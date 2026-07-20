@@ -1,4 +1,4 @@
-import * as admin from "firebase-admin";
+import * as admin from 'firebase-admin';
 
 export async function getDocument(stringPath: string) {
 	const documentRef = admin.firestore().doc(stringPath);

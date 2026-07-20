@@ -15,27 +15,38 @@ const _pageActions = {};
  * Call ONCE at app startup.
  */
 export function initActions() {
-    document.addEventListener("click", function (event) {
-        // Support data-stop-propagation (replaces onclick="event.stopPropagation()")
-        const stopPropTarget = (event.target as Element).closest("[data-stop-propagation]");
-        if (stopPropTarget) {
-            event.stopPropagation();
-            // Don't return — the element might also have a data-action
-        }
+	document.addEventListener('click', function (event) {
+		let el = event.target as Element | null;
 
-        const target = (event.target as Element).closest("[data-action]");
-        if (!target) return;
+		// Walk up the DOM to find data-action, respecting data-stop-propagation boundaries
+		while (el) {
+			if (el.hasAttribute('data-stop-propagation')) {
+				event.stopPropagation();
+				// Handle data-action on the stop-propagation element itself, then stop
+				const action = el.getAttribute('data-action');
+				if (action) {
+					const handler = _pageActions[action];
+					if (typeof handler === 'function') {
+						handler(el, event);
+					}
+				}
+				return;
+			}
 
-        const action = target.getAttribute("data-action");
-        if (!action) return;
+			if (el.hasAttribute('data-action')) {
+				const action = el.getAttribute('data-action');
+				const handler = _pageActions[action];
+				if (typeof handler === 'function') {
+					handler(el, event);
+				} else {
+					console.warn(`No handler registered for action: "${action}"`);
+				}
+				return;
+			}
 
-        const handler = _pageActions[action];
-        if (typeof handler === "function") {
-            handler(target, event);
-        } else {
-            console.warn(`No handler registered for action: "${action}"`);
-        }
-    });
+			el = el.parentElement;
+		}
+	});
 }
 
 /**
@@ -43,5 +54,5 @@ export function initActions() {
  * @param {Object<string, Function>} actions — map of action-name → handler(target, event)
  */
 export function registerActions(actions) {
-    Object.assign(_pageActions, actions);
+	Object.assign(_pageActions, actions);
 }

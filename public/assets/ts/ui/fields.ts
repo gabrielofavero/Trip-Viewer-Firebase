@@ -1,8 +1,7 @@
 import { firstCharToUpperCase, getID } from '../utils/dom.js';
-import { stopLoadingScreen } from "../utils/loading.js";
-import { closeModal, openModal } from '../theme/visibility.js';
+import { stopLoadingScreen } from '../utils/loading.js';
 import { translate } from '../i18n/translation.js';
-import { openToast } from '../utils/messages.js';
+import { openToast, displayMessage, closeMessage } from '../utils/messages.js';
 import { DOCUMENT_ID, SUCCESSFUL_SAVE, setSuccessfulSaveFn } from '../data/state.js';
 
 let ORIGINAL_STATE = new Map();
@@ -13,7 +12,7 @@ export function snapshotFormState(root = document) {
 
 	ORIGINAL_STATE.clear();
 
-	const fields = root.querySelectorAll("input, textarea, select, .input-botao");
+	const fields = root.querySelectorAll('input, textarea, select, .input-button');
 
 	fields.forEach((el) => {
 		ORIGINAL_STATE.set(el, {
@@ -25,10 +24,10 @@ export function snapshotFormState(root = document) {
 
 export function getElValue(el) {
 	switch (el.type) {
-		case "checkbox":
-		case "radio":
+		case 'checkbox':
+		case 'radio':
 			return el.checked;
-		case "submit":
+		case 'submit':
 			return el.innerText;
 		default:
 			return el.value;
@@ -40,7 +39,7 @@ export function getElPosition(el) {
 	if (!parent) return null;
 
 	const siblings = Array.from(parent.children).filter((child) =>
-		(child as Element).matches?.("input, textarea, select, .input-botao"),
+		(child as Element).matches?.('input, textarea, select, .input-button'),
 	);
 
 	return {
@@ -52,9 +51,7 @@ export function getElPosition(el) {
 export function hasUnsavedChanges(root = document) {
 	if (!DOCUMENT_ID) return true;
 
-	const currentFields = root.querySelectorAll(
-		"input, textarea, select, .input-botao",
-	);
+	const currentFields = root.querySelectorAll('input, textarea, select, .input-button');
 
 	for (const el of currentFields) {
 		if (!ORIGINAL_STATE.has(el)) return true;
@@ -83,44 +80,43 @@ export function hasUnsavedChanges(root = document) {
 export function validateRequiredFields() {
 	var invalidFields = [];
 
-	var inputs = document.querySelectorAll("input[required]");
-	var selects = document.querySelectorAll("select[required]");
+	var inputs = document.querySelectorAll('input[required]');
+	var selects = document.querySelectorAll('select[required]');
 	var fields = Array.from(inputs).concat(Array.from(selects));
 
 	fields.forEach(function (field) {
 		const value = (field as HTMLInputElement | HTMLSelectElement).value.trim();
-		if (value == "" || value == "selecione" || value == "outra") {
+		if (value == '' || value == 'select' || value == 'other') {
 			invalidFields.push(field.id);
 		}
 	});
 
 	if (invalidFields.length > 0) {
 		setSuccessfulSaveFn(false);
-		getID("modal-inner-text").innerHTML = getInvalidFieldsText(invalidFields);
 		stopLoadingScreen();
-		openModal();
+		displayMessage(null, getInvalidFieldsText(invalidFields));
 	}
 }
 
 export function getInvalidFieldsText(invalidFields) {
-	const dadosBasicos = ["titulo", "moeda"];
+	const basicFields = ['title', 'currency'];
 
-	let intro = `${translate("messages.fields.invalid")}<br>`;
-	let title = "";
-	let normalText = "";
+	let intro = `${translate('messages.fields.invalid')}<br>`;
+	let title = '';
+	let normalText = '';
 
 	if (invalidFields.length > 0) {
-		if (dadosBasicos.includes(invalidFields[0])) {
-			title = translate("labels.basic_information");
+		if (basicFields.includes(invalidFields[0])) {
+			title = translate('labels.basic_information');
 			normalText += `<strong>${title}:</strong><br><ul>`;
 		}
 
 		for (const id of invalidFields) {
-			const label = getID(id + "-label");
-			const idSplit = id.split("-");
+			const label = getID(id + '-label');
+			const idSplit = id.split('-');
 
 			let innerTitle = title;
-			let innerText = "";
+			let innerText = '';
 
 			if (label && label.innerText) {
 				const lastChar = id[id.length - 1];
@@ -140,14 +136,14 @@ export function getInvalidFieldsText(invalidFields) {
 				innerText = getInnerText(idSplit);
 			}
 
-			if (title == innerTitle || dadosBasicos.includes(id)) {
+			if (title == innerTitle || basicFields.includes(id)) {
 				normalText += `
                 <li>
                     ${innerText || innerTitle}
                 </li>`;
 			} else {
-				if (innerTitle == "Select") {
-					innerTitle = innerText.replace(/[0-9]/g, "").trim();
+				if (innerTitle == 'Select') {
+					innerTitle = innerText.replace(/[0-9]/g, '').trim();
 				}
 
 				title = innerTitle;
@@ -161,10 +157,10 @@ export function getInvalidFieldsText(invalidFields) {
 			}
 		}
 
-		normalText += "</ul>";
+		normalText += '</ul>';
 	}
 
-	const result = [intro, normalText].join("<br>");
+	const result = [intro, normalText].join('<br>');
 	return result;
 }
 
@@ -172,30 +168,30 @@ export function reEdit(type, SUCCESSFUL_SAVE = true) {
 	let param;
 	let url;
 
-	if (type == "viagens") {
-		param = "v";
-		url = "trip.html";
-	} else if (type == "destinos") {
-		param = "d";
-		url = "destination.html";
-	} else if (type == "listagens") {
-		param = "l";
-		url = "listing.html";
+	if (type == 'trips') {
+		param = 't';
+		url = 'trip.html';
+	} else if (type == 'destinations') {
+		param = 'd';
+		url = 'destination.html';
+	} else if (type == 'listings') {
+		param = 'l';
+		url = 'listing.html';
 	}
 
 	if (param && DOCUMENT_ID && SUCCESSFUL_SAVE) {
 		window.location.href = `${url}?${param}=${DOCUMENT_ID}`;
 	} else if (!SUCCESSFUL_SAVE) {
-		closeModal();
+		closeMessage();
 	} else {
-		window.location.href = "../index.html";
+		window.location.href = '../index.html';
 	}
 }
 
 export function getInnerText(idSplit) {
-	let innerText = "";
+	let innerText = '';
 	for (let i = 1; i < idSplit.length; i++) {
-		innerText += firstCharToUpperCase(idSplit[i]) + " ";
+		innerText += firstCharToUpperCase(idSplit[i]) + ' ';
 	}
 	return innerText.trim();
 }
@@ -218,11 +214,11 @@ export function getFieldValueOrNotify(id) {
 
 // Selects
 export function closeAllSelects(excludeElement?) {
-	var selectElements = document.getElementsByTagName("select");
+	var selectElements = document.getElementsByTagName('select');
 	for (var i = 0; i < selectElements.length; i++) {
 		var select = selectElements[i];
-		if (select !== excludeElement && select.hasAttribute("open")) {
-			select.removeAttribute("open");
+		if (select !== excludeElement && select.hasAttribute('open')) {
+			select.removeAttribute('open');
 		}
 	}
 }
@@ -254,7 +250,7 @@ export function selectHasValue(select, value) {
 
 // Link Validation
 export function isHttp(link) {
-	return link.startsWith("http://") || link.startsWith("https://");
+	return link.startsWith('http://') || link.startsWith('https://');
 }
 
 export function validateLink(id) {
@@ -264,12 +260,12 @@ export function validateLink(id) {
 	if (!link || isHttp(link)) return;
 
 	closeAllSelects();
-	div.value = "";
+	div.value = '';
 
-	const title = translate("messages.fields.link.title", {
+	const title = translate('messages.fields.link.title', {
 		icon: '<i class="iconify" data-icon="ic:twotone-link-off"></i>',
 	});
-	const content = translate("messages.fields.link.message");
+	const content = translate('messages.fields.link.message');
 
 	openToast(`${title}: ${content}`);
 }
@@ -279,23 +275,22 @@ export function validateMapLink(id) {
 	const link = div.value;
 
 	const isGoogleMaps =
-		(link.includes("google") && link.includes("maps")) ||
-		link.includes("goo.gl/maps") ||
-		link.includes("maps.app.goo.gl");
-	const isAppleMaps = link.includes("maps.apple.com");
+		(link.includes('google') && link.includes('maps')) ||
+		link.includes('goo.gl/maps') ||
+		link.includes('maps.app.goo.gl');
+	const isAppleMaps = link.includes('maps.apple.com');
 
 	if (!link || (isHttp(link) && (isGoogleMaps || isAppleMaps))) return;
 
 	closeAllSelects();
-	div.value = "";
+	div.value = '';
 
 	const icon = '<i class="iconify" data-icon="hugeicons:maps"></i>';
-	const googleMapsIcon =
-		'<i class="iconify" data-icon="simple-icons:googlemaps"></i>';
+	const googleMapsIcon = '<i class="iconify" data-icon="simple-icons:googlemaps"></i>';
 	const appleMapsIcon = '<i class="iconify" data-icon="ic:baseline-apple"></i>';
 
-	const title = translate("messages.fields.map_link.title", { icon });
-	const content = translate("messages.fields.map_link.message", {
+	const title = translate('messages.fields.map_link.title', { icon });
+	const content = translate('messages.fields.map_link.message', {
 		googleMapsIcon,
 		appleMapsIcon,
 	});
@@ -307,14 +302,14 @@ export function validateInstagramLink(id) {
 	const div = getID(id);
 	const link = div.value;
 
-	if (!link || (isHttp(link) && link.includes("instagram.com"))) return;
+	if (!link || (isHttp(link) && link.includes('instagram.com'))) return;
 
-	div.value = "";
+	div.value = '';
 
 	const icon = '<i class="iconify" data-icon="mdi:instagram"></i>';
 
-	const title = translate("messages.fields.instagram_link.title", { icon });
-	const content = translate("messages.fields.instagram_link.message");
+	const title = translate('messages.fields.instagram_link.title', { icon });
+	const content = translate('messages.fields.instagram_link.message');
 
 	openToast(`${title}: ${content}`);
 }
@@ -324,28 +319,25 @@ export function validateMediaLink(id) {
 	const link = div.value;
 
 	const validDomains = [
-		"youtu.be/",
-		"youtube.com",
-		"tiktok.com",
-		"instagram.com/reel/",
-		"instagram.com/reels/",
-		"instagram.com/p/",
+		'youtu.be/',
+		'youtube.com',
+		'tiktok.com',
+		'instagram.com/reel/',
+		'instagram.com/reels/',
+		'instagram.com/p/',
 	];
 
-	if (
-		!link ||
-		(isHttp(link) && validDomains.some((domain) => link.includes(domain)))
-	) {
+	if (!link || (isHttp(link) && validDomains.some((domain) => link.includes(domain)))) {
 		return;
 	} else {
-		div.value = "";
+		div.value = '';
 		const icon = '<i class="iconify" data-icon="ic:twotone-link-off"></i>';
 		const tiktokIcon = '<i class="iconify" data-icon="cib:tiktok"></i>';
 		const youtubeIcon = '<i class="iconify" data-icon="mdi:youtube"></i>';
 		const instagramIcon = '<i class="iconify" data-icon="mdi:instagram"></i>';
 
-		const title = translate("messages.fields.media_link.title", { icon });
-		const content = translate("messages.fields.media_link.message", {
+		const title = translate('messages.fields.media_link.title', { icon });
+		const content = translate('messages.fields.media_link.message', {
 			youtubeIcon,
 			tiktokIcon,
 			instagramIcon,
@@ -359,36 +351,36 @@ export function validateImageLink(id) {
 	const div = getID(id);
 	const imageLink = div.value;
 
-	if (isHttp(imageLink) && !imageLink.includes("pbs.twimg.com")) return;
+	if (isHttp(imageLink) && !imageLink.includes('pbs.twimg.com')) return;
 
-	let icon = "";
-	let title = "";
-	let content = "";
+	let icon = '';
+	let title = '';
+	let content = '';
 
-	if (imageLink.includes("pbs.twimg.com")) {
-		title = translate("messages.fields.twitter_link.title", {
+	if (imageLink.includes('pbs.twimg.com')) {
+		title = translate('messages.fields.twitter_link.title', {
 			icon: '<i class="iconify" data-icon="mdi:twitter"></i>',
 		});
-		content = translate("messages.fields.twitter_link.message", {
+		content = translate('messages.fields.twitter_link.message', {
 			xIcon: '<i class="iconify" data-icon="fa6-brands:x-twitter"></i>',
 		});
 	} else {
-		title = translate("messages.fields.link.title", {
+		title = translate('messages.fields.link.title', {
 			icon: '<i class="iconify" data-icon="ic:twotone-link-off"></i>',
 		});
-		content = translate("messages.fields.link.message");
+		content = translate('messages.fields.link.message');
 	}
 
 	closeAllSelects();
-	div.value = "";
+	div.value = '';
 
 	openToast(`${title}: ${content}`);
 }
 
 export function getSelectOptionsHTML(object, selectedKey) {
-	let result = "";
+	let result = '';
 	for (const key in object) {
-		const selected = key == selectedKey ? "selected" : "";
+		const selected = key == selectedKey ? 'selected' : '';
 		result += `<option value="${key}" ${selected}>${object[key]}</option>`;
 	}
 	return result;

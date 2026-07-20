@@ -10,7 +10,7 @@
 //
 //   // Anywhere else (synchronous, config must be loaded first):
 //   import { getColors } from '../../app/config.js';
-//   const cores = getColors();
+//   const colors = getColors();
 
 const _cache = {};
 
@@ -26,11 +26,11 @@ async function loadJSON(path) {
 }
 
 export async function loadColors() {
-	return loadJSON('/assets/json/cores.json');
+	return loadJSON('/assets/json/colors.json');
 }
 
 export async function loadDestinations() {
-	return loadJSON('/assets/json/destinos.json');
+	return loadJSON('/assets/json/destinations-config.json');
 }
 
 export async function loadItinerary() {
@@ -38,11 +38,11 @@ export async function loadItinerary() {
 }
 
 export async function loadCurrencies() {
-	return loadJSON('/assets/json/moedas.json');
+	return loadJSON('/assets/json/currencies.json');
 }
 
 export async function loadTransportations() {
-	return loadJSON('/assets/json/transportes.json');
+	return loadJSON('/assets/json/transportation.json');
 }
 
 export async function loadIcons() {
@@ -53,7 +53,7 @@ export async function loadVersions() {
 	return loadJSON('/assets/json/version.json');
 }
 
-export async function loadLanguage(packName) {
+export async function loadLanguage(packName: string) {
 	const path = `/assets/json/languages/${packName}.json`;
 	// Always fetch language fresh (no cache) since it can change
 	const response = await fetch(path);
@@ -67,8 +67,8 @@ export async function loadLanguage(packName) {
  * Load all configs in parallel. Must be called before any sync getter.
  * @param {string} languagePackName - e.g. "en" or "pt"
  */
-export async function loadAllConfigs(languagePackName) {
-	const [cores, destinos, itinerary, moedas, transportes, icons, versoes, language] =
+export async function loadAllConfigs(languagePackName: string) {
+	const [colors, destinations, itinerary, currencies, transportations, icons, versions, language] =
 		await Promise.all([
 			loadColors(),
 			loadDestinations(),
@@ -79,17 +79,26 @@ export async function loadAllConfigs(languagePackName) {
 			loadVersions(),
 			loadLanguage(languagePackName),
 		]);
-	return { cores, destinos, itinerary, moedas, transportes, icons, versoes, language };
+	return {
+		colors,
+		destinations,
+		itinerary,
+		currencies,
+		transportations,
+		icons,
+		versions,
+		language,
+	};
 }
 
 // ======= Synchronous Getters (for use after configs are loaded) =======
 
 export function getColors() {
-	return _cache['/assets/json/cores.json'];
+	return _cache['/assets/json/colors.json'];
 }
 
 export function getDestinations() {
-	return _cache['/assets/json/destinos.json'];
+	return _cache['/assets/json/destinations-config.json'];
 }
 
 export function getItinerary() {
@@ -97,11 +106,11 @@ export function getItinerary() {
 }
 
 export function getCurrencies() {
-	return _cache['/assets/json/moedas.json'];
+	return _cache['/assets/json/currencies.json'];
 }
 
 export function getTransportations() {
-	return _cache['/assets/json/transportes.json'];
+	return _cache['/assets/json/transportation.json'];
 }
 
 export function getIcons() {
@@ -126,7 +135,7 @@ export function getLanguage() {
  * Reload language pack (e.g., when user switches language).
  * Invalidates the old language cache entry.
  */
-export async function setLanguage(packName) {
+export async function setLanguage(packName: string) {
 	// Clear old language cache entries
 	for (const key of Object.keys(_cache)) {
 		if (key.startsWith('/assets/json/languages/')) {

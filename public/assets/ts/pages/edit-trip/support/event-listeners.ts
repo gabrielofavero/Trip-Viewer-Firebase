@@ -1,27 +1,46 @@
 import { getID } from '../../../utils/dom.js';
-import { hasUnsavedChanges, reEdit, validateImageLink, validateLink } from '../../../ui/fields.js';
-import { searchDestinationsListenerAction, closeModal } from '../../../theme/visibility.js';
+import { hasUnsavedChanges, validateImageLink, validateLink } from '../../../ui/fields.js';
+import { searchDestinationsListenerAction } from '../../../theme/visibility.js';
 import { translate } from '../../../i18n/translation.js';
 import { getNextInputDay, getPreviousInputDay, inputDateToJsDate } from '../../../utils/dates.js';
 import { addRemoveChildListenerDS } from '../../../ui/dynamic-select.js';
 import { registerActions } from '../../../ui/actions.js';
 import { registerActions as registerMessageActions } from '../../../utils/messages.js';
 import { openTravelersInfo, saveTravelersInfo } from '../categories/travelers.js';
-import { requestPinEditarGastos, reconfirmPin, validatePin } from '../categories/basic-data/protected-data.js';
-import { deleteTrip, deleteTripAction } from '../edit-trip.js';
-import { DOCUMENT_ID, SUCCESSFUL_SAVE } from '../../../data/state.js';
-import { openInnerExpense, deleteInnerGasto, saveInnerExpense } from '../categories/expenses.js';
+import {
+	requestPinEditExpenses,
+	reconfirmPin,
+	validatePin,
+} from '../categories/basic-data/protected-data.js';
+import { deleteTrip, deleteTripAction, NEW_TRIP } from '../edit-trip.js';
+import { SUCCESSFUL_SAVE } from '../../../data/state.js';
+import { openInnerExpense, deleteInnerExpense, saveInnerExpense } from '../categories/expenses.js';
 import { openAttributions } from '../../../utils/attributions.js';
 import { switchPin } from '../categories/basic-data/protected-data.js';
 import { closeToast } from '../../../utils/messages.js';
-import { openAccommodationImages, openInnerAccommodationImage, accommodationsAddListenerAction, closeInnerAccommodationImage, confirmAccommodationImages } from '../categories/accommodation.js';
-import { galeriaAdicionarListenerAction } from '../categories/gallery.js';
+import {
+	openAccommodationImages,
+	openInnerAccommodationImage,
+	accommodationsAddListenerAction,
+	closeInnerAccommodationImage,
+	confirmAccommodationImages,
+} from '../categories/accommodation.js';
+import { galleryAddListenerAction } from '../categories/gallery.js';
 import { reloadItinerary } from '../categories/itinerary-module/itinerary-module.js';
-import { deleteInnerProgramacao, openInnerItinerary, openInnerItineraryItem, openInnerItinerarySwap, closeInnerProgramacao, innerProgramacaoConfirmAction } from "../categories/itinerary-module/inner-itinerary/inner-itinerary.js";
-import { getVisibilidadeObject, setTripData } from "../set-trip.js";
-import { autoFillDarkColor } from "../categories/customization.js";
-import { applyTransportationTypeVisualization, transportationAddListenerAction } from "../categories/transportation.js";
-import { getVisibility } from "../../../theme/theme.js";
+import {
+	deleteInnerItinerary,
+	openInnerItinerary,
+	openInnerItineraryItem,
+	openInnerItinerarySwap,
+	closeInnerItinerary,
+	innerItineraryConfirmAction,
+} from '../categories/itinerary-module/inner-itinerary/inner-itinerary.js';
+import { getVisibilityObject, setTripData } from '../set-trip.js';
+import { autoFillDarkColor } from '../categories/customization.js';
+import {
+	applyTransportationTypeVisualization,
+	transportationAddListenerAction,
+} from '../categories/transportation.js';
 
 // Loader
 export function loadEventListeners() {
@@ -30,53 +49,49 @@ export function loadEventListeners() {
 		saveTravelersInfo,
 		reconfirmPin,
 		validatePin,
-		"open-travelers-info": () => openTravelersInfo(),
-		"request-pin-expenses": () => requestPinEditarGastos(),
-		"delete-trip": () => deleteTrip(),
-		"open-inner-expense": (target) => {
-			const category = target.getAttribute("data-category");
+		'open-travelers-info': () => openTravelersInfo(),
+		'request-pin-expenses': () => requestPinEditExpenses(),
+		'delete-trip': () => deleteTrip(),
+		'open-inner-expense': (target) => {
+			const category = target.getAttribute('data-category');
 			if (category) openInnerExpense(category);
 		},
-		"open-attributions": () => openAttributions(),
-		"close-modal": (target) => {
-			const modalId = target.getAttribute("data-modal") || "delete-modal";
-			closeModal(modalId);
-		},
-		"close-toast": () => closeToast(),
-		"open-accommodation-images": (target) => {
-			const index = parseInt(target.getAttribute("data-index"));
+		'open-attributions': () => openAttributions(),
+		'close-toast': () => closeToast(),
+		'open-accommodation-images': (target) => {
+			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) openAccommodationImages(index);
 		},
-		"open-inner-itinerary": (target) => {
-			const index = parseInt(target.getAttribute("data-index"));
+		'open-inner-itinerary': (target) => {
+			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) openInnerItinerary(index);
 		},
-		"open-inner-accommodation-image": (target) => {
-			const index = parseInt(target.getAttribute("data-index"));
+		'open-inner-accommodation-image': (target) => {
+			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) openInnerAccommodationImage(index);
 		},
-		"delete-inner-expense": (target) => {
-			const category = target.getAttribute("data-category");
-			const type = target.getAttribute("data-type");
-			const index = parseInt(target.getAttribute("data-index"));
-			if (category && type && !isNaN(index)) deleteInnerGasto(category, type, index);
+		'delete-inner-expense': (target) => {
+			const category = target.getAttribute('data-category');
+			const type = target.getAttribute('data-type');
+			const index = parseInt(target.getAttribute('data-index'));
+			if (category && type && !isNaN(index)) deleteInnerExpense(category, type, index);
 		},
-		"open-inner-itinerary-detail": (target) => {
-			const j = parseInt(target.getAttribute("data-j"));
-			const k = parseInt(target.getAttribute("data-k"));
-			const turno = target.getAttribute("data-turno");
-			if (!isNaN(j) && !isNaN(k) && turno) openInnerItinerary(j, k, turno);
+		'open-inner-itinerary-detail': (target) => {
+			const j = parseInt(target.getAttribute('data-j'));
+			const k = parseInt(target.getAttribute('data-k'));
+			const period = target.getAttribute('data-period');
+			if (!isNaN(j) && !isNaN(k) && period) openInnerItinerary(j, k, period);
 		},
-		"open-inner-itinerary-item": (target) => {
-			const index = parseInt(target.getAttribute("data-index"));
+		'open-inner-itinerary-item': (target) => {
+			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) openInnerItineraryItem(index);
 		},
-		"open-inner-itinerary-swap": () => openInnerItinerarySwap(),
-		"delete-inner-itinerary": (target) => {
-			const j = parseInt(target.getAttribute("data-j"));
-			const k = parseInt(target.getAttribute("data-k"));
-			const turno = target.getAttribute("data-turno");
-			if (!isNaN(j) && !isNaN(k) && turno) deleteInnerProgramacao(j, k, turno);
+		'open-inner-itinerary-swap': () => openInnerItinerarySwap(),
+		'delete-inner-itinerary': (target) => {
+			const j = parseInt(target.getAttribute('data-j'));
+			const k = parseInt(target.getAttribute('data-k'));
+			const period = target.getAttribute('data-period');
+			if (!isNaN(j) && !isNaN(k) && period) deleteInnerItinerary(j, k, period);
 		},
 	});
 
@@ -89,185 +104,114 @@ export function loadEventListeners() {
 		closeInnerAccommodationImage,
 		confirmAccommodationImages,
 		saveInnerExpense,
-		closeInnerProgramacao,
-		innerProgramacaoConfirmAction,
+		closeInnerItinerary,
+		innerItineraryConfirmAction,
 	});
 
 	// Inputs
-	getID("inicio").addEventListener("change", () => inicioListenerAction());
-	getID("fim").addEventListener("change", () => fimListenerAction());
+	getID('start').addEventListener('change', () => startListenerAction());
+	getID('end').addEventListener('change', () => endListenerAction());
 
-	// Botões
-	getID("save-btn").addEventListener("click", () => setTripData());
-	getID("re-editar").addEventListener("click", () =>
-		reEdit("viagens", SUCCESSFUL_SAVE),
-	);
-	getID("visualizar").addEventListener("click", () =>
-		visualizarListenerAction(),
-	);
-	getID("home").addEventListener(
-		"click",
-		() => (window.location.href = "../index.html"),
-	);
-	getID("home").addEventListener(
-		"click",
-		() => (window.location.href = "../index.html"),
-	);
-	getID("cancel-btn").addEventListener(
-		"click",
-		() => (window.location.href = "../index.html"),
-	);
-	getID("transporte-adicionar").addEventListener("click", () =>
-		transportationAddListenerAction(),
-	);
-	getID("hospedagens-adicionar").addEventListener("click", () =>
-		accommodationsAddListenerAction(),
-	);
-	getID("galeria-adicionar").addEventListener("click", () =>
-		galeriaAdicionarListenerAction(),
-	);
-	getID("pin-disabled").addEventListener("click", switchPin);
-	getID("pin-sensitive-only").addEventListener("click", switchPin);
-	getID("pin-all-data").addEventListener("click", switchPin);
-	getID("claro").addEventListener("change", () => autoFillDarkColor());
+	// Buttons
+	getID('save-btn').addEventListener('click', () => setTripData());
+	getID('cancel-btn').addEventListener('click', () => (window.location.href = '../index.html'));
+	getID('transportation-add').addEventListener('click', () => transportationAddListenerAction());
+	getID('accommodation-add').addEventListener('click', () => accommodationsAddListenerAction());
+	getID('gallery-add').addEventListener('click', () => galleryAddListenerAction());
+	getID('pin-disabled').addEventListener('click', switchPin);
+	getID('pin-sensitive-only').addEventListener('click', switchPin);
+	getID('pin-all-data').addEventListener('click', switchPin);
+	getID('light-color').addEventListener('change', () => autoFillDarkColor());
 
-	// Visibilidade do Ida e Volta (Transporte)
-	getID("simple-view").addEventListener("change", () =>
-		applyTransportationTypeVisualization(),
-	);
-	getID("leg-view").addEventListener("change", () =>
-		applyTransportationTypeVisualization(),
-	);
-	getID("people-view").addEventListener("change", () =>
-		applyTransportationTypeVisualization(),
-	);
+	// Visibility do Ida e Volta (Transporte)
+	getID('simple-view').addEventListener('change', () => applyTransportationTypeVisualization());
+	getID('leg-view').addEventListener('change', () => applyTransportationTypeVisualization());
+	getID('people-view').addEventListener('change', () => applyTransportationTypeVisualization());
 
-	// Validação de Imagens no módulo de Customização
-	getID("link-background").addEventListener("change", () =>
-		validateImageLink("link-background"),
-	);
-	getID("link-logo-light").addEventListener("change", () =>
-		validateImageLink("link-logo-light"),
-	);
-	getID("link-logo-dark").addEventListener("change", () =>
-		validateImageLink("link-logo-dark"),
-	);
+	// Image Validation in Customization module
+	getID('link-background').addEventListener('change', () => validateImageLink('link-background'));
+	getID('link-logo-light').addEventListener('change', () => validateImageLink('link-logo-light'));
+	getID('link-logo-dark').addEventListener('change', () => validateImageLink('link-logo-dark'));
 
-	// Validação de Links no módulo de Customização
-	getID("link-attachments").addEventListener("change", () =>
-		validateLink("link-attachments"),
-	);
-	getID("link-drive").addEventListener("change", () =>
-		validateLink("link-drive"),
-	);
-	getID("link-maps").addEventListener("change", () =>
-		validateLink("link-maps"),
-	);
-	getID("link-pdf").addEventListener("change", () => validateLink("link-pdf"));
-	getID("link-ppt").addEventListener("change", () => validateLink("link-ppt"));
-	getID("link-sheet").addEventListener("change", () =>
-		validateLink("link-sheet"),
-	);
-	getID("link-vacina").addEventListener("change", () =>
-		validateLink("link-vacina"),
-	);
+	// Link Validation in Customization module
+	getID('link-attachments').addEventListener('change', () => validateLink('link-attachments'));
+	getID('link-drive').addEventListener('change', () => validateLink('link-drive'));
+	getID('link-maps').addEventListener('change', () => validateLink('link-maps'));
+	getID('link-pdf').addEventListener('change', () => validateLink('link-pdf'));
+	getID('link-ppt').addEventListener('change', () => validateLink('link-ppt'));
+	getID('link-sheet').addEventListener('change', () => validateLink('link-sheet'));
+	getID('link-vaccine').addEventListener('change', () => validateLink('link-vaccine'));
 
-	// Barra de pesquisa em destinos
-	getID("destinos-search").addEventListener("input", () =>
-		searchDestinationsListenerAction(),
-	);
+	// Barra de pesquisa em destinations
+	getID('destinations-search').addEventListener('input', () => searchDestinationsListenerAction());
 
 	// Radios
-	getID("dark-and-light").addEventListener("change", () =>
-		visibilityListenerAction(),
-	);
-	getID("light-exclusive").addEventListener("change", () =>
-		visibilityListenerAction(),
-	);
-	getID("dark-exclusive").addEventListener("change", () =>
-		visibilityListenerAction(),
-	);
+	getID('dark-and-light').addEventListener('change', () => visibilityListenerAction());
+	getID('light-exclusive').addEventListener('change', () => visibilityListenerAction());
+	getID('dark-exclusive').addEventListener('change', () => visibilityListenerAction());
 
-	window.addEventListener("beforeunload", (event) => {
+	window.addEventListener('beforeunload', (event) => {
 		if (hasUnsavedChanges() && !SUCCESSFUL_SAVE) {
 			event.preventDefault();
-			event.returnValue = translate("messages.exit_confirmation");
+			event.returnValue = translate('messages.exit_confirmation');
 		}
 	});
 }
 
 // Actions
-function inicioListenerAction() {
-	const inicioDiv = getID("inicio");
-	const fimDiv = getID("fim");
+function startListenerAction() {
+	const startDiv = getID('start');
+	const endDiv = getID('end');
 
-	const inicio = inicioDiv.value;
-	const fim = fimDiv.value;
+	const start = startDiv.value;
+	const end = endDiv.value;
 
-	if (
-		NEW_TRIP ||
-		!fim ||
-		inputDateToJsDate(fim).getTime() < inputDateToJsDate(inicio).getTime()
-	) {
-		fimDiv.value = getNextInputDay(inicio);
+	if (NEW_TRIP || !end || inputDateToJsDate(end).getTime() < inputDateToJsDate(start).getTime()) {
+		endDiv.value = getNextInputDay(start);
 	}
 
 	reloadItinerary();
 }
 
-function fimListenerAction() {
-	const inicioDiv = getID("inicio");
-	const fimDiv = getID("fim");
+function endListenerAction() {
+	const startDiv = getID('start');
+	const endDiv = getID('end');
 
-	const inicio = inicioDiv.value;
-	const fim = fimDiv.value;
+	const start = startDiv.value;
+	const end = endDiv.value;
 
-	if (
-		!inicio ||
-		inputDateToJsDate(fim).getTime() < inputDateToJsDate(inicio).getTime()
-	) {
-		inicioDiv.value = getPreviousInputDay(fim);
+	if (!start || inputDateToJsDate(end).getTime() < inputDateToJsDate(start).getTime()) {
+		startDiv.value = getPreviousInputDay(end);
 	}
 
 	reloadItinerary();
-}
-
-function visualizarListenerAction() {
-	if (DOCUMENT_ID) {
-		window.open(
-			`../view.html?v=${DOCUMENT_ID}&visibility=${getVisibility()}`,
-			"_blank",
-		);
-	} else {
-		window.location.href = "../index.html";
-	}
 }
 
 export function addRemoveTransportationListener(j) {
 	const dynamicSelects = [
 		{
-			type: "transporte-pessoa",
-			selectID: `transporte-pessoa-select-${j}`,
+			type: 'transportation-person',
+			selectID: `transportation-person-select-${j}`,
 		},
 	];
-	addRemoveChildListenerDS("transporte", j, dynamicSelects);
+	addRemoveChildListenerDS('transportation', j, dynamicSelects);
 }
 
-export function addRemoveGaleriaListener(j) {
+export function addRemoveGalleryListener(j) {
 	const dynamicSelects = [
 		{
-			type: "galeria-categoria",
-			selectID: `galeria-categoria-select-${j}`,
+			type: 'gallery-category',
+			selectID: `gallery-category-select-${j}`,
 		},
 	];
-	addRemoveChildListenerDS("galeria", j, dynamicSelects);
+	addRemoveChildListenerDS('gallery', j, dynamicSelects);
 }
 
-export function visibilityListenerAction(visibilidade?) {
-	if (!visibilidade) {
-		visibilidade = getVisibilidadeObject();
+export function visibilityListenerAction(visibility?) {
+	if (!visibility) {
+		visibility = getVisibilityObject();
 	}
 
-	getID("tema-claro").style.display = visibilidade.claro ? "block" : "none";
-	getID("tema-escuro").style.display = visibilidade.escuro ? "block" : "none";
+	getID('light-theme').style.display = visibility.light ? 'block' : 'none';
+	getID('dark-theme').style.display = visibility.dark ? 'block' : 'none';
 }

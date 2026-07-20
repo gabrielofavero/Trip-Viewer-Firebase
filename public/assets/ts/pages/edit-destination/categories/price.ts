@@ -2,87 +2,87 @@ import { getDestinations, getCurrencies } from '../../../app/config.js';
 import { getChildIDs, getID } from '../../../utils/dom.js';
 import { translate } from '../../../i18n/translation.js';
 
-export var VALOR_OPTIONS = "";
+export var PRICE_OPTIONS = '';
 
 export function loadCurrencySelects() {
-	loadMoedaOptions();
+	loadCurrencyOptions();
 
-	const destinos = getDestinations();
-	for (const categoria of destinos.categorias.passeios) {
-		const childs = getChildIDs(`${categoria}-box`);
+	const destinationsConfig = getDestinations();
+	for (const category of destinationsConfig.categories.tours) {
+		const childs = getChildIDs(`${category}-box`);
 		for (const child of childs) {
-			const i = child.split("-").pop();
-			if (VALOR_OPTIONS) {
-				const select = getID(`${categoria}-valor-${i}`);
+			const i = child.split('-').pop();
+			if (PRICE_OPTIONS) {
+				const select = getID(`${category}-price-${i}`);
 				const value = select.value;
-				select.innerHTML = VALOR_OPTIONS;
+				select.innerHTML = PRICE_OPTIONS;
 				select.value = value;
 			} else {
-				getID(`${categoria}-valor-${i}`).style.display = "none";
-				getID(`${categoria}-outro-valor-${i}`).style.display = "none";
+				getID(`${category}-price-${i}`).style.display = 'none';
+				getID(`${category}-other-price-${i}`).style.display = 'none';
 			}
 		}
 	}
 }
 
-export function loadMoedaOptions() {
-	const moedas = getCurrencies();
-	const categorias = moedas.valores;
-	const moeda = getID("moeda").value;
-	VALOR_OPTIONS = "";
+export function loadCurrencyOptions() {
+	const currencies = getCurrencies();
+	const categories = currencies.values;
+	const selectedCurrency = getID('currency').value;
+	PRICE_OPTIONS = '';
 
-	if (moeda != "outra" && moedas.escala[moeda]) {
-		for (const categoria of categorias) {
-			const label = getLabel(categoria);
-			VALOR_OPTIONS += `<option value="${categoria}">${label}</option>`;
+	if (selectedCurrency != 'other' && currencies.scale[selectedCurrency]) {
+		for (const category of categories) {
+			const label = getLabel(category);
+			PRICE_OPTIONS += `<option value="${category}">${label}</option>`;
 		}
-		if (VALOR_OPTIONS) {
-			VALOR_OPTIONS += `<option value="outro">${translate("labels.other")}</option>`;
+		if (PRICE_OPTIONS) {
+			PRICE_OPTIONS += `<option value="other">${translate('labels.other')}</option>`;
 		}
 	}
 
-	function getLabel(categoria) {
-		switch (categoria) {
-			case "default":
+	function getLabel(category) {
+		switch (category) {
+			case 'default':
 				return translate(`destination.price.default`);
-			case "-":
-			case "free":
+			case '-':
+			case 'free':
 				return translate(`destination.price.free`);
-			case "$":
-			case "$$":
-			case "$$$":
-				return moedas.escala[moeda][categoria];
-			case "$$$$":
+			case '$':
+			case '$$':
+			case '$$$':
+				return currencies.scale[selectedCurrency][category];
+			case '$$$$':
 				return translate(`destination.price.max`, {
-					value: moedas.escala[moeda][categoria],
+					value: currencies.scale[selectedCurrency][category],
 				});
 			default:
-				return translate("labels.other");
+				return translate('labels.other');
 		}
 	}
 }
 
-export function getOutroValorVisibility() {
-	if (VALOR_OPTIONS) return "none";
-	else return "block";
+export function getOtherPriceVisibility() {
+	if (PRICE_OPTIONS) return 'none';
+	else return 'block';
 }
 
-export function loadMoedaValorAndVisibility(valor, categoria, i) {
-	const valorSelect = getID(`${categoria}-valor-${i}`);
-	const outroValorDiv = getID(`${categoria}-outro-valor-${i}`);
+export function loadCurrencyValueAndVisibility(price, category, i) {
+	const priceSelect = getID(`${category}-price-${i}`);
+	const otherPriceDiv = getID(`${category}-other-price-${i}`);
 
-	const texts = Array.from(valorSelect.options).map((option) => option.text);
-	const values = Array.from(valorSelect.options).map((option) => option.value);
+	const texts = Array.from(priceSelect.options).map((option) => option.text);
+	const values = Array.from(priceSelect.options).map((option) => option.value);
 
-	if (VALOR_OPTIONS && values.includes(valor)) {
-		valorSelect.value = valor;
-		outroValorDiv.style.display = "none";
-	} else if (VALOR_OPTIONS && texts.includes(valor)) {
-		valorSelect.value = values[texts.indexOf(valor)];
-		outroValorDiv.style.display = "none";
+	if (PRICE_OPTIONS && values.includes(price)) {
+		priceSelect.value = price;
+		otherPriceDiv.style.display = 'none';
+	} else if (PRICE_OPTIONS && texts.includes(price)) {
+		priceSelect.value = values[texts.indexOf(price)];
+		otherPriceDiv.style.display = 'none';
 	} else {
-		valorSelect.value = "outro";
-		outroValorDiv.style.display = "block";
-		outroValorDiv.value = valor;
+		priceSelect.value = 'other';
+		otherPriceDiv.style.display = 'block';
+		otherPriceDiv.value = price;
 	}
 }

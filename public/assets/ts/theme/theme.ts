@@ -35,7 +35,7 @@ export {
 	rgbToHex,
 	rgbToText,
 	hexToRgbText,
-} from "../theme/colors.js";
+} from '../theme/colors.js';
 
 export {
 	CHANGED_SVGS,
@@ -67,7 +67,7 @@ export {
 	visibilityAdd,
 	getVisibility,
 	loadExternalVisibility,
-} from "../theme/visibility.js";
+} from '../theme/visibility.js';
 
 export {
 	animate,
@@ -82,7 +82,7 @@ export {
 	swipeIn,
 	getSwipeDirection,
 	swipe,
-} from "../theme/animations.js";
+} from '../theme/animations.js';
 
 export {
 	setCSSRule,
@@ -95,4 +95,4 @@ export {
 	removeCSSMediaRuleBatch,
 	setCSSVariable,
 	removeCSSVariable,
-} from "../theme/stylesheets.js";
+} from '../theme/stylesheets.js';

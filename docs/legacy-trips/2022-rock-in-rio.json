@@ -1,0 +1,250 @@
+{
+  "_meta": {
+    "tripId": "legacy-2022-rock-in-rio",
+    "slug": "2022-rock-in-rio",
+    "sourceFiles": [
+      "Pessoais/2022/[2022f] Rock in Rio/Rock in Rio 2022.xlsx",
+      "Pessoais/2022/[2022f] Rock in Rio/Comprovantes/VoeGOL - Ida.pdf",
+      "Pessoais/2022/[2022f] Rock in Rio/Comprovantes/MyTrip - Comprovante 1.pdf",
+      "Pessoais/2022/[2022f] Rock in Rio/Comprovantes/MyTrip - Comprovante 2.pdf",
+      "Pessoais/2022/[2022f] Rock in Rio/Comprovantes/Ingresso - Sexta.pdf",
+      "Pessoais/2022/[2022f] Rock in Rio/Comprovantes/Ingresso - Domingo.pdf",
+      "Pessoais/2022/[2022f] Rock in Rio/Apresentações/Plano de Viagem - Grupo.pdf"
+    ],
+    "extractionNotes": {
+      "xlsxContent": "Programação sheet: day-by-day schedule Sep 8-12 with times, activities, expense types, and values. Dev sheet: cost summary by category and per-person breakdown. Resumo sheet: status/notes.",
+      "pdfContent": "VoeGOL: GOL G3 2051 CNF→SDU Sep 8 08:55-10:00, reservation QDLFBJ. MyTrip: 123Milhas booking Z8KRO6622, passengers Gabriel Favero + Guilherme Machado, milhas from Lucas Tonelo. Return: GOL G3 2019 SDU→CNF Sep 12 07:15-08:15, reservation JKDMJF. Ingresso Sexta: image-based PDF (no text). Ingresso Domingo: CID-encoded PDF.",
+      "tripviewerNote": "TripViewer-RiR22 folder NOT present in trip folder. Using XLSX + PDFs only.",
+      "airbnbNote": "Address from XLSX: Rua Edmundo Lins 25, Copacabana. No PDF reservation found."
+    }
+  },
+  "trip": {
+    "title": "Rock in Rio 2022",
+    "currency": "BRL",
+    "start": { "day": 8, "month": 9, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+    "end": { "day": 12, "month": 9, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      { "id": "gabriel", "name": "Gabriel" },
+      { "id": "gui", "name": "Guilherme" }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Airbnb — Copacabana",
+      "description": "Apartamento em Copacabana, próximo à praia e metrô.",
+      "address": "Rua Edmundo Lins, 25, Copacabana, Rio de Janeiro - RJ",
+      "dates": {
+        "checkIn": { "day": 8, "month": 9, "year": 2022, "hour": 13, "minute": 55, "second": 0 },
+        "checkOut": { "day": 12, "month": 9, "year": 2022, "hour": 5, "minute": 10, "second": 0 }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "GOL Linhas Aéreas",
+      "points": {
+        "origin": "Belo Horizonte (CNF)",
+        "destination": "Rio de Janeiro (SDU)"
+      },
+      "dates": {
+        "departure": { "day": 8, "month": 9, "year": 2022, "hour": 8, "minute": 55, "second": 0 },
+        "arrival": { "day": 8, "month": 9, "year": 2022, "hour": 10, "minute": 0, "second": 0 }
+      },
+      "duration": "1h05min",
+      "direction": "departure",
+      "reservation": "QDLFBJ",
+      "link": "",
+      "person": ""
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "GOL Linhas Aéreas",
+      "points": {
+        "origin": "Rio de Janeiro (SDU)",
+        "destination": "Belo Horizonte (CNF)"
+      },
+      "dates": {
+        "departure": { "day": 12, "month": 9, "year": 2022, "hour": 7, "minute": 15, "second": 0 },
+        "arrival": { "day": 12, "month": 9, "year": 2022, "hour": 8, "minute": 15, "second": 0 }
+      },
+      "duration": "1h00min",
+      "direction": "return",
+      "reservation": "JKDMJF",
+      "link": "",
+      "person": ""
+    }
+  },
+  "itinerary": {
+    "20220908": {
+      "title": { "value": "Dia 1 — Chegada ao Rio", "showDestinations": false, "translate": false },
+      "date": { "day": 8, "month": 9, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "06:30", "activity": "Translado para o Aeroporto", "description": "Ida Aeroporto (Paps)", "location": "Belo Horizonte" },
+        { "time": "07:30", "activity": "Aeroporto", "description": "Aguardar embarque", "location": "Aeroporto de Confins" },
+        { "time": "08:55", "activity": "Voo para o Rio", "description": "GOL G3 2051. Reserva QDLFBJ", "location": "CNF → SDU" }
+      ],
+      "morning": [
+        { "time": "10:00", "activity": "Desembarque + Rio Card", "description": "Comprar Rio Card para metrô", "location": "Aeroporto Santos Dumont" },
+        { "time": "10:45", "activity": "Real Gabinete Português", "description": "Não precisa agendar", "location": "Centro do Rio" },
+        { "time": "11:55", "activity": "Taste Lab", "description": "Almoço (mais demorado)", "location": "Rio de Janeiro" }
+      ],
+      "afternoon": [
+        { "time": "13:55", "activity": "Airbnb", "description": "Check-in / Deixar malas", "location": "Rua Edmundo Lins 25, Copacabana" },
+        { "time": "15:25", "activity": "Escadaria Selarón", "description": "Curtir a região", "location": "Lapa" },
+        { "time": "16:00", "activity": "Rooftop Selina", "description": "Museu + Arredores", "location": "Lapa" },
+        { "time": "17:20", "activity": "Museu do Amanhã", "description": "Pôr do sol na região", "location": "Praça Mauá" }
+      ],
+      "night": [
+        { "time": "18:40", "activity": "BE+CO", "description": "Saída noturna", "location": "Rio de Janeiro" },
+        { "time": "20:45", "activity": "Airbnb", "description": "Descanso", "location": "Copacabana" }
+      ]
+    },
+    "20220909": {
+      "title": { "value": "Dia 2 — Rock in Rio (Sexta-feira)", "showDestinations": false, "translate": false },
+      "date": { "day": 9, "month": 9, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "09:00", "activity": "Airbnb", "description": "Acordar / Arrumar", "location": "Copacabana" }
+      ],
+      "morning": [
+        { "time": "10:30", "activity": "Nusa", "description": "Encher o buxin com brunch", "location": "Rio de Janeiro" },
+        { "time": "11:30", "activity": "Translado", "description": "Metrô + Ônibus para a Cidade do Rock", "location": "Rio de Janeiro" }
+      ],
+      "afternoon": [
+        { "time": "14:00", "activity": "Rock in Rio — Dia 1", "description": "Entrada no festival", "location": "Cidade do Rock" },
+        { "time": "15:30", "activity": "Di Ferreira", "description": "Palco Sunset", "location": "Cidade do Rock" },
+        { "time": "16:55", "activity": "Jão", "description": "Palco Sunset", "location": "Cidade do Rock" },
+        { "time": "18:00", "activity": "Capital Inicial", "description": "Palco Mundo", "location": "Cidade do Rock" }
+      ],
+      "night": [
+        { "time": "20:10", "activity": "Billy Idol", "description": "Palco Mundo", "location": "Cidade do Rock" },
+        { "time": "21:15", "activity": "Avril Lavigne", "description": "Palco Sunset", "location": "Cidade do Rock" },
+        { "time": "22:20", "activity": "Fall Out Boy", "description": "Palco Mundo", "location": "Cidade do Rock" },
+        { "time": "23:20", "activity": "Pré Green Day", "description": "Aguardar", "location": "Cidade do Rock" }
+      ]
+    },
+    "20220910": {
+      "title": { "value": "Dia 3 — Descanso + Praia (Sábado)", "showDestinations": false, "translate": false },
+      "date": { "day": 10, "month": 9, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "00:10", "activity": "Green Day", "description": "Palco Mundo", "location": "Cidade do Rock" },
+        { "time": "01:40", "activity": "Retorno", "description": "Ônibus + Metrô + A pé", "location": "Rio de Janeiro" },
+        { "time": "04:40", "activity": "Airbnb", "description": "Descanso", "location": "Copacabana" }
+      ],
+      "morning": [
+        { "time": "11:00", "activity": "Airbnb", "description": "Arrumar", "location": "Copacabana" },
+        { "time": "12:00", "activity": "Cantón", "description": "Almoço", "location": "Rio de Janeiro" }
+      ],
+      "afternoon": [
+        { "time": "13:35", "activity": "Praia do Leme", "description": "Praia", "location": "Leme" },
+        { "time": "16:05", "activity": "Momo Gelato", "description": "Sorvetinho", "location": "Leme" },
+        { "time": "17:20", "activity": "Airbnb", "description": "Descanso / Arrumar", "location": "Copacabana" }
+      ],
+      "night": [
+        { "time": "18:45", "activity": "Venga Chiringuito", "description": "Saída rápida", "location": "Rio de Janeiro" },
+        { "time": "20:45", "activity": "Airbnb", "description": "Descanso", "location": "Copacabana" }
+      ]
+    },
+    "20220911": {
+      "title": { "value": "Dia 4 — Rock in Rio (Domingo)", "showDestinations": false, "translate": false },
+      "date": { "day": 11, "month": 9, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "09:00", "activity": "Airbnb", "description": "Acordar / Arrumar", "location": "Copacabana" }
+      ],
+      "morning": [
+        { "time": "09:50", "activity": "Parque Lage", "description": "Turismo rápido", "location": "Jardim Botânico" },
+        { "time": "10:40", "activity": "Café 18 do Forte", "description": "Encher o buxin com brunch", "location": "Copacabana" },
+        { "time": "11:40", "activity": "Translado", "description": "Metrô + Ônibus para a Cidade do Rock", "location": "Rio de Janeiro" }
+      ],
+      "afternoon": [
+        { "time": "14:00", "activity": "Rock in Rio — Dia 2", "description": "Pegar lugar para Dua Lipa", "location": "Cidade do Rock" }
+      ],
+      "night": [
+        { "time": "00:10", "activity": "Dua Lipa", "description": "Palco Mundo", "location": "Cidade do Rock" },
+        { "time": "01:40", "activity": "Retorno", "description": "Ônibus + Metrô + A pé", "location": "Rio de Janeiro" }
+      ]
+    },
+    "20220912": {
+      "title": { "value": "Dia 5 — Retorno", "showDestinations": false, "translate": false },
+      "date": { "day": 12, "month": 9, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "04:40", "activity": "Airbnb", "description": "Arrumar e Check-Out", "location": "Copacabana" },
+        { "time": "05:40", "activity": "Aeroporto", "description": "Aguardar embarque", "location": "Aeroporto Santos Dumont" },
+        { "time": "07:15", "activity": "Voo para BH", "description": "GOL JKDMJF. MyTrip Z8KRO6622", "location": "SDU → CNF" }
+      ],
+      "morning": [
+        { "time": "08:15", "activity": "Desembarque", "description": "Translado para casa (Uber)", "location": "Aeroporto de Confins" }
+      ],
+      "afternoon": [],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      { "id": "exp-001", "type": "Alimentação", "label": "Taste Lab — Almoço (Dia 1)", "value": 150.00, "date": { "day": 8, "month": 9, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-002", "type": "Alimentação", "label": "Nusa — Brunch (Dia 2)", "value": 100.00, "date": { "day": 9, "month": 9, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-003", "type": "Alimentação", "label": "Rock in Rio (Dia 2)", "value": 50.00, "date": { "day": 9, "month": 9, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-004", "type": "Alimentação", "label": "Cantón — Almoço (Dia 3)", "value": 150.00, "date": { "day": 10, "month": 9, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-005", "type": "Alimentação", "label": "Momo Gelato — Sorvete (Dia 3)", "value": 20.00, "date": { "day": 10, "month": 9, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-006", "type": "Alimentação", "label": "Café 18 do Forte — Brunch (Dia 4)", "value": 100.00, "date": { "day": 11, "month": 9, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-007", "type": "Alimentação", "label": "Rock in Rio (Dia 4)", "value": 50.00, "date": { "day": 11, "month": 9, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-008", "type": "Turismo", "label": "Real Gabinete Português", "value": 10.00, "date": { "day": 8, "month": 9, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-009", "type": "Turismo", "label": "Praia do Leme", "value": 30.00, "date": { "day": 10, "month": 9, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-010", "type": "Saídas", "label": "Rooftop Selina", "value": 75.00, "date": { "day": 8, "month": 9, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-011", "type": "Saídas", "label": "BE+CO", "value": 100.00, "date": { "day": 8, "month": 9, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-012", "type": "Saídas", "label": "Venga Chiringuito", "value": 100.00, "date": { "day": 10, "month": 9, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-013", "type": "Transporte", "label": "Transporte Público (Metrô + Ônibus)", "value": 30.60, "date": { "day": 8, "month": 9, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-014", "type": "Transporte", "label": "Transporte Privado (Ubers)", "value": 189.50, "date": { "day": 8, "month": 9, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-015", "type": "Ajuste", "label": "Ajustes (reembolso/divisão)", "value": -350.00, "date": { "day": 12, "month": 9, "year": 2022 }, "person": "gabriel" }
+    ],
+    "preTrip": [
+      { "id": "exp-pre-001", "type": "Passagem", "label": "Voo Ida e Volta — GOL (123Milhas Z8KRO6622)", "value": 304.99, "date": { "day": 1, "month": 2, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-pre-002", "type": "Hospedagem", "label": "Airbnb — Copacabana (4 noites)", "value": 633.36, "date": { "day": 1, "month": 2, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-pre-003", "type": "Ingresso", "label": "Rock in Rio — Sexta-feira (09/09)", "value": 312.50, "date": { "day": 1, "month": 3, "year": 2022 }, "person": "gabriel" },
+      { "id": "exp-pre-004", "type": "Ingresso", "label": "Rock in Rio — Domingo (11/09)", "value": 272.50, "date": { "day": 1, "month": 3, "year": 2022 }, "person": "gabriel" }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": { "preTrip": 1523.35, "duringTrip": 455.10 }
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" }
+  }
+}

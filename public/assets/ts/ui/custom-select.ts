@@ -3,26 +3,18 @@ import { getID } from '../utils/dom.js';
 export let CUSTOM_SELECTS = {};
 
 export function loadCloseCustomSelectListeners() {
-	document.addEventListener("click", function (e) {
+	document.addEventListener('click', function (e) {
 		closeCustomSelects();
 	});
 }
 
-export function loadCustomSelect({
-	id,
-	options = [],
-	activeOption,
-	action,
-	autoExecute = true,
-}) {
+export function loadCustomSelect({ id, options = [], activeOption, action, autoExecute = true }) {
 	CUSTOM_SELECTS[id] = { options, activeOption, action, onAction: false };
 	const customSelect = getID(id);
 	customSelect.innerHTML = getCustomSelectHTML(id);
 	hideActiveOption(id);
-	const label =
-		options.find((option) => option.value === activeOption)?.label ||
-		options[0].label;
-	(customSelect.querySelector(".title") as HTMLElement).innerText = label;
+	const label = options.find((option) => option.value === activeOption)?.label || options[0].label;
+	(customSelect.querySelector('.title') as HTMLElement).innerText = label;
 
 	if (autoExecute) {
 		action(activeOption);
@@ -32,7 +24,7 @@ export function loadCustomSelect({
 }
 
 export function getCustomSelectHTML(id) {
-	let optionsHTML = "";
+	let optionsHTML = '';
 	for (const option of CUSTOM_SELECTS[id].options) {
 		optionsHTML += `<div class="option" data-value="${option.value}">${option.label}</div>`;
 	}
@@ -51,32 +43,28 @@ export function getCustomSelectHTML(id) {
 
 export function loadCustomSelectListeners(id) {
 	const customSelect = getID(id);
-	const container = customSelect.querySelector(".container");
-	const dropdown = customSelect.querySelector(".dropdown");
+	const container = customSelect.querySelector('.container');
+	const dropdown = customSelect.querySelector('.dropdown');
 
-	container.addEventListener("click", function (e) {
+	container.addEventListener('click', function (e) {
 		e.stopPropagation();
 		if (CUSTOM_SELECTS[id].onAction) {
 			CUSTOM_SELECTS[id].onAction = false;
 			return;
 		}
-		if ((dropdown as HTMLElement).style.display === "block") {
-			(dropdown as HTMLElement).style.display = "none";
-			customSelect.classList.remove("opened");
+		if ((dropdown as HTMLElement).style.display === 'block') {
+			(dropdown as HTMLElement).style.display = 'none';
+			customSelect.classList.remove('opened');
 		} else {
-			(dropdown as HTMLElement).style.display = "block";
-			customSelect.classList.add("opened");
+			(dropdown as HTMLElement).style.display = 'block';
+			customSelect.classList.add('opened');
 		}
 	});
 
-	customSelect.querySelectorAll(".option").forEach((option) => {
-		option.addEventListener("click", function (this: HTMLElement, e) {
+	customSelect.querySelectorAll('.option').forEach((option) => {
+		option.addEventListener('click', function (this: HTMLElement, e) {
 			closeCustomSelects();
-			loadCustomSelectAction(
-				id,
-				this.getAttribute("data-value"),
-				this.innerText,
-			);
+			loadCustomSelectAction(id, this.getAttribute('data-value'), this.innerText);
 		});
 	});
 }
@@ -89,29 +77,29 @@ export function closeCustomSelects() {
 
 export function closeCustomSelect(id) {
 	const customSelect = getID(id);
-	const dropdown = customSelect.querySelector(".dropdown") as HTMLElement;
-	if (dropdown.style.display === "block") {
-		dropdown.style.display = "none";
-		customSelect.classList.remove("opened");
+	const dropdown = customSelect.querySelector('.dropdown') as HTMLElement;
+	if (dropdown.style.display === 'block') {
+		dropdown.style.display = 'none';
+		customSelect.classList.remove('opened');
 	}
 }
 
 export function loadCustomSelectAction(id, value, label) {
 	CUSTOM_SELECTS[id].onAction = true;
 	CUSTOM_SELECTS[id].activeOption = value;
-	(getID(id).querySelector(".title") as HTMLElement).innerText = label;
+	(getID(id).querySelector('.title') as HTMLElement).innerText = label;
 	CUSTOM_SELECTS[id].action(value);
 	hideActiveOption(id);
 }
 
 export function hideActiveOption(id) {
 	const customSelect = getID(id);
-	customSelect.querySelectorAll(".option").forEach((option) => {
+	customSelect.querySelectorAll('.option').forEach((option) => {
 		const el = option as HTMLElement;
-		if (el.getAttribute("data-value") === CUSTOM_SELECTS[id].activeOption) {
-			el.style.display = "none";
+		if (el.getAttribute('data-value') === CUSTOM_SELECTS[id].activeOption) {
+			el.style.display = 'none';
 		} else {
-			el.style.display = "flex";
+			el.style.display = 'flex';
 		}
 	});
 }

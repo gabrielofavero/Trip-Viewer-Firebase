@@ -1,0 +1,249 @@
+{
+  "trip": {
+    "title": "São Paulo Jan 2022",
+    "currency": "BRL",
+    "start": { "day": 20, "month": 1, "year": 2022, "hour": 5, "minute": 30, "second": 0 },
+    "end": { "day": 24, "month": 1, "year": 2022, "hour": 9, "minute": 0, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2022-01-24T00:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      { "id": "gabriel", "name": "Gabriel" },
+      { "id": "gui", "name": "Guilherme" }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "La Residence Paulista",
+      "description": "Hotel localizado no bairro Jardins, próximo à Avenida Paulista",
+      "address": "São Paulo, SP",
+      "dates": {
+        "checkIn": { "day": 20, "month": 1, "year": 2022, "hour": 14, "minute": 0, "second": 0 },
+        "checkOut": { "day": 23, "month": 1, "year": 2022, "hour": 12, "minute": 0, "second": 0 }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "9182628300819",
+      "link": "https://www.hoteis.com/booking/confirmation.html"
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "Gol",
+      "points": { "origin": "Belo Horizonte (CNF)", "destination": "São Paulo (CGH)" },
+      "dates": {
+        "departure": { "day": 20, "month": 1, "year": 2022, "hour": 6, "minute": 45, "second": 0 },
+        "arrival": { "day": 20, "month": 1, "year": 2022, "hour": 8, "minute": 0, "second": 0 }
+      },
+      "duration": "1h15",
+      "direction": "departure",
+      "reservation": "LF87CB",
+      "link": "",
+      "person": "ambos"
+    },
+    "leg-002": {
+      "type": "bus",
+      "company": "Buser",
+      "points": { "origin": "São Paulo (Vila Guilherme)", "destination": "Belo Horizonte (Tancredo Neves)" },
+      "dates": {
+        "departure": { "day": 23, "month": 1, "year": 2022, "hour": 23, "minute": 0, "second": 0 },
+        "arrival": { "day": 24, "month": 1, "year": 2022, "hour": 8, "minute": 20, "second": 0 }
+      },
+      "duration": "9h20",
+      "direction": "return",
+      "reservation": "BSY5200",
+      "link": "",
+      "person": "ambos"
+    }
+  },
+  "itinerary": {
+    "20220120": {
+      "title": { "value": "Dia 1 — Chegada, Jardins e Liberdade", "showDestinations": false, "translate": false },
+      "date": { "day": 20, "month": 1, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "title": "Ida para o Aeroporto", "description": "Carona com Mãe Bibs", "time": "05:30" }
+      ],
+      "morning": [
+        { "title": "Voo Gol CNF → CGH", "description": "Reserva LF87CB", "time": "06:45" },
+        { "title": "Desembarque + Uber", "description": "Translado para o hotel", "time": "08:00" },
+        { "title": "Check-in La Residence Paulista", "description": "Deixar malas", "time": "09:00" },
+        { "title": "BotaniKafé", "description": "Café da manhã", "time": "09:30" },
+        { "title": "Mirante SESC Paulista", "description": "Agendado 10:45", "time": "10:40" }
+      ],
+      "afternoon": [
+        { "title": "Panda Ya", "description": "Guiozas - Jardins", "time": "11:55" },
+        { "title": "Momo Lamen", "description": "Lamen - Liberdade", "time": "13:00" },
+        { "title": "Liberdade", "description": "Cápsula, Lojas, Snowfall", "time": "13:40" }
+      ],
+      "night": [
+        { "title": "Da Mooca Pizza Shop", "description": "Brunch", "time": "16:45" },
+        { "title": "Infini Bar", "description": "Reservado 19:30", "time": "19:20" }
+      ]
+    },
+    "20220121": {
+      "title": { "value": "Dia 2 — Vila Itororó, Paulista e Augusta", "showDestinations": false, "translate": false },
+      "date": { "day": 21, "month": 1, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "title": "Empório Daruma", "description": "Comprinhas", "time": "09:05" },
+        { "title": "Vila Itororó", "description": "Turismo", "time": "10:05" }
+      ],
+      "afternoon": [
+        { "title": "The Burger Map", "description": "Reservado 12:15", "time": "11:55" },
+        { "title": "Forever 21", "description": "Ver roupinhas", "time": "14:25" },
+        { "title": "Mais um Pouco de Tudo", "description": "Ver roupinhas", "time": "15:05" },
+        { "title": "Galeria do Rock", "description": "Último round de compras", "time": "15:50" },
+        { "title": "Sorveteria do Centro", "description": "Sorvetinho rápido", "time": "16:50" }
+      ],
+      "night": [
+        { "title": "Tan Tan", "description": "Reservado 19:00", "time": "19:00" },
+        { "title": "Augusta!", "description": "Frank Bar, Gali Bar", "time": "20:50" }
+      ]
+    },
+    "20220122": {
+      "title": { "value": "Dia 3 — Parque do Povo, Museu e Bares", "showDestinations": false, "translate": false },
+      "date": { "day": 22, "month": 1, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "title": "Parque do Povo", "description": "Curtir com mais tempo", "time": "09:20" },
+        { "title": "Instituto Artium", "description": "Museu", "time": "10:45" }
+      ],
+      "afternoon": [
+        { "title": "Lazy Park & Food", "description": "Que os jogos comecem", "time": "12:20" },
+        { "title": "St. John's Irish Pub", "description": "Continuação", "time": "14:05" },
+        { "title": "Mule Mule", "description": "Continuação", "time": "16:15" },
+        { "title": "Beco do Batman", "description": "Curtir pôr do sol", "time": "17:55" },
+        { "title": "ZIV Galery", "description": "Por que não mais um drink?", "time": "18:25" }
+      ],
+      "night": [
+        { "title": "Cauli Bar", "description": "Pra fechar", "time": "19:15" }
+      ]
+    },
+    "20220123": {
+      "title": { "value": "Dia 4 — Minhocão, Cinema e Despedida", "showDestinations": false, "translate": false },
+      "date": { "day": 23, "month": 1, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "title": "Minhocão", "description": "Caminhada", "time": "09:20" },
+        { "title": "Check-out La Residence Paulista", "description": "Deixar malas", "time": "11:20" }
+      ],
+      "afternoon": [
+        { "title": "Quintal deBetty", "description": "Reservado 12:00", "time": "12:00" },
+        { "title": "Cinépolis JK", "description": "Cinema", "time": "13:50" }
+      ],
+      "night": [
+        { "title": "Fornô", "description": "Jantinha dahorinha", "time": "17:20" },
+        { "title": "Omalleys", "description": "Despedida com estilo", "time": "19:10" },
+        { "title": "Ônibus Buser para BH", "description": "Placa BSY5200. Partida 23:00", "time": "23:00" }
+      ]
+    },
+    "20220124": {
+      "title": { "value": "Dia 5 — Retorno a BH", "showDestinations": false, "translate": false },
+      "date": { "day": 24, "month": 1, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "title": "Chegada a BH", "description": "Desembarque Tancredo Neves", "time": "08:20" }
+      ],
+      "morning": [],
+      "afternoon": [],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      { "description": "Uber Desembarque → Hotel", "type": "Transporte Privado", "value": 12.50, "person": "gabriel" },
+      { "description": "BotaniKafé — Café da Manhã", "type": "Alimentação", "value": 50.00, "person": "gabriel" },
+      { "description": "Metrô", "type": "Transporte Público", "value": 4.40, "person": "gabriel" },
+      { "description": "Uber para Panda Ya", "type": "Transporte Privado", "value": 9.00, "person": "gabriel" },
+      { "description": "Panda Ya — Guiozas", "type": "Alimentação", "value": 35.00, "person": "gabriel" },
+      { "description": "Uber para Momo Lamen", "type": "Transporte Privado", "value": 7.00, "person": "gabriel" },
+      { "description": "Momo Lamen", "type": "Alimentação", "value": 35.00, "person": "gabriel" },
+      { "description": "Metrô (ida e volta)", "type": "Transporte Público", "value": 4.40, "person": "gabriel" },
+      { "description": "Metrô para Da Mooca", "type": "Transporte Público", "value": 4.40, "person": "gabriel" },
+      { "description": "Da Mooca Pizza Shop", "type": "Alimentação", "value": 30.00, "person": "gabriel" },
+      { "description": "Metrô para hotel", "type": "Transporte Público", "value": 4.40, "person": "gabriel" },
+      { "description": "Uber para Infini Bar", "type": "Transporte Privado", "value": 10.00, "person": "gabriel" },
+      { "description": "Infini Bar", "type": "Saídas", "value": 150.00, "person": "gabriel" },
+      { "description": "Uber volta Infini Bar", "type": "Transporte Privado", "value": 10.00, "person": "gabriel" },
+      { "description": "Uber para Vila Itororó", "type": "Transporte Privado", "value": 7.50, "person": "gabriel" },
+      { "description": "Metrô para The Burger Map", "type": "Transporte Público", "value": 4.40, "person": "gabriel" },
+      { "description": "The Burger Map", "type": "Alimentação", "value": 100.00, "person": "gabriel" },
+      { "description": "Metrô para Paulista", "type": "Transporte Público", "value": 4.40, "person": "gabriel" },
+      { "description": "Uber para Galeria do Rock", "type": "Transporte Privado", "value": 8.50, "person": "gabriel" },
+      { "description": "Sorveteria do Centro", "type": "Alimentação", "value": 15.00, "person": "gabriel" },
+      { "description": "Metrô para Hotel", "type": "Transporte Privado", "value": 10.00, "person": "gabriel" },
+      { "description": "Uber para Tan Tan", "type": "Transporte Privado", "value": 7.00, "person": "gabriel" },
+      { "description": "Tan Tan", "type": "Saídas", "value": 100.00, "person": "gabriel" },
+      { "description": "Uber para Augusta", "type": "Transporte Privado", "value": 7.00, "person": "gabriel" },
+      { "description": "Augusta — Frank Bar, Gali Bar", "type": "Saídas", "value": 70.00, "person": "gabriel" },
+      { "description": "Uber para Parque do Povo", "type": "Transporte Privado", "value": 8.00, "person": "gabriel" },
+      { "description": "Uber para Instituto Artium", "type": "Transporte Privado", "value": 11.00, "person": "gabriel" },
+      { "description": "Uber para Lazy Park", "type": "Transporte Privado", "value": 12.50, "person": "gabriel" },
+      { "description": "Lazy Park & Food", "type": "Saídas", "value": 50.00, "person": "gabriel" },
+      { "description": "Uber para St. John's", "type": "Transporte Privado", "value": 7.00, "person": "gabriel" },
+      { "description": "St. John's Irish Pub", "type": "Saídas", "value": 50.00, "person": "gabriel" },
+      { "description": "Uber para Mule Mule", "type": "Transporte Privado", "value": 21.00, "person": "gabriel" },
+      { "description": "Mule Mule", "type": "Saídas", "value": 50.00, "person": "gabriel" },
+      { "description": "ZIV Galery", "type": "Saídas", "value": 50.00, "person": "gabriel" },
+      { "description": "Uber para Cauli Bar", "type": "Transporte Privado", "value": 5.00, "person": "gabriel" },
+      { "description": "Cauli Bar", "type": "Saídas", "value": 70.00, "person": "gabriel" },
+      { "description": "Uber volta Cauli Bar", "type": "Transporte Privado", "value": 7.50, "person": "gabriel" },
+      { "description": "Uber para Minhocão", "type": "Transporte Privado", "value": 6.00, "person": "gabriel" },
+      { "description": "Uber para Hotel", "type": "Transporte Privado", "value": 6.00, "person": "gabriel" },
+      { "description": "Uber para Quintal deBetty", "type": "Transporte Privado", "value": 10.00, "person": "gabriel" },
+      { "description": "Quintal deBetty", "type": "Alimentação", "value": 70.00, "person": "gabriel" },
+      { "description": "Uber para Cinépolis JK", "type": "Transporte Privado", "value": 7.00, "person": "gabriel" },
+      { "description": "Cinépolis JK", "type": "Turismo", "value": 30.00, "person": "gabriel" },
+      { "description": "Uber para Fornô", "type": "Transporte Privado", "value": 12.50, "person": "gabriel" },
+      { "description": "Fornô", "type": "Saídas", "value": 100.00, "person": "gabriel" },
+      { "description": "Uber para Omalleys", "type": "Transporte Privado", "value": 10.00, "person": "gabriel" },
+      { "description": "Omalleys", "type": "Saídas", "value": 50.00, "person": "gabriel" },
+      { "description": "Uber para Vila Guilherme", "type": "Transporte Privado", "value": 15.00, "person": "gabriel" },
+      { "description": "Uber Tancredo Neves → Casa", "type": "Transporte Privado", "value": 12.50, "person": "gabriel" }
+    ],
+    "preTrip": [
+      { "description": "Voo Gol CNF ↔ CGH (Ida/Volta)", "type": "Ida/Volta", "value": 152.98, "person": "gabriel" },
+      { "description": "Voo Gol CNF ↔ CGH (Ida/Volta)", "type": "Ida/Volta", "value": 152.98, "person": "gui" },
+      { "description": "Hospedagem La Residence Paulista (3 noites)", "type": "Hospedagem", "value": 334.69, "person": "gabriel" },
+      { "description": "Ônibus Buser SP → BH", "type": "Ida/Volta", "value": 34.95, "person": "gabriel" },
+      { "description": "Ônibus Buser SP → BH", "type": "Ida/Volta", "value": 34.95, "person": "gui" }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": { "name": "Gabriel" },
+      "gui": { "name": "Guilherme" }
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2022-01-24T00:00:00.000Z" }
+  }
+}

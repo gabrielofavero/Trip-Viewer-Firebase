@@ -1,130 +1,132 @@
 import { getID, getNextJ } from '../../utils/dom.js';
 import { addSelectorDS } from '../../ui/dynamic-select.js';
-import { translate } from "../../i18n/translation.js";
-import { getNewSvg } from "../../theme/icons.js";
-import { getDescriptionHTML } from "./categories/description.js";
-import {getOutroValorVisibility, loadCurrencySelects, VALOR_OPTIONS} from "./categories/price.js";
-import { addDestinationsListeners } from "./edit-destination.js";
-import { addListenerToRemoveDestination } from "./edit-destination.js";
+import { translate } from '../../i18n/translation.js';
+import { getNewSvg } from '../../theme/icons.js';
+import { getDescriptionHTML } from './categories/description.js';
+import { getOtherPriceVisibility, loadCurrencySelects, PRICE_OPTIONS } from './categories/price.js';
+import { addDestinationsListeners } from './edit-destination.js';
+import { addListenerToRemoveDestination } from './edit-destination.js';
 
 // Adicionar
-export function addRestaurantes() {
-	if (!VALOR_OPTIONS) {
+export function addRestaurants() {
+	if (!PRICE_OPTIONS) {
 		loadCurrencySelects();
 	}
 
-	const categoria = "restaurantes";
-	const j = getNextJ("restaurantes-box");
+	const category = 'restaurants';
+	const j = getNextJ('restaurants-box');
 
-	$("#restaurantes-box").append(`
-    <div id="restaurantes-${j}" class="accordion-item accordion-restaurantes" >
-      <h2 class="accordion-header" id="heading-restaurantes-${j}">
-        <button id="restaurantes-title-${j}" class="accordion-button collapsed flex-button" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-restaurantes-${j}" aria-expanded="true"
-          aria-controls="collapse-restaurantes-${j}">
-          <span class="title-text" id="restaurantes-title-text-${j}">${translate("destination.restaurants.title_singular")} ${j}</span> 
-          <div class="icon-container">${getNewSvg(`restaurantes-title-icon-${j}`)}</div>
+	$('#restaurants-box').append(`
+    <div id="restaurants-${j}" class="accordion-item accordion-restaurants" >
+      <h2 class="accordion-header" id="heading-restaurants-${j}">
+        <button id="restaurants-title-${j}" class="accordion-button collapsed flex-button" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse-restaurants-${j}" aria-expanded="true"
+          aria-controls="collapse-restaurants-${j}">
+          <div class="flex-button-inner">
+            <span class="title-text" id="restaurants-title-text-${j}">${translate('destination.restaurants.title_singular')} ${j}</span> 
+            <div class="icon-container">${getNewSvg(`restaurants-title-icon-${j}`)}</div>
+          </div>
         </button>
       </h2>
-      <div id="collapse-restaurantes-${j}" class="accordion-collapse collapse"
-        aria-labelledby="heading-restaurantes-${j}" data-bs-parent="#restaurantes-box">
+      <div id="collapse-restaurants-${j}" class="accordion-collapse collapse"
+        data-bs-parent="#restaurants-box">
         <div class="accordion-body">
   
           <div class="nice-form-group">
-            <input type="checkbox" id="restaurantes-novo-${j}" class="switch" />
-            <label for="restaurantes-novo-${j}">${translate("destination.recent")}</label>
+            <input type="checkbox" id="restaurants-isNew-${j}" class="switch" />
+            <label for="restaurants-isNew-${j}">${translate('destination.recent')}</label>
           </div>
 
           <div class="nice-form-group" style="display: none">
-            <label>${translate("labels.id")}</label>
-            <input id="restaurantes-id-${j}" type="text" disabled />
+            <label>${translate('labels.id')}</label>
+            <input id="restaurants-id-${j}" type="text" disabled />
           </div>
 
           <div class="nice-form-group" style="display: none">
-            <label>${translate("labels.created_date")}</label>
-            <input id="restaurantes-criadoEm-${j}" type="text" disabled />
+            <label>${translate('labels.created_date')}</label>
+            <input id="restaurants-createdAt-${j}" type="text" disabled />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.name")}</label>
-            <input required id="restaurantes-nome-${j}" type="text" placeholder="${translate("destination.restaurants.placeholders.name")}" />
+            <label>${translate('labels.name')}</label>
+            <input required id="restaurants-name-${j}" type="text" placeholder="${translate('destination.restaurants.placeholders.name')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.emoji")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="restaurantes-emoji-${j}" type="text" placeholder="${translate("destination.restaurants.placeholders.emoji")}" />
+            <label>${translate('labels.emoji')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="restaurants-emoji-${j}" type="text" placeholder="${translate('destination.restaurants.placeholders.emoji')}" />
           </div>
 
-          ${getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(category, j)}
 
           <div class="nice-form-group customization-box">
-            <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="restaurantes-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="restaurants-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">
-            <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="restaurantes-mapa-${j}" type="url" placeholder="${translate("destination.restaurants.placeholders.map")}" value=""
+            <label>${translate('labels.customization.links.map')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="restaurants-map-${j}" type="url" placeholder="${translate('destination.restaurants.placeholders.map')}" value=""
               class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.map")}</div>
+            <div class='caption'>${translate('destination.tooltips.map')}</div>
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.social.website")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="restaurantes-website-${j}" type="url"
-              placeholder="${translate("destination.restaurants.placeholders.website")}" value="" class="icon-right" />
+            <label>${translate('labels.social.website')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="restaurants-website-${j}" type="url"
+              placeholder="${translate('destination.restaurants.placeholders.website')}" value="" class="icon-right" />
           </div>
 
           <div class="nice-form-group">
-            <label>${translate("labels.social.instagram")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="restaurantes-instagram-${j}" type="url" placeholder="${translate("destination.restaurants.placeholders.instagram")}" value=""
+            <label>${translate('labels.social.instagram')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="restaurants-instagram-${j}" type="url" placeholder="${translate('destination.restaurants.placeholders.instagram')}" value=""
               class="icon-right" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="restaurantes-regiao-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="restaurantes-regiao-${j}" type="text" placeholder="${translate("destination.restaurants.placeholders.region")}" />
+            <label>${translate('labels.region')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="restaurants-region-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="restaurants-region-${j}" type="text" placeholder="${translate('destination.restaurants.placeholders.region')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.cost")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="restaurantes-valor-${j}">
-            ${VALOR_OPTIONS}
+            <label>${translate('labels.cost')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="restaurants-price-${j}">
+            ${PRICE_OPTIONS}
           </select>
-            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="restaurantes-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOtherPriceVisibility()}" class="nice-form-group" id="restaurants-other-price-${j}" type="text" placeholder="${translate('destination.price.placeholder')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.video")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="restaurantes-midia-${j}" type="url"
-              placeholder="${translate("destination.restaurants.placeholders.video")}" value="" class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.video")}</div>
+            <label>${translate('labels.video')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="restaurants-media-${j}" type="url"
+              placeholder="${translate('destination.restaurants.placeholders.video')}" value="" class="icon-right" />
+            <div class='caption'>${translate('destination.tooltips.video')}</div>
           </div>
   
           <div class="nice-form-group">
-          <label>${translate("labels.priority")} <span class="opcional">(${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="restaurantes-nota-${j}">
-              <option value="?">${translate("destination.scores.default")}</option>
-              <option value="5">5 - ${translate("destination.scores.5")}</option>
-              <option value="4">4 - ${translate("destination.scores.4")}</option>
-              <option value="3">3 - ${translate("destination.scores.3")}</option>
-              <option value="2">2 - ${translate("destination.scores.2")}</option>
-              <option value="1">1 - ${translate("destination.scores.1")}</option>
+          <label>${translate('labels.priority')} <span class="opcional">(${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="restaurants-rating-${j}">
+              <option value="?">${translate('destination.scores.default')}</option>
+              <option value="5">5 - ${translate('destination.scores.5')}</option>
+              <option value="4">4 - ${translate('destination.scores.4')}</option>
+              <option value="3">3 - ${translate('destination.scores.3')}</option>
+              <option value="2">2 - ${translate('destination.scores.2')}</option>
+              <option value="1">1 - ${translate('destination.scores.1')}</option>
             </select>
           </div>
   
         </div>
   
         <div class="button-box-right-formatted">
-          <button data-action="move-destination" data-index="${j}" data-category="${categoria}" class="btn btn-basic-secondary btn-format">
+          <button data-action="move-destination" data-index="${j}" data-category="${category}" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
                   </g>
               </svg>
           </button>
-          <button id="remove-restaurantes-${j}" class="btn btn-basic btn-format">
+          <button id="remove-restaurants-${j}" class="btn btn-basic btn-format">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" fill-rule="evenodd"
                 d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -137,133 +139,131 @@ export function addRestaurantes() {
     </div>
     `);
 
-	addCreatedDate(categoria, j);
-	addDestinationsListeners(categoria, j);
-	addListenerToRemoveDestination(categoria, j);
-	addSelectorDS(
-		"regiao",
-		`restaurantes-regiao-select-${j}`,
-		`restaurantes-regiao-${j}`,
-	);
+	addCreatedDate(category, j);
+	addDestinationsListeners(category, j);
+	addListenerToRemoveDestination(category, j);
+	addSelectorDS('region', `restaurants-region-select-${j}`, `restaurants-region-${j}`);
 }
 
-export function addLanches() {
-	if (!VALOR_OPTIONS) {
+export function addSnacks() {
+	if (!PRICE_OPTIONS) {
 		loadCurrencySelects();
 	}
 
-	const categoria = "lanches";
-	const j = getNextJ("lanches-box");
+	const category = 'snacks';
+	const j = getNextJ('snacks-box');
 
-	$("#lanches-box").append(`
-    <div id="lanches-${j}" class="accordion-item accordion-lanches" >
-      <h2 class="accordion-header" id="heading-lanches-${j}">
-        <button id="lanches-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-lanches-${j}" aria-expanded="true" aria-controls="collapse-lanches-${j}">
-          <span class="title-text" id="lanches-title-text-${j}">${translate("destination.snacks.title_singular")} ${j}</span> 
-          <div class="icon-container">${getNewSvg(`lanches-title-icon-${j}`)}</div>
+	$('#snacks-box').append(`
+    <div id="snacks-${j}" class="accordion-item accordion-snacks" >
+      <h2 class="accordion-header" id="heading-snacks-${j}">
+        <button id="snacks-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse-snacks-${j}" aria-expanded="true" aria-controls="collapse-snacks-${j}">
+          <div class="flex-button-inner">
+            <span class="title-text" id="snacks-title-text-${j}">${translate('destination.snacks.title_singular')} ${j}</span> 
+            <div class="icon-container">${getNewSvg(`snacks-title-icon-${j}`)}</div>
+          </div>
         </button>
       </h2>
-      <div id="collapse-lanches-${j}" class="accordion-collapse collapse" aria-labelledby="heading-lanches-${j}"
-        data-bs-parent="#lanches-box">
+      <div id="collapse-snacks-${j}" class="accordion-collapse collapse" aria-labelledby="heading-snacks-${j}"
+        data-bs-parent="#snacks-box">
         <div class="accordion-body">
   
           <div class="nice-form-group">
-            <input type="checkbox" id="lanches-novo-${j}" class="switch" />
-            <label for="lanches-novo-${j}">${translate("destination.recent")}</label>
+            <input type="checkbox" id="snacks-isNew-${j}" class="switch" />
+            <label for="snacks-isNew-${j}">${translate('destination.recent')}</label>
           </div>
 
           <div class="nice-form-group" style="display: none">
-            <label>${translate("labels.id")}</label>
-            <input id="lanches-id-${j}" type="text" disabled />
+            <label>${translate('labels.id')}</label>
+            <input id="snacks-id-${j}" type="text" disabled />
           </div>
 
           <div class="nice-form-group" style="display: none">
-            <label>${translate("labels.created_date")}</label>
-            <input id="lanches-criadoEm-${j}" type="text" disabled />
+            <label>${translate('labels.created_date')}</label>
+            <input id="snacks-createdAt-${j}" type="text" disabled />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.name")}</label>
-            <input required id="lanches-nome-${j}" type="text" placeholder="${translate("destination.snacks.placeholders.name")}" />
+            <label>${translate('labels.name')}</label>
+            <input required id="snacks-name-${j}" type="text" placeholder="${translate('destination.snacks.placeholders.name')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.emoji")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="lanches-emoji-${j}" type="text" placeholder="${translate("destination.snacks.placeholders.emoji")}" />
+            <label>${translate('labels.emoji')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="snacks-emoji-${j}" type="text" placeholder="${translate('destination.snacks.placeholders.emoji')}" />
           </div>
 
-          ${getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(category, j)}
   
           <div class="nice-form-group customization-box">
-            <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="lanches-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="snacks-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">
-            <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="lanches-mapa-${j}" type="url" placeholder="${translate("destination.snacks.placeholders.map")}" value=""
+            <label>${translate('labels.customization.links.map')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="snacks-map-${j}" type="url" placeholder="${translate('destination.snacks.placeholders.map')}" value=""
               class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.map")}</div>
+            <div class='caption'>${translate('destination.tooltips.map')}</div>
           </div>
 
           <div class="nice-form-group">
-            <label>${translate("labels.social.website")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="lanches-website-${j}" type="url" placeholder="${translate("destination.snacks.placeholders.website")}" value=""
+            <label>${translate('labels.social.website')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="snacks-website-${j}" type="url" placeholder="${translate('destination.snacks.placeholders.website')}" value=""
               class="icon-right" />
           </div>
 
           <div class="nice-form-group">
-            <label>${translate("labels.social.instagram")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="lanches-instagram-${j}" type="url" placeholder="${translate("destination.snacks.placeholders.instagram")}" value=""
+            <label>${translate('labels.social.instagram')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="snacks-instagram-${j}" type="url" placeholder="${translate('destination.snacks.placeholders.instagram')}" value=""
               class="icon-right" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="lanches-regiao-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="lanches-regiao-${j}" type="text" placeholder="${translate("destination.snacks.placeholders.region")}" />
+            <label>${translate('labels.region')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="snacks-region-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="snacks-region-${j}" type="text" placeholder="${translate('destination.snacks.placeholders.region')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.cost")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="lanches-valor-${j}">
-              ${VALOR_OPTIONS}
+            <label>${translate('labels.cost')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="snacks-price-${j}">
+              ${PRICE_OPTIONS}
             </select>
-            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="lanches-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOtherPriceVisibility()}" class="nice-form-group" id="snacks-other-price-${j}" type="text" placeholder="${translate('destination.price.placeholder')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.video")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="lanches-midia-${j}" type="url"
-              placeholder="${translate("destination.snacks.placeholders.video")}"
+            <label>${translate('labels.video')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="snacks-media-${j}" type="url"
+              placeholder="${translate('destination.snacks.placeholders.video')}"
               value="" class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.video")}</div>
+            <div class='caption'>${translate('destination.tooltips.video')}</div>
           </div>
   
           <div class="nice-form-group">
-          <label>${translate("labels.priority")} <span class="opcional">(${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="lanches-nota-${j}">
-              <option value="?">${translate("destination.scores.default")}</option>
-              <option value="5">5 - ${translate("destination.scores.5")}</option>
-              <option value="4">4 - ${translate("destination.scores.4")}</option>
-              <option value="3">3 - ${translate("destination.scores.3")}</option>
-              <option value="2">2 - ${translate("destination.scores.2")}</option>
-              <option value="1">1 - ${translate("destination.scores.1")}</option>
+          <label>${translate('labels.priority')} <span class="opcional">(${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="snacks-rating-${j}">
+              <option value="?">${translate('destination.scores.default')}</option>
+              <option value="5">5 - ${translate('destination.scores.5')}</option>
+              <option value="4">4 - ${translate('destination.scores.4')}</option>
+              <option value="3">3 - ${translate('destination.scores.3')}</option>
+              <option value="2">2 - ${translate('destination.scores.2')}</option>
+              <option value="1">1 - ${translate('destination.scores.1')}</option>
             </select>
           </div>
   
         </div>
   
         <div class="button-box-right-formatted">
-          <button data-action="move-destination" data-index="${j}" data-category="${categoria}" class="btn btn-basic-secondary btn-format">
+          <button data-action="move-destination" data-index="${j}" data-category="${category}" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
                   </g>
               </svg>
           </button>
-          <button id="remove-lanches-${j}" class="btn btn-basic btn-format">
+          <button id="remove-snacks-${j}" class="btn btn-basic btn-format">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -276,128 +276,130 @@ export function addLanches() {
     </div>
     `);
 
-	addCreatedDate(categoria, j);
-	addDestinationsListeners(categoria, j);
-	addListenerToRemoveDestination(categoria, j);
-	addSelectorDS("regiao", `lanches-regiao-select-${j}`, `lanches-regiao-${j}`);
+	addCreatedDate(category, j);
+	addDestinationsListeners(category, j);
+	addListenerToRemoveDestination(category, j);
+	addSelectorDS('region', `snacks-region-select-${j}`, `snacks-region-${j}`);
 }
 
-export function addSaidas() {
-	if (!VALOR_OPTIONS) {
+export function addNightlife() {
+	if (!PRICE_OPTIONS) {
 		loadCurrencySelects();
 	}
 
-	const categoria = "saidas";
-	const j = getNextJ("saidas-box");
+	const category = 'nightlife';
+	const j = getNextJ('nightlife-box');
 
-	$("#saidas-box").append(`
-    <div id="saidas-${j}" class="accordion-item accordion-saidas" >
-      <h2 class="accordion-header" id="heading-saidas-${j}">
-        <button id="saidas-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-saidas-${j}" aria-expanded="true" aria-controls="collapse-saidas-${j}">
-          <span class="title-text" id="saidas-title-text-${j}">${translate("destination.nightlife.title_singular")} ${j}</span> 
-          <div class="icon-container">${getNewSvg(`saidas-title-icon-${j}`)}</i></div>
+	$('#nightlife-box').append(`
+    <div id="nightlife-${j}" class="accordion-item accordion-nightlife" >
+      <h2 class="accordion-header" id="heading-nightlife-${j}">
+        <button id="nightlife-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse-nightlife-${j}" aria-expanded="true" aria-controls="collapse-nightlife-${j}">
+          <div class="flex-button-inner">
+            <span class="title-text" id="nightlife-title-text-${j}">${translate('destination.nightlife.title_singular')} ${j}</span> 
+            <div class="icon-container">${getNewSvg(`nightlife-title-icon-${j}`)}</i></div>
+          </div>
         </button>
       </h2>
-      <div id="collapse-saidas-${j}" class="accordion-collapse collapse" aria-labelledby="heading-saidas-${j}"
-        data-bs-parent="#saidas-box">
+      <div id="collapse-nightlife-${j}" class="accordion-collapse collapse" aria-labelledby="heading-nightlife-${j}"
+        data-bs-parent="#nightlife-box">
         <div class="accordion-body">
   
           <div class="nice-form-group">
-            <input type="checkbox" id="saidas-novo-${j}" class="switch" />
-            <label for="saidas-novo-${j}">${translate("destination.recent")}</label>
+            <input type="checkbox" id="nightlife-isNew-${j}" class="switch" />
+            <label for="nightlife-isNew-${j}">${translate('destination.recent')}</label>
           </div>
 
           <div class="nice-form-group" style="display: none">
-            <label>${translate("labels.id")}</label>
-            <input id="saidas-id-${j}" type="text" disabled />
+            <label>${translate('labels.id')}</label>
+            <input id="nightlife-id-${j}" type="text" disabled />
           </div>
 
           <div class="nice-form-group" style="display: none">
-            <label>${translate("labels.created_date")}</label>
-            <input id="saidas-criadoEm-${j}" type="text" disabled />
+            <label>${translate('labels.created_date')}</label>
+            <input id="nightlife-createdAt-${j}" type="text" disabled />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.name")}</label>
-            <input required id="saidas-nome-${j}" type="text" placeholder="${translate("destination.nightlife.placeholders.name")}" />
+            <label>${translate('labels.name')}</label>
+            <input required id="nightlife-name-${j}" type="text" placeholder="${translate('destination.nightlife.placeholders.name')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.emoji")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="saidas-emoji-${j}" type="text" placeholder="${translate("destination.nightlife.placeholders.emoji")}" />
+            <label>${translate('labels.emoji')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="nightlife-emoji-${j}" type="text" placeholder="${translate('destination.nightlife.placeholders.emoji')}" />
           </div>
 
-          ${getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(category, j)}
   
           <div class="nice-form-group customization-box">
-            <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="saidas-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="nightlife-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">
-            <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="saidas-mapa-${j}" type="url" placeholder="${translate("destination.nightlife.placeholders.map")}" value=""
+            <label>${translate('labels.customization.links.map')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="nightlife-map-${j}" type="url" placeholder="${translate('destination.nightlife.placeholders.map')}" value=""
               class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.map")}</div>
+            <div class='caption'>${translate('destination.tooltips.map')}</div>
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.social.website")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="saidas-website-${j}" type="url" placeholder="${translate("destination.nightlife.placeholders.website")}" value=""
+            <label>${translate('labels.social.website')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="nightlife-website-${j}" type="url" placeholder="${translate('destination.nightlife.placeholders.website')}" value=""
               class="icon-right" />
           </div>
 
           <div class="nice-form-group">
-            <label>${translate("labels.social.instagram")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="saidas-instagram-${j}" type="url" placeholder="${translate("destination.nightlife.placeholders.instagram")}" value=""
+            <label>${translate('labels.social.instagram')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="nightlife-instagram-${j}" type="url" placeholder="${translate('destination.nightlife.placeholders.instagram')}" value=""
               class="icon-right" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="saidas-regiao-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="saidas-regiao-${j}" type="text" placeholder="${translate("destination.nightlife.placeholders.region")}" />
+            <label>${translate('labels.region')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="nightlife-region-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="nightlife-region-${j}" type="text" placeholder="${translate('destination.nightlife.placeholders.region')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.cost")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="saidas-valor-${j}">
-            ${VALOR_OPTIONS}
+            <label>${translate('labels.cost')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="nightlife-price-${j}">
+            ${PRICE_OPTIONS}
           </select>
-            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="saidas-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOtherPriceVisibility()}" class="nice-form-group" id="nightlife-other-price-${j}" type="text" placeholder="${translate('destination.price.placeholder')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.video")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="saidas-midia-${j}" type="url" placeholder="${translate("destination.nightlife.placeholders.video")}"
+            <label>${translate('labels.video')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="nightlife-media-${j}" type="url" placeholder="${translate('destination.nightlife.placeholders.video')}"
               value="" class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.video")}</div>
+            <div class='caption'>${translate('destination.tooltips.video')}</div>
           </div>
   
           <div class="nice-form-group">
-          <label>${translate("labels.priority")} <span class="opcional">(${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="saidas-nota-${j}">
-              <option value="?">${translate("destination.scores.default")}</option>
-              <option value="5">5 - ${translate("destination.scores.5")}</option>
-              <option value="4">4 - ${translate("destination.scores.4")}</option>
-              <option value="3">3 - ${translate("destination.scores.3")}</option>
-              <option value="2">2 - ${translate("destination.scores.2")}</option>
-              <option value="1">1 - ${translate("destination.scores.1")}</option>
+          <label>${translate('labels.priority')} <span class="opcional">(${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="nightlife-rating-${j}">
+              <option value="?">${translate('destination.scores.default')}</option>
+              <option value="5">5 - ${translate('destination.scores.5')}</option>
+              <option value="4">4 - ${translate('destination.scores.4')}</option>
+              <option value="3">3 - ${translate('destination.scores.3')}</option>
+              <option value="2">2 - ${translate('destination.scores.2')}</option>
+              <option value="1">1 - ${translate('destination.scores.1')}</option>
             </select>
           </div>
   
         </div>
   
         <div class="button-box-right-formatted">
-          <button data-action="move-destination" data-index="${j}" data-category="${categoria}" class="btn btn-basic-secondary btn-format">
+          <button data-action="move-destination" data-index="${j}" data-category="${category}" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
                   </g>
               </svg>
           </button>
-          <button id="remove-saidas-${j}" class="btn btn-basic btn-format">
+          <button id="remove-nightlife-${j}" class="btn btn-basic btn-format">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -410,128 +412,130 @@ export function addSaidas() {
     </div>
     `);
 
-	addCreatedDate(categoria, j);
-	addDestinationsListeners(categoria, j);
-	addListenerToRemoveDestination(categoria, j);
-	addSelectorDS("regiao", `saidas-regiao-select-${j}`, `saidas-regiao-${j}`);
+	addCreatedDate(category, j);
+	addDestinationsListeners(category, j);
+	addListenerToRemoveDestination(category, j);
+	addSelectorDS('region', `nightlife-region-select-${j}`, `nightlife-region-${j}`);
 }
 
-export function addTurismo() {
-	if (!VALOR_OPTIONS) {
+export function addTourism() {
+	if (!PRICE_OPTIONS) {
 		loadCurrencySelects();
 	}
 
-	const categoria = "turismo";
-	const j = getNextJ("turismo-box");
+	const category = 'tourism';
+	const j = getNextJ('tourism-box');
 
-	$("#turismo-box").append(`
-    <div id="turismo-${j}" class="accordion-item accordion-turismo" >
-      <h2 class="accordion-header" id="heading-turismo-${j}">
-        <button id="turismo-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-turismo-${j}" aria-expanded="true" aria-controls="collapse-turismo-${j}">
-          <span class="title-text" id="turismo-title-text-${j}">${translate("destination.tourism.title_singular")} ${j}</span> 
-          <div class="icon-container">${getNewSvg(`turismo-title-icon-${j}`)}</div>
+	$('#tourism-box').append(`
+    <div id="tourism-${j}" class="accordion-item accordion-tourism" >
+      <h2 class="accordion-header" id="heading-tourism-${j}">
+        <button id="tourism-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse-tourism-${j}" aria-expanded="true" aria-controls="collapse-tourism-${j}">
+          <div class="flex-button-inner">
+            <span class="title-text" id="tourism-title-text-${j}">${translate('destination.tourism.title_singular')} ${j}</span> 
+            <div class="icon-container">${getNewSvg(`tourism-title-icon-${j}`)}</div>
+          </div>
         </button>
       </h2>
-      <div id="collapse-turismo-${j}" class="accordion-collapse collapse" aria-labelledby="heading-turismo-${j}"
-        data-bs-parent="#turismo-box">
+      <div id="collapse-tourism-${j}" class="accordion-collapse collapse" aria-labelledby="heading-tourism-${j}"
+        data-bs-parent="#tourism-box">
         <div class="accordion-body">
   
           <div class="nice-form-group">
-            <input type="checkbox" id="turismo-novo-${j}" class="switch" />
-            <label for="turismo-novo-${j}">${translate("destination.recent")}</label>
+            <input type="checkbox" id="tourism-isNew-${j}" class="switch" />
+            <label for="tourism-isNew-${j}">${translate('destination.recent')}</label>
           </div>
 
           <div class="nice-form-group" style="display: none">
-            <label>${translate("labels.id")}</label>
-            <input id="turismo-id-${j}" type="text" disabled />
+            <label>${translate('labels.id')}</label>
+            <input id="tourism-id-${j}" type="text" disabled />
           </div>
 
           <div class="nice-form-group" style="display: none">
-            <label>${translate("labels.created_date")}</label>
-            <input id="turismo-criadoEm-${j}" type="text" disabled />
+            <label>${translate('labels.created_date')}</label>
+            <input id="tourism-createdAt-${j}" type="text" disabled />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.name")}</label>
-            <input required id="turismo-nome-${j}" type="text" placeholder="${translate("destination.tourism.placeholders.name")}" />
+            <label>${translate('labels.name')}</label>
+            <input required id="tourism-name-${j}" type="text" placeholder="${translate('destination.tourism.placeholders.name')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.emoji")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="turismo-emoji-${j}" type="text" placeholder="${translate("destination.tourism.placeholders.emoji")}" />
+            <label>${translate('labels.emoji')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="tourism-emoji-${j}" type="text" placeholder="${translate('destination.tourism.placeholders.emoji')}" />
           </div>
 
-          ${getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(category, j)}
   
           <div class="nice-form-group customization-box">
-            <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="turismo-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="tourism-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">
-            <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="turismo-mapa-${j}" type="url" placeholder="${translate("destination.tourism.placeholders.map")}" value=""
+            <label>${translate('labels.customization.links.map')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="tourism-map-${j}" type="url" placeholder="${translate('destination.tourism.placeholders.map')}" value=""
               class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.map")}</div>
+            <div class='caption'>${translate('destination.tooltips.map')}</div>
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.social.website")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="turismo-website-${j}" type="url" placeholder="${translate("destination.tourism.placeholders.website")}"
+            <label>${translate('labels.social.website')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="tourism-website-${j}" type="url" placeholder="${translate('destination.tourism.placeholders.website')}"
               value="" class="icon-right" />
           </div>
 
           <div class="nice-form-group">
-            <label>${translate("labels.social.instagram")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="turismo-instagram-${j}" type="url" placeholder="${translate("destination.tourism.placeholders.instagram")}" value=""
+            <label>${translate('labels.social.instagram')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="tourism-instagram-${j}" type="url" placeholder="${translate('destination.tourism.placeholders.instagram')}" value=""
               class="icon-right" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="turismo-regiao-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="turismo-regiao-${j}" type="text" placeholder="${translate("destination.tourism.placeholders.region")}" />
+            <label>${translate('labels.region')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="tourism-region-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="tourism-region-${j}" type="text" placeholder="${translate('destination.tourism.placeholders.region')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.cost")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="turismo-valor-${j}">
-              ${VALOR_OPTIONS}
+            <label>${translate('labels.cost')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="tourism-price-${j}">
+              ${PRICE_OPTIONS}
             </select>
-            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="turismo-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOtherPriceVisibility()}" class="nice-form-group" id="tourism-other-price-${j}" type="text" placeholder="${translate('destination.price.placeholder')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.video")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="turismo-midia-${j}" type="url"
-              placeholder="${translate("destination.tourism.placeholders.video")}"
+            <label>${translate('labels.video')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="tourism-media-${j}" type="url"
+              placeholder="${translate('destination.tourism.placeholders.video')}"
               value="" class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.video")}</div>
+            <div class='caption'>${translate('destination.tooltips.video')}</div>
           </div>
   
           <div class="nice-form-group">
-          <label>${translate("labels.priority")} <span class="opcional">(${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="turismo-nota-${j}">
-              <option value="?">${translate("destination.scores.default")}</option>
-              <option value="5">5 - ${translate("destination.scores.5")}</option>
-              <option value="4">4 - ${translate("destination.scores.4")}</option>
-              <option value="3">3 - ${translate("destination.scores.3")}</option>
-              <option value="2">2 - ${translate("destination.scores.2")}</option>
-              <option value="1">1 - ${translate("destination.scores.1")}</option>
+          <label>${translate('labels.priority')} <span class="opcional">(${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="tourism-rating-${j}">
+              <option value="?">${translate('destination.scores.default')}</option>
+              <option value="5">5 - ${translate('destination.scores.5')}</option>
+              <option value="4">4 - ${translate('destination.scores.4')}</option>
+              <option value="3">3 - ${translate('destination.scores.3')}</option>
+              <option value="2">2 - ${translate('destination.scores.2')}</option>
+              <option value="1">1 - ${translate('destination.scores.1')}</option>
             </select>
           </div>
         </div>
   
         <div class="button-box-right-formatted">
-          <button data-action="move-destination" data-index="${j}" data-category="${categoria}" class="btn btn-basic-secondary btn-format">
+          <button data-action="move-destination" data-index="${j}" data-category="${category}" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
                   </g>
               </svg>
           </button>
-          <button id="remove-turismo-${j}" class="btn btn-basic btn-format">
+          <button id="remove-tourism-${j}" class="btn btn-basic btn-format">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -544,130 +548,132 @@ export function addTurismo() {
     </div>
     `);
 
-	addCreatedDate(categoria, j);
-	addDestinationsListeners(categoria, j);
-	addListenerToRemoveDestination(categoria, j);
-	addSelectorDS("regiao", `turismo-regiao-select-${j}`, `turismo-regiao-${j}`);
+	addCreatedDate(category, j);
+	addDestinationsListeners(category, j);
+	addListenerToRemoveDestination(category, j);
+	addSelectorDS('region', `tourism-region-select-${j}`, `tourism-region-${j}`);
 }
 
-export function addLojas() {
-	if (!VALOR_OPTIONS) {
+export function addShopping() {
+	if (!PRICE_OPTIONS) {
 		loadCurrencySelects();
 	}
 
-	const categoria = "lojas";
-	const j = getNextJ("lojas-box");
+	const category = 'shopping';
+	const j = getNextJ('shopping-box');
 
-	$("#lojas-box").append(`
-    <div id="lojas-${j}" class="accordion-item accordion-lojas" >
-      <h2 class="accordion-header" id="heading-lojas-${j}">
-        <button id="lojas-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-lojas-${j}" aria-expanded="true" aria-controls="collapse-lojas-${j}">
-          <span class="title-text" id="lojas-title-text-${j}">${translate("destination.shopping.title_singular")} ${j}</span> 
-          <div class="icon-container">${getNewSvg(`lojas-title-icon-${j}`)}</div>
+	$('#shopping-box').append(`
+    <div id="shopping-${j}" class="accordion-item accordion-shopping" >
+      <h2 class="accordion-header" id="heading-shopping-${j}">
+        <button id="shopping-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse-shopping-${j}" aria-expanded="true" aria-controls="collapse-shopping-${j}">
+          <div class="flex-button-inner">
+            <span class="title-text" id="shopping-title-text-${j}">${translate('destination.shopping.title_singular')} ${j}</span> 
+            <div class="icon-container">${getNewSvg(`shopping-title-icon-${j}`)}</div>
+          </div>
         </button>
       </h2>
 
-      <div id="collapse-lojas-${j}" class="accordion-collapse collapse" aria-labelledby="heading-lojas-${j}"
-        data-bs-parent="#lojas-box">
+      <div id="collapse-shopping-${j}" class="accordion-collapse collapse" aria-labelledby="heading-shopping-${j}"
+        data-bs-parent="#shopping-box">
         <div class="accordion-body">
   
           <div class="nice-form-group">
-            <input type="checkbox" id="lojas-novo-${j}" class="switch" />
-            <label for="lojas-novo-${j}">${translate("destination.recent")}</label>
+            <input type="checkbox" id="shopping-isNew-${j}" class="switch" />
+            <label for="shopping-isNew-${j}">${translate('destination.recent')}</label>
           </div>
 
           <div class="nice-form-group" style="display: none">
-            <label>${translate("labels.created_date")}</label>
-            <input id="lojas-criadoEm-${j}" type="text" disabled />
+            <label>${translate('labels.created_date')}</label>
+            <input id="shopping-createdAt-${j}" type="text" disabled />
           </div>
 
           <div class="nice-form-group" style="display: none">
-            <label>${translate("labels.id")}</label>
-            <input id="lojas-id-${j}" type="text" disabled />
+            <label>${translate('labels.id')}</label>
+            <input id="shopping-id-${j}" type="text" disabled />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.name")}</label>
-            <input required id="lojas-nome-${j}" type="text" placeholder="${translate("destination.shopping.placeholders.name")}" />
+            <label>${translate('labels.name')}</label>
+            <input required id="shopping-name-${j}" type="text" placeholder="${translate('destination.shopping.placeholders.name')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.emoji")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="lojas-emoji-${j}" type="text" placeholder="${translate("destination.shopping.placeholders.emoji")}" />
+            <label>${translate('labels.emoji')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="shopping-emoji-${j}" type="text" placeholder="${translate('destination.shopping.placeholders.emoji')}" />
           </div>
 
-          ${getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(category, j)}
   
           <div class="nice-form-group customization-box">
-            <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="lojas-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="shopping-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">
-            <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="lojas-mapa-${j}" type="url" placeholder="${translate("destination.shopping.placeholders.map")}" value=""
+            <label>${translate('labels.customization.links.map')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="shopping-map-${j}" type="url" placeholder="${translate('destination.shopping.placeholders.map')}" value=""
               class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.map")}</div>
+            <div class='caption'>${translate('destination.tooltips.map')}</div>
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.social.website")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="lojas-website-${j}" type="url"
-              placeholder="${translate("destination.shopping.placeholders.website")}" value=""
+            <label>${translate('labels.social.website')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="shopping-website-${j}" type="url"
+              placeholder="${translate('destination.shopping.placeholders.website')}" value=""
               class="icon-right" />
           </div>
 
           <div class="nice-form-group">
-            <label>${translate("labels.social.instagram")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="lojas-instagram-${j}" type="url" placeholder="${translate("destination.shopping.placeholders.instagram")}" value=""
+            <label>${translate('labels.social.instagram')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="shopping-instagram-${j}" type="url" placeholder="${translate('destination.shopping.placeholders.instagram')}" value=""
               class="icon-right" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="lojas-regiao-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="lojas-regiao-${j}" type="text" placeholder="${translate("destination.shopping.placeholders.region")}" />
+            <label>${translate('labels.region')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="shopping-region-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="shopping-region-${j}" type="text" placeholder="${translate('destination.shopping.placeholders.region')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.cost")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="lojas-valor-${j}">
-              ${VALOR_OPTIONS}
+            <label>${translate('labels.cost')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="shopping-price-${j}">
+              ${PRICE_OPTIONS}
             </select>
-            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="lojas-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOtherPriceVisibility()}" class="nice-form-group" id="shopping-other-price-${j}" type="text" placeholder="${translate('destination.price.placeholder')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>${translate("labels.video")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="lojas-midia-${j}" type="url" placeholder="${translate("destination.shopping.placeholders.video")}"
+            <label>${translate('labels.video')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="shopping-media-${j}" type="url" placeholder="${translate('destination.shopping.placeholders.video')}"
               value="" class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.video")}</div>
+            <div class='caption'>${translate('destination.tooltips.video')}</div>
           </div>
   
           <div class="nice-form-group">
-          <label>${translate("labels.priority")} <span class="opcional">(${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="lojas-nota-${j}">
-              <option value="?">${translate("destination.scores.default")}</option>
-              <option value="5">5 - ${translate("destination.scores.5")}</option>
-              <option value="4">4 - ${translate("destination.scores.4")}</option>
-              <option value="3">3 - ${translate("destination.scores.3")}</option>
-              <option value="2">2 - ${translate("destination.scores.2")}</option>
-              <option value="1">1 - ${translate("destination.scores.1")}</option>
+          <label>${translate('labels.priority')} <span class="opcional">(${translate('labels.optional')})</span></label>
+            <select class="edit-select" id="shopping-rating-${j}">
+              <option value="?">${translate('destination.scores.default')}</option>
+              <option value="5">5 - ${translate('destination.scores.5')}</option>
+              <option value="4">4 - ${translate('destination.scores.4')}</option>
+              <option value="3">3 - ${translate('destination.scores.3')}</option>
+              <option value="2">2 - ${translate('destination.scores.2')}</option>
+              <option value="1">1 - ${translate('destination.scores.1')}</option>
             </select>
           </div>
   
         </div>
   
         <div class="button-box-right-formatted">
-          <button data-action="move-destination" data-index="${j}" data-category="${categoria}" class="btn btn-basic-secondary btn-format">
+          <button data-action="move-destination" data-index="${j}" data-category="${category}" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
                   </g>
               </svg>
           </button>
-          <button id="remove-lojas-${j}" class="btn btn-basic btn-format">
+          <button id="remove-shopping-${j}" class="btn btn-basic btn-format">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -680,12 +686,12 @@ export function addLojas() {
     </div>
     `);
 
-	addCreatedDate(categoria, j);
-	addDestinationsListeners(categoria, j);
-	addListenerToRemoveDestination(categoria, j);
-	addSelectorDS("regiao", `lojas-regiao-select-${j}`, `lojas-regiao-${j}`);
+	addCreatedDate(category, j);
+	addDestinationsListeners(category, j);
+	addListenerToRemoveDestination(category, j);
+	addSelectorDS('region', `shopping-region-select-${j}`, `shopping-region-${j}`);
 }
 
-function addCreatedDate(categoria, j) {
-	getID(`${categoria}-criadoEm-${j}`).value = new Date().toISOString();
+function addCreatedDate(category, j) {
+	getID(`${category}-createdAt-${j}`).value = new Date().toISOString();
 }

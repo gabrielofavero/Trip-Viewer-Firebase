@@ -1,13 +1,11 @@
-import { onAccordionOpen, onAccordionClose, areThereOpenedAccordions } from "./accordion.js";
+import { onAccordionOpen, onAccordionClose, areThereOpenedAccordions } from './accordion.js';
 
 let SORTABLE_SKIP_NEXT_ACTION = false;
 
 export function initializeSortableForGroup(groupName, properties?) {
 	function initializeSortable(groupName) {
-		const containers = document.querySelectorAll(
-			`.draggable-area[data-group="${groupName}"]`,
-		);
-		const handleSelector = properties?.handleSelector || ".drag-icon";
+		const containers = document.querySelectorAll(`.draggable-area[data-group="${groupName}"]`);
+		const handleSelector = properties?.handleSelector || '.drag-icon';
 		const onStartFunc = properties?.onStart;
 		const onEndFunc = properties?.onEnd;
 
@@ -38,9 +36,9 @@ export function initializeSortableForGroup(groupName, properties?) {
 	const observer = new MutationObserver((mutations) => {
 		mutations.forEach((mutation) => {
 			mutation.addedNodes.forEach((node) => {
-			const el = node as HTMLElement;
-			if (node.nodeType === 1 && el.classList.contains("draggable-area")) {
-				if (el.dataset.group === groupName) {
+				const el = node as HTMLElement;
+				if (node.nodeType === 1 && el.classList.contains('draggable-area')) {
+					if (el.dataset.group === groupName) {
 						initializeSortable(groupName);
 					}
 				}
@@ -65,7 +63,7 @@ export function loadDraggablesWithAccordions(items = []) {
 	onAccordionClose([showDragIcon]);
 
 	function changeDragIconVisibility(collapseElement, headerButton, toShow) {
-		const type = headerButton.id.split("-")[0];
+		const type = headerButton.id.split('-')[0];
 
 		if (!items.includes(type)) {
 			return;
@@ -81,17 +79,15 @@ export function loadDraggablesWithAccordions(items = []) {
 			return;
 		}
 
-		const parent = document.querySelector(
-			collapseElement.getAttribute("data-bs-parent"),
-		);
+		const parent = document.querySelector(collapseElement.getAttribute('data-bs-parent'));
 		if (!parent || parent.children.length == 0) {
 			return;
 		}
 
 		for (const child of parent.children) {
-			const dragIcon = child.querySelector(".drag-icon");
+			const dragIcon = child.querySelector('.drag-icon');
 			if (dragIcon) {
-				dragIcon.style.display = toShow ? "block" : "none";
+				dragIcon.classList.toggle('drag-icon-hidden', !toShow);
 			}
 		}
 	}

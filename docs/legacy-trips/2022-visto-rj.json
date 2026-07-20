@@ -1,0 +1,134 @@
+{
+  "trip": {
+    "title": "Visto EUA - RJ 2022",
+    "currency": "BRL",
+    "start": { "day": 29, "month": 8, "year": 2022, "hour": 4, "minute": 30, "second": 0 },
+    "end": { "day": 29, "month": 8, "year": 2022, "hour": 23, "minute": 0, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2022-08-29T00:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": false,
+      "expenses": true
+    },
+    "travelers": [
+      { "id": "gabriel", "name": "Gabriel" },
+      { "id": "marianna", "name": "Marianna" }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {},
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "Azul",
+      "points": { "origin": "CNF - Belo Horizonte", "destination": "SDU - Rio de Janeiro" },
+      "dates": {
+        "departure": { "day": 29, "month": 8, "year": 2022, "hour": 6, "minute": 40, "second": 0 },
+        "arrival": { "day": 29, "month": 8, "year": 2022, "hour": 7, "minute": 45, "second": 0 }
+      },
+      "duration": "1h05",
+      "direction": "departure",
+      "reservation": "DC1YVL",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "Azul",
+      "points": { "origin": "SDU - Rio de Janeiro", "destination": "CNF - Belo Horizonte" },
+      "dates": {
+        "departure": { "day": 29, "month": 8, "year": 2022, "hour": 20, "minute": 40, "second": 0 },
+        "arrival": { "day": 29, "month": 8, "year": 2022, "hour": 21, "minute": 45, "second": 0 }
+      },
+      "duration": "1h05",
+      "direction": "return",
+      "reservation": "DC1YVL",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20220829": {
+      "title": { "value": "Dia Único — Visto EUA + Turismo Rio", "showDestinations": false, "translate": false },
+      "date": { "day": 29, "month": 8, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "04:30", "activity": "→ Uber", "details": "Translado para o aeroporto CNF", "type": "Transporte Privado" },
+        { "time": "05:15", "activity": "Aeroporto (CNF)", "details": "Aguardar embarque", "type": "-" },
+        { "time": "06:35", "activity": "Voo Azul CNF → SDU", "details": "AD 4908. Reserva DC1YVL", "type": "Ida/Volta" },
+        { "time": "07:40", "activity": "Aeroporto (SDU)", "details": "Desembarque", "type": "-" }
+      ],
+      "morning": [
+        { "time": "08:10", "activity": "→ Uber", "details": "Translado para o café", "type": "Transporte Privado" },
+        { "time": "08:25", "activity": "DarkCoffee Centro Rio", "details": "Café da Manhã", "type": "Alimentação" },
+        { "time": "09:55", "activity": "→ Uber", "details": "Translado para o Consulado", "type": "Transporte Privado" },
+        { "time": "10:10", "activity": "Consulado", "details": "Aguardar entrevista", "type": "-" },
+        { "time": "11:15", "activity": "Visto EUA", "details": "Entrevista Visto Americano", "type": "-" }
+      ],
+      "afternoon": [
+        { "time": "12:15", "activity": "→ Uber", "details": "Translado para o almoço", "type": "Transporte Privado" },
+        { "time": "12:25", "activity": "Low Fire", "details": "Almoço Bibs", "type": "Alimentação" },
+        { "time": "13:25", "activity": "→ Uber", "details": "Translado para Bandolim", "type": "Transporte Privado" },
+        { "time": "13:35", "activity": "Bandolim", "details": "Almoço Nana", "type": "Alimentação" },
+        { "time": "14:35", "activity": "→ Uber", "details": "Translado para o Centro", "type": "Transporte Privado" },
+        { "time": "14:45", "activity": "Real Gabinete Português", "details": "Turismo - Biblioteca histórica", "type": "Turismo" },
+        { "time": "15:45", "activity": "→ Uber", "details": "Translado para Escadaria", "type": "Transporte Privado" },
+        { "time": "15:55", "activity": "Escadaria Selarón", "details": "Turismo - Escadaria histórica", "type": "Turismo" }
+      ],
+      "night": [
+        { "time": "16:00", "activity": "The Rooftop at Selina Lapa", "details": "Saída / Drinks", "type": "Saídas" },
+        { "time": "18:30", "activity": "→ Uber", "details": "Translado para o aeroporto", "type": "Transporte Privado" },
+        { "time": "19:00", "activity": "Aeroporto (SDU)", "details": "Aguardar embarque", "type": "-" },
+        { "time": "20:40", "activity": "Voo Azul SDU → CNF", "details": "AD 4752. Reserva DC1YVL", "type": "Ida/Volta" },
+        { "time": "21:45", "activity": "Aeroporto (CNF)", "details": "Desembarque", "type": "-" },
+        { "time": "22:15", "activity": "→ Uber", "details": "Translado para casa", "type": "Transporte Privado" }
+      ]
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      { "type": "Transporte Privado", "description": "Uber Casa → Aeroporto CNF", "value": 50.00, "person": "gabriel", "date": { "day": 29, "month": 8, "year": 2022, "hour": 4, "minute": 30, "second": 0 } },
+      { "type": "Transporte Privado", "description": "Uber SDU → DarkCoffee Centro Rio", "value": 10.00, "person": "gabriel", "date": { "day": 29, "month": 8, "year": 2022, "hour": 8, "minute": 10, "second": 0 } },
+      { "type": "Alimentação", "description": "DarkCoffee Centro Rio - Café da Manhã", "value": 50.00, "person": "gabriel", "date": { "day": 29, "month": 8, "year": 2022, "hour": 8, "minute": 25, "second": 0 } },
+      { "type": "Transporte Privado", "description": "Uber DarkCoffee → Consulado", "value": 10.00, "person": "gabriel", "date": { "day": 29, "month": 8, "year": 2022, "hour": 9, "minute": 55, "second": 0 } },
+      { "type": "Transporte Privado", "description": "Uber Consulado → Low Fire", "value": 10.00, "person": "gabriel", "date": { "day": 29, "month": 8, "year": 2022, "hour": 12, "minute": 15, "second": 0 } },
+      { "type": "Alimentação", "description": "Low Fire - Almoço (Bibs)", "value": 100.00, "person": "gabriel", "date": { "day": 29, "month": 8, "year": 2022, "hour": 12, "minute": 25, "second": 0 } },
+      { "type": "Transporte Privado", "description": "Uber Low Fire → Bandolim", "value": 10.00, "person": "gabriel", "date": { "day": 29, "month": 8, "year": 2022, "hour": 13, "minute": 25, "second": 0 } },
+      { "type": "Transporte Privado", "description": "Uber Bandolim → Real Gabinete Português", "value": 10.00, "person": "gabriel", "date": { "day": 29, "month": 8, "year": 2022, "hour": 14, "minute": 35, "second": 0 } },
+      { "type": "Transporte Privado", "description": "Uber Real Gabinete → Escadaria Selarón", "value": 10.00, "person": "gabriel", "date": { "day": 29, "month": 8, "year": 2022, "hour": 15, "minute": 45, "second": 0 } },
+      { "type": "Saídas", "description": "The Rooftop at Selina Lapa - Drinks", "value": 100.00, "person": "gabriel", "date": { "day": 29, "month": 8, "year": 2022, "hour": 16, "minute": 0, "second": 0 } },
+      { "type": "Transporte Privado", "description": "Uber Selina Lapa → Aeroporto SDU", "value": 10.00, "person": "gabriel", "date": { "day": 29, "month": 8, "year": 2022, "hour": 18, "minute": 30, "second": 0 } },
+      { "type": "Transporte Privado", "description": "Uber Aeroporto CNF → Casa", "value": 50.00, "person": "gabriel", "date": { "day": 29, "month": 8, "year": 2022, "hour": 22, "minute": 15, "second": 0 } }
+    ],
+    "preTrip": [
+      { "type": "Ida/Volta", "description": "Voo Azul CNF ↔ SDU - Reserva DC1YVL (AD 4908 ida + AD 4752 volta). R$313,86 + 53.900 pts TudoAzul", "value": 313.86, "person": "gabriel", "date": { "day": 29, "month": 8, "year": 2022, "hour": 0, "minute": 0, "second": 0 } }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": { "preTrip": 313.86, "duringTrip": 420.00 }
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2022-08-29T00:00:00.000Z" }
+  }
+}

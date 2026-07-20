@@ -1,7 +1,7 @@
 {
-	"gastosDurante": "mdi:graph-line",
-	"gastosPrevios": "mdi:graph-line",
-	"gastosViajantes": "gravity-ui:person",
+	"duringTrip": "mdi:graph-line",
+	"preTrip": "mdi:graph-line",
+	"expensesTravelers": "gravity-ui:person",
 	"labels.entrertainment": "tabler:microphone-2",
 	"labels.gifts": "mdi:gift-outline",
 	"labels.non_specified": "gravity-ui:person-xmark",

@@ -9,7 +9,12 @@
 import { select, on, onscroll, getID } from '../utils/dom.js';
 import { displayError } from '../utils/messages.js';
 import { loadAllConfigs, setLanguage, getVersions } from '../app/config.js';
-import { translatePage, getLanguagePackName, loadLangSelectorSelect } from '../i18n/translation.js';
+import {
+	translate,
+	translatePage,
+	getLanguagePackName,
+	loadLangSelectorSelect,
+} from '../i18n/translation.js';
 import { initActions } from '../ui/actions.js';
 import { initDev } from '../utils/dev.js';
 
@@ -26,43 +31,35 @@ export async function main(pageLoaders: Record<string, () => void> = {}) {
 		loadLangSelectorSelect();
 		loadPage(pageLoaders);
 	} catch (error) {
-		displayError("Initialization Error:" + error.message);
-	}
-}
-
-async function loadTranslationLite() {
-	await setLanguage(getLanguagePackName());
-	translatePage();
-	if (document.querySelector(".lang-button")) {
-		loadLangSelectorSelect();
+		displayError('Initialization Error:' + error.message);
 	}
 }
 
 function loadPage(pageLoaders: Record<string, () => void> = {}) {
 	setPageName();
 	switch (getHTMLpage()) {
-		case "index":
+		case 'index':
 			pageLoaders.index();
 			break;
-		case "view":
+		case 'view':
 			pageLoaders.view();
 			break;
-		case "destination":
+		case 'destination':
 			pageLoaders.destination();
 			break;
-		case "expenses":
+		case 'expenses':
 			pageLoaders.expenses();
 			break;
-		case "edit-listing":
+		case 'edit-listing':
 			pageLoaders.editListing();
 			break;
-		case "edit-destination":
+		case 'edit-destination':
 			pageLoaders.editDestination();
 			break;
-		case "edit-trip":
+		case 'edit-trip':
 			pageLoaders.editTrip();
 			break;
-		case "itinerary":
+		case 'itinerary':
 			pageLoaders.itinerary();
 			return;
 		default:
@@ -72,42 +69,41 @@ function loadPage(pageLoaders: Record<string, () => void> = {}) {
 }
 
 export function getHTMLpage() {
-	let result = window.location.pathname.replace(".html", "");
+	let result = window.location.pathname.replace('.html', '');
 	switch (result) {
-		case "/":
-			return "index";
-		case "/view":
-			return "view";
-		case "/destination":
-			return "destination";
-		case "/expenses":
-			return "expenses";
-		case "/edit/listing":
-			return "edit-listing";
-		case "/edit/destination":
-			return "edit-destination";
-		case "/edit/trip":
-			return "edit-trip";
+		case '/':
+			return 'index';
+		case '/view':
+			return 'view';
+		case '/destination':
+			return 'destination';
+		case '/expenses':
+			return 'expenses';
+		case '/edit/listing':
+			return 'edit-listing';
+		case '/edit/destination':
+			return 'edit-destination';
+		case '/edit/trip':
+			return 'edit-trip';
 		default:
 			return result.slice(1);
 	}
 }
 
 export function getPageURL() {
-	const isAltPrd =
-		window.location.hostname === "trip-viewer-prd.firebaseapp.com";
+	const isAltPrd = window.location.hostname === 'trip-viewer-prd.firebaseapp.com';
 
-	const base = isAltPrd ? "https://trip-viewer.com" : window.location.origin;
+	const base = isAltPrd ? 'https://trip-viewer.com' : window.location.origin;
 
 	const url = new URL(window.location.pathname + window.location.search, base);
 
-	url.searchParams.delete("visibility");
+	url.searchParams.delete('visibility');
 
 	return url.toString();
 }
 
 export function openLinkInNewTab(url) {
-	var win = window.open(url, "_blank");
+	var win = window.open(url, '_blank');
 	win.focus();
 }
 
@@ -116,22 +112,22 @@ function initializeApp() {
 	initDev();
 
 	APP.projectId = firebase.app().options.projectId;
-	const versoes = getVersions();
-	APP.version = versoes[APP.projectId]?.version?.system || "Unknown";
+	const versions = getVersions();
+	APP.version = versions[APP.projectId]?.version?.system || 'Unknown';
 
 	// Initialize the centralized delegated click handler (replaces all inline onclick)
 	initActions();
 }
 
 export function setPageName(pageName?) {
-	const isDev = APP.projectId === "trip-viewer-dev";
+	const isDev = APP.projectId === 'trip-viewer-dev';
 	const host = location.hostname;
-	const isLocal = host === "localhost" || !Number.isNaN(Number(host));
-	const tag = isLocal ? (isDev ? "[LOCAL DEV]" : "[LOCAL PRD]") : isDev ? "[DEV]" : "";
+	const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
+	const tag = isLocal ? (isDev ? '[LOCAL DEV]' : '[LOCAL PRD]') : isDev ? '[DEV]' : '';
 	const cleanTitle = document.title
-		.replace(/\[LOCAL (DEV|PRD)\]\s*/g, "")
-		.replace(/\[DEV\]\s*/g, "")
-		.replace(/\[PRD\]\s*/g, "")
+		.replace(/\[LOCAL (DEV|PRD)\]\s*/g, '')
+		.replace(/\[DEV\]\s*/g, '')
+		.replace(/\[PRD\]\s*/g, '')
 		.trim();
 
 	const resolvedPageName = pageName ?? cleanTitle;
@@ -143,18 +139,14 @@ export function setPageName(pageName?) {
 }
 
 // Global error handlers - catches all unhandled errors
-window.addEventListener("unhandledrejection", function (event) {
-	console.error("Unhandled promise rejection:", event.reason);
-	displayError(
-		event.reason?.message || event.reason || "An unexpected error occurred",
-	);
+window.addEventListener('unhandledrejection', function (event) {
+	console.error('Unhandled promise rejection:', event.reason);
+	displayError(event.reason?.message || event.reason || translate('messages.errors.unknown'));
 	event.preventDefault(); // Prevent default browser error handling
 });
 
-window.addEventListener("error", function (event) {
-	console.error("Global error:", event.error || event.message);
-	displayError(
-		event.error?.message || event.message || "An unexpected error occurred",
-	);
+window.addEventListener('error', function (event) {
+	console.error('Global error:', event.error || event.message);
+	displayError(event.error?.message || event.message || translate('messages.errors.unknown'));
 	event.preventDefault(); // Prevent default browser error handling
 });

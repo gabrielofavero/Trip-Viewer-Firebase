@@ -1,15 +1,42 @@
-import { PIN, switchPinVisibility, switchPinLabel, getCurrentPreferencePIN } from './categories/basic-data/protected-data.js';
-import { setGastosData } from './edit-trip.js';
+import {
+	PIN,
+	switchPinVisibility,
+	switchPinLabel,
+	getCurrentPreferencePIN,
+} from './categories/basic-data/protected-data.js';
+import { setExpensesData } from './edit-trip.js';
+import { loadExpenses } from './categories/expenses.js';
 import { DOCUMENT_ID } from '../../data/state.js';
 import { setCurrentPreferencePIN } from './categories/basic-data/set-protected-data.js';
 import { setTravelers, updateTravelersButtonLabel } from './categories/travelers.js';
-import { loadCustomizacaoImageData, setCurrentLight } from './categories/customization.js';
+import { loadCustomizationImageData, setCurrentLight } from './categories/customization.js';
 import { visibilityListenerAction } from './support/event-listeners.js';
-import { addTransportation, addHospedagens, loadDestinations, loadItinerarySchedule, addGaleria } from './new-trip.js';
-import { loadTransportationVisibility, updateTransportationTitle, applyTransportationTypeVisualization } from './categories/transportation.js';
-import { ACCOMMODATION_IMAGES, setImagemButtonLabel, loadCheckIn, loadCheckOut } from './categories/accommodation.js';
-import { loadDestinosAtivos, updateDestinosAtivosCardsHTML } from './categories/destination.js';
-import { setProgramacaoData, applyLoadedItineraryData } from './categories/itinerary-module/itinerary-module.js';
+import {
+	addTransportation,
+	addAccommodations,
+	loadDestinations,
+	loadItinerarySchedule,
+	addGallery,
+} from './new-trip.js';
+import {
+	loadTransportationVisibility,
+	updateTransportationTitle,
+	applyTransportationTypeVisualization,
+} from './categories/transportation.js';
+import {
+	ACCOMMODATION_IMAGES,
+	setImageButtonLabel,
+	loadCheckIn,
+	loadCheckOut,
+} from './categories/accommodation.js';
+import {
+	loadActiveDestinations,
+	updateActiveDestinationsCardsHTML,
+} from './categories/destination.js';
+import {
+	setItineraryData,
+	applyLoadedItineraryData,
+} from './categories/itinerary-module/itinerary-module.js';
 import { displayError } from '../../utils/messages.js';
 import { translate } from '../../i18n/translation.js';
 import { getState } from '../../data/state.js';
@@ -24,15 +51,15 @@ import { getHTMLpage, setPageName } from '../../app/main.js';
 export async function loadTripData() {
 	try {
 		loadBasicTripData();
-		loadCustomizacaoData();
+		loadCustomizationData();
 		await loadExpensesData();
 		loadTransportationData();
 		loadAccommodationData();
 		await loadDestinationsData();
 		loadItineraryData();
-		loadGaleriaData();
+		loadGalleryData();
 
-		setPageName(`${translate("labels.edit")} ${getState().titulo}`);
+		setPageName(`${translate('labels.edit')} ${getState().title}`);
 	} catch (error) {
 		displayError(error);
 		throw error;
@@ -40,16 +67,16 @@ export async function loadTripData() {
 }
 
 function loadBasicTripData() {
-	getID("titulo").value = getState().titulo;
-	getID("moeda").value = getState().moeda;
+	getID('title').value = getState().title;
+	getID('currency').value = getState().currency;
 
-	const inicio = convertFromDateObject(getState().inicio);
-	const fim = convertFromDateObject(getState().fim);
+	const start = convertFromDateObject(getState().start);
+	const end = convertFromDateObject(getState().end);
 
-	getID("inicio").value = getDateString(inicio, "yyyy-mm-dd");
-	getID("fim").value = getDateString(fim, "yyyy-mm-dd");
+	getID('start').value = getDateString(start, 'yyyy-mm-dd');
+	getID('end').value = getDateString(end, 'yyyy-mm-dd');
 
-	setTravelers(cloneObject(getState().pessoas));
+	setTravelers(cloneObject(getState().travelers));
 	validateTravelersObject();
 	updateTravelersButtonLabel();
 	setCurrentPreferencePIN(getState().pin);
@@ -57,133 +84,134 @@ function loadBasicTripData() {
 	switchPinLabel();
 }
 
-export function loadCustomizacaoData(state?) {
-	// Imagens
-	const background = getState().imagem.background;
-	const logoClaro = getState().imagem.claro;
-	const logoEscuro = getState().imagem.escuro;
+export function loadCustomizationData(state?) {
+	// Images
+	const background = getState().image.background;
+	const logoLight = getState().image.light;
+	const logoDark = getState().image.dark;
 
-	if (getState().imagem.ativo === true) {
-		getID("habilitado-imagens").checked = true;
-		getID("habilitado-imagens-content").style.display = "block";
+	if (getState().image.active === true) {
+		getID('images-enabled').checked = true;
+		getID('images-enabled-content').style.display = 'block';
 	}
 
-	loadCustomizacaoImageData(background, "link-background");
-	loadCustomizacaoImageData(logoClaro, "link-logo-light");
-	loadCustomizacaoImageData(logoEscuro, "link-logo-dark");
+	loadCustomizationImageData(background, 'link-background');
+	loadCustomizationImageData(logoLight, 'link-logo-light');
+	loadCustomizationImageData(logoDark, 'link-logo-dark');
 
 	// Cores
-	const claro = getID("claro");
-	const escuro = getID("escuro");
+	const lightColor = getID('light-color');
+	const darkColor = getID('dark-color');
 
-	if (getState().cores.ativo === true) {
-		getID("habilitado-cores").checked = true;
-		claro.value = getState().cores.claro;
-		escuro.value = getState().cores.escuro;
-		setCurrentLight(getState().cores.claro);
-		getID("habilitado-cores-content").style.display = "block";
+	if (getState().colors.active === true) {
+		getID('colors-enabled').checked = true;
+		lightColor.value = getState().colors.light;
+		darkColor.value = getState().colors.dark;
+		setCurrentLight(getState().colors.light);
+		getID('colors-enabled-content').style.display = 'block';
 	}
 
-	// Visibilidade
-	const visibilidade = getState().visibilidade;
-	if (visibilidade) {
-		visibilityListenerAction(visibilidade);
-		getID("dark-and-light").checked = visibilidade.claro && visibilidade.escuro;
-		getID("light-exclusive").checked =
-			visibilidade.claro && !visibilidade.escuro;
-		getID("dark-exclusive").checked =
-			!visibilidade.claro && visibilidade.escuro;
+	// Visibility
+	const visibility = getState().visibility;
+	if (visibility) {
+		visibilityListenerAction(visibility);
+		getID('dark-and-light').checked = visibility.light && visibility.dark;
+		getID('light-exclusive').checked = visibility.light && !visibility.dark;
+		getID('dark-exclusive').checked = !visibility.light && visibility.dark;
 	}
 
-	// Links Personalizados
-	getID("habilitado-links").checked = getState().links.ativo;
-	getID("link-attachments").value = getState().links.attachments;
-	getID("link-drive").value = getState().links.drive;
-	getID("link-maps").value = getState().links.maps;
-	getID("link-pdf").value = getState().links.pdf;
-	getID("link-ppt").value = getState().links.ppt;
-	getID("link-sheet").value = getState().links.sheet;
-	getID("link-vacina").value = getState().links.vacina;
+	// Custom Links
+	getID('links-enabled').checked = getState().links.active;
+	getID('link-attachments').value = getState().links.attachments;
+	getID('link-drive').value = getState().links.drive;
+	getID('link-maps').value = getState().links.maps;
+	getID('link-pdf').value = getState().links.pdf;
+	getID('link-ppt').value = getState().links.ppt;
+	getID('link-sheet').value = getState().links.sheet;
+	getID('link-vaccine').value = getState().links.vaccine;
 }
 
 async function loadExpensesData() {
-	if (getState().modulos.gastos === true) {
-		getID("habilitado-gastos").checked = true;
-		getID("habilitado-gastos-content").style.display = "block";
+	if (getState().modules.expenses === true) {
+		getID('expenses-enabled').checked = true;
+		getID('expenses-enabled-content').style.display = 'block';
 	}
 
 	const getPath = PIN.current
-		? `gastos/protected/${PIN.current}/${DOCUMENT_ID}`
-		: `gastos/${DOCUMENT_ID}`;
+		? `expenses/protected/${PIN.current}/${DOCUMENT_ID}`
+		: `expenses/${DOCUMENT_ID}`;
 
-	setGastosData(await get(getPath, true, true));
+	setExpensesData(await get(getPath, true, true));
 
 	if (haveErrorFromGetRequest()) {
 		displayError(ERROR_FROM_GET_REQUEST);
 		return;
 	}
 
-	loadExpensesData();
+	loadExpenses();
 }
 
 async function loadTransportationData() {
-	if (getState().modulos.transportes === true) {
-		getID("habilitado-transporte").checked = true;
-		getID("habilitado-transporte-content").style.display = "block";
-		getID("transporte-adicionar-box").style.display = "block";
+	if (getState().modules.transportation === true) {
+		getID('transportation-enabled').checked = true;
+		getID('transportation-enabled-content').style.display = 'block';
+		getID('transportation-add-box').style.display = 'block';
 	}
-	getID(getState().transportes.visualizacao || "simple-view").checked =
-		true;
+	// Migration 13 changed 'simple-view'→'simple', 'leg-view'→'leg' in Firestore.
+	// Map back to the radio button IDs used in the HTML.
+	const rawViewMode = getState().transportation.viewMode || 'simple-view';
+	const viewModeId =
+		rawViewMode === 'simple' ? 'simple-view' :
+		rawViewMode === 'leg' ? 'leg-view' :
+		rawViewMode === 'people' ? 'people-view' :
+		rawViewMode;
+	getID(viewModeId).checked = true;
 
-	for (let j = 1; j <= getState().transportes.dados.length; j++) {
+	for (let j = 1; j <= getState().transportation.data.length; j++) {
 		addTransportation();
-		const transporte = getState().transportes.dados[j - 1];
+		const transport = getState().transportation.data[j - 1];
 
-		getID(`${transporte.idaVolta}-${j}`).checked = true;
+		getID(`${transport.direction}-${j}`).checked = true;
 
-		const pessoa = transporte.pessoa;
-		if (pessoa) {
-			getID(`transporte-pessoa-${j}`).value = pessoa;
-			updateValueDS(
-				"transporte-pessoa",
-				pessoa,
-				`transporte-pessoa-select-${j}`,
-			);
-			buildDS("transporte-pessoa");
+		const person = transport.person;
+		if (person) {
+			getID(`transportation-person-${j}`).value = person;
+			updateValueDS('transportation-person', person, `transportation-person-select-${j}`);
+			buildDS('transportation-person');
 		}
 
-		const partida = convertFromDateObject(transporte.datas.partida);
-		const chegada = convertFromDateObject(transporte.datas.chegada);
+		const departure = convertFromDateObject(transport.dates.departure);
+		const arrival = convertFromDateObject(transport.dates.arrival);
 
-		if (partida) {
-			getID(`partida-${j}`).value = getDateString(partida, "yyyy-mm-dd");
-			getID(`partida-horario-${j}`).value = getTimeStringFromDate(partida);
+		if (departure) {
+			getID(`departure-${j}`).value = getDateString(departure, 'yyyy-mm-dd');
+			getID(`departure-time-${j}`).value = getTimeStringFromDate(departure);
 		}
 
-		if (chegada) {
-			getID(`chegada-${j}`).value = getDateString(chegada, "yyyy-mm-dd");
-			getID(`chegada-horario-${j}`).value = getTimeStringFromDate(chegada);
+		if (arrival) {
+			getID(`arrival-${j}`).value = getDateString(arrival, 'yyyy-mm-dd');
+			getID(`arrival-time-${j}`).value = getTimeStringFromDate(arrival);
 		}
 
-		getID(`transporte-tipo-${j}`).value = transporte.transporte;
-		const empresa = transporte.empresa;
-		if (empresa) {
+		getID(`transportation-type-${j}`).value = transport.type;
+		const company = transport.company;
+		if (company) {
 			loadTransportationVisibility(j);
-			if (getOptionsFromSelect(`empresa-select-${j}`).includes(empresa)) {
-				getID(`empresa-select-${j}`).value = empresa;
+			if (getOptionsFromSelect(`company-select-${j}`).includes(company)) {
+				getID(`company-select-${j}`).value = company;
 			} else {
-				getID(`empresa-select-${j}`).value = "outra";
-				getID(`empresa-${j}`).value = empresa;
+				getID(`company-select-${j}`).value = 'other';
+				getID(`company-${j}`).value = company;
 				loadTransportationVisibility(j);
 			}
 		}
 
-		getID(`transporte-id-${j}`).value = transporte.id;
-		getID(`transporte-duracao-${j}`).value = transporte.duracao;
-		getID(`reserva-transporte-${j}`).value = transporte.reserva;
-		getID(`ponto-partida-${j}`).value = transporte.pontos.partida;
-		getID(`ponto-chegada-${j}`).value = transporte.pontos.chegada;
-		getID(`transporte-link-${j}`).value = transporte.link;
+		getID(`transportation-id-${j}`).value = transport.id;
+		getID(`transportation-duration-${j}`).value = transport.duration;
+		getID(`reservation-transportation-${j}`).value = transport.reservation;
+		getID(`departure-point-${j}`).value = transport.points.origin;
+		getID(`arrival-point-${j}`).value = transport.points.destination;
+		getID(`transportation-link-${j}`).value = transport.link;
 
 		updateTransportationTitle(j);
 	}
@@ -191,122 +219,117 @@ async function loadTransportationData() {
 }
 
 function loadAccommodationData() {
-	if (getState().modulos.hospedagens === true) {
-		getID("habilitado-hospedagens").checked = true;
-		getID("habilitado-hospedagens-content").style.display = "block";
-		getID("hospedagens-adicionar-box").style.display = "block";
+	if (getState().modules.accommodations === true) {
+		getID('accommodations-enabled').checked = true;
+		getID('accommodations-enabled-content').style.display = 'block';
+		getID('accommodations-add-box').style.display = 'block';
 	}
 
-	for (let j = 1; j <= getState().hospedagens.length; j++) {
-		addHospedagens();
-		const hospedagem = getState().hospedagens[j - 1];
-		ACCOMMODATION_IMAGES[j] = hospedagem.imagens || [];
+	for (let j = 1; j <= getState().accommodations.length; j++) {
+		addAccommodations();
+		const accommodation = getState().accommodations[j - 1];
+		ACCOMMODATION_IMAGES[j] = accommodation.images || [];
 
-		getID(`hospedagens-id-${j}`).value = hospedagem.id;
-		getID(`hospedagens-cafe-${j}`).checked = hospedagem.cafe;
-		getID(`hospedagens-nome-${j}`).value = hospedagem.nome;
-		getID(`hospedagens-title-${j}`).innerText =
-			hospedagem.nome || getID(`hospedagens-title-${j}`).innerText;
-		getID(`hospedagens-endereco-${j}`).value = hospedagem.endereco;
-		getID(`hospedagens-descricao-${j}`).value = hospedagem.descricao;
-		getID(`reserva-hospedagens-${j}`).value = hospedagem.reserva || "";
-		getID(`reserva-hospedagens-link-${j}`).value = hospedagem.link;
+		getID(`accommodations-id-${j}`).value = accommodation.id;
+		getID(`accommodations-breakfast-${j}`).checked = accommodation.breakfast;
+		getID(`accommodations-name-${j}`).value = accommodation.name;
+		getID(`accommodations-title-${j}`).innerText =
+			accommodation.name || getID(`accommodations-title-${j}`).innerText;
+		getID(`accommodations-address-${j}`).value = accommodation.address;
+		getID(`accommodations-description-${j}`).value = accommodation.description;
+		getID(`reservation-accommodations-${j}`).value = accommodation.reservation || '';
+		getID(`reservation-accommodations-link-${j}`).value = accommodation.link;
 
-		setImagemButtonLabel(j);
-		loadCheckIn(hospedagem, j);
-		loadCheckOut(hospedagem, j);
+		setImageButtonLabel(j);
+		loadCheckIn(accommodation, j);
+		loadCheckOut(accommodation, j);
 	}
 }
 
 async function loadDestinationsData() {
-	if (
-		getHTMLpage() === "edit-listing" ||
-		getState().modulos.destinos === true
-	) {
-		if (getID("habilitado-destinos")) {
-			getID("habilitado-destinos").checked = true;
+	if (getHTMLpage() === 'edit-listing' || getState().modules.destinations === true) {
+		if (getID('destinations-enabled')) {
+			getID('destinations-enabled').checked = true;
 		}
-		getID("habilitado-destinos-content").style.display = "block";
-		getID("sem-destinos").style.display = "none";
-		getID("com-destinos").style.display = "block";
+		getID('destinations-enabled-content').style.display = 'flex';
+		getID('no-destinations').style.display = 'none';
+		getID('has-destinations').style.display = 'flex';
 	} else {
-		getID("sem-destinos").style.display = "block";
-		getID("com-destinos").style.display = "none";
+		getID('no-destinations').style.display = 'block';
+		getID('has-destinations').style.display = 'none';
 	}
 
 	loadDestinations();
-	const cards = document.querySelectorAll('#destinos-checkboxes .destino-card');
-	for (const destino of getState().destinos) {
-		const id = destino.destinosID;
+	const destinations = getState().destinations || getState().destinationRefs;
+	if (!destinations || !destinations.length) return;
+	const cards = document.querySelectorAll('#destinations-checkboxes .destination-card');
+	for (const destination of destinations) {
+		const id = destination.id || destination.destinationId;
 		for (const card of cards) {
-			if (card.getAttribute("data-destino-id") === id) {
-				card.classList.add("selected");
+			if (card.getAttribute('data-destination-id') === id) {
+				card.classList.add('selected');
 				// Move to top of selected group
-				const container = getID("destinos-checkboxes");
+				const container = getID('destinations-checkboxes');
 				container.prepend(card);
 				break;
 			}
 		}
 	}
-	await loadDestinosAtivos();
+	await loadActiveDestinations();
 }
 
 export function loadItineraryData() {
-	if (getState().modulos.programacao === true) {
-		getID("habilitado-programacao").checked = true;
-		getID("habilitado-programacao-content").style.display = "block";
+	if (getState().modules.itinerary === true) {
+		getID('itinerary-enabled').checked = true;
+		getID('itinerary-enabled-content').style.display = 'block';
 	}
 
 	loadItinerarySchedule();
 
 	let j = 1;
-	while (getID(`programacao-title-${j}`)) {
-		const dados = getState().programacoes[j - 1];
-		if (dados?.data) {
-			applyLoadedItineraryData(j, dados);
+	while (getID(`itinerary-title-${j}`)) {
+		const data = getState().itinerary[j - 1];
+		if (data?.date) {
+			applyLoadedItineraryData(j, data);
 		}
 		j++;
 	}
-	updateDestinosAtivosCardsHTML("programacao");
-	setProgramacaoData(cloneObject(getState().programacoes));
+	updateActiveDestinationsCardsHTML('itinerary');
+	setItineraryData(cloneObject(getState().itinerary));
 }
 
-function loadGaleriaData() {
-	if (getState().modulos.galeria === true) {
-		getID("habilitado-galeria").checked = true;
-		getID("habilitado-galeria-content").style.display = "block";
-		getID("galeria-adicionar-box").style.display = "block";
+function loadGalleryData() {
+	if (getState().modules.gallery === true) {
+		getID('gallery-enabled').checked = true;
+		getID('gallery-enabled-content').style.display = 'block';
+		getID('gallery-add-box').style.display = 'block';
 	}
 
-	const galeriaSize = getState().galeria?.imagens.length;
-	if (galeriaSize > 0) {
-		for (let j = 1; j <= galeriaSize; j++) {
+	const gallerySize = getState().gallery?.images.length;
+	if (gallerySize > 0) {
+		for (let j = 1; j <= gallerySize; j++) {
 			const i = j - 1;
-			addGaleria();
+			addGallery();
 
-			const titulo = getState().galeria.titulos[i];
-			if (titulo) {
-				getID(`galeria-titulo-${j}`).value = titulo;
-				getID(`galeria-title-${j}`).innerText = titulo;
+			const title = getState().gallery.titles[i];
+			if (title) {
+				getID(`gallery-title-${j}`).value = title;
+				getID(`gallery-title-${j}`).innerText = title;
 			}
 
-			const categoria = getState().galeria.categorias[i];
-			if (categoria) {
-				getID(`galeria-categoria-${j}`).value = categoria;
-				updateValueDS(
-					"galeria-categoria",
-					categoria,
-					`galeria-categoria-select-${j}`,
-				);
-				buildDS("galeria-categoria");
+			const category = getState().gallery.categories[i];
+			if (category) {
+				getID(`gallery-category-${j}`).value = category;
+				updateValueDS('gallery-category', category, `gallery-category-select-${j}`);
+				buildDS('gallery-category');
 			}
 
-			const descricao = getState().galeria.descricoes[i];
-			if (descricao) {
-				getID(`galeria-descricao-${j}`).value = descricao;
+			const description = getState().gallery.descriptions[i];
+			if (description) {
+				getID(`gallery-description-${j}`).value = description;
 			}
 
-			getID(`link-galeria-${j}`).value = getState().galeria.imagens[i];
+			getID(`link-gallery-${j}`).value = getState().gallery.images[i];
 		}
 	}
 }

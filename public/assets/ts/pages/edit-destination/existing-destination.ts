@@ -2,33 +2,31 @@ import { buildDS, updateValueDS } from '../../ui/dynamic-select.js';
 import { displayError } from '../../utils/messages.js';
 import { getID } from '../../utils/dom.js';
 import { setPageName } from '../../app/main.js';
-import { translate } from "../../i18n/translation.js";
-import { FIRESTORE_DESTINATIONS_DATA } from "../../data/state.js";
-import { setDescription } from "./categories/description.js";
-import { updateDescriptionButtonLabel } from "./categories/description.js";
-import { loadMoedaOptions } from "./categories/price.js";
-import { loadMoedaValorAndVisibility } from "./categories/price.js";
-import { addLanches } from "./new-destination.js";
-import { addLojas } from "./new-destination.js";
-import { addRestaurantes } from "./new-destination.js";
-import { addSaidas } from "./new-destination.js";
-import { addTurismo } from "./new-destination.js";
+import { translate } from '../../i18n/translation.js';
+import { FIRESTORE_DESTINATIONS_DATA } from '../../data/state.js';
+import { setDescription } from './categories/description.js';
+import { updateDescriptionButtonLabel } from './categories/description.js';
+import { loadCurrencyOptions } from './categories/price.js';
+import { loadCurrencyValueAndVisibility } from './categories/price.js';
+import { addSnacks } from './new-destination.js';
+import { addShopping } from './new-destination.js';
+import { addRestaurants } from './new-destination.js';
+import { addNightlife } from './new-destination.js';
+import { addTourism } from './new-destination.js';
 
-// Destino Existente
+// Existing Destination
 export function populateExistingDestinationForm() {
 	try {
-		loadDadosBasicosDestinosData();
-		loadDestinoExistente("restaurantes");
-		loadDestinoExistente("lanches");
-		loadDestinoExistente("saidas");
-		loadDestinoExistente("turismo");
-		loadDestinoExistente("lojas");
-		buildDS("regiao");
+		loadBasicDestinationData();
+		loadExistingDestination('restaurants');
+		loadExistingDestination('snacks');
+		loadExistingDestination('nightlife');
+		loadExistingDestination('tourism');
+		loadExistingDestination('shopping');
+		buildDS('region');
 
-		loadMapaData();
-		setPageName(
-			`${translate("labels.edit")} ${FIRESTORE_DESTINATIONS_DATA.titulo}`,
-		);
+		loadMapData();
+		setPageName(`${translate('labels.edit')} ${FIRESTORE_DESTINATIONS_DATA?.title || ''}`);
 	} catch (error) {
 		displayError(error);
 		throw error;
@@ -36,122 +34,121 @@ export function populateExistingDestinationForm() {
 }
 
 // Modules: Existing Tour
-function loadDadosBasicosDestinosData() {
-	getID("titulo").value = FIRESTORE_DESTINATIONS_DATA.titulo;
+function loadBasicDestinationData() {
+	getID('title').value = FIRESTORE_DESTINATIONS_DATA?.title || '';
 
-	const moedaValue = FIRESTORE_DESTINATIONS_DATA.moeda;
-	const moedaDiv = getID("moeda");
+	const currencyValue = FIRESTORE_DESTINATIONS_DATA.currency;
+	const currencyDiv = getID('currency');
 
-	if (moedaDiv.querySelector(`option[value="${moedaValue}"]`)) {
-		moedaDiv.value = moedaValue;
+	if (currencyDiv.querySelector(`option[value="${currencyValue}"]`)) {
+		currencyDiv.value = currencyValue;
 	} else {
-		getID("outra-moeda").style.display = "block";
-		getID("outra-moeda").value = moedaValue;
-		moedaDiv.value = "outra";
+		getID('other-currency').style.display = 'block';
+		getID('other-currency').value = currencyValue;
+		currencyDiv.value = 'other';
 	}
 
-	loadMoedaOptions();
+	loadCurrencyOptions();
 }
 
-function loadDestinoExistente(categoria) {
-	const habilitado = FIRESTORE_DESTINATIONS_DATA.modulos[categoria] === true;
-	getID(`habilitado-${categoria}`).checked = habilitado;
-	getID(`habilitado-${categoria}-content`).style.display = habilitado
-		? "block"
-		: "none";
-	getID(`${categoria}-adicionar-box`).style.display = habilitado
-		? "block"
-		: "none";
+function loadExistingDestination(category) {
+	const enabled = FIRESTORE_DESTINATIONS_DATA.modules[category] === true;
+	getID(`${category}-enabled`).checked = enabled;
+	getID(`${category}-enabled-content`).style.display = enabled ? 'block' : 'none';
+	getID(`${category}-add-box`).style.display = enabled ? 'block' : 'none';
 
-	const destinosArr = Object.entries(FIRESTORE_DESTINATIONS_DATA[categoria])
-		.map(([id, value]) => ({
-			id,
-			...(value as Record<string, unknown>),
-		}) as Record<string, unknown>)
+	const itemsArr = Object.entries(FIRESTORE_DESTINATIONS_DATA?.[category] || {})
+		.map(
+			([id, value]) =>
+				({
+					id,
+					...(value as Record<string, unknown>),
+				}) as Record<string, unknown>,
+		)
 		.sort((a, b) => {
-			if (!a.criadoEm && !b.criadoEm) return 0;
-			if (!a.criadoEm) return 1;
-			if (!b.criadoEm) return -1;
-			return new Date(a.criadoEm as string).getTime() - new Date(b.criadoEm as string).getTime();
+			if (!a.createdAt && !b.createdAt) return 0;
+			if (!a.createdAt) return 1;
+			if (!b.createdAt) return -1;
+			return new Date(a.createdAt as string).getTime() - new Date(b.createdAt as string).getTime();
 		});
 
-	for (let j = 1; j <= destinosArr.length; j++) {
-		const destino = destinosArr[j - 1];
-		addDestino(categoria);
-		addDestinoHTML(categoria, j, destino);
-		setDescription(categoria, j, destino.descricao);
-		updateDescriptionButtonLabel(categoria, j);
+	for (let j = 1; j <= itemsArr.length; j++) {
+		const item = itemsArr[j - 1];
+		addDestination(category);
+		addDestinationHTML(category, j, item);
+		setDescription(category, j, item.description);
+		updateDescriptionButtonLabel(category, j);
 	}
 }
 
-export function addDestino(categoria) {
-	switch (categoria) {
-		case "restaurantes":
-			addRestaurantes();
+export function addDestination(category) {
+	switch (category) {
+		case 'restaurants':
+			addRestaurants();
 			break;
-		case "lanches":
-			addLanches();
+		case 'snacks':
+			addSnacks();
 			break;
-		case "saidas":
-			addSaidas();
+		case 'nightlife':
+			addNightlife();
 			break;
-		case "turismo":
-			addTurismo();
+		case 'tourism':
+			addTourism();
 			break;
-		case "lojas":
-			addLojas();
+		case 'shopping':
+			addShopping();
 	}
 }
 
-export function addDestinoHTML(categoria, j, destino) {
-	const id = destino.id;
+export function addDestinationHTML(category, j, item) {
+	const id = item.id;
 	if (id) {
-		getID(`${categoria}-id-${j}`).value = id;
+		getID(`${category}-id-${j}`).value = id;
 	}
 
-	const criadoEm = destino.criadoEm;
-	if (criadoEm) {
-		getID(`${categoria}-criadoEm-${j}`).value = criadoEm;
+	const createdAt = item.createdAt;
+	if (createdAt) {
+		getID(`${category}-createdAt-${j}`).value = createdAt;
 	}
 
-	const novo = destino.novo || false;
-	getID(`${categoria}-novo-${j}`).checked = novo;
-	getID(`${categoria}-title-icon-${j}`).style.display = novo ? "block" : "none";
+	const isNew = item.isNew || false;
+	getID(`${category}-isNew-${j}`).checked = isNew;
+	getID(`${category}-title-icon-${j}`).style.display = isNew ? 'block' : 'none';
 
-	const nome = destino.nome || "";
-	getID(`${categoria}-nome-${j}`).value = nome;
-	getID(`${categoria}-title-text-${j}`).innerText = nome;
+	const name = item.name || '';
+	getID(`${category}-name-${j}`).value = name;
+	getID(`${category}-title-text-${j}`).innerText = name;
 
-	const emoji = destino.emoji;
-	getID(`${categoria}-emoji-${j}`).value = emoji;
-	getID(`${categoria}-title-text-${j}`).innerText += ` ${emoji}`;
+	const emoji = item.emoji;
+	getID(`${category}-emoji-${j}`).value = emoji;
+	getID(`${category}-title-text-${j}`).innerText += ` ${emoji}`;
 
-	updateDescriptionButtonLabel(categoria, j);
-	getID(`${categoria}-website-${j}`).value = destino.website || "";
-	getID(`${categoria}-mapa-${j}`).value = destino.mapa || "";
-	getID(`${categoria}-instagram-${j}`).value = destino.instagram || "";
-	getID(`${categoria}-regiao-${j}`).value = destino.regiao || "";
+	updateDescriptionButtonLabel(category, j);
+	getID(`${category}-website-${j}`).value = item.website || '';
+	getID(`${category}-map-${j}`).value = item.map || '';
+	getID(`${category}-instagram-${j}`).value = item.instagram || '';
+	getID(`${category}-region-${j}`).value = item.region || '';
 
-	updateValueDS("regiao", destino.regiao, `${categoria}-regiao-select-${j}`);
-	loadMoedaValorAndVisibility(destino.valor || "", categoria, j);
+	updateValueDS('region', item.region, `${category}-region-select-${j}`);
+	loadCurrencyValueAndVisibility(item.price || '', category, j);
 
-	getID(`${categoria}-midia-${j}`).value = destino.midia || "";
-	getID(`${categoria}-nota-${j}`).value = destino.nota || "";
+	getID(`${category}-media-${j}`).value = item.media || '';
+	getID(`${category}-rating-${j}`).value = item.rating || '';
 }
 
-function loadMapaData() {
-	const mapaLink = getID("mapa-link");
+function loadMapData() {
+	const mapLinkInput = getID('map-link');
 
-	if (FIRESTORE_DESTINATIONS_DATA.modulos.mapa === true) {
-		getID("habilitado-mapa").checked = true;
-		getID("habilitado-mapa-content").style.display = "block";
-		mapaLink.setAttribute("required", "");
+	if (FIRESTORE_DESTINATIONS_DATA.modules.map === true) {
+		getID('map-enabled').checked = true;
+		getID('map-enabled-content').style.display = 'block';
+		mapLinkInput.setAttribute('required', '');
 
-		const mapa = FIRESTORE_DESTINATIONS_DATA.myMaps;
-		if (mapa) {
-			mapaLink.value = mapa;
+		const mapData = FIRESTORE_DESTINATIONS_DATA.myMaps;
+		if (mapData) {
+			mapLinkInput.value = mapData;
 		}
 	} else {
-		mapaLink.removeAttribute("required");
+		mapLinkInput.removeAttribute('required');
 	}
 }

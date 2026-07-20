@@ -1,13 +1,28 @@
 // Text Utils
 import { getCurrencies } from '../app/config.js';
 import { getState } from '../data/state.js';
-import { DESTINATIONS, TRAVELERS, FIRESTORE_DESTINATIONS_DATA, FIRESTORE_NEW_DATA, FIRESTORE_DESTINATIONS_NEW_DATA, ERROR_FROM_GET_REQUEST } from '../data/state.js';
-import { convertFromDateObject, getDateRegionalFormat, getDateString, getTodayDateObject } from './dates.js';
+import {
+	DESTINATIONS,
+	TRAVELERS,
+	FIRESTORE_DESTINATIONS_DATA,
+	FIRESTORE_NEW_DATA,
+	FIRESTORE_DESTINATIONS_NEW_DATA,
+	ERROR_FROM_GET_REQUEST,
+} from '../data/state.js';
+import {
+	convertFromDateObject,
+	getDateRegionalFormat,
+	getDateString,
+	getTodayDateObject,
+} from './dates.js';
 import { translate } from '../i18n/translation.js';
 import { hideContent } from '../theme/visibility.js';
-import { getFlightBoxHTML } from "../pages/trip-detail/categories/transportation-module.js";
-import { getHospedagensData, getHotelBoxHTML } from "../pages/trip-detail/categories/accommodation-module.js";
-import { getDestinationsAccordionBodyHTML } from "../pages/destination/support/content.js";
+import { getFlightBoxHTML } from '../pages/trip-detail/categories/transportation-module.js';
+import {
+	getHospedagensData,
+	getHotelBoxHTML,
+} from '../pages/trip-detail/categories/accommodation-module.js';
+import { getDestinationsAccordionBodyHTML } from '../pages/destination/support/content.js';
 
 export function firstCharToUpperCase(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1);
@@ -15,23 +30,20 @@ export function firstCharToUpperCase(str) {
 
 export function codifyText(inputString) {
 	let lowercaseString = inputString.toLowerCase();
-	let validFolderName = lowercaseString.replace(/[^a-z0-9_]/g, "");
+	let validFolderName = lowercaseString.replace(/[^a-z0-9_]/g, '');
 	return validFolderName;
 }
 
 export function uncodifyText(inputString) {
-	return inputString
-		.replace(/_/g, " ")
-		.replace(/\b\w/g, (l) => l.toUpperCase());
+	return inputString.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
 }
 
 export function getRandomID({ idLength = 5, pool = [] } = {}) {
-	const characters =
-		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 	const array = new Uint32Array(idLength);
 	crypto.getRandomValues(array); // native + secure
 
-	let randomId = "";
+	let randomId = '';
 	for (let i = 0; i < idLength; i++) {
 		randomId += characters[array[i] % characters.length];
 	}
@@ -41,15 +53,15 @@ export function getRandomID({ idLength = 5, pool = [] } = {}) {
 }
 
 export function getEmptyChar() {
-	return "\u200B";
+	return '\u200B';
 }
 
 export function getLastUpdatedOnText(date) {
-	if (typeof date === "string") {
+	if (typeof date === 'string') {
 		date = new Date(date);
 	}
 	const dateString = getDateString(date, getDateRegionalFormat());
-	return `${translate("labels.last_updated_on")} ${dateString}`;
+	return `${translate('labels.last_updated_on')} ${dateString}`;
 }
 
 // Object Utils
@@ -66,13 +78,13 @@ export function getIdFromObjectDB(dbObject) {
 		const segments = dbObject.data._delegate._key.path.segments;
 		return segments[segments.length - 1];
 	} catch (e) {
-		console.error("Cannot get ID from DB: " + e.message);
+		console.error('Cannot get ID from DB: ' + e.message);
 		return;
 	}
 }
 
 export function printObjectHTML(obj) {
-	var str = "<br>";
+	var str = '<br>';
 	for (var key in obj) {
 		if (obj.hasOwnProperty(key)) {
 			const formattedKey = uncodifyText(key);
@@ -88,14 +100,14 @@ export function cloneObject(object) {
 
 export function getLocalJSON() {
 	return new Promise((resolve, reject) => {
-		const input = document.createElement("input");
-		input.type = "file";
-		input.accept = "application/json";
+		const input = document.createElement('input');
+		input.type = 'file';
+		input.accept = 'application/json';
 
 		input.onchange = (event: Event) => {
 			const file = (event.target as HTMLInputElement).files[0];
 			if (!file) {
-				reject("No file selected");
+				reject('No file selected');
 				return;
 			}
 
@@ -105,10 +117,10 @@ export function getLocalJSON() {
 					const json = JSON.parse(e.target.result as string);
 					resolve(json);
 				} catch (err) {
-					reject("Invalid JSON file");
+					reject('Invalid JSON file');
 				}
 			};
-			reader.onerror = () => reject("Failed to read file");
+			reader.onerror = () => reject('Failed to read file');
 
 			reader.readAsText(file);
 		};
@@ -118,19 +130,14 @@ export function getLocalJSON() {
 }
 
 export function areObjectsEqual(obj1, obj2, ignoredPaths = []) {
-	return deepObjectsEqual(obj1, obj2, "", new Set(ignoredPaths));
+	return deepObjectsEqual(obj1, obj2, '', new Set(ignoredPaths));
 
 	function deepObjectsEqual(val1, val2, path, ignored) {
 		if (ignored.has(path)) return true;
 
 		if (val1 === val2) return true;
 
-		if (
-			typeof val1 !== "object" ||
-			typeof val2 !== "object" ||
-			val1 === null ||
-			val2 === null
-		) {
+		if (typeof val1 !== 'object' || typeof val2 !== 'object' || val1 === null || val2 === null) {
 			return false;
 		}
 
@@ -147,11 +154,11 @@ export function areObjectsEqual(obj1, obj2, ignoredPaths = []) {
 	}
 }
 
-export function getObjectDiff({ obj1, obj2, ignoredPaths = [], name = "Object" }) {
+export function getObjectDiff({ obj1, obj2, ignoredPaths = [], name = 'Object' }) {
 	const differences = [];
 	const ignored = new Set(ignoredPaths);
 
-	collectObjectDiffs(obj1, obj2, "", ignored, differences);
+	collectObjectDiffs(obj1, obj2, '', ignored, differences);
 
 	return {
 		name,
@@ -165,12 +172,7 @@ export function collectObjectDiffs(val1, val2, path, ignored, diffs) {
 
 	if (val1 === val2) return;
 
-	if (
-		typeof val1 !== "object" ||
-		typeof val2 !== "object" ||
-		val1 === null ||
-		val2 === null
-	) {
+	if (typeof val1 !== 'object' || typeof val2 !== 'object' || val1 === null || val2 === null) {
 		diffs.push({
 			path,
 			value1: val1,
@@ -189,10 +191,10 @@ export function collectObjectDiffs(val1, val2, path, ignored, diffs) {
 
 // Array Utils
 export function getReadableArray(arr) {
-	if (arr.length <= 1) return arr[0] ?? "";
-	const andLabel = translate("labels.and");
+	if (arr.length <= 1) return arr[0] ?? '';
+	const andLabel = translate('labels.and');
 	const last = arr.pop();
-	return `${arr.join(", ")} ${andLabel} ${last}`;
+	return `${arr.join(', ')} ${andLabel} ${last}`;
 }
 
 // Element Utils
@@ -219,14 +221,14 @@ export function getChildIDs(parentId) {
 export function setRequired(id) {
 	const div = getID(id);
 	if (div) {
-		div.setAttribute("required", "");
+		div.setAttribute('required', '');
 	}
 }
 
 export function removeRequired(id) {
 	const div = getID(id);
 	if (div) {
-		div.removeAttribute("required");
+		div.removeAttribute('required');
 	}
 }
 
@@ -240,53 +242,53 @@ export function getOptionsFromSelect(id) {
 	return optionValues;
 }
 
-export function removeChild(tipo) {
-	const div = getID(tipo);
+export function removeChild(type) {
+	const div = getID(type);
 	div.parentNode.removeChild(div);
 }
 
-export function removeChildWithValidation(categoria, j) {
-	const id = getID(`${categoria}-inner-box-${j}`)
-		? `${categoria}-inner-box-${j}`
-		: `${categoria}-${j}`;
+export function removeChildWithValidation(category, j) {
+	const id = getID(`${category}-inner-box-${j}`)
+		? `${category}-inner-box-${j}`
+		: `${category}-${j}`;
 	removeChild(id);
-	hideParentIfNoChildren(categoria);
+	hideParentIfNoChildren(category);
 }
 
-export function hideParentIfNoChildren(categoria) {
-	if (getChildIDs(`${categoria}-box`).length === 0) {
-		getID(`habilitado-${categoria}`).checked = false;
-		hideContent(categoria);
+export function hideParentIfNoChildren(category) {
+	if (getChildIDs(`${category}-box`).length === 0) {
+		getID(`${category}-enabled`).checked = false;
+		hideContent(category);
 	}
 }
 
-export function removeEmptyChild(categoria) {
+export function removeEmptyChild(category) {
 	let itens = [];
 
-	switch (categoria) {
-		case "restaurantes":
-		case "lanches":
-		case "saidas":
-		case "turismo":
-		case "lojas":
-		case "lineup":
-			itens = [`${categoria}-nome`];
+	switch (category) {
+		case 'restaurants':
+		case 'snacks':
+		case 'nightlife':
+		case 'tourism':
+		case 'shopping':
+		case 'lineup':
+			itens = [`${category}-name`];
 			break;
-		case "transporte":
-			itens = ["ponto-partida", "ponto-chegada"];
+		case 'transportation':
+			itens = ['departure-point', 'arrival-point'];
 			break;
-		case "hospedagens":
-			itens = [`${categoria}-nome`, `${categoria}-endereco`];
+		case 'accommodations':
+			itens = [`${category}-name`, `${category}-address`];
 			break;
-		case "galeria":
-			itens = [`${categoria}-titulo`, `link-${categoria}`];
+		case 'gallery':
+			itens = [`${category}-title`, `link-${category}`];
 			break;
 	}
 
 	if (itens.length > 0) {
-		const j = getFirstJ(`${categoria}-box`);
+		const j = getFirstJ(`${category}-box`);
 		if (j && !hasUserData(itens, j)) {
-			removeChild(`${categoria}-${j}`);
+			removeChild(`${category}-${j}`);
 		}
 	}
 
@@ -302,16 +304,16 @@ export function removeEmptyChild(categoria) {
 
 export function getIDs(divID) {
 	const ids = [];
-	for (const item of divID.split("-")) {
+	for (const item of divID.split('-')) {
 		if (!isNaN(item)) {
 			ids.push(parseInt(item));
 		}
 	}
-	return ids.join("-");
+	return ids.join('-');
 }
 
 export function getJ(id) {
-	const jSplit = id.split("-");
+	const jSplit = id.split('-');
 	return parseInt(jSplit[jSplit.length - 1]);
 }
 
@@ -319,19 +321,19 @@ export function getJs(parentID) {
 	const parent = getID(parentID);
 	if (!parent) return [];
 
-	return Array.from(parent.querySelectorAll("[id]"))
+	return Array.from(parent.querySelectorAll('[id]'))
 		.map((el) => {
 			const id = el.id;
-			const dash = id.lastIndexOf("-");
+			const dash = id.lastIndexOf('-');
 			return dash === -1 ? NaN : Number(id.slice(dash + 1));
 		})
 		.filter(Number.isFinite);
 }
 
-export function findJFromID(id, tipo) {
-	const js = getJs(`${tipo}-box`);
+export function findJFromID(id, type) {
+	const js = getJs(`${type}-box`);
 	for (const j of js) {
-		const result = getID(`${tipo}-id-${j}`).value;
+		const result = getID(`${type}-id-${j}`).value;
 		if (result === id) {
 			return j;
 		}
@@ -358,16 +360,16 @@ export function getNextJ(parentID) {
 	return getLastUnorderedJ(parentID) + 1;
 }
 
-export function getCategoryID(tipo, j) {
-	const js = getJs(`${tipo}-box`);
+export function getCategoryID(type, j) {
+	const js = getJs(`${type}-box`);
 	let ids = [];
 
 	for (const innerJ of js) {
-		const id = getID(`${tipo}-id-${innerJ}`).value;
+		const id = getID(`${type}-id-${innerJ}`).value;
 		if (id) ids.push(id);
 	}
 
-	const currentID = getID(`${tipo}-id-${j}`).value;
+	const currentID = getID(`${type}-id-${j}`).value;
 	if (currentID && !ids.includes(currentID)) {
 		return currentID;
 	}
@@ -375,9 +377,9 @@ export function getCategoryID(tipo, j) {
 	return getRandomID({ pool: ids });
 }
 
-export function getOrCreateCategoryID(tipo, j) {
-	const currentID = getID(`${tipo}-id-${j}`).value;
-	return currentID ? currentID : getCategoryID(tipo, j);
+export function getOrCreateCategoryID(type, j) {
+	const currentID = getID(`${type}-id-${j}`).value;
+	return currentID ? currentID : getCategoryID(type, j);
 }
 
 // URL Utils
@@ -398,29 +400,29 @@ export function getURLParam(param) {
 export function setURLParam(key, value) {
 	const url = new URL(window.location.href);
 	url.searchParams.set(key, value);
-	window.history.replaceState({}, "", url);
+	window.history.replaceState({}, '', url);
 }
 
 // Document Utils
 
-export function getDataDocument(tipo) {
-	switch (tipo) {
-		case "viagens":
-		case "listagens":
+export function getDataDocument(type) {
+	switch (type) {
+		case 'trips':
+		case 'listings':
 			return getState();
-		case "destinos":
+		case 'destinations':
 			return FIRESTORE_DESTINATIONS_DATA;
 		default:
 			return null;
 	}
 }
 
-export function getNewDataDocument(tipo) {
-	switch (tipo) {
-		case "viagens":
-		case "listagens":
+export function getNewDataDocument(type) {
+	switch (type) {
+		case 'trips':
+		case 'listings':
 			return FIRESTORE_NEW_DATA;
-		case "destinos":
+		case 'destinations':
 			return FIRESTORE_DESTINATIONS_NEW_DATA;
 		default:
 			return null;
@@ -429,22 +431,22 @@ export function getNewDataDocument(tipo) {
 
 export function getTranslatedDocumentLabel(type) {
 	switch (type) {
-		case "viagens":
-			return translate("trip.document");
-		case "viagens/protected":
-			return translate("trip.protected");
-		case "destinos":
-			return translate("destination.document");
-		case "listagens":
-			return translate("listing.document");
-		case "gastos":
-			return translate("trip.expenses.document");
-		case "gastos/protected":
-			return translate("trip.expenses.protected");
-		case "protegido":
-			return translate("labels.protected");
+		case 'trips':
+			return translate('trip.document');
+		case 'trips/protected':
+			return translate('trip.protected');
+		case 'destinations':
+			return translate('destination.document');
+		case 'listings':
+			return translate('listing.document');
+		case 'expenses':
+			return translate('trip.expenses.document');
+		case 'expenses/protected':
+			return translate('trip.expenses.protected');
+		case 'protected':
+			return translate('labels.protected');
 		default:
-			return translate("labels.unknown");
+			return translate('labels.unknown');
 	}
 }
 
@@ -453,39 +455,30 @@ export function getOrderedDocumentByUpdateDate(data: Record<string, any>): any[]
 		.map(([id, v]) => ({ id, ...(v as Record<string, any>) }))
 		.sort(
 			(a: any, b: any) =>
-				new Date(b.versao.ultimaAtualizacao).getTime() -
-				new Date(a.versao.ultimaAtualizacao).getTime(),
+				new Date(b.version.lastUpdated).getTime() - new Date(a.version.lastUpdated).getTime(),
 		);
 }
 
 export function getOrderedDocumentByTitle(data: Record<string, any>): any[] {
 	return Object.entries(data)
 		.map(([id, v]) => ({ id, ...(v as Record<string, any>) }))
-		.sort((a: any, b: any) => a.titulo.localeCompare(b.titulo));
+		.sort((a: any, b: any) => a.title.localeCompare(b.title));
 }
 
 // Destination
-export function getAndDestinationTitle(value, destinos = [], placeholder = true) {
-	if (!destinos || destinos.length === 0) {
-		const placeholderValue = placeholder
-			? translate("trip.itinerary.title")
-			: "";
+export function getAndDestinationTitle(value, destinations = [], placeholder = true) {
+	if (!destinations || destinations.length === 0) {
+		const placeholderValue = placeholder ? translate('trip.itinerary.title') : '';
 		return value || placeholderValue;
 	}
 
-	const titles = destinos.map((d) => d.titulo);
-	if (value.includes("departure")) {
-		return getReadableArray([
-			translate("trip.transportation.departure"),
-			...titles,
-		]);
+	const titles = destinations.map((d) => d.title);
+	if (value.includes('departure')) {
+		return getReadableArray([translate('trip.transportation.departure'), ...titles]);
 	}
 
-	if (value.includes("return")) {
-		return getReadableArray([
-			...titles,
-			translate("trip.transportation.return"),
-		]);
+	if (value.includes('return')) {
+		return getReadableArray([...titles, translate('trip.transportation.return')]);
 	}
 
 	return getReadableArray([titles]);
@@ -495,14 +488,13 @@ export async function normalizeTikTokLink(link) {
 	if (!link) return link;
 
 	const isMobile =
-		link.startsWith("https://vm.tiktok.com/") ||
-		link.startsWith("https://vt.tiktok.com/");
+		link.startsWith('https://vm.tiktok.com/') || link.startsWith('https://vt.tiktok.com/');
 
 	if (!isMobile) return link;
 
 	try {
 		const res = await fetch(`https://www.tiktok.com/oembed?url=${link}`, {
-			method: "GET",
+			method: 'GET',
 		});
 
 		const data = await res.json();
@@ -518,45 +510,45 @@ export async function normalizeTikTokLink(link) {
 }
 
 export function getDestinationTitle(item) {
-	if (item.nome && item.emoji) {
-		return `${item.nome} ${item.emoji}`;
-	} else return item.nome;
+	if (item.name && item.emoji) {
+		return `${item.name} ${item.emoji}`;
+	} else return item.name;
 }
 
 export function getDestinationsBoxHTML({
 	j,
 	item,
 	innerItinerary,
-	valores,
-	moeda,
-	planejado,
+	values,
+	currency,
+	planned,
 	editBtn,
 }) {
 	return `
-    <div ${innerItinerary ? "" : `class="accordion-body" id="accordion-body-${j}"`}>
-        ${getDestinationsAccordionBodyHTML({ j, item, valores, moeda, planejado, editBtn })}
+    <div ${innerItinerary ? '' : `class="accordion-body" id="accordion-body-${j}"`}>
+        ${getDestinationsAccordionBodyHTML({ j, item, values: values, currency: currency, planned: planned, editBtn })}
     </div>`;
 }
 
 // Itinerary
 export function getInnerItineraryTitle(dado: Record<string, any>, viajantes = TRAVELERS) {
-	const schedule = dado.programacao || "";
-	const presentes = !dado.pessoas
+	const schedule = dado.label || '';
+	const presentes = !dado.travelers
 		? []
-		: dado.pessoas
+		: dado.travelers
 				.filter((p) => p.isPresent)
-				.map((p) => viajantes.find((t) => t.id === p.id)?.nome ?? "");
+				.map((p) => viajantes.find((t) => t.id === p.id)?.name ?? '');
 
 	const travelersText =
 		presentes.length === 0 || presentes.length === viajantes.length
-			? ""
+			? ''
 			: getReadableArray(presentes);
 
-	let time = "";
-	if (dado.inicio && dado.fim) {
-		time = `${dado.inicio} - ${dado.fim}`;
-	} else if (dado.inicio) {
-		time = dado.inicio;
+	let time = '';
+	if (dado.start && dado.end) {
+		time = `${dado.start} - ${dado.end}`;
+	} else if (dado.start) {
+		time = dado.start;
 	}
 
 	if (travelersText && time && schedule) {
@@ -581,7 +573,7 @@ export function getInnerItineraryTitle(dado: Record<string, any>, viajantes = TR
 	}
 
 	return {
-		title: "",
+		title: '',
 		content: schedule,
 	};
 }
@@ -595,77 +587,65 @@ export function getInnerItineraryTitleHTML(dado, spanClass) {
 
 export function getInnerItinerary(item, destinations) {
 	const innerItinerary = {
-		tipo: item?.tipo,
-		titulo: "",
-		content: "",
-		midia: "",
-		container:
-			item?.tipo === "destinos"
-				? "destinos-container"
-				: "programacao-container",
+		type: item?.type,
+		title: '',
+		content: '',
+		media: '',
+		container: item?.type === 'destinations' ? 'destinations-container' : 'label-container',
 	};
 	let index = -1;
-	switch (item?.tipo) {
-		case "transporte":
-			if (getState().modulos.transportes === true && item.id) {
-				index = getState().transportes.dados
-					.map((programacao) => programacao.id)
+	switch (item?.type) {
+		case 'transportation':
+			if (getState().modules.transportation === true && item.id) {
+				index = getState()
+					.transportation.data.map((label) => label.id)
 					.indexOf(item.id);
 				if (index >= 0) {
-					const transporte = getState().transportes.dados[index];
-					innerItinerary.titulo = `${transporte.pontos.partida} → ${transporte.pontos.chegada}`;
-					innerItinerary.content = getFlightBoxHTML(
-						index + 1,
-						"inner-programacao",
-						true,
-					);
+					const transportation = getState().transportation.data[index];
+					innerItinerary.title = `${transportation.points.departure} → ${transportation.points.arrival}`;
+					innerItinerary.content = getFlightBoxHTML(index + 1, 'inner-itinerary', true);
 				}
 			}
 			break;
-		case "hospedagens":
-			if (getState().modulos.hospedagens === true && item.id) {
-				index = getState().hospedagens
-					.map((hospedagem) => hospedagem.id)
+		case 'accommodations':
+			if (getState().modules.accommodations === true && item.id) {
+				index = getState()
+					.accommodations.map((hospedagem) => hospedagem.id)
 					.indexOf(item.id);
 				if (index >= 0) {
-					innerItinerary.titulo = "";
+					innerItinerary.title = '';
 					innerItinerary.content = getAccommodationsHTML(index, true);
 				}
 			}
 			break;
-		case "destinos":
-			if (
-				getState().modulos.destinos === true &&
-				item.local &&
-				item.categoria &&
-				item.id
-			) {
-				const destinationIDs = DESTINATIONS.map((d) => d.destinosID);
-				index = destinationIDs.indexOf(item.local);
+		case 'destinations':
+			if (getState().modules.destinations === true && item.location && item.category && item.id) {
+				const destinationIDs = DESTINATIONS.map((d) => d.id);
+				index = destinationIDs.indexOf(item.location);
 
 				if (!destinations) {
-					destinations = DESTINATIONS?.[index]?.destinos;
+					destinations = DESTINATIONS?.[index]?.destinations;
 				}
 
 				if (!destinations) {
 					return;
 				}
 
-				const destination = destinations[item.categoria];
+				const destination = destinations[item.category];
 				if (destination && Object.keys(destination).length) {
 					const destinationItem = destination[item.id];
 					if (destinationItem) {
-						innerItinerary.titulo = getDestinationTitle(destinationItem);
+						innerItinerary.title = getDestinationTitle(destinationItem);
 						innerItinerary.content = getDestinationsBoxHTML({
 							j: 1,
 							item: destinationItem,
 							innerItinerary: true,
-							valores: getDestinationValues(DESTINATIONS[index]),
-							moeda: destinations.moeda,
-							planejado: undefined as any,
+							values: getDestinationValues(DESTINATIONS[index]),
+							currency: destinations.currency,
+							planned: undefined as any,
 							editBtn: undefined as any,
 						});
-						innerItinerary.midia = destinationItem?.midia;
+						innerItinerary.media = destinationItem?.media;
 					}
 				}
 			}
@@ -674,39 +654,37 @@ export function getInnerItinerary(item, destinations) {
 	return innerItinerary;
 
 	function getDestinationValues(destination) {
-		const currencyValue = destination?.destinos?.moeda || "BRL";
-		const currency = cloneObject(getCurrencies().escala[currencyValue] || getCurrencies().escala["BRL"]);
-		const max = translate("destination.price.max", { value: currency["$$$$"] });
-		currency["-"] = translate("destination.price.free");
-		currency["default"] = translate("destination.price.default");
-		currency["$$$$"] = max;
+		const currencyValue = destination?.destinations?.currency || 'BRL';
+		const currency = cloneObject(
+			getCurrencies().scale[currencyValue] || getCurrencies().scale['BRL'],
+		);
+		const max = translate('destination.price.max', { value: currency['$$$$'] });
+		currency['-'] = translate('destination.price.free');
+		currency['default'] = translate('destination.price.default');
+		currency['$$$$'] = max;
 		return currency;
 	}
 }
 
-export function getLinkMediaButton(midia, tipo?) {
-	if (!midia) return;
-	const video = translate("trip.itinerary.media_button.video");
-	const playlist = translate("trip.itinerary.media_button.playlist");
+export function getLinkMediaButton(media, type?) {
+	if (!media) return;
+	const video = translate('trip.itinerary.media_button.video');
+	const playlist = translate('trip.itinerary.media_button.playlist');
 
 	let buttonText = `<i class="iconify" data-icon="lets-icons:video-fill"></i>${video}`;
 
-	if (
-		tipo == "youtube" ||
-		midia.includes("youtube") ||
-		midia.includes("youtu.be")
-	) {
+	if (type == 'youtube' || media.includes('youtube') || media.includes('youtu.be')) {
 		buttonText = `<i class="iconify" data-icon="mdi:youtube"></i>${video}`;
-	} else if (tipo == "tiktok" || midia.includes("tiktok")) {
+	} else if (type == 'tiktok' || media.includes('tiktok')) {
 		buttonText = `<i class="iconify" data-icon="ic:baseline-tiktok"></i>${video}`;
-	} else if (tipo == "spotify" || midia.includes("spotify")) {
+	} else if (type == 'spotify' || media.includes('spotify')) {
 		buttonText = `<i class="iconify" data-icon="mdi:spotify"></i>${playlist}`;
-	} else if (tipo == "instagram" || midia.includes("instagram")) {
+	} else if (type == 'instagram' || media.includes('instagram')) {
 		buttonText = `<i class="iconify" data-icon="mdi:instagram"></i> ${video}`;
 	}
 
 	return `<div class="button-box">
-              <button class="btn btn-secondary btn-format" type="submit" data-action="open-link" data-url="${midia}">${buttonText}</button>
+              <button class="btn btn-secondary btn-format" type="submit" data-action="open-link" data-url="${media}">${buttonText}</button>
             </div>`;
 }
 
@@ -715,8 +693,8 @@ export function getCurrentTrips(data: Record<string, any>) {
 	const today = convertFromDateObject(getTodayDateObject());
 	return Object.entries(data)
 		.filter(([_, v]: [string, any]) => {
-			const start = convertFromDateObject(v.inicio);
-			const end = convertFromDateObject(v.fim);
+			const start = convertFromDateObject(v.start);
+			const end = convertFromDateObject(v.end);
 			return start <= today && today <= end;
 		})
 		.map(([id, v]: [string, any]) => ({ id, ...v }));
@@ -725,46 +703,47 @@ export function getCurrentTrips(data: Record<string, any>) {
 export function getPreviousTrips(data: Record<string, any>) {
 	const today = convertFromDateObject(getTodayDateObject());
 	return Object.entries(data)
-		.filter(([_, v]: [string, any]) => convertFromDateObject(v.fim) < today)
+		.filter(([_, v]: [string, any]) => convertFromDateObject(v.end) < today)
 		.map(([id, v]: [string, any]) => ({ id, ...v }))
 		.sort(
-			(a: any, b: any) => convertFromDateObject(b.fim).getTime() - convertFromDateObject(a.fim).getTime(),
+			(a: any, b: any) =>
+				convertFromDateObject(b.end).getTime() - convertFromDateObject(a.end).getTime(),
 		);
 }
 
 export function getNextTrips(data: Record<string, any>) {
 	const today = convertFromDateObject(getTodayDateObject());
 	return Object.entries(data)
-		.filter(([_, v]: [string, any]) => convertFromDateObject(v.inicio) > today)
+		.filter(([_, v]: [string, any]) => convertFromDateObject(v.start) > today)
 		.map(([id, v]: [string, any]) => ({ id, ...v }))
 		.sort(
 			(a: any, b: any) =>
-				convertFromDateObject(a.inicio).getTime() - convertFromDateObject(b.inicio).getTime(),
+				convertFromDateObject(b.start).getTime() - convertFromDateObject(a.start).getTime(),
 		);
 }
 
 // Accommodation
 export function getAccommodationsHTML(i, innerItinerary = false) {
-	const original = getState().hospedagens[i];
+	const original = getState().accommodations[i];
 	const hospedagem = {
 		id: original.id,
-		cafe: original.cafe,
-		checkIn: getHospedagensData(original.datas.checkin),
-		checkOut: getHospedagensData(original.datas.checkout),
-		reserva: original.reserva,
-		descricao: original.descricao,
-		endereco: original.endereco,
-		imagens: original.imagens,
+		breakfast: original.breakfast,
+		checkIn: getHospedagensData(original.dates.checkIn),
+		checkOut: getHospedagensData(original.dates.checkOut),
+		reservation: original.reservation,
+		description: original.description,
+		address: original.address,
+		images: original.images,
 		link: original.link,
-		nome: original.nome,
+		name: original.name,
 	};
 
 	if (innerItinerary) {
-		return getHotelBoxHTML(hospedagem, "inner-programacao", true);
+		return getHotelBoxHTML(hospedagem, 'inner-itinerary', true);
 	}
 
 	const j = i + 1;
-	return `<div class="swiper-slide" id="hospedagens-slide-${j}">
+	return `<div class="swiper-slide" id="accommodations-slide-${j}">
             <div class="testimonial-item">
               ${getHotelBoxHTML(hospedagem, j)}
             </div>
@@ -773,10 +752,8 @@ export function getAccommodationsHTML(i, innerItinerary = false) {
 
 // Request Utils
 export function getErrorFromGetRequestMessage() {
-	return ERROR_FROM_GET_REQUEST.message.includes(
-		"Missing or insufficient permissions",
-	)
-		? translate("messages.access_denied.message.default")
+	return ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions')
+		? translate('messages.access_denied.message.default')
 		: ERROR_FROM_GET_REQUEST;
 }
 
@@ -787,8 +764,8 @@ export function combineDatabaseResponses(responses) {
 
 	const success = !responses.some((response) => response.success === false);
 	let message = success
-		? translate("messages.operations.success")
-		: `${translate("messages.operations.error")}. ${translate("messages.documents.update.error")}`;
+		? translate('messages.operations.success')
+		: `${translate('messages.operations.error')}. ${translate('messages.documents.update.error')}`;
 
 	return {
 		message: message,
@@ -836,12 +813,17 @@ export function select<T extends DOMElement = DOMElement>(el: string, all = fals
 	}
 }
 
-export function on(type: string, el: string | DOMElement, listener: EventListenerOrEventListenerObject, all = false): void {
-	if (el === "document") {
+export function on(
+	type: string,
+	el: string | DOMElement,
+	listener: EventListenerOrEventListenerObject,
+	all = false,
+): void {
+	if (el === 'document') {
 		document.addEventListener(type, listener);
-	} else if (el === "window") {
+	} else if (el === 'window') {
 		window.addEventListener(type, listener);
-	} else if (typeof el === "string") {
+	} else if (typeof el === 'string') {
 		const selectEl: (DOMElement | null)[] = all
 			? [...document.querySelectorAll<DOMElement>(el)]
 			: [document.querySelector<DOMElement>(el)];
@@ -852,60 +834,5 @@ export function on(type: string, el: string | DOMElement, listener: EventListene
 }
 
 export function onscroll(el, listener) {
-	el.addEventListener("scroll", listener);
+	el.addEventListener('scroll', listener);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

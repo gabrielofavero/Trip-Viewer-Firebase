@@ -1,0 +1,263 @@
+{
+	"companies": {
+		"car": {
+			"99": "99",
+			"avis": "Avis",
+			"cabify": "Cabify",
+			"hertz": "Hertz",
+			"localiza": "Localiza",
+			"lyft": "Lyft",
+			"movida": "Movida",
+			"uber": "Uber",
+			"unidas": "Unidas"
+		},
+		"bus": {
+			"aguiaBranca": "Águia Branca",
+			"buser": "Buser",
+			"cometa": "Cometa",
+			"gontijo": "Gontijo"
+		},
+		"flight": {
+			"aerLingus": "Aer Lingus",
+			"americanAirlines": "American Airlines",
+			"avianca": "Avianca",
+			"azul": "Azul",
+			"britishAirways": "British Airways",
+			"copa": "Copa Airlines",
+			"delta": "Delta Airlines",
+			"easyjet": "EasyJet",
+			"gol": "Gol",
+			"jetblue": "JetBlue",
+			"klm": "KLM",
+			"latam": "LATAM",
+			"lufthansa": "Lufthansa",
+			"qatar": "Qatar Airways",
+			"tap": "TAP Air Portugal",
+			"united": "United Airlines",
+			"vueling": "Vueling Airlines"
+		},
+		"bullet_train": {
+			"eurostar": "Eurostar"
+		}
+	},
+	"icons": {
+		"bicycle": "mingcute:bike-fill",
+		"cableCar": "ph:cable-car-fill",
+		"car": "fa-solid:car-side",
+		"helicopter": "fa6-solid:helicopter",
+		"locomotive": "cil:locomotive",
+		"subway": "mdi:metro",
+		"motorcycle": "ri:motorbike-fill",
+		"ship": "icon-park-solid:sailboat-one",
+		"bus": "mingcute:bus-2-fill",
+		"other": "mingcute:rocket-fill",
+		"bullet_train": "mingcute:train-fill",
+		"flight": "fa-solid:plane"
+	},
+	"images": {
+		"car": {
+			"99": {
+				"light": "assets/img/transportation/car/99.svg",
+				"dark": "assets/img/transportation/car/99-dark.svg"
+			},
+			"avis": {
+				"light": "assets/img/transportation/car/avis.svg",
+				"dark": "assets/img/transportation/car/avis-dark.svg"
+			},
+			"cabify": {
+				"light": "assets/img/transportation/car/cabify.svg",
+				"dark": "assets/img/transportation/car/cabify-dark.svg"
+			},
+			"hertz": {
+				"light": "assets/img/transportation/car/hertz.svg",
+				"dark": "assets/img/transportation/car/hertz-dark.svg"
+			},
+			"localiza": {
+				"light": "assets/img/transportation/car/localiza.svg",
+				"dark": "assets/img/transportation/car/localiza-dark.svg"
+			},
+			"lyft": {
+				"light": "assets/img/transportation/car/lyft.svg",
+				"dark": "assets/img/transportation/car/lyft-dark.svg"
+			},
+			"movida": {
+				"light": "assets/img/transportation/car/movida.svg",
+				"dark": "assets/img/transportation/car/movida-dark.svg"
+			},
+			"uber": {
+				"light": "assets/img/transportation/car/uber.svg",
+				"dark": "assets/img/transportation/car/uber-dark.svg"
+			},
+			"unidas": {
+				"light": "assets/img/transportation/car/unidas.svg",
+				"dark": "assets/img/transportation/car/unidas-dark.svg"
+			}
+		},
+		"bus": {
+			"aguiaBranca": {
+				"light": "assets/img/transportation/bus/aguia-branca.svg",
+				"dark": "assets/img/transportation/bus/aguia-branca-dark.svg"
+			},
+			"buser": {
+				"light": "assets/img/transportation/bus/buser.svg",
+				"dark": "assets/img/transportation/bus/buser-dark.svg"
+			},
+			"cometa": {
+				"light": "assets/img/transportation/bus/cometa.png",
+				"dark": "assets/img/transportation/bus/cometa-dark.png"
+			},
+			"gontijo": {
+				"light": "assets/img/transportation/bus/gontijo.png",
+				"dark": "assets/img/transportation/bus/gontijo-dark.png"
+			}
+		},
+		"flight": {
+			"aerLingus": {
+				"light": "assets/img/transportation/flight/aer-lingus.svg",
+				"dark": "assets/img/transportation/flight/aer-lingus-dark.svg"
+			},
+			"americanAirlines": {
+				"light": "assets/img/transportation/flight/american-airlines.svg",
+				"dark": "assets/img/transportation/flight/american-airlines-dark.svg"
+			},
+			"avianca": {
+				"light": "assets/img/transportation/flight/avianca.svg",
+				"dark": "assets/img/transportation/flight/avianca-dark.svg"
+			},
+			"azul": {
+				"light": "assets/img/transportation/flight/azul.svg",
+				"dark": "assets/img/transportation/flight/azul-dark.svg"
+			},
+			"britishAirways": {
+				"light": "assets/img/transportation/flight/british-airways.svg",
+				"dark": "assets/img/transportation/flight/british-airways-dark.svg"
+			},
+			"copa": {
+				"light": "assets/img/transportation/flight/copa.svg",
+				"dark": "assets/img/transportation/flight/copa-dark.svg"
+			},
+			"delta": {
+				"light": "assets/img/transportation/flight/copa.svg",
+				"dark": "assets/img/transportation/flight/copa-dark.svg"
+			},
+			"easyjet": {
+				"light": "assets/img/transportation/flight/easyjet.svg",
+				"dark": "assets/img/transportation/flight/easyjet-dark.svg"
+			},
+			"gol": {
+				"light": "assets/img/transportation/flight/gol.svg",
+				"dark": "assets/img/transportation/flight/gol-dark.svg"
+			},
+			"jetblue": {
+				"light": "assets/img/transportation/flight/jetblue.svg",
+				"dark": "assets/img/transportation/flight/jetblue-dark.svg"
+			},
+			"klm": {
+				"light": "assets/img/transportation/flight/klm.svg",
+				"dark": "assets/img/transportation/flight/klm-dark.svg"
+			},
+			"latam": {
+				"light": "assets/img/transportation/flight/latam.svg",
+				"dark": "assets/img/transportation/flight/latam-dark.svg"
+			},
+			"lufthansa": {
+				"light": "assets/img/transportation/flight/lufthansa.svg",
+				"dark": "assets/img/transportation/flight/lufthansa-dark.svg"
+			},
+			"qatar": {
+				"light": "assets/img/transportation/flight/qatar.svg",
+				"dark": "assets/img/transportation/flight/qatar-dark.svg"
+			},
+			"ryanair": {
+				"light": "assets/img/transportation/flight/ryanair.svg",
+				"dark": "assets/img/transportation/flight/ryanair-dark.svg"
+			},
+			"tap": {
+				"light": "assets/img/transportation/flight/tap.svg",
+				"dark": "assets/img/transportation/flight/tap-dark.svg"
+			},
+			"united": {
+				"light": "assets/img/transportation/flight/united.svg",
+				"dark": "assets/img/transportation/flight/united-dark.svg"
+			},
+			"vueling": {
+				"light": "assets/img/transportation/flight/vueling.svg",
+				"dark": "assets/img/transportation/flight/vueling-dark.svg"
+			}
+		},
+		"bullet_train": {
+			"eurostar": {
+				"light": "assets/img/transportation/bullet_train/eurostar.svg",
+				"dark": "assets/img/transportation/bullet_train/eurostar-dark.svg"
+			}
+		}
+	},
+	"websites": {
+		"car": {
+			"99": "https://99app.com/",
+			"avis": "https://www.avis.com/",
+			"cabify": "https://cabify.com/",
+			"hertz": "https://www.hertz.com/rentacar/reservation/",
+			"localiza": "https://www.localiza.com/",
+			"lyft": "https://www.lyft.com/",
+			"movida": "https://www.movida.com.br/",
+			"uber": "https://www.uber.com/",
+			"unidas": "https://www.unidas.com.br/"
+		},
+		"bus": {
+			"aguiaBranca": "https://www.aguiabranca.com.br/",
+			"buser": "https://www.buser.com.br/",
+			"cometa": "https://www.viacaocometa.com.br/",
+			"gontijo": "https://www.gontijo.com.br/"
+		},
+		"flight": {
+			"aerLingus": "https://www.aerlingus.com/",
+			"americanAirlines": "https://www.aa.com/",
+			"avianca": "https://www.avianca.com/",
+			"azul": "https://www.voeazul.com.br/",
+			"britishAirways": "https://www.britishairways.com/",
+			"copa": "https://www.copaair.com/",
+			"delta": "https://delta.com/",
+			"easyjet": "https://www.easyjet.com/",
+			"gol": "https://www.voegol.com.br/",
+			"jetblue": "https://www.jetblue.com/",
+			"klm": "https://www.klm.com/",
+			"latam": "https://www.latamairlines.com/",
+			"lufthansa": "https://www.lufthansa.com/",
+			"qatar": "https://www.qatarairways.com/",
+			"ryanair": "https://www.ryanair.com/",
+			"tap": "https://www.flytap.com/",
+			"united": "https://www.united.com/",
+			"vueling": "https://www.vueling.com/"
+		},
+		"bullet_train": {
+			"eurostar": "https://www.eurostar.com/"
+		}
+	},
+	"types": [
+		"flight",
+		"car",
+		"bus",
+		"cableCar",
+		"helicopter",
+		"locomotive",
+		"subway",
+		"motorcycle",
+		"ship",
+		"bullet_train",
+		"other"
+	],
+	"titles": {
+		"flight": "trip.transportation.type.flight",
+		"car": "trip.transportation.type.car",
+		"bus": "trip.transportation.type.bus",
+		"cableCar": "trip.transportation.type.cable_car",
+		"helicopter": "trip.transportation.type.helicopter",
+		"locomotive": "trip.transportation.type.train",
+		"subway": "trip.transportation.type.subway",
+		"motorcycle": "trip.transportation.type.motocycle",
+		"ship": "trip.transportation.type.ship",
+		"bullet_train": "trip.transportation.type.bullet_train",
+		"other": "labels.other"
+	}
+}

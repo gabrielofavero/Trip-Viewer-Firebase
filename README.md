@@ -6,85 +6,6 @@ A **vanilla JavaScript** single-page application for planning, managing, and vie
 
 # How it works
 
-## Main technologies
-
-| Tech | Usage |
-|---|---|
-| **Vanilla JS (ES Modules)** | All front-end logic — no framework dependencies |
-| **Firebase Firestore** | Database — trips, destinations, expenses, user data |
-| **Firebase Auth** | Email/password authentication & session management |
-| **Firebase Storage** | Image uploads (accommodations, galleries) |
-| **Firebase Cloud Functions** | Backend logic (TypeScript) — migrations, admin operations |
-| **Firebase Hosting** | Production deployment from `dist/` |
-| **Node.js** | Build script (`scripts/build/build.js`) — copies files & injects HTML partials |
-| **Bootstrap 5** | Layout & responsive grid (with custom CSS overrides) |
-| **Boxicons** | Icon library (navigation, actions, categories) |
-| **Chart.js** | Expense charts & breakdowns |
-| **Swiper** | Touch-enabled sliders (accommodation images, calendar) |
-
-## Project Structure — `public/assets/js/`
-
-```
-public/assets/js/
-├── app/                          # Bootstrap & configuration
-│   ├── main.js                   # App initialization entry point
-│   └── config.js                 # Lazy-loads & caches JSON configs (colors, language, versions)
-├── backup/                       # Backup & restore feature
-│   ├── backup.js                 # Export trip/destination data to JSON
-│   └── restore.js                # Import data from JSON backup files
-├── data/                         # Data access layer
-│   ├── firebase/
-│   │   ├── database.js           # Firestore CRUD operations (get, set, update, delete)
-│   │   ├── storage.js            # Firebase Storage (image uploads)
-│   │   └── auth.js               # Firebase Auth (user state, login, sign-out)
-│   └── services/                 # Domain services (orchestrate Firebase calls)
-│       ├── trip.service.js       # Trip-related database operations
-│       ├── destination.service.js# Destination-related database operations
-│       ├── expense.service.js    # Expense-related database operations
-│       └── auth.service.js       # Auth orchestration (login, registration, session)
-├── i18n/                         # Internationalization
-│   └── translation.js            # Multi-language text translations
-├── models/                       # Pure data transformation functions
-│   ├── trip.model.js             # Trip duration, traveler count, date helpers
-│   ├── traveler.model.js         # Traveler ID generation, validation
-│   ├── destination.model.js      # Price buckets, ratings, descriptions
-│   ├── expense.model.js          # Currency conversion, expense calculations, chart data
-│   └── itinerary.model.js        # Itinerary content formatting & extraction
-├── pages/                        # Page controllers (one folder per route)
-│   ├── home/                     # Landing page (trips, destinations, listings overview)
-│   ├── trip-detail/              # Single trip view (itinerary, categories, lightbox)
-│   ├── destination/              # Destination details with embeds & media
-│   ├── edit-trip/                # Create & edit trips
-│   ├── edit-destination/         # Create & edit destinations
-│   ├── edit-listing/             # Create & edit listings
-│   ├── expenses/                 # Trip expense breakdown & currency conversion
-│   └── itinerary/                # Full itinerary page (print/PDF export)
-├── theme/                        # Visual theme management
-│   ├── theme.js                  # Barrel file re-exporting all theme functions
-│   ├── colors.js                 # Trip/logo colors, color manipulation utilities
-│   ├── animations.js             # Loading animations & transitions
-│   ├── stylesheets.js            # Dynamic stylesheet loading & management
-│   ├── icons.js                  # SVG icon manipulation & fill colors
-│   └── visibility.js             # Dark/light mode switching & scroll locking
-├── ui/                           # Reusable UI widgets
-│   ├── accordion.js              # Collapsible accordion sections
-│   ├── bimap.js                  # Bidirectional map data structure
-│   ├── custom-select.js          # Styled custom <select> replacement
-│   ├── dynamic-select.js         # Dynamic multi-category select with search
-│   ├── embed.js                  # Third-party embed (YouTube, TikTok, Instagram)
-│   ├── fields.js                 # Input field validation & auto-formatting
-│   └── sortable.js               # Drag-and-drop reordering (transportation, accommodations)
-└── utils/                        # Pure helper functions
-    ├── dom.js                    # DOM queries, URL params, document helpers
-    ├── dates.js                  # Date formatting, timezone, calendar conversions
-    ├── devices.js                # Device/browser detection
-    ├── loading.js                # Loading spinner & long-loading timeout
-    ├── messages.js               # Toast notifications & error dialogs
-    ├── pin.js                    # PIN protection for sensitive trip data
-    ├── set.js                    # Generic form-field binding & data capture
-    └── attributions.js           # Credits & attributions modal
-```
-
 ## Build Instructions
 
 ```bash
@@ -111,23 +32,17 @@ npm run dev
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 161   | 157  | 3         | 1       |
-| 🏆   | Feature     | F000 | 168   | 137  | 22        | 9       |
-| 📈   | Improvement | M000 | 154   | 129  | 23        | 2       |
-| ⚔️   | Epic        | E000 | 48    | 31   | 8         | 9       |
+| 🐞   | Bug         | B000 | 161   | 158  | 3         | 0       |
+| 🏆   | Feature     | F000 | 170   | 138  | 22        | 10      |
+| 📈   | Improvement | M000 | 156   | 131  | 23        | 2       |
+| ⚔️   | Epic        | E000 | 50    | 34   | 9         | 7       |
 
 ## Backlog
 
 ### High Priority
 
-- 🐞 **B161:** Fix page issues post migration
+- 🏆 **F170:** Add Maps integration into edit page (hidden if no api key)
 - 🏆 **F168:** Add option to put image in destination (and make index.html see it)
-- ⚔️ **E048:** Database ovehaul
-  - Translate database 
-  - Migration + 
-  - ts/json files adaptation (+ final translation round)
-  - add image tag on destination
-  - copy destinations tag from trip/listing into user data
 - 📈 **M153:** Index improvements: 
   - trip/listing destination tags, destination images
 
@@ -154,11 +69,19 @@ npm run dev
   - *[🏆F157] Image & embed offline fallbacks (thumbnails, placeholders)*
   - *[🏆F158] Bundle instructions (README.txt) + QA validation flag*
   - *[🏆F159] Python requirements.txt + wire into pre-commit/deploy pipeline*
-- ⚔️ **E024:** Migrate project to React
 - ⚔️ **E019:** Implement Sonarqube
 - ⚔️ **E047:** Implement Unit Tests (after TypeScript migration)
 
 ## Done
+
+### July 2026
+- ⚔️ **E048:** Database ovehaul
+- 🐞 **B161:** Fix page issues post migration
+- 📈 **M155:** Load dark/light mode as soon as page starts (no flicker)
+- 📈 **M156:** Export useful dev scripts into npm run
+- ⚔️ **E049:** Code translation (PT -> EN)
+- ⚔️ **E050:** Create proper dev env (emulators, data preparation scripts, easy config)
+- 🏆 **F169:** Add option to import only a single trip document
 
 ### June 2026
 - 🐞 **B158:** When clicking on last item of transportation tab, nothing happens
@@ -859,3 +782,4 @@ npm run dev
 - 🏆 **F116:** Destinations data refactoring
 - 📈 **M119:** Instead of pop-ups, scroll to item (if not destination)
 - 🐞 **B148:** Full itinerary page giving multiple blank pages
+- ⚔️ **E024:** Migrate project to React

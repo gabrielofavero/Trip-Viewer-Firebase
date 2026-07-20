@@ -1,116 +1,116 @@
 import { getDestinations } from '../../../app/config.js';
 import { cloneObject, firstCharToUpperCase, getChildIDs, getID, getJ } from '../../../utils/dom.js';
 import { getUserLanguage, LANGUAGES, translate } from '../../../i18n/translation.js';
-import { closeMessage, displayFullMessage, getContainersInput, MESSAGE_PROPERTIES } from '../../../utils/messages.js';
-import { getSelectOptionsHTML } from "../../../ui/fields.js";
+import {
+	closeMessage,
+	displayFullMessage,
+	getContainersInput,
+	MESSAGE_PROPERTIES,
+} from '../../../utils/messages.js';
+import { getSelectOptionsHTML } from '../../../ui/fields.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../../../data/state.js';
 
-export function getDescriptionHTML(categoria, j) {
-	let content = "";
+export function getDescriptionHTML(category, j) {
+	let content = '';
 
 	for (const lang of LANGUAGES) {
 		content += `
         <div class="nice-form-group" style="display: none">
-            <label>${translate("labels.description.title")} (${lang}) <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="${categoria}-descricao-${lang}-${j}" type="text" disabled />
+            <label>${translate('labels.description.title')} (${lang}) <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="${category}-description-${lang}-${j}" type="text" disabled />
         </div>`;
 	}
 
 	return content;
 }
 
-export function setDescription(categoria, j, descricao) {
+export function setDescription(category, j, description) {
 	for (const lang of LANGUAGES) {
-		const input = getID(`${categoria}-descricao-${lang}-${j}`);
+		const input = getID(`${category}-description-${lang}-${j}`);
 		if (input) {
-			input.value = descricao[lang] || "";
+			input.value = description[lang] || '';
 		}
 	}
 }
 
-export function updateDescriptionButtonLabel(categoria, j) {
-	const button = getID(`${categoria}-descricao-button-${j}`);
-	const text = getDescriptionLabel(categoria, j);
+export function updateDescriptionButtonLabel(category, j) {
+	const button = getID(`${category}-description-button-${j}`);
+	const text = getDescriptionLabel(category, j);
 	button.innerText = text;
 }
 
-function getDescriptionLabel(categoria, j) {
-	if (!isDescriptionPreset(categoria, j)) {
-		return translate("labels.description.add");
+function getDescriptionLabel(category, j) {
+	if (!isDescriptionPreset(category, j)) {
+		return translate('labels.description.add');
 	}
 
-	const description = getDescription(categoria, j);
+	const description = getDescription(category, j);
 	const lang = getUserLanguage();
-	return description[lang] || translate("labels.description.edit");
+	return description[lang] || translate('labels.description.edit');
 }
 
-function isDescriptionPreset(categoria, j) {
+function isDescriptionPreset(category, j) {
 	for (const lang of LANGUAGES) {
-		const input = getID(`${categoria}-descricao-${lang}-${j}`);
-		if (input && input.value.trim() !== "") {
+		const input = getID(`${category}-description-${lang}-${j}`);
+		if (input && input.value.trim() !== '') {
 			return true;
 		}
 	}
 	return false;
 }
 
-export function getDescription(categoria, j) {
+export function getDescription(category, j) {
 	const description = {};
 	for (const lang of LANGUAGES) {
-		const input = getID(`${categoria}-descricao-${lang}-${j}`);
-		description[lang] = input ? input.value.trim() : "";
+		const input = getID(`${category}-description-${lang}-${j}`);
+		description[lang] = input ? input.value.trim() : '';
 	}
 	return description;
 }
 
-export function openDescriptionModal(categoria, j) {
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
-	const defaultTitle = isDescriptionPreset(categoria, j)
-		? translate("labels.description.edit")
-		: translate("labels.description.add");
-	propriedades.titulo = getID(`${categoria}-nome-${j}`).value || defaultTitle;
-	propriedades.containers = getContainersInput();
-	propriedades.conteudo = getDescriptionContent(categoria);
-	propriedades.botoes = [
+export function openDescriptionModal(category, j) {
+	const modalProperties = cloneObject(MESSAGE_PROPERTIES);
+	const defaultTitle = isDescriptionPreset(category, j)
+		? translate('labels.description.edit')
+		: translate('labels.description.add');
+	modalProperties.title = getID(`${category}-name-${j}`).value || defaultTitle;
+	modalProperties.containers = getContainersInput();
+	modalProperties.content = getDescriptionContent(category);
+	modalProperties.buttons = [
 		{
-			tipo: "cancelar",
+			type: 'cancel',
 		},
 		{
-			tipo: "confirmar",
-			acao: `saveDescription('${categoria}', ${j})`,
+			type: 'confirm',
+			action: `saveDescription('${category}', ${j})`,
 		},
 	];
 
-	displayFullMessage(propriedades);
+	displayFullMessage(modalProperties);
 
-	if (!isDescriptionPreset(categoria, j)) {
+	if (!isDescriptionPreset(category, j)) {
 		return;
 	}
 
-	loadDescriptionInputs(categoria, j);
-	getID("description-language-select").addEventListener(
-		"change",
-		descriptionSelectChangeAction,
-	);
+	loadDescriptionInputs(category, j);
+	getID('description-language-select').addEventListener('change', descriptionSelectChangeAction);
 }
 
-function getDescriptionContent(categoria) {
+function getDescriptionContent(category) {
 	const selectedLanguage = getUserLanguage();
-	const translation = getDestinations().translation[categoria];
+	const translation = getDestinations().translation[category];
 	const placeholders = {};
 	const languages = {};
 
 	for (const lang of LANGUAGES) {
-		placeholders[lang] = translate(
-			`destination.${translation}.placeholders.description.${lang}`,
-		);
+		placeholders[lang] = translate(`destination.${translation.toLowerCase()}.placeholders.description.${lang}`);
 		languages[lang] = translate(`labels.language.${lang}`);
 	}
 
 	return `
     <div>
         <div class="nice-form-group">
-            <label>${translate("labels.language.title")}</label>
+            <label>${translate('labels.language.title')}</label>
             <select id="description-language-select" class="form-control select">
                 ${getSelectOptionsHTML(languages, selectedLanguage)}
             </select>
@@ -120,12 +120,12 @@ function getDescriptionContent(categoria) {
     </div>`;
 
 	function getDescriptionContainers(languages, placeholders) {
-		let result = "";
+		let result = '';
 		for (const lang in languages) {
-			const display = lang === selectedLanguage ? "block" : "none";
+			const display = lang === selectedLanguage ? 'block' : 'none';
 			result += `
             <div class="nice-form-group" id="description-container-${lang}" style="display:${display};">
-                <label>${translate("labels.description.title")}</label>
+                <label>${translate('labels.description.title')}</label>
                 <textarea id="description-${lang}" rows="3"
                 placeholder="${placeholders[lang]}"></textarea>
             </div>`;
@@ -134,8 +134,8 @@ function getDescriptionContent(categoria) {
 	}
 }
 
-function loadDescriptionInputs(categoria, j) {
-	const description = getDescription(categoria, j);
+function loadDescriptionInputs(category, j) {
+	const description = getDescription(category, j);
 	for (const lang in description) {
 		const input = getID(`description-${lang}`);
 		if (input) {
@@ -144,7 +144,7 @@ function loadDescriptionInputs(categoria, j) {
 	}
 }
 
-export function saveDescription(categoria, j) {
+export function saveDescription(category, j) {
 	const description = {};
 	for (const lang of LANGUAGES) {
 		const input = getID(`description-${lang}`);
@@ -152,34 +152,34 @@ export function saveDescription(categoria, j) {
 			description[lang] = firstCharToUpperCase(input.value.trim());
 		}
 	}
-	setDescription(categoria, j, description);
-	updateDescriptionButtonLabel(categoria, j);
+	setDescription(category, j, description);
+	updateDescriptionButtonLabel(category, j);
 	closeMessage();
 }
 
 function descriptionSelectChangeAction() {
-	const value = getID("description-language-select").value;
+	const value = getID('description-language-select').value;
 	for (const lang of LANGUAGES) {
 		const container = getID(`description-container-${lang}`);
 		if (container) {
-			container.style.display = lang === value ? "block" : "none";
+			container.style.display = lang === value ? 'block' : 'none';
 		}
 	}
 }
 
 function getAllDescriptions() {
 	const result = {};
-	const destinos = getDestinations();
-	for (const categoria of destinos.categorias.passeios) {
-		result[categoria] = {};
-		for (const childID of getChildIDs(`${categoria}-box`)) {
+	const destinationsConfig = getDestinations();
+	for (const category of destinationsConfig.categories.tours) {
+		result[category] = {};
+		for (const childID of getChildIDs(`${category}-box`)) {
 			const j = getJ(childID);
-			const id = getID(`${categoria}-id-${j}`).value;
-			const nome = getID(`${categoria}-nome-${j}`).value;
-			const descricao = getDescription(categoria, j);
-			result[categoria][id] = {
-				nome: nome,
-				descricao: descricao,
+			const id = getID(`${category}-id-${j}`).value;
+			const name = getID(`${category}-name-${j}`).value;
+			const description = getDescription(category, j);
+			result[category][id] = {
+				name: name,
+				description: description,
 			};
 		}
 	}
@@ -187,15 +187,15 @@ function getAllDescriptions() {
 }
 
 function updateAllDescriptions(data) {
-	const destinos = getDestinations();
-	for (const categoria of destinos.categorias.passeios) {
-		for (const childID of getChildIDs(`${categoria}-box`)) {
+	const destinationsConfig = getDestinations();
+	for (const category of destinationsConfig.categories.tours) {
+		for (const childID of getChildIDs(`${category}-box`)) {
 			const j = getJ(childID);
-			const id = getID(`${categoria}-id-${j}`).value;
-			if (data[categoria] && data[categoria][id]) {
-				const descricao = data[categoria][id].descricao;
-				setDescription(categoria, j, descricao);
-				updateDescriptionButtonLabel(categoria, j);
+			const id = getID(`${category}-id-${j}`).value;
+			if (data[category] && data[category][id]) {
+				const description = data[category][id].description;
+				setDescription(category, j, description);
+				updateDescriptionButtonLabel(category, j);
 			}
 		}
 	}
@@ -207,22 +207,24 @@ function exportPTtranslations() {
 
 	for (const key in input) {
 		if (Array.isArray(input[key])) {
-			result[key] = input[key].map((item) => item?.descricao?.pt);
+			result[key] = input[key].map((item) => item?.description?.pt);
 		}
 	}
 
 	console.log(result);
 }
 
-function importPTtranslations(input, lang = "en") {
-	const keys = ["lanches", "lojas", "restaurantes", "saidas", "turismo"];
+function importPTtranslations(input, lang = 'en') {
+	const keys = ['snacks', 'shopping', 'restaurants', 'nightlife', 'tourism'];
 
 	for (const key of keys) {
-		for (let i = 0; i < FIRESTORE_DESTINATIONS_DATA[key].length; i++) {
-			const item = FIRESTORE_DESTINATIONS_DATA[key][i];
-			const descricao = item.descricao || {};
-			descricao[lang] = input[key][i];
-			item.descricao = descricao;
+		const categoryData = FIRESTORE_DESTINATIONS_DATA?.[key];
+		if (!categoryData) continue;
+		for (let i = 0; i < categoryData.length; i++) {
+			const item = categoryData[i];
+			const description = item.description || {};
+			description[lang] = input[key][i];
+			item.description = description;
 		}
 	}
 }

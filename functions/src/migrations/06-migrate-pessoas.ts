@@ -1,11 +1,9 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
-
-admin.initializeApp();
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 
 export const migrate = functions.https.onRequest(async (req, res) => {
 	try {
-		const collection = admin.firestore().collection("viagens");
+		const collection = admin.firestore().collection('viagens');
 		const snapshot = await collection.get();
 		const batch = admin.firestore().batch();
 
@@ -16,7 +14,7 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 			const pessoas = [];
 			for (let i = 0; i < quantidadePessoas; i++) {
 				pessoas.push({
-					nome: "",
+					nome: '',
 				});
 			}
 			data.pessoas = pessoas;
@@ -24,9 +22,9 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 		});
 
 		await batch.commit();
-		res.status(200).send("Data migration completed successfully.");
+		res.status(200).send('Data migration completed successfully.');
 	} catch (error) {
-		console.error("Error migrating data:", error);
-		res.status(500).send("Error migrating data.");
+		console.error('Error migrating data:', error);
+		res.status(500).send('Error migrating data.');
 	}
 });

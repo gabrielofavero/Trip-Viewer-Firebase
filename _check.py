@@ -1,9 +1,0 @@
-import
-json
-ua=[i
-for
-i
-in
-issues
-if
-i[type]==undeclared-assignment]

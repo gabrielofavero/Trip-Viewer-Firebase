@@ -1,32 +1,37 @@
 import { getState, DOCUMENT_ID } from '../../../../data/state.js';
 import { getNewPinObject, isDataUnprotected, PIN } from './protected-data.js';
-import { FIRESTORE_GASTOS_DATA } from '../../edit-trip.js';
+import { FIRESTORE_EXPENSES_DATA, FIRESTORE_PROTECTED_DATA } from '../../edit-trip.js';
 import { getID, objectExistsAndHasKeys } from '../../../../utils/dom.js';
 import { FIRESTORE_NEW_DATA } from '../../../../data/state.js';
-import { FIRESTORE_GASTOS_NEW_DATA, FIRESTORE_GASTOS_PROTECTED_NEW_DATA, FIRESTORE_PROTECTED_NEW_DATA } from '../../set-trip.js';
+import {
+	FIRESTORE_EXPENSES_NEW_DATA,
+	FIRESTORE_EXPENSES_PROTECTED_NEW_DATA,
+	FIRESTORE_PROTECTED_NEW_DATA,
+} from '../../set-trip.js';
+import { deepEqual } from '../../../../utils/diff.js';
 
 export function setCurrentPreferencePIN(preference) {
-	if (preference === "sensitive-only") {
-		getID("pin-sensitive-only").checked = true;
-	} else if (preference === "all-data") {
-		getID("pin-all-data").checked = true;
+	if (preference === 'sensitive-only') {
+		getID('pin-sensitive-only').checked = true;
+	} else if (preference === 'all-data') {
+		getID('pin-all-data').checked = true;
 	} else {
-		getID("pin-disabled").checked = true;
+		getID('pin-disabled').checked = true;
 	}
 }
 
 export function setProtectedDataAndExpenses(ops) {
 	const pinType = FIRESTORE_NEW_DATA.pin;
-	if (pinType == "no-pin") {
+	if (pinType == 'no-pin') {
 		setProtectedDataWithoutPIN(ops);
-	} else if (["all-data", "sensitive-only"].includes(pinType)) {
+	} else if (['all-data', 'sensitive-only'].includes(pinType)) {
 		setProtectedDataWithPIN(ops);
-	} else throw new Error("Invalid expenses type");
+	} else throw new Error('Invalid expenses type');
 }
 
 function setProtectedDataWithoutPIN(ops) {
-	const hasCurrentGastos = objectExistsAndHasKeys(FIRESTORE_GASTOS_DATA);
-	const hasNewGastos = objectExistsAndHasKeys(FIRESTORE_GASTOS_NEW_DATA);
+	const hasCurrentExpenses = objectExistsAndHasKeys(FIRESTORE_EXPENSES_DATA);
+	const hasNewExpenses = objectExistsAndHasKeys(FIRESTORE_EXPENSES_NEW_DATA);
 	const currentHasViagens = hasCurrentViagens();
 
 	if (!getState()) {
@@ -38,52 +43,48 @@ function setProtectedDataWithoutPIN(ops) {
 	}
 
 	function setNewDocumentNoPin() {
-		if (hasNewGastos) {
-			ops.set(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
+		if (hasNewExpenses) {
+			ops.set(`expenses/${DOCUMENT_ID}`, FIRESTORE_EXPENSES_NEW_DATA);
 		}
 	}
 
 	function removePinAndSet() {
-		if (hasCurrentGastos) {
-			ops.delete(`gastos/protected/${PIN.current}/${DOCUMENT_ID}`);
+		if (hasCurrentExpenses) {
+			ops.delete(`expenses/protected/${PIN.current}/${DOCUMENT_ID}`);
 		}
 
 		if (currentHasViagens) {
-			ops.delete(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`);
+			ops.delete(`trips/protected/${PIN.current}/${DOCUMENT_ID}`);
 		}
 
-		if (hasNewGastos && !hasCurrentGastos) {
-			ops.set(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
-		} else if (hasNewGastos && hasCurrentGastos) {
-			ops.overwrite(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
-		} else if (!hasNewGastos && hasCurrentGastos) {
-			ops.delete(`gastos/${DOCUMENT_ID}`);
+		if (hasNewExpenses && !hasCurrentExpenses) {
+			ops.set(`expenses/${DOCUMENT_ID}`, FIRESTORE_EXPENSES_NEW_DATA);
+		} else if (hasNewExpenses && hasCurrentExpenses) {
+			ops.overwrite(`expenses/${DOCUMENT_ID}`, FIRESTORE_EXPENSES_NEW_DATA);
+		} else if (!hasNewExpenses && hasCurrentExpenses) {
+			ops.delete(`expenses/${DOCUMENT_ID}`);
 		}
 
-		ops.delete(`protegido/${DOCUMENT_ID}`);
+		ops.delete(`protected/${DOCUMENT_ID}`);
 	}
 
 	function setNoPinDocument() {
-		if (hasNewGastos && hasCurrentGastos) {
-			ops.update(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
-		} else if (!hasCurrentGastos && hasNewGastos) {
-			ops.set(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
-		} else if (hasCurrentGastos && !hasNewGastos) {
-			ops.delete(`gastos/${DOCUMENT_ID}`);
-		}
+		// Only write expenses if they actually changed from what's in Firestore
+		const expensesChanged = hasNewExpenses &&
+			!deepEqual(FIRESTORE_EXPENSES_NEW_DATA, FIRESTORE_EXPENSES_DATA);
+
+		if (!expensesChanged) return;
+
+		ops.set(`expenses/${DOCUMENT_ID}`, FIRESTORE_EXPENSES_NEW_DATA);
 	}
 }
 
 function setProtectedDataWithPIN(ops) {
-	const hasCurrentGastos = objectExistsAndHasKeys(FIRESTORE_GASTOS_DATA);
-	const hasNewProtectedGastos = objectExistsAndHasKeys(
-		FIRESTORE_GASTOS_PROTECTED_NEW_DATA,
-	);
+	const hasCurrentExpenses_PIN = objectExistsAndHasKeys(FIRESTORE_EXPENSES_DATA);
+	const hasNewProtectedExpenses = objectExistsAndHasKeys(FIRESTORE_EXPENSES_PROTECTED_NEW_DATA);
 
 	const currentHasViagens = hasCurrentViagens();
-	const hasNewProtectedViagens = objectExistsAndHasKeys(
-		FIRESTORE_PROTECTED_NEW_DATA,
-	);
+	const hasNewProtectedViagens = objectExistsAndHasKeys(FIRESTORE_PROTECTED_NEW_DATA);
 
 	if (!getState()) {
 		setNewDocumentWithPin();
@@ -96,105 +97,110 @@ function setProtectedDataWithPIN(ops) {
 	}
 
 	function setNewDocumentWithPin() {
-		if (hasNewProtectedGastos) {
+		if (hasNewProtectedExpenses) {
 			ops.set(
-				`gastos/protected/${PIN.new}/${DOCUMENT_ID}`,
-				FIRESTORE_GASTOS_PROTECTED_NEW_DATA,
+				`expenses/protected/${PIN.new}/${DOCUMENT_ID}`,
+				FIRESTORE_EXPENSES_PROTECTED_NEW_DATA,
 			);
 		}
 
 		if (hasNewProtectedViagens) {
-			ops.set(
-				`viagens/protected/${PIN.new}/${DOCUMENT_ID}`,
-				FIRESTORE_PROTECTED_NEW_DATA,
-			);
+			ops.set(`trips/protected/${PIN.new}/${DOCUMENT_ID}`, FIRESTORE_PROTECTED_NEW_DATA);
 		}
 
-		ops.set(`protegido/${DOCUMENT_ID}`, getNewPinObject());
+		ops.set(`protected/${DOCUMENT_ID}`, getNewPinObject());
 	}
 
 	function addPinAndSet() {
-		if (hasCurrentGastos) {
-			ops.delete(`gastos/${DOCUMENT_ID}`);
+		if (hasCurrentExpenses_PIN) {
+			ops.delete(`expenses/${DOCUMENT_ID}`);
 		}
 
-		if (hasNewProtectedGastos) {
+		if (hasNewProtectedExpenses) {
 			ops.set(
-				`gastos/protected/${PIN.new}/${DOCUMENT_ID}`,
-				FIRESTORE_GASTOS_PROTECTED_NEW_DATA,
+				`expenses/protected/${PIN.new}/${DOCUMENT_ID}`,
+				FIRESTORE_EXPENSES_PROTECTED_NEW_DATA,
 			);
 		}
 
 		if (hasNewProtectedViagens) {
-			ops.set(
-				`viagens/protected/${PIN.new}/${DOCUMENT_ID}`,
-				FIRESTORE_PROTECTED_NEW_DATA,
-			);
+			ops.set(`trips/protected/${PIN.new}/${DOCUMENT_ID}`, FIRESTORE_PROTECTED_NEW_DATA);
 		}
 
-		ops.set(`protegido/${DOCUMENT_ID}`, getNewPinObject());
+		ops.set(`protected/${DOCUMENT_ID}`, getNewPinObject());
 	}
 
 	function setChangedPinDocument() {
-		if (hasCurrentGastos && hasNewProtectedGastos) {
-			ops.update(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
-			ops.delete(`gastos/protected/${PIN.current}/${DOCUMENT_ID}`);
+		if (hasCurrentExpenses_PIN && hasNewProtectedExpenses) {
+			ops.set(`expenses/${DOCUMENT_ID}`, FIRESTORE_EXPENSES_NEW_DATA);
+			ops.delete(`expenses/protected/${PIN.current}/${DOCUMENT_ID}`);
 			ops.set(
-				`gastos/protected/${PIN.new}/${DOCUMENT_ID}`,
-				FIRESTORE_GASTOS_PROTECTED_NEW_DATA,
+				`expenses/protected/${PIN.new}/${DOCUMENT_ID}`,
+				FIRESTORE_EXPENSES_PROTECTED_NEW_DATA,
 			);
-		} else if (!hasCurrentGastos && hasNewProtectedGastos) {
-			ops.set(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
+		} else if (!hasCurrentExpenses_PIN && hasNewProtectedExpenses) {
+			ops.set(`expenses/${DOCUMENT_ID}`, FIRESTORE_EXPENSES_NEW_DATA);
 			ops.set(
-				`gastos/protected/${PIN.new}/${DOCUMENT_ID}`,
-				FIRESTORE_GASTOS_PROTECTED_NEW_DATA,
+				`expenses/protected/${PIN.new}/${DOCUMENT_ID}`,
+				FIRESTORE_EXPENSES_PROTECTED_NEW_DATA,
 			);
 		}
 
 		if (hasCurrentViagens && hasNewProtectedViagens) {
-			ops.delete(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`);
-			ops.set(
-				`viagens/protected/${PIN.new}/${DOCUMENT_ID}`,
-				FIRESTORE_PROTECTED_NEW_DATA,
-			);
+			ops.delete(`trips/protected/${PIN.current}/${DOCUMENT_ID}`);
+			ops.set(`trips/protected/${PIN.new}/${DOCUMENT_ID}`, FIRESTORE_PROTECTED_NEW_DATA);
 		} else if (!hasCurrentViagens && hasNewProtectedViagens) {
-			ops.set(
-				`viagens/protected/${PIN.new}/${DOCUMENT_ID}`,
-				FIRESTORE_PROTECTED_NEW_DATA,
-			);
+			ops.set(`trips/protected/${PIN.new}/${DOCUMENT_ID}`, FIRESTORE_PROTECTED_NEW_DATA);
 		}
 
-		ops.update(`protegido/${DOCUMENT_ID}`, getNewPinObject());
+		ops.update(`protected/${DOCUMENT_ID}`, getNewPinObject());
 	}
 
 	function setSamePinDocument() {
-		if (hasCurrentGastos && hasNewProtectedGastos) {
-			ops.update(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
-			ops.update(
-				`gastos/protected/${PIN.current}/${DOCUMENT_ID}`,
-				FIRESTORE_GASTOS_PROTECTED_NEW_DATA,
-			);
-		} else if (!hasCurrentGastos && hasNewProtectedGastos) {
-			ops.set(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
-			ops.set(
-				`gastos/protected/${PIN.current}/${DOCUMENT_ID}`,
-				FIRESTORE_GASTOS_PROTECTED_NEW_DATA,
-			);
+		// Only write expenses if they actually changed from what's in Firestore
+		const expensesChanged = hasNewProtectedExpenses &&
+			!deepEqual(FIRESTORE_EXPENSES_PROTECTED_NEW_DATA, FIRESTORE_EXPENSES_DATA);
+
+		if (expensesChanged) {
+			if (hasCurrentExpenses_PIN) {
+				ops.update(
+					`expenses/protected/${PIN.current}/${DOCUMENT_ID}`,
+					FIRESTORE_EXPENSES_PROTECTED_NEW_DATA,
+				);
+				// Also update the unprotected copy if it exists (sync)
+				ops.update(`expenses/${DOCUMENT_ID}`, FIRESTORE_EXPENSES_NEW_DATA);
+			} else {
+				ops.set(`expenses/${DOCUMENT_ID}`, FIRESTORE_EXPENSES_NEW_DATA);
+				ops.set(
+					`expenses/protected/${PIN.current}/${DOCUMENT_ID}`,
+					FIRESTORE_EXPENSES_PROTECTED_NEW_DATA,
+				);
+			}
 		}
 
-		if (hasCurrentViagens && hasNewProtectedViagens) {
-			ops.overwrite(
-				`viagens/protected/${PIN.current}/${DOCUMENT_ID}`,
-				FIRESTORE_PROTECTED_NEW_DATA,
-			);
-		} else if (!hasCurrentViagens && hasNewProtectedViagens) {
-			ops.set(
-				`viagens/protected/${PIN.current}/${DOCUMENT_ID}`,
-				FIRESTORE_PROTECTED_NEW_DATA,
-			);
+		// Only write protected trip data if it changed
+		const viagensChanged = hasNewProtectedViagens &&
+			!deepEqual(FIRESTORE_PROTECTED_NEW_DATA, FIRESTORE_PROTECTED_DATA);
+
+		if (viagensChanged) {
+			if (hasCurrentViagens) {
+				ops.overwrite(
+					`trips/protected/${PIN.current}/${DOCUMENT_ID}`,
+					FIRESTORE_PROTECTED_NEW_DATA,
+				);
+			} else {
+				ops.set(
+					`trips/protected/${PIN.current}/${DOCUMENT_ID}`,
+					FIRESTORE_PROTECTED_NEW_DATA,
+				);
+			}
 		}
 
-		ops.update(`protegido/${DOCUMENT_ID}`, getNewPinObject());
+		// Only update PIN metadata if the PIN object itself changed
+		const newPinObj = getNewPinObject();
+		if (!deepEqual(newPinObj, { hash: PIN.current, type: FIRESTORE_NEW_DATA.pin })) {
+			ops.update(`protected/${DOCUMENT_ID}`, newPinObj);
+		}
 	}
 }
 
@@ -202,9 +208,7 @@ function hasCurrentViagens() {
 	return (
 		!!getState() &&
 		!isDataUnprotected() &&
-		((getState().transportes?.dados ?? []).some(
-			(t) => t.reserva || t.link,
-		) ||
-			(getState().hospedagens ?? []).some((h) => h.reserva || h.link))
+		((getState().transportation?.data ?? []).some((t) => t.reservation || t.link) ||
+			(getState().accommodations ?? []).some((h) => h.reservation || h.link))
 	);
 }

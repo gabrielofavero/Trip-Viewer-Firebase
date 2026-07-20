@@ -1,30 +1,25 @@
 import { getState } from '../../../data/state.js';
 import { BiMap } from '../../../ui/bimap.js';
 import { codifyText, getID, isObject, on, select } from '../../../utils/dom.js';
-import { loadImageLightbox } from "../support/embed.js";
+import { loadImageLightbox } from '../support/embed.js';
 
 var FILTER_MAP = new BiMap();
 
 // Carregamento
 export function loadGallery() {
-	loadGaleriaCategorias(
-		getState().galeria.categorias || getState().galeria.filtros,
-	);
-	loadGaleriaBody(getState().galeria);
+	loadGaleriaCategorias(getState().gallery.categories || getState().gallery.filtros);
+	loadGaleriaBody(getState().gallery);
 	adjustPortfolioHeight();
 	refreshCategorias();
 }
 
 function loadGaleriaCategorias(filters) {
-	let result = "";
-	let filtersDiv = getID("portfolio-flters");
+	let result = '';
+	let filtersDiv = getID('portfolio-flters');
 
 	filters = filters.filter(
 		(item, index) =>
-			filters.indexOf(item) === index &&
-			item !== null &&
-			item !== undefined &&
-			item !== "",
+			filters.indexOf(item) === index && item !== null && item !== undefined && item !== '',
 	);
 
 	if (filters.length > 0) {
@@ -34,42 +29,42 @@ function loadGaleriaCategorias(filters) {
 		});
 		filtersDiv.innerHTML += result;
 	} else {
-		filtersDiv.style.display = "none";
+		filtersDiv.style.display = 'none';
 	}
 }
 
-function loadGaleriaBody(galeria) {
-	let result = "";
-	for (let i = 0; i < galeria.titulos.length; i++) {
-		const title = getGaleriaTitulo(galeria, i);
-		const description = getGaleriaDescricoes(galeria, i);
-		const link = getGaleriaLink(galeria.imagens[i]);
-		const categoria = getGaleriaCategoria(galeria, i);
+function loadGaleriaBody(gallery) {
+	let result = '';
+	for (let i = 0; i < gallery.titles.length; i++) {
+		const title = getGaleriaTitulo(gallery, i);
+		const description = getGaleriaDescricoes(gallery, i);
+		const link = getGaleriaLink(gallery.images[i]);
+		const category = getGaleriaCategoria(gallery, i);
 
 		result += `
-        <div class="col-lg-4 col-md-6 portfolio-item ${categoria}">
+        <div class="col-lg-4 col-md-6 portfolio-item ${category}">
             <div class="portfolio-wrap">
                 <img src="${link}" class="img-fluid portfolio-lightbox" data-gallery="portfolioGallery" alt="">
                 <div class="portfolio-info">
                     <h4>${title}</h4>
                     <p>${description}</p>
                     <div class="portfolio-links">
-                        <a href="${link}" data-gallery="portfolioGallery" class="portfolio-lightbox galeria" title="${description}"><i class="bx bx-zoom-in"></i></a>
+                        <a href="${link}" data-gallery="portfolioGallery" class="portfolio-lightbox gallery" title="${description}"><i class="bx bx-zoom-in"></i></a>
                     </div>
                 </div>
             </div>
         </div>`;
 	}
 
-	getID("portfolio-container").innerHTML = result;
-	loadImageLightbox("galeria");
+	getID('portfolio-container').innerHTML = result;
+	loadImageLightbox('gallery');
 }
 
 function loadFilterClass(filter) {
-	let filterName = "filter-" + codifyText(filter);
+	let filterName = 'filter-' + codifyText(filter);
 
 	if (FILTER_MAP[filterName]) {
-		filterName += "-" + Object.keys(FILTER_MAP).length;
+		filterName += '-' + Object.keys(FILTER_MAP).length;
 	}
 
 	FILTER_MAP.set(filterName, filter);
@@ -77,104 +72,90 @@ function loadFilterClass(filter) {
 }
 
 // Getters
-function getGaleriaTitulo(galeria, i) {
-	let title = "";
-	if (galeria.titulos && galeria.titulos[i]) {
+function getGaleriaTitulo(gallery, i) {
+	let title = '';
+	if (gallery.titles && gallery.titles[i]) {
 		// Current Implementation
-		title = galeria.titulos[i];
-	} else if (
-		galeria.imagens &&
-		galeria.imagens[i] &&
-		galeria.imagens[i].titulo
-	) {
+		title = gallery.titles[i];
+	} else if (gallery.images && gallery.images[i] && gallery.images[i].title) {
 		// Old Implementation
-		title = galeria.imagens[i].titulo;
+		title = gallery.images[i].title;
 	}
-	return title || "";
+	return title || '';
 }
 
-function getGaleriaDescricoes(galeria, i) {
-	let description = "";
-	if (galeria.descricoes && galeria.descricoes[i]) {
+function getGaleriaDescricoes(gallery, i) {
+	let description = '';
+	if (gallery.descriptions && gallery.descriptions[i]) {
 		// Current Implementation
-		description = galeria.descricoes[i];
-	} else if (
-		galeria.imagens &&
-		galeria.imagens[i] &&
-		galeria.imagens[i].descricao
-	) {
-		// Implementação Antiga
-		description = galeria.imagens[i].descricao;
+		description = gallery.descriptions[i];
+	} else if (gallery.images && gallery.images[i] && gallery.images[i].description) {
+		// Old Implementation
+		description = gallery.images[i].description;
 	}
-	return description || "";
+	return description || '';
 }
 
-function getGaleriaCategoria(galeria, i) {
-	let categoria = "";
-	if (galeria.categorias && galeria.categorias[i]) {
-		// Implementação Atual
-		categoria = FILTER_MAP.getByValue(galeria.categorias[i]);
-	} else if (
-		galeria.imagens &&
-		galeria.imagens[i] &&
-		galeria.imagens[i].filtro
-	) {
-		// Implementação Antiga
-		categoria = FILTER_MAP.getByValue(galeria.imagens[i].filtro);
+function getGaleriaCategoria(gallery, i) {
+	let category = '';
+	if (gallery.categories && gallery.categories[i]) {
+		// Current Implementation
+		category = FILTER_MAP.getByValue(gallery.categories[i]);
+	} else if (gallery.images && gallery.images[i] && gallery.images[i].filtro) {
+		// Old Implementation
+		category = FILTER_MAP.getByValue(gallery.images[i].filtro);
 	}
-	return categoria || "";
+	return category || '';
 }
 
-function getGaleriaLink(imagem) {
-	if (isObject(imagem)) {
-		return imagem.link;
+function getGaleriaLink(image) {
+	if (isObject(image)) {
+		return image.link;
 	} else {
-		return imagem;
+		return image;
 	}
 }
 
 // Visibility
 export function adjustPortfolioHeight() {
-	const container = getID("portfolio-container");
+	const container = getID('portfolio-container');
 
 	if (!container) return;
 
-	container.style.height = "auto";
+	container.style.height = 'auto';
 	let totalHeight = 0;
 
-	container.querySelectorAll(".portfolio-item").forEach((item) => {
+	container.querySelectorAll('.portfolio-item').forEach((item) => {
 		const el = item as HTMLElement;
-		totalHeight +=
-			el.offsetHeight +
-			parseInt(window.getComputedStyle(el).marginBottom, 10);
+		totalHeight += el.offsetHeight + parseInt(window.getComputedStyle(el).marginBottom, 10);
 	});
 
 	container.style.height = `${totalHeight}px`;
 }
 
 export function refreshCategorias() {
-	let portfolioContainer = select(".portfolio-container");
+	let portfolioContainer = select('.portfolio-container');
 	if (portfolioContainer) {
 		let portfolioIsotope = new Isotope(portfolioContainer, {
-			itemSelector: ".portfolio-item",
+			itemSelector: '.portfolio-item',
 		});
 
-		let portfolioFilters = select("#portfolio-flters li", true);
+		let portfolioFilters = select('#portfolio-flters li', true);
 
 		on(
-			"click",
-			"#portfolio-flters li",
+			'click',
+			'#portfolio-flters li',
 			function (e) {
 				e.preventDefault();
 				portfolioFilters.forEach(function (el) {
-					el.classList.remove("filter-active");
+					el.classList.remove('filter-active');
 				});
-				this.classList.add("filter-active");
+				this.classList.add('filter-active');
 
 				portfolioIsotope.arrange({
-					filter: this.getAttribute("data-filter"),
+					filter: this.getAttribute('data-filter'),
 				});
-				portfolioIsotope.on("arrangeComplete", function () {
+				portfolioIsotope.on('arrangeComplete', function () {
 					AOS.refresh();
 				});
 			},

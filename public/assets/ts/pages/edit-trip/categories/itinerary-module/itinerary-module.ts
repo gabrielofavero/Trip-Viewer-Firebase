@@ -1,72 +1,85 @@
-import { convertFromDateObject, convertToDateObject, dateObjectToKey, getDateTitle, jsDateToKey } from '../../../../utils/dates.js';
-import { getAndDestinationTitle, getChildIDs, getID, getIDs, getReadableArray } from '../../../../utils/dom.js';
+import {
+	convertFromDateObject,
+	convertToDateObject,
+	dateObjectToKey,
+	getDateTitle,
+	jsDateToKey,
+} from '../../../../utils/dates.js';
+import {
+	getAndDestinationTitle,
+	getChildIDs,
+	getID,
+	getIDs,
+	getReadableArray,
+} from '../../../../utils/dom.js';
 import { addValueToSelectIfExists, getAllValuesFromSelect } from '../../../../ui/fields.js';
 import { initializeSortableForGroup } from '../../../../ui/sortable.js';
 import { translate } from '../../../../i18n/translation.js';
-import { addValuesForDestinosAtivosCards, getDestinosFromCards, DESTINOS_ATIVOS } from '../destination.js';
+import {
+	addValuesForActiveDestinationsCards,
+	getDestinationsFromCards,
+	ACTIVE_DESTINATIONS,
+} from '../destination.js';
 import { DESTINATIONS } from '../../../../data/state.js';
-import { INNER_PROGRAMACAO, afterDragInnerItinerary, loadInnerItineraryHTML } from "../itinerary-module/inner-itinerary/inner-itinerary.js";
-import { updateDestinosAtivosCardsHTML } from "../destination.js";
-import { DATAS } from "../../new-trip.js";
+import {
+	INNER_ITINERARY,
+	afterDragInnerItinerary,
+	loadInnerItineraryHTML,
+} from '../itinerary-module/inner-itinerary/inner-itinerary.js';
+import { updateActiveDestinationsCardsHTML } from '../destination.js';
+import { DATAS } from '../../new-trip.js';
 
-export var FIRESTORE_PROGRAMACAO_DATA = {};
-export function setProgramacaoData(val) { FIRESTORE_PROGRAMACAO_DATA = val; }
+export var FIRESTORE_ITINERARY_DATA = {};
+export function setItineraryData(val) {
+	FIRESTORE_ITINERARY_DATA = val;
+}
 
 export function getItineraryArray() {
 	let result = [];
 
 	for (let j = 1; j <= DATAS.length; j++) {
 		const innerResult = {
-			data: convertToDateObject(DATAS[j - 1]),
-			destinosIDs: [],
-			titulo: {
-				valor: "",
-				traduzir: false,
-				destinos: false,
+			date: convertToDateObject(DATAS[j - 1]),
+			destinationIds: [],
+			title: {
+				value: '',
+				translate: false,
+				showDestinations: false,
 			},
-			madrugada: [],
-			manha: [],
-			tarde: [],
-			noite: [],
+			earlyMorning: [],
+			morning: [],
+			afternoon: [],
+			night: [],
 		};
 
-		innerResult.destinosIDs = getDestinosFromCards("programacao", j);
+		innerResult.destinationIds = getDestinationsFromCards('itinerary', j);
 
-		const tituloSelectValue = getID(
-			`programacao-inner-title-select-${j}`,
-		).value;
-		if (tituloSelectValue == "outro") {
-			innerResult.titulo.valor = getID(`programacao-inner-title-${j}`).value;
+		const tituloSelectValue = getID(`itinerary-inner-title-select-${j}`).value;
+		if (tituloSelectValue == 'other') {
+			innerResult.title.value = getID(`itinerary-inner-title-${j}`).value;
 		} else {
-			innerResult.titulo.valor = tituloSelectValue;
+			innerResult.title.value = tituloSelectValue;
 		}
 
-		innerResult.titulo.traduzir = [
-			"departure",
-			"return",
-			"during",
-			"departure_and_destinations",
-			"return_and_destinations",
+		innerResult.title.translate = [
+			'departure',
+			'return',
+			'during',
+			'departure_and_destinations',
+			'return_and_destinations',
 		].includes(tituloSelectValue);
 
-		innerResult.titulo.destinos =
-			[
-				"departure_and_destinations",
-				"return_and_destinations",
-				"all_destinations",
-			].includes(tituloSelectValue) ||
-			DESTINATIONS.map((d) => d.id).includes(tituloSelectValue);
+		innerResult.title.showDestinations =
+			['departure_and_destinations', 'return_and_destinations', 'all_destinations'].includes(
+				tituloSelectValue,
+			) || DESTINATIONS.map((d) => d.id).includes(tituloSelectValue);
 
-		if (
-			DATAS[j - 1] &&
-			DATAS[j - 1] &&
-			INNER_PROGRAMACAO[jsDateToKey(DATAS[j - 1])]
-		) {
-			const turnos = INNER_PROGRAMACAO[jsDateToKey(DATAS[j - 1])];
-			innerResult.madrugada = turnos.madrugada;
-			innerResult.manha = turnos.manha;
-			innerResult.tarde = turnos.tarde;
-			innerResult.noite = turnos.noite;
+		if (DATAS[j - 1] && DATAS[j - 1] && INNER_ITINERARY[jsDateToKey(DATAS[j - 1])]) {
+			const periods = INNER_ITINERARY[jsDateToKey(DATAS[j - 1])];
+			innerResult.earlyMorning = periods.earlyMorning;
+			innerResult.morning = periods.morning;
+			innerResult.afternoon = periods.afternoon;
+			innerResult.night = periods.night;
 		}
 		result.push(innerResult);
 	}
@@ -74,115 +87,110 @@ export function getItineraryArray() {
 	return result;
 }
 
-export function applyLoadedItineraryData(j, dados) {
-	const jsDate = convertFromDateObject(dados.data);
+export function applyLoadedItineraryData(j, data) {
+	const jsDate = convertFromDateObject(data.date);
 
-	const destinosIDsObject = dados.destinosIDs;
-	let destinosIDs = [];
-	if (destinosIDsObject && destinosIDsObject.length > 0) {
-		destinosIDs = destinosIDsObject.map((destino) => destino.destinosID);
-		addValuesForDestinosAtivosCards("programacao", j, destinosIDs);
+	const destinationIdsObject = data.destinationIds;
+	let destinationIds = [];
+	if (destinationIdsObject && destinationIdsObject.length > 0) {
+		destinationIds = destinationIdsObject.map((dest) => dest.destinationId || dest.id);
+		addValuesForActiveDestinationsCards('itinerary', j, destinationIds);
 	}
 
-	getID(`programacao-inner-title-select-${j}`).innerHTML =
-		getItineraryTitleSelectOptions(j);
+	getID(`itinerary-inner-title-select-${j}`).innerHTML = getItineraryTitleSelectOptions(j);
 
-	let titulo = dados.titulo?.valor ?? dados.titulo;
-	if (titulo) {
-		const selectValues = getAllValuesFromSelect(
-			getID(`programacao-inner-title-select-${j}`),
-		);
-		if (destinosIDs && destinosIDs.includes(titulo)) {
-			getID(`programacao-inner-title-${j}`).style.display = "none";
-		} else if (
-			titulo.toLowerCase() == "outro" ||
-			!selectValues.includes(titulo)
-		) {
-			getID(`programacao-inner-title-select-${j}`).value = "outro";
-			getID(`programacao-inner-title-${j}`).style.display = "block";
-			getID(`programacao-inner-title-${j}`).value = titulo;
+	let title = data.title?.value ?? data.title;
+	if (title) {
+		const selectValues = getAllValuesFromSelect(getID(`itinerary-inner-title-select-${j}`));
+		if (destinationIds && destinationIds.includes(title)) {
+			getID(`itinerary-inner-title-select-${j}`).value = title;
+			getID(`itinerary-inner-title-${j}`).style.display = 'none';
+		} else if (title.toLowerCase() == 'other' || !selectValues.includes(title)) {
+			getID(`itinerary-inner-title-select-${j}`).value = 'other';
+			getID(`itinerary-inner-title-${j}`).style.display = 'block';
+			getID(`itinerary-inner-title-${j}`).value = title;
 		} else {
-			getID(`programacao-inner-title-select-${j}`).value = titulo;
-			getID(`programacao-inner-title-${j}`).style.display = "none";
+			getID(`itinerary-inner-title-select-${j}`).value = title;
+			getID(`itinerary-inner-title-${j}`).style.display = 'none';
 		}
 	}
 
-	INNER_PROGRAMACAO[jsDateToKey(jsDate)] = {
-		madrugada: dados.madrugada || [],
-		manha: dados.manha || [],
-		tarde: dados.tarde || [],
-		noite: dados.noite || [],
+	INNER_ITINERARY[jsDateToKey(jsDate)] = {
+		earlyMorning: data.earlyMorning || [],
+		morning: data.morning || [],
+		afternoon: data.afternoon || [],
+		night: data.night || [],
 	};
 
 	updateItineraryTitle(j);
 	loadInnerItineraryHTML(j);
-	initializeSortableForGroup(`programacao-${j}`, {
+	initializeSortableForGroup(`itinerary-${j}`, {
 		onEnd: afterDragInnerItinerary,
 	});
 }
 
 export function updateItineraryTitle(j) {
-	const div = getID(`programacao-title-${j}`);
-	const tituloInput = getID(`programacao-inner-title-${j}`);
-	const tituloSelect = getID(`programacao-inner-title-select-${j}`);
-	let titulo;
+	const div = getID(`itinerary-title-${j}`);
+	const tituloInput = getID(`itinerary-inner-title-${j}`);
+	const tituloSelect = getID(`itinerary-inner-title-select-${j}`);
+	let title;
 	let value;
 
 	value = tituloSelect.value;
 	switch (value) {
-		case "":
-			titulo = "";
+		case '':
+			title = '';
 			break;
-		case "outro":
-			titulo = tituloInput.value;
-			tituloInput.style.display = "block";
+		case 'other':
+			title = tituloInput.value;
+			tituloInput.style.display = 'block';
 			value = tituloInput.value;
 			break;
-		case "departure":
-		case "return":
-		case "during":
-			titulo = translate(`trip.transportation.${tituloSelect.value}`);
-			tituloInput.style.display = "none";
+		case 'departure':
+		case 'return':
+		case 'during':
+			title = translate(`trip.transportation.${tituloSelect.value}`);
+			tituloInput.style.display = 'none';
 			break;
 		default:
-			titulo = getDestinationItineraryTitle(value, j);
-			tituloInput.style.display = "none";
+			title = getDestinationItineraryTitle(value, j);
+			tituloInput.style.display = 'none';
 	}
 
 	const data = DATAS[j - 1];
-	const dataFormatada = getDateTitle(data, "weekday_day_month");
-	div.innerText = getItineraryTitle(dataFormatada, titulo);
+	const dataFormatada = getDateTitle(data, 'weekday_day_month');
+	div.innerText = getItineraryTitle(dataFormatada, title);
 }
 
 function getDestinationItineraryTitle(value, j) {
 	const activeDestinations = getActiveDestinations(j);
-	const destinosTitulos = activeDestinations.map((destino) => destino.label);
-	const destinosIDs = activeDestinations.map((destino) => destino.value);
+	const destinationTitles = activeDestinations.map((destination) => destination.label);
+	const destinationIds = activeDestinations.map((destination) => destination.value);
 
-	if (value === "all_destinations") {
-		return getReadableArray(destinosTitulos);
+	if (value === 'all_destinations') {
+		return getReadableArray(destinationTitles);
 	}
 
-	if (value.includes("_and_destinations")) {
-		return getAndDestinationTitle(value, destinosTitulos);
+	if (value.includes('_and_destinations')) {
+		return getAndDestinationTitle(value, destinationTitles);
 	}
 
-	if (destinosIDs.includes(value)) {
-		const index = destinosIDs.indexOf(value);
-		return destinosTitulos[index];
+	if (destinationIds.includes(value)) {
+		const index = destinationIds.indexOf(value);
+		return destinationTitles[index];
 	}
 
-	return "";
+	return '';
 }
 
 export function getActiveDestinations(j) {
 	const result = [];
-	const fieldSet = getID(`programacao-local-${j}`);
+	const fieldSet = getID(`itinerary-location-${j}`);
 	if (!fieldSet) return result;
-	for (const card of fieldSet.querySelectorAll(".destino-card.selected")) {
-		const nameEl = card.querySelector(".destino-card-name") as HTMLElement;
-		const label = nameEl?.textContent?.trim() || "";
-		const value = card.getAttribute("data-destino-id") || "";
+	for (const card of fieldSet.querySelectorAll('.destination-card.selected')) {
+		const nameEl = card.querySelector('.destination-card-name') as HTMLElement;
+		const label = nameEl?.textContent?.trim() || '';
+		const value = card.getAttribute('data-destination-id') || '';
 		if (value) {
 			result.push({ label, value });
 		}
@@ -191,53 +199,45 @@ export function getActiveDestinations(j) {
 }
 
 export function getItineraryTitleSelectOptions(j = null) {
-	const semTitulo = `<option value="">${translate("labels.no_title")}</option>`;
-	let destino = "";
-	let idaVoltaDestino = "";
+	const semTitulo = `<option value="">${translate('labels.no_title')}</option>`;
+	let destination = '';
+	let idaVoltaDestino = '';
 
 	if (j) {
-		let labels = [];
-		let values = [];
+		const activeDestinations = getActiveDestinations(j);
+		const labels = activeDestinations.map((d) => d.label);
+		const values = activeDestinations.map((d) => d.value);
 
-		for (const child of getChildIDs(`programacao-local-${j}`)) {
-			const ids = getIDs(child);
-			const checkbox = getID(`check-programacao-${ids}`);
-			if (checkbox.checked) {
-				labels.push(getID(`check-programacao-label-${ids}`).innerText);
-				values.push(checkbox.value);
-			}
-		}
-
-		if (values.length > 0 && DESTINOS_ATIVOS.length > 0) {
+		if (values.length > 0 && ACTIVE_DESTINATIONS.length > 0) {
 			for (let i = 0; i < values.length; i++) {
-				destino += `<option value="${values[i]}">${labels[i]}</option>`;
+				destination += `<option value="${values[i]}">${labels[i]}</option>`;
 			}
 			if (labels.length > 1) {
 				const text = getReadableArray(labels);
-				destino += `<option value="all_destinations">${text}</option>`;
+				destination += `<option value="all_destinations">${text}</option>`;
 			}
-			const idaArray = [translate("trip.transportation.departure"), ...labels];
+			const idaArray = [translate('trip.transportation.departure'), ...labels];
 			const idaText = getReadableArray(idaArray);
 			idaVoltaDestino += `<option value="departure_and_destinations">${idaText}</option>`;
 
-			const voltaArray = [...labels, translate("trip.transportation.return")];
+			const voltaArray = [...labels, translate('trip.transportation.return')];
 			const voltaText = getReadableArray(voltaArray);
 			idaVoltaDestino += `<option value="return_and_destinations">${voltaText}</option>`;
 		}
 	}
 
-	return `${destino}
-            ${destino ? "" : semTitulo}
-            <option value="departure">${translate("trip.transportation.departure")}</option>
-            <option value="return">${translate("trip.transportation.return")}</option>
-            <option value="during">${translate("trip.transportation.during")}</option>
+	return `${destination}
+            ${destination ? '' : semTitulo}
+            <option value="departure">${translate('trip.transportation.departure')}</option>
+            <option value="return">${translate('trip.transportation.return')}</option>
+            <option value="during">${translate('trip.transportation.during')}</option>
             ${idaVoltaDestino}
-            ${destino ? semTitulo : ""}
-            <option value="outro">${translate("labels.other")}</option>`;
+            ${destination ? semTitulo : ''}
+            <option value="other">${translate('labels.other')}</option>`;
 }
 
 function updateItineraryTitleSelect(j) {
-	const select = getID(`programacao-inner-title-select-${j}`);
+	const select = getID(`itinerary-inner-title-select-${j}`);
 	const value = select.value;
 	select.innerHTML = getItineraryTitleSelectOptions(j);
 	if (value) {
@@ -246,39 +246,37 @@ function updateItineraryTitleSelect(j) {
 	updateItineraryTitle(j);
 }
 
-function getItineraryTitle(dataFormatada, titulo = "") {
-	if (titulo) return `${titulo}: ${dataFormatada}`;
+function getItineraryTitle(dataFormatada, title = '') {
+	if (title) return `${title}: ${dataFormatada}`;
 	else return dataFormatada;
 }
 
 export function reloadItinerary() {
-	if (!getID("habilitado-programacao").checked) return;
+	if (!getID('itinerary-enabled').checked) return;
 	const originalData = getItineraryArray() || [];
-	const originalDataInputs = originalData.map((data) =>
-		dateObjectToKey(data.data),
-	);
+	const originalDataInputs = originalData.map((data) => dateObjectToKey(data.date));
 
 	let j = 1;
 	for (const data of DATAS.map((data) => jsDateToKey(data))) {
 		if (originalDataInputs.includes(data)) {
 			const index = originalDataInputs.indexOf(data);
-			const dados = originalData[index];
-			applyLoadedItineraryData(j, dados);
+			const orig = originalData[index];
+			applyLoadedItineraryData(j, orig);
 		}
 		j++;
 	}
-	updateDestinosAtivosCardsHTML("programacao");
+	updateActiveDestinationsCardsHTML('itinerary');
 }
 
 // Listeners
 export function loadItineraryListeners(j) {
 	// Card-based destination selection
-	const container = getID(`programacao-local-${j}`);
+	const container = getID(`itinerary-location-${j}`);
 	if (!container) return;
-	for (const card of container.querySelectorAll(".destino-card")) {
-		card.addEventListener("click", () => {
-			card.classList.toggle("selected");
-			if (card.classList.contains("selected")) {
+	for (const card of container.querySelectorAll('.destination-card')) {
+		card.addEventListener('click', () => {
+			card.classList.toggle('selected');
+			if (card.classList.contains('selected')) {
 				container.prepend(card);
 			}
 			updateItineraryTitleSelect(j);

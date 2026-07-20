@@ -8,6 +8,18 @@
 <meta name="viewport"
   content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
 
+<!-- Prevent flash of incorrect theme: set data-theme before first paint -->
+<script>
+  (function() {
+    var stored = sessionStorage.getItem("darkMode");
+    var isDark;
+    if (stored === "true") isDark = true;
+    else if (stored === "false") isDark = false;
+    else isDark = (new Date().getHours() >= 18 || new Date().getHours() < 6);
+    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+  })();
+</script>
+
 <title>{{PAGE_TITLE}}</title>
 <meta content="Your Travel Planner" name="description">
 <meta property="og:description" content="Your Travel Planner">

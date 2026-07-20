@@ -1,13 +1,15 @@
-import { displayError, displayMessage } from "../../utils/messages.js";
+import { displayError, displayMessage } from '../../utils/messages.js';
 import { getHTMLpage } from '../../app/main.js';
 import { getID } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
-import { create, get, getSystemData } from './database.js';
+import { create, get, getSystemData, COLLECTION } from './database.js';
 
 export let USER_DATA;
 export let UID;
 
-export function setUserData(value) { USER_DATA = value; }
+export function setUserData(value) {
+	USER_DATA = value;
+}
 
 export async function getUserData(uid?) {
 	if (USER_DATA) {
@@ -16,36 +18,37 @@ export async function getUserData(uid?) {
 	if (!uid) {
 		uid = await getUID();
 	}
-	return await get(`usuarios/${uid}`);
+	return await get(`${COLLECTION.USERS}/${uid}`);
 }
 
 export function unloadPageUserFunctions() {
 	const html = getHTMLpage();
-	if (html == "index") {
-		openIndexPage("unlogged", 0, 1);
+	if (html === 'index') {
+		const unloggedView = document.getElementById('unlogged-view');
+		const loggedView = document.getElementById('logged-view');
+		if (unloggedView) unloggedView.style.display = 'block';
+		if (loggedView) loggedView.style.display = 'none';
 	}
 }
 
 export async function signInWithEmailAndPassword() {
-	const email = getID("login-email").value;
-	const password = getID("login-password").value;
+	const email = getID('login-email').value;
+	const password = getID('login-password').value;
 
 	try {
 		// Set persistence to LOCAL
 		await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 		// Sign in with email and password
-		const userCredential = await firebase
-			.auth()
-			.signInWithEmailAndPassword(email, password);
+		const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
 
 		// Get the signed-in user
 		const user = userCredential.user;
-		console.log("User signed in:", user);
+		console.log('User signed in:', user);
 
 		return user; // Optionally return the user for further use
 	} catch (error) {
-		console.error("Error signing in:", error.message);
+		console.error('Error signing in:', error.message);
 		displayError(error);
 	}
 }
@@ -53,10 +56,16 @@ export async function signInWithEmailAndPassword() {
 export function signOut() {
 	UID = null;
 	firebase.auth().signOut();
-	if (window.location.href.includes("index.html")) {
-		openIndexPage("unlogged", 0, 1);
+	// Check if we're on the index page (clean URL "/" or "index.html")
+	const path = window.location.pathname.replace(/\/+$/, '');
+	if (path === '' || path === '/index' || path.endsWith('/index')) {
+		// Already on index — show unlogged view (no navigation needed)
+		const unloggedView = document.getElementById('unlogged-view');
+		const loggedView = document.getElementById('logged-view');
+		if (unloggedView) unloggedView.style.display = 'block';
+		if (loggedView) loggedView.style.display = 'none';
 	} else {
-		window.location.href = "index.html";
+		window.location.href = '/';
 	}
 }
 
@@ -65,31 +74,32 @@ export async function registerIfUserNotPresent() {
 
 	if (!user) {
 		signOut();
-		displayError(translate("messages.errors.unauthenticated"));
+		displayError(translate('messages.errors.unauthenticated'));
 		return;
 	}
 
-	const userDoc = await get(`usuarios/${user.uid}`);
+	const userDoc = await get(`${COLLECTION.USERS}/${user.uid}`);
 	const systemData = await getSystemData();
 	const registrationOpen = systemData?.registrationOpen == true;
 
 	if (!userDoc && !registrationOpen) {
-		signOut();
-		const title = "Você chegou muito cedo! 😅";
-		const content =
-			"Olá! O TripViewer não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀";
+		const title = translate('messages.too_early.title');
+		const content = translate('messages.too_early.message');
 		displayMessage(title, content);
+		// Sign out from Firebase Auth only (skip signOut() which redirects)
+		UID = null;
+		firebase.auth().signOut();
 		return;
 	}
 
 	if (!userDoc && registrationOpen) {
 		await create(
-			`usuarios`,
+			`${COLLECTION.USERS}`,
 			{
-				listagens: [],
-				viagens: [],
-				destinos: [],
-				visibilidade: "dinamico",
+				listings: [],
+				trips: [],
+				destinations: [],
+				visibility: 'dynamic',
 			},
 			user.uid,
 		);
@@ -116,7 +126,7 @@ export async function getFirebaseIdToken(user) {
 	if (user) {
 		return await user.getIdToken();
 	} else {
-		return Promise.reject("User is not authenticated.");
+		return Promise.reject('User is not authenticated.');
 	}
 }
 

@@ -4,39 +4,42 @@ import { getChildIDs, getID } from '../../../utils/dom.js';
 import { convertFromDateObject, getTodayDateObject, jsDateToKey } from '../../../utils/dates.js';
 import { loadCustomSelect, loadCustomSelectAction } from '../../../ui/custom-select.js';
 import { translate } from '../../../i18n/translation.js';
-import { openViewEmbed } from "../support/embed.js";
-import { getVisibility } from "../../../theme/theme.js";
-import { CUSTOM_SELECTS } from "../../../ui/custom-select.js";
-import { END_DATE } from "../view.js";
-import { START_DATE } from "../view.js";
-import { SCHEDULE_DESTINATIONS } from "./itinerary-module/itinerary-module.js";
+import { openViewEmbed } from '../support/embed.js';
+import { getVisibility } from '../../../theme/theme.js';
+import { CUSTOM_SELECTS } from '../../../ui/custom-select.js';
+import { END_DATE } from '../view.js';
+import { START_DATE } from '../view.js';
+import { SCHEDULE_DESTINATIONS } from './itinerary-module/itinerary-module.js';
 
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var ACTIVE_DESTINATION;
+export function setActiveDestination(val: any) {
+	ACTIVE_DESTINATION = val;
+}
 var DESTINO_EXPORT = {};
 var DESTINO_TRANSLATIONS = {};
 
 // ======= LOADERS =======
 export function loadDestinations() {
 	for (let i = 0; i < DESTINATIONS.length; i++) {
-		P_RESULT[DESTINATIONS[i].destinos.destinosID] = DESTINATIONS[i].destinos;
+		P_RESULT[DESTINATIONS[i].destinations.id] = DESTINATIONS[i].destinations;
 	}
 
 	if (DESTINATIONS.length % 2 === 1) {
-		// Ímpar
-		getID("destinationsBox").classList.add("centered-destino-box");
+		// Odd
+		getID('destinationsBox').classList.add('centered-destination-box');
 	}
 
 	if (
 		DESTINATIONS.length === 1 &&
-		getID("destinations-select").style.display === "none" &&
-		getChildIDs("destinationsBox").length <= 1
+		getID('destinations-select').style.display === 'none' &&
+		getChildIDs('destinationsBox').length <= 1
 	) {
-		getID("destinationsTitleContainer").style.display = "none";
+		getID('destinationsTitleContainer').style.display = 'none';
 	}
 
-	window.addEventListener("resize", function () {
+	window.addEventListener('resize', function () {
 		adjustDestinationsHTML();
 	});
 
@@ -54,29 +57,29 @@ function autoNavigateDestinos() {
 	const hojeDestinos = SCHEDULE_DESTINATIONS[hojeKey];
 	if (!hojeDestinos || hojeDestinos.length === 0) return;
 
-	const targetDestinosID = hojeDestinos[0].destinosID;
+	const targetDestinosID = hojeDestinos[0].id;
 	if (!targetDestinosID) return;
 
-	const option = CUSTOM_SELECTS["destinations-select"]?.options.find(
+	const option = CUSTOM_SELECTS['destinations-select']?.options.find(
 		(opt) => opt.value === targetDestinosID,
 	);
 	if (!option) return;
 
-	loadCustomSelectAction("destinations-select", targetDestinosID, option.label);
+	loadCustomSelectAction('destinations-select', targetDestinosID, option.label);
 }
 
 export function loadDestinationsCustomSelect() {
-	setDestinations(getState().destinos);
+	setDestinations(getState().destinations || getState().destinationRefs);
 
 	if (DESTINATIONS.length <= 1) {
-		getID("destinations-select").style.display = "none";
+		getID('destinations-select').style.display = 'none';
 		return;
 	}
 
 	const options = getDestinationsCustomSelectOptions();
 
 	const customSelect = {
-		id: "destinations-select",
+		id: 'destinations-select',
 		options,
 		activeOption: options[0].value,
 		action: loadDestionationCustomSelectAction,
@@ -86,20 +89,18 @@ export function loadDestinationsCustomSelect() {
 
 	function getDestinationsCustomSelectOptions() {
 		const options = [];
-		const itineraryOrder: Set<string> = getState().programacoes
+		const itineraryOrder: Set<string> = getState().itinerary
 			? new Set<string>(
-					getState().programacoes
-						.flatMap((item: any) =>
-							(item.destinosIDs || []).map((d: any) => d.destinosID),
-						)
+					getState()
+						.itinerary.flatMap((item: any) => (item.destinationIds || []).map((d: any) => d.id))
 						.filter(Boolean),
 				)
 			: new Set<string>();
 
-		for (const destino of DESTINATIONS) {
+		for (const destination of DESTINATIONS) {
 			options.push({
-				value: destino.destinosID,
-				label: destino.destinos.titulo,
+				value: destination.id,
+				label: destination.destinations.title,
 			});
 		}
 
@@ -129,9 +130,9 @@ export function loadDestinationsCustomSelect() {
 
 	function loadDestionationCustomSelectAction(value) {
 		for (let i = 0; i < DESTINATIONS.length; i++) {
-			if (DESTINATIONS[i].destinosID === value) {
-				ACTIVE_DESTINATION = DESTINATIONS[i].destinosID;
-				loadDestinationsHTML(getState().destinos[i]);
+			if (DESTINATIONS[i].id === value) {
+				ACTIVE_DESTINATION = DESTINATIONS[i].id;
+				loadDestinationsHTML((getState().destinations || getState().destinationRefs)[i]);
 				adjustDestinationsHTML();
 				break;
 			}
@@ -139,24 +140,24 @@ export function loadDestinationsCustomSelect() {
 	}
 }
 
-export function loadDestinationsHTML(destino) {
-	let text = "";
-	const destinos = getDestinations();
-	const types = destinos.categorias.geral;
+export function loadDestinationsHTML(destination) {
+	let text = '';
+	const destinationsConfig = getDestinations();
+	const types = destinationsConfig.categories.general;
 
 	for (let i = 0; i < types.length; i++) {
 		const type = types[i];
 
-		if (type != "mapa" && Object.keys(destino.destinos[type]).length === 0) {
+		if (type != 'map' && Object.keys(destination.destinations[type]).length === 0) {
 			continue;
 		}
 
-		const translatedType = destinos.translation[type] || type;
+		const translatedType = destinationsConfig.translation[type].toLowerCase() || type.toLowerCase();
 		const j = i + 1;
-		const box = destinos.boxes[getDestinationsBoxesIndex(i)];
+		const box = destinationsConfig.boxes[getDestinationsBoxesIndex(i)];
 		const title = translate(`destination.${translatedType}.title`);
 		const description = translate(`destination.${translatedType}.description`);
-		const icon = destinos.icons[type];
+		const icon = destinationsConfig.icons[type];
 
 		text += `
     <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" id="b${j}">
@@ -175,12 +176,11 @@ export function loadDestinationsHTML(destino) {
     </div>`;
 	}
 
-	getID("destinationsBox").innerHTML = text;
+	getID('destinationsBox').innerHTML = text;
 }
 
 export function loadAndOpenDestino(code) {
-	const translation = getDestinations().translation;
-	const link = `destination?d=${ACTIVE_DESTINATION}&v=${DOCUMENT_ID}&type=${translation[code]}&visibility=${getVisibility()}`;
+	const link = `destination?d=${ACTIVE_DESTINATION}&t=${DOCUMENT_ID}&type=${code.toLowerCase()}&visibility=${getVisibility()}`;
 	openViewEmbed(link);
 }
 
@@ -192,10 +192,10 @@ function getDestinationsBoxesIndex(i) {
 }
 
 export function adjustDestinationsHTML() {
-	const elements = Array.from(document.querySelectorAll(".bd"));
+	const elements = Array.from(document.querySelectorAll('.bd'));
 
 	for (const el of elements) {
-		(el as HTMLElement).style.height = "auto";
+		(el as HTMLElement).style.height = 'auto';
 	}
 
 	const maxHeight = Math.max(...elements.map((el) => (el as HTMLElement).offsetHeight));

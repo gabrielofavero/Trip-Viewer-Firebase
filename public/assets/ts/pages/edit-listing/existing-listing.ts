@@ -2,19 +2,19 @@ import { getState, DOCUMENT_ID } from '../../data/state.js';
 import { displayError } from '../../utils/messages.js';
 import { getID } from '../../utils/dom.js';
 import { setPageName, getHTMLpage } from '../../app/main.js';
-import { translate } from "../../i18n/translation.js";
-import { loadDestinations } from "../edit-trip/new-trip.js";
-import { loadDestinosAtivos } from "../edit-trip/categories/destination.js";
-import { loadCustomizacaoData } from "../edit-trip/existing-trip.js";
+import { translate } from '../../i18n/translation.js';
+import { loadDestinations } from '../edit-trip/new-trip.js';
+import { loadActiveDestinations } from '../edit-trip/categories/destination.js';
+import { loadCustomizationData } from '../edit-trip/existing-trip.js';
 
 // Listagem Existente
 export async function loadListData(state?) {
 	try {
 		loadDadosBasicosListagemData(getState());
-		loadCustomizacaoData(getState());
+		loadCustomizationData(getState());
 		await loadDestinationsData();
 
-		setPageName(`${translate("labels.edit")} ${getState().titulo}`);
+		setPageName(`${translate('labels.edit')} ${getState().title}`);
 	} catch (error) {
 		displayError(error);
 		throw error;
@@ -22,40 +22,37 @@ export async function loadListData(state?) {
 }
 
 async function loadDestinationsData() {
-	if (
-		getHTMLpage() === "edit-listing" ||
-		getState().modulos?.destinos === true
-	) {
-		if (getID("habilitado-destinos")) {
-			getID("habilitado-destinos").checked = true;
+	if (getHTMLpage() === 'edit-listing' || getState().modules?.destinations === true) {
+		if (getID('destinations-enabled')) {
+			getID('destinations-enabled').checked = true;
 		}
-		getID("habilitado-destinos-content").style.display = "block";
-		getID("sem-destinos").style.display = "none";
-		getID("com-destinos").style.display = "block";
+		getID('destinations-enabled-content').style.display = 'flex';
+		getID('no-destinations').style.display = 'none';
+		getID('has-destinations').style.display = 'flex';
 	} else {
-		getID("sem-destinos").style.display = "block";
-		getID("com-destinos").style.display = "none";
+		getID('no-destinations').style.display = 'block';
+		getID('has-destinations').style.display = 'none';
 	}
 
 	loadDestinations();
-	const cards = document.querySelectorAll('#destinos-checkboxes .destino-card');
-	for (const destino of getState().destinos) {
-		const id = destino.destinosID;
+	const cards = document.querySelectorAll('#destinations-checkboxes .destination-card');
+	for (const destination of (getState().destinations || getState().destinationRefs)) {
+		const id = destination.id;
 		for (const card of cards) {
-			if (card.getAttribute("data-destino-id") === id) {
-				card.classList.add("selected");
-				const container = getID("destinos-checkboxes");
+			if (card.getAttribute('data-destination-id') === id) {
+				card.classList.add('selected');
+				const container = getID('destinations-checkboxes');
 				container.prepend(card);
 				break;
 			}
 		}
 	}
-	await loadDestinosAtivos();
+	await loadActiveDestinations();
 }
 
 function loadDadosBasicosListagemData(state) {
-	getID("titulo").value = state.titulo;
-	getID("subtitulo").value = state.subtitulo;
-	getID("descricao").value = state.descricao;
-	getID("exibir-em-destinos").checked = state.versao.exibirEmDestinos;
+	getID('title').value = state.title;
+	getID('subtitle').value = state.subtitle;
+	getID('description').value = state.description;
+	getID('show-in-destinations').checked = state.version.showInDestinations;
 }

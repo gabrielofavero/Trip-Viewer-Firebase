@@ -1,0 +1,169 @@
+{
+  "trip": {
+    "title": "Rock in Rio 2019",
+    "currency": "BRL",
+    "start": { "day": 3, "month": 10, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+    "end": { "day": 6, "month": 10, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2019-10-06T00:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false, "transportation": true, "itinerary": true,
+      "gallery": false, "summary": true, "accommodations": true, "expenses": true
+    },
+    "travelers": [
+      { "id": "gabriel", "name": "Gabriel", "color": "" },
+      { "id": "milton", "name": "Milton", "color": "" }
+    ],
+    "links": { "maps": "", "attachments": "", "active": false, "drive": "", "pdf": "", "ppt": "", "sheet": "", "vaccine": "" },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Airbnb Estúdio em Ipanema",
+      "description": "Estúdio em Ipanema, Rio de Janeiro",
+      "address": "Ipanema, Rio de Janeiro",
+      "dates": {
+        "checkIn": { "day": 3, "month": 10, "year": 2019, "hour": 14, "minute": 0, "second": 0 },
+        "checkOut": { "day": 6, "month": 10, "year": 2019, "hour": 12, "minute": 0, "second": 0 }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "GOL",
+      "points": { "origin": "CNF (Belo Horizonte)", "destination": "SDU (Rio de Janeiro)" },
+      "dates": {
+        "departure": { "day": 3, "month": 10, "year": 2019, "hour": 6, "minute": 55, "second": 0 },
+        "arrival": { "day": 3, "month": 10, "year": 2019, "hour": 8, "minute": 0, "second": 0 }
+      },
+      "duration": "1h05",
+      "direction": "departure",
+      "reservation": "TIVVKS",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "GOL",
+      "points": { "origin": "SDU/GIG (Rio de Janeiro)", "destination": "CNF (Belo Horizonte)" },
+      "dates": {
+        "departure": { "day": 6, "month": 10, "year": 2019, "hour": 17, "minute": 0, "second": 0 },
+        "arrival": { "day": 6, "month": 10, "year": 2019, "hour": 18, "minute": 0, "second": 0 }
+      },
+      "duration": "",
+      "direction": "return",
+      "reservation": "TIVVKS",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20191003": {
+      "title": { "value": "Chegada e Rock in Rio Dia 1", "showDestinations": false, "translate": false },
+      "date": { "day": 3, "month": 10, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "title": "Ir ao Aeroporto", "description": "", "category": "transport" },
+        { "title": "Voo CNF → SDU", "description": "Gol TIVVKS. 06:55–08:00", "category": "transport" }
+      ],
+      "morning": [
+        { "title": "VLT + Metrô até Ipanema", "description": "", "category": "transport" },
+        { "title": "Airbnb", "description": "Deixar malas", "category": "accommodation" },
+        { "title": "Suprimentos", "description": "", "category": "shopping" },
+        { "title": "Ipanema / Copacabana", "description": "Forte, Confeitaria", "category": "attraction" }
+      ],
+      "afternoon": [
+        { "title": "Taco Bell", "description": "Almoço", "category": "food" },
+        { "title": "Metrô + BRT até Cidade do Rock", "description": "", "category": "transport" },
+        { "title": "Rock in Rio", "description": "Palco Mundo 15:30. Panic! At The Disco e outros", "category": "entertainment" }
+      ],
+      "night": [
+        { "title": "Rock in Rio", "description": "Continuação dos shows", "category": "entertainment" },
+        { "title": "Airbnb", "description": "Descanso", "category": "accommodation" }
+      ]
+    },
+    "20191004": {
+      "title": { "value": "Passeios no Rio", "showDestinations": false, "translate": false },
+      "date": { "day": 4, "month": 10, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "title": "Airbnb", "description": "Arrumar", "category": "accommodation" },
+        { "title": "Mamma Jamma", "description": "Almoço", "category": "food" },
+        { "title": "Cristo Redentor", "description": "", "category": "attraction" },
+        { "title": "Parque Lage", "description": "", "category": "attraction" }
+      ],
+      "afternoon": [
+        { "title": "Escadaria Selarón", "description": "", "category": "attraction" },
+        { "title": "Museu do Amanhã", "description": "", "category": "attraction" },
+        { "title": "Airbnb", "description": "Descanso", "category": "accommodation" }
+      ],
+      "night": [
+        { "title": "Saída Noturna", "description": "Lapa ou região", "category": "entertainment" },
+        { "title": "Airbnb", "description": "Descanso", "category": "accommodation" }
+      ]
+    },
+    "20191005": {
+      "title": { "value": "Praia e Rock in Rio Dia 2", "showDestinations": false, "translate": false },
+      "date": { "day": 5, "month": 10, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "title": "Airbnb", "description": "Arrumar", "category": "accommodation" },
+        { "title": "Praia de Ipanema", "description": "Almoço na praia (Riba)", "category": "attraction" }
+      ],
+      "afternoon": [
+        { "title": "Vista / Mirante", "description": "", "category": "attraction" },
+        { "title": "Rock in Rio", "description": "Segundo dia de festival", "category": "entertainment" }
+      ],
+      "night": [
+        { "title": "Rock in Rio", "description": "Continuação dos shows", "category": "entertainment" },
+        { "title": "Airbnb", "description": "Descanso", "category": "accommodation" }
+      ]
+    },
+    "20191006": {
+      "title": { "value": "Retorno", "showDestinations": false, "translate": false },
+      "date": { "day": 6, "month": 10, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [{ "title": "Airbnb", "description": "Check-out", "category": "accommodation" }],
+      "morning": [
+        { "title": "Livre", "description": "Último passeio ou compras", "category": "free" }
+      ],
+      "afternoon": [
+        { "title": "Voo de retorno", "description": "Gol TIVVKS. Rio → BH", "category": "transport" }
+      ],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      { "id": "exp-001", "title": "Alimentação (Gabriel)", "amount": 475, "currency": "BRL", "date": { "day": 6, "month": 10, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "food", "traveler": "gabriel", "notes": "Total de alimentação durante a viagem" },
+      { "id": "exp-002", "title": "Atrações/Eventos", "amount": 133, "currency": "BRL", "date": { "day": 6, "month": 10, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "entertainment", "traveler": "gabriel", "notes": "Cristo Redentor, Museu do Amanhã, etc." },
+      { "id": "exp-003", "title": "Transporte Público", "amount": 64.70, "currency": "BRL", "date": { "day": 6, "month": 10, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "transport", "traveler": "gabriel", "notes": "Metrô, VLT, BRT" },
+      { "id": "exp-004", "title": "Transporte Privado (Uber)", "amount": 56.67, "currency": "BRL", "date": { "day": 6, "month": 10, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "transport", "traveler": "milton", "notes": "Uber durante a viagem" }
+    ],
+    "preTrip": [
+      { "id": "exp-005", "title": "Ingresso Rock in Rio", "amount": 590.95, "currency": "BRL", "date": { "day": 1, "month": 7, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "entertainment", "traveler": "gabriel", "notes": "" },
+      { "id": "exp-006", "title": "Passagem Aérea", "amount": 269.44, "currency": "BRL", "date": { "day": 1, "month": 7, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "transport", "traveler": "gabriel", "notes": "GOL. Localizador TIVVKS" },
+      { "id": "exp-007", "title": "Airbnb Ipanema", "amount": 522, "currency": "BRL", "date": { "day": 1, "month": 7, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "accommodation", "traveler": "gabriel", "notes": "Estúdio em Ipanema, 4 diárias" }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": { "name": "Gabriel", "color": "" },
+      "milton": { "name": "Milton", "color": "" }
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2019-10-06T00:00:00.000Z" }
+  }
+}

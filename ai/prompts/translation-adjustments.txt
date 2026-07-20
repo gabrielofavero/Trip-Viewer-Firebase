@@ -1,0 +1,48 @@
+I've found some leftover pt-br names in the code. Fix them and their references (example, a function must be changed on original spot and everywhere associated. A id for a div must also be updated if ts files are getting an element by id etc)
+
+Use new-schema.ts and script 13 for referencing yourself
+
+auth.ts
+- creating with pt-br keys (listagens etc)
+
+storage.ts
+- nome, link, caminho, imagem, claro, escuro, imagens, hospedagens, galeria, 
+
+destination.model.ts
+- escala_numerica
+
+itinerary.model.ts
+- getTurno
+
+destination/categories.ts
+- getPlanejado, tipo, getTurno, turno, turnoLabel, madrugada, manha, tarde, noite
+
+destination/destination.ts
+- mapa, item?.midia
+
+destination/edit-destination.ts
+- editar-nome, editar-midia, editar-*, nome, mapa, midia, nota, regiao, valor, descricao, valores, novo
+
+destination/import-destination.ts
+- editar-*, nome, midia, regiao, valor, descricao
+
+destination/support/sort-and-filter/support/price-bucket.ts
+- valor
+
+destination/support/sort-and-filter/filter.ts
+- nota, regiao
+
+destination/support/sort-and-filter/sort-and-filter.ts
+- nota, regiao, notas, precos, 
+
+destination/support/sort-and-filter/sort.ts
+- nome, nota, 
+
+destination/support/content.ts
+- planejado, destinos, notas, mapa, topico, nome, editar-*, nota, editar-planejado-select-data, descricao, midia, moedas
+
+destination/support/media-embed.ts
+- midia, tipo, conteudo, botao
+
+destination/support/trip.ts
+dia, dia.data, destino, turno

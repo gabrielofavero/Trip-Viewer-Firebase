@@ -1,0 +1,183 @@
+{
+  "_meta": {
+    "tripId": "legacy-2015-imagine-dragons",
+    "slug": "2015-imagine-dragons",
+    "sourceFiles": [
+      "Pessoais/2015/[2015] Imagine Dragons/Imagine Dragons.docx",
+      "Pessoais/2015/[2015] Imagine Dragons/Gabriel.pdf",
+      "Pessoais/2015/[2015] Imagine Dragons/Lucas.pdf"
+    ],
+    "extractionNotes": {
+      "docxContent": "Detailed day-by-day itinerary table with times, activities, and costs. Travelers: Gabriel and Lucas. Total per person: Gabriel R$470, Lucas R$290.",
+      "pdfContent": "Two T4F e-tickets (Gabriel and Lucas) for the Imagine Dragons concert. PDFs don't show ticket prices or specific event details in the extracted text — just the e-ticket template with barcodes.",
+      "dateSource": "Confirmed from DOCX itinerary: trip spans 2015-04-17 (night departure to airport) through 2015-04-19 (return flight). Concert on 2015-04-18 at Anhembi, São Paulo.",
+      "transportSource": "DOCX table: JJ3441 (TAM) CNF→GRU 18/04 5:55, JJ3214 (TAM) CGH→CNF 19/04 15:40. Airport bus Guarulhos→Tietê (free).",
+      "accommodationSource": "Hotel mentioned but name not in DOCX. Cost R$390. Check-in 18/04, check-out 19/04.",
+      "missingData": "Hotel name, flight prices, concert ticket prices, reservation codes."
+    }
+  },
+  "trip": {
+    "title": "Imagine Dragons 2015",
+    "currency": "BRL",
+    "start": { "day": 17, "month": 4, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+    "end": { "day": 19, "month": 4, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2015-04-19T00:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      { "id": "gabriel", "name": "Gabriel", "color": "#4CAF50" },
+      { "id": "lucas", "name": "Lucas", "color": "#2196F3" }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Hotel (nome não especificado)",
+      "description": "Hotel próximo ao Anhembi, São Paulo",
+      "address": "",
+      "dates": {
+        "checkIn": { "day": 18, "month": 4, "year": 2015, "hour": 11, "minute": 50, "second": 0 },
+        "checkOut": { "day": 19, "month": 4, "year": 2015, "hour": 11, "minute": 0, "second": 0 }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "TAM",
+      "points": { "origin": "Belo Horizonte - Confins (CNF)", "destination": "São Paulo - Guarulhos (GRU)" },
+      "dates": {
+        "departure": { "day": 18, "month": 4, "year": 2015, "hour": 5, "minute": 55, "second": 0 },
+        "arrival": { "day": 18, "month": 4, "year": 2015, "hour": 7, "minute": 20, "second": 0 }
+      },
+      "duration": "1h25",
+      "direction": "departure",
+      "reservation": "JJ3441",
+      "link": "",
+      "person": ""
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "TAM",
+      "points": { "origin": "São Paulo - Congonhas (CGH)", "destination": "Belo Horizonte - Confins (CNF)" },
+      "dates": {
+        "departure": { "day": 19, "month": 4, "year": 2015, "hour": 15, "minute": 40, "second": 0 },
+        "arrival": { "day": 19, "month": 4, "year": 2015, "hour": 17, "minute": 0, "second": 0 }
+      },
+      "duration": "1h20",
+      "direction": "return",
+      "reservation": "JJ3214",
+      "link": "",
+      "person": ""
+    }
+  },
+  "itinerary": {
+    "20150417": {
+      "title": { "value": "Sexta — Ida para o Aeroporto", "showDestinations": false, "translate": false },
+      "date": { "day": 17, "month": 4, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [],
+      "night": [
+        { "time": "23:30", "activity": "Ir para Confins", "details": "Deslocamento até o aeroporto", "price": "" }
+      ]
+    },
+    "20150418": {
+      "title": { "value": "Sábado — Show Imagine Dragons no Anhembi", "showDestinations": false, "translate": false },
+      "date": { "day": 18, "month": 4, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "00:20", "activity": "Aeroporto de Confins", "details": "Antecipar a passagem para o voo de 5:55 (JJ3441)", "price": "" },
+        { "time": "4:00", "activity": "Check-in dos dois voos", "details": "Fazer o check-in de ida e volta", "price": "" },
+        { "time": "5:55 – 7:20", "activity": "Voo BH → SP (TAM JJ3441)", "details": "Confins → Guarulhos", "price": "" }
+      ],
+      "morning": [
+        { "time": "7:20 – 8:30", "activity": "Ônibus Aeroporto → Rodoviária Tietê", "details": "Ônibus gratuito em direção a Guarulhos", "price": "Grátis" },
+        { "time": "8:30 – 10:00", "activity": "Arquivo Público de SP", "details": "A pé (850m da Rodoviária Tietê)", "price": "" },
+        { "time": "10:00 – 11:30", "activity": "Shopping Center Norte", "details": "A pé (950m). Alimentação.", "price": "" },
+        { "time": "11:30 – 11:50", "activity": "Táxi para o Hotel", "details": "", "price": "R$ 20,00" },
+        { "time": "11:50 – 12:00", "activity": "Check-in no Hotel", "details": "Deixar as mochilas no quarto", "price": "" }
+      ],
+      "afternoon": [
+        { "time": "12:00 – 12:20", "activity": "Averiguar o Anhembi", "details": "Verificar fila, local de entrada, etc.", "price": "" },
+        { "time": "12:20 – 12:40", "activity": "Comprar suprimentos para o show", "details": "", "price": "R$ 40,00" },
+        { "time": "12:40", "activity": "Ir para a fila do show", "details": "Anhembi", "price": "" }
+      ],
+      "night": [
+        { "time": "Noite", "activity": "Show Imagine Dragons", "details": "Anhembi - São Paulo", "price": "" }
+      ]
+    },
+    "20150419": {
+      "title": { "value": "Domingo — Retorno a BH", "showDestinations": false, "translate": false },
+      "date": { "day": 19, "month": 4, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "0:00 – 3:00", "activity": "O'Malley's", "details": "Bar após o show. Táxi de ida e volta.", "price": "" }
+      ],
+      "morning": [
+        { "time": "11:00", "activity": "Check-out do Hotel", "details": "Hotel = R$ 390,00", "price": "" },
+        { "time": "11:00 – 12:00", "activity": "Táxi para Shopping Ibirapuera", "details": "", "price": "R$ 50,00" }
+      ],
+      "afternoon": [
+        { "time": "12:00 – 14:00", "activity": "Almoço no Shopping Ibirapuera", "details": "", "price": "" },
+        { "time": "14:00 – 14:20", "activity": "Táxi para Aeroporto de Congonhas", "details": "", "price": "R$ 20,00" },
+        { "time": "15:40 – 17:00", "activity": "Voo SP → BH (TAM JJ3214)", "details": "Congonhas → Confins", "price": "" }
+      ],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      { "id": "exp-001", "description": "Alimentação Gabriel — Shopping Center Norte", "type": "alimentação", "amount": 60.00, "date": { "day": 18, "month": 4, "year": 2015 }, "traveler": "gabriel", "category": "food" },
+      { "id": "exp-002", "description": "Alimentação Lucas — Shopping Center Norte", "type": "alimentação", "amount": 30.00, "date": { "day": 18, "month": 4, "year": 2015 }, "traveler": "lucas", "category": "food" },
+      { "id": "exp-003", "description": "Táxi — Shopping Center Norte → Hotel", "type": "transporte", "amount": 20.00, "date": { "day": 18, "month": 4, "year": 2015 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-004", "description": "Compras — Suprimentos para o show", "type": "outros", "amount": 40.00, "date": { "day": 18, "month": 4, "year": 2015 }, "traveler": "gabriel", "category": "other" },
+      { "id": "exp-005", "description": "Táxi — Hotel → O'Malley's (pós-show)", "type": "transporte", "amount": 40.00, "date": { "day": 19, "month": 4, "year": 2015 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-006", "description": "Gastos Gabriel — O'Malley's", "type": "alimentação", "amount": 50.00, "date": { "day": 19, "month": 4, "year": 2015 }, "traveler": "gabriel", "category": "food" },
+      { "id": "exp-007", "description": "Gastos Lucas — O'Malley's", "type": "alimentação", "amount": 80.00, "date": { "day": 19, "month": 4, "year": 2015 }, "traveler": "lucas", "category": "food" },
+      { "id": "exp-008", "description": "Táxi — O'Malley's → Hotel (volta)", "type": "transporte", "amount": 40.00, "date": { "day": 19, "month": 4, "year": 2015 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-009", "description": "Hotel (1 diária)", "type": "hospedagem", "amount": 390.00, "date": { "day": 19, "month": 4, "year": 2015 }, "traveler": "gabriel", "category": "accommodation" },
+      { "id": "exp-010", "description": "Táxi — Hotel → Shopping Ibirapuera", "type": "transporte", "amount": 50.00, "date": { "day": 19, "month": 4, "year": 2015 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-011", "description": "Alimentação Gabriel — Shopping Ibirapuera", "type": "alimentação", "amount": 60.00, "date": { "day": 19, "month": 4, "year": 2015 }, "traveler": "gabriel", "category": "food" },
+      { "id": "exp-012", "description": "Alimentação Lucas — Shopping Ibirapuera", "type": "alimentação", "amount": 30.00, "date": { "day": 19, "month": 4, "year": 2015 }, "traveler": "lucas", "category": "food" },
+      { "id": "exp-013", "description": "Táxi — Shopping Ibirapuera → Aeroporto Congonhas", "type": "transporte", "amount": 20.00, "date": { "day": 19, "month": 4, "year": 2015 }, "traveler": "gabriel", "category": "transport" }
+    ],
+    "preTrip": [],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": { "total": 470.00 },
+      "lucas": { "total": 290.00 }
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2015-04-19T00:00:00.000Z" }
+  }
+}

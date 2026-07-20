@@ -3,33 +3,32 @@ import { getState } from '../../../data/state.js';
 import { loadEmbedListeners, openEmbed, sendToEmbed } from '../../../ui/embed.js';
 import { getID } from '../../../utils/dom.js';
 import { disableScroll, enableScroll, loadExternalVisibility } from '../../../theme/visibility.js';
-import { updateProtectedDataFromExternalPin, PIN } from "../support/sensitive-reservation.js";
-import { getVisibility } from "../../../theme/theme.js";
-import { getURLParam } from "../../../utils/dom.js";
+import { updateProtectedDataFromExternalPin, PIN } from '../support/sensitive-reservation.js';
+import { getVisibility } from '../../../theme/theme.js';
+import { getURLParam } from '../../../utils/dom.js';
 
 var SAVED_SCROLL_POSITION = 0;
 export const ACTIVE_EMBEDS = {};
 
 export function loadViewEmbed() {
-	if (getState().modulos?.gastos === true) {
+	if (getState().modules?.expenses === true) {
 		loadEmbedListeners(loadViewEmbedAction);
 	}
 }
 
 export function openViewEmbed(url) {
-	const frameID = "lightbox-iframe";
+	const frameID = 'lightbox-iframe';
 	const newTab = true;
 	const beforeOpen = () => {
-		SAVED_SCROLL_POSITION =
-			window.pageYOffset || document.documentElement.scrollTop;
+		SAVED_SCROLL_POSITION = window.pageYOffset || document.documentElement.scrollTop;
 		startLoadingScreen();
 		window.scrollTo(0, 0);
 	};
 	const onLoad = () => {
-		getID("lightbox").style.display = "block";
-		getID("night-mode").style.display = "none";
-		getID("menu").style.display = "none";
-		getID("navbar").style.display = "none";
+		getID('lightbox').style.display = 'block';
+		getID('night-mode').style.display = 'none';
+		getID('menu').style.display = 'none';
+		getID('navbar').style.display = 'none';
 		stopLoadingScreen();
 		disableScroll();
 	};
@@ -38,10 +37,10 @@ export function openViewEmbed(url) {
 }
 
 function closeViewEmbed(redirectToHome = false, visibility) {
-	getID("lightbox").style.display = "none";
-	getID("night-mode").style.display = "block";
-	getID("menu").style.display = "block";
-	getID("navbar").style.display = "block";
+	getID('lightbox').style.display = 'none';
+	getID('night-mode').style.display = 'block';
+	getID('menu').style.display = 'block';
+	getID('navbar').style.display = 'block';
 	enableScroll();
 
 	if (redirectToHome) {
@@ -49,7 +48,7 @@ function closeViewEmbed(redirectToHome = false, visibility) {
 	} else {
 		window.scrollTo({
 			top: SAVED_SCROLL_POSITION,
-			behavior: "instant",
+			behavior: 'instant',
 		});
 	}
 
@@ -60,8 +59,8 @@ function closeViewEmbed(redirectToHome = false, visibility) {
 
 export function openExpensesEmbed() {
 	openEmbed({
-		frameID: "expenses-embed-frame",
-		url: `expenses.html?visibility=${getVisibility()}&embed=1&g=${getURLParam("v")}`,
+		frameID: 'expenses-embed-frame',
+		url: `expenses.html?visibility=${getVisibility()}&embed=1&e=${getURLParam('t')}`,
 	});
 }
 
@@ -71,27 +70,27 @@ export function loadImageLightbox(className) {
 		autofocusVideos: false,
 		touchNavigation: true,
 		touchFollowAxis: true,
-		width: "auto",
-		height: "auto",
+		width: 'auto',
+		height: 'auto',
 	});
 }
 
 export function sendToExpenses(type, value) {
-	sendToEmbed("expenses-embed-frame", type, value);
+	sendToEmbed('expenses-embed-frame', type, value);
 }
 
 function loadViewEmbedAction(data) {
 	switch (data?.page) {
-		case "expenses":
+		case 'expenses':
 			loadExpensesEmbedAction(data);
 	}
 
 	function loadExpensesEmbedAction(data) {
 		switch (data.type) {
-			case "height":
-				getID("expenses-embed").style.height = `${data.value}px`;
+			case 'height':
+				getID('expenses-embed').style.height = `${data.value}px`;
 				return;
-			case "pin":
+			case 'pin':
 				if (PIN || !data.value || data.value.length != 4) return;
 				updateProtectedDataFromExternalPin(data.value);
 		}

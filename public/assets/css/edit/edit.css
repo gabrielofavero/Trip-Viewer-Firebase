@@ -26,7 +26,7 @@
 	content: "";
 	position: fixed;
 	inset: 0;
-	background: rgba(255, 255, 255, 0.82);
+	background: rgba(255, 255, 255, 0.55);
 	z-index: 0;
 	pointer-events: none;
 }
@@ -133,28 +133,57 @@
 /*--------------------------------------------------------------
 # Language Selector (in shared top-bar)
 --------------------------------------------------------------*/
-.lang-selector { position: relative; }
+.lang-selector {
+	position: relative;
+}
 .lang-button {
-	background: none; border: none; cursor: pointer;
-	font-size: 13px; font-weight: 600; color: var(--text-secondary);
-	padding: 6px 10px; border-radius: 8px; font-family: inherit;
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--text-secondary);
+	padding: 6px 10px;
+	border-radius: 8px;
+	font-family: inherit;
 	transition: all var(--transition-fast);
 }
-.lang-button:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+.lang-button:hover {
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
+}
 .lang-options {
-	display: none; position: absolute; top: 100%; right: 0;
-	background: var(--bg-primary); border: 1px solid var(--border-color);
-	border-radius: var(--radius-md); box-shadow: var(--shadow-md);
-	overflow: hidden; z-index: 100; min-width: 60px;
+	display: none;
+	position: absolute;
+	top: 100%;
+	right: 0;
+	background: var(--bg-primary);
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-md);
+	overflow: hidden;
+	z-index: 100;
+	min-width: 60px;
 }
-.lang-selector:hover .lang-options { display: block; }
+.lang-selector:hover .lang-options {
+	display: block;
+}
 .lang-options button {
-	display: block; width: 100%; padding: 8px 16px;
-	border: none; background: none; cursor: pointer;
-	font-size: 13px; font-family: inherit; color: var(--text-primary);
-	transition: background var(--transition-fast); text-align: center;
+	display: block;
+	width: 100%;
+	padding: 8px 16px;
+	border: none;
+	background: none;
+	cursor: pointer;
+	font-size: 13px;
+	font-family: inherit;
+	color: var(--text-primary);
+	transition: background var(--transition-fast);
+	text-align: center;
 }
-.lang-options button:hover { background: var(--bg-tertiary); }
+.lang-options button:hover {
+	background: var(--bg-tertiary);
+}
 
 /*--------------------------------------------------------------
 # Edit Tab Bar — Horizontal Category Navigation
@@ -259,6 +288,12 @@
 	margin: 0 0 20px 0;
 	font-size: 0.875rem;
 	line-height: 1.5;
+}
+
+/* Caption — helper text below inputs */
+.caption {
+	font-style: italic;
+	color: var(--text-muted);
 }
 
 .edit-page-content section p:last-child {
@@ -419,7 +454,9 @@
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	transition: border var(--transition-fast), box-shadow var(--transition-fast);
+	transition:
+		border var(--transition-fast),
+		box-shadow var(--transition-fast);
 	outline: none;
 }
 
@@ -514,7 +551,8 @@
 
 .nice-form-group > input[type="checkbox"]:checked {
 	background:
-		url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23FFF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E") no-repeat 50% / 70%;
+		url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23FFF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E")
+		no-repeat 50% / 70%;
 	background-color: var(--nf-input-focus-border-color);
 	border-color: var(--nf-input-focus-border-color);
 }
@@ -909,14 +947,14 @@
 
 /* Neutral / secondary */
 .btn-secondary-theme,
-.input-botao {
+.input-button {
 	background: var(--bg-secondary);
 	color: var(--text-primary);
 	border: 1px solid var(--border-color);
 }
 
 .btn-secondary-theme:hover,
-.input-botao:hover {
+.input-button:hover {
 	background: var(--bg-tertiary);
 	border-color: #ccc;
 }
@@ -933,6 +971,49 @@
 	box-shadow: 0 4px 16px rgba(231, 76, 60, 0.4);
 }
 
+/* Button layout spacing */
+.btn-format {
+	margin: 5px;
+}
+
+.btn-format:first-child {
+	margin-left: 0;
+}
+
+.btn-format:last-child {
+	margin-right: 0;
+}
+
+/* Outlined basic — matches theme color */
+.btn-basic {
+	border-width: 2px;
+	border-style: solid;
+	border-color: var(--theme-color);
+	color: var(--theme-color);
+	background: none;
+}
+
+.btn-basic:hover,
+.btn-basic:focus {
+	background: var(--theme-color);
+	color: #fff;
+}
+
+/* Outlined secondary — neutral gray */
+.btn-basic-secondary {
+	border-width: 2px;
+	border-style: solid;
+	border-color: var(--text-secondary);
+	color: var(--text-secondary);
+	background: none;
+}
+
+.btn-basic-secondary:hover,
+.btn-basic-secondary:focus {
+	background: var(--text-secondary);
+	color: #fff;
+}
+
 /* Small variant */
 .btn-sm {
 	padding: 7px 16px;
@@ -941,7 +1022,7 @@
 }
 
 /* Input-trigger buttons (full-width, left-aligned text) */
-.input-botao {
+.input-button {
 	width: 100%;
 	min-height: 48px;
 	justify-content: flex-start;
@@ -987,7 +1068,7 @@
 	cursor: pointer;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: flex-start;
 }
 
 .accordion-button[aria-expanded="false"] {
@@ -1010,6 +1091,28 @@
 	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%235859a7'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
 }
 
+/* "New" badge icon — right-aligned in accordion headers */
+.title-text {
+	margin-right: auto;
+}
+
+.flex-button-inner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	margin-right: 6px;
+}
+
+.new {
+	fill: var(--theme-color);
+}
+
+.icon-container {
+	display: flex;
+	align-items: center;
+}
+
 /*--------------------------------------------------------------
 # Drag Icon (sortable accordion items)
 --------------------------------------------------------------*/
@@ -1019,10 +1122,23 @@
 	color: var(--text-muted);
 	flex-shrink: 0;
 	margin-right: 8px;
-	transition: color var(--transition-fast);
+	opacity: 1;
+	width: 20px;
+	overflow: hidden;
+	transition: opacity 0.25s ease, width 0.25s ease, margin-right 0.25s ease, color var(--transition-fast);
 }
-.drag-icon:hover { color: var(--text-primary); }
-.drag-icon:active { cursor: grabbing; }
+.drag-icon:hover {
+	color: var(--text-primary);
+}
+.drag-icon:active {
+	cursor: grabbing;
+}
+.drag-icon-hidden {
+	opacity: 0;
+	width: 0;
+	margin-right: 0;
+	pointer-events: none;
+}
 
 .draggable {
 	display: flex;
@@ -1030,18 +1146,18 @@
 	gap: 8px;
 }
 
-.input-botao-container {
+.input-button-container {
 	display: flex;
 	align-items: center;
 	gap: 8px;
 	margin-bottom: 8px;
 }
 
-.gastos-item {
+.expenses-item {
 	margin-bottom: 16px;
 }
 
-.gastos-item > label {
+.expenses-item > label {
 	display: block;
 	font-weight: 600;
 	font-size: 0.8125rem;
@@ -1052,7 +1168,7 @@
 /*--------------------------------------------------------------
 # Habilitado Content Spacing
 --------------------------------------------------------------*/
-[id^="habilitado-"][id$="-content"] {
+[id$="-enabled-content"] {
 	margin-top: 16px;
 }
 
@@ -1060,55 +1176,88 @@
 	margin-top: 8px;
 }
 
+#transportation-enabled-content > .transportation-box {
+	margin-top: 16px;
+}
+
 /* Destinos Cards — modern card-based layout */
-#habilitado-destinos-content {
-  max-height: 420px;
-  overflow-y: auto;
+#destinations-enabled-content {
+	max-height: 420px;
+	display: flex;
+	flex-direction: column;
 }
 
-.destinos-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-height: auto !important;
-  padding: 8px 0;
+#destinations-enabled-content > #has-destinations {
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	flex: 1;
 }
 
-.destino-card {
-  display: flex;
-  align-items: center;
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color, #e0e0e0);
-  background: var(--bg-primary, #fff);
-  cursor: pointer;
-  transition: background var(--transition-fast), border-color var(--transition-fast), transform 0.15s ease;
-  user-select: none;
+.destinations-cards {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-height: 0;
+	gap: 4px;
+	padding: 8px 0;
+	overflow-y: auto;
 }
 
-.destino-card:hover {
-  background: var(--bg-secondary);
-  border-color: var(--accent-color, #4a90d9);
+.destination-card {
+	display: flex;
+	align-items: center;
+	padding: 10px 14px;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--border-color, #e0e0e0);
+	background: var(--bg-primary, #fff);
+	cursor: pointer;
+	transition:
+		background 0.2s ease,
+		border-color 0.2s ease,
+		box-shadow 0.2s ease,
+		transform 0.2s ease;
+	user-select: none;
 }
 
-.destino-card.selected {
-  background: var(--accent-color, #4a90d9);
-  border-color: var(--accent-color, #4a90d9);
-  color: #fff;
+.destination-card:hover {
+	background: rgba(var(--theme-color-rgb), 0.04);
+	border-color: rgba(var(--theme-color-rgb), 0.25);
 }
 
-.destino-card.selected .destino-card-name {
-  color: #fff;
+.destination-card:active {
+	transform: scale(0.98);
 }
 
-.destino-card-name {
-  font-weight: 500;
-  font-size: 0.875rem;
-  flex: 1;
+.destination-card.selected {
+	background: rgba(var(--theme-color-rgb), 0.08);
+	border-color: rgba(var(--theme-color-rgb), 0.35);
+	color: var(--theme-color);
+	box-shadow: 0 0 0 1px rgba(var(--theme-color-rgb), 0.1);
+}
+
+.destination-card.selected .destination-card-name {
+	color: var(--theme-color);
+	font-weight: 600;
+}
+
+.destination-card-name {
+	font-weight: 500;
+	font-size: 0.875rem;
+	flex: 1;
+}
+
+/* Wider screens: 2-column grid layout */
+@media (min-width: 640px) {
+	.destinations-cards {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 6px;
+	}
 }
 
 /* Keep old class for itinerary inner checkboxes (they still use checkboxes) */
-.destinos-checkboxes {
+.destinations-checkboxes {
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
@@ -1116,18 +1265,18 @@
 	padding: 8px 0;
 }
 
-.destinos-checkboxes .nice-form-group {
+.destinations-checkboxes .nice-form-group {
 	margin-top: 0;
 	padding: 8px 12px;
 	border-radius: var(--radius-sm);
 	transition: background var(--transition-fast);
 }
 
-.destinos-checkboxes .nice-form-group:hover {
+.destinations-checkboxes .nice-form-group:hover {
 	background: var(--bg-secondary);
 }
 
-.destinos-checkboxes .nice-form-group > label {
+.destinations-checkboxes .nice-form-group > label {
 	margin-bottom: 0;
 	font-weight: 500;
 	font-size: 0.875rem;
@@ -1194,13 +1343,13 @@
 	margin-bottom: 4px;
 }
 
-.transparent-background .imagem-checkbox {
+.transparent-background .image-checkbox {
 	margin-top: 16px;
 	margin-bottom: 16px;
 }
 
-/* Turno-box — itinerary time-of-day containers */
-.turno-box {
+/* Period-box — itinerary time-of-day containers */
+.period-box {
 	margin-top: 16px;
 	padding: 16px;
 	background: var(--bg-secondary);
@@ -1208,7 +1357,7 @@
 	border: 1px solid var(--border-color);
 }
 
-.turno-box > label:first-of-type {
+.period-box > label:first-of-type {
 	font-weight: 700;
 	font-size: 0.8rem;
 	text-transform: uppercase;
@@ -1219,26 +1368,26 @@
 	opacity: 0.85;
 }
 
-[data-theme="dark"] .turno-box {
+[data-theme="dark"] .period-box {
 	background: rgba(255, 255, 255, 0.03);
 }
 
-.turno-box > .nice-form-group:first-child {
+.period-box > .nice-form-group:first-child {
 	margin-top: 0;
 }
 
-/* Input-botao inside turno-box — differentiate from container background */
-.turno-box .input-botao {
+/* Input-button inside period-box — differentiate from container background */
+.period-box .input-button {
 	background: var(--bg-primary);
 	border-color: var(--border-color);
 }
 
-.turno-box .input-botao:hover {
+.period-box .input-button:hover {
 	background: var(--bg-tertiary);
 }
 
 /* Itinerary destination cards — slightly smaller */
-.itinerario-cards .destino-card {
+.itinerary-cards .destination-card {
 	padding: 6px 12px;
 	font-size: 0.8125rem;
 }
@@ -1266,7 +1415,7 @@
 /*--------------------------------------------------------------
 # Optional label indicator
 --------------------------------------------------------------*/
-.opcional {
+.optional {
 	font-weight: 400;
 	font-size: 0.85em;
 	color: var(--text-muted);
@@ -1335,7 +1484,7 @@ input.pin-input-invalid {
 }
 
 /* Spacing between theme radio group and color pickers on desktop */
-#habilitado-cores-content > fieldset {
+#colors-enabled-content > fieldset {
 	margin-bottom: 16px;
 }
 
@@ -1473,7 +1622,7 @@ details summary::-webkit-details-marker {
 # All [data-theme="dark"] rules scoped to edit components
 --------------------------------------------------------------*/
 [data-theme="dark"] #hero::before {
-	background: rgba(0, 0, 0, 0.82);
+	background: rgba(0, 0, 0, 0.55);
 }
 
 /* Tab Bar */
@@ -1533,18 +1682,18 @@ details summary::-webkit-details-marker {
 
 /* Buttons */
 [data-theme="dark"] .btn-secondary-theme,
-[data-theme="dark"] .input-botao {
+[data-theme="dark"] .input-button {
 	background: var(--bg-secondary);
 	color: var(--text-primary);
 	border-color: var(--border-color);
 }
 
 [data-theme="dark"] .btn-secondary-theme:hover,
-[data-theme="dark"] .input-botao:hover {
+[data-theme="dark"] .input-button:hover {
 	background: var(--bg-tertiary);
 }
 
-[data-theme="dark"] .turno-box .input-botao {
+[data-theme="dark"] .period-box .input-button {
 	background: var(--bg-primary);
 }
 
@@ -1788,7 +1937,9 @@ fieldset.modern-radio-group {
 	color: var(--nf-input-color);
 	padding: 12px 16px;
 	letter-spacing: 0.5px;
-	transition: border var(--transition-fast), box-shadow var(--transition-fast);
+	transition:
+		border var(--transition-fast),
+		box-shadow var(--transition-fast);
 	outline: none;
 }
 
@@ -1816,7 +1967,9 @@ fieldset.modern-radio-group {
 	padding: 0 16px;
 	min-height: 48px;
 	cursor: pointer;
-	transition: border var(--transition-fast), box-shadow var(--transition-fast);
+	transition:
+		border var(--transition-fast),
+		box-shadow var(--transition-fast);
 	user-select: none;
 	-webkit-user-select: none;
 }
@@ -1845,10 +1998,12 @@ fieldset.modern-radio-group {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	line-height: 1.4;
 }
 
 .date-range-input .date-text.placeholder {
 	color: var(--nf-input-placeholder-color);
+	cursor: inherit;
 }
 
 .date-range-input .date-clear {
@@ -1862,7 +2017,9 @@ fieldset.modern-radio-group {
 	display: none;
 	align-items: center;
 	justify-content: center;
-	transition: color var(--transition-fast), background var(--transition-fast);
+	transition:
+		color var(--transition-fast),
+		background var(--transition-fast);
 }
 
 .date-range-input .date-clear:hover {
@@ -1967,7 +2124,9 @@ fieldset.modern-radio-group {
 	font-size: 0.8125rem;
 	color: var(--text-primary);
 	cursor: pointer;
-	transition: background var(--transition-fast), color var(--transition-fast);
+	transition:
+		background var(--transition-fast),
+		color var(--transition-fast);
 	position: relative;
 	border: none;
 	background: transparent;

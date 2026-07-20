@@ -1,56 +1,61 @@
 import { getItinerary } from '../../../app/config.js';
 import { getState, setState, DOCUMENT_ID } from '../../../data/state.js';
 import { cloneObject, getID } from '../../../utils/dom.js';
-import { convertFromDateObject, dateObjectToInputDate, getDateTitle } from '../../../utils/dates.js';
+import {
+	convertFromDateObject,
+	dateObjectToInputDate,
+	getDateTitle,
+} from '../../../utils/dates.js';
 import { get, update } from '../../../data/firebase/database.js';
-import { translate } from "../../../i18n/translation.js";
-import { jsDateToInputDate } from "../../../utils/dates.js";
-import { ACTIVE_CATEGORY } from "../destination.js";
+import { translate } from '../../../i18n/translation.js';
+import { jsDateToInputDate } from '../../../utils/dates.js';
+import { ACTIVE_CATEGORY } from '../destination.js';
 
 var TRIP_ID;
 export var PLANNED_DESTINATION = {};
-var ACTIVE_PLANNED_DESTINATION = [];
+var ACTIVE_PLANNED_DESTINATION: any[] = [];
+export function resetActivePlannedDestination() {
+	ACTIVE_PLANNED_DESTINATION = [];
+}
 
 export async function getTripData(tripID) {
 	if (!tripID) return;
 	TRIP_ID = tripID;
-	return await get(`viagens/${tripID}`);
+	return await get(`trips/${tripID}`);
 }
 
 export async function refreshTripData() {
 	if (!TRIP_ID) return;
 	ACTIVE_PLANNED_DESTINATION = [];
 	PLANNED_DESTINATION = {};
-	setState(await get(`viagens/${TRIP_ID}`));
+	setState(await get(`trips/${TRIP_ID}`));
 	loadPlannedDestination();
 }
 
 // Planned Destination
 export function loadPlannedDestination() {
-	const programacoes = getState()?.programacoes || [];
-	for (const dia of programacoes) {
-		const data = dia.data;
-		for (const turno of getItinerary().timeofday) {
-			const programacoes = dia[turno];
-			if (!programacoes) continue;
+	const schedules = getState()?.itinerary || [];
+	for (const day of schedules) {
+		const data = day.data;
+		for (const period of getItinerary().timeOfDay) {
+			const periods = day[period];
+			if (!periods) continue;
 
-			for (const programacao of programacoes) {
-				const item = programacao?.item;
-				if (!item || item.tipo !== "destinos") continue;
-				addPlannedDestination(item, data, turno);
+			for (const schedule of periods) {
+				const item = schedule?.item;
+				if (!item || item.type !== 'destinations') continue;
+				addPlannedDestination(item, data, period);
 			}
 		}
 	}
 
-	function addPlannedDestination(item, data, turno) {
-		const destino = getState().destinos.find(
-			(d) => d.destinosID === item.local,
-		);
-		if (!destino || destino.destinosID != DOCUMENT_ID) return;
+	function addPlannedDestination(item, data, period) {
+		const destination = (getState().destinations || getState().destinationRefs).find((d) => d.destinationId === item.location);
+		if (!destination || destination.destinationId != DOCUMENT_ID) return;
 
-		PLANNED_DESTINATION[item.categoria] ??= {};
-		PLANNED_DESTINATION[item.categoria][item.id] ??= [];
-		PLANNED_DESTINATION[item.categoria][item.id].push({ data, turno });
+		PLANNED_DESTINATION[item.category] ??= {};
+		PLANNED_DESTINATION[item.category][item.id] ??= [];
+		PLANNED_DESTINATION[item.category][item.id].push({ data, period });
 	}
 }
 
@@ -67,11 +72,11 @@ export function populatePlannedDestinationEditField(id, j) {
 }
 
 function loadPlannedDestinationEditFieldHTML(j) {
-	const container = getID(`editar-planejado-container-${j}`);
-	const dataSelect = getID(`editar-planejado-select-data-${j}`);
-	const turnoSelect = getID(`editar-planejado-select-turno-${j}`);
+	const container = getID(`edit-planned-container-${j}`);
+	const dataSelect = getID(`edit-planned-select-data-${j}`);
+	const periodSelect = getID(`edit-planned-select-period-${j}`);
 
-	let options = `<option value="">${translate("labels.planned.not_planned")}</option>`;
+	let options = `<option value="">${translate('labels.planned.not_planned')}</option>`;
 
 	switch (ACTIVE_PLANNED_DESTINATION.length) {
 		case 0:
@@ -84,13 +89,13 @@ function loadPlannedDestinationEditFieldHTML(j) {
 			loadMultiPD();
 	}
 
-	container.style.display = "";
+	container.style.display = '';
 
 	function loadNoPD() {
 		loadAllOptions();
 		dataSelect.innerHTML = options;
-		dataSelect.value = "";
-		turnoSelect.style.display = "none";
+		dataSelect.value = '';
+		periodSelect.style.display = 'none';
 		addSelectListener();
 	}
 
@@ -99,71 +104,67 @@ function loadPlannedDestinationEditFieldHTML(j) {
 		const item = ACTIVE_PLANNED_DESTINATION[0];
 		dataSelect.innerHTML = options;
 		dataSelect.value = dateObjectToInputDate(item.data);
-		turnoSelect.value = item.turno;
+		periodSelect.value = item.period;
 		addSelectListener();
 	}
 
 	function loadMultiPD() {
-		options += `<option value="multi">${translate("labels.planned.multiple")}</option>`;
+		options += `<option value="multi">${translate('labels.planned.multiple')}</option>`;
 		dataSelect.innerHTML = options;
-		dataSelect.value = "multi";
-		turnoSelect.style.display = "none";
+		dataSelect.value = 'multi';
+		periodSelect.style.display = 'none';
 	}
 
 	function loadAllOptions() {
-		for (const programacao of getState().programacoes) {
-			const ids = programacao.destinosIDs.map((destino) => destino.destinosID);
+		const itinerary = getState().itinerary;
+		if (!itinerary) return;
+		for (const schedule of itinerary) {
+			const ids = schedule.destinationIds.map((destination) => destination.destinationId);
 
 			if (!ids.includes(DOCUMENT_ID)) {
 				continue;
 			}
 
-			const date = programacao.data;
+			const date = schedule.data;
 			const jsDate = convertFromDateObject(date);
-			const label = getDateTitle(jsDate, "weekday_day_month");
+			const label = getDateTitle(jsDate, 'weekday_day_month');
 			options += `<option value="${jsDateToInputDate(jsDate)}">${label}</option>`;
 		}
 	}
 
 	function addSelectListener() {
 		dataSelect.onchange = (e) => {
-			turnoSelect.style.display = (e.target as HTMLSelectElement).value ? "" : "none";
+			periodSelect.style.display = (e.target as HTMLSelectElement).value ? '' : 'none';
 		};
 	}
 }
 
 export async function setPlannedDestination(id, j) {
-	const newData = getID(`editar-planejado-select-data-${j}`).value;
-	const newTurno = getID(`editar-planejado-select-turno-${j}`).value;
+	const newData = getID(`edit-planned-select-data-${j}`).value;
+	const newPeriod = getID(`edit-planned-select-period-${j}`).value;
 
 	const currentSize = ACTIVE_PLANNED_DESTINATION.length;
 
-	if ((currentSize === 0 && !newData) || newData === "multi") {
+	if ((currentSize === 0 && !newData) || newData === 'multi') {
 		return false;
 	}
 
 	const currentData = ACTIVE_PLANNED_DESTINATION[0]?.data;
-	const currentInputDate = currentData
-		? dateObjectToInputDate(currentData)
-		: null;
-	const currentTurno = ACTIVE_PLANNED_DESTINATION[0]?.turno;
+	const currentInputDate = currentData ? dateObjectToInputDate(currentData) : null;
+	const currentPeriod = ACTIVE_PLANNED_DESTINATION[0]?.period;
 
-	if (
-		currentSize === 1 &&
-		newData === currentInputDate &&
-		newTurno === currentTurno
-	) {
+	if (currentSize === 1 && newData === currentInputDate && newPeriod === currentPeriod) {
 		return false;
 	}
 
-	const updatedProgramacoes = getUpdatedProgramacoes();
-	await update(`viagens/${TRIP_ID}`, {
-		programacoes: updatedProgramacoes,
+	const updatedSchedules = getUpdatedSchedules();
+	await update(`trips/${TRIP_ID}`, {
+		itinerary: updatedSchedules,
 	});
 
 	return true;
 
-	function getUpdatedProgramacoes() {
+	function getUpdatedSchedules() {
 		if (!newData && currentData) {
 			return removeDestinationReferences();
 		}
@@ -172,83 +173,79 @@ export async function setPlannedDestination(id, j) {
 			return addToLastPosition();
 		}
 
-		if (newData !== currentInputDate || newTurno !== currentTurno) {
+		if (newData !== currentInputDate || newPeriod !== currentPeriod) {
 			return changeOrder();
 		}
 
-		return getState().programacoes;
+		return getState().itinerary;
 	}
 
 	// ---------- helpers ----------
 
 	function removeDestinationReferences() {
-		const programacoes = cloneObject(getState().programacoes);
+		const schedules = cloneObject(getState().itinerary);
 
-		for (const day of programacoes) {
-			for (const period of ["manha", "tarde", "noite", "madrugada"]) {
+		for (const day of schedules) {
+			for (const period of ['morning', 'afternoon', 'night', 'earlyMorning']) {
 				day[period] = day[period].filter((p) => {
 					const item = p?.item;
 					return !(
 						item &&
-						item.tipo === "destinos" &&
-						item.local === DOCUMENT_ID &&
+						item.type === 'destinations' &&
+						item.location === DOCUMENT_ID &&
 						item.id === id
 					);
 				});
 			}
 		}
 
-		return programacoes;
+		return schedules;
 	}
 
 	function addToLastPosition() {
-		const programacoes = cloneObject(getState().programacoes);
+		const schedules = cloneObject(getState().itinerary);
 
-		const targetDay = programacoes.find(
-			(p) => dateObjectToInputDate(p.data) === newData,
-		);
+		const targetDay = schedules.find((p) => dateObjectToInputDate(p.data) === newData);
 
 		if (!targetDay) {
-			return programacoes;
+			return schedules;
 		}
 
-		targetDay[newTurno].push(buildPlannedDestination());
+		targetDay[newPeriod].push(buildPlannedDestination());
 
-		return programacoes;
+		return schedules;
 	}
 
 	function changeOrder() {
-		let programacoes = removeDestinationReferences();
+		let schedules = removeDestinationReferences();
 
-		const targetDay = programacoes.find(
-			(p) => dateObjectToInputDate(p.data) === newData,
-		);
+		const targetDay = schedules.find((p) => dateObjectToInputDate(p.data) === newData);
 
 		if (!targetDay) {
-			return programacoes;
+			return schedules;
 		}
 
-		targetDay[newTurno].push(buildPlannedDestination());
+		targetDay[newPeriod].push(buildPlannedDestination());
 
-		return programacoes;
+		return schedules;
 	}
 
 	function buildPlannedDestination() {
-		const pessoas = cloneObject(getState().pessoas);
-		for (const pessoa of pessoas) {
-			pessoa.isPresent = true;
+		const people = cloneObject(getState().travelers);
+		for (const person of people) {
+			person.isPresent = true;
 		}
 		return {
-			programacao: getID(`editar-nome-${j}`).value,
+			itinerary: getID(`edit-name-${j}`).value,
 			item: {
-				tipo: "destinos",
-				categoria: ACTIVE_CATEGORY,
-				local: DOCUMENT_ID,
+				type: 'destinations',
+				category: ACTIVE_CATEGORY,
+				location: DOCUMENT_ID,
 				id: id,
 			},
-			fim: "",
-			pessoas: pessoas || [],
-			inicio: "",
+			end: '',
+			people: people || [],
+			start: '',
 		};
 	}
 }

@@ -24,7 +24,7 @@
 	width: 400px;
 }
 
-#programacao-hoje {
+#itinerary-today {
 	width: fit-content;
 	font-size: 18px;
 	padding: 12px;
@@ -52,7 +52,7 @@
 	color: #6fa8dc;
 }
 
-#programacao-hoje:hover {
+#itinerary-today:hover {
 	background-color: rgba(78, 79, 80, 0.03);
 }
 
@@ -131,6 +131,12 @@
 .nav-menu a i,
 .nav-menu a:focus i {
 	font-size: 20px;
+}
+
+.nav-menu a svg,
+.nav-menu a:focus svg {
+	flex-shrink: 0;
+	transition: none;
 }
 
 .nav-menu a span,
@@ -617,7 +623,7 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Resume - Programação
+# Resume - Itinerary
 --------------------------------------------------------------*/
 
 #calendar-table-card {
@@ -682,12 +688,12 @@ section {
 		max-width: 700px;
 	}
 
-	#programacao-box {
+	#itinerary-box {
 		width: 700px;
 	}
 }
 
-#programacao-box {
+#itinerary-box {
 	display: none;
 	opacity: 0;
 	transition: opacity 0.2s linear;
@@ -704,57 +710,57 @@ section {
 	padding: 30px;
 }
 
-#programacao-box.show {
+#itinerary-box.show {
 	opacity: 1;
 	transition: opacity 0.2s linear;
 }
 
-#programacao-titulo .titulo,
-#programacao-fechar {
+#itinerary-title .title,
+#itinerary-close {
 	color: #4f5051;
 	font-weight: bold;
 	font-size: 22px;
 }
 
-#programacao-titulo {
+#itinerary-title {
 	margin-bottom: 10px;
 }
 
-.programacao-titulo-box {
+.itinerary-title-box {
 	margin-top: 22px;
 }
 
-.programacao-linha,
+.itinerary-line,
 .flight-title,
 .hotel-title {
 	margin-bottom: 10px;
 	border-bottom: 0.5px solid var(--table-border);
 }
 
-#programacao-modal {
+#itinerary-modal {
 	opacity: 1;
 	transition: opacity 0.2s linear;
 	margin-bottom: 22px;
 }
 
-#programacao-modal.show {
+#itinerary-modal.show {
 	opacity: 0;
 	transition: opacity 0.2s linear;
 }
 
-.programacao-item {
+.itinerary-item {
 	margin-top: 20px;
 	color: #4f5051;
 	font-weight: bold;
 }
 
-#programacao-fechar {
+#itinerary-close {
 	float: right;
 	cursor: pointer;
 	margin-top: -25px;
 }
 
-#sem-programacao {
+#no-itinerary {
 	margin-top: 20px;
 }
 
@@ -1034,6 +1040,20 @@ section {
 }
 
 /*--------------------------------------------------------------
+# Destinations Description (View Page)
+--------------------------------------------------------------*/
+#destinations-description {
+	text-align: center;
+	max-width: 720px;
+	margin: 0 auto 24px auto;
+	font-size: 16px;
+	line-height: 1.6;
+	color: var(--font-color);
+	opacity: 0.75;
+	padding: 0 16px;
+}
+
+/*--------------------------------------------------------------
 # Services - Todos os Destinos
 --------------------------------------------------------------*/
 .services .icon-box {
@@ -1215,7 +1235,7 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Testimonials - Resumo
+# Testimonials - Summary
 --------------------------------------------------------------*/
 .container {
 	position: relative;
@@ -1833,8 +1853,8 @@ iframe {
 --------------------------------------------------------------*/
 
 /* Page-specific container extensions — extend .message-container base styles */
-.programacao-container,
-.destinos-container {
+.itinerary-container,
+.destinations-container {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -1849,7 +1869,7 @@ iframe {
 }
 
 @media (max-height: 730px) {
-	.programacao-container {
+	.itinerary-container {
 		max-height: 95%;
 		overflow: auto;
 		display: block;
@@ -1863,8 +1883,8 @@ iframe {
 }
 
 @media (max-width: 520px) {
-	.programacao-container,
-	.destinos-container {
+	.itinerary-container,
+	.destinations-container {
 		width: 90%;
 		height: auto;
 	}
@@ -1932,13 +1952,12 @@ iframe {
 
 .btn-theme {
 	background: var(--theme-color);
-	color: var(--background-color);
+	color: #ffffff;
 }
 
 .btn-theme:hover,
 .btn-theme:active {
 	background: var(--theme-color-hover);
-	color: var(--background-color);
 }
 
 #dDescription {
@@ -2102,7 +2121,7 @@ iframe {
 	}
 }
 
-.transporte-categoria {
+.transport-category {
 	text-align: center;
 	font-size: 18px;
 	font-weight: bold;
@@ -2110,20 +2129,20 @@ iframe {
 	margin-bottom: 10px;
 }
 
-#transportation-outbound,
+#transportation-departure,
 #transportation-internal {
 	margin-bottom: 50px;
 }
 
-.transporte-categoria:first-child {
+.transport-category:first-child {
 	margin-top: 0;
 }
 
-/* Hospedagem Box */
+/* Accommodation Box */
 
 .hotel-box,
 .flight-box,
-.programacao-box,
+.itinerary-box,
 #calendar {
 	box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
 }
@@ -2220,7 +2239,7 @@ iframe {
 }
 
 .hotel-reservation,
-.programacao-data-box {
+.itinerary-date-box {
 	margin-top: 10px;
 }
 
@@ -2253,21 +2272,21 @@ iframe {
 	}
 }
 
-.destinos-titulo {
+.destination-title {
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 16px;
 	border-bottom: 0.5px solid var(--table-border);
 }
 
-.notas-box {
+.rating-box {
 	display: block;
 	white-space: nowrap;
 	margin-top: 5px;
 	margin-bottom: 20px;
 }
 
-.nota-sem-margem {
+.rating-no-margin {
 	font-size: 25px;
 	color: #1f2937;
 	border-radius: 50%;
@@ -2275,31 +2294,31 @@ iframe {
 	margin-right: 0;
 }
 
-.nota-5 {
+.rating-5 {
 	background-color: #cfe2f3;
 }
 
-.nota-4 {
+.rating-4 {
 	background-color: #d9ead3;
 }
 
-.nota-3 {
+.rating-3 {
 	background-color: #fff2cc;
 }
 
-.nota-2 {
+.rating-2 {
 	background-color: #fce5cd;
 }
 
-.nota-1 {
+.rating-1 {
 	background-color: #f4cccc;
 }
 
-.nota-ausente {
+.rating-absent {
 	background-color: #ead1dc;
 }
 
-.nota-texto {
+.rating-text {
 	color: #4f5051;
 	font-weight: bold;
 	position: relative;
@@ -2307,7 +2326,7 @@ iframe {
 }
 
 @media (max-width: 380px) {
-	.nota-texto {
+	.rating-text {
 		font-size: 16px;
 	}
 }
@@ -2333,12 +2352,12 @@ iframe {
 	text-decoration: none;
 }
 
-.destinos-topicos-box {
+.destination-topics-box {
 	margin-bottom: 10px;
 	font-size: 16px;
 }
 
-.destinos-descricao {
+.destination-description {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
@@ -2367,11 +2386,11 @@ iframe {
 	height: 213.41px;
 }
 
-.inner-programacao-item {
+.inner-itinerary-item {
 	max-width: 390px;
 }
 
-/* Programação Pills */
+/* Itinerary Pills */
 .pill-box {
 	margin-top: 36px;
 	margin-left: auto;
@@ -2468,7 +2487,7 @@ iframe {
 	background-color: #ffe6df !important;
 }
 
-#gastos {
+#expenses-section {
 	color: #fff;
 }
 
@@ -2631,7 +2650,7 @@ input[type="radio"] {
 }
 
 /* Travelers Checkboxes */
-#innner-programacao-travelers-checkboxes {
+#inner-itinerary-travelers-checkboxes {
 	margin: 12px 0 14px 0;
 	display: flex;
 	flex-wrap: wrap;
@@ -2639,7 +2658,7 @@ input[type="radio"] {
 }
 
 /* label layout */
-#innner-programacao-travelers-checkboxes .checkbox-item {
+#inner-itinerary-travelers-checkboxes .checkbox-item {
 	display: flex;
 	align-items: center;
 	gap: 4px;
@@ -2648,7 +2667,7 @@ input[type="radio"] {
 }
 
 /* checkbox color = theme color */
-#innner-programacao-travelers-checkboxes input[type="checkbox"] {
+#inner-itinerary-travelers-checkboxes input[type="checkbox"] {
 	accent-color: var(--theme-color);
 	cursor: pointer;
 }

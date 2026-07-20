@@ -1,0 +1,112 @@
+{
+  "_meta": {
+    "tripId": "legacy-2017-maximus",
+    "slug": "2017-maximus-festival",
+    "sourceFiles": [
+      "Pessoais/2017/[2017b] Maximus Festival/Checkup.docx"
+    ],
+    "extractionNotes": {
+      "docxContent": "Packing checklist only (Roupas, Higiene pessoal, Alimentos, Pele, Dinheiro, Bateria, Ingresso, Check-in Voo Gol, Pijama, Fechar a mochila). No dates, prices, or structured itinerary found.",
+      "dateSource": "Inferred — Maximus Festival 2017 occurred on 2017-05-13 at Autódromo de Interlagos, São Paulo. Verify against ticket/personal records.",
+      "transportSource": "Inferred from 'Check-in Voo Gol' in packing list — suggests a Gol flight. No flight details (times, reservation codes) available.",
+      "missingData": "No expenses data, no accommodation, no detailed itinerary, no reservation codes."
+    }
+  },
+  "trip": {
+    "title": "Maximus Festival 2017",
+    "currency": "BRL",
+    "start": { "day": 13, "month": 5, "year": 2017, "hour": 0, "minute": 0, "second": 0 },
+    "end": { "day": 13, "month": 5, "year": 2017, "hour": 23, "minute": 59, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": false,
+      "expenses": false
+    },
+    "travelers": [
+      { "id": "gabriel", "name": "Gabriel" }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {},
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "Gol",
+      "points": {
+        "origin": "Belo Horizonte",
+        "destination": "São Paulo"
+      },
+      "dates": {
+        "departure": { "day": 13, "month": 5, "year": 2017, "hour": 0, "minute": 0, "second": 0 },
+        "arrival": { "day": 13, "month": 5, "year": 2017, "hour": 0, "minute": 0, "second": 0 }
+      },
+      "duration": "",
+      "direction": "departure",
+      "reservation": "",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "Gol",
+      "points": {
+        "origin": "São Paulo",
+        "destination": "Belo Horizonte"
+      },
+      "dates": {
+        "departure": { "day": 13, "month": 5, "year": 2017, "hour": 23, "minute": 0, "second": 0 },
+        "arrival": { "day": 14, "month": 5, "year": 2017, "hour": 0, "minute": 0, "second": 0 }
+      },
+      "duration": "",
+      "direction": "return",
+      "reservation": "",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20170513": {
+      "title": { "value": "Maximus Festival — Autódromo de Interlagos", "showDestinations": false, "translate": false },
+      "date": { "day": 13, "month": 5, "year": 2017, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [
+        { "activity": "Maximus Festival no Autódromo de Interlagos", "time": "", "notes": "" }
+      ],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [],
+    "preTrip": [],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel"
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2026-07-19T00:00:00.000Z" }
+  }
+}

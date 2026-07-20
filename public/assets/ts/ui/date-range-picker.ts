@@ -9,6 +9,8 @@
  *   </div>
  *   new DateRangePicker(document.getElementById('my-dates'));
  */
+import { translate, getLanguagePackName } from '../i18n/translation.js';
+
 export class DateRangePicker {
 	private container: HTMLElement;
 	private startInput: HTMLInputElement;
@@ -25,17 +27,58 @@ export class DateRangePicker {
 	private hoverDate: Date | null = null;
 	private selecting: 'start' | 'end' = 'start';
 
-	private readonly months = [
-		'January', 'February', 'March', 'April', 'May', 'June',
-		'July', 'August', 'September', 'October', 'November', 'December'
+	private readonly monthKeys = [
+		'january',
+		'february',
+		'march',
+		'april',
+		'may',
+		'june',
+		'july',
+		'august',
+		'september',
+		'october',
+		'november',
+		'december',
 	];
-	private readonly weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-	private readonly shortcuts = [
-		{ label: 'Today', get: () => this.shortcutToday() },
-		{ label: 'This week', get: () => this.shortcutThisWeek() },
-		{ label: 'This month', get: () => this.shortcutThisMonth() },
-		{ label: 'Clear', get: () => this.clear() },
+	private readonly weekDayKeys = [
+		'sunday',
+		'monday',
+		'tuesday',
+		'wednesday',
+		'thursday',
+		'friday',
+		'saturday',
 	];
+
+	private getMonths(): string[] {
+		return this.monthKeys.map((k) => translate(`datetime.months.${k}`));
+	}
+
+	private getWeekDays(): string[] {
+		return this.weekDayKeys.map((k) => translate(`datetime.weekdays.mini.${k}`));
+	}
+
+	private getShortcuts() {
+		return [
+			{
+				label: translate('datetime.datepicker.today'),
+				get: () => this.shortcutToday(),
+			},
+			{
+				label: translate('datetime.datepicker.this_week'),
+				get: () => this.shortcutThisWeek(),
+			},
+			{
+				label: translate('datetime.datepicker.this_month'),
+				get: () => this.shortcutThisMonth(),
+			},
+			{
+				label: translate('datetime.datepicker.clear'),
+				get: () => this.clear(),
+			},
+		];
+	}
 
 	constructor(container: HTMLElement) {
 		this.container = container;
@@ -72,7 +115,7 @@ export class DateRangePicker {
 				<line x1="8" y1="2" x2="8" y2="6"/>
 				<line x1="3" y1="10" x2="21" y2="10"/>
 			</svg>
-			<span class="date-text placeholder">Select dates...</span>
+			<span class="date-text placeholder">${translate('datetime.datepicker.select_dates')}</span>
 			<button class="date-clear" type="button" tabindex="-1">
 				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 					<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
@@ -167,7 +210,13 @@ export class DateRangePicker {
 	private updateDisplay(): void {
 		const hasValue = this.startDate && this.endDate;
 		if (hasValue) {
-			const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+			const locale = getLanguagePackName() === 'pt' ? 'pt-BR' : 'en-US';
+			const fmt = (d: Date) =>
+				d.toLocaleDateString(locale, {
+					month: 'short',
+					day: 'numeric',
+					year: 'numeric',
+				});
 			this.textEl.textContent = `${fmt(this.startDate!)} – ${fmt(this.endDate!)}`;
 			this.textEl.classList.remove('placeholder');
 			this.displayInput.classList.add('has-value');
@@ -196,7 +245,7 @@ export class DateRangePicker {
 				this.previousEndValue = newEnd;
 			}
 		} else {
-			this.textEl.textContent = 'Select dates...';
+			this.textEl.textContent = translate('datetime.datepicker.select_dates');
 			this.textEl.classList.add('placeholder');
 			this.displayInput.classList.remove('has-value');
 			this.startInput.value = '';
@@ -218,16 +267,19 @@ export class DateRangePicker {
 
 		let html = '';
 
+		const months = this.getMonths();
+		const weekDays = this.getWeekDays();
+
 		// Header
 		html += `<div class="cal-header">
 			<button class="cal-nav-btn" data-action="prev">&larr;</button>
-			<span class="cal-month-label">${this.months[month]} ${year}</span>
+			<span class="cal-month-label">${months[month]} ${year}</span>
 			<button class="cal-nav-btn" data-action="next">&rarr;</button>
 		</div>`;
 
 		// Weekday labels
 		html += '<div class="cal-weekdays">';
-		for (const d of this.weekDays) {
+		for (const d of weekDays) {
 			html += `<span>${d}</span>`;
 		}
 		html += '</div>';
@@ -276,24 +328,28 @@ export class DateRangePicker {
 		html += '</div>';
 
 		// Shortcuts
+		const shortcuts = this.getShortcuts();
 		html += '<div class="cal-shortcuts">';
-		for (const s of this.shortcuts) {
+		for (const s of shortcuts) {
 			html += `<button class="cal-shortcut-btn" data-shortcut="${s.label}">${s.label}</button>`;
 		}
 		html += '</div>';
 
 		// Footer
-		const rangeLabel = this.startDate && this.endDate
-			? `${this.fmtShort(this.startDate)} – ${this.fmtShort(this.endDate)}`
-			: this.startDate
-				? `Start: ${this.fmtShort(this.startDate)} — pick end date`
-				: 'Pick start date';
+		const rangeLabel =
+			this.startDate && this.endDate
+				? `${this.fmtShort(this.startDate)} – ${this.fmtShort(this.endDate)}`
+				: this.startDate
+					? translate('datetime.datepicker.start_pick_end', {
+							start: this.fmtShort(this.startDate),
+						})
+					: translate('datetime.datepicker.pick_start_date');
 
 		html += `<div class="cal-footer">
 			<span class="cal-range-label">${rangeLabel}</span>
 			<div class="cal-footer-buttons">
-				<button class="cal-cancel-btn" data-action="cancel">Cancel</button>
-				<button class="cal-apply-btn" data-action="apply">Apply</button>
+				<button class="cal-cancel-btn" data-action="cancel">${translate('datetime.datepicker.cancel')}</button>
+				<button class="cal-apply-btn" data-action="apply">${translate('datetime.datepicker.apply')}</button>
 			</div>
 		</div>`;
 
@@ -305,23 +361,29 @@ export class DateRangePicker {
 
 	private bindCalendarEvents(): void {
 		// Navigation
-		this.calendar.querySelectorAll('.cal-nav-btn').forEach(btn => {
+		this.calendar.querySelectorAll('.cal-nav-btn').forEach((btn) => {
 			btn.addEventListener('click', (e) => {
 				e.stopPropagation();
 				const action = (btn as HTMLElement).dataset.action;
 				if (action === 'prev') {
 					this.currentMonth--;
-					if (this.currentMonth < 0) { this.currentMonth = 11; this.currentYear--; }
+					if (this.currentMonth < 0) {
+						this.currentMonth = 11;
+						this.currentYear--;
+					}
 				} else if (action === 'next') {
 					this.currentMonth++;
-					if (this.currentMonth > 11) { this.currentMonth = 0; this.currentYear++; }
+					if (this.currentMonth > 11) {
+						this.currentMonth = 0;
+						this.currentYear++;
+					}
 				}
 				this.renderCalendar();
 			});
 		});
 
 		// Day clicks
-		this.calendar.querySelectorAll('.cal-day:not(.other-month)').forEach(btn => {
+		this.calendar.querySelectorAll('.cal-day:not(.other-month)').forEach((btn) => {
 			btn.addEventListener('click', (e) => {
 				e.stopPropagation();
 				const ds = (btn as HTMLElement).dataset.date!;
@@ -346,11 +408,11 @@ export class DateRangePicker {
 		});
 
 		// Shortcuts
-		this.calendar.querySelectorAll('.cal-shortcut-btn').forEach(btn => {
+		this.calendar.querySelectorAll('.cal-shortcut-btn').forEach((btn) => {
 			btn.addEventListener('click', (e) => {
 				e.stopPropagation();
 				const label = (btn as HTMLElement).dataset.shortcut!;
-				const shortcut = this.shortcuts.find(s => s.label === label);
+				const shortcut = this.getShortcuts().find((s) => s.label === label);
 				if (shortcut) shortcut.get();
 				this.renderCalendar();
 			});
@@ -397,7 +459,8 @@ export class DateRangePicker {
 	}
 
 	private fmtShort(d: Date): string {
-		return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+		const locale = getLanguagePackName() === 'pt' ? 'pt-BR' : 'en-US';
+		return d.toLocaleDateString(locale, { month: 'short', day: 'numeric' });
 	}
 
 	/** Get current range as {start: Date, end: Date} or null */
@@ -416,8 +479,12 @@ export class DateRangePicker {
 	}
 
 	/** Get the start input element */
-	getStartInput(): HTMLInputElement { return this.startInput; }
+	getStartInput(): HTMLInputElement {
+		return this.startInput;
+	}
 
 	/** Get the end input element */
-	getEndInput(): HTMLInputElement { return this.endInput; }
+	getEndInput(): HTMLInputElement {
+		return this.endInput;
+	}
 }

@@ -1,54 +1,57 @@
 import { getTransportations } from '../../../app/config.js';
-import { getChildIDs, getID, getJ, getOrCreateCategoryID, removeRequired, setRequired } from '../../../utils/dom.js';
+import {
+	getChildIDs,
+	getID,
+	getJ,
+	getOrCreateCategoryID,
+	removeRequired,
+	setRequired,
+} from '../../../utils/dom.js';
 import { formattedDateToDateObject, getTimeBetweenDates } from '../../../utils/dates.js';
 import { translate } from '../../../i18n/translation.js';
 import { validateLink } from '../../../ui/fields.js';
 import { closeAccordions, openLastAccordion } from '../../../ui/accordion.js';
 import { buildDS } from '../../../ui/dynamic-select.js';
-import { addTransportation } from "../new-trip.js";
+import { addTransportation } from '../new-trip.js';
 
 export function getTransportationObject(protectedReservationCodes = false) {
 	const result = {
-		dados: [],
-		visualizacao: getID("people-view").checked
-			? "people-view"
-			: getID("leg-view").checked
-				? "leg-view"
-				: "simple-view",
+		data: [],
+		viewMode: getID('people-view').checked
+			? 'people'
+			: getID('leg-view').checked
+				? 'leg'
+				: 'simple',
 	};
-	for (const child of getChildIDs("transporte-box")) {
+	for (const child of getChildIDs('transportation-box')) {
 		const j = getJ(child);
-		result.dados.push({
-			datas: {
-				chegada: formattedDateToDateObject(
-					getID(`chegada-${j}`).value,
-					getID(`chegada-horario-${j}`).value,
+		result.data.push({
+			dates: {
+				arrival: formattedDateToDateObject(
+					getID(`arrival-${j}`).value,
+					getID(`arrival-time-${j}`).value,
 				),
-				partida: formattedDateToDateObject(
-					getID(`partida-${j}`).value,
-					getID(`partida-horario-${j}`).value,
+				departure: formattedDateToDateObject(
+					getID(`departure-${j}`).value,
+					getID(`departure-time-${j}`).value,
 				),
 			},
-			duracao: getID(`transporte-duracao-${j}`).value,
-			empresa: getCompanyValue(j),
-			id: getOrCreateCategoryID("transporte", j),
-			idaVolta: getID(`ida-${j}`).checked
-				? "ida"
-				: getID(`volta-${j}`).checked
-					? "volta"
-					: "durante",
-			link: protectedReservationCodes
-				? ""
-				: getID(`transporte-link-${j}`).value,
-			pontos: {
-				chegada: getID(`ponto-chegada-${j}`).value,
-				partida: getID(`ponto-partida-${j}`).value,
+			duration: getID(`transportation-duration-other-${j}`).value,
+			company: getCompanyValue(j),
+			id: getOrCreateCategoryID('transportation', j),
+			direction: getID(`departure-${j}`).checked
+				? 'departure'
+				: getID(`return-${j}`).checked
+					? 'return'
+					: 'during',
+			link: protectedReservationCodes ? '' : getID(`transportation-link-${j}`).value,
+			points: {
+				destination: getID(`arrival-point-${j}`).value,
+				origin: getID(`departure-point-${j}`).value,
 			},
-			reserva: protectedReservationCodes
-				? ""
-				: getID(`reserva-transporte-${j}`).value,
-			transporte: getID(`transporte-tipo-${j}`).value,
-			pessoa: getID(`transporte-pessoa-select-${j}`).value,
+			reservation: protectedReservationCodes ? '' : getID(`reservation-transportation-${j}`).value,
+			type: getID(`transportation-type-${j}`).value,
+			person: getID(`transportation-person-select-${j}`).value,
 		});
 	}
 	return result;
@@ -56,57 +59,53 @@ export function getTransportationObject(protectedReservationCodes = false) {
 
 export function getProtectedTransportationObject() {
 	const result = {};
-	for (const childID of getChildIDs("transporte-box")) {
+	for (const childID of getChildIDs('transportation-box')) {
 		const j = getJ(childID);
-		const id = getID(`transporte-id-${j}`).value;
-		const reserva = getID(`reserva-transporte-${j}`).value;
-		const link = getID(`transporte-link-${j}`).value;
-		result[id] = { reserva, link };
+		const id = getID(`transportation-id-${j}`).value;
+		const reservation = getID(`reservation-transportation-${j}`).value;
+		const link = getID(`transportation-link-${j}`).value;
+		result[id] = { reservation, link };
 	}
 	return result;
 }
 
 export function updateTransportationTitle(i) {
-	const partida = getID(`ponto-partida-${i}`).value;
-	const chegada = getID(`ponto-chegada-${i}`).value;
+	const departurePoint = getID(`departure-point-${i}`).value;
+	const arrivalPoint = getID(`arrival-point-${i}`).value;
 
-	if (!partida || !chegada) {
+	if (!departurePoint || !arrivalPoint) {
 		return;
 	}
 
-	let texto = `${partida} → ${chegada}`;
+	let text = `${departurePoint} → ${arrivalPoint}`;
 
-	if (getID("leg-view").checked) {
-		texto = `${getTransportationType(i)}: ${texto}`;
+	if (getID('leg-view').checked) {
+		text = `${getTransportationType(i)}: ${text}`;
 	} else {
-		const pessoa = getPerson(i);
-		if (getID("people-view").checked && pessoa) {
-			texto = `${pessoa}: ${texto}`;
+		const person = getPerson(i);
+		if (getID('people-view').checked && person) {
+			text = `${person}: ${text}`;
 		}
 	}
 
-	getID(`transporte-title-${i}`).innerText = texto;
+	getID(`transportation-title-${i}`).innerText = text;
 }
 
 function getTransportationType(i) {
-	const ida = getID(`ida-${i}`).checked
-		? translate("trip.transportation.departure")
-		: "";
-	const durante = getID(`durante-${i}`).checked
-		? translate("trip.transportation.during")
-		: "";
-	const volta = getID(`volta-${i}`).checked
-		? translate("trip.transportation.return")
-		: "";
+	const outboundLabel = getID(`departure-${i}`).checked
+		? translate('trip.transportation.departure')
+		: '';
+	const duringLabel = getID(`during-${i}`).checked ? translate('trip.transportation.during') : '';
+	const returnLabel = getID(`return-${i}`).checked ? translate('trip.transportation.return') : '';
 
-	return ida || durante || volta;
+	return outboundLabel || duringLabel || returnLabel;
 }
 
 function getPerson(i) {
-	const select = getID(`transporte-pessoa-select-${i}`).value;
-	const input = getID(`transporte-pessoa-${i}`).value;
+	const select = getID(`transportation-person-select-${i}`).value;
+	const input = getID(`transportation-person-${i}`).value;
 
-	if (select === "outra" || select === "selecione") {
+	if (select === 'other' || select === 'select') {
 		return input;
 	}
 
@@ -114,35 +113,34 @@ function getPerson(i) {
 }
 
 export function loadTransportationVisibility(j) {
-	const empresasPorTipo = getTransportations().empresas;
+	const companiesByType = getTransportations().companies;
 
-	const empresaSelect = getID(`empresa-select-${j}`);
-	const empresaInput = getID(`empresa-${j}`);
-	const tipo = getID(`transporte-tipo-${j}`).value;
-	const previousValue = empresaSelect.value;
+	const companySelect = getID(`company-select-${j}`);
+	const companyInput = getID(`company-${j}`);
+	const type = getID(`transportation-type-${j}`).value;
+	const previousValue = companySelect.value;
 
-	const empresas = empresasPorTipo[tipo];
+	const companies = companiesByType[type];
 
-	if (!empresas) {
-		showOnlyEmpresaInput(empresaSelect, empresaInput);
+	if (!companies) {
+		showOnlyCompanyInput(companySelect, companyInput);
 		return;
 	}
 
-	populateEmpresaSelect(empresaSelect, empresas);
-	restorePreviousSelection(empresaSelect, previousValue);
+	populateCompanySelect(companySelect, companies);
+	restorePreviousSelection(companySelect, previousValue);
 
-	empresaSelect.style.display = "block";
-	empresaInput.style.display =
-		empresaSelect.value === "outra" ? "block" : "none";
+	companySelect.style.display = 'block';
+	companyInput.style.display = companySelect.value === 'other' ? 'block' : 'none';
 
-	function populateEmpresaSelect(select, empresas) {
-		let options = `<option value="selecione">${translate("labels.select")}</option>`;
+	function populateCompanySelect(select, companies) {
+		let options = `<option value="select">${translate('labels.select')}</option>`;
 
-		for (const [value, label] of Object.entries(empresas)) {
+		for (const [value, label] of Object.entries(companies)) {
 			options += `<option value="${value}">${label}</option>`;
 		}
 
-		options += `<option value="outra">${translate("labels.other")}</option>`;
+		options += `<option value="other">${translate('labels.other')}</option>`;
 		select.innerHTML = options;
 	}
 
@@ -158,9 +156,9 @@ export function loadTransportationVisibility(j) {
 		}
 	}
 
-	function showOnlyEmpresaInput(select, input) {
-		select.style.display = "none";
-		input.style.display = "block";
+	function showOnlyCompanyInput(select, input) {
+		select.style.display = 'none';
+		input.style.display = 'block';
 	}
 }
 
@@ -170,103 +168,85 @@ export function applyTransportationTypeVisualization(i?) {
 		return;
 	}
 
-	for (const child of getChildIDs("transporte-box")) {
+	for (const child of getChildIDs('transportation-box')) {
 		apply(getJ(child));
 	}
 
 	function apply(j) {
 		updateTransportationTitle(j);
-		getID(`idaVolta-box-${j}`).style.display = getID("leg-view").checked
-			? "block"
-			: "none";
-		getID(`people-box-${j}`).style.display = getID("people-view").checked
-			? "block"
-			: "none";
+		getID(`direction-box-${j}`).style.display = getID('leg-view').checked ? 'block' : 'none';
+		getID(`people-box-${j}`).style.display = getID('people-view').checked ? 'block' : 'none';
 
-		if (getID("people-view").checked) {
-			setRequired(`transporte-pessoa-select-${j}`);
+		if (getID('people-view').checked) {
+			setRequired(`transportation-person-select-${j}`);
 		} else {
-			removeRequired(`transporte-pessoa-select-${j}`);
+			removeRequired(`transportation-person-select-${j}`);
 		}
 	}
 }
 
 function loadAutoDuration(i) {
-	const div = getID(`transporte-duracao-${i}`);
+	const div = getID(`transportation-duration-other-${i}`);
 
-	const startDate = getID(`partida-${i}`).value;
-	const startTime = getID(`partida-horario-${i}`).value;
+	const startDate = getID(`departure-${i}`).value;
+	const startTime = getID(`departure-time-${i}`).value;
 
-	const endDate = getID(`chegada-${i}`).value;
-	const endTime = getID(`chegada-horario-${i}`).value;
+	const endDate = getID(`arrival-${i}`).value;
+	const endTime = getID(`arrival-time-${i}`).value;
 
-	if (startDate != "" && startTime != "" && endDate != "" && endTime != "") {
+	if (startDate != '' && startTime != '' && endDate != '' && endTime != '') {
 		const start = new Date(`${startDate}T${startTime}`);
 		const end = new Date(`${endDate}T${endTime}`);
 		div.value = getTimeBetweenDates(start, end);
 	}
 }
 
-// Set Viagem
+// Set Trip
 function getCompanyValue(j) {
-	const divSelect = getID(`empresa-select-${j}`);
-	const divEmpresa = getID(`empresa-${j}`);
+	const companySelectDiv = getID(`company-select-${j}`);
+	const companyInputDiv = getID(`company-${j}`);
 
-	if (divSelect && divEmpresa) {
-		if (divSelect.value == "outra" || divSelect.value == "selecione") {
-			return divEmpresa.value;
+	if (companySelectDiv && companyInputDiv) {
+		if (companySelectDiv.value == 'other' || companySelectDiv.value == 'select') {
+			return companyInputDiv.value;
 		} else {
-			return divSelect.value;
+			return companySelectDiv.value;
 		}
 	}
 
-	return "";
+	return '';
 }
 
 // Listeners
 export function loadTransportationListeners(j) {
-	// Selects Dinâmicos
-	getID(`empresa-select-${j}`).addEventListener("change", () =>
+	// Dynamic Selects
+	getID(`company-select-${j}`).addEventListener('change', () => loadTransportationVisibility(j));
+	getID(`transportation-type-${j}`).addEventListener('change', () =>
 		loadTransportationVisibility(j),
 	);
-	getID(`transporte-tipo-${j}`).addEventListener("change", () =>
-		loadTransportationVisibility(j),
-	);
 
-	// Título Dinâmico
-	getID(`ponto-partida-${j}`).addEventListener("change", () =>
-		updateTransportationTitle(j),
-	);
-	getID(`ponto-chegada-${j}`).addEventListener("change", () =>
-		updateTransportationTitle(j),
-	);
-	getID(`ida-${j}`).addEventListener("change", () => updateTransportationTitle(j));
-	getID(`durante-${j}`).addEventListener("change", () =>
-		updateTransportationTitle(j),
-	);
-	getID(`volta-${j}`).addEventListener("change", () =>
-		updateTransportationTitle(j),
-	);
+	// Dynamic Title
+	getID(`departure-point-${j}`).addEventListener('change', () => updateTransportationTitle(j));
+	getID(`arrival-point-${j}`).addEventListener('change', () => updateTransportationTitle(j));
+	getID(`departure-${j}`).addEventListener('change', () => updateTransportationTitle(j));
+	getID(`during-${j}`).addEventListener('change', () => updateTransportationTitle(j));
+	getID(`return-${j}`).addEventListener('change', () => updateTransportationTitle(j));
 
-	// Cálculo Automático da Duração do Trajeto
-	getID(`partida-${j}`).addEventListener("change", () => loadAutoDuration(j));
-	getID(`partida-horario-${j}`).addEventListener("change", () =>
-		loadAutoDuration(j),
-	);
-	getID(`chegada-${j}`).addEventListener("change", () => loadAutoDuration(j));
-	getID(`chegada-horario-${j}`).addEventListener("change", () =>
-		loadAutoDuration(j),
-	);
+	// Automatic Route Duration Calculation
+	getID(`departure-${j}`).addEventListener('change', () => loadAutoDuration(j));
+	getID(`departure-time-${j}`).addEventListener('change', () => loadAutoDuration(j));
+	getID(`arrival-${j}`).addEventListener('change', () => loadAutoDuration(j));
+	getID(`arrival-time-${j}`).addEventListener('change', () => loadAutoDuration(j));
 
-	// Validação de Link
-	getID(`transporte-link-${j}`).addEventListener("change", () =>
-		validateLink(`transporte-link-${j}`),
+	// Link Validation
+	getID(`transportation-link-${j}`).addEventListener('change', () =>
+		validateLink(`transportation-link-${j}`),
 	);
 }
 
 export function transportationAddListenerAction() {
-	closeAccordions("transporte");
+	closeAccordions('transportation');
 	addTransportation();
-	openLastAccordion("transporte");
-	buildDS("transporte-pessoa");
+	openLastAccordion('transportation');
+	buildDS('transportation-person');
 }

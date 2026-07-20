@@ -13,10 +13,18 @@ import {
 	getUID,
 	getFirebaseIdToken,
 	getUser,
-} from "../firebase/auth.js";
+} from '../firebase/auth.js';
 
-import { getSystemData, deleteAccount, deleteAccountDocuments } from "../firebase/database.js";
-import { getID } from "../../utils/dom.js";
+import {
+	getSystemData,
+	deleteAccount,
+	deleteAccountDocuments,
+	getUserTripSummaries,
+	getUserDestinationSummaries,
+	getUserListingSummaries,
+	COLLECTION,
+} from '../firebase/database.js';
+import { getID } from '../../utils/dom.js';
 
 // Re-export raw user functions that pages may still use during transition
 export {
@@ -32,6 +40,7 @@ export {
 	getUser,
 	getSystemData,
 	deleteAccountDocuments,
+	COLLECTION,
 };
 
 // ── Auth-specific wrappers ──
@@ -41,8 +50,8 @@ export {
  */
 export async function login(email, password) {
 	// _signInWithEmailAndPassword reads from DOM elements, so we set them temporarily
-	const emailEl = getID<HTMLInputElement>("login-email");
-	const passwordEl = getID<HTMLInputElement>("login-password");
+	const emailEl = getID<HTMLInputElement>('login-email');
+	const passwordEl = getID<HTMLInputElement>('login-password');
 
 	if (emailEl && passwordEl) {
 		emailEl.value = email;
@@ -54,10 +63,10 @@ export async function login(email, password) {
 	try {
 		await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 		const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
-		console.log("User signed in:", userCredential.user);
+		console.log('User signed in:', userCredential.user);
 		return userCredential.user;
 	} catch (error) {
-		console.error("Error signing in:", error.message);
+		console.error('Error signing in:', error.message);
 		throw error;
 	}
 }
@@ -108,4 +117,98 @@ export async function deleteAccountService() {
 	return await deleteAccount();
 }
 
+// ── User summary subcollection readers (Option B architecture) ──
 
+/**
+ * Get all trip summaries for a user from users/{uid}/tripSummaries.
+ * Falls back to reading the user doc's embedded trips array if the
+ * subcollection hasn't been migrated yet.
+ */
+export async function getUserTrips(uid?) {
+	if (!uid) {
+		uid = await getUID();
+	}
+	if (!uid) return [];
+
+	// Try new subcollection first
+	const summaries = await getUserTripSummaries(uid);
+	if (summaries?.length > 0) return summaries;
+
+	// Fallback: old embedded format (user doc had "trips" or "trips" object)
+	const userData = await getUserData(uid);
+	if (userData?.trips) {
+		// Convert object {id: data} → array of {id, ...data}
+		return Object.entries(userData.trips).map(([id, data]: [string, any]) => ({
+			id,
+			...(typeof data === 'object' ? data : { title: data }),
+		}));
+	}
+	if (userData?.trips) {
+		return Object.entries(userData.trips).map(([id, data]: [string, any]) => ({
+			id,
+			...(typeof data === 'object' ? data : { title: data }),
+		}));
+	}
+
+	return [];
+}
+
+/**
+ * Get all destination summaries for a user from users/{uid}/destinationSummaries.
+ */
+export async function getUserDestinations(uid?) {
+	if (!uid) {
+		uid = await getUID();
+	}
+	if (!uid) return [];
+
+	const summaries = await getUserDestinationSummaries(uid);
+	if (summaries?.length > 0) return summaries;
+
+	// Fallback: old embedded format
+	const userData = await getUserData(uid);
+	if (userData?.destinations) {
+		return Object.entries(userData.destinations).map(([id, data]: [string, any]) => ({
+			id,
+			...(typeof data === 'object' ? data : { title: data }),
+		}));
+	}
+	if (userData?.destinations) {
+		return Object.entries(userData.destinations).map(([id, data]: [string, any]) => ({
+			id,
+			...(typeof data === 'object' ? data : { title: data }),
+		}));
+	}
+
+	return [];
+}
+
+/**
+ * Get all listing summaries for a user from users/{uid}/listingSummaries.
+ */
+export async function getUserListings(uid?) {
+	if (!uid) {
+		uid = await getUID();
+	}
+	if (!uid) return [];
+
+	const summaries = await getUserListingSummaries(uid);
+	if (summaries?.length > 0) return summaries;
+
+	// Fallback: old embedded format
+	const userData = await getUserData(uid);
+	if (userData?.listings) {
+		return Object.entries(userData.listings).map(([id, data]: [string, any]) => ({
+			id,
+			...(typeof data === 'object' ? data : { title: data }),
+		}));
+	}
+	if (userData?.listings) {
+		return Object.entries(userData.listings).map(([id, data]: [string, any]) => ({
+			id,
+			...(typeof data === 'object' ? data : { title: data }),
+		}));
+	}
+
+	return [];
+}

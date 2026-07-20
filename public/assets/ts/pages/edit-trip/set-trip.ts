@@ -1,188 +1,211 @@
-import { getCurrentPreferencePIN, validatePinField } from './categories/basic-data/protected-data.js';
+import {
+	getCurrentPreferencePIN,
+	validatePinField,
+} from './categories/basic-data/protected-data.js';
 import { setProtectedDataAndExpenses } from './categories/basic-data/set-protected-data.js';
-import { getState, DOCUMENT_ID, FIRESTORE_NEW_DATA, setFirestoreNewData } from '../../data/state.js';
+import {
+	getState,
+	DOCUMENT_ID,
+	FIRESTORE_NEW_DATA,
+	setFirestoreNewData,
+} from '../../data/state.js';
 import { getChildIDs, getID, setRequired } from '../../utils/dom.js';
 import { formattedDateToDateObject } from '../../utils/dates.js';
 import { getUID } from '../../data/firebase/auth.js';
 import { deleteUnusedImages } from '../../data/firebase/storage.js';
 import { translate } from '../../i18n/translation.js';
-import { getGaleriaObject } from './categories/gallery.js';
+import { getGalleryObject } from './categories/gallery.js';
 import { getItineraryArray } from './categories/itinerary-module/itinerary-module.js';
-import { getDestinationsArray } from "./categories/destination.js";
-import { getAccommodationArray, getProtectedAccommodationObject } from "./categories/accommodation.js";
-import { getProtectedTransportationObject, getTransportationObject } from "./categories/transportation.js";
-import { getExpensesObject } from "./categories/expenses.js";
-import { setDocumento, addSetResponse } from "../../utils/set.js";
-import { IMAGE_UPLOAD_STATUS } from "../../data/firebase/storage.js";
+import { getDestinationsArray } from './categories/destination.js';
+import {
+	getAccommodationArray,
+	getProtectedAccommodationObject,
+} from './categories/accommodation.js';
+import {
+	getProtectedTransportationObject,
+	getTransportationObject,
+} from './categories/transportation.js';
+import { getExpensesObject } from './categories/expenses.js';
+import { setDocument, addSetResponse } from '../../utils/set.js';
+import { IMAGE_UPLOAD_STATUS } from '../../data/firebase/storage.js';
 import { TRAVELERS } from '../../data/state.js';
+import { computeArrayDiff } from '../../utils/diff.js';
 
 export var FIRESTORE_PROTECTED_NEW_DATA = {};
 
-export var FIRESTORE_GASTOS_NEW_DATA = {};
-export var FIRESTORE_GASTOS_PROTECTED_NEW_DATA = {};
+export var FIRESTORE_EXPENSES_NEW_DATA = {};
+export var FIRESTORE_EXPENSES_PROTECTED_NEW_DATA = {};
+
+/** Subcollection data (written to trips/{id}/accommodations, /transportation, /itinerary) */
+export var FIRESTORE_ACCOMMODATIONS_NEW_DATA: any[] = [];
+export var FIRESTORE_TRANSPORTATION_NEW_DATA: { data: any[]; viewMode: string } = { data: [], viewMode: 'simple' };
+export var FIRESTORE_ITINERARY_NEW_DATA: any[] = [];
 
 async function buildTripObject() {
+	let fullTripObject: Record<string, any>;
+
 	switch (getCurrentPreferencePIN()) {
-		case "all-data":
-		setFirestoreNewData(await getUnprotectedTripObject());
-			FIRESTORE_PROTECTED_NEW_DATA = await getTripObjectFull(false);
+		case 'all-data':
+			setFirestoreNewData(await getUnprotectedTripObject());
+			fullTripObject = await getTripObjectFull(false);
+			FIRESTORE_PROTECTED_NEW_DATA = fullTripObject;
 			break;
-		case "sensitive-only":
-		setFirestoreNewData(await getTripObjectFull(true));
+		case 'sensitive-only':
+			fullTripObject = await getTripObjectFull(true);
+			setFirestoreNewData(stripSubcollections(fullTripObject));
 			FIRESTORE_PROTECTED_NEW_DATA = getSensitiveTripObject();
 			break;
 		default:
-		setFirestoreNewData(await getTripObjectFull(false));
+			fullTripObject = await getTripObjectFull(false);
+			setFirestoreNewData(stripSubcollections(fullTripObject));
 			FIRESTORE_PROTECTED_NEW_DATA = {};
 	}
+
+	// Store subcollection data for separate batch write
+	FIRESTORE_ACCOMMODATIONS_NEW_DATA = fullTripObject.accommodations || [];
+	FIRESTORE_TRANSPORTATION_NEW_DATA = fullTripObject.transportation || { data: [], viewMode: 'simple' };
+	FIRESTORE_ITINERARY_NEW_DATA = fullTripObject.itinerary || [];
+}
+
+/** Remove fields that now live in subcollections from the main document. */
+function stripSubcollections(tripObject: Record<string, any>): Record<string, any> {
+	const { accommodations, transportation, itinerary, ...rest } = tripObject;
+	return rest;
 }
 
 async function getUnprotectedTripObject() {
 	return {
-		destinos: getDestinationsArray(),
-		compartilhamento: await getSharingObject(),
-		cores: getCoresObject(),
-		fim: getID(`fim`).value
-			? formattedDateToDateObject(getID(`fim`).value)
-			: "",
-		galeria: {},
-		hospedagens: [],
-		imagem: getImagemObject(),
-		inicio: getID(`inicio`).value
-			? formattedDateToDateObject(getID(`inicio`).value)
-			: "",
+		destinationRefs: getDestinationsArray(),
+		sharing: await getSharingObject(),
+		colors: getColorsObject(),
+		end: getID('end').value ? formattedDateToDateObject(getID('end').value) : '',
+		gallery: {},
+		accommodations: [],
+		image: getImageObject(),
+		start: getID('start').value ? formattedDateToDateObject(getID('start').value) : '',
 		links: {},
-		modulos: {},
-		moeda: getID(`moeda`).value,
-		programacoes: {},
-		pessoas: {},
-		titulo: getID(`titulo`).value,
-		transportes: getVisibilidadeObject(),
-		versao: {
-			ultimaAtualizacao: new Date().toISOString(),
+		modules: {},
+		currency: getID('currency').value,
+		itinerary: [],
+		travelers: [],
+		title: getID('title').value,
+		transportation: { data: [], viewMode: 'simple' },
+		version: {
+			lastUpdated: new Date().toISOString(),
 		},
-		visibilidade: {},
+		visibility: getVisibilityObject(),
 		pin: getCurrentPreferencePIN(),
 	};
 }
 
 function getSensitiveTripObject() {
-	const hospedagens = getProtectedAccommodationObject();
-	const transportes = getProtectedTransportationObject();
+	const accommodations = getProtectedAccommodationObject();
+	const transportation = getProtectedTransportationObject();
 
-	if (
-		Object.keys(hospedagens).length === 0 &&
-		Object.keys(transportes).length === 0
-	) {
+	if (Object.keys(accommodations).length === 0 && Object.keys(transportation).length === 0) {
 		return {};
 	}
 
 	return {
-		hospedagens: hospedagens,
-		transportes: transportes,
+		accommodations: accommodations,
+		transportation: transportation,
 		pin: getCurrentPreferencePIN(),
 	};
 }
 
 async function getTripObjectFull(protectedReservationCodes = false) {
 	return {
-		destinos: getDestinationsArray(),
-		compartilhamento: await getSharingObject(),
-		cores: getCoresObject(),
-		fim: getID(`fim`).value
-			? formattedDateToDateObject(getID(`fim`).value)
-			: "",
-		galeria: getGaleriaObject(),
-		hospedagens: getAccommodationArray(protectedReservationCodes),
-		imagem: getImagemObject(),
-		inicio: getID(`inicio`).value
-			? formattedDateToDateObject(getID(`inicio`).value)
-			: "",
+		destinationRefs: getDestinationsArray(),
+		sharing: await getSharingObject(),
+		colors: getColorsObject(),
+		end: getID('end').value ? formattedDateToDateObject(getID('end').value) : '',
+		gallery: getGalleryObject(),
+		accommodations: getAccommodationArray(protectedReservationCodes),
+		image: getImageObject(),
+		start: getID('start').value ? formattedDateToDateObject(getID('start').value) : '',
 		links: getLinksObject(),
-		modulos: getModulosObject(),
-		moeda: getID(`moeda`).value,
-		programacoes: getItineraryArray(),
-		pessoas: TRAVELERS,
-		titulo: getID(`titulo`).value,
-		transportes: getTransportationObject(protectedReservationCodes),
-		versao: {
-			ultimaAtualizacao: new Date().toISOString(),
+		modules: getModulesObject(),
+		currency: getID('currency').value,
+		itinerary: getItineraryArray(),
+		travelers: TRAVELERS,
+		title: getID('title').value,
+		transportation: getTransportationObject(protectedReservationCodes),
+		version: {
+			lastUpdated: new Date().toISOString(),
 		},
-		visibilidade: getVisibilidadeObject(),
+		visibility: getVisibilityObject(),
 		pin: getCurrentPreferencePIN(),
 	};
 }
 
 async function buildExpensesObject() {
 	switch (getCurrentPreferencePIN()) {
-		case "all-data":
-		case "sensitive-only":
-			FIRESTORE_GASTOS_PROTECTED_NEW_DATA = await getExpensesObject();
-			FIRESTORE_GASTOS_NEW_DATA = {};
+		case 'all-data':
+		case 'sensitive-only':
+			FIRESTORE_EXPENSES_PROTECTED_NEW_DATA = await getExpensesObject();
+			FIRESTORE_EXPENSES_NEW_DATA = {};
 			break;
 		default:
-			FIRESTORE_GASTOS_NEW_DATA = await getExpensesObject(false);
+			FIRESTORE_EXPENSES_NEW_DATA = await getExpensesObject(false);
 			FIRESTORE_PROTECTED_NEW_DATA = {};
 	}
 }
 
-function getModulosObject() {
+function getModulesObject() {
 	return {
-		hospedagens: getID("habilitado-hospedagens").checked,
-		destinos: getID("habilitado-destinos").checked,
-		gastos: getID("habilitado-gastos").checked,
-		programacao: getID("habilitado-programacao").checked,
-		resumo: true,
-		transportes: getID("habilitado-transporte").checked,
-		galeria: getID("habilitado-galeria").checked,
+		accommodations: getID('accommodations-enabled').checked,
+		destinations: getID('destinations-enabled').checked,
+		expenses: getID('expenses-enabled').checked,
+		itinerary: getID('itinerary-enabled').checked,
+		summary: true,
+		transportation: getID('transportation-enabled').checked,
+		gallery: getID('gallery-enabled').checked,
 	};
 }
 
-function getCoresObject() {
+function getColorsObject() {
 	return {
-		ativo: getID("habilitado-cores").checked,
-		claro: getID("claro").value,
-		escuro: getID("escuro").value,
+		active: getID('colors-enabled').checked,
+		light: getID('light-color').value,
+		dark: getID('dark-color').value,
 	};
 }
 
 export async function getSharingObject() {
 	return {
-		ativo: true,
-		dono:
-			getState() && Object.keys(getState()).length > 0
-				? getState().compartilhamento.dono
-				: await getUID(),
-		editores: [],
+		active: true,
+		owner:
+			getState() && Object.keys(getState()).length > 0 ? getState().sharing.owner : await getUID(),
+		editors: [],
 	};
 }
 
-function getImagemObject() {
+function getImageObject() {
 	return {
-		ativo: getID("habilitado-imagens").checked,
-		background: getID("link-background").value || "",
-		claro: getID("link-logo-light").value || "",
-		escuro: getID("link-logo-dark").value || "",
+		active: getID('images-enabled').checked,
+		background: getID('link-background').value || '',
+		light: getID('link-logo-light').value || '',
+		dark: getID('link-logo-dark').value || '',
 	};
 }
 
 function getLinksObject() {
 	return {
-		ativo: getID("habilitado-links").checked,
-		attachments: getID("link-attachments").value || "",
-		drive: getID("link-drive").value || "",
-		maps: getID("link-maps").value || "",
-		pdf: getID("link-pdf").value || "",
-		ppt: getID("link-ppt").value || "",
-		sheet: getID("link-sheet").value || "",
-		vacina: getID("link-vacina").value || "",
+		active: getID('links-enabled').checked,
+		attachments: getID('link-attachments').value || '',
+		drive: getID('link-drive').value || '',
+		maps: getID('link-maps').value || '',
+		pdf: getID('link-pdf').value || '',
+		ppt: getID('link-ppt').value || '',
+		sheet: getID('link-sheet').value || '',
+		vaccine: getID('link-vaccine').value || '',
 	};
 }
 
-export function getVisibilidadeObject() {
+export function getVisibilityObject() {
 	return {
-		claro: getID("dark-and-light").checked || getID("light-exclusive").checked,
-		escuro: getID("dark-and-light").checked || getID("dark-exclusive").checked,
+		light: getID('dark-and-light').checked || getID('light-exclusive').checked,
+		dark: getID('dark-and-light').checked || getID('dark-exclusive').checked,
 	};
 }
 
@@ -192,56 +215,121 @@ function verifyImageUploads(type) {
 
 		const documentLinks = [];
 
-		if (FIRESTORE_NEW_DATA.imagem.background) {
-			documentLinks.push(FIRESTORE_NEW_DATA.imagem.background);
+		if (FIRESTORE_NEW_DATA.image?.background) {
+			documentLinks.push(FIRESTORE_NEW_DATA.image.background);
 		}
 
-		if (FIRESTORE_NEW_DATA.imagem.claro) {
-			documentLinks.push(FIRESTORE_NEW_DATA.imagem.claro);
+		if (FIRESTORE_NEW_DATA.image?.light) {
+			documentLinks.push(FIRESTORE_NEW_DATA.image.light);
 		}
 
-		if (FIRESTORE_NEW_DATA.imagem.escuro) {
-			documentLinks.push(FIRESTORE_NEW_DATA.imagem.escuro);
+		if (FIRESTORE_NEW_DATA.image?.dark) {
+			documentLinks.push(FIRESTORE_NEW_DATA.image.dark);
 		}
 
-		if (type == "viagens") {
-		const data: Record<string, any> =
-				getCurrentPreferencePIN() === "all-data"
-					? FIRESTORE_PROTECTED_NEW_DATA
-					: FIRESTORE_NEW_DATA;
-			const hospedagens = data.hospedagens || [];
-			const hospedagemLinks = (hospedagens ?? []).flatMap((hospedagem) =>
-				(hospedagem?.imagens ?? [])
-					.map((imagem) => imagem?.link)
-					.filter(Boolean),
+		if (type == 'trips') {
+			const accommodationLinks = FIRESTORE_ACCOMMODATIONS_NEW_DATA.flatMap((acc) =>
+				(acc?.images ?? []).map((image: any) => image?.link).filter(Boolean),
 			);
 
-			const imagens = data?.galeria?.imagens || [];
-			documentLinks.push(...hospedagemLinks);
-			documentLinks.push(...imagens);
+			const galleryImages = FIRESTORE_NEW_DATA.gallery?.images || [];
+			documentLinks.push(...accommodationLinks);
+			documentLinks.push(...galleryImages);
 		}
 
 		deleteUnusedImages(path, documentLinks);
 	}
 
-	addSetResponse(
-		translate("labels.image.check"),
-		!IMAGE_UPLOAD_STATUS.hasErrors,
-	);
+	addSetResponse(translate('labels.image.check'), !IMAGE_UPLOAD_STATUS.hasErrors);
+}
+
+/** Build a day ID from the day's date field, matching the migration format (YYYYMMDD). */
+function buildDayId(day: Record<string, any>, index: number): string {
+	const date = day.date;
+	if (
+		date &&
+		typeof date === 'object' &&
+		typeof date.year === 'number' &&
+		typeof date.month === 'number' &&
+		typeof date.day === 'number'
+	) {
+		const y = String(date.year);
+		const m = String(date.month).padStart(2, '0');
+		const d = String(date.day).padStart(2, '0');
+		return `${y}${m}${d}`;
+	}
+	return `day-${index + 1}`;
+}
+
+/** Write accommodations, transportation, and itinerary to subcollections.
+ *  Uses computeArrayDiff to only write items that actually changed,
+ *  avoiding unnecessary Firestore writes. */
+function writeTripSubcollections(ops: any) {
+	const tripId = DOCUMENT_ID;
+	if (!tripId) return;
+
+	const originalState = getState();
+
+	// ── Accommodations ──────────────────────────────────────
+	const originalAccommodations = originalState?.accommodations || [];
+	const accDiff = computeArrayDiff(originalAccommodations, FIRESTORE_ACCOMMODATIONS_NEW_DATA);
+	for (const acc of accDiff.toSet) {
+		if (acc.id) {
+			ops.set(`trips/${tripId}/accommodations/${acc.id}`, acc);
+		}
+	}
+	for (const id of accDiff.toDelete) {
+		ops.delete(`trips/${tripId}/accommodations/${id}`);
+	}
+
+	// ── Transportation ──────────────────────────────────────
+	const originalLegs = originalState?.transportation?.data || [];
+	const { data: newLegs, viewMode } = FIRESTORE_TRANSPORTATION_NEW_DATA;
+	const legsDiff = computeArrayDiff(originalLegs, Array.isArray(newLegs) ? newLegs : []);
+	for (const leg of legsDiff.toSet) {
+		if (leg.id) {
+			ops.set(`trips/${tripId}/transportation/${leg.id}`, leg);
+		}
+	}
+	for (const id of legsDiff.toDelete) {
+		ops.delete(`trips/${tripId}/transportation/${id}`);
+	}
+
+	// Only write _settings if viewMode changed
+	const originalViewMode = originalState?.transportation?.viewMode;
+	if (!originalViewMode || originalViewMode !== (viewMode || 'simple')) {
+		ops.set(`trips/${tripId}/transportation/_settings`, { viewMode: viewMode || 'simple' });
+	}
+
+	// ── Itinerary ───────────────────────────────────────────
+	const originalItinerary = originalState?.itinerary || [];
+	const itineraryDiff = computeArrayDiff(originalItinerary, FIRESTORE_ITINERARY_NEW_DATA);
+	for (const day of itineraryDiff.toSet) {
+		let dayId = day.id;
+		if (!dayId) {
+			// New day without ID — assign one
+			const index = FIRESTORE_ITINERARY_NEW_DATA.indexOf(day);
+			dayId = buildDayId(day, index);
+		}
+		ops.set(`trips/${tripId}/itinerary/${dayId}`, day);
+	}
+	for (const id of itineraryDiff.toDelete) {
+		ops.delete(`trips/${tripId}/itinerary/${id}`);
+	}
 }
 
 export async function setTripData() {
-	if (getID("habilitado-destinos").checked) {
-		for (const child of getChildIDs("com-destinos")) {
-			const i = parseInt(child.split("-")[2]);
-			setRequired(`select-destinos-${i}`);
+	if (getID('destinations-enabled').checked) {
+		for (const child of getChildIDs('has-destinations')) {
+			const i = parseInt(child.split('-')[2]);
+			setRequired(`select-destinations-${i}`);
 		}
 	}
 
-	const type = "viagens";
+	const type = 'trips';
 	const checks = [validatePinField];
 	const dataBuildingFunctions = [buildTripObject, buildExpensesObject];
-	const batchFunctions = [setProtectedDataAndExpenses];
+	const batchFunctions = [setProtectedDataAndExpenses, writeTripSubcollections];
 
-	await setDocumento({ type, checks, dataBuildingFunctions, batchFunctions });
+	await setDocument({ type, checks, dataBuildingFunctions, batchFunctions });
 }

@@ -1,0 +1,244 @@
+{
+  "trip": {
+    "title": "São Paulo 2020",
+    "currency": "BRL",
+    "start": { "day": 10, "month": 12, "year": 2020, "hour": 0, "minute": 0, "second": 0 },
+    "end": { "day": 13, "month": 12, "year": 2020, "hour": 23, "minute": 59, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2020-12-10T00:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      { "id": "gabriel", "name": "Gabriel" },
+      { "id": "milton", "name": "Milton" },
+      { "id": "marianna", "name": "Marianna" }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Matiz Manhattan",
+      "description": "Hotel localizado na região dos Jardins, São Paulo. Reserva feita pelo Hoteis.com.",
+      "address": "São Paulo - SP",
+      "dates": {
+        "checkIn": { "day": 10, "month": 12, "year": 2020, "hour": 14, "minute": 0, "second": 0 },
+        "checkOut": { "day": 13, "month": 12, "year": 2020, "hour": 12, "minute": 0, "second": 0 }
+      },
+      "breakfast": true,
+      "images": [],
+      "reservation": "9202007731222",
+      "link": "https://www.hoteis.com/booking/confirmation.html"
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "LATAM",
+      "points": { "origin": "Belo Horizonte (CNF)", "destination": "São Paulo (CGH)" },
+      "dates": {
+        "departure": { "day": 10, "month": 12, "year": 2020, "hour": 7, "minute": 25, "second": 0 },
+        "arrival": { "day": 10, "month": 12, "year": 2020, "hour": 8, "minute": 45, "second": 0 }
+      },
+      "duration": "1h20",
+      "direction": "departure",
+      "reservation": "TFJCNR",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "LATAM",
+      "points": { "origin": "São Paulo (CGH)", "destination": "Belo Horizonte (CNF)" },
+      "dates": {
+        "departure": { "day": 13, "month": 12, "year": 2020, "hour": 20, "minute": 10, "second": 0 },
+        "arrival": { "day": 13, "month": 12, "year": 2020, "hour": 21, "minute": 25, "second": 0 }
+      },
+      "duration": "1h15",
+      "direction": "return",
+      "reservation": "TFJCNR",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20201210": {
+      "title": { "value": "Dia 1 — Chegada e Paulista", "showDestinations": false, "translate": false },
+      "date": { "day": 10, "month": 12, "year": 2020, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "05:30", "activity": "→ Carona com o Pai", "details": "Translado até o aeroporto", "expenseType": "-" }
+      ],
+      "morning": [
+        { "time": "07:25", "activity": "Voo LATAM", "details": "Reserva TFJCNR. BH → São Paulo", "expenseType": "Voo", "value": 0 },
+        { "time": "08:45", "activity": "→ Uber", "details": "Aeroporto → Hotel", "expenseType": "Transporte Privado", "value": 20 },
+        { "time": "09:15", "activity": "Hotel Matiz Manhattan", "details": "Check-in", "expenseType": "Hotel", "value": 0 },
+        { "time": "09:30", "activity": "Paulista", "details": "Café da manhã na região", "expenseType": "Alimentação", "value": 30 },
+        { "time": "10:00", "activity": "Mirante Sesc Paulista", "details": "Vista aérea da cidade", "expenseType": "Atrações", "value": 0 },
+        { "time": "10:40", "activity": "Japan House", "details": "Centro cultural japonês", "expenseType": "Atrações", "value": 0 },
+        { "time": "11:20", "activity": "Taco Bell", "details": "Almoço", "expenseType": "Alimentação", "value": 30 }
+      ],
+      "afternoon": [
+        { "time": "12:00", "activity": "→ Metrô", "details": "Deslocamento para a Liberdade", "expenseType": "Transporte Público", "value": 4.40 },
+        { "time": "12:20", "activity": "Liberdade", "details": "Compras no bairro japonês", "expenseType": "Compras", "value": 150 },
+        { "time": "14:20", "activity": "→ Metrô", "details": "Volta para o hotel", "expenseType": "Transporte Público", "value": 4.10 },
+        { "time": "14:40", "activity": "Hotel", "details": "Deixar compras", "expenseType": "-" },
+        { "time": "15:00", "activity": "→ Metrô", "details": "Deslocamento para Pinacoteca", "expenseType": "Transporte Público", "value": 4.40 },
+        { "time": "15:20", "activity": "Pinacoteca", "details": "Visita ao museu", "expenseType": "Atrações", "value": 0 }
+      ],
+      "night": [
+        { "time": "16:40", "activity": "Hotel", "details": "Descanso / Arrumar", "expenseType": "-" },
+        { "time": "19:30", "activity": "→ Transporte Privado", "details": "Deslocamento para o jantar", "expenseType": "Transporte Privado", "value": 15 },
+        { "time": "19:45", "activity": "Mexicaníssimo", "details": "Saída noturna", "expenseType": "Saída Noturna", "value": 100 },
+        { "time": "22:00", "activity": "→ Transporte Privado", "details": "Volta ao hotel", "expenseType": "Transporte Privado", "value": 15 },
+        { "time": "22:15", "activity": "Hotel", "details": "Descanso", "expenseType": "-" }
+      ]
+    },
+    "20201211": {
+      "title": { "value": "Dia 2 — Vila Madalena e Pinheiros", "showDestinations": false, "translate": false },
+      "date": { "day": 11, "month": 12, "year": 2020, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "time": "08:00", "activity": "Hotel", "details": "Acordar / Arrumar", "expenseType": "-" },
+        { "time": "09:00", "activity": "Hotel", "details": "Café da manhã", "expenseType": "-" },
+        { "time": "09:20", "activity": "→ Metrô", "details": "Deslocamento", "expenseType": "Transporte Público", "value": 4.40 },
+        { "time": "09:40", "activity": "Beco do Batman", "details": "Vila Madalena — Grafites", "expenseType": "-" },
+        { "time": "10:40", "activity": "→ Metrô L2 + CPTM L10 + Uber", "details": "Deslocamento longo", "expenseType": "Transporte Público", "value": 12.10 },
+        { "time": "12:00", "activity": "The Burger Map", "details": "Almoço", "expenseType": "Alimentação", "value": 60 }
+      ],
+      "afternoon": [
+        { "time": "13:30", "activity": "→ Uber + Metrô", "details": "Volta para região central", "expenseType": "Transporte Privado", "value": 12.40 },
+        { "time": "14:50", "activity": "Museu da Imagem e Som", "details": "MIS — Exposições", "expenseType": "Atrações", "value": 5 },
+        { "time": "15:50", "activity": "→ A pé", "details": "Caminhada", "expenseType": "-" },
+        { "time": "16:20", "activity": "Hotel", "details": "Descanso / Arrumar", "expenseType": "-" }
+      ],
+      "night": [
+        { "time": "18:30", "activity": "→ A pé", "details": "Deslocamento", "expenseType": "-" },
+        { "time": "18:45", "activity": "Bráz Elettrica", "details": "Tira-gosto", "expenseType": "Alimentação", "value": 30 },
+        { "time": "19:15", "activity": "Caixote Bar + Augusta", "details": "Saída noturna", "expenseType": "Saída Noturna", "value": 100 },
+        { "time": "22:00", "activity": "→ Transporte Privado", "details": "Volta ao hotel", "expenseType": "Transporte Privado", "value": 10 },
+        { "time": "22:10", "activity": "Hotel", "details": "Descanso", "expenseType": "-" }
+      ]
+    },
+    "20201212": {
+      "title": { "value": "Dia 3 — Centro e Vida Noturna", "showDestinations": false, "translate": false },
+      "date": { "day": 12, "month": 12, "year": 2020, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "time": "08:00", "activity": "Hotel", "details": "Acordar / Arrumar", "expenseType": "-" },
+        { "time": "09:00", "activity": "Hotel", "details": "Café da manhã", "expenseType": "-" },
+        { "time": "09:20", "activity": "→ Metrô", "details": "Deslocamento para o centro", "expenseType": "Transporte Público", "value": 4.40 },
+        { "time": "09:40", "activity": "Galeria do Rock", "details": "Compras e visita", "expenseType": "Compras", "value": 50 },
+        { "time": "10:40", "activity": "→ Uber", "details": "Deslocamento", "expenseType": "Transporte Privado", "value": 10 },
+        { "time": "10:50", "activity": "Memorial da Resistência", "details": "Visita ao museu", "expenseType": "-" },
+        { "time": "11:50", "activity": "→ Uber", "details": "Deslocamento", "expenseType": "Transporte Privado", "value": 15 }
+      ],
+      "afternoon": [
+        { "time": "12:15", "activity": "Oscar Freire", "details": "Passeio na rua", "expenseType": "-" },
+        { "time": "12:45", "activity": "Cabana Burger", "details": "Almoço", "expenseType": "Alimentação", "value": 30 },
+        { "time": "13:25", "activity": "→ Uber + Metrô", "details": "Deslocamento para Museu da Imigração", "expenseType": "Transporte Público", "value": 4.40 },
+        { "time": "14:05", "activity": "Museu da Imigração", "details": "Visita", "expenseType": "-" }
+      ],
+      "night": [
+        { "time": "17:30", "activity": "→ Uber", "details": "Deslocamento", "expenseType": "Transporte Privado", "value": 20 },
+        { "time": "17:50", "activity": "O Burguer", "details": "Pré-saída (drinks)", "expenseType": "Saída Noturna", "value": 50 },
+        { "time": "19:00", "activity": "→ Uber", "details": "Deslocamento", "expenseType": "Transporte Privado", "value": 20 },
+        { "time": "19:20", "activity": "Omalleys", "details": "Saída noturna", "expenseType": "Saída Noturna", "value": 100 },
+        { "time": "22:00", "activity": "→ Transporte Privado", "details": "Volta ao hotel", "expenseType": "Transporte Privado", "value": 10 },
+        { "time": "22:10", "activity": "Hotel", "details": "Descanso", "expenseType": "-" }
+      ]
+    },
+    "20201213": {
+      "title": { "value": "Dia 4 — Ibirapuera e Retorno", "showDestinations": false, "translate": false },
+      "date": { "day": 13, "month": 12, "year": 2020, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "time": "08:00", "activity": "Hotel", "details": "Acordar / Arrumar", "expenseType": "-" },
+        { "time": "09:00", "activity": "Hotel", "details": "Café da manhã", "expenseType": "-" },
+        { "time": "09:20", "activity": "Hotel", "details": "Checkout / Deixar malas", "expenseType": "Hotel", "value": 11.70 },
+        { "time": "09:40", "activity": "→ Uber", "details": "Deslocamento para o Ibirapuera", "expenseType": "Transporte Privado", "value": 10 },
+        { "time": "10:00", "activity": "Parque Ibirapuera", "details": "Passeio no parque", "expenseType": "-" },
+        { "time": "11:30", "activity": "→ Uber", "details": "Deslocamento", "expenseType": "Transporte Privado", "value": 10 },
+        { "time": "11:40", "activity": "Modern Mamma Osteria", "details": "Almoço", "expenseType": "Alimentação", "value": 100 }
+      ],
+      "afternoon": [
+        { "time": "13:10", "activity": "→ Uber", "details": "Deslocamento", "expenseType": "Transporte Privado", "value": 10 },
+        { "time": "13:20", "activity": "Eataly", "details": "Compras", "expenseType": "Compras", "value": 50 },
+        { "time": "14:20", "activity": "→ Uber", "details": "Deslocamento", "expenseType": "Transporte Privado", "value": 20 },
+        { "time": "14:40", "activity": "O Tradicionalíssimo", "details": "Donuts", "expenseType": "Alimentação", "value": 15 },
+        { "time": "15:10", "activity": "→ Metrô", "details": "Volta ao hotel", "expenseType": "Transporte Público", "value": 4.40 },
+        { "time": "15:40", "activity": "Hotel", "details": "Buscar malas", "expenseType": "-" },
+        { "time": "15:50", "activity": "→ Uber", "details": "Hotel → Aeroporto", "expenseType": "Transporte Privado", "value": 20 }
+      ],
+      "night": [
+        { "time": "20:10", "activity": "Voo LATAM", "details": "Reserva TFJCNR. São Paulo → BH", "expenseType": "Voo", "value": 0 },
+        { "time": "21:25", "activity": "→ Carona com o Pai", "details": "Translado do aeroporto para casa", "expenseType": "-" }
+      ]
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      { "id": "exp-001", "type": "Alimentação", "description": "Paulista — Café da manhã", "value": 30, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-002", "type": "Alimentação", "description": "Taco Bell — Almoço", "value": 30, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-003", "type": "Compras", "description": "Liberdade — Compras", "value": 150, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-004", "type": "Saída Noturna", "description": "Mexicaníssimo — Jantar e saída", "value": 100, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-005", "type": "Transporte Privado", "description": "Uber — Deslocamentos (Dia 1)", "value": 50, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-006", "type": "Transporte Público", "description": "Metrô — Deslocamentos (Dia 1)", "value": 12.90, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-007", "type": "Alimentação", "description": "The Burger Map — Almoço", "value": 60, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-008", "type": "Atrações", "description": "Museu da Imagem e Som — Entrada", "value": 5, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-009", "type": "Alimentação", "description": "Bráz Elettrica — Tira-gosto", "value": 30, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-010", "type": "Saída Noturna", "description": "Caixote Bar + Augusta", "value": 100, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-011", "type": "Transporte Privado", "description": "Uber — Deslocamentos (Dia 2)", "value": 28.40, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-012", "type": "Transporte Público", "description": "Metrô — Deslocamentos (Dia 2)", "value": 8.50, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-013", "type": "Compras", "description": "Galeria do Rock", "value": 50, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-014", "type": "Alimentação", "description": "Cabana Burger — Almoço", "value": 30, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-015", "type": "Saída Noturna", "description": "O Burguer — Drinks", "value": 50, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-016", "type": "Saída Noturna", "description": "Omalleys — Saída noturna", "value": 100, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-017", "type": "Transporte Privado", "description": "Uber — Deslocamentos (Dia 3)", "value": 75, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-018", "type": "Transporte Público", "description": "Metrô — Deslocamentos (Dia 3)", "value": 8.80, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-019", "type": "Alimentação", "description": "Modern Mamma Osteria — Almoço", "value": 100, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-020", "type": "Compras", "description": "Eataly — Compras", "value": 50, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-021", "type": "Alimentação", "description": "O Tradicionalíssimo — Donuts", "value": 15, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-022", "type": "Transporte Privado", "description": "Uber — Deslocamentos (Dia 4)", "value": 70, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-023", "type": "Transporte Público", "description": "Metrô — Deslocamentos (Dia 4)", "value": 4.40, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-024", "type": "Hotel", "description": "Taxa extra no checkout", "value": 11.70, "currency": "BRL", "traveler": "gabriel" }
+    ],
+    "preTrip": [
+      { "id": "exp-025", "type": "Voo", "description": "LATAM — Passagem ida e volta (Reserva TFJCNR)", "value": 550, "currency": "BRL", "traveler": "gabriel" },
+      { "id": "exp-026", "type": "Hospedagem", "description": "Matiz Manhattan — 3 noites (Hoteis.com)", "value": 1072.26, "currency": "BRL", "traveler": "gabriel" }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": { "name": "Gabriel", "total": 2791.06 },
+      "milton": { "name": "Milton", "total": 0 },
+      "marianna": { "name": "Marianna", "total": 0 }
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2020-12-10T00:00:00.000Z" }
+  }
+}

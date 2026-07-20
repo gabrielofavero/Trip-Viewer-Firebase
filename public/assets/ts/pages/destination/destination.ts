@@ -1,17 +1,23 @@
 import { getDestinations } from '../../app/config.js';
 import { get } from '../../data/firebase/database.js';
 import { displayError } from '../../utils/messages.js';
-import { setState, DOCUMENT_ID, FIRESTORE_DESTINATIONS_DATA, setDocumentId, setFirestoreDestinationsData } from '../../data/state.js';
+import {
+	setState,
+	DOCUMENT_ID,
+	FIRESTORE_DESTINATIONS_DATA,
+	setDocumentId,
+	setFirestoreDestinationsData,
+} from '../../data/state.js';
 import { getID, getJs, getURLParams } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
 import { stopLoadingScreen } from '../../utils/loading.js';
 import { loadCloseCustomSelectListeners, loadCustomSelect } from '../../ui/custom-select.js';
 import { getPageURL, setPageName } from '../../app/main.js';
 import { loadDestinationListeners } from './support/event-listeners.js';
-import { loadActiveCategory, updateActiveCategory, ACTIVE_CATEGORY } from "./categories.js";
-import { adjustEditVisibility } from "./edit-destination.js";
-import { restoreIfEditing } from "./edit-destination.js";
-import { getDestinationsHTML } from "./support/content.js";
+import { loadActiveCategory, updateActiveCategory, ACTIVE_CATEGORY } from './categories.js';
+import { adjustEditVisibility } from './edit-destination.js';
+import { restoreIfEditing } from './edit-destination.js';
+import { getDestinationsHTML } from './support/content.js';
 import {
 	adjustInstagramMedia,
 	adjustMediaEmbeds,
@@ -20,30 +26,36 @@ import {
 	unloadMedia,
 	unloadMedias,
 	MEDIA_HYPERLINKS,
-} from "./support/media-embed.js";
-import { loadSortAndFilter } from "./support/sort-and-filter/sort-and-filter.js";
-import { adjustDrawer } from "./support/sort-and-filter/support/drawer.js";
-import { getTripData } from "./support/trip.js";
-import { loadPlannedDestination } from "./support/trip.js";
-import { applyDestinationsMediaHeight } from "./support/visibility.js";
-import { loadDestinationVisibility } from "./support/visibility.js";
+} from './support/media-embed.js';
+import { loadSortAndFilter } from './support/sort-and-filter/sort-and-filter.js';
+import { adjustDrawer } from './support/sort-and-filter/support/drawer.js';
+import { getTripData, loadPlannedDestination, PLANNED_DESTINATION } from './support/trip.js';
+import { applyDestinationsMediaHeight } from './support/visibility.js';
+import { loadDestinationVisibility } from './support/visibility.js';
 
 export { ACTIVE_CATEGORY };
 export var CONTENT = [];
 
 export async function loadDestinationsData(data?) {
 	const urlParams = getURLParams();
-	setDocumentId(urlParams["d"]);
+	setDocumentId(urlParams['d']);
 
 	if (!DOCUMENT_ID) {
-		const error = translate("messages.errors.missing_data");
-		throw error;
+		console.warn('[destination] Missing ?d= param in URL:', window.location.href);
+		throw new Error(translate('messages.errors.missing_data') + ' (no DOCUMENT_ID)');
 	}
 
+	const path = `destinations/${DOCUMENT_ID}`;
+	console.log('[destination] Fetching:', path);
 	const [tripData, destinosData] = await Promise.all([
-		getTripData(urlParams["v"]),
-		get(`destinos/${DOCUMENT_ID}`),
+		getTripData(urlParams['t'] || urlParams['v']),
+		get(path),
 	]);
+
+	if (!destinosData) {
+		console.warn('[destination] Document not found at path:', path);
+		throw new Error(translate('messages.errors.missing_data') + ` (not found: ${path})`);
+	}
 
 	setFirestoreDestinationsData(destinosData);
 	setState(tripData);
@@ -59,57 +71,64 @@ export async function loadDestinationPage() {
 
 	await loadDestinationsData();
 
-	const title = FIRESTORE_DESTINATIONS_DATA.titulo || "TripViewer";
+	if (!FIRESTORE_DESTINATIONS_DATA) {
+		const error = translate('messages.errors.missing_data');
+		throw error;
+	}
+
+	const title = FIRESTORE_DESTINATIONS_DATA.title || 'TripViewer';
 	setPageName(title);
-	getID("title").innerText = title;
+	getID('title').innerText = title;
 
 	await loadDestinationVisibility();
 
 	if (
 		ACTIVE_CATEGORY &&
-		(ACTIVE_CATEGORY === "mapa" ||
-			Object.keys(FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY]).length > 0)
+		(ACTIVE_CATEGORY === 'map' ||
+			(FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY] &&
+				Object.keys(FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY]).length > 0))
 	) {
 		loadDestinationCustomSelect();
-		window.addEventListener("resize", () => {
+		window.addEventListener('resize', () => {
 			applyDestinationsMediaHeight();
 			adjustMediaEmbeds();
 		});
 	} else {
-		const error = translate("messages.errors.missing_data");
+		const error = translate('messages.errors.missing_data');
 		throw error;
 	}
 }
 
 function loadDestinationByType(activeCategory) {
-	const content = getID("content");
-	const filterSortContainer = getID("filter-sort-container");
+	const content = getID('content');
+	const filterSortContainer = getID('filter-sort-container');
 
-	content.innerHTML = "";
+	content.innerHTML = '';
 	CONTENT = [];
 	// Clear MEDIA_HYPERLINKS in-place (imported bindings are read-only)
 	for (const key of Object.keys(MEDIA_HYPERLINKS)) {
 		delete MEDIA_HYPERLINKS[key];
 	}
 
-	if (activeCategory === "myMaps") {
-		content.classList = "map-content";
-		loadMapDestination(FIRESTORE_DESTINATIONS_DATA.myMaps);
-		filterSortContainer.style.display = "none";
-		(document.querySelector(".add-container") as HTMLElement).style.display = "none";
+	if (activeCategory === 'myMaps') {
+		content.classList = 'map-content';
+		loadMapDestination(FIRESTORE_DESTINATIONS_DATA?.myMaps);
+		filterSortContainer.style.display = 'none';
+		(document.querySelector('.add-container') as HTMLElement).style.display = 'none';
 		return;
 	} else {
-		content.classList = "";
-		filterSortContainer.style.display = "";
+		content.classList = '';
+		filterSortContainer.style.display = '';
 	}
 
-	const destino = FIRESTORE_DESTINATIONS_DATA[activeCategory];
-	const keys = Object.keys(destino);
+	const destination = FIRESTORE_DESTINATIONS_DATA?.[activeCategory];
+	if (!destination) return;
+	const keys = Object.keys(destination);
 	for (let j = 1; j <= keys.length; j++) {
 		const id = keys[j - 1];
-		const item = destino[id];
+		const item = destination[id];
 		const innerHTML = getDestinationsHTML({ j, id, item });
-		loadEmbed(item?.midia, j);
+		loadEmbed(item?.media, j);
 		CONTENT.push({ id, innerHTML });
 	}
 
@@ -122,19 +141,19 @@ function loadDestinationByType(activeCategory) {
 }
 
 function loadMapDestination(link) {
-	if (!link || !link.includes("mid=")) {
-		console.error("Link do My Maps inválido.");
+	if (!link || !link.includes('mid=')) {
+		console.error('Invalid My Maps link.');
 		return;
 	}
-	const mid = link.split("mid=")[1].split("&")[0];
-	getID("content").innerHTML =
+	const mid = link.split('mid=')[1].split('&')[0];
+	getID('content').innerHTML =
 		`<iframe class="map-iframe" src="https://www.google.com/maps/d/embed?mid=${mid}&ehbc=2E312F" width="640" height="480"></iframe>`;
 }
 
 // Setters
 export function applyContent() {
-	const div = getID("content");
-	div.innerHTML = "";
+	const div = getID('content');
+	div.innerHTML = '';
 	for (const content of CONTENT) {
 		if (content.filtered) {
 			continue;
@@ -145,14 +164,14 @@ export function applyContent() {
 
 function orderInnerHTMLs(innerContents) {
 	innerContents.sort((a, b) => {
-		if (a.nota === "?") return 1;
-		if (b.nota === "?") return -1;
+		if (a.rating === '?') return 1;
+		if (b.rating === '?') return -1;
 
-		if (b.nota !== a.nota) {
-			return b.nota - a.nota;
+		if (b.rating !== a.rating) {
+			return b.rating - a.rating;
 		}
 
-		return a.titulo.localeCompare(b.titulo);
+		return a.title.localeCompare(b.title);
 	});
 
 	return innerContents.map((item) => item.innerHTML);
@@ -169,29 +188,29 @@ export function processAccordion(j) {
 }
 
 function toggleMedia(j) {
-	const button = getID(`destinos-titulo-${j}`);
-	const midia = `midia-${j}`;
-	if (button.classList.contains("collapsed")) {
-		unloadMedia(midia);
+	const button = getID(`destinations-title-${j}`);
+	const media = `media-${j}`;
+	if (button.classList.contains('collapsed')) {
+		unloadMedia(media);
 	} else {
-		loadMedia(midia);
+		loadMedia(media);
 		applyDestinationsMediaHeight();
 	}
 }
 
 function closeAccordions(exclude) {
-	for (const j of getJs("content")) {
+	for (const j of getJs('content')) {
 		if (j !== exclude) {
-			$(`#collapse-destinos-${j}`).collapse("hide");
+			$(`#collapse-destinations-${j}`).collapse('hide');
 		}
 	}
 }
 
 function loadDestinationCustomSelect() {
 	const customSelect = {
-		id: "destinations-select",
+		id: 'destinations-select',
 		options: getDestinationCustomSelectOptions(),
-		activeOption: ACTIVE_CATEGORY === "mapa" ? "myMaps" : ACTIVE_CATEGORY,
+		activeOption: ACTIVE_CATEGORY === 'map' ? 'myMaps' : ACTIVE_CATEGORY,
 		action: loadDestinationCustomSelectAction,
 	};
 
@@ -200,18 +219,19 @@ function loadDestinationCustomSelect() {
 
 	function getDestinationCustomSelectOptions() {
 		const result = [];
-		const destinos = getDestinations();
-		const values = destinos.categorias.ids;
+		const destinationsConfig = getDestinations();
+		const values = destinationsConfig.categories.ids;
 		for (const value in FIRESTORE_DESTINATIONS_DATA) {
 			if (
 				!values.includes(value) ||
-				(value !== "myMaps" &&
+				(value !== 'myMaps' &&
+					FIRESTORE_DESTINATIONS_DATA?.[value] &&
 					Object.keys(FIRESTORE_DESTINATIONS_DATA[value]).length === 0)
 			) {
 				continue;
 			}
 
-			const key = destinos.translation[value];
+			const key = destinationsConfig.translation[value].toLowerCase();
 			const label = translate(`destination.${key}.title`);
 			result.push({ value, label });
 		}
@@ -238,8 +258,8 @@ export function getDataSet(key) {
 }
 
 export function getDestinationID(j) {
-	const destino = getID(`destinos-${j}`);
-	return destino.getAttribute("data-id");
+	const destination = getID(`destinations-${j}`);
+	return destination.getAttribute('data-id');
 }
 
 export function getItemFromJ(j) {
@@ -248,7 +268,7 @@ export function getItemFromJ(j) {
 }
 
 export function getItem(id) {
-	return FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY][id];
+	return FIRESTORE_DESTINATIONS_DATA?.[ACTIVE_CATEGORY]?.[id];
 }
 
 function getItemValue(id, key) {
@@ -262,14 +282,14 @@ export function isPlanned(id) {
 }
 
 export async function refreshDestination() {
-	setFirestoreDestinationsData(await get(`destinos/${DOCUMENT_ID}`));
+	setFirestoreDestinationsData(await get(`destinations/${DOCUMENT_ID}`));
 	loadDestinationByType(ACTIVE_CATEGORY);
 }
 
 function share() {
-	const title = FIRESTORE_DESTINATIONS_DATA.titulo || document.title;
-	const text = translate("destination.share", {
-		name: FIRESTORE_DESTINATIONS_DATA.titulo,
+	const title = FIRESTORE_DESTINATIONS_DATA?.title || document.title;
+	const text = translate('destination.share', {
+		name: FIRESTORE_DESTINATIONS_DATA?.title,
 	});
 	const url = getPageURL();
 	navigator.share({ title, text, url });

@@ -1,10 +1,34 @@
-import { firstCharToUpperCase, getID, getJs, getURLParam, removeChildWithValidation, removeEmptyChild, setURLParam } from '../utils/dom.js';
-import { getCurrentHour } from "../utils/dates.js";
+import {
+	firstCharToUpperCase,
+	getID,
+	getJs,
+	getURLParam,
+	removeChildWithValidation,
+	removeEmptyChild,
+	setURLParam,
+} from '../utils/dom.js';
+import { getCurrentHour } from '../utils/dates.js';
 import { getState } from '../data/state.js';
-import { changeBarColorIOS, DARK_COLOR, getDarkerColor, getLighterColor, getSecondaryColor, LIGHT_COLOR, loadLogoColors, loadThemeColors, saveLocalColors, setDarkColor, setLightColor, setThemeColor, setThemeColorHover, setThemeColorSecondary, setThemeColorSecondaryHover } from './colors.js';
+import {
+	changeBarColorIOS,
+	DARK_COLOR,
+	getDarkerColor,
+	getLighterColor,
+	getSecondaryColor,
+	LIGHT_COLOR,
+	loadLogoColors,
+	loadThemeColors,
+	saveLocalColors,
+	setDarkColor,
+	setLightColor,
+	setThemeColor,
+	setThemeColorHover,
+	setThemeColorSecondary,
+	setThemeColorSecondaryHover,
+} from './colors.js';
 import { getHTMLpage } from '../app/main.js';
 import { fadeIn, fadeOut } from './animations.js';
-import { loadCurrenciesTab } from "../pages/expenses/support/currency.js";
+import { loadCurrenciesTab } from '../pages/expenses/support/currency.js';
 
 // ======= Visibility JS =======
 var _exports: Record<string, any> = {};
@@ -14,23 +38,27 @@ export function registerVisibilityExport(name: string, fn: any) {
 	_exports[name] = fn;
 }
 export let CHANGED_SVGS = [];
-export let LOGO_LIGHT = "";
-export let LOGO_DARK = "";
+export let LOGO_LIGHT = '';
+export let LOGO_DARK = '';
 
-export function setLogoLight(value: string) { LOGO_LIGHT = value; }
-export function setLogoDark(value: string) { LOGO_DARK = value; }
+export function setLogoLight(value: string) {
+	LOGO_LIGHT = value;
+}
+export function setLogoDark(value: string) {
+	LOGO_DARK = value;
+}
 
-export function loadVisibility(colors = getState()?.cores) {
-	if (colors?.claro && colors?.escuro) {
-		setLightColor(colors.claro);
-		setDarkColor(colors.escuro);
+export function loadVisibility(colors = getState()?.colors) {
+	if (colors?.light && colors?.dark) {
+		setLightColor(colors.light);
+		setDarkColor(colors.dark);
 	}
 
 	saveLocalColors();
 	loadUserVisibility();
 
-	const button = getID("night-mode");
-	button.style.display = "block";
+	const button = getID('night-mode');
+	button.style.display = 'block';
 	button.onclick = function () {
 		switchVisibility();
 	};
@@ -40,9 +68,9 @@ export function loadDarkMode() {
 	applyMode({
 		isDark: true,
 		loadCss: true,
-		barColor: "#303030",
+		barColor: '#303030',
 		hoverFn: getDarkerColor,
-		secondaryKey: "escuro",
+		secondaryKey: 'dark',
 	});
 }
 
@@ -50,9 +78,9 @@ export function loadLightMode() {
 	applyMode({
 		isDark: false,
 		loadCss: true,
-		barColor: "#fff",
+		barColor: '#fff',
 		hoverFn: getLighterColor,
-		secondaryKey: "claro",
+		secondaryKey: 'light',
 	});
 }
 
@@ -60,54 +88,45 @@ export function loadLightModeLite() {
 	applyMode({
 		isDark: false,
 		loadCss: false,
-		barColor: "#fff",
+		barColor: '#fff',
 		hoverFn: getLighterColor,
-		secondaryKey: "claro",
+		secondaryKey: 'light',
 	});
 }
 
 // ======= DATA-THEME TOGGLE =======
 export function applyThemeAttribute(isDark) {
-	document.documentElement.setAttribute(
-		"data-theme",
-		isDark ? "dark" : "light",
-	);
+	document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
 }
 
 // ======= SETTERS =======
 export function loadUserVisibility() {
-	const param = getURLParam("visibility");
+	const param = getURLParam('visibility');
 
-	if (param === "dark") {
+	if (param === 'dark') {
 		return loadDarkMode();
 	}
 
-	if (param === "light") {
+	if (param === 'light') {
 		return loadLightMode();
 	}
 
-	const stored = sessionStorage.getItem("darkMode");
+	const stored = sessionStorage.getItem('darkMode');
 
-	if (stored === "true") {
+	if (stored === 'true') {
 		return loadDarkMode();
 	}
 
-	if (stored === "false") {
+	if (stored === 'false') {
 		return loadLightMode();
 	}
 
 	autoVisibility();
 }
 
-export function applyMode({
-	isDark,
-	loadCss = true,
-	barColor,
-	hoverFn,
-	secondaryKey,
-}) {
-	sessionStorage.setItem("darkMode", String(isDark));
-	setURLParam("visibility", getVisibility(isDark));
+export function applyMode({ isDark, loadCss = true, barColor, hoverFn, secondaryKey }) {
+	sessionStorage.setItem('darkMode', String(isDark));
+	setURLParam('visibility', getVisibility(isDark));
 
 	const base = isDark ? DARK_COLOR : LIGHT_COLOR;
 
@@ -132,34 +151,38 @@ export function applyMode({
 	// Helpers
 	function loadTripViewerLogo() {
 		const isDark = isOnDarkMode();
-		getID("logo-light").style.display = isDark ? "none" : "block";
-		getID("logo-dark").style.display = isDark ? "block" : "none";
+		getID('logo-light').style.display = isDark ? 'none' : 'block';
+		getID('logo-dark').style.display = isDark ? 'block' : 'none';
 
-		const header2 = getID("header2") as HTMLImageElement | null;
+		const header2 = getID('header2') as HTMLImageElement | null;
 		if (header2) {
-			header2.src = isDark
-				? LOGO_DARK || header2.src
-				: LOGO_LIGHT || header2.src;
+			header2.src = isDark ? LOGO_DARK || header2.src : LOGO_LIGHT || header2.src;
 		}
 	}
 
 	function loadToggle(isDark = isOnDarkMode()) {
-		const el = getID("night-mode");
-		el.classList.toggle("bx-moon", !isDark);
-		el.classList.toggle("bx-sun", isDark);
+		const el = getID('night-mode');
+		el.classList.toggle('bx-moon', !isDark);
+		el.classList.toggle('bx-sun', isDark);
 	}
 
 	async function applyCustomVisibilityRules() {
 		switch (getHTMLpage()) {
-			case "view":
-				(await import("../pages/trip-detail/categories/transportation-module.js")).loadTransportationImages();
-				(await import("../pages/trip-detail/support/visibility.js")).loadViewCustomVisibilityRules();
+			case 'view':
+				(
+					await import('../pages/trip-detail/categories/transportation-module.js')
+				).loadTransportationImages();
+				(
+					await import('../pages/trip-detail/support/visibility.js')
+				).loadViewCustomVisibilityRules();
 				break;
-			case "destination":
-				(await import("../pages/destination/support/visibility.js")).applyAccordionArrowCustomColor();
+			case 'destination':
+				(
+					await import('../pages/destination/support/visibility.js')
+				).applyAccordionArrowCustomColor();
 				break;
-			case "expenses":
-				(await import("../pages/expenses/support/data.js")).changeChartsLabelsVisibility();
+			case 'expenses':
+				(await import('../pages/expenses/support/data.js')).changeChartsLabelsVisibility();
 				loadCurrenciesTab();
 		}
 	}
@@ -183,16 +206,16 @@ export function autoVisibility() {
 }
 
 export function disableScroll() {
-	document.body.style.overflow = "hidden";
+	document.body.style.overflow = 'hidden';
 }
 
 export function enableScroll() {
-	document.body.style.overflow = "auto";
+	document.body.style.overflow = 'auto';
 }
 
 // ======= CHECKERS =======
 export function hasCSSRule(selector, property) {
-	let styleElement = document.getElementById("custom-styles");
+	let styleElement = document.getElementById('custom-styles');
 
 	if (!styleElement) {
 		return false;
@@ -212,40 +235,40 @@ export function hasCSSRule(selector, property) {
 }
 
 export function isOnDarkMode() {
-	const visibility = getURLParam("visibility");
+	const visibility = getURLParam('visibility');
 	if (visibility) {
-		return visibility === "dark";
+		return visibility === 'dark';
 	}
-	return sessionStorage.getItem("darkMode") === "true";
+	return sessionStorage.getItem('darkMode') === 'true';
 }
 
 // ======= Modal Functions =======
-export function openModal(modalID = "modal") {
+export function openModal(modalID = 'modal') {
 	fadeIn([modalID]);
 }
 
-export function closeModal(modalID = "modal") {
+export function closeModal(modalID = 'modal') {
 	fadeOut([modalID]);
 }
 
-export function isModalOpen(modalID = "modal") {
-	return getID(modalID).style.display === "block";
+export function isModalOpen(modalID = 'modal') {
+	return getID(modalID).style.display === 'block';
 }
 
 // ======= Edit Pages =======
-export function loadEditModule(categoria, addFn?: () => void) {
-	const habilitado = getID(`habilitado-${categoria}`);
+export function loadEditModule(category, addFn?: () => void) {
+	const habilitado = getID(`${category}-enabled`);
 	if (habilitado.checked) {
-		showContent(categoria);
-		if (!getID(`habilitado-${categoria}-content`).innerText) {
+		showContent(category);
+		if (!getID(`${category}-enabled-content`).innerText) {
 			// Prefer the directly-passed function (avoids circular dependency issues);
 			// fall back to _exports lookup for backward compat.
-			const type = firstCharToUpperCase(categoria).trim();
+			const type = firstCharToUpperCase(category).trim();
 			if (addFn) {
 				setTimeout(() => addFn(), 0);
 			} else {
 				const fnName = `_add${type}`;
-				if (typeof _exports[fnName] === "function") {
+				if (typeof _exports[fnName] === 'function') {
 					setTimeout(() => _exports[fnName](), 0);
 				} else {
 					setTimeout(() => visibilityAdd(type), 0);
@@ -253,100 +276,97 @@ export function loadEditModule(categoria, addFn?: () => void) {
 			}
 		}
 	} else {
-		hideContent(categoria);
+		hideContent(category);
 	}
-	loadListener(categoria, addFn);
+	loadListener(category, addFn);
 }
 
-export function loadListener(categoria, addFn?: () => void) {
-	const habilitado = getID(`habilitado-${categoria}`);
-	habilitado.addEventListener("change", function () {
+export function loadListener(category, addFn?: () => void) {
+	const habilitado = getID(`${category}-enabled`);
+	habilitado.addEventListener('change', function () {
 		if (habilitado.checked) {
-			showContent(categoria);
-			const box = getID(`${categoria}-box`);
-			const habilitadoContent = getID(`habilitado-${categoria}-content`);
+			showContent(category);
+			const box = getID(`${category}-box`);
+			const habilitadoContent = getID(`${category}-enabled-content`);
 
-			if (
-				(box && !box.innerText) ||
-				(habilitadoContent && !habilitadoContent.innerText)
-			) {
+			if ((box && !box.innerText) || (habilitadoContent && !habilitadoContent.innerText)) {
 				if (addFn) {
 					addFn();
 				} else {
-					visibilityAdd(firstCharToUpperCase(categoria).trim());
+					visibilityAdd(firstCharToUpperCase(category).trim());
 				}
 			}
 		} else {
-			removeEmptyChild(categoria);
-			hideContent(categoria);
+			removeEmptyChild(category);
+			hideContent(category);
 		}
 	});
 }
 
 export function showContent(type) {
-	const habilitadoContent = getID(`habilitado-${type}-content`);
-	habilitadoContent.style.display = "block";
+	const habilitadoContent = getID(`${type}-enabled-content`);
+	habilitadoContent.style.display = 'block';
 
-	const adicionarBox = getID(`${type}-adicionar-box`);
+	const adicionarBox = getID(`${type}-add-box`);
 	if (adicionarBox) {
-		adicionarBox.style.display = "block";
+		adicionarBox.style.display = 'block';
 	}
 
 	let i = 1;
 	let text = `collapse-${type}-${i}`;
 
 	while (getID(text)) {
-		$(`#${text}`).collapse("hide");
+		$(`#${text}`).collapse('hide');
 		i++;
 		text = `${type}-${i}`;
 	}
 }
 
 export function hideContent(type) {
-	const habilitadoContent = getID(`habilitado-${type}-content`);
-	habilitadoContent.style.display = "none";
+	const habilitadoContent = getID(`${type}-enabled-content`);
+	habilitadoContent.style.display = 'none';
 
-	const adicionarBox = getID(`${type}-adicionar-box`);
+	const adicionarBox = getID(`${type}-add-box`);
 	if (adicionarBox) {
-		adicionarBox.style.display = "none";
+		adicionarBox.style.display = 'none';
 	}
 }
 
-export function addRemoveChildListener(categoria, j, customFunction = null) {
-	getID(`remove-${categoria}-${j}`).addEventListener("click", function () {
-		removeChildWithValidation(categoria, j);
-		if (typeof customFunction === "function") {
+export function addRemoveChildListener(category, j, customFunction = null) {
+	getID(`remove-${category}-${j}`).addEventListener('click', function () {
+		removeChildWithValidation(category, j);
+		if (typeof customFunction === 'function') {
 			customFunction();
 		}
 	});
 }
 
-export function toggleFadingVisibility(id = "copy-msg") {
+export function toggleFadingVisibility(id = 'copy-msg') {
 	var div = getID(id);
-	div.classList.toggle("visible");
-	div.classList.toggle("hidden");
+	div.classList.toggle('visible');
+	div.classList.toggle('hidden');
 
-	if (div.classList.contains("visible")) {
+	if (div.classList.contains('visible')) {
 		setTimeout(function () {
-			div.classList.remove("visible");
-			div.classList.add("hidden");
+			div.classList.remove('visible');
+			div.classList.add('hidden');
 		}, 3000);
 	}
 }
 
 export function searchDestinationsListenerAction() {
-	const search = getID("destinos-search").value.toLowerCase();
-	const container = getID("destinos-checkboxes");
+	const search = getID('destinations-search').value.toLowerCase();
+	const container = getID('destinations-checkboxes');
 
-	for (const card of container.querySelectorAll(".destino-card")) {
-		const name = card.querySelector(".destino-card-name")?.textContent?.toLowerCase() || "";
-		(card as HTMLElement).style.display = name.includes(search) ? "" : "none";
+	for (const card of container.querySelectorAll('.destination-card')) {
+		const name = card.querySelector('.destination-card-name')?.textContent?.toLowerCase() || '';
+		(card as HTMLElement).style.display = name.includes(search) ? '' : 'none';
 	}
 }
 
 export function visibilityAdd(type) {
 	const dynamicFunctionName = `_add${type}`;
-	if (typeof _exports[dynamicFunctionName] === "function") {
+	if (typeof _exports[dynamicFunctionName] === 'function') {
 		_exports[dynamicFunctionName]();
 	} else {
 		// Fallback: try global scope (for pages where registerVisibilityExport hasn't run yet)
@@ -360,7 +380,7 @@ export function visibilityAdd(type) {
 }
 
 export function getVisibility(isDark = isOnDarkMode()) {
-	return isDark ? "dark" : "light";
+	return isDark ? 'dark' : 'light';
 }
 
 export function loadExternalVisibility(external, internal?) {
@@ -370,12 +390,12 @@ export function loadExternalVisibility(external, internal?) {
 		return;
 	}
 
-	if (external == "dark") {
+	if (external == 'dark') {
 		loadDarkMode();
 		return;
 	}
 
-	if (external === "light") {
+	if (external === 'light') {
 		loadLightMode();
 		return;
 	}

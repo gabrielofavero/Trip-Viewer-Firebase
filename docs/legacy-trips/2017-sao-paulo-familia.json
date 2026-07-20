@@ -1,0 +1,189 @@
+{
+  "_meta": {
+    "tripId": "legacy-2017-sao-paulo-familia",
+    "slug": "2017-sao-paulo-familia",
+    "sourceFiles": [
+      "Família/[2017] California e São Paulo/2017b - São Paulo.xlsx"
+    ],
+    "extractionNotes": {
+      "xlsxContent": "2 sheets: 'Programação' (detailed hour-by-hour itinerary for 3 days with Uber rides, restaurant costs, and expense types), 'Endereços' (addresses: hotel Estanplaza Paulista, restaurants Cão Véio, Eataly, Frutaria SP, Marukai, O'Malleys, TGI Fridays). All expenses in BRL. Flight BH→SP on Jun 23 morning (08:25).",
+      "dateSource": "Confirmed from sheet: June 23-25, 2017 (Friday to Sunday).",
+      "travelerSource": "Not explicitly listed. Trip is in Família folder. Restaurant bills (R$300-410) suggest 2-3 people. Flight from BH suggests Gabriel at minimum. Inferred: Gabriel (and possibly Elaine).",
+      "accommodationSource": "Estanplaza Paulista, Alameda Jaú, 497 - Cerqueira César, São Paulo.",
+      "missingData": "No traveler list, no flight reservation codes, no explicit pre-trip vs during-trip expense split. All expenses appear to be during-trip."
+    }
+  },
+  "trip": {
+    "title": "São Paulo Jun 2017",
+    "currency": "BRL",
+    "start": { "day": 23, "month": 6, "year": 2017, "hour": 0, "minute": 0, "second": 0 },
+    "end": { "day": 25, "month": 6, "year": 2017, "hour": 0, "minute": 0, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      { "id": "gabriel", "name": "Gabriel" },
+      { "id": "elaine", "name": "Elaine" }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Estanplaza Paulista",
+      "description": "Hotel na Alameda Jaú, 497 - Cerqueira César, São Paulo. Bem localizado próximo à Paulista.",
+      "address": "Alameda Jaú, 497 - Cerqueira César, São Paulo, SP",
+      "dates": {
+        "checkIn": { "day": 23, "month": 6, "year": 2017, "hour": 10, "minute": 20, "second": 0 },
+        "checkOut": { "day": 25, "month": 6, "year": 2017, "hour": 8, "minute": 0, "second": 0 }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "",
+      "points": { "origin": "Belo Horizonte (CNF)", "destination": "São Paulo (CGH/GRU)" },
+      "dates": {
+        "departure": { "day": 23, "month": 6, "year": 2017, "hour": 8, "minute": 25, "second": 0 },
+        "arrival": { "day": 23, "month": 6, "year": 2017, "hour": 9, "minute": 40, "second": 0 }
+      },
+      "duration": "1h15",
+      "direction": "departure",
+      "reservation": "",
+      "link": "",
+      "person": ""
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "",
+      "points": { "origin": "São Paulo (CGH/GRU)", "destination": "Belo Horizonte (CNF)" },
+      "dates": {
+        "departure": { "day": 25, "month": 6, "year": 2017, "hour": 0, "minute": 0, "second": 0 },
+        "arrival": { "day": 25, "month": 6, "year": 2017, "hour": 0, "minute": 0, "second": 0 }
+      },
+      "duration": "",
+      "direction": "return",
+      "reservation": "",
+      "link": "",
+      "person": ""
+    }
+  },
+  "itinerary": {
+    "20170623": {
+      "title": { "value": "Dia 1 — Chegada: Eataly + Japan House + Fridays", "showDestinations": false, "translate": false },
+      "date": { "day": 23, "month": 6, "year": 2017, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [{ "title": "Casa → Aeroporto (Voo 08:25 BH→SP)", "type": "Transporte" }],
+      "morning": [
+        { "title": "Aeroporto → Hotel (Uber)", "type": "Transporte" },
+        { "title": "Check-In Estanplaza Paulista", "type": "Hotel" }
+      ],
+      "afternoon": [
+        { "title": "Eataly (almoço)", "type": "Alimentação" },
+        { "title": "Japan House", "type": "Passeio" },
+        { "title": "Hotel (descanso)", "type": "Descanso" }
+      ],
+      "night": [{ "title": "TGI Fridays (jantar)", "type": "Alimentação" }]
+    },
+    "20170624": {
+      "title": { "value": "Dia 2 — Ibirapuera + 25 de Março + Cão Véio + Hooters", "showDestinations": false, "translate": false },
+      "date": { "day": 24, "month": 6, "year": 2017, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [{ "title": "Parque Ibirapuera", "type": "Passeio" }],
+      "morning": [{ "title": "25 de Março (compras)", "type": "Compras" }],
+      "afternoon": [
+        { "title": "Cão Véio (almoço)", "type": "Alimentação" },
+        { "title": "Hotel (descanso)", "type": "Descanso" },
+        { "title": "Frutaria SP (açaí)", "type": "Alimentação" }
+      ],
+      "night": [{ "title": "Hooters (jantar)", "type": "Alimentação" }]
+    },
+    "20170625": {
+      "title": { "value": "Dia 3 — Liberdade + Paulista + O'Malleys + Retorno", "showDestinations": false, "translate": false },
+      "date": { "day": 25, "month": 6, "year": 2017, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [{ "title": "Check-Out Estanplaza Paulista", "type": "Hotel" }],
+      "morning": [{ "title": "Liberdade (Marukai)", "type": "Passeio" }],
+      "afternoon": [
+        { "title": "Avenida Paulista", "type": "Passeio" },
+        { "title": "O'Malleys (almoço)", "type": "Alimentação" }
+      ],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "name": "Alimentação (Eataly, Cão Véio, Frutaria, Fridays, Hooters, O'Malleys)",
+        "type": "trip.expenses.daily",
+        "price": 1030.00,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Saídas / Entretenimento",
+        "type": "trip.expenses.entertainment",
+        "price": 726.00,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Passeios",
+        "type": "trip.expenses.entertainment",
+        "price": 100.00,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Uber (transporte local)",
+        "type": "trip.transportation.type.taxi",
+        "price": 227.00,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Outros (check-in antecipado, taxas)",
+        "type": "Outros",
+        "price": 50.00,
+        "currency": "BRL",
+        "person": ""
+      }
+    ],
+    "preTrip": [],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel",
+      "elaine": "Elaine"
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" }
+  }
+}

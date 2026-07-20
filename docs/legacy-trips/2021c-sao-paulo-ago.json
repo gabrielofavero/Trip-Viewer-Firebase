@@ -1,0 +1,215 @@
+{
+  "trip": {
+    "title": "São Paulo ft. Gui 2021",
+    "currency": "BRL",
+    "start": { "day": 19, "month": 8, "year": 2021, "hour": 0, "minute": 0, "second": 0 },
+    "end": { "day": 22, "month": 8, "year": 2021, "hour": 0, "minute": 0, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2021-08-22T00:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      { "id": "gabriel", "name": "Gabriel" },
+      { "id": "gui", "name": "Guilherme" }
+    ],
+    "links": { "maps": "", "attachments": "", "active": false, "drive": "", "pdf": "", "ppt": "", "sheet": "", "vaccine": "" },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "La Residence Paulista",
+      "description": "Apart-Hotel nos Jardins. Diária ~R$161,67. Total 3 noites: R$485.",
+      "address": "Jardins, São Paulo",
+      "dates": {
+        "checkIn": { "day": 19, "month": 8, "year": 2021, "hour": 8, "minute": 5, "second": 0 },
+        "checkOut": { "day": 22, "month": 8, "year": 2021, "hour": 9, "minute": 10, "second": 0 }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "Azul Linhas Aéreas",
+      "points": { "origin": "Belo Horizonte (CNF)", "destination": "São Paulo (CGH)" },
+      "dates": {
+        "departure": { "day": 19, "month": 8, "year": 2021, "hour": 6, "minute": 10, "second": 0 },
+        "arrival": { "day": 19, "month": 8, "year": 2021, "hour": 7, "minute": 25, "second": 0 }
+      },
+      "duration": "1h15m",
+      "direction": "departure",
+      "reservation": "AKLNSK",
+      "link": "",
+      "person": ""
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "Gol Transportes Aéreos",
+      "points": { "origin": "São Paulo (CGH)", "destination": "Belo Horizonte (CNF)" },
+      "dates": {
+        "departure": { "day": 22, "month": 8, "year": 2021, "hour": 16, "minute": 5, "second": 0 },
+        "arrival": { "day": 22, "month": 8, "year": 2021, "hour": 17, "minute": 20, "second": 0 }
+      },
+      "duration": "1h15m",
+      "direction": "return",
+      "reservation": "VSULJH",
+      "link": "",
+      "person": ""
+    }
+  },
+  "itinerary": {
+    "20210819": {
+      "title": { "value": "Quinta-Feira — Chegada & Paulista", "showDestinations": false, "translate": false },
+      "date": { "day": 19, "month": 8, "year": 2021, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "04:30", "activity": "Ida / Espera Voo", "details": "Mãe Bibs — carona para o aeroporto", "type": "transport" },
+        { "time": "06:10", "activity": "Voo Azul CNF → CGH", "details": "Reserva AKLNSK", "type": "flight" }
+      ],
+      "morning": [
+        { "time": "07:40", "activity": "Uber", "details": "Aeroporto → Hotel (R$12)", "type": "transport" },
+        { "time": "08:05", "activity": "Hotel", "details": "Deixar malas", "type": "accommodation" },
+        { "time": "08:30", "activity": "A Fornada", "details": "Café da manhã (R$50)", "type": "food" },
+        { "time": "09:10", "activity": "Metrô", "details": "Paulista → Liberdade (R$4,40)", "type": "transport" },
+        { "time": "09:30", "activity": "Liberdade", "details": "Lojinhas + Snowfall (R$20)", "type": "shopping" }
+      ],
+      "afternoon": [
+        { "time": "11:30", "activity": "Metrô", "details": "Liberdade → Paulista (R$4,40)", "type": "transport" },
+        { "time": "11:50", "activity": "Hotel", "details": "Deixar compras", "type": "accommodation" },
+        { "time": "12:00", "activity": "Uber", "details": "Hotel → Zena Caffe (R$5)", "type": "transport" },
+        { "time": "12:10", "activity": "Zena Caffe", "details": "Almoço (R$70)", "type": "food" },
+        { "time": "13:20", "activity": "Uber", "details": "Zena → IMS Paulista (R$5)", "type": "transport" },
+        { "time": "13:30", "activity": "IMS Paulista", "details": "Reservado", "type": "attraction" },
+        { "time": "14:00", "activity": "Avenida Paulista", "details": "Caminhada", "type": "leisure" },
+        { "time": "14:10", "activity": "MASP", "details": "Reservado (R$22 — 3 bilhetes)", "type": "attraction" },
+        { "time": "14:55", "activity": "Rick Doces", "details": "Loja de doces", "type": "shopping" },
+        { "time": "15:25", "activity": "Casa das Rosas", "details": "Parque e fotos", "type": "attraction" },
+        { "time": "15:40", "activity": "Japan House", "details": "Museu", "type": "attraction" },
+        { "time": "16:10", "activity": "Uber", "details": "Paulista → Hotel (R$7,50)", "type": "transport" },
+        { "time": "16:25", "activity": "Hotel", "details": "Check-in / Descanso (R$276)", "type": "accommodation" }
+      ],
+      "night": [
+        { "time": "17:30", "activity": "Uber", "details": "Hotel → Olivo (R$15)", "type": "transport" },
+        { "time": "18:00", "activity": "Olivo Bar e Gastronomia", "details": "Reservado, jantar (R$100)", "type": "food" },
+        { "time": "23:00", "activity": "Uber", "details": "Olivo → Hotel (R$10)", "type": "transport" }
+      ]
+    },
+    "20210820": {
+      "title": { "value": "Sexta-Feira — Vila Madalena & Centro", "showDestinations": false, "translate": false },
+      "date": { "day": 20, "month": 8, "year": 2021, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "time": "08:00", "activity": "Hotel", "details": "Arrumar", "type": "accommodation" },
+        { "time": "09:00", "activity": "Uber", "details": "Hotel → Beco do Batman (R$7,50)", "type": "transport" },
+        { "time": "09:20", "activity": "Beco do Batman", "details": "Fotos nos grafites", "type": "attraction" },
+        { "time": "10:20", "activity": "ZIV Gallery", "details": "Café da manhã (R$50)", "type": "food" },
+        { "time": "10:50", "activity": "Uber", "details": "Vila Madalena → Parque Villa Lobos (R$7,50)", "type": "transport" },
+        { "time": "11:10", "activity": "Parque Villa Lobos", "details": "Passeio", "type": "leisure" }
+      ],
+      "afternoon": [
+        { "time": "12:10", "activity": "Uber", "details": "Villa Lobos → Fat Cow (R$10)", "type": "transport" },
+        { "time": "12:30", "activity": "Fat Cow", "details": "Almoço (R$70)", "type": "food" },
+        { "time": "13:30", "activity": "Uber", "details": "Fat Cow → Farol Santander (R$10)", "type": "transport" },
+        { "time": "14:00", "activity": "Farol Santander", "details": "Reservado (R$12,50)", "type": "attraction" },
+        { "time": "16:00", "activity": "Bar do Cofre", "details": "Reservado (R$100)", "type": "food" }
+      ],
+      "night": [
+        { "time": "19:00", "activity": "Uber", "details": "Centro → Hotel (R$10)", "type": "transport" },
+        { "time": "19:30", "activity": "Hotel", "details": "Descanso / Arrumar", "type": "accommodation" },
+        { "time": "20:20", "activity": "Augusta", "details": "Beber beber beber! (R$50)", "type": "nightlife" }
+      ]
+    },
+    "20210821": {
+      "title": { "value": "Sábado — Museus & Vida Noturna", "showDestinations": false, "translate": false },
+      "date": { "day": 21, "month": 8, "year": 2021, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "time": "08:00", "activity": "Hotel", "details": "Arrumar", "type": "accommodation" },
+        { "time": "08:40", "activity": "Perseu Coffee House", "details": "Café (R$30)", "type": "food" },
+        { "time": "09:00", "activity": "Uber", "details": "Hotel → Aquário Urbano (R$5)", "type": "transport" },
+        { "time": "09:20", "activity": "Aquário Urbano", "details": "Fotos", "type": "attraction" },
+        { "time": "09:40", "activity": "Uber", "details": "Aquário → Memorial (R$5)", "type": "transport" },
+        { "time": "10:00", "activity": "Memorial da Resistência", "details": "Reservado", "type": "attraction" },
+        { "time": "11:10", "activity": "Pinacoteca", "details": "Reservado", "type": "attraction" }
+      ],
+      "afternoon": [
+        { "time": "12:10", "activity": "Uber", "details": "Pinacoteca → O Burguer (R$10)", "type": "transport" },
+        { "time": "13:00", "activity": "O Burguer", "details": "Reservado, almoço (R$100)", "type": "food" },
+        { "time": "14:30", "activity": "Uber", "details": "O Burguer → Ibirapuera (R$8)", "type": "transport" },
+        { "time": "14:50", "activity": "Parque Ibirapuera", "details": "Passeio", "type": "leisure" },
+        { "time": "15:50", "activity": "Uber", "details": "Ibirapuera → Sampa Sky (R$10)", "type": "transport" },
+        { "time": "16:30", "activity": "Sampa Sky", "details": "Reservado, mirante (R$30)", "type": "attraction" },
+        { "time": "17:00", "activity": "Metrô", "details": "Sampa Sky → Oscar Freire (R$4,40)", "type": "transport" },
+        { "time": "17:20", "activity": "Oscar Freire", "details": "Passear e brunch (R$50)", "type": "food" }
+      ],
+      "night": [
+        { "time": "18:30", "activity": "Hotel", "details": "Descanso / Arrumar", "type": "accommodation" },
+        { "time": "19:50", "activity": "Omalleys", "details": "Balada (R$100)", "type": "nightlife" }
+      ]
+    },
+    "20210822": {
+      "title": { "value": "Domingo — Último Dia & Retorno", "showDestinations": false, "translate": false },
+      "date": { "day": 22, "month": 8, "year": 2021, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "time": "07:00", "activity": "Hotel", "details": "Arrumar", "type": "accommodation" },
+        { "time": "09:00", "activity": "Hotel", "details": "Check-out", "type": "accommodation" },
+        { "time": "09:10", "activity": "Avenida Paulista", "details": "Passeio rápido", "type": "leisure" },
+        { "time": "09:40", "activity": "Uber", "details": "Paulista → Liberdade (R$5)", "type": "transport" },
+        { "time": "10:00", "activity": "Liberdade", "details": "Conhecer a região", "type": "leisure" },
+        { "time": "10:30", "activity": "Uber", "details": "Liberdade → Eataly (R$7,50)", "type": "transport" },
+        { "time": "10:50", "activity": "Eataly", "details": "Conhecer o ambiente", "type": "leisure" }
+      ],
+      "afternoon": [
+        { "time": "12:00", "activity": "Modern Mamma Osteria", "details": "Almoço (R$70)", "type": "food" },
+        { "time": "13:10", "activity": "The Good Cop Donut Shop", "details": "Donuts para a viagem! (R$20)", "type": "food" },
+        { "time": "13:30", "activity": "Uber", "details": "Donut Shop → Hotel (R$7,50)", "type": "transport" },
+        { "time": "13:50", "activity": "Hotel", "details": "Pegar malas", "type": "accommodation" },
+        { "time": "14:00", "activity": "Uber", "details": "Hotel → Aeroporto (R$25)", "type": "transport" },
+        { "time": "16:05", "activity": "Voo GOL CGH → CNF", "details": "Reserva VSULJH", "type": "flight" }
+      ],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      { "type": "Alimentação", "value": 530, "person": "gabriel", "description": "Refeições durante a viagem" },
+      { "type": "Atrações/Eventos", "value": 64.50, "person": "gabriel", "description": "MASP, Farol Santander, Sampa Sky, IMS" },
+      { "type": "Compras/Extras", "value": 50, "person": "gabriel", "description": "Compras e extras" },
+      { "type": "Saída Noturna", "value": 350, "person": "gabriel", "description": "Olivo, Bar do Cofre, Augusta, Omalleys" },
+      { "type": "Transporte Público", "value": 13.20, "person": "gabriel", "description": "Metrô" },
+      { "type": "Transporte Privado", "value": 182.50, "person": "gabriel", "description": "Uber durante a viagem" }
+    ],
+    "preTrip": [
+      { "type": "Voo", "value": 116.50, "person": "gabriel", "description": "Passagem CNF→CGH (Azul, AKLNSK) + CGH→CNF (Gol, VSULJH)" },
+      { "type": "Voo", "value": 116.50, "person": "gui", "description": "Passagem CNF→CGH (Azul, AKLNSK) + CGH→CNF (Gol, VSULJH)" },
+      { "type": "Hospedagem", "value": 276, "person": "gabriel", "description": "La Residence Paulista — 3 noites (total R$485, R$242,50/pessoa)" }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": { "name": "Gabriel", "preTrip": 392.50, "duringTrip": 1190.20 },
+      "gui": { "name": "Guilherme", "preTrip": 116.50, "duringTrip": 0 }
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2021-08-22T00:00:00.000Z" }
+  }
+}

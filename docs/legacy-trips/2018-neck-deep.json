@@ -1,0 +1,156 @@
+{
+  "trip": {
+    "title": "Neck Deep 2018",
+    "currency": "BRL",
+    "start": { "day": 7, "month": 4, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+    "end": { "day": 8, "month": 4, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2018-04-08T00:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel",
+        "photo": ""
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Airbnb Jardim Paulista",
+      "description": "Apartamento no Jardim Paulista, São Paulo",
+      "address": "Alameda Jaú, 1877, Ap. 21 - Jardim Paulista, São Paulo",
+      "dates": {
+        "checkIn": { "day": 7, "month": 4, "year": 2018, "hour": 15, "minute": 0, "second": 0 },
+        "checkOut": { "day": 8, "month": 4, "year": 2018, "hour": 12, "minute": 0, "second": 0 }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "Azul Linhas Aéreas",
+      "points": { "origin": "Belo Horizonte (CNF)", "destination": "São Paulo (CGH)" },
+      "dates": {
+        "departure": { "day": 7, "month": 4, "year": 2018, "hour": 8, "minute": 5, "second": 0 },
+        "arrival": { "day": 7, "month": 4, "year": 2018, "hour": 9, "minute": 25, "second": 0 }
+      },
+      "duration": "1h20",
+      "direction": "departure",
+      "reservation": "FYTYXP",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "Azul Linhas Aéreas",
+      "points": { "origin": "São Paulo (CGH)", "destination": "Belo Horizonte (CNF)" },
+      "dates": {
+        "departure": { "day": 8, "month": 4, "year": 2018, "hour": 10, "minute": 0, "second": 0 },
+        "arrival": { "day": 8, "month": 4, "year": 2018, "hour": 11, "minute": 15, "second": 0 }
+      },
+      "duration": "1h15",
+      "direction": "return",
+      "reservation": "FYTYXP",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20180407": {
+      "title": { "value": "Show do Neck Deep", "showDestinations": false, "translate": false },
+      "date": { "day": 7, "month": 4, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "06:00", "activity": "Casa → Aeroporto", "details": "Carona com pai", "type": "", "cost": 0 },
+        { "time": "08:05", "activity": "Voo BH → SP", "details": "Azul AD6996, CNF→CGH", "type": "flight", "cost": 0 }
+      ],
+      "morning": [
+        { "time": "09:40", "activity": "Ônibus 175T-10 ou Metrô L1", "details": "Aeroporto → Centro", "type": "transport", "cost": 8 },
+        { "time": "10:10", "activity": "Pinacoteca", "details": "Visita ao museu", "type": "attraction", "cost": 0 },
+        { "time": "11:40", "activity": "Metrô L4", "details": "Pinacoteca → Almoço", "type": "transport", "cost": 4 }
+      ],
+      "afternoon": [
+        { "time": "12:20", "activity": "Pellegrino", "details": "Almoço", "type": "food", "cost": 55 },
+        { "time": "13:20", "activity": "A pé", "details": "Pellegrino → Tomie Ohtake", "type": "transport", "cost": 0 },
+        { "time": "13:30", "activity": "Museu Tomie Ohtake", "details": "Visita", "type": "attraction", "cost": 0 },
+        { "time": "14:30", "activity": "Uber", "details": "Tomie Ohtake → MIS", "type": "transport", "cost": 10 },
+        { "time": "14:30", "activity": "MIS (Museu da Imagem e do Som)", "details": "Visita", "type": "attraction", "cost": 5 },
+        { "time": "15:00", "activity": "Uber", "details": "MIS → Airbnb", "type": "transport", "cost": 9 },
+        { "time": "15:00", "activity": "Airbnb", "details": "Check-in / Descanso", "type": "", "cost": 0 },
+        { "time": "16:00", "activity": "Ônibus 719R-10", "details": "Airbnb → Fabrique Club", "type": "transport", "cost": 4 }
+      ],
+      "night": [
+        { "time": "17:00", "activity": "Show Neck Deep", "details": "Fabrique Club. Portões 18:00, Show 19:15", "type": "entertainment", "cost": 0 },
+        { "time": "21:00", "activity": "Uber", "details": "Fabrique Club → Camdem House", "type": "transport", "cost": 30 },
+        { "time": "22:00", "activity": "Camdem House", "details": "Jantar - Pub inglês", "type": "food", "cost": 95 },
+        { "time": "23:00", "activity": "Uber", "details": "Camdem House → Airbnb", "type": "transport", "cost": 15 },
+        { "time": "23:15", "activity": "Airbnb", "details": "Descanso", "type": "", "cost": 0 }
+      ]
+    },
+    "20180408": {
+      "title": { "value": "Retorno a BH", "showDestinations": false, "translate": false },
+      "date": { "day": 8, "month": 4, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "07:00", "activity": "Airbnb", "details": "Arrumar / Check-out", "type": "", "cost": 0 },
+        { "time": "07:30", "activity": "A pé", "details": "Airbnb → Paulista", "type": "transport", "cost": 0 },
+        { "time": "07:35", "activity": "Avenida Paulista", "details": "Passeio rápido", "type": "attraction", "cost": 0 },
+        { "time": "07:55", "activity": "Metrô + Ônibus", "details": "Paulista → Aeroporto", "type": "transport", "cost": 6 }
+      ],
+      "morning": [
+        { "time": "10:00", "activity": "Voo SP → BH", "details": "Azul AD2696, CGH→CNF", "type": "flight", "cost": 0 }
+      ],
+      "afternoon": [],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      { "date": { "day": 7, "month": 4, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Transporte Público", "description": "Ônibus e metrô em SP", "amount": 22.00, "traveler": "gabriel" },
+      { "date": { "day": 7, "month": 4, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Transporte Privado", "description": "Uber em SP", "amount": 64.00, "traveler": "gabriel" },
+      { "date": { "day": 7, "month": 4, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Alimentação", "description": "Alimentação durante a viagem", "amount": 169.00, "traveler": "gabriel" },
+      { "date": { "day": 7, "month": 4, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Atração", "description": "Ingressos museus e atrações", "amount": 5.00, "traveler": "gabriel" }
+    ],
+    "preTrip": [
+      { "date": { "day": 11, "month": 3, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Voo", "description": "Azul - BH ↔ SP (ida e volta com pontos TudoAzul)", "amount": 100.40, "traveler": "gabriel" },
+      { "date": { "day": 6, "month": 4, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Hospedagem", "description": "Airbnb - Jardim Paulista (1 noite)", "amount": 73.14, "traveler": "gabriel" },
+      { "date": { "day": 6, "month": 4, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Ingresso", "description": "Neck Deep - Fabrique Club (Meia/Promocional)", "amount": 103.50, "traveler": "gabriel" }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": { "preTrip": 277.04, "duringTrip": 260.00, "total": 537.04 }
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2018-04-08T00:00:00.000Z" }
+  }
+}

@@ -1,23 +1,59 @@
 import { getID, getIdFromObjectDB, getURLParams } from '../../utils/dom.js';
-import { displayError } from "../../utils/messages.js";
+import { displayError } from '../../utils/messages.js';
 import { isAlreadyLoading, startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { translate } from '../../i18n/translation.js';
 import { getUID, getUserData } from './auth.js';
-import { DESTINOS_ATIVOS } from "../../pages/edit-trip/categories/destination.js";
-import { getURLParam } from "../../utils/dom.js";
+import { ACTIVE_DESTINATIONS } from '../../pages/edit-trip/categories/destination.js';
+import { getURLParam } from '../../utils/dom.js';
 import { DOCUMENT_ID, ERROR_FROM_GET_REQUEST, setErrorFromGetRequest } from '../state.js';
+import { incrementReads, incrementWrites } from './counter.js';
 
-const DATABASE_TRIP_DOCUMENTS = ["viagens", "destinos", "listagens"];
+// ============================================================
+// Collection & Subcollection Name Constants
+// ============================================================
+
+export const COLLECTION = {
+	USERS: 'users',
+	TRIPS: 'trips',
+	DESTINATIONS: 'destinations',
+	LISTINGS: 'listings',
+	EXPENSES: 'expenses',
+	PROTECTED: 'protected',
+	CONFIG: 'config',
+} as const;
+
+export const SUBCOLLECTION = {
+	TRIP_SUMMARIES: 'tripSummaries',
+	DESTINATION_SUMMARIES: 'destinationSummaries',
+	LISTING_SUMMARIES: 'listingSummaries',
+	ACCOMMODATIONS: 'accommodations',
+	TRANSPORTATION: 'transportation',
+	ITINERARY: 'itinerary',
+	PROTECTED_TRIPS: 'protected', // under trips/{id}/protected
+	PROTECTED_EXPENSES: 'protected', // under expenses/{id}/protected
+} as const;
+
+/** Maps collection names to URL param chars (t=trips, d=destinations, l=listings) */
+const URL_PARAM_MAP: Record<string, string> = {
+	[COLLECTION.TRIPS]: 't',
+	[COLLECTION.DESTINATIONS]: 'd',
+	[COLLECTION.LISTINGS]: 'l',
+};
+
+/** @deprecated Use COLLECTION.TRIPS, COLLECTION.DESTINATIONS, COLLECTION.LISTINGS */
+const DATABASE_TRIP_DOCUMENTS = [COLLECTION.TRIPS, COLLECTION.DESTINATIONS, COLLECTION.LISTINGS];
+
+/** @deprecated Use COLLECTION constants */
 export const DATABASE_EDITABLE_DOCUMENTS = [
-	"viagens",
-	"destinos",
-	"listagens",
-	"gastos",
-	"protegido",
+	COLLECTION.TRIPS,
+	COLLECTION.DESTINATIONS,
+	COLLECTION.LISTINGS,
+	COLLECTION.EXPENSES,
+	COLLECTION.PROTECTED,
 ];
 
 // Constructors
-export function buildDatabaseObject(success, message = "", data = {}) {
+export function buildDatabaseObject(success, message = '', data = {}) {
 	return {
 		success: success,
 		data: data,
@@ -30,6 +66,7 @@ export async function get(path, treatError = true, hideWarn = false) {
 	try {
 		const docRef = firebase.firestore().doc(path);
 		const snapshot = await docRef.get();
+		incrementReads(path);
 
 		if (snapshot.exists) {
 			return snapshot.data();
@@ -51,11 +88,10 @@ export async function hasReadPermission(path) {
 	try {
 		const docRef = firebase.firestore().doc(path);
 		const snapshot = await docRef.get();
+		incrementReads(path);
 
 		if (!snapshot.exists) {
-			console.warn(
-				`Document has reading permissions, but it was not found: ${path}`,
-			);
+			console.warn(`Document has reading permissions, but it was not found: ${path}`);
 		}
 
 		return true;
@@ -64,33 +100,31 @@ export async function hasReadPermission(path) {
 	}
 }
 
-export async function create(collection, data, docName = "") {
+export async function create(collection, data, docName = '') {
 	try {
-		let docRef = "";
+		let docRef = '';
 		if (!docName) {
 			docRef = await firebase.firestore().collection(collection).add(data);
 		} else {
-			docRef = await firebase
-				.firestore()
-				.collection(collection)
-				.doc(docName)
-				.set(data);
+			docRef = await firebase.firestore().collection(collection).doc(docName).set(data);
 		}
-		return buildDatabaseObject(
-			true,
-			translate("messages.documents.create.success"),
-			docRef,
-		);
+		incrementWrites([
+			{
+				type: 'create',
+				path: docName ? `${collection}/${docName}` : `${collection}/${(docRef as any).id}`,
+			},
+		]);
+		return buildDatabaseObject(true, translate('messages.documents.create.success'), docRef);
 	} catch (error) {
 		console.error(error.message);
 		return buildDatabaseObject(
 			false,
-			`${translate("messages.documents.create.error")}: ${error.message}`,
+			`${translate('messages.documents.create.error')}: ${error.message}`,
 		);
 	}
 }
 
-export async function deepCreate(path, data, docId = "") {
+export async function deepCreate(path, data, docId = '') {
 	try {
 		let docRef;
 
@@ -102,17 +136,13 @@ export async function deepCreate(path, data, docId = "") {
 			docRef = firebase.firestore().doc(`${path}/${docId}`);
 			await docRef.set(data);
 		}
-
-		return buildDatabaseObject(
-			true,
-			translate("messages.documents.create.success"),
-			docRef,
-		);
+		incrementWrites([{ type: 'create', path: `${path}/${docId || docRef.id}` }]);
+		return buildDatabaseObject(true, translate('messages.documents.create.success'), docRef);
 	} catch (error) {
 		console.error(error.message);
 		return buildDatabaseObject(
 			false,
-			`${translate("messages.documents.create.error")}: ${error.message}`,
+			`${translate('messages.documents.create.error')}: ${error.message}`,
 		);
 	}
 }
@@ -121,16 +151,13 @@ export async function update(path, newData) {
 	const docRef = firebase.firestore().doc(path);
 	try {
 		const update = await docRef.update(newData);
-		return buildDatabaseObject(
-			true,
-			translate("messages.documents.update.success"),
-			update,
-		);
+		incrementWrites([{ type: 'update', path }]);
+		return buildDatabaseObject(true, translate('messages.documents.update.success'), update);
 	} catch (error) {
 		console.error(error.message);
 		return buildDatabaseObject(
 			false,
-			`${translate("messages.documents.update.error")}: ${error.message}`,
+			`${translate('messages.documents.update.error')}: ${error.message}`,
 		);
 	}
 }
@@ -139,15 +166,13 @@ export async function override(path, newData) {
 	const docRef = firebase.firestore().doc(path);
 	try {
 		await docRef.set(newData, { merge: false });
-		return buildDatabaseObject(
-			true,
-			translate("messages.documents.replace.success"),
-		);
+		incrementWrites([{ type: 'overwrite', path }]);
+		return buildDatabaseObject(true, translate('messages.documents.replace.success'));
 	} catch (error) {
 		console.error(error.message);
 		return buildDatabaseObject(
 			false,
-			`${translate("messages.documents.replace.error")}: ${error.message}`,
+			`${translate('messages.documents.replace.error')}: ${error.message}`,
 		);
 	}
 }
@@ -156,22 +181,16 @@ export async function deleteDocument(path, ignoreError = false) {
 	const docRef = firebase.firestore().doc(path);
 	try {
 		const deleteObj = await docRef.delete();
-		return buildDatabaseObject(
-			true,
-			translate("messages.documents.delete.success"),
-			deleteObj,
-		);
+		incrementWrites([{ type: 'delete', path }]);
+		return buildDatabaseObject(true, translate('messages.documents.delete.success'), deleteObj);
 	} catch (error) {
 		if (ignoreError) {
-			buildDatabaseObject(
-				true,
-				translate("messages.documents.delete.success"),
-			);
+			buildDatabaseObject(true, translate('messages.documents.delete.success'));
 		}
 		console.error(error.message);
 		return buildDatabaseObject(
 			false,
-			`${translate("messages.documents.delete.error")}: ${error.message}`,
+			`${translate('messages.documents.delete.error')}: ${error.message}`,
 		);
 	}
 }
@@ -194,41 +213,53 @@ export function createBatchOps() {
 		create(path, data) {
 			const docRef = db.collection(path).doc(); // auto ID generated now
 			batch.set(docRef, data, { merge: false });
-			track("set", docRef.path, data);
+			track('set', docRef.path, data);
 			return docRef.id;
 		},
 
 		set(path, data) {
 			batch.set(ref(path), data, { merge: true });
-			track("set", path, data);
+			track('set', path, data);
 		},
 
 		overwrite(path, data) {
 			batch.set(ref(path), data, { merge: false });
-			track("overwrite", path, data);
+			track('overwrite', path, data);
 		},
 
 		update(path, data) {
 			batch.update(ref(path), data);
-			track("update", path, data);
+			track('update', path, data);
 		},
 
 		delete(path) {
 			batch.delete(ref(path));
-			track("delete", path);
+			track('delete', path);
 		},
 
+		/** Returns all tracked operations (for dryrun inspection). */
+		getOps: () => ops,
+
 		commit: async () => {
-			console.log("[Firestore batch] Operations to commit:", ops);
+			console.log('[Firestore batch] Operations to commit:', ops);
 
 			try {
 				await batch.commit();
+				incrementWrites(
+					ops.map(
+						(o) =>
+							({ type: o.type, path: o.path }) as {
+								type: 'set' | 'update' | 'overwrite' | 'delete' | 'create';
+								path: string;
+							},
+					),
+				);
 				return {
 					success: true,
 					operations: ops.length,
 				};
 			} catch (error) {
-				console.error("[Firestore batch] Commit failed:", {
+				console.error('[Firestore batch] Commit failed:', {
 					error,
 					operations: ops,
 				});
@@ -246,44 +277,54 @@ export function createBatchOps() {
 export async function getSingleData(type) {
 	let data;
 	try {
-		data = await get(`${type}/${getURLParam(type[0])}`);
+		const param = URL_PARAM_MAP[type] || type[0];
+		data = await get(`${type}/${getURLParam(param)}`);
 		if (!data) {
 			displayError(
-				`${translate("messages.documents.get.error")}. ${translate(translate("messages.documents.get.no_code"))}`,
+				`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}`,
 			);
 		}
 		if (
-			["viagens", "listagens"].includes(type) &&
-			data?.destinos &&
-			data.destinos.length > 0
+			[COLLECTION.TRIPS, COLLECTION.LISTINGS].includes(type) &&
+			(data?.destinationRefs || data?.destinations) &&
+			(data?.destinationRefs || data?.destinations)?.length > 0
 		) {
 			data = await getTripDataWithDestinations(data);
 		}
 	} catch (error) {
-		console.error("Error fetching data from Firestore:", error.message);
+		console.error('Error fetching data from Firestore:', error.message);
 	}
 
 	return data;
 }
 
 export async function getTripDataWithDestinations(tripData) {
-	for (let i = 0; i < tripData?.destinos?.length; i++) {
-		let place;
-		try {
-			place = await get(`destinos/${tripData.destinos[i].destinosID}`, false);
-			tripData.destinos[i].destinos = place;
-		} catch (e) {
-			console.warn(
-				`Unable to get destination ${tripData.destinos[i].destinosID}: ${e.message}`,
-			);
-			tripData.destinos.splice(i, 1);
+	// Migration 13 renamed 'destinos' → 'destinationRefs' on trip docs.
+	const refs = tripData?.destinations || tripData?.destinationRefs;
+	if (!refs || refs.length === 0) return tripData;
+
+	// Normalize to the old 'destinations' key so downstream code sees it there.
+	if (!tripData.destinations) tripData.destinations = refs;
+
+	const results = await Promise.allSettled(
+		refs.map((ref) => get(`${COLLECTION.DESTINATIONS}/${ref.id || ref.destinationId}`, false)),
+	);
+
+	results.forEach((result, i) => {
+		if (result.status === 'fulfilled' && result.value) {
+			tripData.destinations[i].destinations = result.value;
+		} else {
+			const reason = result.status === 'rejected' ? result.reason?.message : 'not found';
+			console.warn(`Unable to get destination ${refs[i].id || refs[i].destinationId}: ${reason}`);
+			tripData.destinations.splice(i, 1);
 		}
-	}
+	});
+
 	return tripData;
 }
 
 export async function getSystemData() {
-	const systemData = await get("config/system");
+	const systemData = await get('config/system');
 	return systemData;
 }
 
@@ -297,7 +338,7 @@ export async function deleteUserObjectDB(id, type) {
 		let result = {};
 		result[type] = dataArray;
 
-		update(`usuarios/${uid}/`, result);
+		update(`${COLLECTION.USERS}/${uid}/`, result);
 
 		return await deleteDocument(`${type}/${id}`);
 	}
@@ -307,7 +348,7 @@ export async function deleteAccount() {
 	const uid = await getUID();
 	if (uid) {
 		await deleteAccountDocuments();
-		await deleteDocument(`usuarios/${uid}`);
+		await deleteDocument(`${COLLECTION.USERS}/${uid}`);
 		await firebase.auth().currentUser.delete();
 	}
 }
@@ -321,14 +362,14 @@ export async function deleteAccountDocuments() {
 	const safePushDelete = (ref) => {
 		deleteOps.push(
 			ref.delete().then(
-				() => console.log("Deleted:", ref.path),
-				(err) => console.warn("⚠️ Failed:", ref.path, err.message),
+				() => console.log('Deleted:', ref.path),
+				(err) => console.warn('⚠️ Failed:', ref.path, err.message),
 			),
 		);
 	};
 
-	// --- CASE A: destinos + listagens ---
-	for (const type of ["destinos", "listagens"]) {
+	// --- CASE A: destinations + listings ---
+	for (const type of [COLLECTION.DESTINATIONS, COLLECTION.LISTINGS]) {
 		const ids = userData[type] ?? [];
 		for (const id of ids) {
 			const ref = firebase.firestore().collection(type).doc(id);
@@ -337,26 +378,20 @@ export async function deleteAccountDocuments() {
 		userData[type] = [];
 	}
 
-	// --- CASE B: viagens ---
-	if (Array.isArray(userData.viagens)) {
-		for (const tripID of userData.viagens) {
-			const tripRef = firebase
-				.firestore()
-				.collection("viagens")
-				.doc(tripID);
+	// --- CASE B: trips ---
+	if (Array.isArray(userData.trips)) {
+		for (const tripID of userData.trips) {
+			const tripRef = firebase.firestore().collection(COLLECTION.TRIPS).doc(tripID);
 			safePushDelete(tripRef);
 
-			const protRef = firebase
-				.firestore()
-				.collection("protegido")
-				.doc(tripID);
+			const protRef = firebase.firestore().collection(COLLECTION.PROTECTED).doc(tripID);
 
 			// Read protRef (read must be awaited, deletes can be parallel)
 			let protSnap = null;
 			try {
 				protSnap = await protRef.get();
 			} catch (e) {
-				console.warn("⚠️ Failed reading:", protRef.path, e.message);
+				console.warn('⚠️ Failed reading:', protRef.path, e.message);
 			}
 
 			if (protSnap?.exists) {
@@ -364,44 +399,40 @@ export async function deleteAccountDocuments() {
 
 				if (pin) {
 					safePushDelete(
-						firebase.firestore().doc(`viagens/protected/${pin}/${tripID}`),
+						firebase.firestore().doc(`${COLLECTION.TRIPS}/protected/${pin}/${tripID}`),
 					);
 					safePushDelete(
-						firebase.firestore().doc(`gastos/protected/${pin}/${tripID}`),
+						firebase.firestore().doc(`${COLLECTION.EXPENSES}/protected/${pin}/${tripID}`),
 					);
 				}
 
 				safePushDelete(protRef);
 			} else {
-				const expensesRef = firebase
-					.firestore()
-					.collection("gastos")
-					.doc(tripID);
+				const expensesRef = firebase.firestore().collection(COLLECTION.EXPENSES).doc(tripID);
 				safePushDelete(expensesRef);
 			}
 		}
 
-		userData.viagens = [];
+		userData.trips = [];
 	}
 
 	// --- Update user object individually (not batched) ---
-	const userRef = firebase.firestore().collection("usuarios").doc(uid);
+	const userRef = firebase.firestore().collection(COLLECTION.USERS).doc(uid);
 	deleteOps.push(
 		userRef.update(userData).then(
-			() => console.log("Updated user:", userRef.path),
-			(err) =>
-				console.warn("⚠️ Failed updating user:", userRef.path, err.message),
+			() => console.log('Updated user:', userRef.path),
+			(err) => console.warn('⚠️ Failed updating user:', userRef.path, err.message),
 		),
 	);
 
-	console.log("Running all delete ops...");
+	console.log('Running all delete ops...');
 	await Promise.allSettled(deleteOps);
 }
 
 export async function addToUserArray(type, value) {
 	const uid = await getUID();
 	if (uid) {
-		const userDoc = await get(`usuarios/${uid}`);
+		const userDoc = await get(`${COLLECTION.USERS}/${uid}`);
 		if (userDoc) {
 			let list = userDoc[type];
 			if (!list) {
@@ -409,11 +440,11 @@ export async function addToUserArray(type, value) {
 			}
 			if (!list.includes(value)) {
 				list.push(value);
-				await update(`usuarios/${uid}`, {
+				await update(`${COLLECTION.USERS}/${uid}`, {
 					[type]: list,
 				});
 			}
-			console.log("User data updated successfully");
+			console.log('User data updated successfully');
 		}
 	}
 }
@@ -428,29 +459,33 @@ export async function newUserObjectDB(object, type) {
 			addToUserArray(type, id);
 			return result;
 		}
-	} else return translate("messages.unauthenticated");
+	} else return translate('messages.unauthenticated');
 }
 
-export async function getPermissoes() {
-	// Seing permissions is only for Front-End purposes. Security is handled by Firebase Rules
+/** Get user permissions from Firestore.  was "getPermissoes" */
+export async function getPermissions() {
+	// Seeing permissions is only for Front-End purposes. Security is handled by Firebase Rules
 	const uid = await getUID();
 	if (uid) {
 		const userData = await getUserData(uid);
-		return userData?.permissoes;
+		return userData?.permissions ?? userData?.permissions_legacy;
 	}
 }
 
+/** @deprecated Use getPermissions() */
+export const getPermissions_legacy = getPermissions;
+
 export async function getDestination(id, containerID?) {
-	if (DESTINOS_ATIVOS[id]) return DESTINOS_ATIVOS[id];
+	if (ACTIVE_DESTINATIONS[id]) return ACTIVE_DESTINATIONS[id];
 
 	let content, preloader, _alreadyLoading;
 	if (containerID) {
 		const container = getID(containerID);
-		content = container.querySelector(".content");
-		preloader = container.querySelector(".preloader");
+		content = container.querySelector('.content');
+		preloader = container.querySelector('.preloader');
 
-		content.style.display = "none";
-		preloader.style.display = "block";
+		content.style.display = 'none';
+		preloader.style.display = 'block';
 	} else {
 		_alreadyLoading = isAlreadyLoading();
 		if (!_alreadyLoading) {
@@ -459,16 +494,127 @@ export async function getDestination(id, containerID?) {
 	}
 
 	try {
-		DESTINOS_ATIVOS[id] = await get(`destinos/${id}`);
-		return DESTINOS_ATIVOS[id];
+		ACTIVE_DESTINATIONS[id] = await get(`${COLLECTION.DESTINATIONS}/${id}`);
+		return ACTIVE_DESTINATIONS[id];
 	} finally {
 		if (containerID) {
-			content.style.display = "block";
-			preloader.style.display = "none";
+			content.style.display = 'block';
+			preloader.style.display = 'none';
 		} else if (!_alreadyLoading) {
 			stopLoadingScreen();
 		}
 	}
+}
+
+// ============================================================
+// Subcollection Read Functions (Option B — Optimized Redesign)
+// ============================================================
+
+/** Get all accommodations for a trip from trips/{tripId}/accommodations */
+export async function getAccommodations(tripId: string): Promise<any[]> {
+	const snapshot = await firebase
+		.firestore()
+		.collection(`${COLLECTION.TRIPS}/${tripId}/${SUBCOLLECTION.ACCOMMODATIONS}`)
+		.get();
+	return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+}
+
+/** Get all transportation legs + settings for a trip from trips/{tripId}/transportation */
+export async function getTransportation(tripId: string): Promise<{ legs: any[]; settings: any }> {
+	const colRef = firebase
+		.firestore()
+		.collection(`${COLLECTION.TRIPS}/${tripId}/${SUBCOLLECTION.TRANSPORTATION}`);
+	const snapshot = await colRef.get();
+	const legs: any[] = [];
+	let settings: any = { viewMode: 'simple' };
+	snapshot.forEach((doc) => {
+		if (doc.id === '_settings') {
+			settings = doc.data();
+		} else {
+			legs.push({ id: doc.id, ...doc.data() });
+		}
+	});
+	return { legs, settings };
+}
+
+/** Get all itinerary days for a trip from trips/{tripId}/itinerary */
+export async function getItinerary(tripId: string): Promise<any[]> {
+	const snapshot = await firebase
+		.firestore()
+		.collection(`${COLLECTION.TRIPS}/${tripId}/${SUBCOLLECTION.ITINERARY}`)
+		.get();
+	return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+}
+
+/** Get trip summaries for a user from users/{uid}/tripSummaries */
+export async function getUserTripSummaries(uid: string): Promise<any[]> {
+	const snapshot = await firebase
+		.firestore()
+		.collection(`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.TRIP_SUMMARIES}`)
+		.get();
+	return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+}
+
+/** Get destination summaries for a user from users/{uid}/destinationSummaries */
+export async function getUserDestinationSummaries(uid: string): Promise<any[]> {
+	const snapshot = await firebase
+		.firestore()
+		.collection(`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.DESTINATION_SUMMARIES}`)
+		.get();
+	return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+}
+
+/** Get listing summaries for a user from users/{uid}/listingSummaries */
+export async function getUserListingSummaries(uid: string): Promise<any[]> {
+	const snapshot = await firebase
+		.firestore()
+		.collection(`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.LISTING_SUMMARIES}`)
+		.get();
+	return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+}
+
+/**
+ * Get a trip with all subcollections resolved in parallel.
+ * Replaces getTripDataWithDestinations for the new subcollection architecture.
+ */
+export async function getTripComplete(tripId: string): Promise<any> {
+	const tripData = await get(`${COLLECTION.TRIPS}/${tripId}`);
+	if (!tripData) return null;
+
+	const destinationRefs = tripData.destinationRefs || tripData.destinations;
+
+	let [accommodations, transportation, itinerary, destinations] = await Promise.all([
+		getAccommodations(tripId).catch(() => []),
+		getTransportation(tripId).catch(() => ({
+			legs: [],
+			settings: { viewMode: 'simple' },
+		})),
+		getItinerary(tripId).catch(() => []),
+		destinationRefs?.length
+			? Promise.all(
+					destinationRefs.map(async (ref: any) => {
+						const id = ref.id || ref.destinationId;
+						const data = await get(`${COLLECTION.DESTINATIONS}/${id}`, false);
+						return data ? { id, destinations: data } : null;
+					}),
+				).then((results) => results.filter(Boolean))
+			: Promise.resolve([]),
+	]);
+
+	if (!transportation.legs?.length && tripData.transportation?.data?.length) {
+		transportation = {
+			legs: tripData.transportation.data,
+			settings: { viewMode: tripData.transportation.viewMode || 'simple' },
+		};
+	}
+
+	return {
+		...tripData,
+		accommodations,
+		transportation,
+		itinerary,
+		destinations,
+	};
 }
 
 // Helpers (Not database related)

@@ -1,8 +1,8 @@
 {
 	"account": {
-		"settings": "Account settings",
+		"settings": "Settings",
 		"backup": {
-			"title": "Backup account",
+			"title": "Backup All",
 			"prompt": "Would you like to back up sensitive trip data? You will need to enter the access PIN for each protected trip",
 			"success": "The account backup was completed successfully",
 			"partial": {
@@ -16,12 +16,21 @@
 			}
 		},
 		"restore": {
-			"title": "Restore account",
+			"title": "Restore All",
 			"error_title": "Account restoration failed",
 			"prompt": "Are you sure you want to restore your account from a backup? This will overwrite your current trip data. This action cannot be undone",
 			"invalid_file": "The selected file is not a valid backup file",
 			"incorrect_owner": "The selected backup file does not belong to the current user",
-			"success": "The account restoration was completed successfully"
+			"success": "The account restoration was completed successfully",
+			"owner_updated": "The account restoration was completed successfully ({{count}} owner(s) updated to your account.)"
+		},
+		"import_documents": {
+			"title": "Import Document(s)",
+			"error_title": "Import failed",
+			"invalid_file": "The selected file is not a valid trip document. Expected a JSON file with a \"trip\" property.",
+			"none_imported": "No documents could be imported. Check that the files are valid trip documents.",
+			"success": "{{count}} document(s) imported successfully!",
+			"untitled": "Untitled Trip"
 		},
 		"delete": {
 			"title": "Delete account",
@@ -157,6 +166,7 @@
 			"title": "Itinerary",
 			"subtitle": "Add your day-to-day schedule here",
 			"placeholder": "Go to...",
+			"swap_title": "Swap Itinerary",
 			"todays_itinerary": "Today's Itinerary",
 			"no_itinerary": "Nothing planned here! ☹️",
 			"full_itinerary": "Full itinerary",
@@ -304,7 +314,9 @@
 			"title": "Map",
 			"description": "Interactive Google Map with highlights of the city: Restaurants, Snacks, Nightlife, Tourism, and Shopping",
 			"instructions": "Create a map for free at",
-			"my_maps": "My Maps"
+			"my_maps": "My Maps",
+			"link_label": "My Maps Link",
+			"url_placeholder": "https://www.google.com/maps/d/viewer?mid=1tgHq3Dg7zI1yMKTDlObLRryNPi_sy79t&usp=sharing"
 		},
 		"lineup": {
 			"title": "Lineup",
@@ -334,8 +346,13 @@
 			"free": "Free",
 			"placeholder": "$26 - $50"
 		},
+		"move": {
+			"title": "Move - {{category}}",
+			"label": "Move to:"
+		},
 		"errors": {
 			"missing_title": "Cannot update this destination data. Missing title information",
+			"invalid_emoji": "Enter a valid emoji 🫠",
 			"tiktok": {
 				"not_found": "TikTok link not found",
 				"conversion": "Conversion error: Tiktok",
@@ -396,6 +413,10 @@
 		"new": "New destination list",
 		"edit": "Edit destination List",
 		"share": "Check out the destination list \"{{name}}\" created on TripViewer",
+		"delete": {
+			"title": "Delete Listing",
+			"message": "Are you sure you want to delete the listing \"{{name}}\"? This action cannot be undone"
+		},
 		"basic_information": "Add the main information about your destination list here",
 		"last_update": {
 			"title": "Show last update date",
@@ -446,6 +467,17 @@
 		}
 	},
 	"datetime": {
+		"datepicker": {
+			"today": "Today",
+			"this_week": "This week",
+			"this_month": "This month",
+			"clear": "Clear",
+			"select_dates": "Select dates...",
+			"cancel": "Cancel",
+			"apply": "Apply",
+			"pick_start_date": "Pick start date",
+			"start_pick_end": "Start: {{start}} — pick end date"
+		},
 		"titles": {
 			"day_month": "{{month}} {{day}}",
 			"weekday_day_month": "{{weekday}}, {{month}} {{day}}",
@@ -525,7 +557,9 @@
 			"module_not_active": "Cannot load the page. The module {{module}} is not active",
 			"no_data_on_module": "No data found for the module {{module}}",
 			"loading_timeout": "The request took too long to respond. Please try again later",
-			"missing_data": "We weren't able to load this document. It looks like some required information is missing"
+			"missing_data": "We weren't able to load this document. It looks like some required information is missing",
+			"with_location": "Error \"{{message}}\" located at {{location}}",
+			"without_location": "Error \"{{message}}\""
 		},
 		"too_early": {
 			"title": "You're a bit early! 😅",
@@ -651,6 +685,8 @@
 		"last_updated_on": "Last updated on",
 		"unauthenticated": "Not authenticated",
 		"home": "Home",
+		"url_placeholder": "https://drive.google.com/drive",
+		"map_url_placeholder": "https://www.google.com/maps/",
 		"days": "Days",
 		"people": "People",
 		"person": "Person",
@@ -757,9 +793,9 @@
 	},
 	"index": {
 		"welcome_back": "Ready to explore your trips?",
-		"my_trips": "My Trips",
-		"my_destinations": "My Destinations",
-		"my_lists": "My Lists",
+		"my_trips": "Trips",
+		"my_destinations": "Destinations",
+		"my_lists": "Lists",
 		"no_trips": "No trips yet. Create your first trip!",
 		"no_destinations": "No destinations registered yet",
 		"no_lists": "No lists created yet",

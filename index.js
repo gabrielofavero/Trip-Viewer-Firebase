@@ -1,6 +1,6 @@
-import { startFirebase } from "./firebase-config.js";
+import { startFirebase } from './firebase-config.js';
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
 	startFirebase();
-	console.log("Firebase started and DOM content loaded.");
+	console.log('Firebase started and DOM content loaded.');
 });

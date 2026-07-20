@@ -3,7 +3,7 @@
  * Enhances native <input type="color"> with a synchronized hex text field.
  *
  * Usage:
- *   enhanceColorPicker(document.getElementById('claro'));
+ *   enhanceColorPicker(document.getElementById('light'));
  *   // or auto-detect all:
  *   enhanceAllColorPickers();
  */

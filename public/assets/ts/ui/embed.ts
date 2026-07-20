@@ -2,13 +2,11 @@ import { getID } from '../utils/dom.js';
 import { getVisibility } from '../theme/visibility.js';
 
 export function loadEmbedListeners(action) {
-	window.addEventListener("message", (e) => {
+	window.addEventListener('message', (e) => {
 		const current = getOrigin().toUpperCase();
-		const eventType = e?.data?.type || "unknown";
-		const origin = e?.data?.page || "unknown";
-		console.log(
-			`[${current}] Received "${eventType}" event from "${origin}" page`,
-		);
+		const eventType = e?.data?.type || 'unknown';
+		const origin = e?.data?.page || 'unknown';
+		console.log(`[${current}] Received "${eventType}" event from "${origin}" page`);
 		onEmbedMessage(e, action);
 	});
 }
@@ -34,7 +32,7 @@ export function openEmbed({
 	beforeOpen?.();
 
 	if (newTab) {
-		iframe.src = "about:blank";
+		iframe.src = 'about:blank';
 	}
 
 	iframe.onload = function () {
@@ -51,7 +49,7 @@ export function onEmbedMessage(event, action) {
 
 	const data = event.data;
 
-	if (!data || typeof data !== "object" || !data.type) return;
+	if (!data || typeof data !== 'object' || !data.type) return;
 
 	action(data);
 }
@@ -66,14 +64,11 @@ export function sendToEmbed(frameID, type, value) {
 	if (!frame || !frame.contentWindow) return;
 	const page = getOrigin();
 
-	frame.contentWindow.postMessage(
-		{ page, type, value },
-		window.location.origin,
-	);
+	frame.contentWindow.postMessage({ page, type, value }, window.location.origin);
 }
 
 export function getOrigin() {
-	return window.location.pathname.replace("/", "");
+	return window.location.pathname.replace('/', '');
 }
 
 export function loadEmbedVisibility({
@@ -85,30 +80,33 @@ export function loadEmbedVisibility({
 	embedAction?: () => void;
 	notEmbedAction?: () => void;
 } = {}) {
-	const closeButton = getID("closeButton");
-	const logoLink = getID("logo-link");
+	const closeButton = getID('closeButton');
+	const logoLink = getID('logo-link');
 
 	if (isEmbed()) {
 		embedAction?.();
-		closeButton && (closeButton.onclick = () => {
-			closeAction?.();
-			(window.parent as any).closeViewEmbed(false, getVisibility());
-		});
+		closeButton &&
+			(closeButton.onclick = () => {
+				closeAction?.();
+				(window.parent as any).closeViewEmbed(false, getVisibility());
+			});
 
-		logoLink && (logoLink.onclick = () => {
-			(window.parent as any).closeViewEmbed(true, getVisibility());
-		});
+		logoLink &&
+			(logoLink.onclick = () => {
+				(window.parent as any).closeViewEmbed(true, getVisibility());
+			});
 	} else {
 		notEmbedAction?.();
-		closeButton && (closeButton.style.display = "none");
-		const share = getID("share");
+		closeButton && (closeButton.style.display = 'none');
+		const share = getID('share');
 		if (share) {
-			share.style.display = "";
+			share.style.display = '';
 		}
 
-		logoLink && (logoLink.onclick = () => {
-			window.location.href = "index.html";
-		});
+		logoLink &&
+			(logoLink.onclick = () => {
+				window.location.href = 'index.html';
+			});
 	}
 }
 

@@ -1,0 +1,172 @@
+{
+  "trip": {
+    "title": "Less Than Jake 2018",
+    "currency": "BRL",
+    "start": { "day": 26, "month": 5, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+    "end": { "day": 27, "month": 5, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2018-05-27T00:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel",
+        "photo": ""
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Airbnb - Cond. Edifício Saint Cyr",
+      "description": "Apartamento próximo à estação Brigadeiro, São Paulo",
+      "address": "Cond Edifício Saint Cyr - Rua Maria Figueiredo, 85, Ap. 22, São Paulo, 04002",
+      "dates": {
+        "checkIn": { "day": 26, "month": 5, "year": 2018, "hour": 14, "minute": 0, "second": 0 },
+        "checkOut": { "day": 27, "month": 5, "year": 2018, "hour": 13, "minute": 0, "second": 0 }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "HM9BJJC2AZ",
+      "link": "https://www.airbnb.com.br/rooms/14692847"
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "GOL Linhas Aéreas",
+      "points": { "origin": "Belo Horizonte (CNF)", "destination": "São Paulo (CGH)" },
+      "dates": {
+        "departure": { "day": 26, "month": 5, "year": 2018, "hour": 7, "minute": 10, "second": 0 },
+        "arrival": { "day": 26, "month": 5, "year": 2018, "hour": 8, "minute": 30, "second": 0 }
+      },
+      "duration": "1h20",
+      "direction": "departure",
+      "reservation": "LLGB2Q",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "GOL Linhas Aéreas",
+      "points": { "origin": "São Paulo (CGH)", "destination": "Belo Horizonte (CNF)" },
+      "dates": {
+        "departure": { "day": 27, "month": 5, "year": 2018, "hour": 16, "minute": 20, "second": 0 },
+        "arrival": { "day": 27, "month": 5, "year": 2018, "hour": 17, "minute": 25, "second": 0 }
+      },
+      "duration": "1h05",
+      "direction": "return",
+      "reservation": "LLGB2Q",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20180526": {
+      "title": { "value": "Show do Less Than Jake", "showDestinations": false, "translate": false },
+      "date": { "day": 26, "month": 5, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "05:00", "activity": "Casa → Aeroporto", "details": "Carona com pai", "type": "", "cost": 0 },
+        { "time": "07:10", "activity": "Voo BH → SP", "details": "GOL G31301, CNF→CGH", "type": "flight", "cost": 0 }
+      ],
+      "morning": [
+        { "time": "08:30", "activity": "Ônibus + Metrô", "details": "Aeroporto → Paulista", "type": "transport", "cost": 4 },
+        { "time": "09:30", "activity": "Galerias do Centro", "details": "Galeria Nova Barão e Galeria do Rock. Vinil", "type": "shopping", "cost": 0 },
+        { "time": "11:00", "activity": "A pé / Metrô", "details": "Centro → Paulista", "type": "transport", "cost": 4 },
+        { "time": "11:30", "activity": "Sensorial Discos", "details": "Loja de discos na Paulista", "type": "attraction", "cost": 0 }
+      ],
+      "afternoon": [
+        { "time": "12:00", "activity": "Metrô", "details": "Paulista → Pinheiros", "type": "transport", "cost": 4 },
+        { "time": "12:30", "activity": "Pellegrino", "details": "Almoço", "type": "food", "cost": 52.80 },
+        { "time": "13:00", "activity": "Metrô", "details": "Pinheiros → Airbnb", "type": "transport", "cost": 4 },
+        { "time": "13:30", "activity": "Airbnb", "details": "Check-in - Deixar mochila", "type": "", "cost": 0 },
+        { "time": "14:00", "activity": "Metrô", "details": "Airbnb → Liberdade", "type": "transport", "cost": 4 },
+        { "time": "14:20", "activity": "Liberdade", "details": "Compras + Passeio", "type": "shopping", "cost": 237.28 },
+        { "time": "15:20", "activity": "Snowfall", "details": "Lanche rápido", "type": "food", "cost": 14 },
+        { "time": "15:40", "activity": "Metrô", "details": "Liberdade → Airbnb", "type": "transport", "cost": 4 },
+        { "time": "16:00", "activity": "Airbnb", "details": "Descanso", "type": "", "cost": 0 },
+        { "time": "16:30", "activity": "Metrô + A pé", "details": "Airbnb → Fabrique Club", "type": "transport", "cost": 4 }
+      ],
+      "night": [
+        { "time": "17:10", "activity": "Show Less Than Jake", "details": "Fabrique Club", "type": "entertainment", "cost": 0 },
+        { "time": "17:10", "activity": "Água", "details": "Comprar água no show", "type": "food", "cost": 5 },
+        { "time": "22:00", "activity": "Metrô", "details": "Fabrique Club → Airbnb", "type": "transport", "cost": 4 },
+        { "time": "22:40", "activity": "Airbnb", "details": "Arrumar para sair", "type": "", "cost": 0 },
+        { "time": "23:10", "activity": "A pé", "details": "Airbnb → Hooters", "type": "transport", "cost": 0 },
+        { "time": "23:15", "activity": "Hooters", "details": "Jantar", "type": "food", "cost": 97 },
+        { "time": "00:15", "activity": "A pé", "details": "Hooters → Airbnb", "type": "transport", "cost": 0 },
+        { "time": "00:20", "activity": "Airbnb", "details": "Descanso", "type": "", "cost": 0 }
+      ]
+    },
+    "20180527": {
+      "title": { "value": "Passeio e retorno", "showDestinations": false, "translate": false },
+      "date": { "day": 27, "month": 5, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "time": "09:00", "activity": "Airbnb", "details": "Acordar / Arrumar", "type": "", "cost": 0 },
+        { "time": "09:45", "activity": "Avenida Paulista", "details": "Caminhada", "type": "", "cost": 0 },
+        { "time": "10:00", "activity": "Japan House", "details": "Visita rápida", "type": "attraction", "cost": 0 },
+        { "time": "10:30", "activity": "Metrô", "details": "Paulista → Liberdade", "type": "transport", "cost": 4 },
+        { "time": "10:50", "activity": "Liberdade", "details": "Café da manhã", "type": "food", "cost": 24.99 },
+        { "time": "11:20", "activity": "Metrô + A pé", "details": "Liberdade → Centro", "type": "transport", "cost": 4 },
+        { "time": "11:30", "activity": "Liberdade", "details": "Compras", "type": "shopping", "cost": 17.80 },
+        { "time": "12:00", "activity": "Z Deli", "details": "Almoço - Hamburgueria", "type": "food", "cost": 50 },
+        { "time": "12:30", "activity": "A pé", "details": "Z Deli → Happy Donuts", "type": "transport", "cost": 0 },
+        { "time": "12:45", "activity": "Happy Donuts", "details": "Sobremesa", "type": "food", "cost": 20 }
+      ],
+      "afternoon": [
+        { "time": "12:50", "activity": "Metrô", "details": "Centro → Airbnb", "type": "transport", "cost": 4 },
+        { "time": "13:05", "activity": "Airbnb", "details": "Check-out", "type": "", "cost": 0 },
+        { "time": "13:05", "activity": "Ônibus", "details": "Airbnb → Aeroporto", "type": "transport", "cost": 4 }
+      ],
+      "night": [
+        { "time": "16:20", "activity": "Voo SP → BH", "details": "GOL G31308, CGH→CNF", "type": "flight", "cost": 0 },
+        { "time": "17:25", "activity": "Aeroporto → Casa", "details": "Carona com Matheus", "type": "transport", "cost": 0 }
+      ]
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      { "date": { "day": 26, "month": 5, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Alimentação", "description": "Alimentação durante a viagem", "amount": 263.79, "traveler": "gabriel" },
+      { "date": { "day": 26, "month": 5, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Compras", "description": "Compras (discos, itens pessoais)", "amount": 255.08, "traveler": "gabriel" },
+      { "date": { "day": 26, "month": 5, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Transporte Público", "description": "Metrô e ônibus em SP", "amount": 48.00, "traveler": "gabriel" }
+    ],
+    "preTrip": [
+      { "date": { "day": 13, "month": 5, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Voo", "description": "GOL - BH ↔ SP (ida e volta)", "amount": 213.86, "traveler": "gabriel" },
+      { "date": { "day": 13, "month": 5, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Hospedagem", "description": "Airbnb - Cond. Saint Cyr (1 noite)", "amount": 151.91, "traveler": "gabriel" },
+      { "date": { "day": 13, "month": 5, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Ingresso", "description": "Less Than Jake - Fabrique Club", "amount": 126.50, "traveler": "gabriel" }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": { "preTrip": 492.27, "duringTrip": 566.87, "total": 1073.14 }
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2018-05-27T00:00:00.000Z" }
+  }
+}
