@@ -33,14 +33,15 @@ npm run dev
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 161   | 158  | 3         | 0       |
-| 🏆   | Feature     | F000 | 168   | 137  | 22        | 9       |
+| 🏆   | Feature     | F000 | 170   | 138  | 22        | 10      |
 | 📈   | Improvement | M000 | 156   | 131  | 23        | 2       |
-| ⚔️   | Epic        | E000 | 48    | 32   | 8         | 8       |
+| ⚔️   | Epic        | E000 | 50    | 34   | 9         | 7       |
 
 ## Backlog
 
 ### High Priority
 
+- 🏆 **F170:** Add Maps integration into edit page (hidden if no api key)
 - 🏆 **F168:** Add option to put image in destination (and make index.html see it)
 - 📈 **M153:** Index improvements: 
   - trip/listing destination tags, destination images
@@ -68,7 +69,6 @@ npm run dev
   - *[🏆F157] Image & embed offline fallbacks (thumbnails, placeholders)*
   - *[🏆F158] Bundle instructions (README.txt) + QA validation flag*
   - *[🏆F159] Python requirements.txt + wire into pre-commit/deploy pipeline*
-- ⚔️ **E024:** Migrate project to React
 - ⚔️ **E019:** Implement Sonarqube
 - ⚔️ **E047:** Implement Unit Tests (after TypeScript migration)
 
@@ -79,6 +79,9 @@ npm run dev
 - 🐞 **B161:** Fix page issues post migration
 - 📈 **M155:** Load dark/light mode as soon as page starts (no flicker)
 - 📈 **M156:** Export useful dev scripts into npm run
+- ⚔️ **E049:** Code translation (PT -> EN)
+- ⚔️ **E050:** Create proper dev env (emulators, data preparation scripts, easy config)
+- 🏆 **F169:** Add option to import only a single trip document
 
 ### June 2026
 - 🐞 **B158:** When clicking on last item of transportation tab, nothing happens
@@ -779,3 +782,4 @@ npm run dev
 - 🏆 **F116:** Destinations data refactoring
 - 📈 **M119:** Instead of pop-ups, scroll to item (if not destination)
 - 🐞 **B148:** Full itinerary page giving multiple blank pages
+- ⚔️ **E024:** Migrate project to React

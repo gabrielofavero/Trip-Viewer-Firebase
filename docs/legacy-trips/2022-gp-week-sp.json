@@ -1,0 +1,273 @@
+{
+  "trip": {
+    "title": "GP Week SP 2022",
+    "currency": "BRL",
+    "start": { "day": 11, "month": 11, "year": 2022, "hour": 20, "minute": 0, "second": 0 },
+    "end": { "day": 16, "month": 11, "year": 2022, "hour": 6, "minute": 25, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2022-11-16T00:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      { "id": "gabriel", "name": "Gabriel", "color": "#966313" },
+      { "id": "gui", "name": "Guilherme", "color": "#4A90D9" }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Ibis Budget",
+      "description": "Check in / descanso no lobby — diária de sábado (12/nov)",
+      "address": "São Paulo - SP",
+      "dates": {
+        "checkIn": { "day": 12, "month": 11, "year": 2022, "hour": 7, "minute": 30, "second": 0 },
+        "checkOut": { "day": 13, "month": 11, "year": 2022, "hour": 9, "minute": 30, "second": 0 }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    },
+    "acc-002": {
+      "name": "Airbnb - La Residence Paulista",
+      "description": "Check in domingo (13/nov) — pernoite",
+      "address": "Alameda Jaú, Jardim Paulista, São Paulo - SP",
+      "dates": {
+        "checkIn": { "day": 13, "month": 11, "year": 2022, "hour": 15, "minute": 30, "second": 0 },
+        "checkOut": { "day": 14, "month": 11, "year": 2022, "hour": 8, "minute": 55, "second": 0 }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    },
+    "acc-003": {
+      "name": "INNSiDE By Melia São Paulo Itaim",
+      "description": "Check in segunda (14/nov) — pernoite de luxo no Itaim Bibi",
+      "address": "Itaim Bibi, São Paulo - SP",
+      "dates": {
+        "checkIn": { "day": 14, "month": 11, "year": 2022, "hour": 10, "minute": 50, "second": 0 },
+        "checkOut": { "day": 15, "month": 11, "year": 2022, "hour": 10, "minute": 30, "second": 0 }
+      },
+      "breakfast": true,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "bus",
+      "company": "Expresso Adamantina (Buser)",
+      "points": { "origin": "Belo Horizonte - MG", "destination": "São Paulo - SP" },
+      "dates": {
+        "departure": { "day": 11, "month": 11, "year": 2022, "hour": 21, "minute": 30, "second": 0 },
+        "arrival": { "day": 12, "month": 11, "year": 2022, "hour": 6, "minute": 0, "second": 0 }
+      },
+      "duration": "8h30",
+      "direction": "departure",
+      "reservation": "7H11GC",
+      "link": "",
+      "person": ""
+    },
+    "leg-002": {
+      "type": "bus",
+      "company": "Luxor (Buser)",
+      "points": { "origin": "São Paulo - SP", "destination": "Belo Horizonte - MG" },
+      "dates": {
+        "departure": { "day": 15, "month": 11, "year": 2022, "hour": 21, "minute": 0, "second": 0 },
+        "arrival": { "day": 16, "month": 11, "year": 2022, "hour": 5, "minute": 40, "second": 0 }
+      },
+      "duration": "8h40",
+      "direction": "return",
+      "reservation": "GU5VE",
+      "link": "",
+      "person": ""
+    }
+  },
+  "itinerary": {
+    "20221111": {
+      "title": { "value": "Dia 1 — Sexta-feira, 11 de Novembro", "showDestinations": false, "translate": false },
+      "date": { "day": 11, "month": 11, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [],
+      "night": [
+        { "time": "20:00", "title": "Uber → Rodoviária BH", "description": "Translado até a rodoviária de Belo Horizonte", "type": "Transporte Privado" },
+        { "time": "20:30", "title": "Terminal Rodoviário", "description": "Retirar passagem (G2) — Buser 7H11GC", "type": "-" },
+        { "time": "21:30", "title": "Ônibus BH → SP", "description": "Expresso Adamantina — Leito. Previsão de chegada: 06:00", "type": "Ida/Volta" }
+      ]
+    },
+    "20221112": {
+      "title": { "value": "Dia 2 — Sábado, 12 de Novembro — GP Week!", "showDestinations": false, "translate": false },
+      "date": { "day": 12, "month": 11, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "06:00", "title": "Chegada em SP — Metrô", "description": "Desembarque Terminal Tietê → Metrô até o hotel", "type": "Transporte Público" },
+        { "time": "06:30", "title": "Hotel Ibis Budget", "description": "Check In / Descanso no lobby", "type": "Hospedagem" }
+      ],
+      "morning": [
+        { "time": "07:55", "title": "Bottanikafé", "description": "Café da manhã reforçado — vibe natureba para brunch", "type": "Alimentação" },
+        { "time": "10:10", "title": "IMS (Instituto Moreira Salles)", "description": "Turismo rápido — exposições", "type": "Turismo" },
+        { "time": "11:05", "title": "Empório Daruma", "description": "Comprinhas pré-show — itens japoneses", "type": "Compras" },
+        { "time": "11:45", "title": "Hotel Ibis Budget", "description": "Guardar compras / Entrar no quarto", "type": "Hospedagem" }
+      ],
+      "afternoon": [
+        { "time": "11:55", "title": "Uber → Allianz Parque", "description": "Translado para o festival", "type": "Transporte Privado" },
+        { "time": "12:05", "title": "GP Week — Livre", "description": "Explorar o festival. Abertura dos portões: 13:00", "type": "Turismo" },
+        { "time": "14:00", "title": "Fresno", "description": "Show no GP Week", "type": "Turismo" },
+        { "time": "15:30", "title": "The Band Camino", "description": "Show no GP Week", "type": "Turismo" },
+        { "time": "17:00", "title": "Hot Chip", "description": "Show no GP Week", "type": "Turismo" },
+        { "time": "18:00", "title": "Pré TOP", "description": "Preparação para o headliner", "type": "Turismo" }
+      ],
+      "night": [
+        { "time": "19:00", "title": "Twenty One Pilots", "description": "Show principal no GP Week", "type": "Turismo" },
+        { "time": "20:30", "title": "The Killers", "description": "Show de encerramento no GP Week", "type": "Turismo" },
+        { "time": "23:30", "title": "Uber → Hotel", "description": "Volta para o Ibis Budget", "type": "Transporte Privado" }
+      ]
+    },
+    "20221113": {
+      "title": { "value": "Dia 3 — Domingo, 13 de Novembro", "showDestinations": false, "translate": false },
+      "date": { "day": 13, "month": 11, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "time": "08:30", "title": "Hotel Ibis Budget", "description": "Arrumar / Check Out / Deixar malas", "type": "Hospedagem" },
+        { "time": "09:40", "title": "Metrô → Liberdade", "description": "Translado para o bairro da Liberdade", "type": "Transporte Público" },
+        { "time": "10:05", "title": "Liberdade — Feirinha", "description": "Passeio e compras na feirinha de artesanato", "type": "Compras" }
+      ],
+      "afternoon": [
+        { "time": "12:05", "title": "Sukya — Liberdade", "description": "Almoço (ou qualquer outro asiático na região)", "type": "Alimentação" },
+        { "time": "13:35", "title": "Metrô → Unibes Cultural", "description": "Translado", "type": "Transporte Público" },
+        { "time": "14:05", "title": "Unibes Cultural", "description": "Exposição Diálogo no Escuro (agendado 14:00)", "type": "Turismo" },
+        { "time": "15:05", "title": "Metrô → Hotel", "description": "Pegar malas no Ibis Budget", "type": "Transporte Público" },
+        { "time": "15:30", "title": "Airbnb — La Residence Paulista", "description": "Check in. Livre / Descanso", "type": "Hospedagem" }
+      ],
+      "night": [
+        { "time": "17:25", "title": "Airbnb — Arrumar", "description": "Preparação para a noite", "type": "Hospedagem" },
+        { "time": "18:25", "title": "Metrô → Tan Tan", "description": "Translado para o jantar", "type": "Transporte Público" },
+        { "time": "18:55", "title": "Tan Tan", "description": "Jantinha — restaurante asiático", "type": "Saídas" },
+        { "time": "20:25", "title": "Uber → Tokyo SP", "description": "Translado para o bar", "type": "Transporte Privado" },
+        { "time": "20:50", "title": "Tokyo SP", "description": "Bar com Karaokê — bebeeeer!", "type": "Saídas" },
+        { "time": "00:00", "title": "Uber → Airbnb", "description": "Volta para o Airbnb", "type": "Transporte Privado" }
+      ]
+    },
+    "20221114": {
+      "title": { "value": "Dia 4 — Segunda-feira, 14 de Novembro", "showDestinations": false, "translate": false },
+      "date": { "day": 14, "month": 11, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "time": "08:00", "title": "Airbnb — Arrumar / Check Out", "description": "Deixar o Airbnb", "type": "Hospedagem" },
+        { "time": "09:05", "title": "Mugg SP", "description": "Brunch (ou outro na região)", "type": "Alimentação" },
+        { "time": "10:15", "title": "Airbnb — Pegar Malas", "description": "Retirar as malas", "type": "-" },
+        { "time": "10:25", "title": "Uber → INNSiDE Itaim", "description": "Translado para o hotel novo", "type": "Transporte Privado" },
+        { "time": "10:50", "title": "Hotel INNSiDE By Melia Itaim", "description": "Check in / Deixar malas", "type": "Hospedagem" }
+      ],
+      "afternoon": [
+        { "time": "12:05", "title": "Between Buns", "description": "Almoço no Itaim Bibi (hambúrgueres)", "type": "Alimentação" },
+        { "time": "13:40", "title": "Koa Mart", "description": "Comprinhas — itens coreanos", "type": "Compras" },
+        { "time": "14:15", "title": "Parque do Povo", "description": "Pra não perder a tradição rs", "type": "Turismo" },
+        { "time": "14:50", "title": "The Good Cop", "description": "Pra não perder a tradição também rs", "type": "Alimentação" },
+        { "time": "15:15", "title": "Hotel INNSiDE Itaim", "description": "Descansar / Curtir a chiquesa do hotel", "type": "Hospedagem" }
+      ],
+      "night": [
+        { "time": "20:00", "title": "Uber → Omalleys", "description": "Translado para o pub", "type": "Transporte Privado" },
+        { "time": "20:25", "title": "Omalleys", "description": "Pub Irlandês — favorito do Bibs. Bebeeeeeer!", "type": "Saídas" },
+        { "time": "23:00", "title": "Uber → Hotel", "description": "Volta para o INNSiDE Itaim", "type": "Transporte Privado" }
+      ]
+    },
+    "20221115": {
+      "title": { "value": "Dia 5 — Terça-feira, 15 de Novembro (Feriado)", "showDestinations": false, "translate": false },
+      "date": { "day": 15, "month": 11, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "08:00", "title": "Hotel INNSiDE Itaim — Arrumar", "description": "Preparação para o dia", "type": "Hospedagem" },
+        { "time": "08:30", "title": "Café da Manhã no Hotel", "description": "Cortesia do INNSiDE Itaim", "type": "Alimentação" }
+      ],
+      "morning": [
+        { "time": "09:00", "title": "Uber → Ibirapuera", "description": "Translado para o parque", "type": "Transporte Privado" },
+        { "time": "09:15", "title": "Parque Ibirapuera", "description": "Curtir o parque no feriado", "type": "Turismo" },
+        { "time": "10:15", "title": "Uber → Hotel", "description": "Volta para o hotel", "type": "Transporte Privado" },
+        { "time": "10:30", "title": "Hotel INNSiDE Itaim — Check Out", "description": "Descanso / Check Out / Deixar malas", "type": "Hospedagem" },
+        { "time": "11:30", "title": "Uber → Sughetto", "description": "Translado para o almoço", "type": "Transporte Privado" }
+      ],
+      "afternoon": [
+        { "time": "11:55", "title": "Sughetto", "description": "Almoço — casa de massas, varal de parma. Villa SP", "type": "Alimentação" },
+        { "time": "13:25", "title": "A pé → Paulista", "description": "Caminhada pela região", "type": "-" },
+        { "time": "14:05", "title": "Compras Paulista / Taco Bell", "description": "Comprinhas e Taco Bell", "type": "Compras" },
+        { "time": "14:35", "title": "Uber → JK Iguatemi", "description": "Translado para o shopping", "type": "Transporte Privado" },
+        { "time": "15:35", "title": "JK Iguatemi — Cinema", "description": "Filminho no shopping de luxo", "type": "Turismo" }
+      ],
+      "night": [
+        { "time": "17:50", "title": "Brugi", "description": "Saída rápida — lanche", "type": "Alimentação" },
+        { "time": "19:20", "title": "Uber → Hotel", "description": "Pegar malas no INNSiDE Itaim", "type": "Transporte Privado" },
+        { "time": "19:35", "title": "Hotel INNSiDE Itaim — Pegar Malas", "description": "Retirar as malas", "type": "Hospedagem" },
+        { "time": "19:45", "title": "Uber → Terminal Tietê", "description": "Translado para a rodoviária", "type": "Transporte Privado" },
+        { "time": "20:20", "title": "Sala VIP Levare", "description": "Aguardar embarque", "type": "-" },
+        { "time": "21:00", "title": "Ônibus SP → BH", "description": "Luxor — GU5VE. Previsão de chegada: 05:40", "type": "Ida/Volta" }
+      ]
+    },
+    "20221116": {
+      "title": { "value": "Dia 6 — Quarta-feira, 16 de Novembro", "showDestinations": false, "translate": false },
+      "date": { "day": 16, "month": 11, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "05:40", "title": "Chegada — Praça da Liberdade BH", "description": "Desembarque do ônibus", "type": "-" },
+        { "time": "05:50", "title": "Uber → Casa", "description": "Translado final — volta pra casa!", "type": "Transporte Privado" }
+      ],
+      "morning": [],
+      "afternoon": [],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      { "type": "Hospedagem", "description": "Ibis Budget (1 diária) + Ibis locker (12) + INNSiDE Itaim (check-in antecipado 50)", "value": 313.48, "person": "gabriel", "date": { "day": 12, "month": 11, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Alimentação", "description": "Bottanikafé (150) + Sukya (50) + Mugg SP (70) + Between Buns (75) + The Good Cop (15) + Café INNSiDE (0) + Sughetto (100) + Brugi (75)", "value": 535.00, "person": "gabriel", "date": { "day": 12, "month": 11, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Turismo", "description": "IMS (grátis) + Unibes Cultural — Diálogo no Escuro (grátis) + JK Iguatemi Cinema (30)", "value": 30.00, "person": "gabriel", "date": { "day": 12, "month": 11, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Compras", "description": "Empório Daruma (50) + Liberdade Feirinha (50) + Koa Mart (50) + Compras Paulista/Taco Bell (30)", "value": 180.00, "person": "gabriel", "date": { "day": 12, "month": 11, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Saídas", "description": "Tan Tan (100) + Tokyo SP (100) + Omalleys (100)", "value": 300.00, "person": "gabriel", "date": { "day": 13, "month": 11, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Transporte Público", "description": "Metrô — 5 bilhetes (translados diversos)", "value": 22.00, "person": "gabriel", "date": { "day": 12, "month": 11, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Transporte Privado", "description": "Ubers — Rodoviária, Allianz Parque, volta, Tan Tan/Tokyo, Omalleys, INNSiDE, Ibirapuera, Paulista, JK Iguatemi, Tietê, casa BH", "value": 165.00, "person": "gabriel", "date": { "day": 11, "month": 11, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Ajustes", "description": "Acerto entre Gabriel e Guilherme (Guilherme pagou algumas despesas compartilhadas)", "value": -365.00, "person": "gabriel", "date": { "day": 15, "month": 11, "year": 2022, "hour": 0, "minute": 0, "second": 0 } }
+    ],
+    "preTrip": [
+      { "type": "Ida/Volta", "description": "Ônibus Buser BH ↔ SP — Expresso Adamantina, Leito, 2 passageiros (R$640 total / R$320 cada). Ida: 7H11GC, Volta original: Q8URDJ", "value": 320.00, "person": "gabriel", "date": { "day": 1, "month": 10, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Ida/Volta", "description": "Ônibus Buser BH ↔ SP — Expresso Adamantina, Leito, 2 passageiros (R$640 total / R$320 cada). Ida: 7H11GC, Volta original: Q8URDJ", "value": 320.00, "person": "gui", "date": { "day": 1, "month": 10, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Ingresso/Show", "description": "GP Week — Allianz Parque, Pista VIP Box, Meia-Entrada (R$495 + R$99 tx) — Eventim, TicketDirect V040L2K", "value": 594.00, "person": "gabriel", "date": { "day": 11, "month": 8, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Ingresso/Show", "description": "GP Week — Allianz Parque, Pista VIP Box, Meia-Entrada (R$495 + R$99 tx) — Eventim, TicketDirect U8AMT2K", "value": 594.00, "person": "gui", "date": { "day": 11, "month": 8, "year": 2022, "hour": 0, "minute": 0, "second": 0 } }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": { "preTrip": 914.00, "duringTrip": 1180.48 },
+      "gui": { "preTrip": 914.00, "duringTrip": 0 }
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2022-11-16T00:00:00.000Z" }
+  }
+}

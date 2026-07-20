@@ -2,7 +2,7 @@
 	"account": {
 		"settings": "Settings",
 		"backup": {
-			"title": "Backup account",
+			"title": "Backup All",
 			"prompt": "Would you like to back up sensitive trip data? You will need to enter the access PIN for each protected trip",
 			"success": "The account backup was completed successfully",
 			"partial": {
@@ -16,13 +16,21 @@
 			}
 		},
 		"restore": {
-			"title": "Restore account",
+			"title": "Restore All",
 			"error_title": "Account restoration failed",
 			"prompt": "Are you sure you want to restore your account from a backup? This will overwrite your current trip data. This action cannot be undone",
 			"invalid_file": "The selected file is not a valid backup file",
 			"incorrect_owner": "The selected backup file does not belong to the current user",
 			"success": "The account restoration was completed successfully",
 			"owner_updated": "The account restoration was completed successfully ({{count}} owner(s) updated to your account.)"
+		},
+		"import_documents": {
+			"title": "Import Document(s)",
+			"error_title": "Import failed",
+			"invalid_file": "The selected file is not a valid trip document. Expected a JSON file with a \"trip\" property.",
+			"none_imported": "No documents could be imported. Check that the files are valid trip documents.",
+			"success": "{{count}} document(s) imported successfully!",
+			"untitled": "Untitled Trip"
 		},
 		"delete": {
 			"title": "Delete account",

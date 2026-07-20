@@ -1,0 +1,223 @@
+{
+  "trip": {
+    "title": "Lollapalooza 2018",
+    "currency": "BRL",
+    "start": { "day": 22, "month": 3, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+    "end": { "day": 26, "month": 3, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2018-03-26T00:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel",
+        "photo": ""
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Edifício Follow (Airbnb)",
+      "description": "Apartamento em Vila Gertrudes, São Paulo",
+      "address": "Rua Doutor Paschoal Imperatriz, 107, Ap. 1508 - Vila Gertrudes, São Paulo, 04705-070",
+      "dates": {
+        "checkIn": { "day": 22, "month": 3, "year": 2018, "hour": 15, "minute": 0, "second": 0 },
+        "checkOut": { "day": 26, "month": 3, "year": 2018, "hour": 12, "minute": 0, "second": 0 }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "HMC5M395KZ",
+      "link": "https://www.airbnb.com.br/rooms/18997663"
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "LATAM Airlines Brasil",
+      "points": { "origin": "Belo Horizonte (CNF)", "destination": "São Paulo (CGH)" },
+      "dates": {
+        "departure": { "day": 22, "month": 3, "year": 2018, "hour": 6, "minute": 20, "second": 0 },
+        "arrival": { "day": 22, "month": 3, "year": 2018, "hour": 7, "minute": 40, "second": 0 }
+      },
+      "duration": "1h20",
+      "direction": "departure",
+      "reservation": "NYAGRX",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "LATAM Airlines Brasil",
+      "points": { "origin": "São Paulo (CGH)", "destination": "Belo Horizonte (CNF)" },
+      "dates": {
+        "departure": { "day": 26, "month": 3, "year": 2018, "hour": 18, "minute": 35, "second": 0 },
+        "arrival": { "day": 26, "month": 3, "year": 2018, "hour": 19, "minute": 50, "second": 0 }
+      },
+      "duration": "1h15",
+      "direction": "return",
+      "reservation": "NYAGRX",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20180322": {
+      "title": { "value": "Chegada em São Paulo", "showDestinations": false, "translate": false },
+      "date": { "day": 22, "month": 3, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "04:40", "activity": "Casa → Aeroporto", "details": "Carona com pai", "type": "", "cost": 0 },
+        { "time": "06:20", "activity": "Voo BH → SP", "details": "LATAM JJ3201, CNF→CGH", "type": "flight", "cost": 0 }
+      ],
+      "morning": [
+        { "time": "07:40", "activity": "Ônibus + Metrô L1", "details": "Aeroporto → Estação Jabaquara", "type": "transport", "cost": 7.60 },
+        { "time": "08:10", "activity": "Estação Jabaquara", "details": "Pegar Bilhete Único", "type": "transport", "cost": 3.80 },
+        { "time": "08:30", "activity": "Metrô L1 + L2", "details": "Jabaquara → Beco do Batman", "type": "transport", "cost": 3.80 },
+        { "time": "09:00", "activity": "Beco do Batman", "details": "Passeio", "type": "attraction", "cost": 0 },
+        { "time": "10:00", "activity": "Metrô L2", "details": "Beco do Batman → Paulista", "type": "transport", "cost": 0 },
+        { "time": "10:30", "activity": "Paulista", "details": "Passeio", "type": "attraction", "cost": 0 },
+        { "time": "11:00", "activity": "Metrô L2 + CPTM10 + Ônibus 070", "details": "Paulista → Santo André", "type": "transport", "cost": 6.80 }
+      ],
+      "afternoon": [
+        { "time": "12:00", "activity": "The Burger Map", "details": "Almoço", "type": "food", "cost": 60 },
+        { "time": "13:30", "activity": "Metrô L2 + CPTM10 + L1", "details": "Santo André → Liberdade", "type": "transport", "cost": 6.80 },
+        { "time": "14:30", "activity": "Liberdade", "details": "Suprimentos (Lolla + Casa)", "type": "food", "cost": 100 },
+        { "time": "15:00", "activity": "Metrô L1 + L4 + CPTM9", "details": "Liberdade → Airbnb", "type": "transport", "cost": 3.80 },
+        { "time": "15:40", "activity": "Casa (Airbnb)", "details": "Check-in / Livre", "type": "", "cost": 0 }
+      ],
+      "night": [
+        { "time": "17:10", "activity": "Transporte Privado", "details": "Airbnb → Frutaria SP", "type": "transport", "cost": 10 },
+        { "time": "17:30", "activity": "Frutaria SP", "details": "Açaí", "type": "food", "cost": 30 },
+        { "time": "18:00", "activity": "Transporte Privado", "details": "Frutaria SP → Airbnb", "type": "transport", "cost": 8 },
+        { "time": "18:20", "activity": "Casa", "details": "Arrumar para sair", "type": "", "cost": 0 },
+        { "time": "20:00", "activity": "Transporte Privado", "details": "Airbnb → Saída", "type": "transport", "cost": 8 },
+        { "time": "20:15", "activity": "Saída (Fridays ou Hooters)", "details": "Jantar", "type": "food", "cost": 100 },
+        { "time": "22:30", "activity": "Transporte Privado", "details": "Volta para Airbnb", "type": "transport", "cost": 8 }
+      ]
+    },
+    "20180323": {
+      "title": { "value": "Lollapalooza Dia 1 - Sexta", "showDestinations": false, "translate": false },
+      "date": { "day": 23, "month": 3, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "?", "activity": "Livre", "details": "Descanso ou passeio rápido", "type": "", "cost": 0 }
+      ],
+      "morning": [
+        { "time": "09:50", "activity": "Casa", "details": "Arrumar para o Lolla", "type": "", "cost": 0 },
+        { "time": "10:50", "activity": "A pé", "details": "Airbnb → Estação Morumbi", "type": "transport", "cost": 0 },
+        { "time": "11:00", "activity": "Morumbi", "details": "Lanche pré-festival", "type": "food", "cost": 30 },
+        { "time": "11:40", "activity": "CPTM9", "details": "Morumbi → Autódromo", "type": "transport", "cost": 3.80 }
+      ],
+      "afternoon": [
+        { "time": "12:20", "activity": "Lollapalooza", "details": "Festival - Sexta: Volbeat, Spoon, Royal Blood, Red Hot Chili Peppers", "type": "entertainment", "cost": 50 }
+      ],
+      "night": [
+        { "time": "23:00", "activity": "CPTM9 + Transporte Privado", "details": "Volta para Airbnb", "type": "transport", "cost": 6.30 },
+        { "time": "00:30", "activity": "Casa", "details": "Delivery / Descanso", "type": "food", "cost": 25 }
+      ]
+    },
+    "20180324": {
+      "title": { "value": "Lollapalooza Dia 2 - Sábado", "showDestinations": false, "translate": false },
+      "date": { "day": 24, "month": 3, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "?", "activity": "Livre", "details": "Descanso ou passeio rápido", "type": "", "cost": 0 }
+      ],
+      "morning": [
+        { "time": "09:40", "activity": "Casa", "details": "Arrumar para o Lolla", "type": "", "cost": 0 },
+        { "time": "10:40", "activity": "CPTM9", "details": "Airbnb → Autódromo", "type": "transport", "cost": 3.80 },
+        { "time": "11:00", "activity": "Wendy's", "details": "Lanche pré-festival", "type": "food", "cost": 30 }
+      ],
+      "afternoon": [
+        { "time": "12:20", "activity": "Lollapalooza", "details": "Festival - Sábado", "type": "entertainment", "cost": 50 }
+      ],
+      "night": [
+        { "time": "23:00", "activity": "CPTM9 + Transporte Privado", "details": "Volta para Airbnb", "type": "transport", "cost": 6.30 },
+        { "time": "00:30", "activity": "Casa", "details": "Delivery / Descanso", "type": "food", "cost": 25 }
+      ]
+    },
+    "20180325": {
+      "title": { "value": "Lollapalooza Dia 3 - Domingo", "showDestinations": false, "translate": false },
+      "date": { "day": 25, "month": 3, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "?", "activity": "Livre", "details": "Descanso ou passeio rápido", "type": "", "cost": 0 }
+      ],
+      "morning": [
+        { "time": "09:40", "activity": "Casa", "details": "Arrumar para o Lolla", "type": "", "cost": 0 },
+        { "time": "10:40", "activity": "CPTM9", "details": "Airbnb → Autódromo", "type": "transport", "cost": 3.80 }
+      ],
+      "afternoon": [
+        { "time": "11:20", "activity": "Lollapalooza", "details": "Festival - Domingo. Almoçar no Lolla", "type": "entertainment", "cost": 100 }
+      ],
+      "night": [
+        { "time": "23:00", "activity": "CPTM9 + Transporte Privado", "details": "Volta para Airbnb", "type": "transport", "cost": 6.30 },
+        { "time": "00:30", "activity": "Casa", "details": "Delivery / Descanso", "type": "food", "cost": 25 }
+      ]
+    },
+    "20180326": {
+      "title": { "value": "Retorno a BH", "showDestinations": false, "translate": false },
+      "date": { "day": 26, "month": 3, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "?", "activity": "Livre", "details": "Descanso ou passeio rápido", "type": "", "cost": 0 }
+      ],
+      "morning": [
+        { "time": "11:00", "activity": "Casa", "details": "Arrumar / Check-out", "type": "", "cost": 0 },
+        { "time": "12:00", "activity": "Transporte Privado", "details": "Airbnb → Almoço", "type": "transport", "cost": 5 }
+      ],
+      "afternoon": [
+        { "time": "12:20", "activity": "Almoço", "details": "Omalleys ou Eataly", "type": "food", "cost": 100 },
+        { "time": "14:00", "activity": "Livre", "details": "Almoço maior / Passeio", "type": "", "cost": 0 },
+        { "time": "15:30", "activity": "Transporte Privado + Metrô", "details": "Passeio → Aeroporto", "type": "transport", "cost": 8.80 }
+      ],
+      "night": [
+        { "time": "18:35", "activity": "Voo SP → BH", "details": "LATAM JJ3224, CGH→CNF", "type": "flight", "cost": 0 },
+        { "time": "19:50", "activity": "Aeroporto → Casa", "details": "Carona", "type": "transport", "cost": 0 }
+      ]
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      { "date": { "day": 22, "month": 3, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Transporte Público", "description": "Transporte público ao longo dos dias", "amount": 59.20, "traveler": "gabriel" },
+      { "date": { "day": 22, "month": 3, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Transporte Privado", "description": "Uber e transporte privado ao longo dos dias", "amount": 61.50, "traveler": "gabriel" },
+      { "date": { "day": 22, "month": 3, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Alimentação", "description": "Alimentação durante a viagem", "amount": 725.00, "traveler": "gabriel" }
+    ],
+    "preTrip": [
+      { "date": { "day": 15, "month": 10, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Ingresso", "description": "Lolla Pass - Lollapalooza 2018", "amount": 687.00, "traveler": "gabriel" },
+      { "date": { "day": 15, "month": 10, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Hospedagem", "description": "Airbnb - Edifício Follow (4 noites)", "amount": 260.00, "traveler": "gabriel" },
+      { "date": { "day": 24, "month": 11, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Voo", "description": "LATAM - BH ↔ SP (ida e volta)", "amount": 212.43, "traveler": "gabriel" }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": { "preTrip": 1159.43, "duringTrip": 845.70, "total": 2045.13 }
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2018-03-26T00:00:00.000Z" }
+  }
+}

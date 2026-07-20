@@ -1,0 +1,189 @@
+{
+  "trip": {
+    "title": "Bring Me The Horizon SP 2022",
+    "currency": "BRL",
+    "start": { "day": 16, "month": 12, "year": 2022, "hour": 6, "minute": 0, "second": 0 },
+    "end": { "day": 18, "month": 12, "year": 2022, "hour": 20, "minute": 40, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2022-12-18T00:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      { "id": "gabriel", "name": "Gabriel", "color": "#966313" }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "H4 La Residence Paulista",
+      "description": "Studio, Alameda Jaú, 1606, Jardim Paulista — Hotels.com 9155811573020",
+      "address": "Alameda Jaú, 1606, Jardim Paulista, São Paulo - SP, 01420-002",
+      "dates": {
+        "checkIn": { "day": 16, "month": 12, "year": 2022, "hour": 11, "minute": 25, "second": 0 },
+        "checkOut": { "day": 18, "month": 12, "year": 2022, "hour": 9, "minute": 40, "second": 0 }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "9155811573020",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "GOL",
+      "points": { "origin": "CNF - Belo Horizonte", "destination": "CGH - São Paulo" },
+      "dates": {
+        "departure": { "day": 16, "month": 12, "year": 2022, "hour": 9, "minute": 5, "second": 0 },
+        "arrival": { "day": 16, "month": 12, "year": 2022, "hour": 10, "minute": 25, "second": 0 }
+      },
+      "duration": "1h20",
+      "direction": "departure",
+      "reservation": "GOWCGZ",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "GOL",
+      "points": { "origin": "CGH - São Paulo", "destination": "CNF - Belo Horizonte" },
+      "dates": {
+        "departure": { "day": 18, "month": 12, "year": 2022, "hour": 18, "minute": 0, "second": 0 },
+        "arrival": { "day": 18, "month": 12, "year": 2022, "hour": 19, "minute": 15, "second": 0 }
+      },
+      "duration": "1h15",
+      "direction": "return",
+      "reservation": "GOWCGZ",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20221216": {
+      "title": { "value": "Dia 1 — Chegada + Bring Me The Horizon", "showDestinations": false, "translate": false },
+      "date": { "day": 16, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "06:00", "activity": "→ Paps", "details": "Translado para o aeroporto", "type": "Transporte Privado" },
+        { "time": "07:00", "activity": "Aeroporto (CNF)", "details": "Trabalho", "type": "Trabalho" },
+        { "time": "09:05", "activity": "Voo GOL CNF → CGH", "details": "G3 1303, Reserva GOWCGZ", "type": "Ida/Volta" }
+      ],
+      "morning": [
+        { "time": "10:25", "activity": "Aeroporto (CGH)", "details": "Desembarque", "type": "-" },
+        { "time": "10:55", "activity": "→ Uber", "details": "Translado para o hotel", "type": "Transporte Privado" },
+        { "time": "11:25", "activity": "H4 La Residence Paulista", "details": "Check-in / Deixar Malas", "type": "Hospedagem" },
+        { "time": "11:55", "activity": "Paul's Boutique", "details": "Almoço", "type": "Alimentação" }
+      ],
+      "afternoon": [
+        { "time": "12:40", "activity": "Rick Doces", "details": "Compras", "type": "Compras" },
+        { "time": "13:10", "activity": "Empório Daruma", "details": "Comprinhas", "type": "Compras" },
+        { "time": "13:40", "activity": "Hospedagem", "details": "Trabalho", "type": "Trabalho" },
+        { "time": "15:10", "activity": "Hospedagem", "details": "Descanso / Arrumar", "type": "-" },
+        { "time": "17:00", "activity": "→ Metrô", "details": "Translado para o show", "type": "Transporte Público" }
+      ],
+      "night": [
+        { "time": "18:00", "activity": "Vibra São Paulo", "details": "Chegada no local", "type": "Ingresso/Show" },
+        { "time": "20:00", "activity": "Vended", "details": "Show de abertura", "type": "Ingresso/Show" },
+        { "time": "21:30", "activity": "Bring Me The Horizon", "details": "Show principal! Pista Premium", "type": "Ingresso/Show" },
+        { "time": "23:00", "activity": "→ Metrô", "details": "Volta para o hotel", "type": "Transporte Público" },
+        { "time": "23:50", "activity": "Hospedagem", "details": "Descanso", "type": "-" }
+      ]
+    },
+    "20221217": {
+      "title": { "value": "Dia 2 — Liberdade + Saída", "showDestinations": false, "translate": false },
+      "date": { "day": 17, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "time": "09:00", "activity": "Hospedagem", "details": "Acordar / Arrumar", "type": "Hospedagem" },
+        { "time": "09:50", "activity": "St. Marche", "details": "Compras", "type": "Compras" },
+        { "time": "10:30", "activity": "Hospedagem", "details": "Deixar Compras", "type": "-" },
+        { "time": "10:45", "activity": "→ Metrô + Trem", "details": "Translado para almoço", "type": "Transporte Público" }
+      ],
+      "afternoon": [
+        { "time": "12:00", "activity": "The Burger Map", "details": "Almoço — comida americana autêntica", "type": "Alimentação" },
+        { "time": "13:00", "activity": "→ Trem + Metrô", "details": "Translado para a Liberdade", "type": "Transporte Público" },
+        { "time": "14:15", "activity": "Liberdade", "details": "Comprinhas e lanchinho", "type": "Compras" },
+        { "time": "16:15", "activity": "→ Metrô", "details": "Volta para o hotel", "type": "Transporte Público" },
+        { "time": "16:35", "activity": "Hospedagem", "details": "Descanso", "type": "-" }
+      ],
+      "night": [
+        { "time": "19:30", "activity": "→ Uber", "details": "Translado para saída", "type": "Transporte Privado" },
+        { "time": "20:00", "activity": "Saída", "details": "A definir", "type": "Saídas" },
+        { "time": "23:00", "activity": "→ Uber", "details": "Volta para o hotel", "type": "Transporte Privado" },
+        { "time": "23:30", "activity": "Hospedagem", "details": "Descanso", "type": "-" }
+      ]
+    },
+    "20221218": {
+      "title": { "value": "Dia 3 — Cultura + Final da Copa + Volta", "showDestinations": false, "translate": false },
+      "date": { "day": 18, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "time": "09:00", "activity": "Hospedagem", "details": "Acordar / Arrumar", "type": "Hospedagem" },
+        { "time": "09:30", "activity": "Hospedagem", "details": "Check Out", "type": "Hospedagem" },
+        { "time": "09:40", "activity": "→ Metrô", "details": "Translado para o centro", "type": "Transporte Público" },
+        { "time": "10:00", "activity": "Centro Cultural Coreano", "details": "Visita cultural", "type": "Turismo" },
+        { "time": "10:40", "activity": "Japan House", "details": "Visita cultural", "type": "Turismo" },
+        { "time": "11:15", "activity": "→ Metrô + A pé", "details": "Translado para o bar", "type": "Transporte Público" }
+      ],
+      "afternoon": [
+        { "time": "11:40", "activity": "Omalleys", "details": "Assistir final da Copa do Mundo", "type": "Saídas" },
+        { "time": "15:30", "activity": "→ A pé", "details": "Volta para o hotel", "type": "-" },
+        { "time": "15:40", "activity": "Hospedagem", "details": "Pegar Malas", "type": "-" },
+        { "time": "15:50", "activity": "→ Uber", "details": "Translado para o aeroporto", "type": "Transporte Privado" },
+        { "time": "16:20", "activity": "Aeroporto (CGH)", "details": "Aguardar Embarque", "type": "-" },
+        { "time": "18:00", "activity": "Voo GOL CGH → CNF", "details": "G3 1308, Reserva GOWCGZ", "type": "Ida/Volta" },
+        { "time": "19:20", "activity": "Aeroporto (CNF)", "details": "Desembarque", "type": "-" }
+      ],
+      "night": [
+        { "time": "19:40", "activity": "→ Paps", "details": "Translado para casa", "type": "-" }
+      ]
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      { "type": "Hospedagem", "description": "H4 La Residence Paulista — 2 noites (Studio)", "value": 584.00, "person": "gabriel", "date": { "day": 16, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Alimentação", "description": "Paul's Boutique — Almoço", "value": 50.00, "person": "gabriel", "date": { "day": 16, "month": 12, "year": 2022, "hour": 11, "minute": 55, "second": 0 } },
+      { "type": "Alimentação", "description": "The Burger Map — Almoço (comida americana autêntica)", "value": 150.00, "person": "gabriel", "date": { "day": 17, "month": 12, "year": 2022, "hour": 12, "minute": 0, "second": 0 } },
+      { "type": "Alimentação", "description": "Ajuste alimentação (reembolso/desconto)", "value": -77.00, "person": "gabriel", "date": { "day": 17, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Compras", "description": "Rick Doces + Empório Daruma + St. Marche + Liberdade", "value": 300.00, "person": "gabriel", "date": { "day": 16, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Saídas", "description": "Saída noturna (sábado) + Omalleys (final da Copa)", "value": 250.00, "person": "gabriel", "date": { "day": 17, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Transporte Público", "description": "Metrô/Trem — 7 bilhetes (translados diversos)", "value": 30.80, "person": "gabriel", "date": { "day": 16, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Transporte Privado", "description": "Ubers diversos (aeroporto→hotel, hotel↔restaurantes, hotel↔saída, hotel→aeroporto)", "value": 120.00, "person": "gabriel", "date": { "day": 16, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } }
+    ],
+    "preTrip": [
+      { "type": "Ida/Volta", "description": "Voo GOL CNF ↔ CGH — G3 1303/G3 1308, Reserva GOWCGZ (ida e volta)", "value": 367.30, "person": "gabriel", "date": { "day": 16, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
+      { "type": "Ingresso/Show", "description": "Bring Me The Horizon — Vibra São Paulo, Pista Premium, Meia-Entrada (R$325 + R$65 tx) — TicketDirect TSFGX7J", "value": 390.00, "person": "gabriel", "date": { "day": 16, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": { "preTrip": 757.30, "duringTrip": 1407.80 }
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2022-12-18T00:00:00.000Z" }
+  }
+}

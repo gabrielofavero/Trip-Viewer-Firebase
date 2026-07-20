@@ -2,7 +2,7 @@
 	"account": {
 		"settings": "Ajustes",
 		"backup": {
-			"title": "Backup da conta",
+			"title": "Backup Total",
 			"prompt": "Você gostaria de fazer backup dos dados sensíveis de viagens? Será necessário inserir o PIN de acesso para cada viagem protegida",
 			"success": "Backup realizado com sucesso",
 			"partial": {
@@ -16,13 +16,21 @@
 			}
 		},
 		"restore": {
-			"title": "Restaurar conta",
+			"title": "Restauração Total",
 			"error_title": "Erro ao restaurar o backup",
 			"prompt": "Tem certeza que deseja restaurar os dados da conta? Todos os dados atuais serão substituídos pelos dados do backup. A ação não poderá ser desfeita",
 			"invalid_file": "O arquivo selecionado não é um backup válido",
 			"incorrect_owner": "O backup selecionado pertence a outro usuário",
 			"success": "Restauração realizada com sucesso",
 			"owner_updated": "Restauração realizada com sucesso ({{count}} proprietário(s) atualizados para sua conta.)"
+		},
+		"import_documents": {
+			"title": "Importar Documento(s)",
+			"error_title": "Erro ao importar",
+			"invalid_file": "O arquivo selecionado não é um documento de viagem válido. Esperava um JSON com a propriedade \"trip\".",
+			"none_imported": "Nenhum documento pôde ser importado. Verifique se os arquivos são documentos de viagem válidos.",
+			"success": "{{count}} documento(s) importado(s) com sucesso!",
+			"untitled": "Viagem sem título"
 		},
 		"delete": {
 			"title": "Excluir conta",

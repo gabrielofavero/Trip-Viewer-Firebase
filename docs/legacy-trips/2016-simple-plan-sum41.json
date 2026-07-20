@@ -1,0 +1,213 @@
+{
+  "trip": {
+    "title": "Simple Plan + Sum 41 2016",
+    "currency": "BRL",
+    "start": { "day": 6, "month": 12, "year": 2016, "hour": 0, "minute": 0, "second": 0 },
+    "end": { "day": 9, "month": 12, "year": 2016, "hour": 0, "minute": 0, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2016-12-09T00:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      { "id": "gabriel", "name": "Gabriel", "color": "#4CAF50" },
+      { "id": "lucas", "name": "Lucas", "color": "#2196F3" }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Hotel Trianon Paulista",
+      "description": "Alameda Casa Branca, 355 - Jardim Paulista, São Paulo",
+      "address": "Alameda Casa Branca, 355 - Jardim Paulista, São Paulo",
+      "dates": {
+        "checkIn": { "day": 6, "month": 12, "year": 2016, "hour": 12, "minute": 40, "second": 0 },
+        "checkOut": { "day": 9, "month": 12, "year": 2016, "hour": 7, "minute": 30, "second": 0 }
+      },
+      "breakfast": true,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "GOL",
+      "points": { "origin": "Belo Horizonte - Confins (CNF)", "destination": "São Paulo - Congonhas (CGH)" },
+      "dates": {
+        "departure": { "day": 6, "month": 12, "year": 2016, "hour": 10, "minute": 10, "second": 0 },
+        "arrival": { "day": 6, "month": 12, "year": 2016, "hour": 11, "minute": 25, "second": 0 }
+      },
+      "duration": "1h15",
+      "direction": "departure",
+      "reservation": "ANKFQE (G3 1305)",
+      "link": "",
+      "person": ""
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "GOL",
+      "points": { "origin": "São Paulo - Congonhas (CGH)", "destination": "Belo Horizonte - Confins (CNF)" },
+      "dates": {
+        "departure": { "day": 9, "month": 12, "year": 2016, "hour": 10, "minute": 25, "second": 0 },
+        "arrival": { "day": 9, "month": 12, "year": 2016, "hour": 11, "minute": 35, "second": 0 }
+      },
+      "duration": "1h10",
+      "direction": "return",
+      "reservation": "ANKFQE (G3 1304)",
+      "link": "",
+      "person": ""
+    }
+  },
+  "itinerary": {
+    "20161206": {
+      "title": { "value": "Terça — Chegada a São Paulo", "showDestinations": false, "translate": false },
+      "date": { "day": 6, "month": 12, "year": 2016, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [
+        { "time": "11:30 – 12:40", "activity": "Aeroporto → Hotel", "details": "Ônibus - 6366-10", "price": "R$ 3,80" },
+        { "time": "12:40 – 12:50", "activity": "Check-in", "details": "Deixar mochilas no Hotel", "price": "" },
+        { "time": "12:50 – 13:05", "activity": "Hotel → Almoço (KFC/Taco Bell)", "details": "Shopping Center 3 ou Top Center - A pé", "price": "" },
+        { "time": "13:05 – 15:05", "activity": "Almoço/Passeio", "details": "", "price": "R$ 30,00" },
+        { "time": "15:05 – 15:20", "activity": "Shopping → Hotel", "details": "A pé", "price": "" },
+        { "time": "15:20 – 15:40", "activity": "Fazer Check-in", "details": "", "price": "" },
+        { "time": "15:40 – 16:20", "activity": "Hotel → Instituto Tomie Ohtake", "details": "Metrô: Linha L4", "price": "R$ 3,80" },
+        { "time": "16:20 – 17:20", "activity": "Instituto Tomie Ohtake", "details": "", "price": "R$ 18,00" },
+        { "time": "17:20 – 18:00", "activity": "Tomie Ohtake → Hotel", "details": "Metrô: Linha L4", "price": "R$ 3,80" }
+      ],
+      "night": [
+        { "time": "18:00 – 19:00", "activity": "Descanso", "details": "", "price": "" },
+        { "time": "19:00 – 19:15", "activity": "Hotel → O'Malley's", "details": "A pé", "price": "" },
+        { "time": "19:15 – 21:45", "activity": "O'Malley's", "details": "Alameda Itu, 1529 - Jardim Paulista", "price": "R$ 100,00" },
+        { "time": "21:45 – 22:00", "activity": "O'Malley's → Hotel", "details": "A pé ou Uber", "price": "" }
+      ]
+    },
+    "20161207": {
+      "title": { "value": "Quarta — Ibirapuera, Galeria do Rock e Simple Plan", "showDestinations": false, "translate": false },
+      "date": { "day": 7, "month": 12, "year": 2016, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "7:20 – 7:50", "activity": "Café da Manhã", "details": "", "price": "" }
+      ],
+      "morning": [
+        { "time": "7:50 – 8:30", "activity": "Hotel → Ibirapuera", "details": "Ônibus: 6358-10", "price": "R$ 3,80" },
+        { "time": "8:30 – 11:10", "activity": "Parque Ibirapuera", "details": "", "price": "" },
+        { "time": "11:10 – 11:50", "activity": "Ibirapuera → Almoço (KFC/Taco Bell)", "details": "Ônibus: 669A-10", "price": "R$ 3,80" },
+        { "time": "11:50 – 12:30", "activity": "Almoçar", "details": "", "price": "R$ 30,00" }
+      ],
+      "afternoon": [
+        { "time": "12:30 – 13:00", "activity": "Shopping → Galeria do Rock", "details": "Metrô: Linha L4", "price": "R$ 3,80" },
+        { "time": "13:00 – 18:00", "activity": "Galeria do Rock", "details": "Av. São João, 439 - República", "price": "" },
+        { "time": "15:00 – 16:00", "activity": "Galeria → Edifício Itália (e voltar)", "details": "A pé", "price": "" },
+        { "time": "18:00 – 18:40", "activity": "Galeria → Hotel", "details": "Metrô: Linha L4", "price": "R$ 3,80" }
+      ],
+      "night": [
+        { "time": "18:40 – 19:40", "activity": "Descanso", "details": "", "price": "" },
+        { "time": "19:40 – 20:10", "activity": "Hotel → Citibank Hall", "details": "Uber", "price": "R$ 20,00" },
+        { "time": "20:10 – 23:00", "activity": "Show Simple Plan", "details": "Citibank Hall - Av. das Nações Unidas, 12.551 - Santo Amaro", "price": "" },
+        { "time": "23:00 – 23:20", "activity": "Citibank Hall → Hotel", "details": "Uber", "price": "R$ 30,00" }
+      ]
+    },
+    "20161208": {
+      "title": { "value": "Quinta — Liberdade, MASP e Sum 41", "showDestinations": false, "translate": false },
+      "date": { "day": 8, "month": 12, "year": 2016, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "8:00 – 8:30", "activity": "Café da Manhã", "details": "", "price": "" }
+      ],
+      "morning": [
+        { "time": "8:30 – 9:00", "activity": "Hotel → Liberdade", "details": "Metrô: Linha L2 + Linha L1", "price": "R$ 3,80" },
+        { "time": "9:00 – 11:00", "activity": "Bairro da Liberdade", "details": "", "price": "" },
+        { "time": "11:00 – 12:30", "activity": "Liberdade → Jetis", "details": "Metrô: L1 + L4 + CPTM L09", "price": "R$ 7,60" }
+      ],
+      "afternoon": [
+        { "time": "12:30 – 14:00", "activity": "Almoço no Jetis", "details": "R. Verbo Divino, 1194 - Chácara Santo Antônio", "price": "R$ 75,00" },
+        { "time": "14:00 – 15:00", "activity": "Jetis → MASP", "details": "Metrô: CPTM L09 + Linha L4", "price": "R$ 7,60" },
+        { "time": "15:00 – 16:00", "activity": "MASP", "details": "", "price": "R$ 15,00" },
+        { "time": "16:00 – 16:15", "activity": "MASP → Hotel", "details": "A pé", "price": "" },
+        { "time": "16:15 – 17:00", "activity": "Descanso", "details": "", "price": "" }
+      ],
+      "night": [
+        { "time": "17:00 – 18:00", "activity": "Hotel → Tropical Butantã", "details": "Metrô: Linha L4", "price": "R$ 3,80" },
+        { "time": "18:00 – 23:00", "activity": "Show Sum 41 (Honorsounds Especial)", "details": "Tropical Butantã - Av. Valdemar Ferreira, 93 - Butantã. Abertura: 19h, Início: 19h45", "price": "" },
+        { "time": "23:00 – 23:20", "activity": "Tropical Butantã → Hotel", "details": "Uber", "price": "R$ 60,00" }
+      ]
+    },
+    "20161209": {
+      "title": { "value": "Sexta — Retorno a BH", "showDestinations": false, "translate": false },
+      "date": { "day": 9, "month": 12, "year": 2016, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "7:00 – 7:30", "activity": "Café da manhã", "details": "", "price": "" },
+        { "time": "7:30 – 8:00", "activity": "Check-out", "details": "", "price": "" },
+        { "time": "8:00 – 8:30", "activity": "Hotel → Aeroporto de Congonhas", "details": "Uber", "price": "R$ 50,00" }
+      ],
+      "morning": [
+        { "time": "10:25 – 11:35", "activity": "SP → BH (voo GOL G3 1304)", "details": "Localizador: ANKFQE", "price": "" }
+      ],
+      "afternoon": [],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      { "id": "exp-001", "description": "Ônibus Aeroporto → Hotel", "type": "transporte", "amount": 3.80, "date": { "day": 6, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-002", "description": "Almoço dia 1", "type": "alimentação", "amount": 30.00, "date": { "day": 6, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "food" },
+      { "id": "exp-003", "description": "Metrô Hotel → Tomie Ohtake (ida e volta)", "type": "transporte", "amount": 7.60, "date": { "day": 6, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-004", "description": "Instituto Tomie Ohtake", "type": "entretenimento", "amount": 18.00, "date": { "day": 6, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "entertainment" },
+      { "id": "exp-005", "description": "O'Malley's", "type": "alimentação", "amount": 100.00, "date": { "day": 6, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "food" },
+      { "id": "exp-006", "description": "Ônibus Hotel → Ibirapuera", "type": "transporte", "amount": 3.80, "date": { "day": 7, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-007", "description": "Ônibus Ibirapuera → Shopping", "type": "transporte", "amount": 3.80, "date": { "day": 7, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-008", "description": "Almoço dia 2", "type": "alimentação", "amount": 30.00, "date": { "day": 7, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "food" },
+      { "id": "exp-009", "description": "Metrô Shopping → Galeria do Rock", "type": "transporte", "amount": 3.80, "date": { "day": 7, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-010", "description": "Metrô Galeria → Hotel", "type": "transporte", "amount": 3.80, "date": { "day": 7, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-011", "description": "Uber Hotel → Citibank Hall", "type": "transporte", "amount": 20.00, "date": { "day": 7, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-012", "description": "Uber Citibank Hall → Hotel", "type": "transporte", "amount": 30.00, "date": { "day": 7, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-013", "description": "Metrô Hotel → Liberdade", "type": "transporte", "amount": 3.80, "date": { "day": 8, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-014", "description": "Metrô Liberdade → Jetis", "type": "transporte", "amount": 7.60, "date": { "day": 8, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-015", "description": "Almoço Jetis", "type": "alimentação", "amount": 75.00, "date": { "day": 8, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "food" },
+      { "id": "exp-016", "description": "Metrô Jetis → MASP", "type": "transporte", "amount": 7.60, "date": { "day": 8, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-017", "description": "MASP", "type": "entretenimento", "amount": 15.00, "date": { "day": 8, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "entertainment" },
+      { "id": "exp-018", "description": "Metrô Hotel → Tropical Butantã", "type": "transporte", "amount": 3.80, "date": { "day": 8, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-019", "description": "Uber Tropical Butantã → Hotel", "type": "transporte", "amount": 60.00, "date": { "day": 8, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "transport" },
+      { "id": "exp-020", "description": "Uber Hotel → Aeroporto Congonhas", "type": "transporte", "amount": 50.00, "date": { "day": 9, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "transport" }
+    ],
+    "preTrip": [
+      { "id": "exp-pre-001", "description": "Passagem aérea GOL BH-SP (ida e volta, 2 pessoas)", "type": "voo", "amount": 522.60, "date": { "day": 6, "month": 9, "year": 2016 }, "traveler": "", "category": "flight", "details": "Localizador ANKFQE. G3 1305 (CNF→CGH) + G3 1304 (CGH→CNF). Comprado por Milton." },
+      { "id": "exp-pre-002", "description": "Ingresso Simple Plan - Citibank Hall (2 ingressos)", "type": "ingresso", "amount": 0, "date": { "day": 7, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "ticket" },
+      { "id": "exp-pre-003", "description": "Ingresso Sum 41 - Honorsounds Especial (2x Pista VIP Meia)", "type": "ingresso", "amount": 383.30, "date": { "day": 8, "month": 12, "year": 2016 }, "traveler": "gabriel", "category": "ticket", "details": "Valor: R$ 332,90 + Taxa: R$ 50,40. Tropical Butantã." }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": { "budget": 321.20, "spent": 431.60 },
+      "lucas": { "budget": 0, "spent": 0 }
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2016-12-09T00:00:00.000Z" }
+  }
+}

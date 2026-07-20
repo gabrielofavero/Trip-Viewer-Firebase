@@ -6,6 +6,10 @@ import { newTrip, newDestination, newListing } from './navigation.js';
 import { restoreOnFileSelectionAction, restoreOnClickAction } from '../../../backup/restore.js';
 import { backupOnClickAction } from '../../../backup/backup.js';
 import {
+	importDocumentsOnClickAction,
+	importDocumentsOnFileSelectionAction,
+} from '../../../backup/import-documents.js';
+import {
 	openTripDialog,
 	closeTripDialog,
 	openDestDialog,
@@ -75,11 +79,17 @@ export function loadListenersIndex() {
 		restoreOnFileSelectionAction(event);
 	});
 
+	// Import documents file input
+	document.getElementById('import-documents-input').addEventListener('change', function (event) {
+		importDocumentsOnFileSelectionAction(event);
+	});
+
 	// Register data-action handlers via the shared delegated handler (ui/actions.js)
 	registerActions({
 		'sign-out': () => signOut(),
 		'backup-account': () => backupOnClickAction(),
 		'restore-account': () => restoreOnClickAction(),
+		'import-documents': () => importDocumentsOnClickAction(),
 		'open-delete-modal': () => openModal(),
 		'close-delete-modal': () => closeModal(),
 		'close-trip-dialog': () => closeTripDialog(),

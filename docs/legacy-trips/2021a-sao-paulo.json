@@ -1,0 +1,295 @@
+{
+  "trip": {
+    "title": "São Paulo Jan 2022",
+    "currency": "BRL",
+    "start": { "day": 20, "month": 1, "year": 2022, "hour": 5, "minute": 30, "second": 0 },
+    "end": { "day": 24, "month": 1, "year": 2022, "hour": 9, "minute": 0, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2022-01-24T00:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      { "id": "gabriel", "name": "Gabriel" },
+      { "id": "gui", "name": "Guilherme" }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "https://drive.google.com/drive/folders/1nj-tdYra7Eyj-_vxn3wRy93RDg-KNNkb?usp=sharing",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "La Residence Paulista",
+      "description": "Hotel localizado na região da Paulista, bem avaliado. Reserva com oferta exclusiva de 10% de desconto.",
+      "address": "São Paulo, SP",
+      "dates": {
+        "checkIn": { "day": 20, "month": 1, "year": 2022, "hour": 14, "minute": 0, "second": 0 },
+        "checkOut": { "day": 23, "month": 1, "year": 2022, "hour": 12, "minute": 0, "second": 0 }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "9182628300819",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "flight",
+      "company": "Gol",
+      "points": { "origin": "Belo Horizonte (CNF)", "destination": "São Paulo (CGH)" },
+      "dates": {
+        "departure": { "day": 20, "month": 1, "year": 2022, "hour": 6, "minute": 45, "second": 0 },
+        "arrival": { "day": 20, "month": 1, "year": 2022, "hour": 8, "minute": 0, "second": 0 }
+      },
+      "duration": "1h15min",
+      "direction": "departure",
+      "reservation": "WHTWZB (MyTrip LF87CB)",
+      "link": "https://drive.google.com/file/d/1xFVROBdAUA3-JQn3lDdKX_F71440FgN0/view?usp=sharing",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "bus",
+      "company": "Buser",
+      "points": { "origin": "São Paulo (Vila Guilherme)", "destination": "Belo Horizonte" },
+      "dates": {
+        "departure": { "day": 23, "month": 1, "year": 2022, "hour": 23, "minute": 0, "second": 0 },
+        "arrival": { "day": 24, "month": 1, "year": 2022, "hour": 8, "minute": 20, "second": 0 }
+      },
+      "duration": "9h20min",
+      "direction": "return",
+      "reservation": "Placa BSY5200",
+      "link": "https://drive.google.com/file/d/1x5-ue82dlwiaoWogQA_Y9d7i4k7Scy_1/view?usp=sharing",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20220120": {
+      "title": { "value": "Dia 1 — Chegada, Jardins & Liberdade", "showDestinations": false, "translate": false },
+      "date": { "day": 20, "month": 1, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "5:30", "title": "Ida ao Aeroporto", "description": "Carona com a Mãe Bibs até o aeroporto de Confins", "type": "transport" },
+        { "time": "6:00", "title": "Aeroporto", "description": "Aguardar embarque no Aeroporto de Confins", "type": "transit" },
+        { "time": "6:45", "title": "Voo Gol WHTWZB", "description": "Voo para São Paulo (CGH). MyTrip LF87CB", "type": "transport" }
+      ],
+      "morning": [
+        { "time": "8:00", "title": "Desembarque + Uber", "description": "Chegada em Congonhas, Uber até o hotel", "type": "transport" },
+        { "time": "9:00", "title": "Hotel — Check-In", "description": "La Residence Paulista. Deixar malas no hotel", "type": "accommodation" },
+        { "time": "9:20", "title": "Caminhada pelo Jardins", "description": "Passeio a pé pela região dos Jardins", "type": "leisure" },
+        { "time": "9:30", "title": "BotaniKafé", "description": "Café da manhã em ambiente natureba", "type": "food" }
+      ],
+      "afternoon": [
+        { "time": "10:10", "title": "Caminhada + Metrô", "description": "Deslocamento de metrô pela cidade", "type": "transport" },
+        { "time": "10:40", "title": "Mirante SESC Paulista", "description": "Vista aérea da cidade. Agendado para 10:45", "type": "tourism" },
+        { "time": "11:30", "title": "Uber para Panda Ya", "description": "Deslocamento para o almoço", "type": "transport" },
+        { "time": "11:55", "title": "Panda Ya", "description": "Guiozas no Jardins. Restaurante asiático bonito e barato", "type": "food" },
+        { "time": "12:35", "title": "Uber para Momo Lamen", "description": "Deslocamento para a Liberdade", "type": "transport" },
+        { "time": "13:00", "title": "Momo Lamen", "description": "Lamen autêntico na Liberdade", "type": "food" },
+        { "time": "13:40", "title": "Liberdade", "description": "Cápsula, lojas, Snowfall. Exploração do bairro japonês", "type": "tourism" },
+        { "time": "15:40", "title": "Metrô para o Hotel", "description": "Retorno de metrô", "type": "transport" },
+        { "time": "16:10", "title": "Hotel", "description": "Deixar compras e descansar rapidamente", "type": "accommodation" }
+      ],
+      "night": [
+        { "time": "16:25", "title": "Metrô para Da Mooca", "description": "Deslocamento para o brunch", "type": "transport" },
+        { "time": "16:45", "title": "Da Mooca Pizza Shop", "description": "Brunch com pizza italiana em várias modalidades", "type": "food" },
+        { "time": "17:25", "title": "Metrô para o Hotel", "description": "Retorno ao hotel", "type": "transport" },
+        { "time": "17:45", "title": "Hotel — Descanso", "description": "Descansar e se arrumar para a noite", "type": "accommodation" },
+        { "time": "19:00", "title": "Uber para Infini Bar", "description": "Deslocamento para o bar", "type": "transport" },
+        { "time": "19:20", "title": "Infini Bar", "description": "Reservado para 19:30. Bar mega descolado", "type": "nightlife" },
+        { "time": "23:00", "title": "Uber para o Hotel", "description": "Retorno ao hotel", "type": "transport" },
+        { "time": "23:20", "title": "Hotel — Descanso", "description": "Fim do primeiro dia", "type": "accommodation" }
+      ]
+    },
+    "20220121": {
+      "title": { "value": "Dia 2 — Vila Itororó, Paulista & Augusta", "showDestinations": false, "translate": false },
+      "date": { "day": 21, "month": 1, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "time": "8:00", "title": "Hotel — Arrumar", "description": "Preparar para o dia", "type": "accommodation" },
+        { "time": "9:00", "title": "Empório Daruma", "description": "Lojinhas estilo Liberdade na Augusta. Comprinhas matinais", "type": "shopping" },
+        { "time": "9:35", "title": "Hotel", "description": "Deixar compras no hotel", "type": "accommodation" },
+        { "time": "9:50", "title": "Uber para Vila Itororó", "description": "Deslocamento para atração cultural", "type": "transport" },
+        { "time": "10:05", "title": "Vila Itororó", "description": "Centro cultural gratuito com arquitetura histórica", "type": "tourism" }
+      ],
+      "afternoon": [
+        { "time": "10:45", "title": "Metrô para The Burger Map", "description": "Deslocamento para o almoço", "type": "transport" },
+        { "time": "11:55", "title": "The Burger Map", "description": "Reservado para 12:15. Comida americana autêntica", "type": "food" },
+        { "time": "13:25", "title": "Metrô para Paulista", "description": "Deslocamento para a Avenida Paulista", "type": "transport" },
+        { "time": "14:25", "title": "Forever 21", "description": "Ver roupinhas na loja de departamento", "type": "shopping" },
+        { "time": "14:45", "title": "Caminhada pela Paulista", "description": "Passeio a pé pela Avenida Paulista", "type": "leisure" },
+        { "time": "15:05", "title": "Mais um Pouco de Tudo", "description": "Ver roupinhas em mais lojas", "type": "shopping" },
+        { "time": "15:25", "title": "Uber para Galeria do Rock", "description": "Deslocamento para o centro", "type": "transport" },
+        { "time": "15:50", "title": "Galeria do Rock", "description": "Último round de compras. Centro de roupas, discos e tatuagens", "type": "shopping" },
+        { "time": "16:40", "title": "Sorveteria do Centro", "description": "Sorvetinho rápido. Sorveteria muito diferente", "type": "food" }
+      ],
+      "night": [
+        { "time": "17:15", "title": "Metrô/Uber para o Hotel", "description": "Retorno ao hotel", "type": "transport" },
+        { "time": "17:40", "title": "Hotel — Descanso", "description": "Descansar e se arrumar para a noite", "type": "accommodation" },
+        { "time": "18:40", "title": "Uber para Tan Tan", "description": "Deslocamento para o jantar", "type": "transport" },
+        { "time": "19:00", "title": "Tan Tan", "description": "Reservado para 19h. Jantar especial", "type": "food" },
+        { "time": "20:30", "title": "Uber para Augusta", "description": "Deslocamento para a noite", "type": "transport" },
+        { "time": "20:50", "title": "Augusta!", "description": "Frank Bar e Gali Bar. Noite na região mais boêmia de SP", "type": "nightlife" }
+      ]
+    },
+    "20220122": {
+      "title": { "value": "Dia 3 — Parque do Povo, Museus & Vila Madalena", "showDestinations": false, "translate": false },
+      "date": { "day": 22, "month": 1, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "0:20", "title": "Hotel — Descanso", "description": "Chegada tarde da Augusta, dormir", "type": "accommodation" }
+      ],
+      "morning": [
+        { "time": "9:00", "title": "Uber para Parque do Povo", "description": "Deslocamento para o parque", "type": "transport" },
+        { "time": "9:20", "title": "Parque do Povo", "description": "Curtir o parque com mais tempo", "type": "tourism" },
+        { "time": "10:20", "title": "Uber para Instituto Artium", "description": "Deslocamento para o museu", "type": "transport" },
+        { "time": "10:45", "title": "Instituto Artium", "description": "Museu com exposições e jardim", "type": "tourism" }
+      ],
+      "afternoon": [
+        { "time": "11:45", "title": "Uber para Lazy Park", "description": "Deslocamento para o almoço", "type": "transport" },
+        { "time": "12:20", "title": "Lazy Park & Food", "description": "Que os jogos comecem! Restaurante muito fofo com jogos", "type": "food" },
+        { "time": "13:50", "title": "Uber para St. John's", "description": "Deslocamento para o pub", "type": "transport" },
+        { "time": "14:05", "title": "St. John's Irish Pub", "description": "Continuação da tarde no pub irlandês", "type": "nightlife" },
+        { "time": "15:35", "title": "Uber para Mule Mule", "description": "Deslocamento para o próximo bar", "type": "transport" },
+        { "time": "16:15", "title": "Mule Mule", "description": "Continuação. Bar especializado em burritos", "type": "nightlife" }
+      ],
+      "night": [
+        { "time": "17:45", "title": "A pé para Beco do Batman", "description": "Caminhada (cambaleando) para o point turístico", "type": "leisure" },
+        { "time": "17:55", "title": "Beco do Batman", "description": "Curtir o pôr do sol nos grafites icônicos", "type": "tourism" },
+        { "time": "18:25", "title": "ZIV Gallery", "description": "Por que não mais um drink? Galeria no Beco do Batman", "type": "nightlife" },
+        { "time": "19:05", "title": "Uber para Cauli Bar", "description": "Deslocamento para fechar a noite", "type": "transport" },
+        { "time": "19:15", "title": "Cauli Bar", "description": "Pra fechar a noite com estilo. Comidas instagramáveis", "type": "nightlife" },
+        { "time": "20:15", "title": "Uber para o Hotel", "description": "Retorno ao hotel", "type": "transport" },
+        { "time": "20:30", "title": "Hotel — Descanso", "description": "Livre para descansar após o dia intenso", "type": "accommodation" }
+      ]
+    },
+    "20220123": {
+      "title": { "value": "Dia 4 — Minhocão, Cinema & Despedida", "showDestinations": false, "translate": false },
+      "date": { "day": 23, "month": 1, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "time": "8:00", "title": "Hotel — Arrumar Malas", "description": "Preparar checkout e organizar bagagem", "type": "accommodation" },
+        { "time": "9:00", "title": "Uber para Minhocão", "description": "Deslocamento para o parque elevado", "type": "transport" },
+        { "time": "9:20", "title": "Minhocão", "description": "Caminhada no parque aberto no centro (aberto aos domingos)", "type": "tourism" },
+        { "time": "10:20", "title": "Uber para o Hotel", "description": "Retorno ao hotel para banho rápido", "type": "transport" },
+        { "time": "10:40", "title": "Hotel — Banho", "description": "Banho rápido antes do checkout", "type": "accommodation" },
+        { "time": "11:20", "title": "Check-Out", "description": "Deixar malas na recepção", "type": "accommodation" }
+      ],
+      "afternoon": [
+        { "time": "11:40", "title": "Uber para Quintal deBetty", "description": "Deslocamento para o almoço", "type": "transport" },
+        { "time": "12:00", "title": "Quintal deBetty", "description": "Reservado para 12:00. Carnes e burgers com churrasco ao ar livre", "type": "food" },
+        { "time": "13:30", "title": "Uber para Cinépolis JK", "description": "Deslocamento para o cinema", "type": "transport" },
+        { "time": "13:50", "title": "Cinépolis JK", "description": "Sessão de cinema premium no shopping JK", "type": "tourism" },
+        { "time": "16:50", "title": "Uber para Fornô", "description": "Deslocamento para o jantar", "type": "transport" },
+        { "time": "17:20", "title": "Fornô", "description": "Jantinha dahorinha. Pizzaria e tira-gostos bem bacanas", "type": "food" }
+      ],
+      "night": [
+        { "time": "18:50", "title": "Uber para Omalleys", "description": "Deslocamento para o pub irlandês", "type": "transport" },
+        { "time": "19:10", "title": "Omalleys", "description": "Despedida com estilo. Pub irlandês favorito", "type": "nightlife" },
+        { "time": "20:40", "title": "A pé para o Hotel", "description": "Buscar malas na recepção", "type": "transit" },
+        { "time": "20:50", "title": "Hotel — Buscar Malas", "description": "Retirar bagagem da recepção", "type": "accommodation" },
+        { "time": "21:10", "title": "Uber para Vila Guilherme", "description": "Deslocamento para ponto de ônibus", "type": "transport" },
+        { "time": "21:45", "title": "Vila Guilherme", "description": "Aguardar partida do ônibus Buser", "type": "transit" },
+        { "time": "23:00", "title": "Ônibus Buser", "description": "Placa BSY5200. Viagem noturna de retorno para BH", "type": "transport" }
+      ]
+    },
+    "20220124": {
+      "title": { "value": "Dia 5 — Retorno a BH", "showDestinations": false, "translate": false },
+      "date": { "day": 24, "month": 1, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [
+        { "time": "8:20", "title": "Ponto Tancredo Neves", "description": "Desembarque do ônibus Buser em BH", "type": "transit" },
+        { "time": "8:30", "title": "Uber para Casa", "description": "Deslocamento final de retorno para casa", "type": "transport" }
+      ],
+      "morning": [],
+      "afternoon": [],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "Uber Aeroporto → Hotel", "amount": 12.50, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "BotaniKafé — Café da Manhã", "amount": 50.00, "category": "Alimentação", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "Metrô (Mirante SESC)", "amount": 4.40, "category": "Transporte Público", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "Uber → Panda Ya", "amount": 9.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "Panda Ya — Guiozas", "amount": 35.00, "category": "Alimentação", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "Uber → Momo Lamen", "amount": 7.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "Momo Lamen", "amount": 35.00, "category": "Alimentação", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "Metrô (Liberdade → Hotel)", "amount": 4.40, "category": "Transporte Público", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "Metrô (Hotel → Da Mooca)", "amount": 4.40, "category": "Transporte Público", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "Da Mooca Pizza Shop — Brunch", "amount": 30.00, "category": "Alimentação", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "Metrô (Da Mooca → Hotel)", "amount": 4.40, "category": "Transporte Público", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "Uber → Infini Bar", "amount": 10.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "Infini Bar", "amount": 150.00, "category": "Saídas", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "Uber → Hotel", "amount": 10.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 21, "month": 1, "year": 2022 }, "description": "Uber → Vila Itororó", "amount": 7.50, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 21, "month": 1, "year": 2022 }, "description": "Metrô → The Burger Map", "amount": 4.40, "category": "Transporte Público", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 21, "month": 1, "year": 2022 }, "description": "The Burger Map — Almoço", "amount": 100.00, "category": "Alimentação", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 21, "month": 1, "year": 2022 }, "description": "Metrô → Paulista", "amount": 4.40, "category": "Transporte Público", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 21, "month": 1, "year": 2022 }, "description": "Uber → Galeria do Rock", "amount": 8.50, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 21, "month": 1, "year": 2022 }, "description": "Sorveteria do Centro", "amount": 15.00, "category": "Alimentação", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 21, "month": 1, "year": 2022 }, "description": "Metrô/Uber → Hotel", "amount": 10.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 21, "month": 1, "year": 2022 }, "description": "Uber → Tan Tan", "amount": 7.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 21, "month": 1, "year": 2022 }, "description": "Tan Tan — Jantar", "amount": 100.00, "category": "Saídas", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 21, "month": 1, "year": 2022 }, "description": "Uber → Augusta", "amount": 7.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 21, "month": 1, "year": 2022 }, "description": "Augusta — Frank Bar + Gali Bar", "amount": 70.00, "category": "Saídas", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 22, "month": 1, "year": 2022 }, "description": "Uber → Parque do Povo", "amount": 8.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 22, "month": 1, "year": 2022 }, "description": "Uber → Instituto Artium", "amount": 11.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 22, "month": 1, "year": 2022 }, "description": "Uber → Lazy Park", "amount": 12.50, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 22, "month": 1, "year": 2022 }, "description": "Lazy Park & Food", "amount": 50.00, "category": "Saídas", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 22, "month": 1, "year": 2022 }, "description": "Uber → St. John's", "amount": 7.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 22, "month": 1, "year": 2022 }, "description": "St. John's Irish Pub", "amount": 50.00, "category": "Saídas", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 22, "month": 1, "year": 2022 }, "description": "Uber → Mule Mule", "amount": 21.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 22, "month": 1, "year": 2022 }, "description": "Mule Mule", "amount": 50.00, "category": "Saídas", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 22, "month": 1, "year": 2022 }, "description": "ZIV Gallery — Drink", "amount": 50.00, "category": "Saídas", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 22, "month": 1, "year": 2022 }, "description": "Uber → Cauli Bar", "amount": 5.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 22, "month": 1, "year": 2022 }, "description": "Cauli Bar", "amount": 70.00, "category": "Saídas", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 22, "month": 1, "year": 2022 }, "description": "Uber → Hotel", "amount": 7.50, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 23, "month": 1, "year": 2022 }, "description": "Uber → Minhocão", "amount": 6.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 23, "month": 1, "year": 2022 }, "description": "Uber → Hotel (banho)", "amount": 6.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 23, "month": 1, "year": 2022 }, "description": "Uber → Quintal deBetty", "amount": 10.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 23, "month": 1, "year": 2022 }, "description": "Quintal deBetty — Almoço", "amount": 70.00, "category": "Alimentação", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 23, "month": 1, "year": 2022 }, "description": "Uber → Cinépolis JK", "amount": 7.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 23, "month": 1, "year": 2022 }, "description": "Cinépolis JK — Cinema", "amount": 30.00, "category": "Turismo", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 23, "month": 1, "year": 2022 }, "description": "Uber → Fornô", "amount": 12.50, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 23, "month": 1, "year": 2022 }, "description": "Fornô — Jantar", "amount": 100.00, "category": "Saídas", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 23, "month": 1, "year": 2022 }, "description": "Uber → Omalleys", "amount": 10.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 23, "month": 1, "year": 2022 }, "description": "Omalleys — Despedida", "amount": 50.00, "category": "Saídas", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 23, "month": 1, "year": 2022 }, "description": "Uber → Vila Guilherme", "amount": 15.00, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 24, "month": 1, "year": 2022 }, "description": "Uber → Casa (BH)", "amount": 12.50, "category": "Transporte Privado", "paidBy": "gabriel", "splitAmong": ["gabriel"] }
+    ],
+    "preTrip": [
+      { "date": { "day": 8, "month": 1, "year": 2022 }, "description": "Voo Gol WHTWZB — BH (CNF) → SP (CGH)", "amount": 118.03, "category": "Ida/Volta", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 23, "month": 1, "year": 2022 }, "description": "Ônibus Buser — SP → BH (BSY5200)", "amount": 34.95, "category": "Ida/Volta", "paidBy": "gabriel", "splitAmong": ["gabriel"] },
+      { "date": { "day": 20, "month": 1, "year": 2022 }, "description": "La Residence Paulista — 3 noites (20 a 23 Jan)", "amount": 334.69, "category": "Hospedagem", "paidBy": "gabriel", "splitAmong": ["gabriel"] }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": { "budget": 1073.52, "spent": 1858.57, "adjustment": -632.07 },
+      "gui": { "budget": 1073.52, "spent": 1858.57, "adjustment": -632.07 }
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2022-01-24T00:00:00.000Z" }
+  }
+}

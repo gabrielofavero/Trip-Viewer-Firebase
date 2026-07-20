@@ -4,7 +4,7 @@ repos:
       # ── Auto-update README task counts ──
       - id: readme
         name: Update README
-        entry: bash -c "python3 scripts/utils/readme.py"
+        entry: npm run readme
         language: system
         files: ^README\.md$
         pass_filenames: false

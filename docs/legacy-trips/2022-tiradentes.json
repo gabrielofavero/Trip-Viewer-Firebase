@@ -1,0 +1,148 @@
+{
+  "_meta": {
+    "tripId": "legacy-2022-tiradentes",
+    "slug": "2022-tiradentes",
+    "sourceFiles": [
+      "Pessoais/2022/[2022c] Tiradentes/Checkup.docx",
+      "Pessoais/2022/[2022c] Tiradentes/20260719_231803232_iOS.pdf"
+    ],
+    "extractionNotes": {
+      "docxContent": "Packing checklist only (Roupas, Higiene Pessoal, Remédios, Guarda Chuva, Máscaras, JBL Flip, Powerbank, Cabos/Carregador, Óculos, Chinelo, Itens no corpo, Comidas/Bebidas). No dates, prices, or transport info.",
+      "pdfContent": "Airbnb reservation — Casinha do Rosário (Centro Histórico), check-in May 20 14:00 → check-out May 22 11:00, 1 guest (Gabriel Favero), confirmation HMYBQ54ES5, host Homero.",
+      "dateSource": "Confirmed from Airbnb PDF reservation.",
+      "transportSource": "Inferred — Tiradentes is a road trip destination (~200 km from Belo Horizonte). No transport details in source files.",
+      "missingData": "No expenses/price data, no detailed itinerary, no transport reservations."
+    }
+  },
+  "trip": {
+    "title": "Tiradentes 2022",
+    "currency": "BRL",
+    "start": { "day": 20, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+    "end": { "day": 22, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+    "pin": "no-pin",
+    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" },
+    "visibility": { "light": true, "dark": true },
+    "colors": { "light": "#966313", "dark": "#966313", "active": false },
+    "sharing": { "owner": "", "active": false, "editors": [] },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": false
+    },
+    "travelers": [
+      { "id": "gabriel", "name": "Gabriel" }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "destinationRefs": [],
+    "image": { "dark": "", "light": "", "background": "", "active": false }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Casinha do Rosário (Centro Histórico)",
+      "description": "Airbnb no Centro Histórico de Tiradentes. Anfitrião: Homero.",
+      "address": "Centro Histórico, Tiradentes - MG",
+      "dates": {
+        "checkIn": { "day": 20, "month": 5, "year": 2022, "hour": 14, "minute": 0, "second": 0 },
+        "checkOut": { "day": 22, "month": 5, "year": 2022, "hour": 11, "minute": 0, "second": 0 }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "HMYBQ54ES5",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": { "viewMode": "simple" },
+    "leg-001": {
+      "type": "car",
+      "company": "",
+      "points": {
+        "origin": "Belo Horizonte",
+        "destination": "Tiradentes"
+      },
+      "dates": {
+        "departure": { "day": 20, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+        "arrival": { "day": 20, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 }
+      },
+      "duration": "",
+      "direction": "departure",
+      "reservation": "",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "car",
+      "company": "",
+      "points": {
+        "origin": "Tiradentes",
+        "destination": "Belo Horizonte"
+      },
+      "dates": {
+        "departure": { "day": 22, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+        "arrival": { "day": 22, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 }
+      },
+      "duration": "",
+      "direction": "return",
+      "reservation": "",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20220520": {
+      "title": { "value": "Chegada em Tiradentes", "showDestinations": false, "translate": false },
+      "date": { "day": 20, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [
+        { "activity": "Check-in Casinha do Rosário (14:00)", "time": "14:00", "notes": "Centro Histórico" }
+      ],
+      "night": []
+    },
+    "20220521": {
+      "title": { "value": "Tiradentes", "showDestinations": false, "translate": false },
+      "date": { "day": 21, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [],
+      "night": []
+    },
+    "20220522": {
+      "title": { "value": "Check-out e Retorno", "showDestinations": false, "translate": false },
+      "date": { "day": 22, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        { "activity": "Check-out Casinha do Rosário (11:00)", "time": "11:00", "notes": "" }
+      ],
+      "afternoon": [],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [],
+    "preTrip": [],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel"
+    },
+    "sharing": { "owner": "", "active": true, "editors": [] },
+    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" }
+  }
+}
