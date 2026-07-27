@@ -11,9 +11,24 @@ import {
 import { cloneObject, getID, getTranslatedDocumentLabel } from '../utils/dom.js';
 import { getTimestamp } from '../utils/dates.js';
 import { get } from '../data/firebase/database.js';
-import { getUID, USER_DATA } from '../data/firebase/auth.js';
+import {
+	getUserTripSummaries,
+	getUserDestinationSummaries,
+	getUserListingSummaries,
+} from '../data/firebase/database.js';
+import { getUID } from '../data/firebase/auth.js';
 
 const MISSING_ACCOUNT_DATA = { jobs: [], protected: [], failed: [] };
+
+/** Convert an array of { id, ...data } to a Record<string, data>. */
+function arrayToRecord<T extends { id: string }>(arr: T[]): Record<string, Omit<T, 'id'>> {
+	const record: Record<string, any> = {};
+	for (const item of arr) {
+		const { id, ...rest } = item;
+		record[id] = rest;
+	}
+	return record;
+}
 
 // Backup
 export async function backupOnClickAction() {
@@ -21,7 +36,7 @@ export async function backupOnClickAction() {
 	MISSING_ACCOUNT_DATA.protected = [];
 	MISSING_ACCOUNT_DATA.failed = [];
 
-	prepareMissingData();
+	await prepareMissingData();
 
 	if (MISSING_ACCOUNT_DATA.protected.length === 0) {
 		backupAccountData(false);
@@ -29,7 +44,8 @@ export async function backupOnClickAction() {
 	}
 
 	const title = translate('account.backup.title');
-	const content = translate('account.backup.prompt');
+	const content = translate('account.backup.prompt') +
+		'<br><br><small class="security-warning-text">' + translate('account.backup.security_warning') + '</small>';
 	displayPrompt({
 		title,
 		content,
@@ -38,9 +54,31 @@ export async function backupOnClickAction() {
 	});
 }
 
-function prepareMissingData() {
-	const jobs = [];
-	const protectedJobs = [];
+/** Cached summary data fetched from subcollections for backup use. */
+var BACKUP_SUMMARIES: { trips: Record<string, any>; destinations: Record<string, any>; listings: Record<string, any> } = {
+	trips: {},
+	destinations: {},
+	listings: {},
+};
+
+async function prepareMissingData() {
+	const jobs: any[] = [];
+	const protectedJobs: any[] = [];
+
+	const uid = await getUID();
+	if (uid) {
+		// Fetch summaries from subcollections (post-migration 15)
+		const [tripSummaries, destSummaries, listSummaries] = await Promise.all([
+			getUserTripSummaries(uid),
+			getUserDestinationSummaries(uid),
+			getUserListingSummaries(uid),
+		]);
+
+		// Convert arrays to Record<string, data> for compatibility with existing code
+		BACKUP_SUMMARIES.trips = arrayToRecord(tripSummaries);
+		BACKUP_SUMMARIES.destinations = arrayToRecord(destSummaries);
+		BACKUP_SUMMARIES.listings = arrayToRecord(listSummaries);
+	}
 
 	prepareMainData();
 	prepareAdditionalData();
@@ -50,15 +88,16 @@ function prepareMissingData() {
 
 	function prepareMainData() {
 		for (const type of ['trips', 'destinations', 'listings']) {
-			for (const documentID in USER_DATA[type]) {
-				const title = USER_DATA[type][documentID].title;
+			const summaries = BACKUP_SUMMARIES[type];
+			for (const documentID in summaries) {
+				const title = summaries[documentID].title;
 				jobs.push(getJobObject(title, documentID, type));
 			}
 		}
 	}
 
 	function prepareAdditionalData() {
-		const trips = USER_DATA.trips || {};
+		const trips = BACKUP_SUMMARIES.trips;
 		for (const documentID in trips) {
 			const trip = trips[documentID];
 
@@ -116,7 +155,7 @@ export function displayPinRequestBackup() {
 			`);
 		}
 		return `
-			<p class="pin-backup-instruction">${translate('trip.basic_information.pin.trip_pin.optional')}</p>
+			<p class="pin-backup-instruction">${translate('account.backup.pin_instruction')}</p>
 			<table class="pin-backup-table">
 				${rows.join('')}
 			</table>
@@ -191,9 +230,9 @@ async function getAccountData(useSensitiveData = false) {
 	function getInitialBaseStructure() {
 		return {
 			user: {
-				destinations: USER_DATA.destinations,
-				listings: USER_DATA.listings,
-				trips: USER_DATA.trips,
+				destinations: BACKUP_SUMMARIES.destinations,
+				listings: BACKUP_SUMMARIES.listings,
+				trips: BACKUP_SUMMARIES.trips,
 			},
 			destinations: {},
 			expenses: { protected: {} },

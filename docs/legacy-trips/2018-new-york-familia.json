@@ -2,13 +2,40 @@
   "trip": {
     "title": "New York 2018",
     "currency": "BRL",
-    "start": { "day": 7, "month": 2, "year": 2018, "hour": 18, "minute": 50, "second": 0 },
-    "end": { "day": 20, "month": 2, "year": 2018, "hour": 14, "minute": 5, "second": 0 },
+    "start": {
+      "day": 7,
+      "month": 2,
+      "year": 2018,
+      "hour": 18,
+      "minute": 50,
+      "second": 0
+    },
+    "end": {
+      "day": 20,
+      "month": 2,
+      "year": 2018,
+      "hour": 14,
+      "minute": 5,
+      "second": 0
+    },
     "pin": "no-pin",
-    "version": { "lastUpdated": "2018-02-20T00:00:00.000Z" },
-    "visibility": { "light": true, "dark": true },
-    "colors": { "light": "#966313", "dark": "#966313", "active": false },
-    "sharing": { "owner": "", "active": false, "editors": [] },
+    "version": {
+      "lastUpdated": "2018-02-20T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
     "modules": {
       "destinations": false,
       "transportation": true,
@@ -19,10 +46,22 @@
       "expenses": true
     },
     "travelers": [
-      { "id": "gabriel", "name": "Gabriel" },
-      { "id": "elaine", "name": "Elaine" },
-      { "id": "milton", "name": "Milton" },
-      { "id": "marianna", "name": "Marianna" }
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      },
+      {
+        "id": "elaine",
+        "name": "Elaine"
+      },
+      {
+        "id": "milton",
+        "name": "Milton"
+      },
+      {
+        "id": "marianna",
+        "name": "Marianna"
+      }
     ],
     "links": {
       "maps": "",
@@ -34,9 +73,19 @@
       "sheet": "",
       "vaccine": ""
     },
-    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
     "destinationRefs": [],
-    "image": { "dark": "", "light": "", "background": "", "active": false }
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
   },
   "accommodations": {
     "acc-001": {
@@ -44,8 +93,22 @@
       "description": "Hotel localizado em Manhattan. Check-in após chegada em 08/02. Check-out em 19/02 antes do voo de volta.",
       "address": "Manhattan, New York, NY",
       "dates": {
-        "checkIn": { "day": 8, "month": 2, "year": 2018, "hour": 10, "minute": 0, "second": 0 },
-        "checkOut": { "day": 19, "month": 2, "year": 2018, "hour": 16, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 8,
+          "month": 2,
+          "year": 2018,
+          "hour": 10,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 19,
+          "month": 2,
+          "year": 2018,
+          "hour": 16,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -54,14 +117,33 @@
     }
   },
   "transportation": {
-    "_settings": { "viewMode": "simple" },
+    "_settings": {
+      "viewMode": "simple"
+    },
     "leg-001": {
       "type": "flight",
       "company": "United Airlines / Avianca Brasil",
-      "points": { "origin": "Belo Horizonte (CNF)", "destination": "New York/Newark (EWR)" },
+      "points": {
+        "origin": "Belo Horizonte (CNF)",
+        "destination": "New York/Newark (EWR)"
+      },
       "dates": {
-        "departure": { "day": 7, "month": 2, "year": 2018, "hour": 18, "minute": 50, "second": 0 },
-        "arrival": { "day": 8, "month": 2, "year": 2018, "hour": 5, "minute": 55, "second": 0 }
+        "departure": {
+          "day": 7,
+          "month": 2,
+          "year": 2018,
+          "hour": 18,
+          "minute": 50,
+          "second": 0
+        },
+        "arrival": {
+          "day": 8,
+          "month": 2,
+          "year": 2018,
+          "hour": 5,
+          "minute": 55,
+          "second": 0
+        }
       },
       "duration": "14h 05min",
       "direction": "departure",
@@ -72,10 +154,27 @@
     "leg-002": {
       "type": "flight",
       "company": "United Airlines / Avianca Brasil",
-      "points": { "origin": "New York/LaGuardia (LGA)", "destination": "Belo Horizonte (CNF)" },
+      "points": {
+        "origin": "New York/LaGuardia (LGA)",
+        "destination": "Belo Horizonte (CNF)"
+      },
       "dates": {
-        "departure": { "day": 19, "month": 2, "year": 2018, "hour": 19, "minute": 25, "second": 0 },
-        "arrival": { "day": 20, "month": 2, "year": 2018, "hour": 14, "minute": 5, "second": 0 }
+        "departure": {
+          "day": 19,
+          "month": 2,
+          "year": 2018,
+          "hour": 19,
+          "minute": 25,
+          "second": 0
+        },
+        "arrival": {
+          "day": 20,
+          "month": 2,
+          "year": 2018,
+          "hour": 14,
+          "minute": 5,
+          "second": 0
+        }
       },
       "duration": "16h 40min",
       "direction": "return",
@@ -86,143 +185,1066 @@
   },
   "itinerary": {
     "20180208": {
-      "title": { "value": "Chegada em New York", "showDestinations": false, "translate": false },
-      "date": { "day": 8, "month": 2, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Chegada em New York",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 8,
+        "month": 2,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
-      "earlyMorning": [{ "text": "Pouso em Newark (EWR) às 05:55", "time": "05:55" }],
-      "morning": [{ "text": "Fazer Check In e deixar malas no hotel", "time": "" }, { "text": "Ir na Apple Store e Walmart", "time": "" }],
-      "afternoon": [{ "text": "Voltar para o Hotel para subir com as malas", "time": "" }, { "text": "Passear em volta (Times Square, Rockefeller Center)", "time": "" }],
-      "night": [{ "text": "Livre", "time": "" }]
+      "earlyMorning": [
+        {
+          "text": "Pouso em Newark (EWR) às 05:55",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "05:55",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "text": "Fazer Check In e deixar malas no hotel",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Ir na Apple Store e Walmart",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "text": "Voltar para o Hotel para subir com as malas",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Passear em volta (Times Square, Rockefeller Center)",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "text": "Livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ]
     },
     "20180209": {
-      "title": { "value": "Compras - Jersey Gardens", "showDestinations": false, "translate": false },
-      "date": { "day": 9, "month": 2, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Compras - Jersey Gardens",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 9,
+        "month": 2,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
-      "morning": [{ "text": "Ir no Outlet Jersey Gardens", "time": "" }],
-      "afternoon": [{ "text": "Ir no Outlet Jersey Gardens", "time": "" }],
-      "night": [{ "text": "Livre", "time": "" }]
+      "morning": [
+        {
+          "text": "Ir no Outlet Jersey Gardens",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "text": "Ir no Outlet Jersey Gardens",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "text": "Livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ]
     },
     "20180210": {
-      "title": { "value": "Compras e Encontro", "showDestinations": false, "translate": false },
-      "date": { "day": 10, "month": 2, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Compras e Encontro",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 10,
+        "month": 2,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
-      "morning": [{ "text": "Encontrar com a Conceição", "time": "" }, { "text": "Ir na BestBuy", "time": "" }],
-      "afternoon": [{ "text": "Compras (Marshalls, Bed Bath & Beyond)", "time": "" }],
-      "night": [{ "text": "Livre", "time": "" }]
+      "morning": [
+        {
+          "text": "Encontrar com a Conceição",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Ir na BestBuy",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "text": "Compras (Marshalls, Bed Bath & Beyond)",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "text": "Livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ]
     },
     "20180211": {
-      "title": { "value": "World Trade Center e 9/11 Memorial", "showDestinations": false, "translate": false },
-      "date": { "day": 11, "month": 2, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "World Trade Center e 9/11 Memorial",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 11,
+        "month": 2,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
-      "morning": [{ "text": "Ir no B&H e Westfield World Trade Center", "time": "" }],
-      "afternoon": [{ "text": "Almoçar na Eataly", "time": "" }, { "text": "Visitar Ground Zero e 9/11 Memorial & Museum", "time": "" }],
-      "night": [{ "text": "Livre (Talvez show Anti-flag)", "time": "" }]
+      "morning": [
+        {
+          "text": "Ir no B&H e Westfield World Trade Center",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "text": "Almoçar na Eataly",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Visitar Ground Zero e 9/11 Memorial & Museum",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "text": "Livre (Talvez show Anti-flag)",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ]
     },
     "20180212": {
-      "title": { "value": "SoHo e Central Park", "showDestinations": false, "translate": false },
-      "date": { "day": 12, "month": 2, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "SoHo e Central Park",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 12,
+        "month": 2,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
-      "morning": [{ "text": "Passear pelo SoHo", "time": "" }],
-      "afternoon": [{ "text": "Ir no Central Park", "time": "" }],
-      "night": [{ "text": "Livre", "time": "" }]
+      "morning": [
+        {
+          "text": "Passear pelo SoHo",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "text": "Ir no Central Park",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "text": "Livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ]
     },
     "20180213": {
-      "title": { "value": "Brooklyn Bridge e DUMBO", "showDestinations": false, "translate": false },
-      "date": { "day": 13, "month": 2, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Brooklyn Bridge e DUMBO",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 13,
+        "month": 2,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
-      "morning": [{ "text": "Atravessar a pé a Brooklyn Bridge", "time": "" }, { "text": "Ir no Brooklyn Bridge Park", "time": "" }, { "text": "Almoçar na região", "time": "" }],
-      "afternoon": [{ "text": "Passear na D.U.M.B.O", "time": "" }, { "text": "Ir para o Brooklyn Heights Promenade e East River State Park", "time": "" }],
-      "night": [{ "text": "Broadway", "time": "" }]
+      "morning": [
+        {
+          "text": "Atravessar a pé a Brooklyn Bridge",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Ir no Brooklyn Bridge Park",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Almoçar na região",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "text": "Passear na D.U.M.B.O",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Ir para o Brooklyn Heights Promenade e East River State Park",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "text": "Broadway",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ]
     },
     "20180214": {
-      "title": { "value": "Chinatown, Little Italy e Basquete", "showDestinations": false, "translate": false },
-      "date": { "day": 14, "month": 2, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Chinatown, Little Italy e Basquete",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 14,
+        "month": 2,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
-      "morning": [{ "text": "Passear por Chinatown e Little Italy", "time": "" }],
-      "afternoon": [{ "text": "Visitar o Museu de História Natural", "time": "" }],
-      "night": [{ "text": "Jogo de Basquete: Brooklyn Nets vs. Indiana Pacers", "time": "" }]
+      "morning": [
+        {
+          "text": "Passear por Chinatown e Little Italy",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "text": "Visitar o Museu de História Natural",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "text": "Jogo de Basquete: Brooklyn Nets vs. Indiana Pacers",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ]
     },
     "20180215": {
-      "title": { "value": "Bondinho, Chelsea Market e Noel Gallagher", "showDestinations": false, "translate": false },
-      "date": { "day": 15, "month": 2, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Bondinho, Chelsea Market e Noel Gallagher",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 15,
+        "month": 2,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
-      "morning": [{ "text": "Passeio de bondinho", "time": "" }, { "text": "Almoçar no Stardust", "time": "" }],
-      "afternoon": [{ "text": "Almoçar no Chelsea Market", "time": "" }, { "text": "Livre", "time": "" }],
-      "night": [{ "text": "Família: Livre", "time": "" }, { "text": "Gabriel: Noel Gallagher's High Flying Birds", "time": "" }]
+      "morning": [
+        {
+          "text": "Passeio de bondinho",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Almoçar no Stardust",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "text": "Almoçar no Chelsea Market",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "text": "Família: Livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Gabriel: Noel Gallagher's High Flying Birds",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ]
     },
     "20180216": {
-      "title": { "value": "High Line e Chelsea", "showDestinations": false, "translate": false },
-      "date": { "day": 16, "month": 2, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "High Line e Chelsea",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 16,
+        "month": 2,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
-      "morning": [{ "text": "Passear pelo bairro de Chelsea", "time": "" }, { "text": "Andar pela High Line", "time": "" }],
-      "afternoon": [{ "text": "Almoçar no Chelsea Market", "time": "" }, { "text": "Livre", "time": "" }],
-      "night": [{ "text": "McSorley's Old House Ale", "time": "" }]
+      "morning": [
+        {
+          "text": "Passear pelo bairro de Chelsea",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Andar pela High Line",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "text": "Almoçar no Chelsea Market",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "text": "McSorley's Old House Ale",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ]
     },
     "20180217": {
-      "title": { "value": "Williamsburg e Brooklyn Brewery", "showDestinations": false, "translate": false },
-      "date": { "day": 17, "month": 2, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Williamsburg e Brooklyn Brewery",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 17,
+        "month": 2,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
-      "morning": [{ "text": "Passear por Williamsburg (Brooklyn)", "time": "" }, { "text": "Smorgasburg, Wythe Hotel", "time": "" }, { "text": "Conhecer a Brooklyn Brewery", "time": "" }],
-      "afternoon": [{ "text": "Livre", "time": "" }],
-      "night": [{ "text": "Livre", "time": "" }]
+      "morning": [
+        {
+          "text": "Passear por Williamsburg (Brooklyn)",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Smorgasburg, Wythe Hotel",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Conhecer a Brooklyn Brewery",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "text": "Livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "text": "Livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ]
     },
     "20180218": {
-      "title": { "value": "Bryant Park e Stone Street", "showDestinations": false, "translate": false },
-      "date": { "day": 18, "month": 2, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Bryant Park e Stone Street",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 18,
+        "month": 2,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
-      "morning": [{ "text": "Conhecer o Parque Bryant", "time": "" }],
-      "afternoon": [{ "text": "Stone Street", "time": "" }],
-      "night": [{ "text": "Livre", "time": "" }]
+      "morning": [
+        {
+          "text": "Conhecer o Parque Bryant",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "text": "Stone Street",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "text": "Livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ]
     },
     "20180219": {
-      "title": { "value": "Retorno ao Brasil", "showDestinations": false, "translate": false },
-      "date": { "day": 19, "month": 2, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Retorno ao Brasil",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 19,
+        "month": 2,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
-      "morning": [{ "text": "Check-out do hotel", "time": "" }, { "text": "Último passeio livre", "time": "" }],
-      "afternoon": [{ "text": "Ir para o aeroporto LaGuardia (LGA)", "time": "" }],
-      "night": [{ "text": "Voo LGA→IAD às 19:25", "time": "19:25" }, { "text": "Conexão IAD→GRU às 23:00", "time": "23:00" }]
+      "morning": [
+        {
+          "text": "Check-out do hotel",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "text": "Último passeio livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "text": "Ir para o aeroporto LaGuardia (LGA)",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "text": "Voo LGA→IAD às 19:25",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "19:25",
+          "end": ""
+        },
+        {
+          "text": "Conexão IAD→GRU às 23:00",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "23:00",
+          "end": ""
+        }
+      ]
     }
   },
   "expenses": {
     "duringTrip": [
-      { "type": "Alimentação", "description": "Alimentação diária (12 dias)", "value": 768, "currency": "USD", "traveler": "" },
-      { "type": "Transporte", "description": "Transporte local (metrô, ônibus, táxi)", "value": 244, "currency": "USD", "traveler": "" },
-      { "type": "Supermercado", "description": "Compras de supermercado", "value": 325, "currency": "USD", "traveler": "" },
-      { "type": "Saídas", "description": "Restaurantes, bares, passeios", "value": 998, "currency": "USD", "traveler": "" },
-      { "type": "Atrações", "description": "Ingressos para atrações turísticas", "value": 460, "currency": "USD", "traveler": "" },
-      { "type": "Outros", "description": "Diversos (gorjetas, compras menores)", "value": 400, "currency": "USD", "traveler": "" },
-      { "type": "Jogo de Basquete", "description": "Brooklyn Nets vs. Indiana Pacers (14/02)", "value": 252.2, "currency": "BRL", "traveler": "" },
-      { "type": "Show", "description": "Noel Gallagher's High Flying Birds (15/02)", "value": 103.7, "currency": "USD", "traveler": "gabriel" },
-      { "type": "Uber", "description": "Corridas de Uber durante a viagem", "value": 0, "currency": "BRL", "traveler": "" },
-      { "type": "ONU", "description": "Loja da ONU", "value": 10, "currency": "USD", "traveler": "gabriel" }
+      {
+        "type": "Alimentação",
+        "value": 768,
+        "currency": "BRL",
+        "name": "Alimentação diária (12 dias)",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "type": "Transporte",
+        "value": 244,
+        "currency": "BRL",
+        "name": "Transporte local (metrô, ônibus, táxi)",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "type": "Supermercado",
+        "value": 325,
+        "currency": "BRL",
+        "name": "Compras de supermercado",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "type": "Saídas",
+        "value": 998,
+        "currency": "BRL",
+        "name": "Restaurantes, bares, passeios",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "type": "Atrações",
+        "value": 460,
+        "currency": "BRL",
+        "name": "Ingressos para atrações turísticas",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "type": "Outros",
+        "value": 400,
+        "currency": "BRL",
+        "name": "Diversos (gorjetas, compras menores)",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "type": "Jogo de Basquete",
+        "value": 252.2,
+        "currency": "BRL",
+        "name": "Brooklyn Nets vs. Indiana Pacers (14/02)",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "type": "Show",
+        "value": 103.7,
+        "currency": "BRL",
+        "name": "Noel Gallagher's High Flying Birds (15/02)",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Uber",
+        "value": 0,
+        "currency": "BRL",
+        "name": "Corridas de Uber durante a viagem",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "type": "ONU",
+        "value": 10,
+        "currency": "BRL",
+        "name": "Loja da ONU",
+        "price": 0,
+        "person": "gabriel"
+      }
     ],
     "preTrip": [
-      { "type": "Passagem Aérea", "description": "Passagens aéreas BH→NY→BH (United Airlines, reserva MZV9LQ) - 4 pessoas", "value": 9500, "currency": "BRL", "traveler": "" },
-      { "type": "Hotel", "description": "Hospedagem em Manhattan (11 noites)", "value": 6000, "currency": "BRL", "traveler": "" },
-      { "type": "Xbox One X", "description": "Comprado na Microsoft Store e enviado para NY", "value": 536.43, "currency": "USD", "traveler": "gabriel" },
-      { "type": "Oculus Rift + Touch", "description": "Comprado na Oculus Store e enviado para NY", "value": 349, "currency": "USD", "traveler": "gabriel" },
-      { "type": "Envio de Caixas", "description": "Serviço Free Your Arms - envio de caixas dos EUA para o Brasil", "value": 512.24, "currency": "BRL", "traveler": "" },
-      { "type": "Compras Online", "description": "Compras na Amazon (vinis, roupas, acessórios) enviadas para NY", "value": 0, "currency": "BRL", "traveler": "gabriel" }
+      {
+        "type": "Passagem Aérea",
+        "value": 9500,
+        "currency": "BRL",
+        "name": "Passagens aéreas BH→NY→BH (United Airlines, reserva MZV9LQ) - 4 pessoas",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "type": "Hotel",
+        "value": 6000,
+        "currency": "BRL",
+        "name": "Hospedagem em Manhattan (11 noites)",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "type": "Xbox One X",
+        "value": 536.43,
+        "currency": "BRL",
+        "name": "Comprado na Microsoft Store e enviado para NY",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Oculus Rift + Touch",
+        "value": 349,
+        "currency": "BRL",
+        "name": "Comprado na Oculus Store e enviado para NY",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Envio de Caixas",
+        "value": 512.24,
+        "currency": "BRL",
+        "name": "Serviço Free Your Arms - envio de caixas dos EUA para o Brasil",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "type": "Compras Online",
+        "value": 0,
+        "currency": "BRL",
+        "name": "Compras na Amazon (vinis, roupas, acessórios) enviadas para NY",
+        "price": 0,
+        "person": "gabriel"
+      }
     ],
     "currency": "BRL",
     "travelers": {
-      "gabriel": { "preTrip": 885.43, "duringTrip": 900.005 },
-      "elaine": { "preTrip": 0, "duringTrip": 0 },
-      "milton": { "preTrip": 0, "duringTrip": 0 },
-      "marianna": { "preTrip": 0, "duringTrip": 0 }
+      "gabriel": "Gabriel",
+      "elaine": "Elaine",
+      "milton": "Milton",
+      "marianna": "Marianna"
     },
-    "sharing": { "owner": "", "active": true, "editors": [] },
-    "version": { "lastUpdated": "2018-02-20T00:00:00.000Z" }
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2018-02-20T00:00:00.000Z"
+    }
   }
 }

@@ -17,13 +17,40 @@
   "trip": {
     "title": "Salvador 2020",
     "currency": "BRL",
-    "start": { "day": 28, "month": 1, "year": 2020, "hour": 0, "minute": 0, "second": 0 },
-    "end": { "day": 30, "month": 1, "year": 2020, "hour": 0, "minute": 0, "second": 0 },
+    "start": {
+      "day": 28,
+      "month": 1,
+      "year": 2020,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 30,
+      "month": 1,
+      "year": 2020,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
     "pin": "no-pin",
-    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" },
-    "visibility": { "light": true, "dark": true },
-    "colors": { "light": "#966313", "dark": "#966313", "active": false },
-    "sharing": { "owner": "", "active": false, "editors": [] },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
     "modules": {
       "destinations": false,
       "transportation": true,
@@ -34,8 +61,14 @@
       "expenses": true
     },
     "travelers": [
-      { "id": "gabriel", "name": "Gabriel" },
-      { "id": "milton", "name": "Milton" }
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      },
+      {
+        "id": "milton",
+        "name": "Milton"
+      }
     ],
     "links": {
       "maps": "",
@@ -47,9 +80,19 @@
       "sheet": "",
       "vaccine": ""
     },
-    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
     "destinationRefs": [],
-    "image": { "dark": "", "light": "", "background": "", "active": false }
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
   },
   "accommodations": {
     "acc-001": {
@@ -57,8 +100,22 @@
       "description": "Bairro Jardins. Diárias planejadas: 4 (Airbnb sheet).",
       "address": "Jardins, Salvador - BA",
       "dates": {
-        "checkIn": { "day": 28, "month": 1, "year": 2020, "hour": 14, "minute": 0, "second": 0 },
-        "checkOut": { "day": 30, "month": 1, "year": 2020, "hour": 12, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 28,
+          "month": 1,
+          "year": 2020,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 30,
+          "month": 1,
+          "year": 2020,
+          "hour": 12,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -67,7 +124,9 @@
     }
   },
   "transportation": {
-    "_settings": { "viewMode": "simple" },
+    "_settings": {
+      "viewMode": "simple"
+    },
     "leg-001": {
       "type": "flight",
       "company": "Gol",
@@ -76,8 +135,22 @@
         "destination": "Salvador"
       },
       "dates": {
-        "departure": { "day": 28, "month": 1, "year": 2020, "hour": 10, "minute": 0, "second": 0 },
-        "arrival": { "day": 28, "month": 1, "year": 2020, "hour": 11, "minute": 45, "second": 0 }
+        "departure": {
+          "day": 28,
+          "month": 1,
+          "year": 2020,
+          "hour": 10,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 28,
+          "month": 1,
+          "year": 2020,
+          "hour": 11,
+          "minute": 45,
+          "second": 0
+        }
       },
       "duration": "01:45",
       "direction": "departure",
@@ -93,8 +166,22 @@
         "destination": "Belo Horizonte"
       },
       "dates": {
-        "departure": { "day": 30, "month": 1, "year": 2020, "hour": 17, "minute": 10, "second": 0 },
-        "arrival": { "day": 30, "month": 1, "year": 2020, "hour": 18, "minute": 55, "second": 0 }
+        "departure": {
+          "day": 30,
+          "month": 1,
+          "year": 2020,
+          "hour": 17,
+          "minute": 10,
+          "second": 0
+        },
+        "arrival": {
+          "day": 30,
+          "month": 1,
+          "year": 2020,
+          "hour": 18,
+          "minute": 55,
+          "second": 0
+        }
       },
       "duration": "01:45",
       "direction": "return",
@@ -105,19 +192,52 @@
   },
   "itinerary": {
     "20200128": {
-      "title": { "value": "Chegada em Salvador", "showDestinations": false, "translate": false },
-      "date": { "day": 28, "month": 1, "year": 2020, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Chegada em Salvador",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 28,
+        "month": 1,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "activity": "Voo Gol FSJRQE — BH → Salvador", "time": "10:00 - 11:45", "notes": "" }
+        {
+          "notes": "",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo Gol FSJRQE — BH → Salvador",
+          "start": "10:00",
+          "end": "11:45"
+        }
       ],
       "afternoon": [],
       "night": []
     },
     "20200129": {
-      "title": { "value": "Salvador", "showDestinations": false, "translate": false },
-      "date": { "day": 29, "month": 1, "year": 2020, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Salvador",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 29,
+        "month": 1,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -125,13 +245,35 @@
       "night": []
     },
     "20200130": {
-      "title": { "value": "Retorno", "showDestinations": false, "translate": false },
-      "date": { "day": 30, "month": 1, "year": 2020, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 30,
+        "month": 1,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
       "afternoon": [
-        { "activity": "Voo Gol FSJRQE — Salvador → BH", "time": "17:10 - 18:55", "notes": "" }
+        {
+          "notes": "",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo Gol FSJRQE — Salvador → BH",
+          "start": "17:10",
+          "end": "18:55"
+        }
       ],
       "night": []
     }
@@ -142,14 +284,14 @@
       {
         "name": "Voo Gol FSJRQE — BH ↔ Salvador",
         "type": "trip.transportation.type.flights",
-        "price": 1215.00,
+        "price": 1215.0,
         "currency": "BRL",
         "person": ""
       },
       {
         "name": "Aparthotel Adagio Salvador",
         "type": "trip.accommodation.title",
-        "price": 500.00,
+        "price": 500.0,
         "currency": "BRL",
         "person": ""
       }
@@ -159,7 +301,13 @@
       "gabriel": "Gabriel",
       "milton": "Milton"
     },
-    "sharing": { "owner": "", "active": true, "editors": [] },
-    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" }
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    }
   }
 }

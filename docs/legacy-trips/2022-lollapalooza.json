@@ -23,13 +23,40 @@
   "trip": {
     "title": "Lollapalooza 2022",
     "currency": "BRL",
-    "start": { "day": 24, "month": 3, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
-    "end": { "day": 28, "month": 3, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+    "start": {
+      "day": 24,
+      "month": 3,
+      "year": 2022,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 28,
+      "month": 3,
+      "year": 2022,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
     "pin": "no-pin",
-    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" },
-    "visibility": { "light": true, "dark": true },
-    "colors": { "light": "#966313", "dark": "#966313", "active": false },
-    "sharing": { "owner": "", "active": false, "editors": [] },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
     "modules": {
       "destinations": false,
       "transportation": true,
@@ -40,8 +67,14 @@
       "expenses": true
     },
     "travelers": [
-      { "id": "gabriel", "name": "Gabriel" },
-      { "id": "gui", "name": "Guilherme" }
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      },
+      {
+        "id": "gui",
+        "name": "Guilherme"
+      }
     ],
     "links": {
       "maps": "",
@@ -53,9 +86,19 @@
       "sheet": "",
       "vaccine": ""
     },
-    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
     "destinationRefs": [],
-    "image": { "dark": "", "light": "", "background": "", "active": false }
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
   },
   "accommodations": {
     "acc-001": {
@@ -63,8 +106,22 @@
       "description": "Hotel localizado no Jardim Paulista, próximo à Avenida Paulista e ao metrô.",
       "address": "Alameda Jaú, 1925, Jardim Paulista, São Paulo - SP, 05420-001",
       "dates": {
-        "checkIn": { "day": 24, "month": 3, "year": 2022, "hour": 8, "minute": 5, "second": 0 },
-        "checkOut": { "day": 28, "month": 3, "year": 2022, "hour": 11, "minute": 40, "second": 0 }
+        "checkIn": {
+          "day": 24,
+          "month": 3,
+          "year": 2022,
+          "hour": 8,
+          "minute": 5,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 28,
+          "month": 3,
+          "year": 2022,
+          "hour": 11,
+          "minute": 40,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -73,7 +130,9 @@
     }
   },
   "transportation": {
-    "_settings": { "viewMode": "simple" },
+    "_settings": {
+      "viewMode": "simple"
+    },
     "leg-001": {
       "type": "flight",
       "company": "Azul Linhas Aéreas Brasileiras",
@@ -82,8 +141,22 @@
         "destination": "São Paulo (CGH)"
       },
       "dates": {
-        "departure": { "day": 24, "month": 3, "year": 2022, "hour": 6, "minute": 5, "second": 0 },
-        "arrival": { "day": 24, "month": 3, "year": 2022, "hour": 7, "minute": 25, "second": 0 }
+        "departure": {
+          "day": 24,
+          "month": 3,
+          "year": 2022,
+          "hour": 6,
+          "minute": 5,
+          "second": 0
+        },
+        "arrival": {
+          "day": 24,
+          "month": 3,
+          "year": 2022,
+          "hour": 7,
+          "minute": 25,
+          "second": 0
+        }
       },
       "duration": "1h20min",
       "direction": "departure",
@@ -99,8 +172,22 @@
         "destination": "Belo Horizonte (CNF)"
       },
       "dates": {
-        "departure": { "day": 28, "month": 3, "year": 2022, "hour": 19, "minute": 0, "second": 0 },
-        "arrival": { "day": 28, "month": 3, "year": 2022, "hour": 20, "minute": 10, "second": 0 }
+        "departure": {
+          "day": 28,
+          "month": 3,
+          "year": 2022,
+          "hour": 19,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 28,
+          "month": 3,
+          "year": 2022,
+          "hour": 20,
+          "minute": 10,
+          "second": 0
+        }
       },
       "duration": "1h10min",
       "direction": "return",
@@ -111,160 +198,1097 @@
   },
   "itinerary": {
     "20220324": {
-      "title": { "value": "Dia 1 — Chegada + Onix Day", "showDestinations": false, "translate": false },
-      "date": { "day": 24, "month": 3, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 1 — Chegada + Onix Day",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 24,
+        "month": 3,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "time": "04:30", "activity": "Translado para o Aeroporto", "description": "Paps", "location": "Belo Horizonte" },
-        { "time": "05:10", "activity": "Aeroporto", "description": "Aguardar embarque", "location": "Aeroporto de Confins" },
-        { "time": "06:05", "activity": "Voo para São Paulo", "description": "Azul. Reserva XID36G", "location": "CNF → CGH" }
+        {
+          "description": "Paps",
+          "location": "Belo Horizonte",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Translado para o Aeroporto",
+          "start": "04:30",
+          "end": ""
+        },
+        {
+          "description": "Aguardar embarque",
+          "location": "Aeroporto de Confins",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto",
+          "start": "05:10",
+          "end": ""
+        },
+        {
+          "description": "Azul. Reserva XID36G",
+          "location": "CNF → CGH",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo para São Paulo",
+          "start": "06:05",
+          "end": ""
+        }
       ],
       "morning": [
-        { "time": "07:25", "activity": "Desembarque + Uber", "description": "Translado para o hotel", "location": "São Paulo" },
-        { "time": "08:05", "activity": "Hotel", "description": "Check-In. Deixar malas", "location": "Ibis Budget Paulista" },
-        { "time": "08:40", "activity": "BotaniKafé", "description": "Café da manhã. Reservado", "location": "São Paulo" },
-        { "time": "10:05", "activity": "Liberdade", "description": "Fazer compras", "location": "Bairro da Liberdade" }
+        {
+          "description": "Translado para o hotel",
+          "location": "São Paulo",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Desembarque + Uber",
+          "start": "07:25",
+          "end": ""
+        },
+        {
+          "description": "Check-In. Deixar malas",
+          "location": "Ibis Budget Paulista",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel",
+          "start": "08:05",
+          "end": ""
+        },
+        {
+          "description": "Café da manhã. Reservado",
+          "location": "São Paulo",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "BotaniKafé",
+          "start": "08:40",
+          "end": ""
+        },
+        {
+          "description": "Fazer compras",
+          "location": "Bairro da Liberdade",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Liberdade",
+          "start": "10:05",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "12:00", "activity": "Between Buns", "description": "Almoço — hamburgueria no Itaim Bibi", "location": "Itaim Bibi" },
-        { "time": "13:25", "activity": "Hotel", "description": "Guardar malas / Descanso", "location": "Ibis Budget Paulista" },
-        { "time": "16:00", "activity": "Pré Onix Day", "description": "Aguardar na fila", "location": "Autódromo de Interlagos" }
+        {
+          "description": "Almoço — hamburgueria no Itaim Bibi",
+          "location": "Itaim Bibi",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Between Buns",
+          "start": "12:00",
+          "end": ""
+        },
+        {
+          "description": "Guardar malas / Descanso",
+          "location": "Ibis Budget Paulista",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel",
+          "start": "13:25",
+          "end": ""
+        },
+        {
+          "description": "Aguardar na fila",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pré Onix Day",
+          "start": "16:00",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "17:00", "activity": "Onix Day", "description": "Shows — evento gratuito de abertura do Lollapalooza", "location": "Autódromo de Interlagos" },
-        { "time": "23:30", "activity": "Hotel", "description": "Descanso / Delivery", "location": "Ibis Budget Paulista" }
+        {
+          "description": "Shows — evento gratuito de abertura do Lollapalooza",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Onix Day",
+          "start": "17:00",
+          "end": ""
+        },
+        {
+          "description": "Descanso / Delivery",
+          "location": "Ibis Budget Paulista",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel",
+          "start": "23:30",
+          "end": ""
+        }
       ]
     },
     "20220325": {
-      "title": { "value": "Dia 2 — Lollapalooza (Sexta-feira)", "showDestinations": false, "translate": false },
-      "date": { "day": 25, "month": 3, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 2 — Lollapalooza (Sexta-feira)",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 25,
+        "month": 3,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "time": "09:00", "activity": "Hotel", "description": "Descanso / Arrumar", "location": "Ibis Budget Paulista" }
+        {
+          "description": "Descanso / Arrumar",
+          "location": "Ibis Budget Paulista",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel",
+          "start": "09:00",
+          "end": ""
+        }
       ],
       "morning": [
-        { "time": "10:30", "activity": "Translado", "description": "Metrô + A pé para Interlagos", "location": "São Paulo" },
-        { "time": "11:50", "activity": "Lollapalooza", "description": "Almoço / Livre", "location": "Autódromo de Interlagos" }
+        {
+          "description": "Metrô + A pé para Interlagos",
+          "location": "São Paulo",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Translado",
+          "start": "10:30",
+          "end": ""
+        },
+        {
+          "description": "Almoço / Livre",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Lollapalooza",
+          "start": "11:50",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "13:05", "activity": "Detonautas", "description": "Opcional. Palco Budweiser", "location": "Autódromo de Interlagos" },
-        { "time": "13:55", "activity": "jxdn", "description": "Palco Onix", "location": "Autódromo de Interlagos" },
-        { "time": "14:45", "activity": "Turnstile", "description": "Palco Budweiser", "location": "Autódromo de Interlagos" },
-        { "time": "15:35", "activity": "The Wombats", "description": "Palco Onix", "location": "Autódromo de Interlagos" },
-        { "time": "16:40", "activity": "LP", "description": "Palco Budweiser", "location": "Autódromo de Interlagos" },
-        { "time": "17:45", "activity": "Marina", "description": "Palco Onix", "location": "Autódromo de Interlagos" }
+        {
+          "description": "Opcional. Palco Budweiser",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Detonautas",
+          "start": "13:05",
+          "end": ""
+        },
+        {
+          "description": "Palco Onix",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "jxdn",
+          "start": "13:55",
+          "end": ""
+        },
+        {
+          "description": "Palco Budweiser",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Turnstile",
+          "start": "14:45",
+          "end": ""
+        },
+        {
+          "description": "Palco Onix",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "The Wombats",
+          "start": "15:35",
+          "end": ""
+        },
+        {
+          "description": "Palco Budweiser",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "LP",
+          "start": "16:40",
+          "end": ""
+        },
+        {
+          "description": "Palco Onix",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Marina",
+          "start": "17:45",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "18:50", "activity": "Machine Gun Kelly", "description": "Palco Budweiser", "location": "Autódromo de Interlagos" },
-        { "time": "20:10", "activity": "Doja Cat", "description": "Opcional. Palco Onix", "location": "Autódromo de Interlagos" },
-        { "time": "21:15", "activity": "The Strokes", "description": "Palco Budweiser", "location": "Autódromo de Interlagos" },
-        { "time": "23:45", "activity": "Hotel", "description": "Descanso / Delivery", "location": "Ibis Budget Paulista" }
+        {
+          "description": "Palco Budweiser",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Machine Gun Kelly",
+          "start": "18:50",
+          "end": ""
+        },
+        {
+          "description": "Opcional. Palco Onix",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Doja Cat",
+          "start": "20:10",
+          "end": ""
+        },
+        {
+          "description": "Palco Budweiser",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "The Strokes",
+          "start": "21:15",
+          "end": ""
+        },
+        {
+          "description": "Descanso / Delivery",
+          "location": "Ibis Budget Paulista",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel",
+          "start": "23:45",
+          "end": ""
+        }
       ]
     },
     "20220326": {
-      "title": { "value": "Dia 3 — Lollapalooza (Sábado)", "showDestinations": false, "translate": false },
-      "date": { "day": 26, "month": 3, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 3 — Lollapalooza (Sábado)",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 26,
+        "month": 3,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "time": "09:30", "activity": "Hotel", "description": "Descanso / Arrumar", "location": "Ibis Budget Paulista" }
+        {
+          "description": "Descanso / Arrumar",
+          "location": "Ibis Budget Paulista",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel",
+          "start": "09:30",
+          "end": ""
+        }
       ],
       "morning": [
-        { "time": "10:30", "activity": "Translado", "description": "Metrô + A pé para Interlagos", "location": "São Paulo" },
-        { "time": "11:50", "activity": "Lollapalooza", "description": "Almoço / Livre", "location": "Autódromo de Interlagos" }
+        {
+          "description": "Metrô + A pé para Interlagos",
+          "location": "São Paulo",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Translado",
+          "start": "10:30",
+          "end": ""
+        },
+        {
+          "description": "Almoço / Livre",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Lollapalooza",
+          "start": "11:50",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "13:05", "activity": "Terno Rei", "description": "Opcional. Palco Budweiser", "location": "Autódromo de Interlagos" },
-        { "time": "13:55", "activity": "Clarice Falcão", "description": "Opcional. Palco Onix", "location": "Autódromo de Interlagos" },
-        { "time": "14:45", "activity": "Silva", "description": "Opcional. Palco Budweiser", "location": "Autódromo de Interlagos" },
-        { "time": "15:50", "activity": "Jão", "description": "Opcional. Palco Onix", "location": "Autódromo de Interlagos" },
-        { "time": "16:55", "activity": "Two Feet", "description": "Opcional. Palco Budweiser", "location": "Autódromo de Interlagos" },
-        { "time": "18:00", "activity": "A Day To Remember", "description": "Palco Onix", "location": "Autódromo de Interlagos" }
+        {
+          "description": "Opcional. Palco Budweiser",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Terno Rei",
+          "start": "13:05",
+          "end": ""
+        },
+        {
+          "description": "Opcional. Palco Onix",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Clarice Falcão",
+          "start": "13:55",
+          "end": ""
+        },
+        {
+          "description": "Opcional. Palco Budweiser",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Silva",
+          "start": "14:45",
+          "end": ""
+        },
+        {
+          "description": "Opcional. Palco Onix",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Jão",
+          "start": "15:50",
+          "end": ""
+        },
+        {
+          "description": "Opcional. Palco Budweiser",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Two Feet",
+          "start": "16:55",
+          "end": ""
+        },
+        {
+          "description": "Palco Onix",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "A Day To Remember",
+          "start": "18:00",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "19:05", "activity": "Alessia Cara", "description": "Palco Adidas", "location": "Autódromo de Interlagos" },
-        { "time": "20:15", "activity": "Pré Miley Cyrus", "description": "Pegar lugar", "location": "Autódromo de Interlagos" },
-        { "time": "21:30", "activity": "Miley Cyrus", "description": "Palco Budweiser", "location": "Autódromo de Interlagos" },
-        { "time": "23:59", "activity": "Hotel", "description": "Descanso / Delivery", "location": "Ibis Budget Paulista" }
+        {
+          "description": "Palco Adidas",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Alessia Cara",
+          "start": "19:05",
+          "end": ""
+        },
+        {
+          "description": "Pegar lugar",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pré Miley Cyrus",
+          "start": "20:15",
+          "end": ""
+        },
+        {
+          "description": "Palco Budweiser",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Miley Cyrus",
+          "start": "21:30",
+          "end": ""
+        },
+        {
+          "description": "Descanso / Delivery",
+          "location": "Ibis Budget Paulista",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel",
+          "start": "23:59",
+          "end": ""
+        }
       ]
     },
     "20220327": {
-      "title": { "value": "Dia 4 — Lollapalooza (Domingo)", "showDestinations": false, "translate": false },
-      "date": { "day": 27, "month": 3, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 4 — Lollapalooza (Domingo)",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 27,
+        "month": 3,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "time": "09:00", "activity": "Hotel", "description": "Descanso / Arrumar", "location": "Ibis Budget Paulista" }
+        {
+          "description": "Descanso / Arrumar",
+          "location": "Ibis Budget Paulista",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel",
+          "start": "09:00",
+          "end": ""
+        }
       ],
       "morning": [
-        { "time": "10:30", "activity": "Translado", "description": "Metrô + A pé para Interlagos", "location": "São Paulo" },
-        { "time": "11:50", "activity": "Lollapalooza", "description": "Almoço / Livre", "location": "Autódromo de Interlagos" }
+        {
+          "description": "Metrô + A pé para Interlagos",
+          "location": "São Paulo",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Translado",
+          "start": "10:30",
+          "end": ""
+        },
+        {
+          "description": "Almoço / Livre",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Lollapalooza",
+          "start": "11:50",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "12:00", "activity": "Lagum", "description": "Opcional. Palco Budweiser", "location": "Autódromo de Interlagos" },
-        { "time": "12:50", "activity": "Lollapalooza", "description": "Livre", "location": "Autódromo de Interlagos" },
-        { "time": "14:50", "activity": "Fresno", "description": "Palco Onix", "location": "Autódromo de Interlagos" },
-        { "time": "15:55", "activity": "IDLES", "description": "Palco Budweiser", "location": "Autódromo de Interlagos" },
-        { "time": "17:00", "activity": "Black Pumas", "description": "Opcional. Palco Onix", "location": "Autódromo de Interlagos" },
-        { "time": "18:05", "activity": "The Libertines", "description": "Opcional. Palco Budweiser", "location": "Autódromo de Interlagos" }
+        {
+          "description": "Opcional. Palco Budweiser",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Lagum",
+          "start": "12:00",
+          "end": ""
+        },
+        {
+          "description": "Livre",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Lollapalooza",
+          "start": "12:50",
+          "end": ""
+        },
+        {
+          "description": "Palco Onix",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Fresno",
+          "start": "14:50",
+          "end": ""
+        },
+        {
+          "description": "Palco Budweiser",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "IDLES",
+          "start": "15:55",
+          "end": ""
+        },
+        {
+          "description": "Opcional. Palco Onix",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Black Pumas",
+          "start": "17:00",
+          "end": ""
+        },
+        {
+          "description": "Opcional. Palco Budweiser",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "The Libertines",
+          "start": "18:05",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "19:05", "activity": "Pré Foo Fighters", "description": "Livre / Pegar lugar", "location": "Autódromo de Interlagos" },
-        { "time": "20:30", "activity": "Foo Fighters", "description": "Palco Budweiser", "location": "Autódromo de Interlagos" },
-        { "time": "23:59", "activity": "Hotel", "description": "Descanso / Delivery", "location": "Ibis Budget Paulista" }
+        {
+          "description": "Livre / Pegar lugar",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pré Foo Fighters",
+          "start": "19:05",
+          "end": ""
+        },
+        {
+          "description": "Palco Budweiser",
+          "location": "Autódromo de Interlagos",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Foo Fighters",
+          "start": "20:30",
+          "end": ""
+        },
+        {
+          "description": "Descanso / Delivery",
+          "location": "Ibis Budget Paulista",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel",
+          "start": "23:59",
+          "end": ""
+        }
       ]
     },
     "20220328": {
-      "title": { "value": "Dia 5 — Retorno", "showDestinations": false, "translate": false },
-      "date": { "day": 28, "month": 3, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 5 — Retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 28,
+        "month": 3,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "time": "09:00", "activity": "Hotel", "description": "Trabalho no quarto", "location": "Ibis Budget Paulista" }
+        {
+          "description": "Trabalho no quarto",
+          "location": "Ibis Budget Paulista",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel",
+          "start": "09:00",
+          "end": ""
+        }
       ],
       "morning": [
-        { "time": "11:00", "activity": "Hotel", "description": "Arrumar", "location": "Ibis Budget Paulista" },
-        { "time": "11:40", "activity": "Hotel", "description": "Check-Out. Deixar malas", "location": "Ibis Budget Paulista" }
+        {
+          "description": "Arrumar",
+          "location": "Ibis Budget Paulista",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel",
+          "start": "11:00",
+          "end": ""
+        },
+        {
+          "description": "Check-Out. Deixar malas",
+          "location": "Ibis Budget Paulista",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel",
+          "start": "11:40",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "12:20", "activity": "Modern Mama", "description": "Almoço", "location": "São Paulo" },
-        { "time": "13:30", "activity": "The Good Cop Donut Shop", "description": "2 donuts", "location": "São Paulo" },
-        { "time": "14:00", "activity": "Donuts & Co.", "description": "2 donuts", "location": "São Paulo" },
-        { "time": "14:30", "activity": "Hotel", "description": "Trabalho no lobby", "location": "Ibis Budget Paulista" },
-        { "time": "16:00", "activity": "Hotel", "description": "Pegar malas", "location": "Ibis Budget Paulista" }
+        {
+          "description": "Almoço",
+          "location": "São Paulo",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Modern Mama",
+          "start": "12:20",
+          "end": ""
+        },
+        {
+          "description": "2 donuts",
+          "location": "São Paulo",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "The Good Cop Donut Shop",
+          "start": "13:30",
+          "end": ""
+        },
+        {
+          "description": "2 donuts",
+          "location": "São Paulo",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Donuts & Co.",
+          "start": "14:00",
+          "end": ""
+        },
+        {
+          "description": "Trabalho no lobby",
+          "location": "Ibis Budget Paulista",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel",
+          "start": "14:30",
+          "end": ""
+        },
+        {
+          "description": "Pegar malas",
+          "location": "Ibis Budget Paulista",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel",
+          "start": "16:00",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "17:10", "activity": "Aeroporto", "description": "Aguardar embarque", "location": "Aeroporto de Congonhas" },
-        { "time": "19:00", "activity": "Voo para BH", "description": "Azul. Reserva XID36G", "location": "CGH → CNF" },
-        { "time": "20:10", "activity": "Translado para casa", "description": "Paps", "location": "Belo Horizonte" }
+        {
+          "description": "Aguardar embarque",
+          "location": "Aeroporto de Congonhas",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto",
+          "start": "17:10",
+          "end": ""
+        },
+        {
+          "description": "Azul. Reserva XID36G",
+          "location": "CGH → CNF",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo para BH",
+          "start": "19:00",
+          "end": ""
+        },
+        {
+          "description": "Paps",
+          "location": "Belo Horizonte",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Translado para casa",
+          "start": "20:10",
+          "end": ""
+        }
       ]
     }
   },
   "expenses": {
     "duringTrip": [
-      { "id": "exp-001", "type": "Hospedagem", "label": "Ibis Budget Paulista", "value": 629.40, "date": { "day": 24, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-002", "type": "Alimentação", "label": "BotaniKafé — Café da manhã", "value": 50.00, "date": { "day": 24, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-003", "type": "Compras", "label": "Liberdade", "value": 100.00, "date": { "day": 24, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-004", "type": "Alimentação", "label": "Between Buns — Almoço", "value": 70.00, "date": { "day": 24, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-005", "type": "Alimentação", "label": "Delivery (noite)", "value": 50.00, "date": { "day": 24, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-006", "type": "Alimentação", "label": "Lollapalooza — Almoço/Livre (Dia 2)", "value": 100.00, "date": { "day": 25, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-007", "type": "Alimentação", "label": "Delivery (noite — Dia 2)", "value": 50.00, "date": { "day": 25, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-008", "type": "Alimentação", "label": "Lollapalooza — Almoço/Livre (Dia 3)", "value": 100.00, "date": { "day": 26, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-009", "type": "Alimentação", "label": "Delivery (noite — Dia 3)", "value": 50.00, "date": { "day": 26, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-010", "type": "Alimentação", "label": "Lollapalooza — Almoço/Livre (Dia 4)", "value": 100.00, "date": { "day": 27, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-011", "type": "Alimentação", "label": "Delivery (noite — Dia 4)", "value": 50.00, "date": { "day": 27, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-012", "type": "Alimentação", "label": "Modern Mama — Almoço", "value": 70.00, "date": { "day": 28, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-013", "type": "Alimentação", "label": "The Good Cop Donut Shop", "value": 20.00, "date": { "day": 28, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-014", "type": "Alimentação", "label": "Donuts & Co.", "value": 20.00, "date": { "day": 28, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-015", "type": "Transporte", "label": "Transporte Público (Metrô — 9 bilhetes)", "value": 39.60, "date": { "day": 24, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-016", "type": "Transporte", "label": "Transporte Privado (Ubers)", "value": 74.50, "date": { "day": 24, "month": 3, "year": 2022 }, "person": "gabriel" }
+      {
+        "type": "Hospedagem",
+        "label": "Ibis Budget Paulista",
+        "value": 629.4,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "label": "BotaniKafé — Café da manhã",
+        "value": 50.0,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Compras",
+        "label": "Liberdade",
+        "value": 100.0,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "label": "Between Buns — Almoço",
+        "value": 70.0,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "label": "Delivery (noite)",
+        "value": 50.0,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "label": "Lollapalooza — Almoço/Livre (Dia 2)",
+        "value": 100.0,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "label": "Delivery (noite — Dia 2)",
+        "value": 50.0,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "label": "Lollapalooza — Almoço/Livre (Dia 3)",
+        "value": 100.0,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "label": "Delivery (noite — Dia 3)",
+        "value": 50.0,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "label": "Lollapalooza — Almoço/Livre (Dia 4)",
+        "value": 100.0,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "label": "Delivery (noite — Dia 4)",
+        "value": 50.0,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "label": "Modern Mama — Almoço",
+        "value": 70.0,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "label": "The Good Cop Donut Shop",
+        "value": 20.0,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "label": "Donuts & Co.",
+        "value": 20.0,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Transporte",
+        "label": "Transporte Público (Metrô — 9 bilhetes)",
+        "value": 39.6,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Transporte",
+        "label": "Transporte Privado (Ubers)",
+        "value": 74.5,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      }
     ],
     "preTrip": [
-      { "id": "exp-pre-001", "type": "Passagem", "label": "Voo Ida e Volta — Azul (XID36G)", "value": 71.06, "date": { "day": 1, "month": 3, "year": 2022 }, "person": "gabriel" },
-      { "id": "exp-pre-002", "type": "Ingresso", "label": "Lolla Pass (ESTNEXT15%) — Lollapalooza 2022", "value": 790.00, "date": { "day": 1, "month": 3, "year": 2022 }, "person": "gabriel" }
+      {
+        "type": "Passagem",
+        "label": "Voo Ida e Volta — Azul (XID36G)",
+        "value": 71.06,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Ingresso",
+        "label": "Lolla Pass (ESTNEXT15%) — Lollapalooza 2022",
+        "value": 790.0,
+        "person": "",
+        "name": "",
+        "price": 0,
+        "currency": "BRL"
+      }
     ],
     "currency": "BRL",
     "travelers": {
-      "gabriel": { "preTrip": 861.06, "duringTrip": 1073.50 }
+      "gabriel": "Gabriel"
     },
-    "sharing": { "owner": "", "active": true, "editors": [] },
-    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" }
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    }
   }
 }

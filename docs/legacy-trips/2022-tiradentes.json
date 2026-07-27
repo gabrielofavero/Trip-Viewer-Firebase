@@ -17,13 +17,40 @@
   "trip": {
     "title": "Tiradentes 2022",
     "currency": "BRL",
-    "start": { "day": 20, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
-    "end": { "day": 22, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+    "start": {
+      "day": 20,
+      "month": 5,
+      "year": 2022,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 22,
+      "month": 5,
+      "year": 2022,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
     "pin": "no-pin",
-    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" },
-    "visibility": { "light": true, "dark": true },
-    "colors": { "light": "#966313", "dark": "#966313", "active": false },
-    "sharing": { "owner": "", "active": false, "editors": [] },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
     "modules": {
       "destinations": false,
       "transportation": true,
@@ -34,7 +61,10 @@
       "expenses": false
     },
     "travelers": [
-      { "id": "gabriel", "name": "Gabriel" }
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      }
     ],
     "links": {
       "maps": "",
@@ -46,9 +76,19 @@
       "sheet": "",
       "vaccine": ""
     },
-    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
     "destinationRefs": [],
-    "image": { "dark": "", "light": "", "background": "", "active": false }
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
   },
   "accommodations": {
     "acc-001": {
@@ -56,8 +96,22 @@
       "description": "Airbnb no Centro Histórico de Tiradentes. Anfitrião: Homero.",
       "address": "Centro Histórico, Tiradentes - MG",
       "dates": {
-        "checkIn": { "day": 20, "month": 5, "year": 2022, "hour": 14, "minute": 0, "second": 0 },
-        "checkOut": { "day": 22, "month": 5, "year": 2022, "hour": 11, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 20,
+          "month": 5,
+          "year": 2022,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 22,
+          "month": 5,
+          "year": 2022,
+          "hour": 11,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -66,7 +120,9 @@
     }
   },
   "transportation": {
-    "_settings": { "viewMode": "simple" },
+    "_settings": {
+      "viewMode": "simple"
+    },
     "leg-001": {
       "type": "car",
       "company": "",
@@ -75,8 +131,22 @@
         "destination": "Tiradentes"
       },
       "dates": {
-        "departure": { "day": 20, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
-        "arrival": { "day": 20, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 }
+        "departure": {
+          "day": 20,
+          "month": 5,
+          "year": 2022,
+          "hour": 0,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 20,
+          "month": 5,
+          "year": 2022,
+          "hour": 0,
+          "minute": 0,
+          "second": 0
+        }
       },
       "duration": "",
       "direction": "departure",
@@ -92,8 +162,22 @@
         "destination": "Belo Horizonte"
       },
       "dates": {
-        "departure": { "day": 22, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
-        "arrival": { "day": 22, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 }
+        "departure": {
+          "day": 22,
+          "month": 5,
+          "year": 2022,
+          "hour": 0,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 22,
+          "month": 5,
+          "year": 2022,
+          "hour": 0,
+          "minute": 0,
+          "second": 0
+        }
       },
       "duration": "",
       "direction": "return",
@@ -104,19 +188,52 @@
   },
   "itinerary": {
     "20220520": {
-      "title": { "value": "Chegada em Tiradentes", "showDestinations": false, "translate": false },
-      "date": { "day": 20, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Chegada em Tiradentes",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 20,
+        "month": 5,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
       "afternoon": [
-        { "activity": "Check-in Casinha do Rosário (14:00)", "time": "14:00", "notes": "Centro Histórico" }
+        {
+          "notes": "Centro Histórico",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Check-in Casinha do Rosário (14:00)",
+          "start": "14:00",
+          "end": ""
+        }
       ],
       "night": []
     },
     "20220521": {
-      "title": { "value": "Tiradentes", "showDestinations": false, "translate": false },
-      "date": { "day": 21, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Tiradentes",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 21,
+        "month": 5,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -124,12 +241,34 @@
       "night": []
     },
     "20220522": {
-      "title": { "value": "Check-out e Retorno", "showDestinations": false, "translate": false },
-      "date": { "day": 22, "month": 5, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Check-out e Retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 22,
+        "month": 5,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "activity": "Check-out Casinha do Rosário (11:00)", "time": "11:00", "notes": "" }
+        {
+          "notes": "",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Check-out Casinha do Rosário (11:00)",
+          "start": "11:00",
+          "end": ""
+        }
       ],
       "afternoon": [],
       "night": []
@@ -142,7 +281,13 @@
     "travelers": {
       "gabriel": "Gabriel"
     },
-    "sharing": { "owner": "", "active": true, "editors": [] },
-    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" }
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    }
   }
 }

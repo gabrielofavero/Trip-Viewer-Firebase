@@ -2,8 +2,10 @@
 	"account": {
 		"settings": "Ajustes",
 		"backup": {
-			"title": "Backup Total",
+			"title": "Exportar Conta",
 			"prompt": "Você gostaria de fazer backup dos dados sensíveis de viagens? Será necessário inserir o PIN de acesso para cada viagem protegida",
+			"security_warning": "⚠️ Os arquivos exportados contêm seus dados em texto simples, incluindo informações protegidas (códigos de reserva, links) se os PINs forem fornecidos. Qualquer pessoa com acesso ao arquivo pode ler esses dados. Armazene os arquivos exportados com segurança e exclua-os quando não forem mais necessários.",
+			"pin_instruction": "Insira os PINs de acesso para as viagens abaixo. Se deixar algum em branco, os dados protegidos dessa viagem não serão incluídos no backup.",
 			"success": "Backup realizado com sucesso",
 			"partial": {
 				"title": "Backup parcialmente concluído",
@@ -16,7 +18,7 @@
 			}
 		},
 		"restore": {
-			"title": "Restauração Total",
+			"title": "Importar Conta",
 			"error_title": "Erro ao restaurar o backup",
 			"prompt": "Tem certeza que deseja restaurar os dados da conta? Todos os dados atuais serão substituídos pelos dados do backup. A ação não poderá ser desfeita",
 			"invalid_file": "O arquivo selecionado não é um backup válido",
@@ -27,10 +29,29 @@
 		"import_documents": {
 			"title": "Importar Documento(s)",
 			"error_title": "Erro ao importar",
-			"invalid_file": "O arquivo selecionado não é um documento de viagem válido. Esperava um JSON com a propriedade \"trip\".",
-			"none_imported": "Nenhum documento pôde ser importado. Verifique se os arquivos são documentos de viagem válidos.",
+			"invalid_file": "O arquivo selecionado não é um documento de exportação válido. Esperava um JSON com a propriedade \"trip\", \"destination\" ou \"listing\".",
+			"none_imported": "Nenhum documento pôde ser importado. Verifique se os arquivos são documentos de exportação válidos.",
 			"success": "{{count}} documento(s) importado(s) com sucesso!",
-			"untitled": "Viagem sem título"
+			"untitled": "Sem título",
+			"conflict_title": "Documentos Conflitantes",
+			"conflict_desc": "Os seguintes documentos já existem na sua conta e serão duplicados se importados. Tem certeza que deseja continuar?",
+			"complex_hint": "Alguns documentos incluem destinos que já existem. Escolha se deseja importar apenas os documentos principais (viagem/lista) sem os destinos anexados, ou cancelar.",
+			"override_confirm": "Importar Todos",
+			"import_main_only": "Importar Apenas Documentos Principais",
+			"in_db": "Na sua conta",
+			"in_file": "No arquivo"
+		},
+		"export_documents": {
+			"title": "Exportar Documento",
+			"select_hint": "Selecione os documentos para exportar",
+			"security_warning": "⚠️ Os arquivos exportados contêm seus dados em texto simples, incluindo informações protegidas (códigos de reserva, links) se os PINs forem fornecidos. Qualquer pessoa com acesso ao arquivo pode ler esses dados. Armazene os arquivos exportados com segurança e exclua-os quando não forem mais necessários.",
+			"no_documents": "Nenhum documento disponível para exportar nesta categoria.",
+			"none_selected": "Nenhum documento selecionado para exportar.",
+			"export_button": "Exportar Selecionados",
+			"pin_instruction": "Insira os PINs de acesso para as viagens abaixo. Se deixar algum em branco, apenas os dados não protegidos serão exportados para essa viagem.",
+			"success": "{{count}} documento(s) exportado(s) com sucesso!",
+			"partial_success": "{{exported}} documento(s) exportado(s) com sucesso ({{failed}} falhou).",
+			"failed": "Falha ao exportar documentos."
 		},
 		"delete": {
 			"title": "Excluir conta",
@@ -654,6 +675,7 @@
 			"link": "Link da reserva"
 		},
 		"select": "Selecione",
+		"select_all": "Selecionar Todos",
 		"other": "Outro(a)",
 		"optional": "Opcional",
 		"cancel": "Cancelar",

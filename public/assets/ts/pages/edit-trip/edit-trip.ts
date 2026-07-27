@@ -20,6 +20,7 @@ import {
 import { cloneObject, getID, getURLParam } from '../../utils/dom.js';
 import {
 	deleteUserObjectDB,
+	deleteSubcollection,
 	getPermissions,
 	getSingleData,
 	getTripDataWithDestinations,
@@ -29,6 +30,8 @@ import {
 	getUserDestinationSummaries,
 	get,
 	deleteDocument,
+	SUBCOLLECTION,
+	COLLECTION,
 } from '../../data/firebase/database.js';
 import { loadDraggablesWithAccordions } from '../../ui/sortable.js';
 import { newDynamicSelect } from '../../ui/dynamic-select.js';
@@ -165,7 +168,7 @@ async function loadTrip(stripped = false) {
 			setState(await getMergedTripObject(await getTravelDocument(stripped)));
 			break;
 		default:
-			setState(await getTravelDocument(stripped));
+			setState(await fetchSubcollectionsIfNeeded(await getTravelDocument(stripped)));
 	}
 
 	await loadTripData();
@@ -196,10 +199,26 @@ export function deleteTrip() {
 export async function deleteTripAction() {
 	if (!DOCUMENT_ID) return;
 
+	// Delete trip subcollections (transportation, accommodations, itinerary)
+	const subTasks: Promise<any>[] = [
+		deleteSubcollection(`${COLLECTION.TRIPS}/${DOCUMENT_ID}/${SUBCOLLECTION.TRANSPORTATION}`),
+		deleteSubcollection(`${COLLECTION.TRIPS}/${DOCUMENT_ID}/${SUBCOLLECTION.ACCOMMODATIONS}`),
+		deleteSubcollection(`${COLLECTION.TRIPS}/${DOCUMENT_ID}/${SUBCOLLECTION.ITINERARY}`),
+	];
+
+	// Delete trip summary from user subcollection
+	const uid = await getUID();
+	if (uid) {
+		subTasks.push(
+			deleteDocument(`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.TRIP_SUMMARIES}/${DOCUMENT_ID}`, true),
+		);
+	}
+
 	const tasks = [
 		deleteUserObjectDB(DOCUMENT_ID, 'trips'),
 		deleteUserObjectStorage(),
 		deleteDocument(`expenses/${DOCUMENT_ID}`, true),
+		...subTasks,
 	];
 
 	if (PIN.current) {
@@ -211,6 +230,7 @@ export async function deleteTripAction() {
 	}
 
 	await Promise.all(tasks);
+	setSuccessfulSaveFn(true);
 	window.location.href = '../index.html';
 }
 
@@ -228,6 +248,33 @@ export function getDataSelectOptions(j) {
 
 async function getTravelDocument(stripped = false) {
 	return stripped ? await get(`trips/${DOCUMENT_ID}`) : await getSingleData('trips');
+}
+
+/**
+ * Fetch subcollections (transportation, accommodations, itinerary) for a trip
+ * if they aren't already embedded in the trip document. This is needed for trips
+ * created via the import feature or migrated to the subcollection architecture.
+ */
+async function fetchSubcollectionsIfNeeded(tripData: Record<string, any>) {
+	if (!tripData) return tripData;
+
+	if (!tripData.transportation?.data?.length) {
+		const transport = await getTransportation(DOCUMENT_ID);
+		tripData.transportation = {
+			data: transport.legs || [],
+			viewMode: transport.settings?.viewMode || 'simple',
+		};
+	}
+
+	if (!tripData.accommodations?.length) {
+		tripData.accommodations = await getAccommodations(DOCUMENT_ID);
+	}
+
+	if (!tripData.itinerary?.length) {
+		tripData.itinerary = await getItinerary(DOCUMENT_ID);
+	}
+
+	return tripData;
 }
 
 async function getMergedTripObject(tripData) {

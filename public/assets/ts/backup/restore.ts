@@ -7,9 +7,8 @@ import {
 	openToast,
 } from '../utils/messages.js';
 import { translate } from '../i18n/translation.js';
-import { getUID, USER_DATA } from '../data/firebase/auth.js';
+import { getUID } from '../data/firebase/auth.js';
 import { DATABASE_EDITABLE_DOCUMENTS } from '../data/firebase/database.js';
-import { cloneObject } from '../utils/dom.js';
 import { normalizeLegacyJson } from './normalize.js';
 
 export async function restoreOnClickAction() {
@@ -217,81 +216,88 @@ async function restoreAccount(restore) {
 	}
 
 	async function collectDeleteOps(uid) {
-		const userData = cloneObject(USER_DATA);
-		const ops = [];
+		const ops: any[] = [];
+		const pushDelete = (ref: any) => ops.push({ type: 'delete', ref });
 
-		const pushDelete = (ref) => ops.push({ type: 'delete', ref });
+		// --- Step 1: Read summary subcollections to discover document IDs ---
+		const summaryIds: Record<string, string[]> = {
+			trips: [],
+			destinations: [],
+			listings: [],
+		};
 
-		// --- Delete user summary subcollections ---
-		for (const sub of ['tripSummaries', 'destinationSummaries', 'listingSummaries']) {
+		for (const [type, subName] of [
+			['trips', 'tripSummaries'],
+			['destinations', 'destinationSummaries'],
+			['listings', 'listingSummaries'],
+		] as const) {
 			try {
 				const subSnap = await firebase
 					.firestore()
-					.collection(`users/${uid}/${sub}`)
+					.collection(`users/${uid}/${subName}`)
 					.get();
-				subSnap.forEach((doc) => pushDelete(doc.ref));
+				subSnap.forEach((doc) => {
+					summaryIds[type].push(doc.id);
+					pushDelete(doc.ref); // Delete the summary doc itself
+				});
 			} catch {
 				// Subcollection may not exist
 			}
 		}
 
-		// --- CASE A: destinations + listings ---
+		// --- Step 2: Delete main documents discovered from summaries ---
+
+		// Destinations + listings
 		for (const type of ['destinations', 'listings']) {
-			const data = userData[type] ?? [];
-			for (const id in data) pushDelete(firebase.firestore().collection(type).doc(id));
-			userData[type] = [];
+			for (const id of summaryIds[type]) {
+				pushDelete(firebase.firestore().collection(type).doc(id));
+			}
 		}
 
-		// --- CASE B: trips (+ protected / expenses, + subcollections) ---
-		if (Array.isArray(userData.trips)) {
-			for (const tripID in userData.trips) {
-				// Main trip
-				pushDelete(firebase.firestore().collection('trips').doc(tripID));
+		// Trips (with protected data, expenses, and subcollections)
+		for (const tripID of summaryIds.trips) {
+			pushDelete(firebase.firestore().collection('trips').doc(tripID));
 
-				// Subcollections: accommodations, transportation, itinerary
-				for (const sub of ['accommodations', 'transportation', 'itinerary']) {
-					try {
-						const subSnap = await firebase
-							.firestore()
-							.collection(`trips/${tripID}/${sub}`)
-							.get();
-						subSnap.forEach((doc) => pushDelete(doc.ref));
-					} catch {
-						// Subcollection may not exist
-					}
-				}
-
-				const protRef = firebase.firestore().collection('protected').doc(tripID);
-
-				// Try read for protected
-				let protSnap = null;
+			// Subcollections: accommodations, transportation, itinerary
+			for (const sub of ['accommodations', 'transportation', 'itinerary']) {
 				try {
-					protSnap = await protRef.get();
-				} catch {}
-
-				if (protSnap?.exists) {
-					const pin = protSnap.data()?.pin;
-
-					if (pin) {
-						pushDelete(firebase.firestore().doc(`trips/protected/${pin}/${tripID}`));
-						pushDelete(firebase.firestore().doc(`expenses/protected/${pin}/${tripID}`));
-					}
-
-					pushDelete(protRef);
-				} else {
-					// Fallback normal expenses/<tripID>
-					pushDelete(firebase.firestore().collection('expenses').doc(tripID));
+					const subSnap = await firebase
+						.firestore()
+						.collection(`trips/${tripID}/${sub}`)
+						.get();
+					subSnap.forEach((doc) => pushDelete(doc.ref));
+				} catch {
+					// Subcollection may not exist
 				}
 			}
 
-			userData.trips = [];
+			const protRef = firebase.firestore().collection('protected').doc(tripID);
+			let protSnap = null;
+			try {
+				protSnap = await protRef.get();
+			} catch {}
+
+			if (protSnap?.exists) {
+				const pin = protSnap.data()?.pin;
+				if (pin) {
+					pushDelete(firebase.firestore().doc(`trips/protected/${pin}/${tripID}`));
+					pushDelete(firebase.firestore().doc(`expenses/protected/${pin}/${tripID}`));
+				}
+				pushDelete(protRef);
+			} else {
+				pushDelete(firebase.firestore().collection('expenses').doc(tripID));
+			}
 		}
 
-		// Finally update the user document
+		// --- Step 3: Update user document — clear embedded arrays ---
 		ops.push({
 			type: 'set',
 			ref: firebase.firestore().collection('users').doc(uid),
-			data: userData,
+			data: {
+				trips: [],
+				destinations: [],
+				listings: [],
+			},
 		});
 
 		return ops;
@@ -446,19 +452,12 @@ async function restoreAccount(restore) {
 	}
 
 	function buildUserUpdateFromRestore(restore) {
-		const patch = {};
-		const types = ['trips', 'destinations', 'listings'];
-
-		for (const type of types) {
-			const group = restore?.user?.[type];
-			if (!group || Object.keys(group).length === 0) {
-				patch[type] = {};
-				continue;
-			}
-
-			patch[type] = group;
-		}
-
-		return patch;
+		// After migration 15, user doc should only have empty arrays.
+		// Summaries are written to subcollections via collectUserSummaryOps.
+		return {
+			trips: [],
+			destinations: [],
+			listings: [],
+		};
 	}
 }

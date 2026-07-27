@@ -2,25 +2,84 @@
   "trip": {
     "title": "Lollapalooza 2019",
     "currency": "BRL",
-    "start": { "day": 4, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
-    "end": { "day": 8, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+    "start": {
+      "day": 4,
+      "month": 4,
+      "year": 2019,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 8,
+      "month": 4,
+      "year": 2019,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
     "pin": "no-pin",
-    "version": { "lastUpdated": "2019-04-08T00:00:00.000Z" },
-    "visibility": { "light": true, "dark": true },
-    "colors": { "light": "#966313", "dark": "#966313", "active": false },
-    "sharing": { "owner": "", "active": false, "editors": [] },
+    "version": {
+      "lastUpdated": "2019-04-08T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
     "modules": {
-      "destinations": false, "transportation": true, "itinerary": true,
-      "gallery": false, "summary": true, "accommodations": true, "expenses": true
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
     },
     "travelers": [
-      { "id": "gabriel", "name": "Gabriel", "color": "" },
-      { "id": "milton", "name": "Milton", "color": "" }
+      {
+        "id": "gabriel",
+        "name": "Gabriel",
+        "color": ""
+      },
+      {
+        "id": "milton",
+        "name": "Milton",
+        "color": ""
+      }
     ],
-    "links": { "maps": "", "attachments": "", "active": false, "drive": "", "pdf": "", "ppt": "", "sheet": "", "vaccine": "" },
-    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
     "destinationRefs": [],
-    "image": { "dark": "", "light": "", "background": "", "active": false }
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
   },
   "accommodations": {
     "acc-001": {
@@ -28,8 +87,22 @@
       "description": "Airbnb na região dos Jardins, São Paulo",
       "address": "Jardins, São Paulo",
       "dates": {
-        "checkIn": { "day": 4, "month": 4, "year": 2019, "hour": 14, "minute": 0, "second": 0 },
-        "checkOut": { "day": 8, "month": 4, "year": 2019, "hour": 12, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 4,
+          "month": 4,
+          "year": 2019,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 8,
+          "month": 4,
+          "year": 2019,
+          "hour": 12,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -38,14 +111,33 @@
     }
   },
   "transportation": {
-    "_settings": { "viewMode": "simple" },
+    "_settings": {
+      "viewMode": "simple"
+    },
     "leg-001": {
       "type": "flight",
       "company": "GOL",
-      "points": { "origin": "CNF (Belo Horizonte)", "destination": "CGH (São Paulo)" },
+      "points": {
+        "origin": "CNF (Belo Horizonte)",
+        "destination": "CGH (São Paulo)"
+      },
       "dates": {
-        "departure": { "day": 4, "month": 4, "year": 2019, "hour": 7, "minute": 10, "second": 0 },
-        "arrival": { "day": 4, "month": 4, "year": 2019, "hour": 8, "minute": 30, "second": 0 }
+        "departure": {
+          "day": 4,
+          "month": 4,
+          "year": 2019,
+          "hour": 7,
+          "minute": 10,
+          "second": 0
+        },
+        "arrival": {
+          "day": 4,
+          "month": 4,
+          "year": 2019,
+          "hour": 8,
+          "minute": 30,
+          "second": 0
+        }
       },
       "duration": "1h20",
       "direction": "departure",
@@ -56,10 +148,27 @@
     "leg-002": {
       "type": "flight",
       "company": "GOL",
-      "points": { "origin": "CGH (São Paulo)", "destination": "CNF (Belo Horizonte)" },
+      "points": {
+        "origin": "CGH (São Paulo)",
+        "destination": "CNF (Belo Horizonte)"
+      },
       "dates": {
-        "departure": { "day": 8, "month": 4, "year": 2019, "hour": 17, "minute": 55, "second": 0 },
-        "arrival": { "day": 8, "month": 4, "year": 2019, "hour": 19, "minute": 5, "second": 0 }
+        "departure": {
+          "day": 8,
+          "month": 4,
+          "year": 2019,
+          "hour": 17,
+          "minute": 55,
+          "second": 0
+        },
+        "arrival": {
+          "day": 8,
+          "month": 4,
+          "year": 2019,
+          "hour": 19,
+          "minute": 5,
+          "second": 0
+        }
       },
       "duration": "1h10",
       "direction": "return",
@@ -70,119 +179,681 @@
   },
   "itinerary": {
     "20190404": {
-      "title": { "value": "Chegada e Passeios em SP", "showDestinations": false, "translate": false },
-      "date": { "day": 4, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Chegada e Passeios em SP",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 4,
+        "month": 4,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "title": "Ir ao Aeroporto", "description": "Paps", "category": "transport" },
-        { "title": "Voo CNF → CGH", "description": "Gol OHLGGC. 07:10–08:30", "category": "transport" }
+        {
+          "title": "Ir ao Aeroporto",
+          "description": "Paps",
+          "category": "transport",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Voo CNF → CGH",
+          "description": "Gol OHLGGC. 07:10–08:30",
+          "category": "transport",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "morning": [
-        { "title": "Ônibus + Metrô até o Airbnb", "description": "", "category": "transport" },
-        { "title": "Airbnb", "description": "Deixar mala", "category": "accommodation" },
-        { "title": "Museu da Diversidade Sexual", "description": "", "category": "attraction" },
-        { "title": "Memorial da Imigração", "description": "", "category": "attraction" }
+        {
+          "title": "Ônibus + Metrô até o Airbnb",
+          "description": "",
+          "category": "transport",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Airbnb",
+          "description": "Deixar mala",
+          "category": "accommodation",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Museu da Diversidade Sexual",
+          "description": "",
+          "category": "attraction",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Memorial da Imigração",
+          "description": "",
+          "category": "attraction",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Napoli Centrale", "description": "Almoço", "category": "food" },
-        { "title": "Parque Villa Lobos", "description": "", "category": "attraction" },
-        { "title": "Liberdade", "description": "Suprimentos + Compras", "category": "shopping" },
-        { "title": "Liberdade (Lanche)", "description": "Bubble", "category": "food" }
+        {
+          "title": "Napoli Centrale",
+          "description": "Almoço",
+          "category": "food",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Parque Villa Lobos",
+          "description": "",
+          "category": "attraction",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Liberdade",
+          "description": "Suprimentos + Compras",
+          "category": "shopping",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Liberdade (Lanche)",
+          "description": "Bubble",
+          "category": "food",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Airbnb / Livre", "description": "Descanso", "category": "accommodation" },
-        { "title": "Onix Day", "description": "", "category": "entertainment" }
+        {
+          "title": "Airbnb / Livre",
+          "description": "Descanso",
+          "category": "accommodation",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Onix Day",
+          "description": "",
+          "category": "entertainment",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190405": {
-      "title": { "value": "Lollapalooza Dia 1", "showDestinations": false, "translate": false },
-      "date": { "day": 5, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Lollapalooza Dia 1",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 5,
+        "month": 4,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Airbnb", "description": "Arrumar para o Lolla", "category": "accommodation" },
-        { "title": "Paulista", "description": "Ir nos Mirantes", "category": "attraction" },
-        { "title": "Taco Bell", "description": "Almoço", "category": "food" }
+        {
+          "title": "Airbnb",
+          "description": "Arrumar para o Lolla",
+          "category": "accommodation",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Paulista",
+          "description": "Ir nos Mirantes",
+          "category": "attraction",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Taco Bell",
+          "description": "Almoço",
+          "category": "food",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Lollapalooza", "description": "Shows: Macklemore, Portugal The Man, Foals, entre outros", "category": "entertainment" }
+        {
+          "title": "Lollapalooza",
+          "description": "Shows: Macklemore, Portugal The Man, Foals, entre outros",
+          "category": "entertainment",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Lollapalooza", "description": "Continuação dos shows", "category": "entertainment" },
-        { "title": "Airbnb", "description": "Delivery ou sair na região", "category": "food" }
+        {
+          "title": "Lollapalooza",
+          "description": "Continuação dos shows",
+          "category": "entertainment",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Airbnb",
+          "description": "Delivery ou sair na região",
+          "category": "food",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190406": {
-      "title": { "value": "Lollapalooza Dia 2", "showDestinations": false, "translate": false },
-      "date": { "day": 6, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Lollapalooza Dia 2",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 6,
+        "month": 4,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Livre", "description": "Descanso ou passeio rápido", "category": "free" },
-        { "title": "Airbnb", "description": "Arrumar para o Lolla", "category": "accommodation" }
+        {
+          "title": "Livre",
+          "description": "Descanso ou passeio rápido",
+          "category": "free",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Airbnb",
+          "description": "Arrumar para o Lolla",
+          "category": "accommodation",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Lollapalooza", "description": "Almoçar lá", "category": "entertainment" }
+        {
+          "title": "Lollapalooza",
+          "description": "Almoçar lá",
+          "category": "entertainment",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Lollapalooza", "description": "Continuação dos shows", "category": "entertainment" },
-        { "title": "Blitz Haus", "description": "Rolé LGBTQ+", "category": "entertainment" },
-        { "title": "Airbnb", "description": "Descanso", "category": "accommodation" }
+        {
+          "title": "Lollapalooza",
+          "description": "Continuação dos shows",
+          "category": "entertainment",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Blitz Haus",
+          "description": "Rolé LGBTQ+",
+          "category": "entertainment",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Airbnb",
+          "description": "Descanso",
+          "category": "accommodation",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190407": {
-      "title": { "value": "Lollapalooza Dia 3", "showDestinations": false, "translate": false },
-      "date": { "day": 7, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Lollapalooza Dia 3",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 7,
+        "month": 4,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Airbnb", "description": "Arrumar para o Lolla", "category": "accommodation" },
-        { "title": "O Burger", "description": "Almoço", "category": "food" }
+        {
+          "title": "Airbnb",
+          "description": "Arrumar para o Lolla",
+          "category": "accommodation",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "O Burger",
+          "description": "Almoço",
+          "category": "food",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Lollapalooza", "description": "Último dia de festival", "category": "entertainment" }
+        {
+          "title": "Lollapalooza",
+          "description": "Último dia de festival",
+          "category": "entertainment",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Lollapalooza", "description": "Encerramento", "category": "entertainment" },
-        { "title": "Airbnb", "description": "Delivery ou sair na região", "category": "food" }
+        {
+          "title": "Lollapalooza",
+          "description": "Encerramento",
+          "category": "entertainment",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Airbnb",
+          "description": "Delivery ou sair na região",
+          "category": "food",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190408": {
-      "title": { "value": "Retorno", "showDestinations": false, "translate": false },
-      "date": { "day": 8, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 8,
+        "month": 4,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
-      "earlyMorning": [{ "title": "Airbnb", "description": "Check-out e arrumar", "category": "accommodation" }],
+      "earlyMorning": [
+        {
+          "title": "Airbnb",
+          "description": "Check-out e arrumar",
+          "category": "accommodation",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
       "morning": [
-        { "title": "Livre", "description": "Últimas compras ou passeio", "category": "free" },
-        { "title": "Almoço", "description": "", "category": "food" }
+        {
+          "title": "Livre",
+          "description": "Últimas compras ou passeio",
+          "category": "free",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Almoço",
+          "description": "",
+          "category": "food",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Voo CGH → CNF", "description": "Gol OHLGGC. 17:55–19:05", "category": "transport" }
+        {
+          "title": "Voo CGH → CNF",
+          "description": "Gol OHLGGC. 17:55–19:05",
+          "category": "transport",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": []
     }
   },
   "expenses": {
     "duringTrip": [
-      { "id": "exp-001", "title": "Airbnb Jardins (Gabriel)", "amount": 650, "currency": "BRL", "date": { "day": 4, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "accommodation", "traveler": "gabriel", "notes": "4 diárias" },
-      { "id": "exp-002", "title": "Airbnb Jardins (Milton)", "amount": 489, "currency": "BRL", "date": { "day": 4, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "accommodation", "traveler": "milton", "notes": "4 diárias" },
-      { "id": "exp-003", "title": "Alimentação (Gabriel)", "amount": 482.20, "currency": "BRL", "date": { "day": 8, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "food", "traveler": "gabriel", "notes": "Total de alimentação durante a viagem" },
-      { "id": "exp-004", "title": "Alimentação (Milton)", "amount": 260.26, "currency": "BRL", "date": { "day": 8, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "food", "traveler": "milton", "notes": "Total de alimentação durante a viagem" },
-      { "id": "exp-005", "title": "Atrações/Eventos", "amount": 66, "currency": "BRL", "date": { "day": 8, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "entertainment", "traveler": "gabriel", "notes": "Memorial Imigração, Blitz Haus, etc." },
-      { "id": "exp-006", "title": "Compras (Gabriel)", "amount": 240.87, "currency": "BRL", "date": { "day": 8, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "shopping", "traveler": "gabriel", "notes": "Suprimentos e compras na Liberdade" },
-      { "id": "exp-007", "title": "Compras (Milton)", "amount": 58.77, "currency": "BRL", "date": { "day": 8, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "shopping", "traveler": "milton", "notes": "" },
-      { "id": "exp-008", "title": "Transporte Público", "amount": 50, "currency": "BRL", "date": { "day": 8, "month": 4, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "transport", "traveler": "gabriel", "notes": "Metrô e ônibus durante a viagem" }
+      {
+        "title": "Airbnb Jardins (Gabriel)",
+        "currency": "BRL",
+        "notes": "4 diárias",
+        "name": "",
+        "price": 650,
+        "person": "gabriel"
+      },
+      {
+        "title": "Airbnb Jardins (Milton)",
+        "currency": "BRL",
+        "notes": "4 diárias",
+        "name": "",
+        "price": 489,
+        "person": "milton"
+      },
+      {
+        "title": "Alimentação (Gabriel)",
+        "currency": "BRL",
+        "notes": "Total de alimentação durante a viagem",
+        "name": "",
+        "price": 482.2,
+        "person": "gabriel"
+      },
+      {
+        "title": "Alimentação (Milton)",
+        "currency": "BRL",
+        "notes": "Total de alimentação durante a viagem",
+        "name": "",
+        "price": 260.26,
+        "person": "milton"
+      },
+      {
+        "title": "Atrações/Eventos",
+        "currency": "BRL",
+        "notes": "Memorial Imigração, Blitz Haus, etc.",
+        "name": "",
+        "price": 66,
+        "person": "gabriel"
+      },
+      {
+        "title": "Compras (Gabriel)",
+        "currency": "BRL",
+        "notes": "Suprimentos e compras na Liberdade",
+        "name": "",
+        "price": 240.87,
+        "person": "gabriel"
+      },
+      {
+        "title": "Compras (Milton)",
+        "currency": "BRL",
+        "notes": "",
+        "name": "",
+        "price": 58.77,
+        "person": "milton"
+      },
+      {
+        "title": "Transporte Público",
+        "currency": "BRL",
+        "notes": "Metrô e ônibus durante a viagem",
+        "name": "",
+        "price": 50,
+        "person": "gabriel"
+      }
     ],
     "preTrip": [
-      { "id": "exp-009", "title": "Ingresso Lolla Pass", "amount": 820, "currency": "BRL", "date": { "day": 22, "month": 9, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "category": "entertainment", "traveler": "gabriel", "notes": "Lolla Pass R$663 + taxas R$156.60. Transação 180924,4330" },
-      { "id": "exp-010", "title": "Passagem Aérea (Ida e Volta)", "amount": 213, "currency": "BRL", "date": { "day": 22, "month": 9, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "category": "transport", "traveler": "gabriel", "notes": "GOL. CNF–CGH–CNF. Localizador OHLGGC" }
+      {
+        "title": "Ingresso Lolla Pass",
+        "currency": "BRL",
+        "notes": "Lolla Pass R$663 + taxas R$156.60. Transação 180924,4330",
+        "name": "",
+        "price": 820,
+        "person": "gabriel"
+      },
+      {
+        "title": "Passagem Aérea (Ida e Volta)",
+        "currency": "BRL",
+        "notes": "GOL. CNF–CGH–CNF. Localizador OHLGGC",
+        "name": "",
+        "price": 213,
+        "person": "gabriel"
+      }
     ],
     "currency": "BRL",
     "travelers": {
-      "gabriel": { "name": "Gabriel", "color": "" },
-      "milton": { "name": "Milton", "color": "" }
+      "gabriel": "Gabriel",
+      "milton": "Milton"
     },
-    "sharing": { "owner": "", "active": true, "editors": [] },
-    "version": { "lastUpdated": "2019-04-08T00:00:00.000Z" }
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2019-04-08T00:00:00.000Z"
+    }
   }
 }

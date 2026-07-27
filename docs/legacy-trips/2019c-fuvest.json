@@ -2,25 +2,84 @@
   "trip": {
     "title": "FUVEST 2019",
     "currency": "BRL",
-    "start": { "day": 24, "month": 11, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
-    "end": { "day": 27, "month": 11, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+    "start": {
+      "day": 24,
+      "month": 11,
+      "year": 2019,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 27,
+      "month": 11,
+      "year": 2019,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
     "pin": "no-pin",
-    "version": { "lastUpdated": "2019-11-27T00:00:00.000Z" },
-    "visibility": { "light": true, "dark": true },
-    "colors": { "light": "#966313", "dark": "#966313", "active": false },
-    "sharing": { "owner": "", "active": false, "editors": [] },
+    "version": {
+      "lastUpdated": "2019-11-27T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
     "modules": {
-      "destinations": false, "transportation": true, "itinerary": true,
-      "gallery": false, "summary": true, "accommodations": true, "expenses": true
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
     },
     "travelers": [
-      { "id": "gabriel", "name": "Gabriel", "color": "" },
-      { "id": "milton", "name": "Milton", "color": "" }
+      {
+        "id": "gabriel",
+        "name": "Gabriel",
+        "color": ""
+      },
+      {
+        "id": "milton",
+        "name": "Milton",
+        "color": ""
+      }
     ],
-    "links": { "maps": "", "attachments": "", "active": false, "drive": "", "pdf": "", "ppt": "", "sheet": "", "vaccine": "" },
-    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
     "destinationRefs": [],
-    "image": { "dark": "", "light": "", "background": "", "active": false }
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
   },
   "accommodations": {
     "acc-001": {
@@ -28,8 +87,22 @@
       "description": "Airbnb na região dos Jardins, São Paulo",
       "address": "Jardins, São Paulo",
       "dates": {
-        "checkIn": { "day": 24, "month": 11, "year": 2019, "hour": 14, "minute": 0, "second": 0 },
-        "checkOut": { "day": 27, "month": 11, "year": 2019, "hour": 12, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 24,
+          "month": 11,
+          "year": 2019,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 27,
+          "month": 11,
+          "year": 2019,
+          "hour": 12,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -38,14 +111,33 @@
     }
   },
   "transportation": {
-    "_settings": { "viewMode": "simple" },
+    "_settings": {
+      "viewMode": "simple"
+    },
     "leg-001": {
       "type": "flight",
       "company": "GOL",
-      "points": { "origin": "CNF (Belo Horizonte)", "destination": "CGH (São Paulo)" },
+      "points": {
+        "origin": "CNF (Belo Horizonte)",
+        "destination": "CGH (São Paulo)"
+      },
       "dates": {
-        "departure": { "day": 24, "month": 11, "year": 2019, "hour": 7, "minute": 0, "second": 0 },
-        "arrival": { "day": 24, "month": 11, "year": 2019, "hour": 8, "minute": 20, "second": 0 }
+        "departure": {
+          "day": 24,
+          "month": 11,
+          "year": 2019,
+          "hour": 7,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 24,
+          "month": 11,
+          "year": 2019,
+          "hour": 8,
+          "minute": 20,
+          "second": 0
+        }
       },
       "duration": "1h20",
       "direction": "departure",
@@ -56,10 +148,27 @@
     "leg-002": {
       "type": "flight",
       "company": "GOL",
-      "points": { "origin": "CGH (São Paulo)", "destination": "CNF (Belo Horizonte)" },
+      "points": {
+        "origin": "CGH (São Paulo)",
+        "destination": "CNF (Belo Horizonte)"
+      },
       "dates": {
-        "departure": { "day": 27, "month": 11, "year": 2019, "hour": 17, "minute": 0, "second": 0 },
-        "arrival": { "day": 27, "month": 11, "year": 2019, "hour": 18, "minute": 0, "second": 0 }
+        "departure": {
+          "day": 27,
+          "month": 11,
+          "year": 2019,
+          "hour": 17,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 27,
+          "month": 11,
+          "year": 2019,
+          "hour": 18,
+          "minute": 0,
+          "second": 0
+        }
       },
       "duration": "",
       "direction": "return",
@@ -70,91 +179,491 @@
   },
   "itinerary": {
     "20191124": {
-      "title": { "value": "Chegada e Passeios", "showDestinations": false, "translate": false },
-      "date": { "day": 24, "month": 11, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Chegada e Passeios",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 24,
+        "month": 11,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "title": "Ir ao Aeroporto", "description": "Pai", "category": "transport" },
-        { "title": "Voo CNF → CGH", "description": "Gol HMH8SG. Reserva Trip 10770551517", "category": "transport" }
+        {
+          "title": "Ir ao Aeroporto",
+          "description": "Pai",
+          "category": "transport",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Voo CNF → CGH",
+          "description": "Gol HMH8SG. Reserva Trip 10770551517",
+          "category": "transport",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "morning": [
-        { "title": "Ônibus + Metrô até a Paulista", "description": "", "category": "transport" },
-        { "title": "Paulista", "description": "Café da manhã", "category": "food" },
-        { "title": "Japan House", "description": "", "category": "attraction" },
-        { "title": "Casa das Rosas", "description": "", "category": "attraction" }
+        {
+          "title": "Ônibus + Metrô até a Paulista",
+          "description": "",
+          "category": "transport",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Paulista",
+          "description": "Café da manhã",
+          "category": "food",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Japan House",
+          "description": "",
+          "category": "attraction",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Casa das Rosas",
+          "description": "",
+          "category": "attraction",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Metrô + Ônibus", "description": "Deslocamento", "category": "transport" },
-        { "title": "The Burger Map", "description": "Almoço", "category": "food" },
-        { "title": "Airbnb", "description": "Check-in", "category": "accommodation" },
-        { "title": "Liberdade", "description": "Suprimentos", "category": "shopping" },
-        { "title": "Bubble Kill", "description": "Lanche", "category": "food" }
+        {
+          "title": "Metrô + Ônibus",
+          "description": "Deslocamento",
+          "category": "transport",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "The Burger Map",
+          "description": "Almoço",
+          "category": "food",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Airbnb",
+          "description": "Check-in",
+          "category": "accommodation",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Liberdade",
+          "description": "Suprimentos",
+          "category": "shopping",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Bubble Kill",
+          "description": "Lanche",
+          "category": "food",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Mirante 9 de Julho", "description": "", "category": "attraction" }
+        {
+          "title": "Mirante 9 de Julho",
+          "description": "",
+          "category": "attraction",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20191125": {
-      "title": { "value": "Prova FUVEST", "showDestinations": false, "translate": false },
-      "date": { "day": 25, "month": 11, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Prova FUVEST",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 25,
+        "month": 11,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
-      "earlyMorning": [{ "title": "Airbnb", "description": "Preparação para a prova", "category": "accommodation" }],
+      "earlyMorning": [
+        {
+          "title": "Airbnb",
+          "description": "Preparação para a prova",
+          "category": "accommodation",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
       "morning": [
-        { "title": "Prova FUVEST", "description": "1ª Fase", "category": "event" }
+        {
+          "title": "Prova FUVEST",
+          "description": "1ª Fase",
+          "category": "event",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Prova FUVEST", "description": "Continuação", "category": "event" },
-        { "title": "Livre", "description": "Descanso ou passeio leve", "category": "free" }
+        {
+          "title": "Prova FUVEST",
+          "description": "Continuação",
+          "category": "event",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Livre",
+          "description": "Descanso ou passeio leve",
+          "category": "free",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Jantar", "description": "Comemoração ou descanso", "category": "food" }
+        {
+          "title": "Jantar",
+          "description": "Comemoração ou descanso",
+          "category": "food",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20191126": {
-      "title": { "value": "Passeios em SP", "showDestinations": false, "translate": false },
-      "date": { "day": 26, "month": 11, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Passeios em SP",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 26,
+        "month": 11,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Mirante Sesc Paulista", "description": "Vista aérea da cidade", "category": "attraction" },
-        { "title": "Passeio pela Paulista", "description": "", "category": "attraction" }
+        {
+          "title": "Mirante Sesc Paulista",
+          "description": "Vista aérea da cidade",
+          "category": "attraction",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Passeio pela Paulista",
+          "description": "",
+          "category": "attraction",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Modern Mamma Osteria", "description": "Almoço", "category": "food" },
-        { "title": "Compras", "description": "", "category": "shopping" }
+        {
+          "title": "Modern Mamma Osteria",
+          "description": "Almoço",
+          "category": "food",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Compras",
+          "description": "",
+          "category": "shopping",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Saída Noturna", "description": "", "category": "entertainment" }
+        {
+          "title": "Saída Noturna",
+          "description": "",
+          "category": "entertainment",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20191127": {
-      "title": { "value": "Retorno", "showDestinations": false, "translate": false },
-      "date": { "day": 27, "month": 11, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 27,
+        "month": 11,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
-      "earlyMorning": [{ "title": "Airbnb", "description": "Check-out", "category": "accommodation" }],
+      "earlyMorning": [
+        {
+          "title": "Airbnb",
+          "description": "Check-out",
+          "category": "accommodation",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
+      ],
       "morning": [
-        { "title": "Livre", "description": "Último passeio ou compras", "category": "free" }
+        {
+          "title": "Livre",
+          "description": "Último passeio ou compras",
+          "category": "free",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Voo CGH → CNF", "description": "Gol HMH8SG", "category": "transport" }
+        {
+          "title": "Voo CGH → CNF",
+          "description": "Gol HMH8SG",
+          "category": "transport",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": []
     }
   },
   "expenses": {
     "duringTrip": [
-      { "id": "exp-001", "title": "Gastos durante a viagem (Gabriel)", "amount": 241, "currency": "BRL", "date": { "day": 27, "month": 11, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "food", "traveler": "gabriel", "notes": "Alimentação, transporte público, compras" },
-      { "id": "exp-002", "title": "Gastos durante a viagem (Milton)", "amount": 1156.44, "currency": "BRL", "date": { "day": 27, "month": 11, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "food", "traveler": "milton", "notes": "Alimentação, transporte, compras" }
+      {
+        "title": "Gastos durante a viagem (Gabriel)",
+        "currency": "BRL",
+        "notes": "Alimentação, transporte público, compras",
+        "name": "",
+        "price": 241,
+        "person": "gabriel"
+      },
+      {
+        "title": "Gastos durante a viagem (Milton)",
+        "currency": "BRL",
+        "notes": "Alimentação, transporte, compras",
+        "name": "",
+        "price": 1156.44,
+        "person": "milton"
+      }
     ],
     "preTrip": [
-      { "id": "exp-003", "title": "Gastos antecipados (Milton)", "amount": 1469.09, "currency": "BRL", "date": { "day": 1, "month": 11, "year": 2019, "hour": 0, "minute": 0, "second": 0 }, "category": "accommodation", "traveler": "milton", "notes": "Passagem aérea + Airbnb + taxas" }
+      {
+        "title": "Gastos antecipados (Milton)",
+        "currency": "BRL",
+        "notes": "Passagem aérea + Airbnb + taxas",
+        "name": "",
+        "price": 1469.09,
+        "person": "milton"
+      }
     ],
     "currency": "BRL",
     "travelers": {
-      "gabriel": { "name": "Gabriel", "color": "" },
-      "milton": { "name": "Milton", "color": "" }
+      "gabriel": "Gabriel",
+      "milton": "Milton"
     },
-    "sharing": { "owner": "", "active": true, "editors": [] },
-    "version": { "lastUpdated": "2019-11-27T00:00:00.000Z" }
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2019-11-27T00:00:00.000Z"
+    }
   }
 }

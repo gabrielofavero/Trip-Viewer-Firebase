@@ -138,20 +138,24 @@
             <div class="settings-section">
               <h3 class="settings-section-title" data-translate="labels.advanced"></h3>
               <div class="settings-actions">
-                <button class="btn btn-secondary-theme settings-action-btn" data-action="backup-account">
-                  <i class="iconify" data-icon="material-symbols:cloud-download"></i>
-                  <span data-translate="account.backup.title"></span>
-                </button>
-                <button class="btn btn-secondary-theme settings-action-btn" data-action="restore-account">
-                  <i class="iconify" data-icon="material-symbols:cloud-upload"></i>
-                  <span data-translate="account.restore.title"></span>
-                </button>
-                <input type="file" id="restore-account-input" accept="application/json" style="display:none">
                 <button class="btn btn-secondary-theme settings-action-btn" data-action="import-documents">
                   <i class="iconify" data-icon="material-symbols:document-scanner-rounded"></i>
                   <span data-translate="account.import_documents.title"></span>
                 </button>
                 <input type="file" id="import-documents-input" accept="application/json" multiple style="display:none">
+                <button class="btn btn-secondary-theme settings-action-btn" data-action="export-documents">
+                  <i class="iconify" data-icon="material-symbols:ios-share"></i>
+                  <span data-translate="account.export_documents.title"></span>
+                </button>
+                <button class="btn btn-secondary-theme settings-action-btn" data-action="restore-account">
+                  <i class="iconify" data-icon="material-symbols:cloud-upload"></i>
+                  <span data-translate="account.restore.title"></span>
+                </button>
+                <button class="btn btn-secondary-theme settings-action-btn" data-action="backup-account">
+                  <i class="iconify" data-icon="material-symbols:cloud-download"></i>
+                  <span data-translate="account.backup.title"></span>
+                </button>
+                <input type="file" id="restore-account-input" accept="application/json" style="display:none">
               </div>
               <div class="settings-danger">
                 <a id="settings-delete-account" href="#" data-action="open-delete-modal" data-translate="account.delete.title"></a>

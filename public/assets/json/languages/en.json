@@ -2,8 +2,10 @@
 	"account": {
 		"settings": "Settings",
 		"backup": {
-			"title": "Backup All",
+			"title": "Export Account",
 			"prompt": "Would you like to back up sensitive trip data? You will need to enter the access PIN for each protected trip",
+			"security_warning": "⚠️ Exported files contain your trip data in plain text, including any protected information (reservation codes, booking links) if PINs are provided. Anyone with access to the file can read this data. Store exported files securely and delete them when no longer needed.",
+			"pin_instruction": "Enter the access PINs for the trips below. If you leave any blank, the protected data for that trip will not be backed up.",
 			"success": "The account backup was completed successfully",
 			"partial": {
 				"title": "Backup partially completed",
@@ -16,7 +18,7 @@
 			}
 		},
 		"restore": {
-			"title": "Restore All",
+			"title": "Import Account",
 			"error_title": "Account restoration failed",
 			"prompt": "Are you sure you want to restore your account from a backup? This will overwrite your current trip data. This action cannot be undone",
 			"invalid_file": "The selected file is not a valid backup file",
@@ -27,10 +29,29 @@
 		"import_documents": {
 			"title": "Import Document(s)",
 			"error_title": "Import failed",
-			"invalid_file": "The selected file is not a valid trip document. Expected a JSON file with a \"trip\" property.",
-			"none_imported": "No documents could be imported. Check that the files are valid trip documents.",
+			"invalid_file": "The selected file is not a valid export document. Expected a JSON file with a \"trip\", \"destination\", or \"listing\" property.",
+			"none_imported": "No documents could be imported. Check that the files are valid export documents.",
 			"success": "{{count}} document(s) imported successfully!",
-			"untitled": "Untitled Trip"
+			"untitled": "Untitled",
+			"conflict_title": "Conflicting Documents",
+			"conflict_desc": "The following documents already exist in your account and will be duplicated if imported. Are you sure you want to continue?",
+			"complex_hint": "Some documents include destinations that already exist. Choose whether to import only the main documents (trip/listing) without the attached destinations, or cancel.",
+			"override_confirm": "Import All",
+			"import_main_only": "Import Main Documents Only",
+			"in_db": "In your account",
+			"in_file": "In file"
+		},
+		"export_documents": {
+			"title": "Export Document",
+			"select_hint": "Select documents to export",
+			"security_warning": "⚠️ Exported files contain your document data in plain text, including any protected information (reservation codes, booking links) if PINs are provided. Anyone with access to the file can read this data. Store exported files securely and delete them when no longer needed.",
+			"no_documents": "No documents available to export for this category.",
+			"none_selected": "No documents selected for export.",
+			"export_button": "Export Selected",
+			"pin_instruction": "Enter the access PINs for the trips below. If you leave any blank, only unprotected data will be exported for that trip.",
+			"success": "{{count}} document(s) exported successfully!",
+			"partial_success": "{{exported}} document(s) exported successfully ({{failed}} failed).",
+			"failed": "Failed to export documents."
 		},
 		"delete": {
 			"title": "Delete account",
@@ -657,6 +678,7 @@
 			"link": "Reservation link"
 		},
 		"select": "Select",
+		"select_all": "Select All",
 		"other": "Other",
 		"optional": "Optional",
 		"cancel": "Cancel",

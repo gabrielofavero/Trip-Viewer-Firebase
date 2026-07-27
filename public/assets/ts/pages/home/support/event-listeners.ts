@@ -9,6 +9,7 @@ import {
 	importDocumentsOnClickAction,
 	importDocumentsOnFileSelectionAction,
 } from '../../../backup/import-documents.js';
+import { exportDocumentsOnClickAction } from '../../../backup/export-documents.js';
 import {
 	openTripDialog,
 	closeTripDialog,
@@ -90,6 +91,7 @@ export function loadListenersIndex() {
 		'backup-account': () => backupOnClickAction(),
 		'restore-account': () => restoreOnClickAction(),
 		'import-documents': () => importDocumentsOnClickAction(),
+		'export-documents': () => exportDocumentsOnClickAction(),
 		'open-delete-modal': () => openModal(),
 		'close-delete-modal': () => closeModal(),
 		'close-trip-dialog': () => closeTripDialog(),

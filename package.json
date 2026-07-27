@@ -1,32 +1,33 @@
 {
-	"name": "trip-viewer-firebase",
-	"version": "2.30.5",
-	"private": true,
-	"description": "Trip Viewer — Firebase-hosted static frontend",
-	"scripts": {
-		"build": "node scripts/build/build.js",
-		"watch": "node scripts/build/build.js --watch",
-		"clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true }); console.log('dist/ cleaned.');\"",
-		"serve": "firebase serve --only hosting --port 5000",
-		"kill-ports": "powershell -Command \"8085,9099,5000,5001,4000 | ForEach-Object { $c = Get-NetTCPConnection -LocalPort $_ -ErrorAction SilentlyContinue; if ($c) { $c | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }; Write-Host \\\"Killed process on port $_\\\" } else { Write-Host \\\"Port $_ is free\\\" } }\"",
-		"dev": "npm run kill-ports && concurrently -n fn-watch,front-watch,emulators -c yellow,blue,green \"npm --prefix functions run build:watch\" \"npm run watch:fast\" \"firebase emulators:start --import=./.emulator-data --export-on-exit=./.emulator-data\"",
-		"dev:livereload": "npm run kill-ports && concurrently -n fn-watch,front-watch,emulators -c yellow,blue,green \"npm --prefix functions run build:watch\" \"npm run watch\" \"firebase emulators:start --import=./.emulator-data --export-on-exit=./.emulator-data\"",
-		"watch:fast": "node scripts/build/build.js --watch --no-livereload",
-		"typecheck": "tsc --noEmit",
-		"readme": "python scripts/utils/readme.py",
-		"format": "npx biome format --write",
-		"lint": "npx biome lint",
-		"check": "npx biome check",
-		"sync": "python scripts/utils/sync.py",
-		"deploy": "python scripts/build/deploy.py",
-		"export-maps": "python scripts/export-maps-data/export-maps-data.py",
-		"backup": "firebase emulators:export ./.emulator-data"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^2.3.11",
-		"concurrently": "^10.0.3",
-		"esbuild": "^0.25.0",
-		"glob": "^13.0.6",
-		"typescript": "^6.0.3"
-	}
+  "name": "trip-viewer-firebase",
+  "version": "2.30.5",
+  "private": true,
+  "description": "Trip Viewer \u00e2\u20ac\u201d Firebase-hosted static frontend",
+  "scripts": {
+    "build": "node scripts/build/build.js",
+    "watch": "node scripts/build/build.js --watch",
+    "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true }); console.log('dist/ cleaned.');\"",
+    "serve": "firebase serve --only hosting --port 5000",
+    "kill-ports": "powershell -Command \"8085,9099,5000,5001,4000 | ForEach-Object { $c = Get-NetTCPConnection -LocalPort $_ -ErrorAction SilentlyContinue; if ($c) { $c | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }; Write-Host \\\"Killed process on port $_\\\" } else { Write-Host \\\"Port $_ is free\\\" } }\"",
+    "dev": "concurrently -n fn-watch,front-watch,emulators,open -c yellow,blue,green,magenta \"npm --prefix functions run build:watch\" \"npm run watch:fast\" \"firebase emulators:start --import=./.emulator-data --export-on-exit=./.emulator-data\" \"node -e \\\"setTimeout(function(){require('child_process').exec('start http://127.0.0.1:5000')},6000)\\\"\"",
+    "dev:livereload": "concurrently -n fn-watch,front-watch,emulators,open -c yellow,blue,green,magenta \"npm --prefix functions run build:watch\" \"npm run watch\" \"firebase emulators:start --import=./.emulator-data --export-on-exit=./.emulator-data\" \"node -e \\\"setTimeout(function(){require('child_process').exec('start http://127.0.0.1:5000')},6000)\\\"\"",
+    "watch:fast": "node scripts/build/build.js --watch --no-livereload",
+    "typecheck": "tsc --noEmit",
+    "readme": "python scripts/utils/readme.py",
+    "format": "npx biome format --write",
+    "lint": "npx biome lint",
+    "check": "npx biome check",
+    "sync": "python scripts/utils/sync.py",
+    "deploy": "python scripts/build/deploy.py",
+    "export-maps": "python scripts/export-maps-data/export-maps-data.py",
+    "backup": "firebase emulators:export ./.emulator-data",
+    "functions": "npm --prefix functions run build && firebase emulators:start --only functions"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.11",
+    "concurrently": "^10.0.3",
+    "esbuild": "^0.25.0",
+    "glob": "^13.0.6",
+    "typescript": "^6.0.3"
+  }
 }

@@ -316,7 +316,7 @@ export function getButton(button) {
 		case 'cancel':
 			return getCloseButton('labels.cancel', button.action);
 		case 'confirm':
-			return getConfirmButton(button.action);
+			return getConfirmButton(button.action, button.label || 'labels.confirm');
 		case 'delete':
 			return getDeleteButton(button.action);
 		case 'deleteBasic':

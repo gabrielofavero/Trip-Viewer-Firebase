@@ -33,16 +33,16 @@ npm run dev
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 161   | 158  | 3         | 0       |
-| 🏆   | Feature     | F000 | 170   | 138  | 22        | 10      |
-| 📈   | Improvement | M000 | 156   | 131  | 23        | 2       |
-| ⚔️   | Epic        | E000 | 50    | 34   | 9         | 7       |
+| 🏆   | Feature     | F000 | 163   | 139  | 22        | 2       |
+| 📈   | Improvement | M000 | 157   | 132  | 23        | 2       |
+| ⚔️   | Epic        | E000 | 51    | 34   | 9         | 8       |
 
 ## Backlog
 
 ### High Priority
 
-- 🏆 **F170:** Add Maps integration into edit page (hidden if no api key)
 - 🏆 **F168:** Add option to put image in destination (and make index.html see it)
+- 🏆 **F170:** Add Maps integration into edit page (hidden if no api key)
 - 📈 **M153:** Index improvements: 
   - trip/listing destination tags, destination images
 
@@ -60,15 +60,8 @@ npm run dev
 
 ### Low Priority
 
-- ⚔️ **E043:** Offline Mode (Dev Only, POC)
-  - *[🏆F152] Export script — Firestore→JSON + image download + offline HTML generation*
-  - *[🏆F153] Zip packaging + validation + deploy integration*
-  - *[🏆F154] offline-data.js — local JSON data loader (replaces database.ts)*
-  - *[🏆F155] main-offline.ts + page JS adaptation (Firebase-free)*
-  - *[🏆F156] Service Worker + PWA manifest for iOS home-screen support*
-  - *[🏆F157] Image & embed offline fallbacks (thumbnails, placeholders)*
-  - *[🏆F158] Bundle instructions (README.txt) + QA validation flag*
-  - *[🏆F159] Python requirements.txt + wire into pre-commit/deploy pipeline*
+- ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
+- ⚔️ **E043:** Offline Mode
 - ⚔️ **E019:** Implement Sonarqube
 - ⚔️ **E047:** Implement Unit Tests (after TypeScript migration)
 
@@ -82,6 +75,8 @@ npm run dev
 - ⚔️ **E049:** Code translation (PT -> EN)
 - ⚔️ **E050:** Create proper dev env (emulators, data preparation scripts, easy config)
 - 🏆 **F169:** Add option to import only a single trip document
+- 🏆 **F171:** Add single document export
+- 📈 **M157:** Expand single document import/export features by allowing all types
 
 ### June 2026
 - 🐞 **B158:** When clicking on last item of transportation tab, nothing happens

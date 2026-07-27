@@ -1,4 +1,4 @@
-import { getID, getIdFromObjectDB, getURLParams } from '../../utils/dom.js';
+import { getID, getURLParams } from '../../utils/dom.js';
 import { displayError } from '../../utils/messages.js';
 import { isAlreadyLoading, startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { translate } from '../../i18n/translation.js';
@@ -195,6 +195,21 @@ export async function deleteDocument(path, ignoreError = false) {
 	}
 }
 
+/** Delete all documents in a Firestore (sub)collection. Returns the count deleted. */
+export async function deleteSubcollection(collectionPath: string): Promise<number> {
+	const snapshot = await firebase.firestore().collection(collectionPath).get();
+	if (snapshot.empty) return 0;
+
+	const batchOps = createBatchOps();
+	snapshot.docs.forEach((doc) => batchOps.delete(doc.ref));
+	await batchOps.commit();
+
+	incrementWrites(
+		snapshot.docs.map((doc) => ({ type: 'delete', path: doc.ref.path })),
+	);
+	return snapshot.size;
+}
+
 // Business logic functions
 export function createBatchOps() {
 	const db = firebase.firestore();
@@ -332,11 +347,21 @@ export async function deleteUserObjectDB(id, type) {
 	const uid = await getUID();
 	if (uid) {
 		const userData = await getUserData(uid);
-		let dataArray = userData[type];
-		dataArray = dataArray.filter((item) => item !== id);
+		const existing = userData[type];
 
-		let result = {};
-		result[type] = dataArray;
+		// Support both array format (legacy) and object format (current, keyed by ID)
+		let updated: any;
+		if (Array.isArray(existing)) {
+			updated = existing.filter((item) => item !== id);
+		} else if (existing && typeof existing === 'object') {
+			updated = { ...existing };
+			delete updated[id];
+		} else {
+			updated = {};
+		}
+
+		const result: Record<string, any> = {};
+		result[type] = updated;
 
 		update(`${COLLECTION.USERS}/${uid}/`, result);
 
@@ -355,73 +380,86 @@ export async function deleteAccount() {
 
 export async function deleteAccountDocuments() {
 	const uid = await getUID();
-	const userData = await getUserData(uid);
 
-	const deleteOps = [];
+	const deleteOps: Promise<void>[] = [];
 
-	const safePushDelete = (ref) => {
+	const safePushDelete = (ref: any) => {
 		deleteOps.push(
 			ref.delete().then(
 				() => console.log('Deleted:', ref.path),
-				(err) => console.warn('⚠️ Failed:', ref.path, err.message),
+				(err: any) => console.warn('⚠️ Failed:', ref.path, err.message),
 			),
 		);
 	};
 
-	// --- CASE A: destinations + listings ---
+	// --- Step 1: Discover document IDs from summary subcollections ---
+	const summaryIds: Record<string, string[]> = {
+		trips: [],
+		destinations: [],
+		listings: [],
+	};
+
+	for (const [type, subName] of [
+		['trips', SUBCOLLECTION.TRIP_SUMMARIES],
+		['destinations', SUBCOLLECTION.DESTINATION_SUMMARIES],
+		['listings', SUBCOLLECTION.LISTING_SUMMARIES],
+	] as const) {
+		try {
+			const subSnap = await firebase
+				.firestore()
+				.collection(`${COLLECTION.USERS}/${uid}/${subName}`)
+				.get();
+			subSnap.forEach((doc) => {
+				summaryIds[type].push(doc.id);
+				safePushDelete(doc.ref); // Delete the summary doc
+			});
+		} catch {
+			// Subcollection may not exist
+		}
+	}
+
+	// --- Step 2: Delete destinations + listings ---
 	for (const type of [COLLECTION.DESTINATIONS, COLLECTION.LISTINGS]) {
-		const ids = userData[type] ?? [];
-		for (const id of ids) {
-			const ref = firebase.firestore().collection(type).doc(id);
-			safePushDelete(ref);
+		const key = type === COLLECTION.DESTINATIONS ? 'destinations' : 'listings';
+		for (const id of summaryIds[key]) {
+			safePushDelete(firebase.firestore().collection(type).doc(id));
 		}
-		userData[type] = [];
 	}
 
-	// --- CASE B: trips ---
-	if (Array.isArray(userData.trips)) {
-		for (const tripID of userData.trips) {
-			const tripRef = firebase.firestore().collection(COLLECTION.TRIPS).doc(tripID);
-			safePushDelete(tripRef);
+	// --- Step 3: Delete trips (with protected data, expenses, and subcollections) ---
+	for (const tripID of summaryIds.trips) {
+		safePushDelete(firebase.firestore().collection(COLLECTION.TRIPS).doc(tripID));
 
-			const protRef = firebase.firestore().collection(COLLECTION.PROTECTED).doc(tripID);
-
-			// Read protRef (read must be awaited, deletes can be parallel)
-			let protSnap = null;
-			try {
-				protSnap = await protRef.get();
-			} catch (e) {
-				console.warn('⚠️ Failed reading:', protRef.path, e.message);
-			}
-
-			if (protSnap?.exists) {
-				const pin = protSnap.data()?.pin;
-
-				if (pin) {
-					safePushDelete(
-						firebase.firestore().doc(`${COLLECTION.TRIPS}/protected/${pin}/${tripID}`),
-					);
-					safePushDelete(
-						firebase.firestore().doc(`${COLLECTION.EXPENSES}/protected/${pin}/${tripID}`),
-					);
-				}
-
-				safePushDelete(protRef);
-			} else {
-				const expensesRef = firebase.firestore().collection(COLLECTION.EXPENSES).doc(tripID);
-				safePushDelete(expensesRef);
-			}
+		const protRef = firebase.firestore().collection(COLLECTION.PROTECTED).doc(tripID);
+		let protSnap: any = null;
+		try {
+			protSnap = await protRef.get();
+		} catch (e: any) {
+			console.warn('⚠️ Failed reading:', protRef.path, e.message);
 		}
 
-		userData.trips = [];
+		if (protSnap?.exists) {
+			const pin = protSnap.data()?.pin;
+			if (pin) {
+				safePushDelete(
+					firebase.firestore().doc(`${COLLECTION.TRIPS}/protected/${pin}/${tripID}`),
+				);
+				safePushDelete(
+					firebase.firestore().doc(`${COLLECTION.EXPENSES}/protected/${pin}/${tripID}`),
+				);
+			}
+			safePushDelete(protRef);
+		} else {
+			safePushDelete(firebase.firestore().collection(COLLECTION.EXPENSES).doc(tripID));
+		}
 	}
 
-	// --- Update user object individually (not batched) ---
+	// --- Step 4: Update user document — clear embedded arrays ---
 	const userRef = firebase.firestore().collection(COLLECTION.USERS).doc(uid);
 	deleteOps.push(
-		userRef.update(userData).then(
+		userRef.update({ trips: [], destinations: [], listings: [] }).then(
 			() => console.log('Updated user:', userRef.path),
-			(err) => console.warn('⚠️ Failed updating user:', userRef.path, err.message),
+			(err: any) => console.warn('⚠️ Failed updating user:', userRef.path, err.message),
 		),
 	);
 
@@ -454,11 +492,11 @@ export async function newUserObjectDB(object, type) {
 		const result = await create(type, object);
 		console.log(`Document created in ${type}:`);
 		console.log(result);
-		if (result.data) {
-			const id = getIdFromObjectDB(result);
-			addToUserArray(type, id);
-			return result;
-		}
+		// Note: Summary subcollection management is handled by the service layer
+		// (trip.service.ts / destination.service.ts). The legacy addToUserArray
+		// call that wrote IDs to users/{uid}.{type} arrays has been removed
+		// as of migration 15 — summaries now live in subcollections.
+		return result;
 	} else return translate('messages.unauthenticated');
 }
 

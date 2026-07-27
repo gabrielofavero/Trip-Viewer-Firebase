@@ -2,13 +2,40 @@
   "trip": {
     "title": "Southern USA 2019",
     "currency": "BRL",
-    "start": { "day": 13, "month": 2, "year": 2019, "hour": 11, "minute": 55, "second": 0 },
-    "end": { "day": 3, "month": 3, "year": 2019, "hour": 0, "minute": 31, "second": 0 },
+    "start": {
+      "day": 13,
+      "month": 2,
+      "year": 2019,
+      "hour": 11,
+      "minute": 55,
+      "second": 0
+    },
+    "end": {
+      "day": 3,
+      "month": 3,
+      "year": 2019,
+      "hour": 0,
+      "minute": 31,
+      "second": 0
+    },
     "pin": "no-pin",
-    "version": { "lastUpdated": "2019-03-03T00:31:00.000Z" },
-    "visibility": { "light": true, "dark": true },
-    "colors": { "light": "#966313", "dark": "#966313", "active": false },
-    "sharing": { "owner": "", "active": false, "editors": [] },
+    "version": {
+      "lastUpdated": "2019-03-03T00:31:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
     "modules": {
       "destinations": false,
       "transportation": true,
@@ -19,10 +46,26 @@
       "expenses": true
     },
     "travelers": [
-      { "id": "gabriel", "name": "Gabriel", "color": "#966313" },
-      { "id": "elaine", "name": "Elaine", "color": "#966313" },
-      { "id": "milton", "name": "Milton", "color": "#966313" },
-      { "id": "marianna", "name": "Marianna", "color": "#966313" }
+      {
+        "id": "gabriel",
+        "name": "Gabriel",
+        "color": "#966313"
+      },
+      {
+        "id": "elaine",
+        "name": "Elaine",
+        "color": "#966313"
+      },
+      {
+        "id": "milton",
+        "name": "Milton",
+        "color": "#966313"
+      },
+      {
+        "id": "marianna",
+        "name": "Marianna",
+        "color": "#966313"
+      }
     ],
     "links": {
       "maps": "",
@@ -34,9 +77,19 @@
       "sheet": "",
       "vaccine": ""
     },
-    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
     "destinationRefs": [],
-    "image": { "dark": "", "light": "", "background": "", "active": false }
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
   },
   "accommodations": {
     "acc-001": {
@@ -44,8 +97,22 @@
       "description": "Estúdio Suíte - 1 Cama Queen-size, 1 Sofá-cama. Santa Monica Pier (20 mins bus).",
       "address": "2 Breeze Avenue, Venice Beach, Los Angeles, CA 90291, United States",
       "dates": {
-        "checkIn": { "day": 14, "month": 2, "year": 2019, "hour": 15, "minute": 0, "second": 0 },
-        "checkOut": { "day": 16, "month": 2, "year": 2019, "hour": 12, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 14,
+          "month": 2,
+          "year": 2019,
+          "hour": 15,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 16,
+          "month": 2,
+          "year": 2019,
+          "hour": 12,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -57,8 +124,22 @@
       "description": "Entire home/apt, 3 beds, 4 guests. Music Row (10 mins a pé). Hosted by Elite D.",
       "address": "2020 West End Avenue, Nashville, TN 37203, United States",
       "dates": {
-        "checkIn": { "day": 16, "month": 2, "year": 2019, "hour": 16, "minute": 0, "second": 0 },
-        "checkOut": { "day": 20, "month": 2, "year": 2019, "hour": 11, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 16,
+          "month": 2,
+          "year": 2019,
+          "hour": 16,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 20,
+          "month": 2,
+          "year": 2019,
+          "hour": 11,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -70,8 +151,22 @@
       "description": "Entire home/apt, 2 beds, 4 guests. Beale Street (10 mins a pé). Hosted by Jon Hodge.",
       "address": "77 Vance Avenue Unit 105, Memphis, TN 38103, United States",
       "dates": {
-        "checkIn": { "day": 20, "month": 2, "year": 2019, "hour": 15, "minute": 0, "second": 0 },
-        "checkOut": { "day": 23, "month": 2, "year": 2019, "hour": 11, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 20,
+          "month": 2,
+          "year": 2019,
+          "hour": 15,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 23,
+          "month": 2,
+          "year": 2019,
+          "hour": 11,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -83,8 +178,22 @@
       "description": "Studio Suite with Two Double Beds. Centro Dallas (20 mins a pé). Café da Manhã incluso.",
       "address": "2914 Harry Hines Blvd, Uptown Dallas, Dallas, TX 75201, United States",
       "dates": {
-        "checkIn": { "day": 23, "month": 2, "year": 2019, "hour": 15, "minute": 0, "second": 0 },
-        "checkOut": { "day": 25, "month": 2, "year": 2019, "hour": 11, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 23,
+          "month": 2,
+          "year": 2019,
+          "hour": 15,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 25,
+          "month": 2,
+          "year": 2019,
+          "hour": 11,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": true,
       "images": [],
@@ -96,8 +205,22 @@
       "description": "Entire home/apt, 2 beds, 4 guests. Galleria (5m a pé). Hosted by Marie Simon.",
       "address": "3300 Sage Road 2308, Houston, TX 77056, United States",
       "dates": {
-        "checkIn": { "day": 25, "month": 2, "year": 2019, "hour": 15, "minute": 0, "second": 0 },
-        "checkOut": { "day": 28, "month": 2, "year": 2019, "hour": 11, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 25,
+          "month": 2,
+          "year": 2019,
+          "hour": 15,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 28,
+          "month": 2,
+          "year": 2019,
+          "hour": 11,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -109,8 +232,22 @@
       "description": "Quarto standard, 4 guests. French Quarter/Downtown.",
       "address": "301 Camp Street, New Orleans, LA 70130, United States",
       "dates": {
-        "checkIn": { "day": 28, "month": 2, "year": 2019, "hour": 15, "minute": 0, "second": 0 },
-        "checkOut": { "day": 2, "month": 3, "year": 2019, "hour": 3, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 28,
+          "month": 2,
+          "year": 2019,
+          "hour": 15,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 2,
+          "month": 3,
+          "year": 2019,
+          "hour": 3,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -119,14 +256,33 @@
     }
   },
   "transportation": {
-    "_settings": { "viewMode": "simple" },
+    "_settings": {
+      "viewMode": "simple"
+    },
     "leg-001": {
       "type": "flight",
       "company": "LATAM",
-      "points": { "origin": "Belo Horizonte (CNF)", "destination": "São Paulo (GRU)" },
+      "points": {
+        "origin": "Belo Horizonte (CNF)",
+        "destination": "São Paulo (GRU)"
+      },
       "dates": {
-        "departure": { "day": 13, "month": 2, "year": 2019, "hour": 11, "minute": 55, "second": 0 },
-        "arrival": { "day": 13, "month": 2, "year": 2019, "hour": 13, "minute": 10, "second": 0 }
+        "departure": {
+          "day": 13,
+          "month": 2,
+          "year": 2019,
+          "hour": 11,
+          "minute": 55,
+          "second": 0
+        },
+        "arrival": {
+          "day": 13,
+          "month": 2,
+          "year": 2019,
+          "hour": 13,
+          "minute": 10,
+          "second": 0
+        }
       },
       "duration": "1h 15m",
       "direction": "departure",
@@ -137,10 +293,27 @@
     "leg-002": {
       "type": "flight",
       "company": "LATAM",
-      "points": { "origin": "São Paulo (GRU)", "destination": "Santiago (SCL)" },
+      "points": {
+        "origin": "São Paulo (GRU)",
+        "destination": "Santiago (SCL)"
+      },
       "dates": {
-        "departure": { "day": 13, "month": 2, "year": 2019, "hour": 17, "minute": 25, "second": 0 },
-        "arrival": { "day": 13, "month": 2, "year": 2019, "hour": 20, "minute": 35, "second": 0 }
+        "departure": {
+          "day": 13,
+          "month": 2,
+          "year": 2019,
+          "hour": 17,
+          "minute": 25,
+          "second": 0
+        },
+        "arrival": {
+          "day": 13,
+          "month": 2,
+          "year": 2019,
+          "hour": 20,
+          "minute": 35,
+          "second": 0
+        }
       },
       "duration": "3h 10m",
       "direction": "departure",
@@ -151,10 +324,27 @@
     "leg-003": {
       "type": "flight",
       "company": "LATAM",
-      "points": { "origin": "Santiago (SCL)", "destination": "Los Angeles (LAX)" },
+      "points": {
+        "origin": "Santiago (SCL)",
+        "destination": "Los Angeles (LAX)"
+      },
       "dates": {
-        "departure": { "day": 13, "month": 2, "year": 2019, "hour": 23, "minute": 55, "second": 0 },
-        "arrival": { "day": 14, "month": 2, "year": 2019, "hour": 6, "minute": 20, "second": 0 }
+        "departure": {
+          "day": 13,
+          "month": 2,
+          "year": 2019,
+          "hour": 23,
+          "minute": 55,
+          "second": 0
+        },
+        "arrival": {
+          "day": 14,
+          "month": 2,
+          "year": 2019,
+          "hour": 6,
+          "minute": 20,
+          "second": 0
+        }
       },
       "duration": "6h 25m",
       "direction": "departure",
@@ -165,10 +355,27 @@
     "leg-004": {
       "type": "flight",
       "company": "American Airlines",
-      "points": { "origin": "Los Angeles (LAX)", "destination": "Memphis (MEM)" },
+      "points": {
+        "origin": "Los Angeles (LAX)",
+        "destination": "Memphis (MEM)"
+      },
       "dates": {
-        "departure": { "day": 16, "month": 2, "year": 2019, "hour": 11, "minute": 45, "second": 0 },
-        "arrival": { "day": 16, "month": 2, "year": 2019, "hour": 17, "minute": 39, "second": 0 }
+        "departure": {
+          "day": 16,
+          "month": 2,
+          "year": 2019,
+          "hour": 11,
+          "minute": 45,
+          "second": 0
+        },
+        "arrival": {
+          "day": 16,
+          "month": 2,
+          "year": 2019,
+          "hour": 17,
+          "minute": 39,
+          "second": 0
+        }
       },
       "duration": "5h 54m",
       "direction": "departure",
@@ -179,10 +386,27 @@
     "leg-005": {
       "type": "car",
       "company": "Budget",
-      "points": { "origin": "Nashville, TN", "destination": "New Orleans, LA" },
+      "points": {
+        "origin": "Nashville, TN",
+        "destination": "New Orleans, LA"
+      },
       "dates": {
-        "departure": { "day": 19, "month": 2, "year": 2019, "hour": 17, "minute": 0, "second": 0 },
-        "arrival": { "day": 2, "month": 3, "year": 2019, "hour": 3, "minute": 0, "second": 0 }
+        "departure": {
+          "day": 19,
+          "month": 2,
+          "year": 2019,
+          "hour": 17,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 2,
+          "month": 3,
+          "year": 2019,
+          "hour": 3,
+          "minute": 0,
+          "second": 0
+        }
       },
       "duration": "10 dias",
       "direction": "departure",
@@ -193,10 +417,27 @@
     "leg-006": {
       "type": "flight",
       "company": "Copa Airlines",
-      "points": { "origin": "New Orleans (MSY)", "destination": "Panamá (PTY)" },
+      "points": {
+        "origin": "New Orleans (MSY)",
+        "destination": "Panamá (PTY)"
+      },
       "dates": {
-        "departure": { "day": 2, "month": 3, "year": 2019, "hour": 5, "minute": 46, "second": 0 },
-        "arrival": { "day": 2, "month": 3, "year": 2019, "hour": 10, "minute": 48, "second": 0 }
+        "departure": {
+          "day": 2,
+          "month": 3,
+          "year": 2019,
+          "hour": 5,
+          "minute": 46,
+          "second": 0
+        },
+        "arrival": {
+          "day": 2,
+          "month": 3,
+          "year": 2019,
+          "hour": 10,
+          "minute": 48,
+          "second": 0
+        }
       },
       "duration": "5h 2m",
       "direction": "return",
@@ -207,10 +448,27 @@
     "leg-007": {
       "type": "flight",
       "company": "Copa Airlines",
-      "points": { "origin": "Panamá (PTY)", "destination": "Belo Horizonte (CNF)" },
+      "points": {
+        "origin": "Panamá (PTY)",
+        "destination": "Belo Horizonte (CNF)"
+      },
       "dates": {
-        "departure": { "day": 2, "month": 3, "year": 2019, "hour": 15, "minute": 29, "second": 0 },
-        "arrival": { "day": 3, "month": 3, "year": 2019, "hour": 0, "minute": 31, "second": 0 }
+        "departure": {
+          "day": 2,
+          "month": 3,
+          "year": 2019,
+          "hour": 15,
+          "minute": 29,
+          "second": 0
+        },
+        "arrival": {
+          "day": 3,
+          "month": 3,
+          "year": 2019,
+          "hour": 0,
+          "minute": 31,
+          "second": 0
+        }
       },
       "duration": "9h 2m",
       "direction": "return",
@@ -221,307 +479,1344 @@
   },
   "itinerary": {
     "20190213": {
-      "title": { "value": "Dia de Voo — BH → Los Angeles", "showDestinations": false, "translate": false },
-      "date": { "day": 13, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia de Voo — BH → Los Angeles",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 13,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Voo BH → SP", "description": "LATAM XRAEIZ. 11:55–13:10.", "type": "transporte" }
+        {
+          "title": "Voo BH → SP",
+          "description": "LATAM XRAEIZ. 11:55–13:10.",
+          "type": "transporte",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Conexão SP → Santiago", "description": "17:25–20:35.", "type": "transporte" }
+        {
+          "title": "Conexão SP → Santiago",
+          "description": "17:25–20:35.",
+          "type": "transporte",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Voo Santiago → Los Angeles", "description": "23:55–06:20 (chegada dia 14).", "type": "transporte" }
+        {
+          "title": "Voo Santiago → Los Angeles",
+          "description": "23:55–06:20 (chegada dia 14).",
+          "type": "transporte",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190214": {
-      "title": { "value": "Los Angeles — Venice Beach", "showDestinations": false, "translate": false },
-      "date": { "day": 14, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Los Angeles — Venice Beach",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 14,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "title": "Chegada em Los Angeles", "description": "Desembarque 06:20. Translado para Venice Beach.", "type": "chegada" }
+        {
+          "title": "Chegada em Los Angeles",
+          "description": "Desembarque 06:20. Translado para Venice Beach.",
+          "type": "chegada",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "morning": [
-        { "title": "Café da Manhã Venice", "description": "Café da manhã em Venice Beach.", "type": "alimentação" }
+        {
+          "title": "Café da Manhã Venice",
+          "description": "Café da manhã em Venice Beach.",
+          "type": "alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Livre", "description": "Tarde livre para explorar Venice Beach e Santa Monica.", "type": "livre" }
+        {
+          "title": "Livre",
+          "description": "Tarde livre para explorar Venice Beach e Santa Monica.",
+          "type": "livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Panic! At The Disco — Pray For The Wicked Tour", "description": "The Forum, Inglewood, CA. 19:00. VIP Floor Section B.", "type": "show" }
+        {
+          "title": "Panic! At The Disco — Pray For The Wicked Tour",
+          "description": "The Forum, Inglewood, CA. 19:00. VIP Floor Section B.",
+          "type": "show",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190215": {
-      "title": { "value": "Los Angeles — Último Dia", "showDestinations": false, "translate": false },
-      "date": { "day": 15, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Los Angeles — Último Dia",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 15,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Check-out Venice Breeze Suites", "description": "Check-out até 12:00.", "type": "checkout" }
+        {
+          "title": "Check-out Venice Breeze Suites",
+          "description": "Check-out até 12:00.",
+          "type": "checkout",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Ida ao Aeroporto", "description": "Translado para LAX.", "type": "transporte" }
+        {
+          "title": "Ida ao Aeroporto",
+          "description": "Translado para LAX.",
+          "type": "transporte",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": []
     },
     "20190216": {
-      "title": { "value": "Los Angeles → Nashville", "showDestinations": false, "translate": false },
-      "date": { "day": 16, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Los Angeles → Nashville",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 16,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Voo LA → Memphis", "description": "American Airlines SHEXYN. 11:45–17:39. Chegada em Memphis, depois roadtrip para Nashville.", "type": "transporte" }
+        {
+          "title": "Voo LA → Memphis",
+          "description": "American Airlines SHEXYN. 11:45–17:39. Chegada em Memphis, depois roadtrip para Nashville.",
+          "type": "transporte",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Chegada em Nashville", "description": "Check-in Airbnb na 2020 West End Avenue.", "type": "chegada" }
+        {
+          "title": "Chegada em Nashville",
+          "description": "Check-in Airbnb na 2020 West End Avenue.",
+          "type": "chegada",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Noite Livre", "description": "Explorar Music Row e arredores.", "type": "livre" }
+        {
+          "title": "Noite Livre",
+          "description": "Explorar Music Row e arredores.",
+          "type": "livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190217": {
-      "title": { "value": "Nashville — Compras e Show", "showDestinations": false, "translate": false },
-      "date": { "day": 17, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Nashville — Compras e Show",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 17,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Bicentennial Capitol Mall State Park", "description": "Parque histórico no centro de Nashville.", "type": "passeio" }
+        {
+          "title": "Bicentennial Capitol Mall State Park",
+          "description": "Parque histórico no centro de Nashville.",
+          "type": "passeio",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Compras — The Kooks", "description": "Show do The Kooks. Ingresso: R$39,72.", "type": "show" }
+        {
+          "title": "Compras — The Kooks",
+          "description": "Show do The Kooks. Ingresso: R$39,72.",
+          "type": "show",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Noite Livre em Nashville", "description": "Explorar Broadway e bares de música ao vivo.", "type": "livre" }
+        {
+          "title": "Noite Livre em Nashville",
+          "description": "Explorar Broadway e bares de música ao vivo.",
+          "type": "livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190218": {
-      "title": { "value": "Nashville — Dia Livre", "showDestinations": false, "translate": false },
-      "date": { "day": 18, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Nashville — Dia Livre",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 18,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Manhã Livre", "description": "Dia livre para explorar Nashville.", "type": "livre" }
+        {
+          "title": "Manhã Livre",
+          "description": "Dia livre para explorar Nashville.",
+          "type": "livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Music Row", "description": "Explorar a região da Music Row.", "type": "passeio" }
+        {
+          "title": "Music Row",
+          "description": "Explorar a região da Music Row.",
+          "type": "passeio",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Noite Livre", "description": "Restaurantes e bares em Nashville.", "type": "livre" }
+        {
+          "title": "Noite Livre",
+          "description": "Restaurantes e bares em Nashville.",
+          "type": "livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190219": {
-      "title": { "value": "Nashville — Aniversário & Retirada do Carro", "showDestinations": false, "translate": false },
-      "date": { "day": 19, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Nashville — Aniversário & Retirada do Carro",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 19,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Aniversário!", "description": "🎂 Comemoração de aniversário.", "type": "especial" }
+        {
+          "title": "Aniversário!",
+          "description": "🎂 Comemoração de aniversário.",
+          "type": "especial",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Retirada do Carro — Budget", "description": "Retirar Dodge Grand Caravan na 1816 Church Street. 17:00.", "type": "transporte" }
+        {
+          "title": "Retirada do Carro — Budget",
+          "description": "Retirar Dodge Grand Caravan na 1816 Church Street. 17:00.",
+          "type": "transporte",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Última Noite em Nashville", "description": "Jantar e despedida de Nashville.", "type": "livre" }
+        {
+          "title": "Última Noite em Nashville",
+          "description": "Jantar e despedida de Nashville.",
+          "type": "livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190220": {
-      "title": { "value": "Nashville → Memphis", "showDestinations": false, "translate": false },
-      "date": { "day": 20, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Nashville → Memphis",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 20,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Roadtrip Nashville → Memphis", "description": "Check-out Airbnb Nashville. Viagem de carro até Memphis (~3h).", "type": "transporte" }
+        {
+          "title": "Roadtrip Nashville → Memphis",
+          "description": "Check-out Airbnb Nashville. Viagem de carro até Memphis (~3h).",
+          "type": "transporte",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Cooper-Young", "description": "Bairro histórico de Memphis. Check-in Airbnb: 77 Vance Avenue.", "type": "passeio" }
+        {
+          "title": "Cooper-Young",
+          "description": "Bairro histórico de Memphis. Check-in Airbnb: 77 Vance Avenue.",
+          "type": "passeio",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Walmart", "description": "Compras no Walmart.", "type": "compras" }
+        {
+          "title": "Walmart",
+          "description": "Compras no Walmart.",
+          "type": "compras",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190221": {
-      "title": { "value": "Memphis — Dia Livre", "showDestinations": false, "translate": false },
-      "date": { "day": 21, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Memphis — Dia Livre",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 21,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Manhã Livre", "description": "Dia livre para explorar Memphis.", "type": "livre" }
+        {
+          "title": "Manhã Livre",
+          "description": "Dia livre para explorar Memphis.",
+          "type": "livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Beale Street", "description": "Explorar a famosa Beale Street.", "type": "passeio" }
+        {
+          "title": "Beale Street",
+          "description": "Explorar a famosa Beale Street.",
+          "type": "passeio",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Noite na Beale Street", "description": "Música ao vivo nos bares da Beale Street.", "type": "livre" }
+        {
+          "title": "Noite na Beale Street",
+          "description": "Música ao vivo nos bares da Beale Street.",
+          "type": "livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190222": {
-      "title": { "value": "Memphis — Graceland", "showDestinations": false, "translate": false },
-      "date": { "day": 22, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Memphis — Graceland",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 22,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Graceland", "description": "Visita à mansão de Elvis Presley.", "type": "passeio" }
+        {
+          "title": "Graceland",
+          "description": "Visita à mansão de Elvis Presley.",
+          "type": "passeio",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Germantown", "description": "Explorar a região de Germantown.", "type": "passeio" }
+        {
+          "title": "Germantown",
+          "description": "Explorar a região de Germantown.",
+          "type": "passeio",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": []
     },
     "20190223": {
-      "title": { "value": "Memphis → Dallas", "showDestinations": false, "translate": false },
-      "date": { "day": 23, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Memphis → Dallas",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 23,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Roadtrip Memphis → Dallas", "description": "Check-out Airbnb Memphis. Viagem de carro até Dallas (~6h).", "type": "transporte" }
+        {
+          "title": "Roadtrip Memphis → Dallas",
+          "description": "Check-out Airbnb Memphis. Viagem de carro até Dallas (~6h).",
+          "type": "transporte",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Chegada em Dallas", "description": "Check-in Hyatt House Dallas Uptown. 2914 Harry Hines Blvd.", "type": "chegada" }
+        {
+          "title": "Chegada em Dallas",
+          "description": "Check-in Hyatt House Dallas Uptown. 2914 Harry Hines Blvd.",
+          "type": "chegada",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Noite Livre em Dallas", "description": "Explorar Uptown Dallas.", "type": "livre" }
+        {
+          "title": "Noite Livre em Dallas",
+          "description": "Explorar Uptown Dallas.",
+          "type": "livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190224": {
-      "title": { "value": "Dallas — Dia Livre", "showDestinations": false, "translate": false },
-      "date": { "day": 24, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dallas — Dia Livre",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 24,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Café da Manhã no Hyatt House", "description": "Café da manhã incluso.", "type": "alimentação" }
+        {
+          "title": "Café da Manhã no Hyatt House",
+          "description": "Café da manhã incluso.",
+          "type": "alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Dia Livre em Dallas", "description": "Explorar o centro de Dallas.", "type": "livre" }
+        {
+          "title": "Dia Livre em Dallas",
+          "description": "Explorar o centro de Dallas.",
+          "type": "livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": []
     },
     "20190225": {
-      "title": { "value": "Dallas → Houston", "showDestinations": false, "translate": false },
-      "date": { "day": 25, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dallas → Houston",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 25,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Roadtrip Dallas → Houston", "description": "Check-out Hyatt House. Viagem de carro até Houston (~3h30).", "type": "transporte" }
+        {
+          "title": "Roadtrip Dallas → Houston",
+          "description": "Check-out Hyatt House. Viagem de carro até Houston (~3h30).",
+          "type": "transporte",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "River Oaks", "description": "Explorar o bairro de River Oaks. Check-in Airbnb: 3300 Sage Road.", "type": "passeio" }
+        {
+          "title": "River Oaks",
+          "description": "Explorar o bairro de River Oaks. Check-in Airbnb: 3300 Sage Road.",
+          "type": "passeio",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Galleria", "description": "Shopping na Galleria (5 min a pé do Airbnb).", "type": "compras" }
+        {
+          "title": "Galleria",
+          "description": "Shopping na Galleria (5 min a pé do Airbnb).",
+          "type": "compras",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190226": {
-      "title": { "value": "Houston — Beer Can House", "showDestinations": false, "translate": false },
-      "date": { "day": 26, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Houston — Beer Can House",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 26,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Dia Livre em Houston", "description": "Explorar a cidade.", "type": "livre" }
+        {
+          "title": "Dia Livre em Houston",
+          "description": "Explorar a cidade.",
+          "type": "livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Beer Can House", "description": "Visita à casa decorada com latas de cerveja.", "type": "passeio" }
+        {
+          "title": "Beer Can House",
+          "description": "Visita à casa decorada com latas de cerveja.",
+          "type": "passeio",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": []
     },
     "20190227": {
-      "title": { "value": "Houston — Último Dia", "showDestinations": false, "translate": false },
-      "date": { "day": 27, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Houston — Último Dia",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 27,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
       "afternoon": [
-        { "title": "Tarde Livre em Houston", "description": "Último dia em Houston.", "type": "livre" }
+        {
+          "title": "Tarde Livre em Houston",
+          "description": "Último dia em Houston.",
+          "type": "livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": []
     },
     "20190228": {
-      "title": { "value": "Houston → New Orleans", "showDestinations": false, "translate": false },
-      "date": { "day": 28, "month": 2, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Houston → New Orleans",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 28,
+        "month": 2,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Roadtrip Houston → New Orleans", "description": "Check-out Airbnb Houston. Viagem de carro até New Orleans (~5h).", "type": "transporte" }
+        {
+          "title": "Roadtrip Houston → New Orleans",
+          "description": "Check-out Airbnb Houston. Viagem de carro até New Orleans (~5h).",
+          "type": "transporte",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Canal Street", "description": "Chegada em New Orleans. Check-in La Quinta Inn & Suites. 301 Camp Street.", "type": "chegada" }
+        {
+          "title": "Canal Street",
+          "description": "Chegada em New Orleans. Check-in La Quinta Inn & Suites. 301 Camp Street.",
+          "type": "chegada",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Bourbon Street e French Quarter", "description": "Explorar a vida noturna de New Orleans.", "type": "livre" }
+        {
+          "title": "Bourbon Street e French Quarter",
+          "description": "Explorar a vida noturna de New Orleans.",
+          "type": "livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190301": {
-      "title": { "value": "New Orleans — Royal Street", "showDestinations": false, "translate": false },
-      "date": { "day": 1, "month": 3, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "New Orleans — Royal Street",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 1,
+        "month": 3,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "French Quarter", "description": "Explorar o French Quarter durante o dia.", "type": "passeio" }
+        {
+          "title": "French Quarter",
+          "description": "Explorar o French Quarter durante o dia.",
+          "type": "passeio",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Royal Street", "description": "Galerias de arte e lojas de antiguidades na Royal Street.", "type": "passeio" }
+        {
+          "title": "Royal Street",
+          "description": "Galerias de arte e lojas de antiguidades na Royal Street.",
+          "type": "passeio",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Última Noite — Jantar em New Orleans", "description": "Jantar de despedida. Devolução do carro no aeroporto.", "type": "livre" }
+        {
+          "title": "Última Noite — Jantar em New Orleans",
+          "description": "Jantar de despedida. Devolução do carro no aeroporto.",
+          "type": "livre",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20190302": {
-      "title": { "value": "New Orleans → BH — Retorno", "showDestinations": false, "translate": false },
-      "date": { "day": 2, "month": 3, "year": 2019, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "New Orleans → BH — Retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 2,
+        "month": 3,
+        "year": 2019,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "title": "Voo New Orleans → Panamá", "description": "Copa Airlines CM0499. 05:46–10:48. Devolução do carro até 03:00.", "type": "transporte" }
+        {
+          "title": "Voo New Orleans → Panamá",
+          "description": "Copa Airlines CM0499. 05:46–10:48. Devolução do carro até 03:00.",
+          "type": "transporte",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "morning": [],
       "afternoon": [
-        { "title": "Conexão Panamá → BH", "description": "Copa Airlines CM0765. 15:29–00:31.", "type": "transporte" }
+        {
+          "title": "Conexão Panamá → BH",
+          "description": "Copa Airlines CM0765. 15:29–00:31.",
+          "type": "transporte",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Chegada em BH", "description": "Chegada prevista 00:31 do dia 3 de março.", "type": "chegada" }
+        {
+          "title": "Chegada em BH",
+          "description": "Chegada prevista 00:31 do dia 3 de março.",
+          "type": "chegada",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     }
   },
   "expenses": {
     "duringTrip": [
-      { "title": "Alimentação", "value": 1280, "currency": "BRL", "category": "alimentação" },
-      { "title": "Gasolina", "value": 200, "currency": "BRL", "category": "transporte" },
-      { "title": "Supermercado", "value": 800, "currency": "BRL", "category": "supermercado" },
-      { "title": "Saídas", "value": 1920, "currency": "BRL", "category": "entretenimento" },
-      { "title": "Atrações", "value": 692, "currency": "BRL", "category": "passeios" },
-      { "title": "Uber/Lyft", "value": 198, "currency": "BRL", "category": "transporte" },
-      { "title": "Aluguel Carro — Budget (Dodge Grand Caravan)", "value": 2178, "currency": "BRL", "category": "transporte" },
-      { "title": "Seguro Carro", "value": 1300, "currency": "BRL", "category": "transporte" },
-      { "title": "Bagagem Voo", "value": 12.63, "currency": "BRL", "category": "transporte" },
-      { "title": "Panic! At The Disco Ticket (2x VIP)", "value": 250, "currency": "USD", "category": "show" },
-      { "title": "The Kooks Ticket", "value": 39.72, "currency": "BRL", "category": "show" },
-      { "title": "Twenty One Pilots Merch", "value": 141.63, "currency": "BRL", "category": "compras" },
-      { "title": "Mike Shinoda Merch", "value": 26.83, "currency": "BRL", "category": "compras" },
-      { "title": "Vanilla", "value": 5, "currency": "USD", "category": "compras" },
-      { "title": "Tênis", "value": 150, "currency": "USD", "category": "compras" },
-      { "title": "iPhone", "value": 600, "currency": "USD", "category": "compras" },
-      { "title": "Panic Merch", "value": 45, "currency": "USD", "category": "compras" },
-      { "title": "Walmart", "value": 50, "currency": "USD", "category": "compras" },
-      { "title": "Amoeba Music", "value": 150, "currency": "USD", "category": "compras" },
-      { "title": "Cavetown", "value": 35, "currency": "USD", "category": "compras" }
+      {
+        "title": "Alimentação",
+        "value": 1280,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Gasolina",
+        "value": 200,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Supermercado",
+        "value": 800,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Saídas",
+        "value": 1920,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Atrações",
+        "value": 692,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Uber/Lyft",
+        "value": 198,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Aluguel Carro — Budget (Dodge Grand Caravan)",
+        "value": 2178,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Seguro Carro",
+        "value": 1300,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Bagagem Voo",
+        "value": 12.63,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Panic! At The Disco Ticket (2x VIP)",
+        "value": 250,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "The Kooks Ticket",
+        "value": 39.72,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Twenty One Pilots Merch",
+        "value": 141.63,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Mike Shinoda Merch",
+        "value": 26.83,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Vanilla",
+        "value": 5,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Tênis",
+        "value": 150,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "iPhone",
+        "value": 600,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Panic Merch",
+        "value": 45,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Walmart",
+        "value": 50,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Amoeba Music",
+        "value": 150,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Cavetown",
+        "value": 35,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      }
     ],
     "preTrip": [
-      { "title": "Voos Internacionais (BH↔USA)", "value": 18306.40, "currency": "BRL", "category": "transporte" },
-      { "title": "Voo Doméstico LA→Memphis (AA)", "value": 1706.40, "currency": "BRL", "category": "transporte" },
-      { "title": "Hospedagem — Venice Breeze Suites (Los Angeles)", "value": 1677, "currency": "BRL", "category": "hospedagem" },
-      { "title": "Hospedagem — Airbnb Nashville", "value": 2451.33, "currency": "BRL", "category": "hospedagem" },
-      { "title": "Hospedagem — Airbnb Memphis", "value": 2151.23, "currency": "BRL", "category": "hospedagem" },
-      { "title": "Hospedagem — Hyatt House Dallas", "value": 1496, "currency": "BRL", "category": "hospedagem" },
-      { "title": "Hospedagem — Airbnb Houston", "value": 1268.88, "currency": "BRL", "category": "hospedagem" },
-      { "title": "Hospedagem — La Quinta New Orleans", "value": 2509.36, "currency": "BRL", "category": "hospedagem" }
+      {
+        "title": "Voos Internacionais (BH↔USA)",
+        "value": 18306.4,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Voo Doméstico LA→Memphis (AA)",
+        "value": 1706.4,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Hospedagem — Venice Breeze Suites (Los Angeles)",
+        "value": 1677,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Hospedagem — Airbnb Nashville",
+        "value": 2451.33,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Hospedagem — Airbnb Memphis",
+        "value": 2151.23,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Hospedagem — Hyatt House Dallas",
+        "value": 1496,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Hospedagem — Airbnb Houston",
+        "value": 1268.88,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      },
+      {
+        "title": "Hospedagem — La Quinta New Orleans",
+        "value": 2509.36,
+        "currency": "BRL",
+        "name": "",
+        "price": 0,
+        "person": ""
+      }
     ],
     "currency": "BRL",
     "travelers": {
-      "gabriel": { "invested": 1937.92, "spent": 1695.92, "remaining": 242 },
-      "milton": { "invested": 290, "spent": 0, "remaining": 290 },
-      "elaine": { "invested": 1840, "spent": 6808, "remaining": 0 },
-      "marianna": { "invested": 1350, "spent": 4995, "remaining": 0 }
+      "gabriel": "Gabriel",
+      "milton": "Milton",
+      "elaine": "Elaine",
+      "marianna": "Marianna"
     },
-    "sharing": { "owner": "", "active": true, "editors": [] },
-    "version": { "lastUpdated": "2019-03-03T00:31:00.000Z" }
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2019-03-03T00:31:00.000Z"
+    }
   }
 }

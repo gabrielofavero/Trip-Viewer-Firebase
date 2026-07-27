@@ -17,7 +17,7 @@ import {
 	getURLParam,
 	setRequired,
 } from '../../utils/dom.js';
-import { deleteUserObjectDB, getPermissions, getSingleData, getUserDestinationSummaries } from '../../data/firebase/database.js';
+import { deleteUserObjectDB, deleteDocument, getPermissions, getSingleData, getUserDestinationSummaries, COLLECTION, SUBCOLLECTION } from '../../data/firebase/database.js';
 import { getUserData, getUID, setUserData, USER_DATA } from '../../data/firebase/auth.js';
 import {
 	deleteUserObjectStorage,
@@ -200,6 +200,20 @@ export async function deleteListagemAction() {
 	if (DOCUMENT_ID) {
 		await deleteUserObjectDB(DOCUMENT_ID, 'listings');
 		await deleteUserObjectStorage();
+
+		// Also delete the listing summary from the user subcollection
+		const uid = await getUID();
+		if (uid) {
+			try {
+				await deleteDocument(
+					`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.LISTING_SUMMARIES}/${DOCUMENT_ID}`,
+					true,
+				);
+			} catch (e) {
+				console.warn('Failed to delete listing summary:', e);
+			}
+		}
+
 		window.location.href = '../index.html';
 	}
 }

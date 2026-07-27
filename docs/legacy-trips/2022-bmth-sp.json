@@ -2,13 +2,40 @@
   "trip": {
     "title": "Bring Me The Horizon SP 2022",
     "currency": "BRL",
-    "start": { "day": 16, "month": 12, "year": 2022, "hour": 6, "minute": 0, "second": 0 },
-    "end": { "day": 18, "month": 12, "year": 2022, "hour": 20, "minute": 40, "second": 0 },
+    "start": {
+      "day": 16,
+      "month": 12,
+      "year": 2022,
+      "hour": 6,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 18,
+      "month": 12,
+      "year": 2022,
+      "hour": 20,
+      "minute": 40,
+      "second": 0
+    },
     "pin": "no-pin",
-    "version": { "lastUpdated": "2022-12-18T00:00:00.000Z" },
-    "visibility": { "light": true, "dark": true },
-    "colors": { "light": "#966313", "dark": "#966313", "active": false },
-    "sharing": { "owner": "", "active": false, "editors": [] },
+    "version": {
+      "lastUpdated": "2022-12-18T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
     "modules": {
       "destinations": false,
       "transportation": true,
@@ -19,7 +46,11 @@
       "expenses": true
     },
     "travelers": [
-      { "id": "gabriel", "name": "Gabriel", "color": "#966313" }
+      {
+        "id": "gabriel",
+        "name": "Gabriel",
+        "color": "#966313"
+      }
     ],
     "links": {
       "maps": "",
@@ -31,9 +62,19 @@
       "sheet": "",
       "vaccine": ""
     },
-    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
     "destinationRefs": [],
-    "image": { "dark": "", "light": "", "background": "", "active": false }
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
   },
   "accommodations": {
     "acc-001": {
@@ -41,8 +82,22 @@
       "description": "Studio, Alameda Jaú, 1606, Jardim Paulista — Hotels.com 9155811573020",
       "address": "Alameda Jaú, 1606, Jardim Paulista, São Paulo - SP, 01420-002",
       "dates": {
-        "checkIn": { "day": 16, "month": 12, "year": 2022, "hour": 11, "minute": 25, "second": 0 },
-        "checkOut": { "day": 18, "month": 12, "year": 2022, "hour": 9, "minute": 40, "second": 0 }
+        "checkIn": {
+          "day": 16,
+          "month": 12,
+          "year": 2022,
+          "hour": 11,
+          "minute": 25,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 18,
+          "month": 12,
+          "year": 2022,
+          "hour": 9,
+          "minute": 40,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -51,14 +106,33 @@
     }
   },
   "transportation": {
-    "_settings": { "viewMode": "simple" },
+    "_settings": {
+      "viewMode": "simple"
+    },
     "leg-001": {
       "type": "flight",
       "company": "GOL",
-      "points": { "origin": "CNF - Belo Horizonte", "destination": "CGH - São Paulo" },
+      "points": {
+        "origin": "CNF - Belo Horizonte",
+        "destination": "CGH - São Paulo"
+      },
       "dates": {
-        "departure": { "day": 16, "month": 12, "year": 2022, "hour": 9, "minute": 5, "second": 0 },
-        "arrival": { "day": 16, "month": 12, "year": 2022, "hour": 10, "minute": 25, "second": 0 }
+        "departure": {
+          "day": 16,
+          "month": 12,
+          "year": 2022,
+          "hour": 9,
+          "minute": 5,
+          "second": 0
+        },
+        "arrival": {
+          "day": 16,
+          "month": 12,
+          "year": 2022,
+          "hour": 10,
+          "minute": 25,
+          "second": 0
+        }
       },
       "duration": "1h20",
       "direction": "departure",
@@ -69,10 +143,27 @@
     "leg-002": {
       "type": "flight",
       "company": "GOL",
-      "points": { "origin": "CGH - São Paulo", "destination": "CNF - Belo Horizonte" },
+      "points": {
+        "origin": "CGH - São Paulo",
+        "destination": "CNF - Belo Horizonte"
+      },
       "dates": {
-        "departure": { "day": 18, "month": 12, "year": 2022, "hour": 18, "minute": 0, "second": 0 },
-        "arrival": { "day": 18, "month": 12, "year": 2022, "hour": 19, "minute": 15, "second": 0 }
+        "departure": {
+          "day": 18,
+          "month": 12,
+          "year": 2022,
+          "hour": 18,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 18,
+          "month": 12,
+          "year": 2022,
+          "hour": 19,
+          "minute": 15,
+          "second": 0
+        }
       },
       "duration": "1h15",
       "direction": "return",
@@ -83,107 +174,700 @@
   },
   "itinerary": {
     "20221216": {
-      "title": { "value": "Dia 1 — Chegada + Bring Me The Horizon", "showDestinations": false, "translate": false },
-      "date": { "day": 16, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 1 — Chegada + Bring Me The Horizon",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 16,
+        "month": 12,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "time": "06:00", "activity": "→ Paps", "details": "Translado para o aeroporto", "type": "Transporte Privado" },
-        { "time": "07:00", "activity": "Aeroporto (CNF)", "details": "Trabalho", "type": "Trabalho" },
-        { "time": "09:05", "activity": "Voo GOL CNF → CGH", "details": "G3 1303, Reserva GOWCGZ", "type": "Ida/Volta" }
+        {
+          "type": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Paps: Translado para o aeroporto",
+          "start": "06:00",
+          "end": ""
+        },
+        {
+          "type": "Trabalho",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto (CNF): Trabalho",
+          "start": "07:00",
+          "end": ""
+        },
+        {
+          "type": "Ida/Volta",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo GOL CNF → CGH: G3 1303, Reserva GOWCGZ",
+          "start": "09:05",
+          "end": ""
+        }
       ],
       "morning": [
-        { "time": "10:25", "activity": "Aeroporto (CGH)", "details": "Desembarque", "type": "-" },
-        { "time": "10:55", "activity": "→ Uber", "details": "Translado para o hotel", "type": "Transporte Privado" },
-        { "time": "11:25", "activity": "H4 La Residence Paulista", "details": "Check-in / Deixar Malas", "type": "Hospedagem" },
-        { "time": "11:55", "activity": "Paul's Boutique", "details": "Almoço", "type": "Alimentação" }
+        {
+          "type": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto (CGH): Desembarque",
+          "start": "10:25",
+          "end": ""
+        },
+        {
+          "type": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Translado para o hotel",
+          "start": "10:55",
+          "end": ""
+        },
+        {
+          "type": "Hospedagem",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "H4 La Residence Paulista: Check-in / Deixar Malas",
+          "start": "11:25",
+          "end": ""
+        },
+        {
+          "type": "Alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Paul's Boutique: Almoço",
+          "start": "11:55",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "12:40", "activity": "Rick Doces", "details": "Compras", "type": "Compras" },
-        { "time": "13:10", "activity": "Empório Daruma", "details": "Comprinhas", "type": "Compras" },
-        { "time": "13:40", "activity": "Hospedagem", "details": "Trabalho", "type": "Trabalho" },
-        { "time": "15:10", "activity": "Hospedagem", "details": "Descanso / Arrumar", "type": "-" },
-        { "time": "17:00", "activity": "→ Metrô", "details": "Translado para o show", "type": "Transporte Público" }
+        {
+          "type": "Compras",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Rick Doces: Compras",
+          "start": "12:40",
+          "end": ""
+        },
+        {
+          "type": "Compras",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Empório Daruma: Comprinhas",
+          "start": "13:10",
+          "end": ""
+        },
+        {
+          "type": "Trabalho",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hospedagem: Trabalho",
+          "start": "13:40",
+          "end": ""
+        },
+        {
+          "type": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hospedagem: Descanso / Arrumar",
+          "start": "15:10",
+          "end": ""
+        },
+        {
+          "type": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Translado para o show",
+          "start": "17:00",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "18:00", "activity": "Vibra São Paulo", "details": "Chegada no local", "type": "Ingresso/Show" },
-        { "time": "20:00", "activity": "Vended", "details": "Show de abertura", "type": "Ingresso/Show" },
-        { "time": "21:30", "activity": "Bring Me The Horizon", "details": "Show principal! Pista Premium", "type": "Ingresso/Show" },
-        { "time": "23:00", "activity": "→ Metrô", "details": "Volta para o hotel", "type": "Transporte Público" },
-        { "time": "23:50", "activity": "Hospedagem", "details": "Descanso", "type": "-" }
+        {
+          "type": "Ingresso/Show",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Vibra São Paulo: Chegada no local",
+          "start": "18:00",
+          "end": ""
+        },
+        {
+          "type": "Ingresso/Show",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Vended: Show de abertura",
+          "start": "20:00",
+          "end": ""
+        },
+        {
+          "type": "Ingresso/Show",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Bring Me The Horizon: Show principal! Pista Premium",
+          "start": "21:30",
+          "end": ""
+        },
+        {
+          "type": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Volta para o hotel",
+          "start": "23:00",
+          "end": ""
+        },
+        {
+          "type": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hospedagem: Descanso",
+          "start": "23:50",
+          "end": ""
+        }
       ]
     },
     "20221217": {
-      "title": { "value": "Dia 2 — Liberdade + Saída", "showDestinations": false, "translate": false },
-      "date": { "day": 17, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 2 — Liberdade + Saída",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 17,
+        "month": 12,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "time": "09:00", "activity": "Hospedagem", "details": "Acordar / Arrumar", "type": "Hospedagem" },
-        { "time": "09:50", "activity": "St. Marche", "details": "Compras", "type": "Compras" },
-        { "time": "10:30", "activity": "Hospedagem", "details": "Deixar Compras", "type": "-" },
-        { "time": "10:45", "activity": "→ Metrô + Trem", "details": "Translado para almoço", "type": "Transporte Público" }
+        {
+          "type": "Hospedagem",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hospedagem: Acordar / Arrumar",
+          "start": "09:00",
+          "end": ""
+        },
+        {
+          "type": "Compras",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "St. Marche: Compras",
+          "start": "09:50",
+          "end": ""
+        },
+        {
+          "type": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hospedagem: Deixar Compras",
+          "start": "10:30",
+          "end": ""
+        },
+        {
+          "type": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô + Trem: Translado para almoço",
+          "start": "10:45",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "12:00", "activity": "The Burger Map", "details": "Almoço — comida americana autêntica", "type": "Alimentação" },
-        { "time": "13:00", "activity": "→ Trem + Metrô", "details": "Translado para a Liberdade", "type": "Transporte Público" },
-        { "time": "14:15", "activity": "Liberdade", "details": "Comprinhas e lanchinho", "type": "Compras" },
-        { "time": "16:15", "activity": "→ Metrô", "details": "Volta para o hotel", "type": "Transporte Público" },
-        { "time": "16:35", "activity": "Hospedagem", "details": "Descanso", "type": "-" }
+        {
+          "type": "Alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "The Burger Map: Almoço — comida americana autêntica",
+          "start": "12:00",
+          "end": ""
+        },
+        {
+          "type": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Trem + Metrô: Translado para a Liberdade",
+          "start": "13:00",
+          "end": ""
+        },
+        {
+          "type": "Compras",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Liberdade: Comprinhas e lanchinho",
+          "start": "14:15",
+          "end": ""
+        },
+        {
+          "type": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Volta para o hotel",
+          "start": "16:15",
+          "end": ""
+        },
+        {
+          "type": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hospedagem: Descanso",
+          "start": "16:35",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "19:30", "activity": "→ Uber", "details": "Translado para saída", "type": "Transporte Privado" },
-        { "time": "20:00", "activity": "Saída", "details": "A definir", "type": "Saídas" },
-        { "time": "23:00", "activity": "→ Uber", "details": "Volta para o hotel", "type": "Transporte Privado" },
-        { "time": "23:30", "activity": "Hospedagem", "details": "Descanso", "type": "-" }
+        {
+          "type": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Translado para saída",
+          "start": "19:30",
+          "end": ""
+        },
+        {
+          "type": "Saídas",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Saída: A definir",
+          "start": "20:00",
+          "end": ""
+        },
+        {
+          "type": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Volta para o hotel",
+          "start": "23:00",
+          "end": ""
+        },
+        {
+          "type": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hospedagem: Descanso",
+          "start": "23:30",
+          "end": ""
+        }
       ]
     },
     "20221218": {
-      "title": { "value": "Dia 3 — Cultura + Final da Copa + Volta", "showDestinations": false, "translate": false },
-      "date": { "day": 18, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 3 — Cultura + Final da Copa + Volta",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 18,
+        "month": 12,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "time": "09:00", "activity": "Hospedagem", "details": "Acordar / Arrumar", "type": "Hospedagem" },
-        { "time": "09:30", "activity": "Hospedagem", "details": "Check Out", "type": "Hospedagem" },
-        { "time": "09:40", "activity": "→ Metrô", "details": "Translado para o centro", "type": "Transporte Público" },
-        { "time": "10:00", "activity": "Centro Cultural Coreano", "details": "Visita cultural", "type": "Turismo" },
-        { "time": "10:40", "activity": "Japan House", "details": "Visita cultural", "type": "Turismo" },
-        { "time": "11:15", "activity": "→ Metrô + A pé", "details": "Translado para o bar", "type": "Transporte Público" }
+        {
+          "type": "Hospedagem",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hospedagem: Acordar / Arrumar",
+          "start": "09:00",
+          "end": ""
+        },
+        {
+          "type": "Hospedagem",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hospedagem: Check Out",
+          "start": "09:30",
+          "end": ""
+        },
+        {
+          "type": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Translado para o centro",
+          "start": "09:40",
+          "end": ""
+        },
+        {
+          "type": "Turismo",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Centro Cultural Coreano: Visita cultural",
+          "start": "10:00",
+          "end": ""
+        },
+        {
+          "type": "Turismo",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Japan House: Visita cultural",
+          "start": "10:40",
+          "end": ""
+        },
+        {
+          "type": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô + A pé: Translado para o bar",
+          "start": "11:15",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "11:40", "activity": "Omalleys", "details": "Assistir final da Copa do Mundo", "type": "Saídas" },
-        { "time": "15:30", "activity": "→ A pé", "details": "Volta para o hotel", "type": "-" },
-        { "time": "15:40", "activity": "Hospedagem", "details": "Pegar Malas", "type": "-" },
-        { "time": "15:50", "activity": "→ Uber", "details": "Translado para o aeroporto", "type": "Transporte Privado" },
-        { "time": "16:20", "activity": "Aeroporto (CGH)", "details": "Aguardar Embarque", "type": "-" },
-        { "time": "18:00", "activity": "Voo GOL CGH → CNF", "details": "G3 1308, Reserva GOWCGZ", "type": "Ida/Volta" },
-        { "time": "19:20", "activity": "Aeroporto (CNF)", "details": "Desembarque", "type": "-" }
+        {
+          "type": "Saídas",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Omalleys: Assistir final da Copa do Mundo",
+          "start": "11:40",
+          "end": ""
+        },
+        {
+          "type": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ A pé: Volta para o hotel",
+          "start": "15:30",
+          "end": ""
+        },
+        {
+          "type": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hospedagem: Pegar Malas",
+          "start": "15:40",
+          "end": ""
+        },
+        {
+          "type": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Translado para o aeroporto",
+          "start": "15:50",
+          "end": ""
+        },
+        {
+          "type": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto (CGH): Aguardar Embarque",
+          "start": "16:20",
+          "end": ""
+        },
+        {
+          "type": "Ida/Volta",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo GOL CGH → CNF: G3 1308, Reserva GOWCGZ",
+          "start": "18:00",
+          "end": ""
+        },
+        {
+          "type": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto (CNF): Desembarque",
+          "start": "19:20",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "19:40", "activity": "→ Paps", "details": "Translado para casa", "type": "-" }
+        {
+          "type": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Paps: Translado para casa",
+          "start": "19:40",
+          "end": ""
+        }
       ]
     }
   },
   "expenses": {
     "duringTrip": [
-      { "type": "Hospedagem", "description": "H4 La Residence Paulista — 2 noites (Studio)", "value": 584.00, "person": "gabriel", "date": { "day": 16, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
-      { "type": "Alimentação", "description": "Paul's Boutique — Almoço", "value": 50.00, "person": "gabriel", "date": { "day": 16, "month": 12, "year": 2022, "hour": 11, "minute": 55, "second": 0 } },
-      { "type": "Alimentação", "description": "The Burger Map — Almoço (comida americana autêntica)", "value": 150.00, "person": "gabriel", "date": { "day": 17, "month": 12, "year": 2022, "hour": 12, "minute": 0, "second": 0 } },
-      { "type": "Alimentação", "description": "Ajuste alimentação (reembolso/desconto)", "value": -77.00, "person": "gabriel", "date": { "day": 17, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
-      { "type": "Compras", "description": "Rick Doces + Empório Daruma + St. Marche + Liberdade", "value": 300.00, "person": "gabriel", "date": { "day": 16, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
-      { "type": "Saídas", "description": "Saída noturna (sábado) + Omalleys (final da Copa)", "value": 250.00, "person": "gabriel", "date": { "day": 17, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
-      { "type": "Transporte Público", "description": "Metrô/Trem — 7 bilhetes (translados diversos)", "value": 30.80, "person": "gabriel", "date": { "day": 16, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
-      { "type": "Transporte Privado", "description": "Ubers diversos (aeroporto→hotel, hotel↔restaurantes, hotel↔saída, hotel→aeroporto)", "value": 120.00, "person": "gabriel", "date": { "day": 16, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } }
+      {
+        "type": "Hospedagem",
+        "value": 584.0,
+        "person": "",
+        "name": "H4 La Residence Paulista — 2 noites (Studio)",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "value": 50.0,
+        "person": "",
+        "name": "Paul's Boutique — Almoço",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "value": 150.0,
+        "person": "",
+        "name": "The Burger Map — Almoço (comida americana autêntica)",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Alimentação",
+        "value": -77.0,
+        "person": "",
+        "name": "Ajuste alimentação (reembolso/desconto)",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Compras",
+        "value": 300.0,
+        "person": "",
+        "name": "Rick Doces + Empório Daruma + St. Marche + Liberdade",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Saídas",
+        "value": 250.0,
+        "person": "",
+        "name": "Saída noturna (sábado) + Omalleys (final da Copa)",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Transporte Público",
+        "value": 30.8,
+        "person": "",
+        "name": "Metrô/Trem — 7 bilhetes (translados diversos)",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Transporte Privado",
+        "value": 120.0,
+        "person": "",
+        "name": "Ubers diversos (aeroporto→hotel, hotel↔restaurantes, hotel↔saída, hotel→aeroporto)",
+        "price": 0,
+        "currency": "BRL"
+      }
     ],
     "preTrip": [
-      { "type": "Ida/Volta", "description": "Voo GOL CNF ↔ CGH — G3 1303/G3 1308, Reserva GOWCGZ (ida e volta)", "value": 367.30, "person": "gabriel", "date": { "day": 16, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } },
-      { "type": "Ingresso/Show", "description": "Bring Me The Horizon — Vibra São Paulo, Pista Premium, Meia-Entrada (R$325 + R$65 tx) — TicketDirect TSFGX7J", "value": 390.00, "person": "gabriel", "date": { "day": 16, "month": 12, "year": 2022, "hour": 0, "minute": 0, "second": 0 } }
+      {
+        "type": "Ida/Volta",
+        "value": 367.3,
+        "person": "",
+        "name": "Voo GOL CNF ↔ CGH — G3 1303/G3 1308, Reserva GOWCGZ (ida e volta)",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Ingresso/Show",
+        "value": 390.0,
+        "person": "",
+        "name": "Bring Me The Horizon — Vibra São Paulo, Pista Premium, Meia-Entrada (R$325 + R$65 tx) — TicketDirect TSFGX7J",
+        "price": 0,
+        "currency": "BRL"
+      }
     ],
     "currency": "BRL",
     "travelers": {
-      "gabriel": { "preTrip": 757.30, "duringTrip": 1407.80 }
+      "gabriel": "Gabriel"
     },
-    "sharing": { "owner": "", "active": true, "editors": [] },
-    "version": { "lastUpdated": "2022-12-18T00:00:00.000Z" }
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2022-12-18T00:00:00.000Z"
+    }
   }
 }

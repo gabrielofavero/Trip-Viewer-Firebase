@@ -18,13 +18,40 @@
   "trip": {
     "title": "Rock in Rio 2017",
     "currency": "BRL",
-    "start": { "day": 21, "month": 9, "year": 2017, "hour": 5, "minute": 30, "second": 0 },
-    "end": { "day": 22, "month": 9, "year": 2017, "hour": 13, "minute": 55, "second": 0 },
+    "start": {
+      "day": 21,
+      "month": 9,
+      "year": 2017,
+      "hour": 5,
+      "minute": 30,
+      "second": 0
+    },
+    "end": {
+      "day": 22,
+      "month": 9,
+      "year": 2017,
+      "hour": 13,
+      "minute": 55,
+      "second": 0
+    },
     "pin": "no-pin",
-    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" },
-    "visibility": { "light": true, "dark": true },
-    "colors": { "light": "#966313", "dark": "#966313", "active": false },
-    "sharing": { "owner": "", "active": false, "editors": [] },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
     "modules": {
       "destinations": false,
       "transportation": true,
@@ -35,7 +62,10 @@
       "expenses": true
     },
     "travelers": [
-      { "id": "gabriel", "name": "Gabriel" }
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      }
     ],
     "links": {
       "maps": "",
@@ -47,9 +77,19 @@
       "sheet": "",
       "vaccine": ""
     },
-    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
     "destinationRefs": [],
-    "image": { "dark": "", "light": "", "background": "", "active": false }
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
   },
   "accommodations": {
     "acc-001": {
@@ -57,8 +97,22 @@
       "description": "Standard Double Room, 1 Queen Bed",
       "address": "Av. das Américas, 9650 - Barra da Tijuca, Rio de Janeiro",
       "dates": {
-        "checkIn": { "day": 21, "month": 9, "year": 2017, "hour": 9, "minute": 15, "second": 0 },
-        "checkOut": { "day": 22, "month": 9, "year": 2017, "hour": 8, "minute": 30, "second": 0 }
+        "checkIn": {
+          "day": 21,
+          "month": 9,
+          "year": 2017,
+          "hour": 9,
+          "minute": 15,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 22,
+          "month": 9,
+          "year": 2017,
+          "hour": 8,
+          "minute": 30,
+          "second": 0
+        }
       },
       "breakfast": true,
       "images": [],
@@ -67,14 +121,33 @@
     }
   },
   "transportation": {
-    "_settings": { "viewMode": "simple" },
+    "_settings": {
+      "viewMode": "simple"
+    },
     "leg-001": {
       "type": "flight",
       "company": "Azul",
-      "points": { "origin": "Confins (BH)", "destination": "Santos Dumont (RJ)" },
+      "points": {
+        "origin": "Confins (BH)",
+        "destination": "Santos Dumont (RJ)"
+      },
       "dates": {
-        "departure": { "day": 21, "month": 9, "year": 2017, "hour": 6, "minute": 45, "second": 0 },
-        "arrival": { "day": 21, "month": 9, "year": 2017, "hour": 7, "minute": 50, "second": 0 }
+        "departure": {
+          "day": 21,
+          "month": 9,
+          "year": 2017,
+          "hour": 6,
+          "minute": 45,
+          "second": 0
+        },
+        "arrival": {
+          "day": 21,
+          "month": 9,
+          "year": 2017,
+          "hour": 7,
+          "minute": 50,
+          "second": 0
+        }
       },
       "duration": "1h05m",
       "direction": "departure",
@@ -85,10 +158,27 @@
     "leg-002": {
       "type": "flight",
       "company": "Azul",
-      "points": { "origin": "Santos Dumont (RJ)", "destination": "Confins (BH)" },
+      "points": {
+        "origin": "Santos Dumont (RJ)",
+        "destination": "Confins (BH)"
+      },
       "dates": {
-        "departure": { "day": 22, "month": 9, "year": 2017, "hour": 12, "minute": 5, "second": 0 },
-        "arrival": { "day": 22, "month": 9, "year": 2017, "hour": 13, "minute": 15, "second": 0 }
+        "departure": {
+          "day": 22,
+          "month": 9,
+          "year": 2017,
+          "hour": 12,
+          "minute": 5,
+          "second": 0
+        },
+        "arrival": {
+          "day": 22,
+          "month": 9,
+          "year": 2017,
+          "hour": 13,
+          "minute": 15,
+          "second": 0
+        }
       },
       "duration": "1h10m",
       "direction": "return",
@@ -99,67 +189,359 @@
   },
   "itinerary": {
     "20170921": {
-      "title": { "value": "Quinta-feira — Rock in Rio 2017", "showDestinations": false, "translate": false },
-      "date": { "day": 21, "month": 9, "year": 2017, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Quinta-feira — Rock in Rio 2017",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 21,
+        "month": 9,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "title": "Casa → Aeroporto Confins", "description": "Carona com Paps", "time": { "start": "05:30", "end": "06:10" } },
-        { "title": "BH → Rio (SDU)", "description": "Voo AD 2550 — Assento 10C", "time": { "start": "06:45", "end": "07:50" } }
+        {
+          "title": "Casa → Aeroporto Confins",
+          "description": "Carona com Paps",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "BH → Rio (SDU)",
+          "description": "Voo AD 2550 — Assento 10C",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "morning": [
-        { "title": "Aeroporto SDU", "description": "Carregar Rio Card (R$33)", "time": { "start": "07:50", "end": "08:10" } },
-        { "title": "Aeroporto → Hotel", "description": "VLT 01 + Linha 1+4 do Metrô + Uber/Cabify", "time": { "start": "08:10", "end": "09:15" } },
-        { "title": "Hotel — Check-in", "description": "Ramada Encore Ribalta. Deixar mochila.", "time": { "start": "09:15", "end": "09:45" } },
-        { "title": "Hotel → Barra Shopping", "description": "BRT Alvorada / Uber", "time": { "start": "09:45", "end": "10:20" } }
+        {
+          "title": "Aeroporto SDU",
+          "description": "Carregar Rio Card (R$33)",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Aeroporto → Hotel",
+          "description": "VLT 01 + Linha 1+4 do Metrô + Uber/Cabify",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Hotel — Check-in",
+          "description": "Ramada Encore Ribalta. Deixar mochila.",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Hotel → Barra Shopping",
+          "description": "BRT Alvorada / Uber",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Barra Shopping — Almoço", "description": "Almoço antes do festival", "time": { "start": "10:20", "end": "11:00" } },
-        { "title": "Barra Shopping → Rock in Rio", "description": "Linha 92 (BRT)", "time": { "start": "11:00", "end": "12:00" } }
+        {
+          "title": "Barra Shopping — Almoço",
+          "description": "Almoço antes do festival",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Barra Shopping → Rock in Rio",
+          "description": "Linha 92 (BRT)",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": [
-        { "title": "Rock in Rio — Parque Olímpico", "description": "Explorar Game XP, Rock Street, Roda Gigante. Fall Out Boy às 21:00 no Palco Mundo. Tirolesa, MegaDrop, Montanha Russa.", "time": { "start": "12:00", "end": "04:00" } },
-        { "title": "Rock in Rio → Hotel", "description": "Linha 92 (BRT) + Uber/Cabify", "time": { "start": "04:00", "end": "06:30" } }
+        {
+          "title": "Rock in Rio — Parque Olímpico",
+          "description": "Explorar Game XP, Rock Street, Roda Gigante. Fall Out Boy às 21:00 no Palco Mundo. Tirolesa, MegaDrop, Montanha Russa.",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Rock in Rio → Hotel",
+          "description": "Linha 92 (BRT) + Uber/Cabify",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ]
     },
     "20170922": {
-      "title": { "value": "Sexta-feira — Volta para BH", "showDestinations": false, "translate": false },
-      "date": { "day": 22, "month": 9, "year": 2017, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Sexta-feira — Volta para BH",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 22,
+        "month": 9,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "title": "Hotel — Café da manhã + Checkout", "description": "Check-out do Ramada Encore Ribalta", "time": { "start": "07:40", "end": "08:30" } },
-        { "title": "Hotel → Aeroporto SDU", "description": "Uber/Cabify (Jardim Oceânico) + Linha 1+4 do Metrô", "time": { "start": "08:30", "end": "10:15" } },
-        { "title": "Starbucks", "description": "Café no aeroporto", "time": { "start": "10:15", "end": "11:00" } }
+        {
+          "title": "Hotel — Café da manhã + Checkout",
+          "description": "Check-out do Ramada Encore Ribalta",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Hotel → Aeroporto SDU",
+          "description": "Uber/Cabify (Jardim Oceânico) + Linha 1+4 do Metrô",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Starbucks",
+          "description": "Café no aeroporto",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "title": "Rio → BH", "description": "Voo AD 2501 — Assento 7C", "time": { "start": "12:05", "end": "13:15" } },
-        { "title": "Aeroporto Confins → Casa", "description": "Uber/carona Paps", "time": { "start": "13:15", "end": "13:55" } }
+        {
+          "title": "Rio → BH",
+          "description": "Voo AD 2501 — Assento 7C",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        },
+        {
+          "title": "Aeroporto Confins → Casa",
+          "description": "Uber/carona Paps",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "",
+          "start": "",
+          "end": ""
+        }
       ],
       "night": []
     }
   },
   "expenses": {
     "duringTrip": [
-      { "id": "exp-001", "date": { "day": 21, "month": 9, "year": 2017 }, "description": "Rio Card — Recarga", "type": "Transporte Público", "value": 33.00, "traveler": "gabriel" },
-      { "id": "exp-002", "date": { "day": 21, "month": 9, "year": 2017 }, "description": "Uber/Cabify Aeroporto → Hotel", "type": "Uber/Cabify", "value": 24.24, "traveler": "gabriel" },
-      { "id": "exp-003", "date": { "day": 21, "month": 9, "year": 2017 }, "description": "Uber/Cabify Hotel → Barra Shopping", "type": "Uber/Cabify", "value": 15.00, "traveler": "gabriel" },
-      { "id": "exp-004", "date": { "day": 21, "month": 9, "year": 2017 }, "description": "Almoço Barra Shopping", "type": "Alimentação", "value": 30.00, "traveler": "gabriel" },
-      { "id": "exp-005", "date": { "day": 21, "month": 9, "year": 2017 }, "description": "Alimentação no Rock in Rio", "type": "Alimentação", "value": 70.00, "traveler": "gabriel" },
-      { "id": "exp-006", "date": { "day": 21, "month": 9, "year": 2017 }, "description": "Uber/Cabify Rock in Rio → Hotel", "type": "Uber/Cabify", "value": 30.00, "traveler": "gabriel" },
-      { "id": "exp-007", "date": { "day": 22, "month": 9, "year": 2017 }, "description": "Uber/Cabify Hotel → Aeroporto", "type": "Uber/Cabify", "value": 25.00, "traveler": "gabriel" },
-      { "id": "exp-008", "date": { "day": 22, "month": 9, "year": 2017 }, "description": "Uber/Cabify (Jardim Oceânico)", "type": "Uber/Cabify", "value": 7.75, "traveler": "gabriel" },
-      { "id": "exp-009", "date": { "day": 22, "month": 9, "year": 2017 }, "description": "Starbucks — Café no aeroporto", "type": "Alimentação", "value": 36.00, "traveler": "gabriel" }
+      {
+        "type": "Transporte Público",
+        "value": 33.0,
+        "name": "Rio Card — Recarga",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Uber/Cabify",
+        "value": 24.24,
+        "name": "Uber/Cabify Aeroporto → Hotel",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Uber/Cabify",
+        "value": 15.0,
+        "name": "Uber/Cabify Hotel → Barra Shopping",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Alimentação",
+        "value": 30.0,
+        "name": "Almoço Barra Shopping",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Alimentação",
+        "value": 70.0,
+        "name": "Alimentação no Rock in Rio",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Uber/Cabify",
+        "value": 30.0,
+        "name": "Uber/Cabify Rock in Rio → Hotel",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Uber/Cabify",
+        "value": 25.0,
+        "name": "Uber/Cabify Hotel → Aeroporto",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Uber/Cabify",
+        "value": 7.75,
+        "name": "Uber/Cabify (Jardim Oceânico)",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Alimentação",
+        "value": 36.0,
+        "name": "Starbucks — Café no aeroporto",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
     ],
     "preTrip": [
-      { "id": "exp-pre-001", "date": { "day": 1, "month": 8, "year": 2017 }, "description": "Ingresso Rock in Rio 2017", "type": "Ingresso", "value": 262.50, "traveler": "gabriel" },
-      { "id": "exp-pre-002", "date": { "day": 15, "month": 8, "year": 2017 }, "description": "Voo Azul — Ida e Volta (AD 2550 + AD 2501)", "type": "Voo", "value": 155.03, "traveler": "gabriel" },
-      { "id": "exp-pre-003", "date": { "day": 18, "month": 6, "year": 2017 }, "description": "Hotel Ramada Encore Ribalta — 1 diária", "type": "Hotel", "value": 276.36, "traveler": "gabriel" }
+      {
+        "type": "Ingresso",
+        "value": 262.5,
+        "name": "Ingresso Rock in Rio 2017",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Voo",
+        "value": 155.03,
+        "name": "Voo Azul — Ida e Volta (AD 2550 + AD 2501)",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Hotel",
+        "value": 276.36,
+        "name": "Hotel Ramada Encore Ribalta — 1 diária",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
     ],
     "currency": "BRL",
     "travelers": {
-      "gabriel": { "preTripTotal": 693.89, "duringTripTotal": 270.99 }
+      "gabriel": "Gabriel"
     },
-    "sharing": { "owner": "", "active": true, "editors": [] },
-    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" }
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    }
   }
 }

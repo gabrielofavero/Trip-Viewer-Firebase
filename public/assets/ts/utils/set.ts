@@ -1,6 +1,6 @@
 import { startLoadingScreen, stopLoadingScreen } from './loading.js';
 import { getUID } from '../data/firebase/auth.js';
-import { createBatchOps } from '../data/firebase/database.js';
+import { createBatchOps, SUBCOLLECTION } from '../data/firebase/database.js';
 import { translate } from '../i18n/translation.js';
 import { hasUnsavedChanges, validateRequiredFields } from '../ui/fields.js';
 import { cloneObject, getID, getNewDataDocument, getURLParam } from './dom.js';
@@ -317,9 +317,26 @@ function setUserData(
 		return;
 	}
 
-	ops.update(`users/${uid}`, {
-		[`${type}.${DOCUMENT_ID}`]: newData,
-	});
+	// Write summary to the subcollection (post-migration 15):
+	//   users/{uid}/tripSummaries/{docId}
+	//   users/{uid}/destinationSummaries/{docId}
+	//   users/{uid}/listingSummaries/{docId}
+	const summarySubcollection = typeToSummarySubcollection(type);
+	ops.set(`users/${uid}/${summarySubcollection}/${DOCUMENT_ID}`, newData);
+}
+
+/** Maps a collection type to its summary subcollection name. */
+function typeToSummarySubcollection(type: string): string {
+	switch (type) {
+		case 'destinations':
+			return SUBCOLLECTION.DESTINATION_SUMMARIES;
+		case 'listings':
+			return SUBCOLLECTION.LISTING_SUMMARIES;
+		case 'trips':
+			return SUBCOLLECTION.TRIP_SUMMARIES;
+		default:
+			return '';
+	}
 }
 
 /** Returns the keys that, if changed, should trigger a user-document update. */

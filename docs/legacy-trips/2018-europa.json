@@ -2,13 +2,40 @@
   "trip": {
     "title": "Europa 2018",
     "currency": "BRL",
-    "start": { "day": 9, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
-    "end": { "day": 31, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+    "start": {
+      "day": 9,
+      "month": 1,
+      "year": 2018,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 31,
+      "month": 1,
+      "year": 2018,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
     "pin": "no-pin",
-    "version": { "lastUpdated": "2018-01-31T00:00:00.000Z" },
-    "visibility": { "light": true, "dark": true },
-    "colors": { "light": "#966313", "dark": "#966313", "active": false },
-    "sharing": { "owner": "", "active": false, "editors": [] },
+    "version": {
+      "lastUpdated": "2018-01-31T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
     "modules": {
       "destinations": false,
       "transportation": true,
@@ -19,7 +46,11 @@
       "expenses": true
     },
     "travelers": [
-      { "id": "gabriel", "name": "Gabriel", "photo": "" }
+      {
+        "id": "gabriel",
+        "name": "Gabriel",
+        "photo": ""
+      }
     ],
     "links": {
       "maps": "",
@@ -31,9 +62,19 @@
       "sheet": "",
       "vaccine": ""
     },
-    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
     "destinationRefs": [],
-    "image": { "dark": "", "light": "", "background": "", "active": false }
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
   },
   "accommodations": {
     "acc-001": {
@@ -41,8 +82,22 @@
       "description": "Hotel em Londres, próximo ao London Eye. Quarto duplo (2 camas de casal).",
       "address": "Belvedere Road, Lambeth, Londres, SE1 7PB, United Kingdom",
       "dates": {
-        "checkIn": { "day": 10, "month": 1, "year": 2018, "hour": 14, "minute": 0, "second": 0 },
-        "checkOut": { "day": 15, "month": 1, "year": 2018, "hour": 12, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 10,
+          "month": 1,
+          "year": 2018,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 15,
+          "month": 1,
+          "year": 2018,
+          "hour": 12,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -54,8 +109,22 @@
       "description": "Hotel em Liverpool",
       "address": "Liverpool, United Kingdom",
       "dates": {
-        "checkIn": { "day": 15, "month": 1, "year": 2018, "hour": 14, "minute": 0, "second": 0 },
-        "checkOut": { "day": 17, "month": 1, "year": 2018, "hour": 12, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 15,
+          "month": 1,
+          "year": 2018,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 17,
+          "month": 1,
+          "year": 2018,
+          "hour": 12,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -67,8 +136,22 @@
       "description": "Hotel em Amsterdam",
       "address": "Amsterdam, Netherlands",
       "dates": {
-        "checkIn": { "day": 17, "month": 1, "year": 2018, "hour": 14, "minute": 0, "second": 0 },
-        "checkOut": { "day": 23, "month": 1, "year": 2018, "hour": 12, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 17,
+          "month": 1,
+          "year": 2018,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 23,
+          "month": 1,
+          "year": 2018,
+          "hour": 12,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -80,8 +163,22 @@
       "description": "Hotel em Paris, região de Quartier Latin",
       "address": "Paris, France",
       "dates": {
-        "checkIn": { "day": 23, "month": 1, "year": 2018, "hour": 14, "minute": 0, "second": 0 },
-        "checkOut": { "day": 26, "month": 1, "year": 2018, "hour": 12, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 23,
+          "month": 1,
+          "year": 2018,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 26,
+          "month": 1,
+          "year": 2018,
+          "hour": 12,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": false,
       "images": [],
@@ -93,8 +190,22 @@
       "description": "Hotel em Roma, próximo à Piazza Navona. Café da manhã incluso.",
       "address": "Via Della Trinità Dei Pellegrini 20, Navona, 00186 Roma, Italia",
       "dates": {
-        "checkIn": { "day": 26, "month": 1, "year": 2018, "hour": 13, "minute": 0, "second": 0 },
-        "checkOut": { "day": 31, "month": 1, "year": 2018, "hour": 8, "minute": 0, "second": 0 }
+        "checkIn": {
+          "day": 26,
+          "month": 1,
+          "year": 2018,
+          "hour": 13,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 31,
+          "month": 1,
+          "year": 2018,
+          "hour": 8,
+          "minute": 0,
+          "second": 0
+        }
       },
       "breakfast": true,
       "images": [],
@@ -103,14 +214,33 @@
     }
   },
   "transportation": {
-    "_settings": { "viewMode": "simple" },
+    "_settings": {
+      "viewMode": "simple"
+    },
     "leg-001": {
       "type": "flight",
       "company": "TAP Portugal",
-      "points": { "origin": "Belo Horizonte (CNF)", "destination": "Londres (LCY)" },
+      "points": {
+        "origin": "Belo Horizonte (CNF)",
+        "destination": "Londres (LCY)"
+      },
       "dates": {
-        "departure": { "day": 9, "month": 1, "year": 2018, "hour": 19, "minute": 0, "second": 0 },
-        "arrival": { "day": 10, "month": 1, "year": 2018, "hour": 9, "minute": 40, "second": 0 }
+        "departure": {
+          "day": 9,
+          "month": 1,
+          "year": 2018,
+          "hour": 19,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 10,
+          "month": 1,
+          "year": 2018,
+          "hour": 9,
+          "minute": 40,
+          "second": 0
+        }
       },
       "duration": "~17h40 (com conexão em LIS)",
       "direction": "departure",
@@ -121,10 +251,27 @@
     "leg-002": {
       "type": "train",
       "company": "Virgin Trains",
-      "points": { "origin": "Londres", "destination": "Liverpool" },
+      "points": {
+        "origin": "Londres",
+        "destination": "Liverpool"
+      },
       "dates": {
-        "departure": { "day": 15, "month": 1, "year": 2018, "hour": 6, "minute": 27, "second": 0 },
-        "arrival": { "day": 15, "month": 1, "year": 2018, "hour": 9, "minute": 37, "second": 0 }
+        "departure": {
+          "day": 15,
+          "month": 1,
+          "year": 2018,
+          "hour": 6,
+          "minute": 27,
+          "second": 0
+        },
+        "arrival": {
+          "day": 15,
+          "month": 1,
+          "year": 2018,
+          "hour": 9,
+          "minute": 37,
+          "second": 0
+        }
       },
       "duration": "~3h10",
       "direction": "departure",
@@ -135,10 +282,27 @@
     "leg-003": {
       "type": "flight",
       "company": "easyJet",
-      "points": { "origin": "Liverpool (LPL)", "destination": "Amsterdam (AMS)" },
+      "points": {
+        "origin": "Liverpool (LPL)",
+        "destination": "Amsterdam (AMS)"
+      },
       "dates": {
-        "departure": { "day": 17, "month": 1, "year": 2018, "hour": 7, "minute": 25, "second": 0 },
-        "arrival": { "day": 17, "month": 1, "year": 2018, "hour": 9, "minute": 50, "second": 0 }
+        "departure": {
+          "day": 17,
+          "month": 1,
+          "year": 2018,
+          "hour": 7,
+          "minute": 25,
+          "second": 0
+        },
+        "arrival": {
+          "day": 17,
+          "month": 1,
+          "year": 2018,
+          "hour": 9,
+          "minute": 50,
+          "second": 0
+        }
       },
       "duration": "1h25",
       "direction": "departure",
@@ -149,10 +313,27 @@
     "leg-004": {
       "type": "flight",
       "company": "Transavia",
-      "points": { "origin": "Amsterdam (AMS)", "destination": "Paris (ORY)" },
+      "points": {
+        "origin": "Amsterdam (AMS)",
+        "destination": "Paris (ORY)"
+      },
       "dates": {
-        "departure": { "day": 23, "month": 1, "year": 2018, "hour": 8, "minute": 55, "second": 0 },
-        "arrival": { "day": 23, "month": 1, "year": 2018, "hour": 10, "minute": 20, "second": 0 }
+        "departure": {
+          "day": 23,
+          "month": 1,
+          "year": 2018,
+          "hour": 8,
+          "minute": 55,
+          "second": 0
+        },
+        "arrival": {
+          "day": 23,
+          "month": 1,
+          "year": 2018,
+          "hour": 10,
+          "minute": 20,
+          "second": 0
+        }
       },
       "duration": "1h25",
       "direction": "departure",
@@ -163,10 +344,27 @@
     "leg-005": {
       "type": "flight",
       "company": "Vueling",
-      "points": { "origin": "Paris (ORY)", "destination": "Roma (FCO)" },
+      "points": {
+        "origin": "Paris (ORY)",
+        "destination": "Roma (FCO)"
+      },
       "dates": {
-        "departure": { "day": 26, "month": 1, "year": 2018, "hour": 6, "minute": 20, "second": 0 },
-        "arrival": { "day": 26, "month": 1, "year": 2018, "hour": 8, "minute": 20, "second": 0 }
+        "departure": {
+          "day": 26,
+          "month": 1,
+          "year": 2018,
+          "hour": 6,
+          "minute": 20,
+          "second": 0
+        },
+        "arrival": {
+          "day": 26,
+          "month": 1,
+          "year": 2018,
+          "hour": 8,
+          "minute": 20,
+          "second": 0
+        }
       },
       "duration": "2h00",
       "direction": "departure",
@@ -177,10 +375,27 @@
     "leg-006": {
       "type": "flight",
       "company": "TAP Portugal",
-      "points": { "origin": "Roma (FCO)", "destination": "Belo Horizonte (CNF)" },
+      "points": {
+        "origin": "Roma (FCO)",
+        "destination": "Belo Horizonte (CNF)"
+      },
       "dates": {
-        "departure": { "day": 31, "month": 1, "year": 2018, "hour": 6, "minute": 10, "second": 0 },
-        "arrival": { "day": 31, "month": 1, "year": 2018, "hour": 17, "minute": 30, "second": 0 }
+        "departure": {
+          "day": 31,
+          "month": 1,
+          "year": 2018,
+          "hour": 6,
+          "minute": 10,
+          "second": 0
+        },
+        "arrival": {
+          "day": 31,
+          "month": 1,
+          "year": 2018,
+          "hour": 17,
+          "minute": 30,
+          "second": 0
+        }
       },
       "duration": "~14h20 (com conexão em LIS)",
       "direction": "return",
@@ -191,119 +406,519 @@
   },
   "itinerary": {
     "20180109": {
-      "title": { "value": "Partida do Brasil", "showDestinations": false, "translate": false },
-      "date": { "day": 9, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Partida do Brasil",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 9,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
       "afternoon": [],
       "night": [
-        { "time": "19:00", "activity": "Voo BH → Lisboa", "details": "TAP TP0104, CNF→LIS. Conexão em Lisboa.", "type": "flight", "cost": 0 }
+        {
+          "type": "flight",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo BH → Lisboa: TAP TP0104, CNF→LIS. Conexão em Lisboa.",
+          "start": "19:00",
+          "end": ""
+        }
       ]
     },
     "20180110": {
-      "title": { "value": "Chegada em Londres", "showDestinations": false, "translate": false },
-      "date": { "day": 10, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Chegada em Londres",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 10,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "time": "07:00", "activity": "Voo Lisboa → Londres", "details": "TAP TP0344, LIS→LCY", "type": "flight", "cost": 0 }
+        {
+          "type": "flight",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo Lisboa → Londres: TAP TP0344, LIS→LCY",
+          "start": "07:00",
+          "end": ""
+        }
       ],
       "morning": [
-        { "time": "09:40", "activity": "Chegada em Londres", "details": "Comprar Oyster Card (£30). Check-in no hotel.", "type": "", "cost": 0 },
-        { "time": "10:00", "activity": "London Eye e arredores", "details": "Passeio na região do London Eye", "type": "attraction", "cost": 0 }
+        {
+          "type": "",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Chegada em Londres: Comprar Oyster Card (£30). Check-in no hotel.",
+          "start": "09:40",
+          "end": ""
+        },
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "London Eye e arredores: Passeio na região do London Eye",
+          "start": "10:00",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "14:00", "activity": "Carnaby Street, Piccadilly Circus", "details": "Comprar 4G. Passeio pelo centro.", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Carnaby Street, Piccadilly Circus: Comprar 4G. Passeio pelo centro.",
+          "start": "14:00",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "19:00", "activity": "Broadway: Kinky Boots", "details": "Musical", "type": "entertainment", "cost": 0 }
+        {
+          "type": "entertainment",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Broadway: Kinky Boots: Musical",
+          "start": "19:00",
+          "end": ""
+        }
       ]
     },
     "20180111": {
-      "title": { "value": "Londres - Westminster e Museu Britânico", "showDestinations": false, "translate": false },
-      "date": { "day": 11, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Londres - Westminster e Museu Britânico",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 11,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "time": "08:00", "activity": "Westminster Abbey", "details": "Chegar cedo, ~8h", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Westminster Abbey: Chegar cedo, ~8h",
+          "start": "08:00",
+          "end": ""
+        }
       ],
       "morning": [
-        { "time": "10:00", "activity": "Buckingham Palace", "details": "Troca da guarda", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Buckingham Palace: Troca da guarda",
+          "start": "10:00",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "13:00", "activity": "British Museum e St. Paul's Cathedral", "details": "Museus e catedral", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "British Museum e St. Paul's Cathedral: Museus e catedral",
+          "start": "13:00",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "19:00", "activity": "Show Fall Out Boy", "details": "Buscar ingresso antes", "type": "entertainment", "cost": 0 }
+        {
+          "type": "entertainment",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Show Fall Out Boy: Buscar ingresso antes",
+          "start": "19:00",
+          "end": ""
+        }
       ]
     },
     "20180112": {
-      "title": { "value": "Londres - South Bank e Tower of London", "showDestinations": false, "translate": false },
-      "date": { "day": 12, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Londres - South Bank e Tower of London",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 12,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "time": "09:00", "activity": "South Bank", "details": "Borough Market, The Anchor, South Bank Center", "type": "attraction", "cost": 0 },
-        { "time": "11:00", "activity": "Buckingham Palace", "details": "Troca real", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "South Bank: Borough Market, The Anchor, South Bank Center",
+          "start": "09:00",
+          "end": ""
+        },
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Buckingham Palace: Troca real",
+          "start": "11:00",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "13:00", "activity": "Tower of London", "details": "Millennium Bridge, Sky Garden", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Tower of London: Millennium Bridge, Sky Garden",
+          "start": "13:00",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "19:00", "activity": "Show Fall Out Boy", "details": "Segundo dia de show", "type": "entertainment", "cost": 0 }
+        {
+          "type": "entertainment",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Show Fall Out Boy: Segundo dia de show",
+          "start": "19:00",
+          "end": ""
+        }
       ]
     },
     "20180113": {
-      "title": { "value": "Londres - Wembley e Abbey Road", "showDestinations": false, "translate": false },
-      "date": { "day": 13, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Londres - Wembley e Abbey Road",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 13,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "time": "09:00", "activity": "Camden Town", "details": "Mercado e passeio", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Camden Town: Mercado e passeio",
+          "start": "09:00",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "13:00", "activity": "Abbey Road e Wembley Stadium", "details": "Estúdio Abbey Road. Jogo Tottenham vs Everton 17:30", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Abbey Road e Wembley Stadium: Estúdio Abbey Road. Jogo Tottenham vs Everton 17:30",
+          "start": "13:00",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "20:00", "activity": "Restaurante chique", "details": "Jantar especial", "type": "food", "cost": 0 }
+        {
+          "type": "food",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Restaurante chique: Jantar especial",
+          "start": "20:00",
+          "end": ""
+        }
       ]
     },
     "20180114": {
-      "title": { "value": "Londres - Último dia", "showDestinations": false, "translate": false },
-      "date": { "day": 14, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Londres - Último dia",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 14,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "time": "09:00", "activity": "Greenwich Village", "details": "Passeio em Greenwich", "type": "attraction", "cost": 0 },
-        { "time": "11:00", "activity": "Harrods", "details": "Almoço na região", "type": "food", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Greenwich Village: Passeio em Greenwich",
+          "start": "09:00",
+          "end": ""
+        },
+        {
+          "type": "food",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Harrods: Almoço na região",
+          "start": "11:00",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "14:00", "activity": "King's Cross", "details": "Plataforma 9¾. Compras.", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "King's Cross: Plataforma 9¾. Compras.",
+          "start": "14:00",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "20:00", "activity": "Preparação para viagem", "details": "Arrumação para partida amanhã", "type": "", "cost": 0 }
+        {
+          "type": "",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Preparação para viagem: Arrumação para partida amanhã",
+          "start": "20:00",
+          "end": ""
+        }
       ]
     },
     "20180115": {
-      "title": { "value": "Liverpool - Beatles e Pier Head", "showDestinations": false, "translate": false },
-      "date": { "day": 15, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Liverpool - Beatles e Pier Head",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 15,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "time": "06:27", "activity": "Trem Londres → Liverpool", "details": "Virgin Trains, ~3h10", "type": "transport", "cost": 0 }
+        {
+          "type": "transport",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Trem Londres → Liverpool: Virgin Trains, ~3h10",
+          "start": "06:27",
+          "end": ""
+        }
       ],
       "morning": [
-        { "time": "10:00", "activity": "Pier Head", "details": "Check-in hotel. Passeio pelo pier.", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pier Head: Check-in hotel. Passeio pelo pier.",
+          "start": "10:00",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "13:00", "activity": "The Beatles Story Exhibition", "details": "Museu dos Beatles", "type": "attraction", "cost": 0 },
-        { "time": "15:00", "activity": "Penny Lane", "details": "Rua famosa dos Beatles", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "The Beatles Story Exhibition: Museu dos Beatles",
+          "start": "13:00",
+          "end": ""
+        },
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Penny Lane: Rua famosa dos Beatles",
+          "start": "15:00",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "19:00", "activity": "Cavern Club", "details": "Jantar no famoso clube dos Beatles", "type": "entertainment", "cost": 0 }
+        {
+          "type": "entertainment",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Cavern Club: Jantar no famoso clube dos Beatles",
+          "start": "19:00",
+          "end": ""
+        }
       ]
     },
     "20180116": {
-      "title": { "value": "Liverpool - Dia livre", "showDestinations": false, "translate": false },
-      "date": { "day": 16, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Liverpool - Dia livre",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 16,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -311,47 +926,163 @@
       "night": []
     },
     "20180117": {
-      "title": { "value": "Amsterdam - Chegada", "showDestinations": false, "translate": false },
-      "date": { "day": 17, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Amsterdam - Chegada",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 17,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "time": "07:25", "activity": "Voo Liverpool → Amsterdam", "details": "easyJet EZY7001, LPL→AMS", "type": "flight", "cost": 0 }
+        {
+          "type": "flight",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo Liverpool → Amsterdam: easyJet EZY7001, LPL→AMS",
+          "start": "07:25",
+          "end": ""
+        }
       ],
       "morning": [
-        { "time": "10:00", "activity": "Chegada em Amsterdam", "details": "Check-in The Student Hotel", "type": "", "cost": 0 }
+        {
+          "type": "",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Chegada em Amsterdam: Check-in The Student Hotel",
+          "start": "10:00",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "13:00", "activity": "Red Light District", "details": "Passeio pelo bairro", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Red Light District: Passeio pelo bairro",
+          "start": "13:00",
+          "end": ""
+        }
       ],
       "night": [
-        { "time": "18:00", "activity": "Bulldog Palace, Dam Square", "details": "Praça central e Sex Museum", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Bulldog Palace, Dam Square: Praça central e Sex Museum",
+          "start": "18:00",
+          "end": ""
+        }
       ]
     },
     "20180118": {
-      "title": { "value": "Amsterdam - Dia 2", "showDestinations": false, "translate": false },
-      "date": { "day": 18, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Amsterdam - Dia 2",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 18,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
       "afternoon": [
-        { "time": "13:00", "activity": "Heineken Experience", "details": "Museu da cerveja Heineken", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Heineken Experience: Museu da cerveja Heineken",
+          "start": "13:00",
+          "end": ""
+        }
       ],
       "night": []
     },
     "20180119": {
-      "title": { "value": "Amsterdam - Anne Frank e cultura", "showDestinations": false, "translate": false },
-      "date": { "day": 19, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Amsterdam - Anne Frank e cultura",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 19,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [
-        { "time": "09:00", "activity": "Anne Frank Museum", "details": "Casa de Anne Frank", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Anne Frank Museum: Casa de Anne Frank",
+          "start": "09:00",
+          "end": ""
+        }
       ],
       "afternoon": [],
       "night": []
     },
     "20180120": {
-      "title": { "value": "Amsterdam - Dia 4", "showDestinations": false, "translate": false },
-      "date": { "day": 20, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Amsterdam - Dia 4",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 20,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -359,8 +1090,19 @@
       "night": []
     },
     "20180121": {
-      "title": { "value": "Amsterdam - Dia 5", "showDestinations": false, "translate": false },
-      "date": { "day": 21, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Amsterdam - Dia 5",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 21,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -368,8 +1110,19 @@
       "night": []
     },
     "20180122": {
-      "title": { "value": "Amsterdam - Último dia", "showDestinations": false, "translate": false },
-      "date": { "day": 22, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Amsterdam - Último dia",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 22,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -377,24 +1130,94 @@
       "night": []
     },
     "20180123": {
-      "title": { "value": "Paris - Chegada", "showDestinations": false, "translate": false },
-      "date": { "day": 23, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Paris - Chegada",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 23,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "time": "08:55", "activity": "Voo Amsterdam → Paris", "details": "Transavia TO4011, AMS→ORY", "type": "flight", "cost": 0 }
+        {
+          "type": "flight",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo Amsterdam → Paris: Transavia TO4011, AMS→ORY",
+          "start": "08:55",
+          "end": ""
+        }
       ],
       "morning": [
-        { "time": "10:20", "activity": "Chegada em Paris", "details": "Check-in Hôtel Le Littre", "type": "", "cost": 0 }
+        {
+          "type": "",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Chegada em Paris: Check-in Hôtel Le Littre",
+          "start": "10:20",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "12:00", "activity": "Quartier Latin", "details": "Almoço na região. Notre Dame, Panthéon.", "type": "attraction", "cost": 0 },
-        { "time": "16:00", "activity": "Trocadero, Champs Élysées", "details": "Arco do Triunfo ao pôr do sol", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Quartier Latin: Almoço na região. Notre Dame, Panthéon.",
+          "start": "12:00",
+          "end": ""
+        },
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Trocadero, Champs Élysées: Arco do Triunfo ao pôr do sol",
+          "start": "16:00",
+          "end": ""
+        }
       ],
       "night": []
     },
     "20180124": {
-      "title": { "value": "Paris - Dia 2", "showDestinations": false, "translate": false },
-      "date": { "day": 24, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Paris - Dia 2",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 24,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -402,8 +1225,19 @@
       "night": []
     },
     "20180125": {
-      "title": { "value": "Paris - Último dia", "showDestinations": false, "translate": false },
-      "date": { "day": 25, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Paris - Último dia",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 25,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -411,24 +1245,94 @@
       "night": []
     },
     "20180126": {
-      "title": { "value": "Roma - Chegada", "showDestinations": false, "translate": false },
-      "date": { "day": 26, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Roma - Chegada",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 26,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "time": "06:20", "activity": "Voo Paris → Roma", "details": "Vueling VY6250, ORY→FCO", "type": "flight", "cost": 0 }
+        {
+          "type": "flight",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo Paris → Roma: Vueling VY6250, ORY→FCO",
+          "start": "06:20",
+          "end": ""
+        }
       ],
       "morning": [
-        { "time": "08:20", "activity": "Chegada em Roma", "details": "Check-in Regola Suite", "type": "", "cost": 0 },
-        { "time": "10:00", "activity": "Piazza Navona e Pantheon", "details": "Praça e obelisco", "type": "attraction", "cost": 0 }
+        {
+          "type": "",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Chegada em Roma: Check-in Regola Suite",
+          "start": "08:20",
+          "end": ""
+        },
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Piazza Navona e Pantheon: Praça e obelisco",
+          "start": "10:00",
+          "end": ""
+        }
       ],
       "afternoon": [
-        { "time": "14:00", "activity": "Tempio di Adriano, Fontana di Trevi", "details": "Monumentos históricos", "type": "attraction", "cost": 0 }
+        {
+          "type": "attraction",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Tempio di Adriano, Fontana di Trevi: Monumentos históricos",
+          "start": "14:00",
+          "end": ""
+        }
       ],
       "night": []
     },
     "20180127": {
-      "title": { "value": "Roma - Dia 2", "showDestinations": false, "translate": false },
-      "date": { "day": 27, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Roma - Dia 2",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 27,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -436,8 +1340,19 @@
       "night": []
     },
     "20180128": {
-      "title": { "value": "Roma - Dia 3", "showDestinations": false, "translate": false },
-      "date": { "day": 28, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Roma - Dia 3",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 28,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -445,8 +1360,19 @@
       "night": []
     },
     "20180129": {
-      "title": { "value": "Roma - Dia 4", "showDestinations": false, "translate": false },
-      "date": { "day": 29, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Roma - Dia 4",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 29,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -454,8 +1380,19 @@
       "night": []
     },
     "20180130": {
-      "title": { "value": "Roma - Dia 5", "showDestinations": false, "translate": false },
-      "date": { "day": 30, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Roma - Dia 5",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 30,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -463,54 +1400,251 @@
       "night": []
     },
     "20180131": {
-      "title": { "value": "Retorno ao Brasil", "showDestinations": false, "translate": false },
-      "date": { "day": 31, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Retorno ao Brasil",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 31,
+        "month": 1,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [
-        { "time": "06:10", "activity": "Voo Roma → Lisboa", "details": "TAP TP0837, FCO→LIS", "type": "flight", "cost": 0 },
-        { "time": "09:45", "activity": "Voo Lisboa → BH", "details": "TAP TP0103, LIS→CNF", "type": "flight", "cost": 0 }
+        {
+          "type": "flight",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo Roma → Lisboa: TAP TP0837, FCO→LIS",
+          "start": "06:10",
+          "end": ""
+        },
+        {
+          "type": "flight",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo Lisboa → BH: TAP TP0103, LIS→CNF",
+          "start": "09:45",
+          "end": ""
+        }
       ],
       "morning": [],
       "afternoon": [
-        { "time": "17:30", "activity": "Chegada em BH", "details": "Fim da viagem", "type": "", "cost": 0 }
+        {
+          "type": "",
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Chegada em BH: Fim da viagem",
+          "start": "17:30",
+          "end": ""
+        }
       ],
       "night": []
     }
   },
   "expenses": {
     "duringTrip": [
-      { "date": { "day": 10, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Alimentação", "description": "Alimentação diária (Londres/Liverpool: £20/dia x 7 dias)", "amount": 0, "currency": "GBP", "traveler": "gabriel" },
-      { "date": { "day": 10, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Transporte", "description": "Transporte diário (Londres/Liverpool: £10/dia x 7 dias)", "amount": 0, "currency": "GBP", "traveler": "gabriel" },
-      { "date": { "day": 10, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Saídas", "description": "Saídas noturnas (Londres/Liverpool: £30/dia x 7 dias)", "amount": 0, "currency": "GBP", "traveler": "gabriel" },
-      { "date": { "day": 17, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Alimentação", "description": "Alimentação diária (Amsterdam: €20/dia x 6 dias)", "amount": 0, "currency": "EUR", "traveler": "gabriel" },
-      { "date": { "day": 17, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Transporte", "description": "Transporte diário (Amsterdam: €10/dia x 6 dias)", "amount": 0, "currency": "EUR", "traveler": "gabriel" },
-      { "date": { "day": 17, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Saídas", "description": "Saídas noturnas (Amsterdam: €30/dia x 6 dias)", "amount": 0, "currency": "EUR", "traveler": "gabriel" },
-      { "date": { "day": 23, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Alimentação", "description": "Alimentação diária (Paris: €20/dia x 3 dias)", "amount": 0, "currency": "EUR", "traveler": "gabriel" },
-      { "date": { "day": 23, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Transporte", "description": "Transporte diário (Paris: €10/dia x 3 dias)", "amount": 0, "currency": "EUR", "traveler": "gabriel" },
-      { "date": { "day": 23, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Saídas", "description": "Saídas noturnas (Paris: €30/dia x 3 dias)", "amount": 0, "currency": "EUR", "traveler": "gabriel" },
-      { "date": { "day": 26, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Alimentação", "description": "Alimentação diária (Roma: €20/dia x 6 dias)", "amount": 0, "currency": "EUR", "traveler": "gabriel" },
-      { "date": { "day": 26, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Transporte", "description": "Transporte diário (Roma: €10/dia x 6 dias)", "amount": 0, "currency": "EUR", "traveler": "gabriel" },
-      { "date": { "day": 26, "month": 1, "year": 2018, "hour": 0, "minute": 0, "second": 0 }, "type": "Saídas", "description": "Saídas noturnas (Roma: €30/dia x 6 dias)", "amount": 0, "currency": "EUR", "traveler": "gabriel" }
+      {
+        "type": "Alimentação",
+        "currency": "BRL",
+        "name": "Alimentação diária (Londres/Liverpool: £20/dia x 7 dias)",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Transporte",
+        "currency": "BRL",
+        "name": "Transporte diário (Londres/Liverpool: £10/dia x 7 dias)",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Saídas",
+        "currency": "BRL",
+        "name": "Saídas noturnas (Londres/Liverpool: £30/dia x 7 dias)",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Alimentação",
+        "currency": "BRL",
+        "name": "Alimentação diária (Amsterdam: €20/dia x 6 dias)",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Transporte",
+        "currency": "BRL",
+        "name": "Transporte diário (Amsterdam: €10/dia x 6 dias)",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Saídas",
+        "currency": "BRL",
+        "name": "Saídas noturnas (Amsterdam: €30/dia x 6 dias)",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Alimentação",
+        "currency": "BRL",
+        "name": "Alimentação diária (Paris: €20/dia x 3 dias)",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Transporte",
+        "currency": "BRL",
+        "name": "Transporte diário (Paris: €10/dia x 3 dias)",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Saídas",
+        "currency": "BRL",
+        "name": "Saídas noturnas (Paris: €30/dia x 3 dias)",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Alimentação",
+        "currency": "BRL",
+        "name": "Alimentação diária (Roma: €20/dia x 6 dias)",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Transporte",
+        "currency": "BRL",
+        "name": "Transporte diário (Roma: €10/dia x 6 dias)",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Saídas",
+        "currency": "BRL",
+        "name": "Saídas noturnas (Roma: €30/dia x 6 dias)",
+        "price": 0,
+        "person": "gabriel"
+      }
     ],
     "preTrip": [
-      { "date": { "day": 13, "month": 9, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Voo", "description": "TAP Portugal - BH ↔ Europa (ida e volta com conexão em Lisboa)", "amount": 4540.51, "traveler": "gabriel" },
-      { "date": { "day": 6, "month": 10, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Hospedagem", "description": "Premier Inn London County Hall - 5 noites, £567", "amount": 2901.27, "traveler": "gabriel" },
-      { "date": { "day": 24, "month": 10, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Hospedagem", "description": "Mercure Liverpool - 2 noites, £170", "amount": 869.87, "traveler": "gabriel" },
-      { "date": { "day": 24, "month": 10, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Hospedagem", "description": "The Student Hotel Amsterdam - 6 noites, €684", "amount": 2946.94, "traveler": "gabriel" },
-      { "date": { "day": 24, "month": 10, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Hospedagem", "description": "Hôtel Le Littre Paris - 3 noites, €483.30", "amount": 0, "currency": "EUR", "traveler": "gabriel" },
-      { "date": { "day": 11, "month": 10, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Hospedagem", "description": "Regola Suite Roma - 6 noites, €498", "amount": 1993.00, "traveler": "gabriel" },
-      { "date": { "day": 24, "month": 10, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Transporte", "description": "Trem Londres → Liverpool (Virgin Trains), £62.73", "amount": 0, "currency": "GBP", "traveler": "gabriel" },
-      { "date": { "day": 24, "month": 10, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Transporte", "description": "Voo Liverpool → Amsterdam (easyJet), £43.41", "amount": 0, "currency": "GBP", "traveler": "gabriel" },
-      { "date": { "day": 24, "month": 10, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Transporte", "description": "Voo Amsterdam → Paris (Transavia)", "amount": 0, "currency": "EUR", "traveler": "gabriel" },
-      { "date": { "day": 24, "month": 10, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Transporte", "description": "Voo Paris → Roma (Vueling), €50.99", "amount": 0, "currency": "EUR", "traveler": "gabriel" },
-      { "date": { "day": 6, "month": 10, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Atração", "description": "Westminster Abbey - ingresso", "amount": 88.34, "traveler": "gabriel" },
-      { "date": { "day": 6, "month": 10, "year": 2017, "hour": 0, "minute": 0, "second": 0 }, "type": "Atração", "description": "Jogo Tottenham vs Everton - ingresso", "amount": 299.80, "traveler": "gabriel" }
+      {
+        "type": "Voo",
+        "name": "TAP Portugal - BH ↔ Europa (ida e volta com conexão em Lisboa)",
+        "price": 4540.51,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Hospedagem",
+        "name": "Premier Inn London County Hall - 5 noites, £567",
+        "price": 2901.27,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Hospedagem",
+        "name": "Mercure Liverpool - 2 noites, £170",
+        "price": 869.87,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Hospedagem",
+        "name": "The Student Hotel Amsterdam - 6 noites, €684",
+        "price": 2946.94,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Hospedagem",
+        "currency": "BRL",
+        "name": "Hôtel Le Littre Paris - 3 noites, €483.30",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Hospedagem",
+        "name": "Regola Suite Roma - 6 noites, €498",
+        "price": 1993.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Transporte",
+        "currency": "BRL",
+        "name": "Trem Londres → Liverpool (Virgin Trains), £62.73",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Transporte",
+        "currency": "BRL",
+        "name": "Voo Liverpool → Amsterdam (easyJet), £43.41",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Transporte",
+        "currency": "BRL",
+        "name": "Voo Amsterdam → Paris (Transavia)",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Transporte",
+        "currency": "BRL",
+        "name": "Voo Paris → Roma (Vueling), €50.99",
+        "price": 0,
+        "person": "gabriel"
+      },
+      {
+        "type": "Atração",
+        "name": "Westminster Abbey - ingresso",
+        "price": 88.34,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Atração",
+        "name": "Jogo Tottenham vs Everton - ingresso",
+        "price": 299.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
     ],
     "currency": "BRL",
     "travelers": {
-      "gabriel": { "preTrip": 13639.73, "duringTrip": 0, "total": 0 }
+      "gabriel": "Gabriel"
     },
-    "sharing": { "owner": "", "active": true, "editors": [] },
-    "version": { "lastUpdated": "2018-01-31T00:00:00.000Z" }
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2018-01-31T00:00:00.000Z"
+    }
   }
 }
