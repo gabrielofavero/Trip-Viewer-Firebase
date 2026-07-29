@@ -24,7 +24,7 @@ interface DateObject {
   year:   number;
   hour:   number;   // 0–23
   minute: number;   // 0–59
-  second: number;   // 0–59
+  second?: number;  // 0–59 — may be absent in some legacy documents
 }
 ```
 
@@ -77,14 +77,16 @@ Feature toggles controlling which sections are visible in the trip viewer.
   summary:        boolean;
   accommodations: boolean;
   expenses:       boolean;
+  lineup?:        boolean;  // Legacy — music festival lineup toggle
 }
 ```
 
 ### `travelers` — `Traveler[]`
 ```ts
+/** A traveler/person on a trip. The `id` may be missing in legacy documents. */
 interface Traveler {
-  id:   string;   // random alphanumeric ID (e.g. "LerZT")
-  name: string;   // display name (e.g. "Bibs")
+  id?:  string;   // random alphanumeric ID (e.g. "LerZT") — may be absent in older docs
+  name: string;   // display name (e.g. "Bibs") — may be empty string
 }
 ```
 
@@ -123,7 +125,8 @@ interface DestinationRef {
 }
 ```
 
-### `image` — `TripImage` *(not yet in TypeScript interface — present at runtime)*
+### `image` — `TripImage`
+
 ```ts
 {
   dark:       string;   // dark-theme image URL
@@ -219,7 +222,7 @@ interface ItineraryDay {
     translate:        boolean;
   };
   date:          DateObject;
-  destinationIds: string[];       // array of destination document IDs relevant to this day
+  destinationIds: (string | { id: string; title: string })[];  // can be plain IDs or objects with id+title
   earlyMorning:  PeriodItem[];    // usually empty, sometimes has transport
   morning:       PeriodItem[];
   afternoon:     PeriodItem[];
@@ -235,7 +238,7 @@ interface PeriodItem {
   end:       string;           // "HH:MM" or empty string
   travelers: PeriodTraveler[];
   item: {
-    type:     "destination" | "transportation" | "accommodation" | "";  // type of referenced item
+    type:     "destination" | "transportation" | "accommodation" | "";  // type of referenced item (empty string when none)
     id:       string;          // document ID of the referenced item, or empty
     category: string;          // for destinations: "tourism" | "restaurants" | "shopping" | "nightlife" | "snacks"
     location: string;          // destination document ID this item belongs to, or empty
@@ -264,26 +267,37 @@ When `pin` is `"sensitive-only"`, sensitive fields are stored in a parallel prot
 
 ```ts
 {
-  hospedagens: {
+  accommodations: {
     [accId: string]: {
-      reserva: string;  // reservation code/number
-      link:    string;  // booking link URL
+      reservation: string;  // reservation code/number
+      link:        string;  // booking link URL
     }
   };
-  transportes: {
+  transportation: {
     [legId: string]: {
-      reserva: string;  // reservation code/number
-      link:    string;  // booking link URL
+      reservation: string;  // reservation code/number
+      link:        string;  // booking link URL
     }
   };
   pin: "sensitive-only";
 }
 ```
 
+> **Note:** Despite documentation previously referencing Portuguese field names (`hospedagens`, `transportes`, `reserva`), the actual protected subcollection uses **English** field names (`accommodations`, `transportation`, `reservation`), matching the Phase 1 English migration.
+
 ### Path: `expenses/protected/{pin}/{tripId}`
+
+Expenses for PIN-protected trips are stored in the `expenses/protected/{pin}` subcollection. Each document contains the full expenses data (same shape as the non-protected `expenses/{tripId}` document).
+
+A lookup document at `protected/{tripId}` stores:
 ```ts
 {
-  pin: string;  // the PIN for expense data protection
+  pin:     string;   // the PIN value
+  sharing: {         // trip sharing metadata (owner, active, editors)
+    owner:   string;
+    active:  boolean;
+    editors: string[];
+  };
 }
 ```
 
@@ -365,7 +379,11 @@ expenses/
 ├── {tripId}                        ← Expenses document
 └── protected/
     └── {pin}/
-        └── {tripId}                ← Protected expense PIN
+        └── {tripId}                ← Protected expenses (full document)
+
+protected/
+├── {tripId}                        ← PIN lookup ({ pin, sharing })
+└── _placeholder                    ← Placeholder doc (ensures collection exists)
 ```
 
 ---

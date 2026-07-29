@@ -57,10 +57,11 @@ export async function loadUserIndex() {
 
 				setUserData(await getUserData(user.uid));
 
-				const displayName = USER_DATA.name;
-				const photoURL = USER_DATA.photo ? 'url(' + USER_DATA.photo + ')' : '';
+			const displayName = user.displayName || '';
+			const photo = user.photoURL || '';
+				const photoURL = photo ? 'url(' + photo + ')' : '';
 
-				getID('title-name').innerHTML = displayName.split(' ')[0];
+				getID('title-name').innerHTML = displayName ? displayName.split(' ')[0] : '';
 				getID('greeting-avatar').style.backgroundImage = photoURL;
 				getID('greeting-avatar').style.backgroundSize = 'cover';
 

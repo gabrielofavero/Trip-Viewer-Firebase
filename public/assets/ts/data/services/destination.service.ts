@@ -11,7 +11,6 @@ import {
 	deleteDocument,
 	newUserObjectDB,
 	deleteUserObjectDB,
-	addToUserArray,
 	createBatchOps,
 	COLLECTION,
 	SUBCOLLECTION,
@@ -28,7 +27,6 @@ export {
 	deleteDocument,
 	newUserObjectDB,
 	deleteUserObjectDB,
-	addToUserArray,
 	createBatchOps,
 	COLLECTION,
 };

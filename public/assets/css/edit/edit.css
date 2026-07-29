@@ -1025,8 +1025,12 @@
 .input-button {
 	width: 100%;
 	min-height: 48px;
+	height: auto;
 	justify-content: flex-start;
 	font-weight: 500;
+	white-space: normal;
+	word-break: break-word;
+	text-align: left;
 }
 
 /* Focus ring — shared by buttons and accordion */

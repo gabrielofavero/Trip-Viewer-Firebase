@@ -1,0 +1,171 @@
+---
+name: build-pipeline
+description: 'Use when you need to build, watch, debug build errors, understand the custom build flow, or modify build configuration. The pipeline uses esbuild for TypeScript compilation, HTML partial injection, and tsc for type-checking. Always consult this skill before running builds or troubleshooting build issues.'
+---
+
+# Build Pipeline
+
+The TripViewer build system is a **custom Node.js pipeline** (no Webpack, Vite, or bundler). It copies static assets, injects HTML partials, compiles TypeScript via esbuild, and type-checks with tsc.
+
+---
+
+## Quick Reference
+
+```bash
+npm run build              # One-shot build (blocks on TS errors)
+npm run watch              # Watch mode (rebuilds on change, errors non-blocking)
+npm run dev                # Full dev: watch + emulators + auto-open browser
+node scripts/build/build.js --watch --no-livereload  # Watch without live reload
+```
+
+---
+
+## Build Flow (`scripts/build/build.js`)
+
+```
+1. CLEAN          rm -rf dist/
+2. COPY           public/ → dist/ (recursive)
+3. INJECT         HTML partials (<!-- #include shared/foo.html --> → content)
+4. COMPILE TS     esbuild: dist/assets/ts/**/*.ts → .js (ESM, ES2020 target)
+   REMOVE TS      Delete .ts source files from dist/
+5. COPY CONFIG    firebase.json, firebase-config.js, index.js → dist/
+6. LIVE RELOAD    Write dist/reload timestamp file
+7. TYPE-CHECK     tsc --noEmit
+```
+
+### Step 3: HTML Partial Injection (`inject-partials.js`)
+
+The injector processes 8 pages defined in `PAGES[]`:
+
+| Source HTML | Entry Point |
+|---|---|
+| `index.html` | `assets/ts/pages/home/index-entry.js` |
+| `view.html` | `assets/ts/pages/trip-detail/view-entry.js` |
+| `destination.html` | `assets/ts/pages/destination/destination-entry.js` |
+| `expenses.html` | `assets/ts/pages/expenses/expenses-entry.js` |
+| `itinerary.html` | `assets/ts/pages/itinerary/itinerary-entry.js` |
+| `edit/trip.html` | `assets/ts/pages/edit-trip/trip-entry.js` |
+| `edit/destination.html` | `assets/ts/pages/edit-destination/destination-entry.js` |
+| `edit/listing.html` | `assets/ts/pages/edit-listing/listing-entry.js` |
+
+It replaces:
+- `<!-- #include shared/head.html -->` — injects `<head>` with page-specific title and CSS
+- `<!-- #include shared/scripts-core.html -->` — injects Firebase SDK + app config + entry script
+- `<!-- #include shared/scripts-vendor.html -->` — injects vendor `<script>` tags (jQuery, Bootstrap, Chart.js, Swiper, etc.)
+- `<!-- #include shared/top-bar.html -->` — injects top navigation bar (with page-specific icons)
+- `<!-- #include shared/livereload.html -->` — injects live-reload polling script (unless `--no-livereload`)
+- `{{PLACEHOLDER}}` → resolved values (e.g., `{{PAGE_TITLE}}`)
+
+### Step 4: TypeScript Compilation
+
+- **Compiler:** esbuild (fast, no type-checking)
+- **Format:** ESM (`import`/`export`)
+- **Target:** ES2020
+- **Entry points:** All `.ts` files under `dist/assets/ts/` (after copy)
+- **Output:** `.js` files in the same directory structure
+- **Cleanup:** `.ts` source files deleted from `dist/` after compilation
+
+### Step 7: Type Checking
+
+- Runs `tsc --noEmit` (type-checks only, no JS output)
+- **One-shot mode:** Aborts build with exit code 1 on errors
+- **Watch mode:** Reports errors but does NOT block the build or live reload
+- Error summary lists affected files only (no full error output in watch mode)
+
+---
+
+## Watch Mode
+
+```
+node scripts/build/build.js --watch
+```
+
+- Uses `fs.watch` with `recursive: true` on `public/`
+- **300ms debounce** — waits for burst of changes to settle before rebuild
+- Falls back to non-recursive watch on platforms that don't support it
+- Type-check errors are non-blocking (page already reloaded by then)
+- Live reload signal written to `dist/reload` after compilation, before type-check
+
+---
+
+## Dev Mode (`npm run dev`)
+
+```
+concurrently:
+  ├── npm run watch:functions    (tsc --watch in functions/)
+  ├── npm run watch              (frontend build watch)
+  ├── firebase emulators:start   (auth:9099, firestore:8085, hosting:5000, functions:5001)
+  └── node scripts/utils/open-on-ready.js  (opens browser when ready)
+```
+
+---
+
+## Key Configuration Files
+
+| File | Role |
+|---|---|
+| `tsconfig.json` | TypeScript config: `strict: false`, `noEmit: true`, `moduleResolution: "bundler"`, `isolatedModules: true`, includes `public/assets/ts/**/*.ts` |
+| `biome.json` | Formatter/linter: tab width 2, single quotes, semicolons, trailing commas, 100 char width |
+| `firebase.json` | Hosting from `dist/`, SPA rewrite `** → /index.html`, cache headers, 301 redirects |
+| `firebase-config.js` | Firebase config, auto-detects DEV/PRD/TCC by hostname |
+| `functions/tsconfig.json` | Separate TS config for Cloud Functions |
+
+---
+
+## HTML Partials (Source)
+
+Located in `public/shared/`:
+
+| File | Purpose |
+|---|---|
+| `head.html` | `<head>` with meta, CSS links, title placeholder |
+| `top-bar.html` | Navigation bar with back button, night mode toggle, extra icons |
+| `livereload.html` | Script that polls `dist/reload` and refreshes the page |
+| `scripts-core.html` | Firebase SDK scripts, firebase-config, app entry script |
+| `scripts-vendor.html` | Third-party scripts (jQuery, Bootstrap, Chart.js, Swiper, Sortable, AOS, GLightbox, Isotope, Typed, Waypoint, Mapbox) |
+
+---
+
+## Common Build Issues
+
+### "Build aborted — TypeScript errors found"
+- This only happens in one-shot mode (`npm run build`)
+- Run `npx tsc --noEmit` to see full error details
+- In watch mode, errors are non-blocking
+
+### Missing modules / vendor globals
+- Vendor scripts (jQuery, Bootstrap, etc.) are loaded via `<script>` tags, NOT bundled
+- Their types are declared in `public/assets/ts/vendor.d.ts`
+- Don't try to `import` them — they're globals
+
+### HTML partials not injecting
+- The injector reads from `public/` (source), writes to `dist/`
+- Editing HTML in `dist/` directly will be overwritten on next build
+- Always edit in `public/`
+
+### Live reload not working
+- Check that `dist/reload` file is being written (timestamp changes on each build)
+- The livereload script polls every 500ms
+- Use `--no-livereload` to disable if causing issues
+
+---
+
+## Build Scripts Location
+
+```
+scripts/
+├── build/
+│   ├── build.js              ← Main build orchestrator
+│   ├── inject-partials.js    ← HTML include processor
+│   ├── deploy.py             ← Python deploy script
+│   ├── setup.ps1             ← PowerShell setup
+│   ├── translate-ids.js      ← ID translation utility
+│   └── id-class-map.json     ← Old→new ID mappings
+├── dev/
+│   └── query-firestore.js    ← Firestore emulator query tool
+├── export-maps-data/         ← Google Places API data fetcher
+└── utils/
+    ├── readme.py             ← README.md maintenance
+    ├── sync.py               ← Git branch sync
+    └── open-on-ready.js      ← Browser auto-open
+```

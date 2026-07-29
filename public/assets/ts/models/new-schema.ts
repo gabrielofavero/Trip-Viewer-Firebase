@@ -35,7 +35,7 @@ export type CollectionName =
 	| 'config';
 
 /** was "voo" | "onibus" | "carro" */
-export type TransportType = 'flight' | 'bus' | 'car';
+export type TransportType = 'flight' | 'bus' | 'car' | 'bullet_train' | string;
 
 /** was "ida" | "volta" | "durante" */
 export type Direction = 'departure' | 'return' | 'during';
@@ -49,11 +49,8 @@ export type PinType = 'sensitive-only' | 'no-pin';
 /** was "claro" | "escuro" | "ativo" */
 export type ThemeMode = 'light' | 'dark' | 'active';
 
-/** was "dinamico" */
-export type UserVisibilityMode = 'dynamic';
-
-/** was "destinos" | "transporte" | "hospedagens" */
-export type ItineraryItemType = 'destination' | 'transportation' | 'accommodation';
+/** was "destinos" | "transporte" | "hospedagens" — can be empty string when no item is linked */
+export type ItineraryItemType = 'destination' | 'transportation' | 'accommodation' | '';
 
 /** was "madrugada" | "manha" | "tarde" | "noite" */
 export type ItineraryPeriod = 'earlyMorning' | 'morning' | 'afternoon' | 'night';
@@ -109,6 +106,9 @@ export interface Trip {
 
 	/** was "destinos" — now slim references only */
 	destinationRefs: DestinationRef[];
+
+	/** Header/hero image configuration */
+	image?: TripImage;
 }
 
 /** was "versao" */
@@ -161,6 +161,8 @@ export interface TripModules {
 	accommodations: boolean;
 	/** was "gastos" */
 	expenses: boolean;
+	/** Legacy — music festival lineup toggle (not actively used) */
+	lineup?: boolean;
 }
 
 /** was "links" */
@@ -192,6 +194,18 @@ export interface TripGallery {
 /** was "destinos[i].destinosID" */
 export interface DestinationRef {
 	id: string;
+}
+
+/** Header/hero image — top-level trip field (was "imagem") */
+export interface TripImage {
+	/** Dark-theme image URL */
+	dark: string;
+	/** Light-theme image URL */
+	light: string;
+	/** Fallback/background image URL */
+	background: string;
+	/** Whether the image section is active */
+	active: boolean;
 }
 
 // -----------------------------------------------------------
@@ -293,8 +307,8 @@ export interface ItineraryDay {
 	title: ItineraryTitle;
 	/** was "data" */
 	date: DateObject;
-	/** was "destinosIDs" */
-	destinationIds: string[];
+	/** was "destinosIDs" — can be plain string IDs or objects with id+title */
+	destinationIds: (string | { id: string; title: string })[];
 	/** was "madrugada" */
 	earlyMorning: PeriodItem[];
 	/** was "manha" */
@@ -319,10 +333,10 @@ export interface ItineraryTitle {
 export interface PeriodItem {
 	/** was "programacao" */
 	label: string;
-	/** was "inicio" */
-	startTime: string; // HH:mm
-	/** was "fim" */
-	endTime: string; // HH:mm
+	/** was "inicio" — HH:mm format */
+	start: string;
+	/** was "fim" — HH:mm format */
+	end: string;
 	/** was "pessoas" */
 	travelers: PeriodTraveler[];
 	/** was "item" */
@@ -454,27 +468,47 @@ export interface Expenses {
 	duringTrip: ExpenseEntry[];
 	/** was "gastosPrevios" */
 	preTrip: ExpenseEntry[];
-	/** was "orcamento" */
-	budget: Record<string, unknown>;
+	/** 3-letter currency code, mirrored from parent trip */
+	currency: string;
+	/** Map of travelerId → travelerName */
+	travelers: Record<string, string>;
+	/** was "compartilhamento" */
+	sharing: TripSharing;
+	/** was "versao" */
+	version: TripVersion;
+	/** was "orcamento" — optional, rarely populated */
+	budget?: Record<string, unknown>;
 }
 
 /**
  * A single expense entry.
  * was individual items in gastosDurante[] / gastosPrevios[]
- * Structure varies; refine type as field details are discovered.
  */
-export type ExpenseEntry = Record<string, unknown>;
+export interface ExpenseEntry {
+	/** was "nome" — expense description */
+	name: string;
+	/** was "tipo" — i18n translation key (e.g. "trip.transportation.type.flights") */
+	type: string;
+	/** was "valor" — amount in the stated currency */
+	price: number;
+	/** was "moeda" — 3-letter currency code */
+	currency: string;
+	/** was "pessoa" — traveler ID from the travelers map, or "" if unassigned */
+	person: string;
+}
 
 // -----------------------------------------------------------
 // User Profile — Document at users/{uid}  (was "usuarios/{uid}")
 // -----------------------------------------------------------
 
-/** was "usuarios/{uid}" — now slim (summaries moved to subcollections) */
+/** was "usuarios/{uid}" — summaries moved to subcollections; these arrays are vestigial */
 export interface UserProfile {
-	/** was "visibilidade" (dinamico) */
-	visibility: UserVisibilityMode;
-	/** was "permissoes" */
-	permissions: Record<string, unknown>;
+	/** Vestigial — destination IDs (real data in destinationSummaries subcollection) */
+	destinations: string[];
+	/** Vestigial — trip IDs (real data in tripSummaries subcollection) */
+	trips: string[];
+	/** Vestigial — listing IDs (real data in listingSummaries subcollection) */
+	listings: string[];
 }
 
 // -----------------------------------------------------------
@@ -490,7 +524,8 @@ export interface TripSummary {
 	start: DateObject;
 	/** was "fim" */
 	end: DateObject;
-	image: string;
+	/** Header/hero image object (same shape as TripImage) */
+	image: TripImage;
 	/** was "cores" */
 	colors: TripColors;
 	/** was "versao" */

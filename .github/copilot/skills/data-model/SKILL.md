@@ -1,0 +1,211 @@
+---
+name: data-model
+description: 'Use when you need to understand the Firestore data model — trip/expense document schemas, the PIN-based two-tier protected storage pattern, Firestore security rules, subcollection structure, or how collections relate to each other. Always consult this skill before modifying any data access code, writing migrations, or answering questions about the database schema.'
+---
+
+# Data Model & Firestore Schema
+
+TripViewer uses Firebase Firestore with a **two-tier PIN-protected architecture**. Public fields live in the main document; sensitive fields (reservation codes, booking links) are stored in a parallel `protected/{pin}/{id}` subcollection.
+
+---
+
+## Collections Overview
+
+| Collection | Doc ID | Purpose |
+|---|---|---|
+| `admin` | `admin` | List of admin UIDs (`{ admins: string[] }`) |
+| `config` | `system` | Global config (`{ registrationOpen: boolean }`) |
+| `users` | `{authUid}` | User profile with `destinations`, `trips`, `listings` arrays |
+| `trips` | `{tripId}` | Trip document (non-sensitive fields) |
+| `trips/{tripId}/accommodations` | `{accId}` | Accommodation sub-documents |
+| `trips/{tripId}/transportation` | `{legId}` | Transport leg sub-documents (+ `_settings` doc) |
+| `trips/{tripId}/itinerary` | `{dayId}` | Itinerary day documents (ID = `YYYYMMDD` or `YYYYMMDD-xxx`) |
+| `trips/protected/{pin}/{tripId}` | — | Protected sensitive data (reservation codes, links) |
+| `expenses` | `{tripId}` | Expenses document (matches parent trip ID) |
+| `expenses/protected/{pin}/{tripId}` | — | Protected expenses for PIN-enabled trips |
+| `destinations` | `{destId}` | Destination documents |
+| `listings` | `{listingId}` | Listing documents |
+| `protected` | `{tripId}` | PIN lookup (`{ pin: string, sharing: { owner, active, editors } }`) |\n| `protected` | `_placeholder` | Placeholder document to ensure collection exists |
+| `admin/permissions` | `{userId}` | Per-user permission flags |
+
+---
+
+## Trip Document (`trips/{tripId}`)
+
+### Top-Level Fields
+
+```
+title            string              Display title
+currency         string              3-letter code (BRL, EUR, USD)
+start            DateObject          Trip start
+end              DateObject          Trip end
+pin              "sensitive-only" | "no-pin"
+version          { lastUpdated: string }   ISO 8601
+visibility       { light: bool, dark: bool }
+colors           { light: hex, dark: hex, active: bool }
+sharing          { owner: uid, active: bool, editors: uid[] }
+modules          { destinations, transportation, itinerary, gallery, summary, accommodations, expenses: bool, lineup?: bool }
+travelers        { id?: string, name: string }[]   // id may be missing in legacy docs
+links            { maps, attachments, active, drive, pdf, ppt, sheet, vaccine: string }
+gallery          { categories[], descriptions[], images[], titles[] }
+destinationRefs  { id: string }[]        Slim references to destinations collection
+image            { dark, light, background: string, active: bool }
+```
+
+### DateObject
+
+```ts
+{ day: number, month: number, year: number, hour: number, minute: number, second: number }
+```
+
+### Subcollection: `accommodations/{accId}`
+
+```ts
+{
+  name, description, address: string
+  dates: { checkIn: DateObject, checkOut: DateObject }
+  breakfast: boolean
+  images: { description: string, link: string }[]
+  reservation: ""   // EMPTY — real value in protected subcollection
+  link: ""           // EMPTY — real value in protected subcollection
+}
+```
+
+### Subcollection: `transportation/{legId}`
+
+```ts
+{
+  type: "flight" | "bus" | "car" | "bullet_train" | ...
+  company: string
+  points: { origin: string, destination: string }
+  dates: { departure: DateObject, arrival: DateObject }
+  duration: "HH:MM"
+  direction: "departure" | "return" | "during"
+  reservation: ""   // EMPTY — real value in protected subcollection
+  link: ""           // EMPTY — real value in protected subcollection
+  person: string     // traveler name
+}
+```
+
+Also has a `_settings` document: `{ viewMode: "simple" | "leg" }`.
+
+### Subcollection: `itinerary/{dayId}`
+
+```ts
+{
+  title: { value: string, showDestinations: bool, translate: bool }
+  date: DateObject
+  destinationIds: (string | { id: string; title: string })[]  // can be plain IDs or objects
+  earlyMorning, morning, afternoon, night: PeriodItem[]
+}
+// PeriodItem:
+{ label: string, start: "HH:MM", end: "HH:MM",
+  travelers: { id, name: string, isPresent: bool }[],
+  item: { type: "destination"|"transportation"|"accommodation"|"", id, category, location: string }
+}
+```
+
+---
+
+## Expenses Document (`expenses/{tripId}`)
+
+```ts
+{
+  duringTrip: ExpenseEntry[]
+  preTrip:    ExpenseEntry[]
+  currency:   string               // 3-letter code, set from parent trip
+  travelers:  Record<string, string>  // travelerId → travelerName
+  sharing:    { owner: uid, active: true, editors: [] }
+  version:    { lastUpdated: string }
+  budget?:    Record<string, unknown>  // optional, rarely populated
+}
+// ExpenseEntry:
+{ name: string, type: string, price: number, currency: string, person: string }
+```
+
+The `type` field stores **i18n translation keys** (e.g., `trip.transportation.type.flights`, `labels.entrertainment`, `trip.expenses.daily`), not raw labels.
+
+---
+
+## PIN-Based Protected Storage
+
+The two-tier system works as follows:
+
+| Trip PIN mode | Sensitive fields live at | Expenses live at |
+|---|---|---|
+| `"no-pin"` | N/A (no protected data) | `expenses/{tripId}` |
+| `"sensitive-only"` | `trips/protected/{pin}/{tripId}` | `expenses/protected/{pin}/{tripId}` |
+
+> **Note:** There is no `"all-data"` pin mode in current data. Only `"no-pin"` and `"sensitive-only"` exist.
+
+Protected trip document structure:
+```ts
+// trips/protected/{pin}/{tripId}
+{
+  accommodations: { [accId]: { reservation: string, link: string } }
+  transportation: { [legId]: { reservation: string, link: string } }
+  pin: "sensitive-only"
+}
+```
+
+A lookup document at `protected/{tripId}` stores `{ pin: string, sharing: { owner, active, editors } }` for locating the protected path.
+
+---
+
+## Firestore Security Rules Summary
+
+| Rule | Effect |
+|---|---|
+| `canReadDoc()` | Owner OR admin OR sharing active |
+| `canCreateDoc()` | Admin OR owner (from `request.resource.data.sharing.owner`) |
+| `canUpdateDoc()` | Admin OR (owner AND same owner in before & after) |
+| `isRegistrationOpen()` | Checks `config/system.registrationOpen` |
+| Protected `/{pin}/{id}` reads | `allow read: if true` (anyone with the PIN) |
+| Protected writes | Same as non-protected (`canCreateDoc`, `canUpdateDoc`) |
+
+---
+
+## How to Query Emulator Data
+
+Use the **query-firestore** skill/tool:
+
+```bash
+# List all collections
+node scripts/dev/query-firestore.js --list-collections
+
+# Get a trip document
+node scripts/dev/query-firestore.js --collection trips --json
+
+# Get a trip with subcollections
+node scripts/dev/query-firestore.js --collection trips --doc "tripId" --json
+
+# Query expenses for a trip
+node scripts/dev/query-firestore.js --collection expenses --doc "tripId" --json
+```
+
+---
+
+## TypeScript Model Files
+
+The canonical TypeScript interfaces are in `public/assets/ts/models/`:
+- `trip.model.ts` — `Trip`, `Accommodation`, `TransportLeg`, `ItineraryDay`, etc.
+- `expense.model.ts` — `ExpensesDoc`, `ExpenseEntry`
+- `traveler.model.ts` — `Traveler`
+- `destination.model.ts` — Destination interface
+- `new-schema.ts` — Post-migration English field names
+
+Service layer in `public/assets/ts/data/services/` wraps Firestore CRUD:
+- `trip.service.ts`, `expense.service.ts`, `destination.service.ts`, `auth.service.ts`
+
+---
+
+## Key Constraints to Remember
+
+1. **PIN is stored in the path**, not the document — `protected/{pin}/{tripId}` means the PIN is part of the URL, making it readable by anyone who knows the PIN.
+2. **Sensitive fields are always `""` in non-protected docs** — the real values only exist in the protected subcollection.
+3. **Expenses document ID matches the trip ID** — they share the same key.
+4. **Itinerary day IDs use `YYYYMMDD` format** — with random 3-char suffix for days with multiple entries.
+5. **Legacy docs may have Portuguese field names** — but post-migration protected subcollections use English (`accommodations`, `transportation`, `reservation`). Some older docs may still use Portuguese names; verify with the query-firestore tool.
+6. **DateObject.second may be missing** in some `end` dates of legacy documents — treat as optional when reading.
+7. **Traveler.id may be absent** in legacy documents — the `validateTravelersObject()` function in `traveler.model.ts` backfills missing IDs at runtime.
+8. **Itinerary destinationIds can be objects** — not just plain string IDs; some docs store `{ id: string, title: string }` entries.

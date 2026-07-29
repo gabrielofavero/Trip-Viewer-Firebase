@@ -99,7 +99,6 @@ export async function registerIfUserNotPresent() {
 				listings: [],
 				trips: [],
 				destinations: [],
-				visibility: 'dynamic',
 			},
 			user.uid,
 		);

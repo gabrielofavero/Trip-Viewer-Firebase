@@ -2,7 +2,7 @@ import { getID, getURLParams } from '../../utils/dom.js';
 import { displayError } from '../../utils/messages.js';
 import { isAlreadyLoading, startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { translate } from '../../i18n/translation.js';
-import { getUID, getUserData } from './auth.js';
+import { getUID } from './auth.js';
 import { ACTIVE_DESTINATIONS } from '../../pages/edit-trip/categories/destination.js';
 import { getURLParam } from '../../utils/dom.js';
 import { DOCUMENT_ID, ERROR_FROM_GET_REQUEST, setErrorFromGetRequest } from '../state.js';
@@ -344,29 +344,9 @@ export async function getSystemData() {
 }
 
 export async function deleteUserObjectDB(id, type) {
-	const uid = await getUID();
-	if (uid) {
-		const userData = await getUserData(uid);
-		const existing = userData[type];
-
-		// Support both array format (legacy) and object format (current, keyed by ID)
-		let updated: any;
-		if (Array.isArray(existing)) {
-			updated = existing.filter((item) => item !== id);
-		} else if (existing && typeof existing === 'object') {
-			updated = { ...existing };
-			delete updated[id];
-		} else {
-			updated = {};
-		}
-
-		const result: Record<string, any> = {};
-		result[type] = updated;
-
-		update(`${COLLECTION.USERS}/${uid}/`, result);
-
-		return await deleteDocument(`${type}/${id}`);
-	}
+	// Subcollections (tripSummaries, etc.) are managed by the service layer.
+	// Legacy user-doc array manipulation removed — summaries live in subcollections only.
+	return await deleteDocument(`${type}/${id}`);
 }
 
 export async function deleteAccount() {
@@ -454,38 +434,15 @@ export async function deleteAccountDocuments() {
 		}
 	}
 
-	// --- Step 4: Update user document — clear embedded arrays ---
-	const userRef = firebase.firestore().collection(COLLECTION.USERS).doc(uid);
-	deleteOps.push(
-		userRef.update({ trips: [], destinations: [], listings: [] }).then(
-			() => console.log('Updated user:', userRef.path),
-			(err: any) => console.warn('⚠️ Failed updating user:', userRef.path, err.message),
-		),
-	);
+	// --- Step 4: User document is deleted by deleteAccount() after this call ---
+	// (Legacy trips/destinations/listings arrays are no longer written here;
+	// the user doc itself is deleted in deleteAccount() above.)
 
 	console.log('Running all delete ops...');
 	await Promise.allSettled(deleteOps);
 }
 
-export async function addToUserArray(type, value) {
-	const uid = await getUID();
-	if (uid) {
-		const userDoc = await get(`${COLLECTION.USERS}/${uid}`);
-		if (userDoc) {
-			let list = userDoc[type];
-			if (!list) {
-				list = [];
-			}
-			if (!list.includes(value)) {
-				list.push(value);
-				await update(`${COLLECTION.USERS}/${uid}`, {
-					[type]: list,
-				});
-			}
-			console.log('User data updated successfully');
-		}
-	}
-}
+
 
 export async function newUserObjectDB(object, type) {
 	if (await getUID()) {
@@ -500,18 +457,34 @@ export async function newUserObjectDB(object, type) {
 	} else return translate('messages.unauthenticated');
 }
 
-/** Get user permissions from Firestore.  was "getPermissoes" */
-export async function getPermissions() {
-	// Seeing permissions is only for Front-End purposes. Security is handled by Firebase Rules
+/** Get user permissions by checking admin/permissions subcollection.
+ *  Each permission is represented by a document at
+ *  admin/permissions/{permissionType}/{uid} — existence = has permission.
+ *  Security is enforced by Firestore rules; this is purely for UI gating. */
+export async function getPermissions(): Promise<Record<string, boolean>> {
 	const uid = await getUID();
-	if (uid) {
-		const userData = await getUserData(uid);
-		return userData?.permissions ?? userData?.permissions_legacy;
-	}
-}
+	if (!uid) return {};
 
-/** @deprecated Use getPermissions() */
-export const getPermissions_legacy = getPermissions;
+	const permissionTypes = ['unlimitedUploadSize', 'upload'];
+	const permissions: Record<string, boolean> = {};
+
+	await Promise.all(
+		permissionTypes.map(async (type) => {
+			try {
+				const snap = await firebase
+					.firestore()
+					.doc(`admin/permissions/${type}/${uid}`)
+					.get();
+				permissions[type] = snap.exists;
+			} catch {
+				// If the read fails (e.g. permission denied), default to false
+				permissions[type] = false;
+			}
+		}),
+	);
+
+	return permissions;
+}
 
 export async function getDestination(id, containerID?) {
 	if (ACTIVE_DESTINATIONS[id]) return ACTIVE_DESTINATIONS[id];

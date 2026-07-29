@@ -16,7 +16,6 @@ import {
 	create,
 	newUserObjectDB,
 	deleteUserObjectDB,
-	addToUserArray,
 	createBatchOps,
 	COLLECTION,
 	SUBCOLLECTION,
@@ -42,7 +41,6 @@ export {
 	create,
 	newUserObjectDB,
 	deleteUserObjectDB,
-	addToUserArray,
 	createBatchOps,
 	COLLECTION,
 };

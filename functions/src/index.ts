@@ -25,9 +25,9 @@ export const migratePhase1 = phase1.migrate;
 import * as phase2 from './migrations/14-migrate-phase2-rename-finalize';
 export const migratePhase2 = phase2.migrate;
 
-// Migration 15: Clean up user-document embedded summaries
-import * as cleanupSummaries from './migrations/15-migrate-cleanup-user-embedded-summaries';
-export const migrateCleanupSummaries = cleanupSummaries.migrate;
+// Migration 15: Phase 3 cleanup (embedded summaries, permissions migration, legacy field removal)
+import * as phase3 from './migrations/15-migrate-phase3-hotfixes';
+export const migratePhase3 = phase3.migrate;
 
 // Dev: initialize a fresh local Firestore emulator database
 import * as initLocalDbModule from './dev/init-local-db';

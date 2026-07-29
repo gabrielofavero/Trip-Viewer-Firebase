@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { FieldValue } from 'firebase-admin/firestore';
 
 /**
  * init-local-db
@@ -49,11 +50,15 @@ export const initLocalDb = functions.https.onRequest(async (req, res) => {
 			admins: [uid],
 		});
 
-		// admin/permissions → stores upload permission lists
-		batch.set(db.collection('admin').doc('permissions'), {
-			unlimitedUploadSize: [uid],
-			upload: [uid],
-		});
+		// admin/permissions/{type}/{uid} → existence = has permission
+		batch.set(
+			db.collection('admin').doc('permissions').collection('unlimitedUploadSize').doc(uid),
+			{ _created: FieldValue.serverTimestamp() },
+		);
+		batch.set(
+			db.collection('admin').doc('permissions').collection('upload').doc(uid),
+			{ _created: FieldValue.serverTimestamp() },
+		);
 
 		// --- config collection ---
 		batch.set(db.collection('config').doc('system'), {
@@ -65,14 +70,6 @@ export const initLocalDb = functions.https.onRequest(async (req, res) => {
 			destinations: [],
 			trips: [],
 			listings: [],
-			name: displayName,
-			permissions: {
-				admin: true,
-				unlimitedUploadSize: true,
-				upload: true,
-			},
-			visibility: 'light',
-			photo: photoURL,
 		});
 
 		// --- protected parent docs (act as containers for subcollections) ---

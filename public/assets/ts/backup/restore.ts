@@ -289,16 +289,8 @@ async function restoreAccount(restore) {
 			}
 		}
 
-		// --- Step 3: Update user document — clear embedded arrays ---
-		ops.push({
-			type: 'set',
-			ref: firebase.firestore().collection('users').doc(uid),
-			data: {
-				trips: [],
-				destinations: [],
-				listings: [],
-			},
-		});
+		// --- Step 3: User doc is handled by collectUserUpdateOp (merge set) ---
+		// Legacy trips/destinations/listings arrays no longer written here.
 
 		return ops;
 	}
@@ -452,12 +444,8 @@ async function restoreAccount(restore) {
 	}
 
 	function buildUserUpdateFromRestore(restore) {
-		// After migration 15, user doc should only have empty arrays.
+		// After migration 15, user doc has no embedded summary arrays.
 		// Summaries are written to subcollections via collectUserSummaryOps.
-		return {
-			trips: [],
-			destinations: [],
-			listings: [],
-		};
+		return {};
 	}
 }

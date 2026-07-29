@@ -832,7 +832,7 @@ body.dialog-open {
 	border-radius: var(--radius-lg);
 	font-size: 14px;
 	font-weight: 500;
-	z-index: 2000;
+	z-index: 10000;
 	display: none;
 	align-items: center;
 	gap: 12px;

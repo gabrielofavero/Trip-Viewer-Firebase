@@ -311,7 +311,7 @@ def deploy_firebase(project):
 
     # Explicitly bind deploy to project
     result = run_command(
-        f"firebase deploy --only hosting --project {project}",
+        f"firebase deploy --only hosting,firestore:rules --project {project}",
         capture_output=False,
         check=False
     )
@@ -322,7 +322,7 @@ def deploy_firebase(project):
 
     # Fetch deploy info deterministically
     version_result = run_command(
-        f"firebase deploy --only hosting --project {project} --json",
+        f"firebase deploy --only hosting,firestore:rules --project {project} --json",
         check=False
     )
 

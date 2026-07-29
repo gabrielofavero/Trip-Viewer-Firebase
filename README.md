@@ -33,27 +33,27 @@ npm run dev
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 161   | 158  | 3         | 0       |
-| 🏆   | Feature     | F000 | 163   | 139  | 22        | 2       |
-| 📈   | Improvement | M000 | 157   | 132  | 23        | 2       |
+| 🏆   | Feature     | F000 | 169   | 142  | 22        | 5       |
+| 📈   | Improvement | M000 | 158   | 133  | 23        | 2       |
 | ⚔️   | Epic        | E000 | 51    | 34   | 9         | 8       |
 
 ## Backlog
 
 ### High Priority
 
-- 🏆 **F168:** Add option to put image in destination (and make index.html see it)
-- 🏆 **F170:** Add Maps integration into edit page (hidden if no api key)
-- 📈 **M153:** Index improvements: 
-  - trip/listing destination tags, destination images
+- 🏆 **F156:** Add support for legacy trips
+- 🏆 **F168:** Add image for destination documents
+- 🏆 **F155:** Add images for each destination item
+- 🏆 **F157:** Add destination images on index.html
+- 📈 **M153:** Improve destination preview on trip card for index.html
+- 🏆 **F170:** Add Maps integration into edit page
 
 ### Medium Priority
 
 - ⚔️ **E016:** New Front-End: destination.html
-  - Use image somehow
-  - boxes like on index
-  - search bar
 - ⚔️ **E027:** New Front-End: view.html
   - no more iframe/embeds. Use html injection instead
+  - destination subcategory to be refined (no more need to read destination on view.html)
 - 📈 **M154:** Reduce firestore calls on index
 - ⚔️ **E045:** New Front-End: itinerary.html
 - ⚔️ **E046:** New Front-End: expenses.html
@@ -62,8 +62,8 @@ npm run dev
 
 - ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
 - ⚔️ **E043:** Offline Mode
-- ⚔️ **E019:** Implement Sonarqube
 - ⚔️ **E047:** Implement Unit Tests (after TypeScript migration)
+- ⚔️ **E019:** Implement Sonarqube
 
 ## Done
 
@@ -120,6 +120,10 @@ npm run dev
   - *[📈M152] All ids, classes and html comments in EN-US (+ better naming)*
 - 🏆 **F167:** Add dev mode for easy debugging
 - ⚔️ **E044:** New Front-End: edit pages
+- 🏆 **F152:** Add firebase rules into repo + deployment
+- 📈 **M158:** Optimize user data + user permissions
+- 🏆 **F153:** Auto open dev browser on npm run dev
+- 🏆 **F154:** Add AI skills for project
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action

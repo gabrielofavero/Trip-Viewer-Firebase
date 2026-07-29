@@ -87,13 +87,17 @@ The expenses document's storage location depends on the trip's PIN preference:
 | PIN preference | Document path | Notes |
 |---|---|---|
 | `"no-pin"` | `expenses/{tripId}` | Publicly readable by anyone with trip access |
-| `"sensitive-only"` | `expenses/protected/{pin}/{tripId}` | Requires PIN to read |
-| `"all-data"` | `expenses/protected/{pin}/{tripId}` | Requires PIN to read (entire expenses doc is protected) |
+| `"sensitive-only"` | `expenses/protected/{pin}/{tripId}` | Requires PIN to read; full expenses doc with all fields |
 
 There is also a lightweight lookup document at `protected/{tripId}`:
 ```ts
 {
-  pin: string;  // the PIN value, used to locate the protected expenses doc
+  pin:     string;   // the PIN value, used to locate the protected expenses doc
+  sharing: {         // trip sharing metadata
+    owner:   string;
+    active:  boolean;
+    editors: string[];
+  };
 }
 ```
 
@@ -219,10 +223,10 @@ expenses/
 ├── {tripId}                        ← Expenses document (when pin = "no-pin")
 └── protected/
     └── {pin}/
-        └── {tripId}                ← Expenses document (when pin = "sensitive-only" or "all-data")
+        └── {tripId}                ← Expenses document (when pin = "sensitive-only")
 
 protected/
-└── {tripId}                        ← PIN lookup: { pin: "1234" }
+└── {tripId}                        ← PIN lookup: { pin: string, sharing: { owner, active, editors } }
 ```
 
 ---
@@ -250,4 +254,4 @@ protected/
 | Currency field on entry | `moeda` | `currency` |
 | Entry name | `nome` | `name` |
 | Entry type | `tipo` | `type` |
-| PIN storage | `pin` field embedded in `gastos` doc | `pin` in `protected/{tripId}` + doc under `expenses/protected/{pin}/` |
+| PIN storage | `pin` field embedded in `gastos` doc | `pin` in `protected/{tripId}` (with `sharing` metadata) + doc under `expenses/protected/{pin}/` |
