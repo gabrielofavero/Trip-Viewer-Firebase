@@ -26,7 +26,7 @@ functions/package-lock.json
 
 # Firebase emulator data (persisted between restarts)
 .emulator-data/
-.emulator-data-backup/
+.emulator-data-backups/
 firebase-export-*/
 
 # Python cache

@@ -34,7 +34,7 @@ npm run dev
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 162   | 159  | 3         | 0       |
 | 🏆   | Feature     | F000 | 169   | 142  | 22        | 5       |
-| 📈   | Improvement | M000 | 159   | 134  | 23        | 2       |
+| 📈   | Improvement | M000 | 160   | 135  | 23        | 2       |
 | ⚔️   | Epic        | E000 | 51    | 34   | 9         | 8       |
 
 ## Backlog
@@ -83,6 +83,7 @@ npm run dev
 - 🏆 **F154:** Add AI skills for project
 - 📈 **M159:** Improve skills behavior
 - 🐞 **B162:** People-view transportation wrapper not loading on initial page load
+- 📈 **M160:** Improve emulator data backup actions
 
 ### June 2026
 - 🐞 **B158:** When clicking on last item of transportation tab, nothing happens

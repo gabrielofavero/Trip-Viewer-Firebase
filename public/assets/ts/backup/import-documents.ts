@@ -482,7 +482,7 @@ async function importTrip(doc: Record<string, any>, skipDestinations: boolean = 
 		const subData = doc[key];
 		if (!subData || typeof subData !== 'object') continue;
 		for (const [subId, subDoc] of Object.entries(subData as Record<string, any>)) {
-			if (subId.startsWith('_')) continue;
+			if (subId.startsWith('_') && subId !== '_settings') continue;
 			if (!subDoc || typeof subDoc !== 'object') continue;
 			ops.push({ type: 'set', ref: firebase.firestore().doc(`trips/${newTripId}/${subName}/${subId}`), data: subDoc });
 		}
