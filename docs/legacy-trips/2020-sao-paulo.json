@@ -1,6 +1,6 @@
 {
   "trip": {
-    "title": "São Paulo 2020",
+    "title": "São Paulo ft. Nana",
     "currency": "BRL",
     "start": {
       "day": 10,
@@ -118,7 +118,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "LATAM",
+      "company": "latam",
       "points": {
         "origin": "Belo Horizonte (CNF)",
         "destination": "São Paulo (CGH)"
@@ -141,7 +141,7 @@
           "second": 0
         }
       },
-      "duration": "1h20",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "TFJCNR",
       "link": "",
@@ -149,7 +149,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "LATAM",
+      "company": "latam",
       "points": {
         "origin": "São Paulo (CGH)",
         "destination": "Belo Horizonte (CNF)"
@@ -172,7 +172,7 @@
           "second": 0
         }
       },
-      "duration": "1h15",
+      "duration": "01:00",
       "direction": "return",
       "reservation": "TFJCNR",
       "link": "",
@@ -212,7 +212,6 @@
       "morning": [
         {
           "expenseType": "Voo",
-          "value": 0,
           "item": {
             "type": "",
             "id": "",
@@ -225,7 +224,6 @@
         },
         {
           "expenseType": "Transporte Privado",
-          "value": 20,
           "item": {
             "type": "",
             "id": "",
@@ -238,7 +236,6 @@
         },
         {
           "expenseType": "Hotel",
-          "value": 0,
           "item": {
             "type": "",
             "id": "",
@@ -251,7 +248,6 @@
         },
         {
           "expenseType": "Alimentação",
-          "value": 30,
           "item": {
             "type": "",
             "id": "",
@@ -264,7 +260,6 @@
         },
         {
           "expenseType": "Atrações",
-          "value": 0,
           "item": {
             "type": "",
             "id": "",
@@ -277,7 +272,6 @@
         },
         {
           "expenseType": "Atrações",
-          "value": 0,
           "item": {
             "type": "",
             "id": "",
@@ -290,7 +284,6 @@
         },
         {
           "expenseType": "Alimentação",
-          "value": 30,
           "item": {
             "type": "",
             "id": "",
@@ -305,7 +298,6 @@
       "afternoon": [
         {
           "expenseType": "Transporte Público",
-          "value": 4.4,
           "item": {
             "type": "",
             "id": "",
@@ -318,7 +310,6 @@
         },
         {
           "expenseType": "Compras",
-          "value": 150,
           "item": {
             "type": "",
             "id": "",
@@ -331,7 +322,6 @@
         },
         {
           "expenseType": "Transporte Público",
-          "value": 4.1,
           "item": {
             "type": "",
             "id": "",
@@ -356,7 +346,6 @@
         },
         {
           "expenseType": "Transporte Público",
-          "value": 4.4,
           "item": {
             "type": "",
             "id": "",
@@ -369,7 +358,6 @@
         },
         {
           "expenseType": "Atrações",
-          "value": 0,
           "item": {
             "type": "",
             "id": "",
@@ -396,7 +384,6 @@
         },
         {
           "expenseType": "Transporte Privado",
-          "value": 15,
           "item": {
             "type": "",
             "id": "",
@@ -409,7 +396,6 @@
         },
         {
           "expenseType": "Saída Noturna",
-          "value": 100,
           "item": {
             "type": "",
             "id": "",
@@ -422,7 +408,6 @@
         },
         {
           "expenseType": "Transporte Privado",
-          "value": 15,
           "item": {
             "type": "",
             "id": "",
@@ -490,7 +475,6 @@
         },
         {
           "expenseType": "Transporte Público",
-          "value": 4.4,
           "item": {
             "type": "",
             "id": "",
@@ -515,7 +499,6 @@
         },
         {
           "expenseType": "Transporte Público",
-          "value": 12.1,
           "item": {
             "type": "",
             "id": "",
@@ -528,7 +511,6 @@
         },
         {
           "expenseType": "Alimentação",
-          "value": 60,
           "item": {
             "type": "",
             "id": "",
@@ -543,7 +525,6 @@
       "afternoon": [
         {
           "expenseType": "Transporte Privado",
-          "value": 12.4,
           "item": {
             "type": "",
             "id": "",
@@ -556,7 +537,6 @@
         },
         {
           "expenseType": "Atrações",
-          "value": 5,
           "item": {
             "type": "",
             "id": "",
@@ -607,7 +587,6 @@
         },
         {
           "expenseType": "Alimentação",
-          "value": 30,
           "item": {
             "type": "",
             "id": "",
@@ -620,7 +599,6 @@
         },
         {
           "expenseType": "Saída Noturna",
-          "value": 100,
           "item": {
             "type": "",
             "id": "",
@@ -633,7 +611,6 @@
         },
         {
           "expenseType": "Transporte Privado",
-          "value": 10,
           "item": {
             "type": "",
             "id": "",
@@ -701,7 +678,6 @@
         },
         {
           "expenseType": "Transporte Público",
-          "value": 4.4,
           "item": {
             "type": "",
             "id": "",
@@ -714,7 +690,6 @@
         },
         {
           "expenseType": "Compras",
-          "value": 50,
           "item": {
             "type": "",
             "id": "",
@@ -727,7 +702,6 @@
         },
         {
           "expenseType": "Transporte Privado",
-          "value": 10,
           "item": {
             "type": "",
             "id": "",
@@ -752,7 +726,6 @@
         },
         {
           "expenseType": "Transporte Privado",
-          "value": 15,
           "item": {
             "type": "",
             "id": "",
@@ -779,7 +752,6 @@
         },
         {
           "expenseType": "Alimentação",
-          "value": 30,
           "item": {
             "type": "",
             "id": "",
@@ -792,7 +764,6 @@
         },
         {
           "expenseType": "Transporte Público",
-          "value": 4.4,
           "item": {
             "type": "",
             "id": "",
@@ -819,7 +790,6 @@
       "night": [
         {
           "expenseType": "Transporte Privado",
-          "value": 20,
           "item": {
             "type": "",
             "id": "",
@@ -832,7 +802,6 @@
         },
         {
           "expenseType": "Saída Noturna",
-          "value": 50,
           "item": {
             "type": "",
             "id": "",
@@ -845,7 +814,6 @@
         },
         {
           "expenseType": "Transporte Privado",
-          "value": 20,
           "item": {
             "type": "",
             "id": "",
@@ -858,7 +826,6 @@
         },
         {
           "expenseType": "Saída Noturna",
-          "value": 100,
           "item": {
             "type": "",
             "id": "",
@@ -871,7 +838,6 @@
         },
         {
           "expenseType": "Transporte Privado",
-          "value": 10,
           "item": {
             "type": "",
             "id": "",
@@ -939,7 +905,6 @@
         },
         {
           "expenseType": "Hotel",
-          "value": 11.7,
           "item": {
             "type": "",
             "id": "",
@@ -952,7 +917,6 @@
         },
         {
           "expenseType": "Transporte Privado",
-          "value": 10,
           "item": {
             "type": "",
             "id": "",
@@ -977,7 +941,6 @@
         },
         {
           "expenseType": "Transporte Privado",
-          "value": 10,
           "item": {
             "type": "",
             "id": "",
@@ -990,7 +953,6 @@
         },
         {
           "expenseType": "Alimentação",
-          "value": 100,
           "item": {
             "type": "",
             "id": "",
@@ -1005,7 +967,6 @@
       "afternoon": [
         {
           "expenseType": "Transporte Privado",
-          "value": 10,
           "item": {
             "type": "",
             "id": "",
@@ -1018,7 +979,6 @@
         },
         {
           "expenseType": "Compras",
-          "value": 50,
           "item": {
             "type": "",
             "id": "",
@@ -1031,7 +991,6 @@
         },
         {
           "expenseType": "Transporte Privado",
-          "value": 20,
           "item": {
             "type": "",
             "id": "",
@@ -1044,7 +1003,6 @@
         },
         {
           "expenseType": "Alimentação",
-          "value": 15,
           "item": {
             "type": "",
             "id": "",
@@ -1057,7 +1015,6 @@
         },
         {
           "expenseType": "Transporte Público",
-          "value": 4.4,
           "item": {
             "type": "",
             "id": "",
@@ -1082,7 +1039,6 @@
         },
         {
           "expenseType": "Transporte Privado",
-          "value": 20,
           "item": {
             "type": "",
             "id": "",
@@ -1097,7 +1053,6 @@
       "night": [
         {
           "expenseType": "Voo",
-          "value": 0,
           "item": {
             "type": "",
             "id": "",
@@ -1126,213 +1081,187 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "Alimentação",
-        "value": 30,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Paulista — Café da manhã",
-        "price": 0,
+        "price": 30,
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 30,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Taco Bell — Almoço",
-        "price": 0,
+        "price": 30,
         "person": "gabriel"
       },
       {
-        "type": "Compras",
-        "value": 150,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Liberdade — Compras",
-        "price": 0,
+        "price": 150,
         "person": "gabriel"
       },
       {
         "type": "Saída Noturna",
-        "value": 100,
         "currency": "BRL",
         "name": "Mexicaníssimo — Jantar e saída",
-        "price": 0,
+        "price": 100,
         "person": "gabriel"
       },
       {
         "type": "Transporte Privado",
-        "value": 50,
         "currency": "BRL",
         "name": "Uber — Deslocamentos (Dia 1)",
-        "price": 0,
+        "price": 50,
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 12.9,
+        "type": "trip.transportation.type.bus",
         "currency": "BRL",
         "name": "Metrô — Deslocamentos (Dia 1)",
-        "price": 0,
+        "price": 12.9,
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 60,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "The Burger Map — Almoço",
-        "price": 0,
+        "price": 60,
         "person": "gabriel"
       },
       {
-        "type": "Atrações",
-        "value": 5,
+        "type": "trip.expenses.entertainment",
         "currency": "BRL",
         "name": "Museu da Imagem e Som — Entrada",
-        "price": 0,
+        "price": 5,
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 30,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Bráz Elettrica — Tira-gosto",
-        "price": 0,
+        "price": 30,
         "person": "gabriel"
       },
       {
         "type": "Saída Noturna",
-        "value": 100,
         "currency": "BRL",
         "name": "Caixote Bar + Augusta",
-        "price": 0,
+        "price": 100,
         "person": "gabriel"
       },
       {
         "type": "Transporte Privado",
-        "value": 28.4,
         "currency": "BRL",
         "name": "Uber — Deslocamentos (Dia 2)",
-        "price": 0,
+        "price": 28.4,
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 8.5,
+        "type": "trip.transportation.type.bus",
         "currency": "BRL",
         "name": "Metrô — Deslocamentos (Dia 2)",
-        "price": 0,
+        "price": 8.5,
         "person": "gabriel"
       },
       {
-        "type": "Compras",
-        "value": 50,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Galeria do Rock",
-        "price": 0,
+        "price": 50,
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 30,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Cabana Burger — Almoço",
-        "price": 0,
+        "price": 30,
         "person": "gabriel"
       },
       {
         "type": "Saída Noturna",
-        "value": 50,
         "currency": "BRL",
         "name": "O Burguer — Drinks",
-        "price": 0,
+        "price": 50,
         "person": "gabriel"
       },
       {
         "type": "Saída Noturna",
-        "value": 100,
         "currency": "BRL",
         "name": "Omalleys — Saída noturna",
-        "price": 0,
+        "price": 100,
         "person": "gabriel"
       },
       {
         "type": "Transporte Privado",
-        "value": 75,
         "currency": "BRL",
         "name": "Uber — Deslocamentos (Dia 3)",
-        "price": 0,
+        "price": 75,
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 8.8,
+        "type": "trip.transportation.type.bus",
         "currency": "BRL",
         "name": "Metrô — Deslocamentos (Dia 3)",
-        "price": 0,
+        "price": 8.8,
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 100,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Modern Mamma Osteria — Almoço",
-        "price": 0,
+        "price": 100,
         "person": "gabriel"
       },
       {
-        "type": "Compras",
-        "value": 50,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Eataly — Compras",
-        "price": 0,
+        "price": 50,
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 15,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "O Tradicionalíssimo — Donuts",
-        "price": 0,
+        "price": 15,
         "person": "gabriel"
       },
       {
         "type": "Transporte Privado",
-        "value": 70,
         "currency": "BRL",
         "name": "Uber — Deslocamentos (Dia 4)",
-        "price": 0,
+        "price": 70,
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 4.4,
+        "type": "trip.transportation.type.bus",
         "currency": "BRL",
         "name": "Metrô — Deslocamentos (Dia 4)",
-        "price": 0,
+        "price": 4.4,
         "person": "gabriel"
       },
       {
-        "type": "Hotel",
-        "value": 11.7,
+        "type": "trip.accommodation.title",
         "currency": "BRL",
         "name": "Taxa extra no checkout",
-        "price": 0,
+        "price": 11.7,
         "person": "gabriel"
       }
     ],
     "preTrip": [
       {
-        "type": "Voo",
-        "value": 550,
+        "type": "trip.transportation.type.flights",
         "currency": "BRL",
         "name": "LATAM — Passagem ida e volta (Reserva TFJCNR)",
-        "price": 0,
+        "price": 550,
         "person": "gabriel"
       },
       {
-        "type": "Hospedagem",
-        "value": 1072.26,
+        "type": "trip.accommodation.title",
         "currency": "BRL",
         "name": "Matiz Manhattan — 3 noites (Hoteis.com)",
-        "price": 0,
+        "price": 1072.26,
         "person": "gabriel"
       }
     ],

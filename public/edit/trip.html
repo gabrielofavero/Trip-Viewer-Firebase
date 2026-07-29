@@ -244,6 +244,36 @@
           </div>
 
           <div class="nice-form-group">
+            <input id="theme-enabled" type="checkbox" class="switch" />
+            <label for="check-4">
+              <span data-translate="labels.customization.theme.title"></span>
+              <small data-translate="labels.customization.theme.subtitle"></small>
+            </label>
+          </div>
+
+          <div class="transparent-background" id="theme-enabled-content">
+
+            <fieldset class="nice-form-group" id="theme-mode-group">
+              <div class="modern-radio-group">
+                <div class="nice-form-group">
+                  <input type="radio" name="theme-mode" id="theme-mode-dynamic" checked>
+                  <label for="theme-mode-dynamic" data-translate="labels.customization.theme.dynamic"></label>
+                </div>
+
+                <div class="nice-form-group">
+                  <input type="radio" name="theme-mode" id="theme-mode-light">
+                  <label for="theme-mode-light" data-translate="labels.customization.theme.light_only"></label>
+                </div>
+
+                <div class="nice-form-group">
+                  <input type="radio" name="theme-mode" id="theme-mode-dark">
+                  <label for="theme-mode-dark" data-translate="labels.customization.theme.dark_only"></label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="nice-form-group">
             <input id="colors-enabled" type="checkbox" id="check-4" class="switch" />
             <label for="check-4">
               <span data-translate="labels.customization.colors.title"></span>
@@ -253,26 +283,17 @@
 
           <div class="transparent-background-color" id="colors-enabled-content">
 
-            <fieldset class="nice-form-group">
-              <div class="modern-radio-group">
-                <div class="nice-form-group">
-                  <input type="radio" id="dark-and-light" name="display-mode" checked />
-                  <label for="dark-and-light" data-translate="labels.customization.colors.themes.light_and_dark"></label>
+            <div id="color-preset-section">
+              <div class="color-preset-carousel">
+                <button class="color-preset-arrow color-preset-prev" aria-label="Previous">&lsaquo;</button>
+                <div class="color-preset-grid" id="color-presets">
+                  <!-- Populated dynamically from colors.json options + custom swatch -->
                 </div>
-
-                <div class="nice-form-group">
-                  <input type="radio" id="light-exclusive" name="display-mode" />
-                  <label for="light-exclusive" data-translate="labels.customization.colors.themes.light"></label>
-                </div>
-
-                <div class="nice-form-group">
-                  <input type="radio" id="dark-exclusive" name="display-mode" />
-                  <label for="dark-exclusive" data-translate="labels.customization.colors.themes.dark"></label>
-                </div>
+                <button class="color-preset-arrow color-preset-next" aria-label="Next">&rsaquo;</button>
               </div>
-            </fieldset>
+            </div>
 
-            <div class="side-by-side-color-box" id="colors">
+            <div class="side-by-side-color-box" id="color-pickers" style="display: none;">
               <div class="nice-form-group side-by-side-fixed" id="light-theme">
                 <label data-translate="labels.light_mode"></label>
                 <div class="color-picker-box">

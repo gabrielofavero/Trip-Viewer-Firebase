@@ -95,7 +95,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "Gol",
+      "company": "gol",
       "points": {
         "origin": "Belo Horizonte",
         "destination": "São Paulo"
@@ -126,7 +126,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "Gol",
+      "company": "gol",
       "points": {
         "origin": "São Paulo",
         "destination": "Belo Horizonte"

@@ -470,6 +470,109 @@ function extractItinerary(
 }
 
 // ============================================================
+// MODULE SANITIZATION
+//
+// Disables modules whose backing data is effectively empty,
+// so the UI doesn't show tabs/sections with nothing useful.
+// ============================================================
+
+/** Time-slot keys checked for itinerary emptiness */
+const ITINERARY_SLOTS = ['earlyMorning', 'morning', 'afternoon', 'night'];
+
+/** Check whether an itinerary subcollection has any meaningful activities. */
+function isItineraryEmpty(itinSub: Record<string, any>): boolean {
+	const days = Object.values(itinSub);
+	if (days.length === 0) return true;
+
+	return days.every((day: any) => {
+		if (!day || typeof day !== 'object') return true;
+		return ITINERARY_SLOTS.every((slot) => {
+			const entries = day[slot];
+			return !Array.isArray(entries) || entries.length === 0;
+		});
+	});
+}
+
+/** Check whether a gallery object has any images. */
+function hasGalleryContent(gallery: Record<string, any>): boolean {
+	if (!gallery || typeof gallery !== 'object') return false;
+	const images = gallery.images;
+	if (Array.isArray(images) && images.length > 0) return true;
+	// Also check legacy "media" key
+	const media = gallery.media;
+	if (Array.isArray(media) && media.length > 0) return true;
+	return false;
+}
+
+/**
+ * Walk all trip documents and disable modules whose backing data
+ * is empty or effectively useless.
+ *
+ * Modifies the normalized object in place.
+ */
+function sanitizeModules(normalized: NormalizedJson): void {
+	if (!normalized.trips) return;
+
+	const subTrips = normalized._subcollections?.trips ?? {};
+
+	for (const [tripId, tripDoc] of Object.entries(normalized.trips)) {
+		if (tripId === 'protected') continue;
+		const trip = tripDoc as Record<string, any>;
+		const modules = trip.modules;
+		if (!modules || typeof modules !== 'object') continue;
+
+		const sub = subTrips[tripId] ?? {};
+
+		// --- itinerary: disable if all days have zero activities ---
+		if (modules.itinerary) {
+			const itinSub = sub.itinerary;
+			if (!itinSub || isItineraryEmpty(itinSub as Record<string, any>)) {
+				modules.itinerary = false;
+				console.log(`[sanitize] trip ${tripId}: itinerary disabled (no activities)`);
+			}
+		}
+
+		// --- accommodations: disable if no accommodation docs ---
+		if (modules.accommodations) {
+			const accSub = sub.accommodations;
+			if (!accSub || Object.keys(accSub as Record<string, any>).length === 0) {
+				modules.accommodations = false;
+				console.log(`[sanitize] trip ${tripId}: accommodations disabled (empty)`);
+			}
+		}
+
+		// --- transportation: disable if only _settings exists (no legs) ---
+		if (modules.transportation) {
+			const transSub = sub.transportation;
+			const legCount = transSub
+				? Object.keys(transSub as Record<string, any>).filter((k) => k !== '_settings').length
+				: 0;
+			if (legCount === 0) {
+				modules.transportation = false;
+				console.log(`[sanitize] trip ${tripId}: transportation disabled (no legs)`);
+			}
+		}
+
+		// --- destinations: disable if destinationRefs is empty ---
+		if (modules.destinations) {
+			const refs = trip.destinationRefs;
+			if (!Array.isArray(refs) || refs.length === 0) {
+				modules.destinations = false;
+				console.log(`[sanitize] trip ${tripId}: destinations disabled (no refs)`);
+			}
+		}
+
+		// --- gallery: disable if no images ---
+		if (modules.gallery) {
+			if (!hasGalleryContent(trip.gallery)) {
+				modules.gallery = false;
+				console.log(`[sanitize] trip ${tripId}: gallery disabled (no images)`);
+			}
+		}
+	}
+}
+
+// ============================================================
 // MAIN NORMALIZATION FUNCTION
 // ============================================================
 
@@ -643,6 +746,9 @@ export function normalizeLegacyJson(input: unknown): NormalizedJson {
 	console.log(
 		`[normalize] Complete: ${totalFieldsRenamed} fields renamed, ${totalValuesTranslated} values translated.`,
 	);
+
+	// Auto-disable modules whose backing data is empty
+	sanitizeModules(normalized);
 
 	return normalized;
 }

@@ -135,7 +135,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "Azul Linhas Aéreas Brasileiras",
+      "company": "azul",
       "points": {
         "origin": "Belo Horizonte (CNF)",
         "destination": "São Paulo (CGH)"
@@ -158,7 +158,7 @@
           "second": 0
         }
       },
-      "duration": "1h20min",
+      "duration": "01:20",
       "direction": "departure",
       "reservation": "XID36G",
       "link": "",
@@ -166,7 +166,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "Azul Linhas Aéreas Brasileiras",
+      "company": "azul",
       "points": {
         "origin": "São Paulo (CGH)",
         "destination": "Belo Horizonte (CNF)"
@@ -189,7 +189,7 @@
           "second": 0
         }
       },
-      "duration": "1h10min",
+      "duration": "01:10",
       "direction": "return",
       "reservation": "XID36G",
       "link": "",
@@ -214,7 +214,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "description": "Paps",
           "location": "Belo Horizonte",
           "item": {
             "type": "",
@@ -227,7 +226,6 @@
           "end": ""
         },
         {
-          "description": "Aguardar embarque",
           "location": "Aeroporto de Confins",
           "item": {
             "type": "",
@@ -240,7 +238,6 @@
           "end": ""
         },
         {
-          "description": "Azul. Reserva XID36G",
           "location": "CNF → CGH",
           "item": {
             "type": "",
@@ -255,7 +252,6 @@
       ],
       "morning": [
         {
-          "description": "Translado para o hotel",
           "location": "São Paulo",
           "item": {
             "type": "",
@@ -268,7 +264,6 @@
           "end": ""
         },
         {
-          "description": "Check-In. Deixar malas",
           "location": "Ibis Budget Paulista",
           "item": {
             "type": "",
@@ -281,7 +276,6 @@
           "end": ""
         },
         {
-          "description": "Café da manhã. Reservado",
           "location": "São Paulo",
           "item": {
             "type": "",
@@ -294,7 +288,6 @@
           "end": ""
         },
         {
-          "description": "Fazer compras",
           "location": "Bairro da Liberdade",
           "item": {
             "type": "",
@@ -309,7 +302,6 @@
       ],
       "afternoon": [
         {
-          "description": "Almoço — hamburgueria no Itaim Bibi",
           "location": "Itaim Bibi",
           "item": {
             "type": "",
@@ -322,7 +314,6 @@
           "end": ""
         },
         {
-          "description": "Guardar malas / Descanso",
           "location": "Ibis Budget Paulista",
           "item": {
             "type": "",
@@ -335,7 +326,6 @@
           "end": ""
         },
         {
-          "description": "Aguardar na fila",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -350,7 +340,6 @@
       ],
       "night": [
         {
-          "description": "Shows — evento gratuito de abertura do Lollapalooza",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -363,7 +352,6 @@
           "end": ""
         },
         {
-          "description": "Descanso / Delivery",
           "location": "Ibis Budget Paulista",
           "item": {
             "type": "",
@@ -394,7 +382,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "description": "Descanso / Arrumar",
           "location": "Ibis Budget Paulista",
           "item": {
             "type": "",
@@ -409,7 +396,6 @@
       ],
       "morning": [
         {
-          "description": "Metrô + A pé para Interlagos",
           "location": "São Paulo",
           "item": {
             "type": "",
@@ -422,7 +408,6 @@
           "end": ""
         },
         {
-          "description": "Almoço / Livre",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -437,7 +422,6 @@
       ],
       "afternoon": [
         {
-          "description": "Opcional. Palco Budweiser",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -450,7 +434,6 @@
           "end": ""
         },
         {
-          "description": "Palco Onix",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -463,7 +446,6 @@
           "end": ""
         },
         {
-          "description": "Palco Budweiser",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -476,7 +458,6 @@
           "end": ""
         },
         {
-          "description": "Palco Onix",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -489,7 +470,6 @@
           "end": ""
         },
         {
-          "description": "Palco Budweiser",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -502,7 +482,6 @@
           "end": ""
         },
         {
-          "description": "Palco Onix",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -517,7 +496,6 @@
       ],
       "night": [
         {
-          "description": "Palco Budweiser",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -530,7 +508,6 @@
           "end": ""
         },
         {
-          "description": "Opcional. Palco Onix",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -543,7 +520,6 @@
           "end": ""
         },
         {
-          "description": "Palco Budweiser",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -556,7 +532,6 @@
           "end": ""
         },
         {
-          "description": "Descanso / Delivery",
           "location": "Ibis Budget Paulista",
           "item": {
             "type": "",
@@ -587,7 +562,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "description": "Descanso / Arrumar",
           "location": "Ibis Budget Paulista",
           "item": {
             "type": "",
@@ -602,7 +576,6 @@
       ],
       "morning": [
         {
-          "description": "Metrô + A pé para Interlagos",
           "location": "São Paulo",
           "item": {
             "type": "",
@@ -615,7 +588,6 @@
           "end": ""
         },
         {
-          "description": "Almoço / Livre",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -630,7 +602,6 @@
       ],
       "afternoon": [
         {
-          "description": "Opcional. Palco Budweiser",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -643,7 +614,6 @@
           "end": ""
         },
         {
-          "description": "Opcional. Palco Onix",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -656,7 +626,6 @@
           "end": ""
         },
         {
-          "description": "Opcional. Palco Budweiser",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -669,7 +638,6 @@
           "end": ""
         },
         {
-          "description": "Opcional. Palco Onix",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -682,7 +650,6 @@
           "end": ""
         },
         {
-          "description": "Opcional. Palco Budweiser",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -695,7 +662,6 @@
           "end": ""
         },
         {
-          "description": "Palco Onix",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -710,7 +676,6 @@
       ],
       "night": [
         {
-          "description": "Palco Adidas",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -723,7 +688,6 @@
           "end": ""
         },
         {
-          "description": "Pegar lugar",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -736,7 +700,6 @@
           "end": ""
         },
         {
-          "description": "Palco Budweiser",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -749,7 +712,6 @@
           "end": ""
         },
         {
-          "description": "Descanso / Delivery",
           "location": "Ibis Budget Paulista",
           "item": {
             "type": "",
@@ -780,7 +742,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "description": "Descanso / Arrumar",
           "location": "Ibis Budget Paulista",
           "item": {
             "type": "",
@@ -795,7 +756,6 @@
       ],
       "morning": [
         {
-          "description": "Metrô + A pé para Interlagos",
           "location": "São Paulo",
           "item": {
             "type": "",
@@ -808,7 +768,6 @@
           "end": ""
         },
         {
-          "description": "Almoço / Livre",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -823,7 +782,6 @@
       ],
       "afternoon": [
         {
-          "description": "Opcional. Palco Budweiser",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -836,7 +794,6 @@
           "end": ""
         },
         {
-          "description": "Livre",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -849,7 +806,6 @@
           "end": ""
         },
         {
-          "description": "Palco Onix",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -862,7 +818,6 @@
           "end": ""
         },
         {
-          "description": "Palco Budweiser",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -875,7 +830,6 @@
           "end": ""
         },
         {
-          "description": "Opcional. Palco Onix",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -888,7 +842,6 @@
           "end": ""
         },
         {
-          "description": "Opcional. Palco Budweiser",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -903,7 +856,6 @@
       ],
       "night": [
         {
-          "description": "Livre / Pegar lugar",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -916,7 +868,6 @@
           "end": ""
         },
         {
-          "description": "Palco Budweiser",
           "location": "Autódromo de Interlagos",
           "item": {
             "type": "",
@@ -929,7 +880,6 @@
           "end": ""
         },
         {
-          "description": "Descanso / Delivery",
           "location": "Ibis Budget Paulista",
           "item": {
             "type": "",
@@ -960,7 +910,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "description": "Trabalho no quarto",
           "location": "Ibis Budget Paulista",
           "item": {
             "type": "",
@@ -975,7 +924,6 @@
       ],
       "morning": [
         {
-          "description": "Arrumar",
           "location": "Ibis Budget Paulista",
           "item": {
             "type": "",
@@ -988,7 +936,6 @@
           "end": ""
         },
         {
-          "description": "Check-Out. Deixar malas",
           "location": "Ibis Budget Paulista",
           "item": {
             "type": "",
@@ -1003,7 +950,6 @@
       ],
       "afternoon": [
         {
-          "description": "Almoço",
           "location": "São Paulo",
           "item": {
             "type": "",
@@ -1016,7 +962,6 @@
           "end": ""
         },
         {
-          "description": "2 donuts",
           "location": "São Paulo",
           "item": {
             "type": "",
@@ -1029,7 +974,6 @@
           "end": ""
         },
         {
-          "description": "2 donuts",
           "location": "São Paulo",
           "item": {
             "type": "",
@@ -1042,7 +986,6 @@
           "end": ""
         },
         {
-          "description": "Trabalho no lobby",
           "location": "Ibis Budget Paulista",
           "item": {
             "type": "",
@@ -1055,7 +998,6 @@
           "end": ""
         },
         {
-          "description": "Pegar malas",
           "location": "Ibis Budget Paulista",
           "item": {
             "type": "",
@@ -1070,7 +1012,6 @@
       ],
       "night": [
         {
-          "description": "Aguardar embarque",
           "location": "Aeroporto de Congonhas",
           "item": {
             "type": "",
@@ -1083,7 +1024,6 @@
           "end": ""
         },
         {
-          "description": "Azul. Reserva XID36G",
           "location": "CGH → CNF",
           "item": {
             "type": "",
@@ -1096,7 +1036,6 @@
           "end": ""
         },
         {
-          "description": "Paps",
           "location": "Belo Horizonte",
           "item": {
             "type": "",
@@ -1114,147 +1053,131 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "Hospedagem",
+        "type": "trip.accommodation.title",
         "label": "Ibis Budget Paulista",
-        "value": 629.4,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 629.4,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "BotaniKafé — Café da manhã",
-        "value": 50.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 50.0,
         "currency": "BRL"
       },
       {
-        "type": "Compras",
+        "type": "trip.expenses.daily",
         "label": "Liberdade",
-        "value": 100.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Between Buns — Almoço",
-        "value": 70.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 70.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Delivery (noite)",
-        "value": 50.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 50.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Lollapalooza — Almoço/Livre (Dia 2)",
-        "value": 100.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Delivery (noite — Dia 2)",
-        "value": 50.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 50.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Lollapalooza — Almoço/Livre (Dia 3)",
-        "value": 100.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Delivery (noite — Dia 3)",
-        "value": 50.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 50.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Lollapalooza — Almoço/Livre (Dia 4)",
-        "value": 100.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Delivery (noite — Dia 4)",
-        "value": 50.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 50.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Modern Mama — Almoço",
-        "value": 70.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 70.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "The Good Cop Donut Shop",
-        "value": 20.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 20.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Donuts & Co.",
-        "value": 20.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 20.0,
         "currency": "BRL"
       },
       {
-        "type": "Transporte",
+        "type": "trip.transportation.type.bus",
         "label": "Transporte Público (Metrô — 9 bilhetes)",
-        "value": 39.6,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 39.6,
         "currency": "BRL"
       },
       {
-        "type": "Transporte",
+        "type": "trip.transportation.type.bus",
         "label": "Transporte Privado (Ubers)",
-        "value": 74.5,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 74.5,
         "currency": "BRL"
       }
     ],
@@ -1262,19 +1185,17 @@
       {
         "type": "Passagem",
         "label": "Voo Ida e Volta — Azul (XID36G)",
-        "value": 71.06,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 71.06,
         "currency": "BRL"
       },
       {
-        "type": "Ingresso",
+        "type": "trip.expenses.entertainment",
         "label": "Lolla Pass (ESTNEXT15%) — Lollapalooza 2022",
-        "value": 790.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 790.0,
         "currency": "BRL"
       }
     ],

@@ -157,30 +157,26 @@
       "morning": [],
       "afternoon": [
         {
-          "title": "Wall Mart",
-          "type": "Compras",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Wall Mart",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Friday's",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Friday's",
           "start": "",
           "end": ""
         }
@@ -204,30 +200,26 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Orlando Premium Outlet",
-          "type": "Compras",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Orlando Premium Outlet",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Florida Mall",
-          "type": "Compras",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Florida Mall",
           "start": "",
           "end": ""
         }
@@ -252,30 +244,26 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Magic Kingdom",
-          "type": "Parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Magic Kingdom",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Magic Kingdom",
-          "type": "Parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Magic Kingdom",
           "start": "",
           "end": ""
         }
@@ -301,15 +289,13 @@
       "morning": [],
       "afternoon": [
         {
-          "title": "Orlando (cidade)",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Orlando (cidade)",
           "start": "",
           "end": ""
         }
@@ -334,30 +320,26 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Hollywood Studios",
-          "type": "Parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hollywood Studios",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Hollywood Studios",
-          "type": "Parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hollywood Studios",
           "start": "",
           "end": ""
         }
@@ -382,30 +364,26 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Tampa",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Tampa",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Tampa",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Tampa",
           "start": "",
           "end": ""
         }
@@ -430,30 +408,26 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Universal Studios (Simuladores)",
-          "type": "Parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Universal Studios (Simuladores)",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Universal Studios (Simuladores)",
-          "type": "Parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Universal Studios (Simuladores)",
           "start": "",
           "end": ""
         }
@@ -478,30 +452,26 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Outlet",
-          "type": "Compras",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Outlet",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Outlet",
-          "type": "Compras",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Outlet",
           "start": "",
           "end": ""
         }
@@ -526,30 +496,26 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Universal Studios (Área Nova)",
-          "type": "Parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Universal Studios (Área Nova)",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Universal Studios (Área Nova)",
-          "type": "Parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Universal Studios (Área Nova)",
           "start": "",
           "end": ""
         }
@@ -574,30 +540,26 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Bush Gardens",
-          "type": "Parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Bush Gardens",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Bush Gardens",
-          "type": "Parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Bush Gardens",
           "start": "",
           "end": ""
         }
@@ -670,7 +632,7 @@
       },
       {
         "name": "Supermercado",
-        "type": "Compras",
+        "type": "trip.expenses.daily",
         "price": 427.0,
         "currency": "USD",
         "person": ""
@@ -700,14 +662,14 @@
       },
       {
         "name": "Compras iniciais — Wall Mart",
-        "type": "Compras",
+        "type": "trip.expenses.daily",
         "price": 100.0,
         "currency": "USD",
         "person": ""
       },
       {
         "name": "Compras — restante",
-        "type": "Compras",
+        "type": "trip.expenses.daily",
         "price": 400.0,
         "currency": "USD",
         "person": ""

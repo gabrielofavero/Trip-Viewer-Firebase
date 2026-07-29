@@ -16,7 +16,7 @@
     }
   },
   "trip": {
-    "title": "California e Las Vegas 2017",
+    "title": "California & Las Vegas 2017",
     "currency": "USD",
     "start": {
       "day": 22,
@@ -211,30 +211,26 @@
       "morning": [],
       "afternoon": [
         {
-          "title": "T-Mobile e Target (4G e Supermercado)",
-          "type": "Compras",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "T-Mobile e Target (4G e Supermercado)",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Pier 39 (a pé)",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Pier 39 (a pé)",
           "start": "",
           "end": ""
         }
@@ -257,15 +253,13 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Sausalito",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Sausalito",
           "start": "",
           "end": ""
         }
@@ -273,30 +267,26 @@
       "morning": [],
       "afternoon": [
         {
-          "title": "Union Square (Pier 33)",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Union Square (Pier 33)",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Pier 39",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Pier 39",
           "start": "",
           "end": ""
         }
@@ -319,60 +309,52 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Alcatraz",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Alcatraz",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Fisherman's Wharf",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Fisherman's Wharf",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Crissy Field + Yoda Fountain + Fine Arts",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Crissy Field + Yoda Fountain + Fine Arts",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Boundini",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Boundini",
           "start": "",
           "end": ""
         }
@@ -396,15 +378,13 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Viagem de carro SF → Los Angeles",
-          "type": "Transporte",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Viagem de carro SF → Los Angeles",
           "start": "",
           "end": ""
         }
@@ -430,30 +410,26 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Compras (LA)",
-          "type": "Compras",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Compras (LA)",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Compras (LA)",
-          "type": "Compras",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Compras (LA)",
           "start": "",
           "end": ""
         }
@@ -478,30 +454,26 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Los Angeles (cidade)",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Los Angeles (cidade)",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Apple Store (Eu e Paps)",
-          "type": "Compras",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Apple Store (Eu e Paps)",
           "start": "",
           "end": ""
         }
@@ -546,30 +518,26 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Universal Studios Hollywood",
-          "type": "Parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Universal Studios Hollywood",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Universal Studios Hollywood",
-          "type": "Parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Universal Studios Hollywood",
           "start": "",
           "end": ""
         }
@@ -594,30 +562,26 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Universal / Warner",
-          "type": "Parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Universal / Warner",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Warner Bros. Studio",
-          "type": "Parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Warner Bros. Studio",
           "start": "",
           "end": ""
         }
@@ -642,15 +606,13 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Viagem de carro LA → Las Vegas",
-          "type": "Transporte",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Viagem de carro LA → Las Vegas",
           "start": "",
           "end": ""
         }
@@ -658,15 +620,13 @@
       "afternoon": [],
       "night": [
         {
-          "title": "LIVRE",
-          "type": "Livre",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "LIVRE",
           "start": "",
           "end": ""
         }
@@ -690,45 +650,39 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Strip: New York New York (Montanha-russa)",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Strip: New York New York (Montanha-russa)",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Bellagio (Show de Fontes), Venetian (Gôndola), Fashion Show Mall",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Bellagio (Show de Fontes), Venetian (Gôndola), Fashion Show Mall",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Stratosphere (Torre Gigante), High Roller (Roda Gigante)",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Stratosphere (Torre Gigante), High Roller (Roda Gigante)",
           "start": "",
           "end": ""
         }
@@ -752,15 +706,13 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Strip",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Strip",
           "start": "",
           "end": ""
         }
@@ -768,15 +720,13 @@
       "afternoon": [],
       "night": [
         {
-          "title": "Señor Frog",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Señor Frog",
           "start": "",
           "end": ""
         }
@@ -800,45 +750,39 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Strip (800 Pizza)",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Strip (800 Pizza)",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Strip",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Strip",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Beatles (Gordon Pub)",
-          "type": "Entretenimento",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Beatles (Gordon Pub)",
           "start": "",
           "end": ""
         }
@@ -862,15 +806,13 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Mob Museum",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Mob Museum",
           "start": "",
           "end": ""
         }
@@ -964,7 +906,7 @@
       },
       {
         "name": "Supermercado",
-        "type": "Compras",
+        "type": "trip.expenses.daily",
         "price": 625.0,
         "currency": "USD",
         "person": ""

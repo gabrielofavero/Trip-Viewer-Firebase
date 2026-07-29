@@ -149,7 +149,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "American Airlines (operado por Gol)",
+      "company": "americanAirlines",
       "points": {
         "origin": "CNF (Confins)",
         "destination": "GRU (Guarulhos)"
@@ -172,7 +172,7 @@
           "second": 0
         }
       },
-      "duration": "1h 25m",
+      "duration": "01:25",
       "direction": "departure",
       "reservation": "WJFXJI",
       "link": "",
@@ -180,7 +180,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "American Airlines",
+      "company": "americanAirlines",
       "points": {
         "origin": "GRU (Guarulhos)",
         "destination": "DFW (Dallas/Fort Worth)"
@@ -203,7 +203,7 @@
           "second": 0
         }
       },
-      "duration": "10h 30m",
+      "duration": "10:30",
       "direction": "departure",
       "reservation": "WJFXJI",
       "link": "",
@@ -211,7 +211,7 @@
     },
     "leg-003": {
       "type": "flight",
-      "company": "American Airlines",
+      "company": "americanAirlines",
       "points": {
         "origin": "DFW (Dallas/Fort Worth)",
         "destination": "JFK (John F. Kennedy)"
@@ -234,7 +234,7 @@
           "second": 0
         }
       },
-      "duration": "3h 38m",
+      "duration": "03:38",
       "direction": "departure",
       "reservation": "WJFXJI",
       "link": "",
@@ -242,7 +242,7 @@
     },
     "leg-004": {
       "type": "flight",
-      "company": "American Airlines",
+      "company": "americanAirlines",
       "points": {
         "origin": "JFK (John F. Kennedy)",
         "destination": "GRU (Guarulhos)"
@@ -265,7 +265,7 @@
           "second": 0
         }
       },
-      "duration": "9h 45m",
+      "duration": "09:45",
       "direction": "return",
       "reservation": "BGATIO",
       "link": "",
@@ -273,7 +273,7 @@
     },
     "leg-005": {
       "type": "flight",
-      "company": "Latam",
+      "company": "latam",
       "points": {
         "origin": "GRU (Guarulhos)",
         "destination": "CNF (Confins)"
@@ -296,7 +296,7 @@
           "second": 0
         }
       },
-      "duration": "1h 10m",
+      "duration": "01:10",
       "direction": "return",
       "reservation": "SPXEYN",
       "link": "",
@@ -324,34 +324,24 @@
       "afternoon": [],
       "night": [
         {
-          "type": "transport",
-          "description": "Voo BH → SP (CNF → GRU) - 19:00",
-          "value": 0,
-          "currency": "BRL",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voo BH → SP (CNF → GRU) - 19:00",
           "start": "",
           "end": ""
         },
         {
-          "type": "transport",
-          "description": "Voo SP → Dallas (GRU → DFW) - 22:25",
-          "value": 0,
-          "currency": "BRL",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voo SP → Dallas (GRU → DFW) - 22:25",
           "start": "",
           "end": ""
         }
@@ -375,70 +365,50 @@
       "earlyMorning": [],
       "morning": [
         {
-          "type": "transport",
-          "description": "Conexão em Dallas (DFW)",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Conexão em Dallas (DFW)",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "type": "transport",
-          "description": "Voo Dallas → NY (DFW → JFK) - 12:51 às 17:29",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voo Dallas → NY (DFW → JFK) - 12:51 às 17:29",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "type": "food",
-          "description": "Chick-Fill-A - Almoço/Jantar",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Chick-Fill-A - Almoço/Jantar",
           "start": "",
           "end": ""
         },
         {
-          "type": "food",
-          "description": "Five Guys - Almoço com a Família",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Five Guys - Almoço com a Família",
           "start": "",
           "end": ""
         }
@@ -462,18 +432,13 @@
       "earlyMorning": [],
       "morning": [
         {
-          "type": "activity",
-          "description": "Dia de compras - adaptação ao fuso horário",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Dia de compras - adaptação ao fuso horário",
           "start": "",
           "end": ""
         }
@@ -499,102 +464,72 @@
       "earlyMorning": [],
       "morning": [
         {
-          "type": "activity",
-          "description": "Williamsburg",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Williamsburg",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "type": "activity",
-          "description": "East River State Park",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "East River State Park",
           "start": "",
           "end": ""
         },
         {
-          "type": "activity",
-          "description": "Domino Park",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Domino Park",
           "start": "",
           "end": ""
         },
         {
-          "type": "activity",
-          "description": "Brooklyn Heights Promenade - Vista de Manhattan",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Brooklyn Heights Promenade - Vista de Manhattan",
           "start": "",
           "end": ""
         },
         {
-          "type": "activity",
-          "description": "DUMBO",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "DUMBO",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "type": "activity",
-          "description": "Manhattan Bridge à noite",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Manhattan Bridge à noite",
           "start": "",
           "end": ""
         }
@@ -658,52 +593,37 @@
       "earlyMorning": [],
       "morning": [
         {
-          "type": "activity",
-          "description": "Central Park",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Central Park",
           "start": "",
           "end": ""
         },
         {
-          "type": "activity",
-          "description": "ONU 09:30 - Gabriel",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "gabriel",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "ONU 09:30 - Gabriel",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "type": "activity",
-          "description": "Museu de História Natural",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Museu de História Natural",
           "start": "",
           "end": ""
         }
@@ -729,34 +649,24 @@
       "morning": [],
       "afternoon": [
         {
-          "type": "activity",
-          "description": "Brooklyn Brewery",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Brooklyn Brewery",
           "start": "",
           "end": ""
         },
         {
-          "type": "activity",
-          "description": "Champs Diner, Vinnie Pizza",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Champs Diner, Vinnie Pizza",
           "start": "",
           "end": ""
         }
@@ -782,18 +692,13 @@
       "morning": [],
       "afternoon": [
         {
-          "type": "food",
-          "description": "Gallaghers Steakhouse",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Gallaghers Steakhouse",
           "start": "",
           "end": ""
         }
@@ -818,36 +723,26 @@
       "earlyMorning": [],
       "morning": [
         {
-          "type": "activity",
-          "description": "Dia livre em família",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Dia livre em família",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "type": "food",
-          "description": "Chelsea Market + Dos Caminos",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Chelsea Market + Dos Caminos",
           "start": "",
           "end": ""
         }
@@ -873,34 +768,24 @@
       "morning": [],
       "afternoon": [
         {
-          "type": "activity",
-          "description": "Home Depot",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Home Depot",
           "start": "",
           "end": ""
         },
         {
-          "type": "activity",
-          "description": "High Line + Mercado Espanhol",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "High Line + Mercado Espanhol",
           "start": "",
           "end": ""
         }
@@ -925,54 +810,39 @@
       "earlyMorning": [],
       "morning": [
         {
-          "type": "activity",
-          "description": "Último dia em NY - compras de última hora",
-          "value": 0,
-          "currency": "USD",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Último dia em NY - compras de última hora",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "type": "activity",
-          "description": "Aguardar em Guarulhos ou tentar antecipar voo",
-          "value": 0,
-          "currency": "BRL",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Aguardar em Guarulhos ou tentar antecipar voo",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "type": "transport",
-          "description": "Voo NY → SP (JFK → GRU) - 22:30",
-          "value": 0,
-          "currency": "BRL",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voo NY → SP (JFK → GRU) - 22:30",
           "start": "",
           "end": ""
         }
@@ -995,18 +865,13 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "type": "transport",
-          "description": "Chegada em GRU às 09:15",
-          "value": 0,
-          "currency": "BRL",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Chegada em GRU às 09:15",
           "start": "",
           "end": ""
         }
@@ -1015,18 +880,13 @@
       "afternoon": [],
       "night": [
         {
-          "type": "transport",
-          "description": "Voo SP → BH (GRU → CNF) - 20:15 às 21:25",
-          "value": 0,
-          "currency": "BRL",
-          "traveler": "",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voo SP → BH (GRU → CNF) - 20:15 às 21:25",
           "start": "",
           "end": ""
         }
@@ -1037,85 +897,76 @@
     "duringTrip": [
       {
         "type": "food",
-        "value": 880.0,
         "currency": "BRL",
         "notes": "Orçamento diário de $80/dia para 11 dias",
         "name": "Alimentação (orçamento)",
-        "price": 0,
+        "price": 880.0,
         "person": ""
       },
       {
         "type": "transport",
-        "value": 110.0,
         "currency": "BRL",
         "notes": "Orçamento diário de $10/dia para metrô/ônibus",
         "name": "Transporte local (orçamento)",
-        "price": 0,
+        "price": 110.0,
         "person": ""
       },
       {
         "type": "shopping",
-        "value": 600.0,
         "currency": "BRL",
         "notes": "Orçamento diário de $60/dia",
         "name": "Supermercado (orçamento)",
-        "price": 0,
+        "price": 600.0,
         "person": ""
       },
       {
         "type": "entertainment",
-        "value": 1500.0,
         "currency": "BRL",
         "notes": "Orçamento diário de $150/dia para passeios e entretenimento",
         "name": "Saídas/Passeios (orçamento)",
-        "price": 0,
+        "price": 1500.0,
         "person": ""
       }
     ],
     "preTrip": [
       {
         "type": "transport",
-        "value": 16000.0,
         "currency": "BRL",
         "notes": "Voos CNF→GRU→DFW→JFK (ida) + JFK→GRU (volta). American Airlines. Reservas WJFXJI e BGATIO. 4 passageiros. Total pago: R$ 8.480,12 + extras.",
         "name": "Passagem Aérea NY (internacional)",
-        "price": 0,
+        "price": 16000.0,
         "person": ""
       },
       {
         "type": "transport",
-        "value": 1400.0,
         "currency": "BRL",
         "notes": "Trecho doméstico GRU→CNF. Latam LA4508. Reserva SPXEYN. Total pago: R$ 1.757,68.",
         "name": "Passagem Aérea SP (doméstico)",
-        "price": 0,
+        "price": 1400.0,
         "person": ""
       },
       {
         "type": "accommodation",
-        "value": 15400.0,
         "currency": "BRL",
         "notes": "Hotel em Manhattan/Times Square. IOF: R$ 982,52.",
         "name": "Hotel New York",
-        "price": 0,
+        "price": 15400.0,
         "person": ""
       },
       {
         "type": "accommodation",
-        "value": 2557.98,
         "currency": "BRL",
         "notes": "Hotel Brooklyn ou escala em SP. IOF: R$ 163,20.",
         "name": "Hotel Brooklyn/SP",
-        "price": 0,
+        "price": 2557.98,
         "person": ""
       },
       {
         "type": "shopping",
-        "value": 42.55,
         "currency": "BRL",
         "notes": "LPs comprados online para entrega no hotel. IOF: $2,55.",
         "name": "Compras Online - Fandom + Wake Up Sunshine (LPs)",
-        "price": 0,
+        "price": 42.55,
         "person": "gabriel"
       }
     ],

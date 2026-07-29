@@ -48,8 +48,7 @@
     "travelers": [
       {
         "id": "gabriel",
-        "name": "Gabriel",
-        "photo": ""
+        "name": "Gabriel"
       }
     ],
     "links": {
@@ -111,7 +110,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "LATAM Airlines Brasil",
+      "company": "latam",
       "points": {
         "origin": "Belo Horizonte (CNF)",
         "destination": "São Paulo (CGH)"
@@ -134,7 +133,7 @@
           "second": 0
         }
       },
-      "duration": "1h20",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "NYAGRX",
       "link": "",
@@ -142,7 +141,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "LATAM Airlines Brasil",
+      "company": "latam",
       "points": {
         "origin": "São Paulo (CGH)",
         "destination": "Belo Horizonte (CNF)"
@@ -165,7 +164,7 @@
           "second": 0
         }
       },
-      "duration": "1h15",
+      "duration": "01:00",
       "direction": "return",
       "reservation": "NYAGRX",
       "link": "",
@@ -190,7 +189,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -203,7 +201,6 @@
           "end": ""
         },
         {
-          "type": "flight",
           "cost": 0,
           "item": {
             "type": "",
@@ -218,7 +215,6 @@
       ],
       "morning": [
         {
-          "type": "transport",
           "cost": 7.6,
           "item": {
             "type": "",
@@ -231,7 +227,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 3.8,
           "item": {
             "type": "",
@@ -244,7 +239,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 3.8,
           "item": {
             "type": "",
@@ -257,7 +251,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "cost": 0,
           "item": {
             "type": "",
@@ -270,7 +263,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 0,
           "item": {
             "type": "",
@@ -283,7 +275,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "cost": 0,
           "item": {
             "type": "",
@@ -296,7 +287,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 6.8,
           "item": {
             "type": "",
@@ -311,7 +301,6 @@
       ],
       "afternoon": [
         {
-          "type": "food",
           "cost": 60,
           "item": {
             "type": "",
@@ -324,7 +313,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 6.8,
           "item": {
             "type": "",
@@ -337,7 +325,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 100,
           "item": {
             "type": "",
@@ -350,7 +337,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 3.8,
           "item": {
             "type": "",
@@ -363,7 +349,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -378,7 +363,6 @@
       ],
       "night": [
         {
-          "type": "transport",
           "cost": 10,
           "item": {
             "type": "",
@@ -391,7 +375,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 30,
           "item": {
             "type": "",
@@ -404,7 +387,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 8,
           "item": {
             "type": "",
@@ -417,7 +399,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -430,7 +411,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 8,
           "item": {
             "type": "",
@@ -443,7 +423,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 100,
           "item": {
             "type": "",
@@ -456,7 +435,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 8,
           "item": {
             "type": "",
@@ -487,7 +465,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -502,7 +479,6 @@
       ],
       "morning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -515,7 +491,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 0,
           "item": {
             "type": "",
@@ -528,7 +503,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 30,
           "item": {
             "type": "",
@@ -541,7 +515,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 3.8,
           "item": {
             "type": "",
@@ -556,7 +529,6 @@
       ],
       "afternoon": [
         {
-          "type": "entertainment",
           "cost": 50,
           "item": {
             "type": "",
@@ -571,7 +543,6 @@
       ],
       "night": [
         {
-          "type": "transport",
           "cost": 6.3,
           "item": {
             "type": "",
@@ -584,7 +555,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 25,
           "item": {
             "type": "",
@@ -615,7 +585,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -630,7 +599,6 @@
       ],
       "morning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -643,7 +611,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 3.8,
           "item": {
             "type": "",
@@ -656,7 +623,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 30,
           "item": {
             "type": "",
@@ -671,7 +637,6 @@
       ],
       "afternoon": [
         {
-          "type": "entertainment",
           "cost": 50,
           "item": {
             "type": "",
@@ -686,7 +651,6 @@
       ],
       "night": [
         {
-          "type": "transport",
           "cost": 6.3,
           "item": {
             "type": "",
@@ -699,7 +663,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 25,
           "item": {
             "type": "",
@@ -730,7 +693,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -745,7 +707,6 @@
       ],
       "morning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -758,7 +719,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 3.8,
           "item": {
             "type": "",
@@ -773,7 +733,6 @@
       ],
       "afternoon": [
         {
-          "type": "entertainment",
           "cost": 100,
           "item": {
             "type": "",
@@ -788,7 +747,6 @@
       ],
       "night": [
         {
-          "type": "transport",
           "cost": 6.3,
           "item": {
             "type": "",
@@ -801,7 +759,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 25,
           "item": {
             "type": "",
@@ -832,7 +789,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -847,7 +803,6 @@
       ],
       "morning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -860,7 +815,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 5,
           "item": {
             "type": "",
@@ -875,7 +829,6 @@
       ],
       "afternoon": [
         {
-          "type": "food",
           "cost": 100,
           "item": {
             "type": "",
@@ -888,7 +841,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -901,7 +853,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 8.8,
           "item": {
             "type": "",
@@ -916,7 +867,6 @@
       ],
       "night": [
         {
-          "type": "flight",
           "cost": 0,
           "item": {
             "type": "",
@@ -929,7 +879,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 0,
           "item": {
             "type": "",
@@ -947,7 +896,7 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "Transporte Público",
+        "type": "trip.transportation.type.bus",
         "name": "Transporte público ao longo dos dias",
         "price": 59.2,
         "currency": "BRL",
@@ -961,7 +910,7 @@
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "name": "Alimentação durante a viagem",
         "price": 725.0,
         "currency": "BRL",
@@ -970,21 +919,21 @@
     ],
     "preTrip": [
       {
-        "type": "Ingresso",
+        "type": "trip.expenses.entertainment",
         "name": "Lolla Pass - Lollapalooza 2018",
         "price": 687.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Hospedagem",
+        "type": "trip.accommodation.title",
         "name": "Airbnb - Edifício Follow (4 noites)",
         "price": 260.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Voo",
+        "type": "trip.transportation.type.flights",
         "name": "LATAM - BH ↔ SP (ida e volta)",
         "price": 212.43,
         "currency": "BRL",

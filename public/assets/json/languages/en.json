@@ -120,6 +120,7 @@
 			"personal": "Personal expenses",
 			"other": "Other expenses",
 			"daily": "Daily expenses",
+			"entertainment": "Entertainment",
 			"exchange_rate_api": "Exchange rate (API)",
 			"paid_by": "Paid by",
 			"min": {
@@ -736,12 +737,31 @@
 				"logo_light": "Logo: Light mode",
 				"logo_dark": "Logo: Dark mode"
 			},
+			"theme": {
+				"title": "Custom theme",
+				"subtitle": "Force the trip to display in light or dark mode",
+				"dynamic": "Dynamic",
+				"light_only": "Light mode only",
+				"dark_only": "Dark mode only"
+			},
 			"colors": {
 				"title": "Custom colors",
-				"themes": {
-					"light_and_dark": "Both",
-					"light": "Light mode",
-					"dark": "Dark mode"
+				"custom": "Custom color",
+				"presets": {
+					"purple": "Purple",
+					"rose": "Rose",
+					"magenta": "Magenta",
+					"crimson": "Crimson",
+					"sunset": "Sunset",
+					"amber": "Amber",
+					"terracotta": "Terracotta",
+					"forest": "Forest",
+					"sage": "Sage",
+					"teal": "Teal",
+					"ocean": "Ocean",
+					"steel": "Steel",
+					"indigo": "Indigo",
+					"gray": "Gray"
 				}
 			},
 			"links": {

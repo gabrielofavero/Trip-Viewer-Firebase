@@ -21,7 +21,7 @@
     }
   },
   "trip": {
-    "title": "Mary & Diogo 🍻",
+    "title": "Monteverde: Mary & Diogo 🍻",
     "currency": "BRL",
     "start": {
       "day": 18,
@@ -212,7 +212,7 @@
           "second": 0
         }
       },
-      "duration": "6h",
+      "duration": "06:00",
       "direction": "departure",
       "reservation": "",
       "link": "",
@@ -243,7 +243,7 @@
           "second": 0
         }
       },
-      "duration": "1h",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "",
       "link": "",
@@ -274,7 +274,7 @@
           "second": 0
         }
       },
-      "duration": "2h30",
+      "duration": "02:00",
       "direction": "departure",
       "reservation": "",
       "link": "",
@@ -305,7 +305,7 @@
           "second": 0
         }
       },
-      "duration": "6h30",
+      "duration": "06:00",
       "direction": "return",
       "reservation": "",
       "link": "",
@@ -862,7 +862,7 @@
       },
       {
         "name": "Cervejaria 3 Orelhas (Gonçalves)",
-        "type": "Saídas",
+        "type": "trip.expenses.daily",
         "price": 100.0,
         "currency": "BRL",
         "person": ""
@@ -899,7 +899,7 @@
     "preTrip": [
       {
         "name": "Hotel Serras de Minas (1 diária)",
-        "type": "Hospedagem",
+        "type": "trip.accommodation.title",
         "price": 190.0,
         "currency": "BRL",
         "person": ""

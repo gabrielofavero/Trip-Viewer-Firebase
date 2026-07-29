@@ -78,10 +78,10 @@
 			"subtitle": "Adicione aqui as principais informações da sua viagem",
 			"title_placeholder": "Digite o título da viagem",
 			"security": {
-				"title": "Proteção de dados",
-				"disabled": "Desabilitada",
+				"title": "Proteger dados da viagem",
+				"disabled": "Desabilitado",
 				"sensitive_only": "Apenas dados sensíveis",
-				"all_data": "Habilitada"
+				"all_data": "Habilitado"
 			},
 			"pin": {
 				"title": "PIN de Acesso",
@@ -120,6 +120,7 @@
 			"personal": "Gastos pessoais",
 			"other": "Outros gastos",
 			"daily": "Gastos por dia",
+			"entertainment": "Entretenimento",
 			"exchange_rate_api": "Taxa de Câmbio (API)",
 			"paid_by": "Pago por",
 			"min": {
@@ -733,12 +734,31 @@
 				"logo_light": "Logotipo: Tema Claro",
 				"logo_dark": "Logotipo: Tema Escuro"
 			},
+			"theme": {
+				"title": "Tema personalizado",
+				"subtitle": "Forçar a exibição da viagem em modo claro ou escuro",
+				"dynamic": "Dinâmico",
+				"light_only": "Apenas modo claro",
+				"dark_only": "Apenas modo escuro"
+			},
 			"colors": {
 				"title": "Cores Personalizadas",
-				"themes": {
-					"light_and_dark": "Ambos",
-					"light": "Modo claro",
-					"dark": "Modo escuro"
+				"custom": "Cor personalizada",
+				"presets": {
+					"purple": "Roxo",
+					"rose": "Rosa",
+					"magenta": "Magenta",
+					"crimson": "Carmim",
+					"sunset": "Pôr do sol",
+					"amber": "Âmbar",
+					"terracotta": "Terracota",
+					"forest": "Floresta",
+					"sage": "Sálvia",
+					"teal": "Verde-azulado",
+					"ocean": "Oceano",
+					"steel": "Aço",
+					"indigo": "Índigo",
+					"gray": "Cinza"
 				}
 			},
 			"links": {

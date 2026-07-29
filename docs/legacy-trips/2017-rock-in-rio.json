@@ -126,7 +126,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "Azul",
+      "company": "azul",
       "points": {
         "origin": "Confins (BH)",
         "destination": "Santos Dumont (RJ)"
@@ -149,7 +149,7 @@
           "second": 0
         }
       },
-      "duration": "1h05m",
+      "duration": "01:05",
       "direction": "departure",
       "reservation": "GD2CYW (AD 2550)",
       "link": "",
@@ -157,7 +157,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "Azul",
+      "company": "azul",
       "points": {
         "origin": "Santos Dumont (RJ)",
         "destination": "Confins (BH)"
@@ -180,7 +180,7 @@
           "second": 0
         }
       },
-      "duration": "1h10m",
+      "duration": "01:10",
       "direction": "return",
       "reservation": "GD2CYW (AD 2501)",
       "link": "",
@@ -205,138 +205,118 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Casa → Aeroporto Confins",
-          "description": "Carona com Paps",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa → Aeroporto Confins: Carona com Paps",
           "start": "",
           "end": ""
         },
         {
-          "title": "BH → Rio (SDU)",
-          "description": "Voo AD 2550 — Assento 10C",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "BH → Rio (SDU): Voo AD 2550 — Assento 10C",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Aeroporto SDU",
-          "description": "Carregar Rio Card (R$33)",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Aeroporto SDU: Carregar Rio Card (R$33)",
           "start": "",
           "end": ""
         },
         {
-          "title": "Aeroporto → Hotel",
-          "description": "VLT 01 + Linha 1+4 do Metrô + Uber/Cabify",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Aeroporto → Hotel: VLT 01 + Linha 1+4 do Metrô + Uber/Cabify",
           "start": "",
           "end": ""
         },
         {
-          "title": "Hotel — Check-in",
-          "description": "Ramada Encore Ribalta. Deixar mochila.",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hotel — Check-in: Ramada Encore Ribalta. Deixar mochila.",
           "start": "",
           "end": ""
         },
         {
-          "title": "Hotel → Barra Shopping",
-          "description": "BRT Alvorada / Uber",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hotel → Barra Shopping: BRT Alvorada / Uber",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Barra Shopping — Almoço",
-          "description": "Almoço antes do festival",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Barra Shopping — Almoço: Almoço antes do festival",
           "start": "",
           "end": ""
         },
         {
-          "title": "Barra Shopping → Rock in Rio",
-          "description": "Linha 92 (BRT)",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Barra Shopping → Rock in Rio: Linha 92 (BRT)",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Rock in Rio — Parque Olímpico",
-          "description": "Explorar Game XP, Rock Street, Roda Gigante. Fall Out Boy às 21:00 no Palco Mundo. Tirolesa, MegaDrop, Montanha Russa.",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Rock in Rio — Parque Olímpico: Explorar Game XP, Rock Street, Roda Gigante. Fall Out Boy às 21:00 no Palco Mundo. Tirolesa, MegaDrop, Montanha Russa.",
           "start": "",
           "end": ""
         },
         {
-          "title": "Rock in Rio → Hotel",
-          "description": "Linha 92 (BRT) + Uber/Cabify",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Rock in Rio → Hotel: Linha 92 (BRT) + Uber/Cabify",
           "start": "",
           "end": ""
         }
@@ -360,69 +340,59 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Hotel — Café da manhã + Checkout",
-          "description": "Check-out do Ramada Encore Ribalta",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hotel — Café da manhã + Checkout: Check-out do Ramada Encore Ribalta",
           "start": "",
           "end": ""
         },
         {
-          "title": "Hotel → Aeroporto SDU",
-          "description": "Uber/Cabify (Jardim Oceânico) + Linha 1+4 do Metrô",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hotel → Aeroporto SDU: Uber/Cabify (Jardim Oceânico) + Linha 1+4 do Metrô",
           "start": "",
           "end": ""
         },
         {
-          "title": "Starbucks",
-          "description": "Café no aeroporto",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Starbucks: Café no aeroporto",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Rio → BH",
-          "description": "Voo AD 2501 — Assento 7C",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Rio → BH: Voo AD 2501 — Assento 7C",
           "start": "",
           "end": ""
         },
         {
-          "title": "Aeroporto Confins → Casa",
-          "description": "Uber/carona Paps",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Aeroporto Confins → Casa: Uber/carona Paps",
           "start": "",
           "end": ""
         }
@@ -433,100 +403,88 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "Transporte Público",
-        "value": 33.0,
+        "type": "trip.transportation.type.bus",
         "name": "Rio Card — Recarga",
-        "price": 0,
+        "price": 33.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Uber/Cabify",
-        "value": 24.24,
+        "type": "trip.transportation.type.taxi",
         "name": "Uber/Cabify Aeroporto → Hotel",
-        "price": 0,
+        "price": 24.24,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Uber/Cabify",
-        "value": 15.0,
+        "type": "trip.transportation.type.taxi",
         "name": "Uber/Cabify Hotel → Barra Shopping",
-        "price": 0,
+        "price": 15.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 30.0,
+        "type": "trip.expenses.daily",
         "name": "Almoço Barra Shopping",
-        "price": 0,
+        "price": 30.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 70.0,
+        "type": "trip.expenses.daily",
         "name": "Alimentação no Rock in Rio",
-        "price": 0,
+        "price": 70.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Uber/Cabify",
-        "value": 30.0,
+        "type": "trip.transportation.type.taxi",
         "name": "Uber/Cabify Rock in Rio → Hotel",
-        "price": 0,
+        "price": 30.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Uber/Cabify",
-        "value": 25.0,
+        "type": "trip.transportation.type.taxi",
         "name": "Uber/Cabify Hotel → Aeroporto",
-        "price": 0,
+        "price": 25.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Uber/Cabify",
-        "value": 7.75,
+        "type": "trip.transportation.type.taxi",
         "name": "Uber/Cabify (Jardim Oceânico)",
-        "price": 0,
+        "price": 7.75,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 36.0,
+        "type": "trip.expenses.daily",
         "name": "Starbucks — Café no aeroporto",
-        "price": 0,
+        "price": 36.0,
         "currency": "BRL",
         "person": "gabriel"
       }
     ],
     "preTrip": [
       {
-        "type": "Ingresso",
-        "value": 262.5,
+        "type": "trip.expenses.entertainment",
         "name": "Ingresso Rock in Rio 2017",
-        "price": 0,
+        "price": 262.5,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Voo",
-        "value": 155.03,
+        "type": "trip.transportation.type.flights",
         "name": "Voo Azul — Ida e Volta (AD 2550 + AD 2501)",
-        "price": 0,
+        "price": 155.03,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Hotel",
-        "value": 276.36,
+        "type": "trip.accommodation.title",
         "name": "Hotel Ramada Encore Ribalta — 1 diária",
-        "price": 0,
+        "price": 276.36,
         "currency": "BRL",
         "person": "gabriel"
       }

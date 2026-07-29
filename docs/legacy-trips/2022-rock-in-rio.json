@@ -133,7 +133,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "GOL Linhas Aéreas",
+      "company": "gol",
       "points": {
         "origin": "Belo Horizonte (CNF)",
         "destination": "Rio de Janeiro (SDU)"
@@ -156,7 +156,7 @@
           "second": 0
         }
       },
-      "duration": "1h05min",
+      "duration": "01:05",
       "direction": "departure",
       "reservation": "QDLFBJ",
       "link": "",
@@ -164,7 +164,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "GOL Linhas Aéreas",
+      "company": "gol",
       "points": {
         "origin": "Rio de Janeiro (SDU)",
         "destination": "Belo Horizonte (CNF)"
@@ -187,7 +187,7 @@
           "second": 0
         }
       },
-      "duration": "1h00min",
+      "duration": "01:00",
       "direction": "return",
       "reservation": "JKDMJF",
       "link": "",
@@ -212,7 +212,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "description": "Ida Aeroporto (Paps)",
           "location": "Belo Horizonte",
           "item": {
             "type": "",
@@ -225,7 +224,6 @@
           "end": ""
         },
         {
-          "description": "Aguardar embarque",
           "location": "Aeroporto de Confins",
           "item": {
             "type": "",
@@ -238,7 +236,6 @@
           "end": ""
         },
         {
-          "description": "GOL G3 2051. Reserva QDLFBJ",
           "location": "CNF → SDU",
           "item": {
             "type": "",
@@ -253,7 +250,6 @@
       ],
       "morning": [
         {
-          "description": "Comprar Rio Card para metrô",
           "location": "Aeroporto Santos Dumont",
           "item": {
             "type": "",
@@ -266,7 +262,6 @@
           "end": ""
         },
         {
-          "description": "Não precisa agendar",
           "location": "Centro do Rio",
           "item": {
             "type": "",
@@ -279,7 +274,6 @@
           "end": ""
         },
         {
-          "description": "Almoço (mais demorado)",
           "location": "Rio de Janeiro",
           "item": {
             "type": "",
@@ -294,7 +288,6 @@
       ],
       "afternoon": [
         {
-          "description": "Check-in / Deixar malas",
           "location": "Rua Edmundo Lins 25, Copacabana",
           "item": {
             "type": "",
@@ -307,7 +300,6 @@
           "end": ""
         },
         {
-          "description": "Curtir a região",
           "location": "Lapa",
           "item": {
             "type": "",
@@ -320,7 +312,6 @@
           "end": ""
         },
         {
-          "description": "Museu + Arredores",
           "location": "Lapa",
           "item": {
             "type": "",
@@ -333,7 +324,6 @@
           "end": ""
         },
         {
-          "description": "Pôr do sol na região",
           "location": "Praça Mauá",
           "item": {
             "type": "",
@@ -348,7 +338,6 @@
       ],
       "night": [
         {
-          "description": "Saída noturna",
           "location": "Rio de Janeiro",
           "item": {
             "type": "",
@@ -361,7 +350,6 @@
           "end": ""
         },
         {
-          "description": "Descanso",
           "location": "Copacabana",
           "item": {
             "type": "",
@@ -392,7 +380,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "description": "Acordar / Arrumar",
           "location": "Copacabana",
           "item": {
             "type": "",
@@ -407,7 +394,6 @@
       ],
       "morning": [
         {
-          "description": "Encher o buxin com brunch",
           "location": "Rio de Janeiro",
           "item": {
             "type": "",
@@ -420,7 +406,6 @@
           "end": ""
         },
         {
-          "description": "Metrô + Ônibus para a Cidade do Rock",
           "location": "Rio de Janeiro",
           "item": {
             "type": "",
@@ -435,7 +420,6 @@
       ],
       "afternoon": [
         {
-          "description": "Entrada no festival",
           "location": "Cidade do Rock",
           "item": {
             "type": "",
@@ -448,7 +432,6 @@
           "end": ""
         },
         {
-          "description": "Palco Sunset",
           "location": "Cidade do Rock",
           "item": {
             "type": "",
@@ -461,7 +444,6 @@
           "end": ""
         },
         {
-          "description": "Palco Sunset",
           "location": "Cidade do Rock",
           "item": {
             "type": "",
@@ -474,7 +456,6 @@
           "end": ""
         },
         {
-          "description": "Palco Mundo",
           "location": "Cidade do Rock",
           "item": {
             "type": "",
@@ -489,7 +470,6 @@
       ],
       "night": [
         {
-          "description": "Palco Mundo",
           "location": "Cidade do Rock",
           "item": {
             "type": "",
@@ -502,7 +482,6 @@
           "end": ""
         },
         {
-          "description": "Palco Sunset",
           "location": "Cidade do Rock",
           "item": {
             "type": "",
@@ -515,7 +494,6 @@
           "end": ""
         },
         {
-          "description": "Palco Mundo",
           "location": "Cidade do Rock",
           "item": {
             "type": "",
@@ -528,7 +506,6 @@
           "end": ""
         },
         {
-          "description": "Aguardar",
           "location": "Cidade do Rock",
           "item": {
             "type": "",
@@ -559,7 +536,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "description": "Palco Mundo",
           "location": "Cidade do Rock",
           "item": {
             "type": "",
@@ -572,7 +548,6 @@
           "end": ""
         },
         {
-          "description": "Ônibus + Metrô + A pé",
           "location": "Rio de Janeiro",
           "item": {
             "type": "",
@@ -585,7 +560,6 @@
           "end": ""
         },
         {
-          "description": "Descanso",
           "location": "Copacabana",
           "item": {
             "type": "",
@@ -600,7 +574,6 @@
       ],
       "morning": [
         {
-          "description": "Arrumar",
           "location": "Copacabana",
           "item": {
             "type": "",
@@ -613,7 +586,6 @@
           "end": ""
         },
         {
-          "description": "Almoço",
           "location": "Rio de Janeiro",
           "item": {
             "type": "",
@@ -628,7 +600,6 @@
       ],
       "afternoon": [
         {
-          "description": "Praia",
           "location": "Leme",
           "item": {
             "type": "",
@@ -641,7 +612,6 @@
           "end": ""
         },
         {
-          "description": "Sorvetinho",
           "location": "Leme",
           "item": {
             "type": "",
@@ -654,7 +624,6 @@
           "end": ""
         },
         {
-          "description": "Descanso / Arrumar",
           "location": "Copacabana",
           "item": {
             "type": "",
@@ -669,7 +638,6 @@
       ],
       "night": [
         {
-          "description": "Saída rápida",
           "location": "Rio de Janeiro",
           "item": {
             "type": "",
@@ -682,7 +650,6 @@
           "end": ""
         },
         {
-          "description": "Descanso",
           "location": "Copacabana",
           "item": {
             "type": "",
@@ -713,7 +680,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "description": "Acordar / Arrumar",
           "location": "Copacabana",
           "item": {
             "type": "",
@@ -728,7 +694,6 @@
       ],
       "morning": [
         {
-          "description": "Turismo rápido",
           "location": "Jardim Botânico",
           "item": {
             "type": "",
@@ -741,7 +706,6 @@
           "end": ""
         },
         {
-          "description": "Encher o buxin com brunch",
           "location": "Copacabana",
           "item": {
             "type": "",
@@ -754,7 +718,6 @@
           "end": ""
         },
         {
-          "description": "Metrô + Ônibus para a Cidade do Rock",
           "location": "Rio de Janeiro",
           "item": {
             "type": "",
@@ -769,7 +732,6 @@
       ],
       "afternoon": [
         {
-          "description": "Pegar lugar para Dua Lipa",
           "location": "Cidade do Rock",
           "item": {
             "type": "",
@@ -784,7 +746,6 @@
       ],
       "night": [
         {
-          "description": "Palco Mundo",
           "location": "Cidade do Rock",
           "item": {
             "type": "",
@@ -797,7 +758,6 @@
           "end": ""
         },
         {
-          "description": "Ônibus + Metrô + A pé",
           "location": "Rio de Janeiro",
           "item": {
             "type": "",
@@ -828,7 +788,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "description": "Arrumar e Check-Out",
           "location": "Copacabana",
           "item": {
             "type": "",
@@ -841,7 +800,6 @@
           "end": ""
         },
         {
-          "description": "Aguardar embarque",
           "location": "Aeroporto Santos Dumont",
           "item": {
             "type": "",
@@ -854,7 +812,6 @@
           "end": ""
         },
         {
-          "description": "GOL JKDMJF. MyTrip Z8KRO6622",
           "location": "SDU → CNF",
           "item": {
             "type": "",
@@ -869,7 +826,6 @@
       ],
       "morning": [
         {
-          "description": "Translado para casa (Uber)",
           "location": "Aeroporto de Confins",
           "item": {
             "type": "",
@@ -889,138 +845,123 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Taste Lab — Almoço (Dia 1)",
-        "value": 150.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 150.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Nusa — Brunch (Dia 2)",
-        "value": 100.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Rock in Rio (Dia 2)",
-        "value": 50.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 50.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Cantón — Almoço (Dia 3)",
-        "value": 150.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 150.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Momo Gelato — Sorvete (Dia 3)",
-        "value": 20.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 20.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Café 18 do Forte — Brunch (Dia 4)",
-        "value": 100.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "label": "Rock in Rio (Dia 4)",
-        "value": 50.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 50.0,
         "currency": "BRL"
       },
       {
         "type": "Turismo",
         "label": "Real Gabinete Português",
-        "value": 10.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 10.0,
         "currency": "BRL"
       },
       {
         "type": "Turismo",
         "label": "Praia do Leme",
-        "value": 30.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 30.0,
         "currency": "BRL"
       },
       {
-        "type": "Saídas",
+        "type": "trip.expenses.daily",
         "label": "Rooftop Selina",
-        "value": 75.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 75.0,
         "currency": "BRL"
       },
       {
-        "type": "Saídas",
+        "type": "trip.expenses.daily",
         "label": "BE+CO",
-        "value": 100.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL"
       },
       {
-        "type": "Saídas",
+        "type": "trip.expenses.daily",
         "label": "Venga Chiringuito",
-        "value": 100.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL"
       },
       {
-        "type": "Transporte",
+        "type": "trip.transportation.type.bus",
         "label": "Transporte Público (Metrô + Ônibus)",
-        "value": 30.6,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 30.6,
         "currency": "BRL"
       },
       {
-        "type": "Transporte",
+        "type": "trip.transportation.type.bus",
         "label": "Transporte Privado (Ubers)",
-        "value": 189.5,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 189.5,
         "currency": "BRL"
       },
       {
         "type": "Ajuste",
         "label": "Ajustes (reembolso/divisão)",
-        "value": -350.0,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": -350.0,
         "currency": "BRL"
       }
     ],
@@ -1028,37 +969,33 @@
       {
         "type": "Passagem",
         "label": "Voo Ida e Volta — GOL (123Milhas Z8KRO6622)",
-        "value": 304.99,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 304.99,
         "currency": "BRL"
       },
       {
-        "type": "Hospedagem",
+        "type": "trip.accommodation.title",
         "label": "Airbnb — Copacabana (4 noites)",
-        "value": 633.36,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 633.36,
         "currency": "BRL"
       },
       {
-        "type": "Ingresso",
+        "type": "trip.expenses.entertainment",
         "label": "Rock in Rio — Sexta-feira (09/09)",
-        "value": 312.5,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 312.5,
         "currency": "BRL"
       },
       {
-        "type": "Ingresso",
+        "type": "trip.expenses.entertainment",
         "label": "Rock in Rio — Domingo (11/09)",
-        "value": 272.5,
         "person": "",
         "name": "",
-        "price": 0,
+        "price": 272.5,
         "currency": "BRL"
       }
     ],

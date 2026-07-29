@@ -16,27 +16,66 @@
   "trip": {
     "title": "New York 2015",
     "currency": "BRL",
-    "start": { "day": 25, "month": 1, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
-    "end": { "day": 8, "month": 2, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+    "start": {
+      "day": 25,
+      "month": 1,
+      "year": 2015,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 8,
+      "month": 2,
+      "year": 2015,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
     "pin": "no-pin",
-    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" },
-    "visibility": { "light": true, "dark": true },
-    "colors": { "light": "#966313", "dark": "#966313", "active": false },
-    "sharing": { "owner": "", "active": false, "editors": [] },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
     "modules": {
       "destinations": false,
       "transportation": false,
-      "itinerary": true,
+      "itinerary": false,
       "gallery": false,
       "summary": true,
       "accommodations": false,
       "expenses": true
     },
     "travelers": [
-      { "id": "gabriel", "name": "Gabriel" },
-      { "id": "elaine", "name": "Elaine" },
-      { "id": "milton", "name": "Milton" },
-      { "id": "marianna", "name": "Marianna" }
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      },
+      {
+        "id": "elaine",
+        "name": "Elaine"
+      },
+      {
+        "id": "milton",
+        "name": "Milton"
+      },
+      {
+        "id": "marianna",
+        "name": "Marianna"
+      }
     ],
     "links": {
       "maps": "",
@@ -48,18 +87,41 @@
       "sheet": "",
       "vaccine": ""
     },
-    "gallery": { "categories": [], "descriptions": [], "images": [], "titles": [] },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
     "destinationRefs": [],
-    "image": { "dark": "", "light": "", "background": "", "active": false }
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
   },
   "accommodations": {},
   "transportation": {
-    "_settings": { "viewMode": "simple" }
+    "_settings": {
+      "viewMode": "simple"
+    }
   },
   "itinerary": {
     "20150125": {
-      "title": { "value": "Dia 1 — Chegada", "showDestinations": false, "translate": false },
-      "date": { "day": 25, "month": 1, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 1 — Chegada",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 25,
+        "month": 1,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -67,8 +129,19 @@
       "night": []
     },
     "20150126": {
-      "title": { "value": "Dia 2", "showDestinations": false, "translate": false },
-      "date": { "day": 26, "month": 1, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 2",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 26,
+        "month": 1,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -76,8 +149,19 @@
       "night": []
     },
     "20150127": {
-      "title": { "value": "Dia 3", "showDestinations": false, "translate": false },
-      "date": { "day": 27, "month": 1, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 3",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 27,
+        "month": 1,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -85,8 +169,19 @@
       "night": []
     },
     "20150128": {
-      "title": { "value": "Dia 4", "showDestinations": false, "translate": false },
-      "date": { "day": 28, "month": 1, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 4",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 28,
+        "month": 1,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -94,8 +189,19 @@
       "night": []
     },
     "20150129": {
-      "title": { "value": "Dia 5", "showDestinations": false, "translate": false },
-      "date": { "day": 29, "month": 1, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 5",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 29,
+        "month": 1,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -103,8 +209,19 @@
       "night": []
     },
     "20150130": {
-      "title": { "value": "Dia 6", "showDestinations": false, "translate": false },
-      "date": { "day": 30, "month": 1, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 6",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 30,
+        "month": 1,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -112,8 +229,19 @@
       "night": []
     },
     "20150131": {
-      "title": { "value": "Dia 7", "showDestinations": false, "translate": false },
-      "date": { "day": 31, "month": 1, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 7",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 31,
+        "month": 1,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -121,8 +249,19 @@
       "night": []
     },
     "20150201": {
-      "title": { "value": "Dia 8", "showDestinations": false, "translate": false },
-      "date": { "day": 1, "month": 2, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 8",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 1,
+        "month": 2,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -130,8 +269,19 @@
       "night": []
     },
     "20150202": {
-      "title": { "value": "Dia 9", "showDestinations": false, "translate": false },
-      "date": { "day": 2, "month": 2, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 9",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 2,
+        "month": 2,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -139,8 +289,19 @@
       "night": []
     },
     "20150203": {
-      "title": { "value": "Dia 10", "showDestinations": false, "translate": false },
-      "date": { "day": 3, "month": 2, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 10",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 3,
+        "month": 2,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -148,8 +309,19 @@
       "night": []
     },
     "20150204": {
-      "title": { "value": "Dia 11", "showDestinations": false, "translate": false },
-      "date": { "day": 4, "month": 2, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 11",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 4,
+        "month": 2,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -157,8 +329,19 @@
       "night": []
     },
     "20150205": {
-      "title": { "value": "Dia 12", "showDestinations": false, "translate": false },
-      "date": { "day": 5, "month": 2, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 12",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 5,
+        "month": 2,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -166,8 +349,19 @@
       "night": []
     },
     "20150206": {
-      "title": { "value": "Dia 13", "showDestinations": false, "translate": false },
-      "date": { "day": 6, "month": 2, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 13",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 6,
+        "month": 2,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -175,8 +369,19 @@
       "night": []
     },
     "20150207": {
-      "title": { "value": "Dia 14", "showDestinations": false, "translate": false },
-      "date": { "day": 7, "month": 2, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 14",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 7,
+        "month": 2,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -184,8 +389,19 @@
       "night": []
     },
     "20150208": {
-      "title": { "value": "Dia 15 — Retorno", "showDestinations": false, "translate": false },
-      "date": { "day": 8, "month": 2, "year": 2015, "hour": 0, "minute": 0, "second": 0 },
+      "title": {
+        "value": "Dia 15 — Retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 8,
+        "month": 2,
+        "year": 2015,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
       "destinationIds": [],
       "earlyMorning": [],
       "morning": [],
@@ -198,21 +414,21 @@
       {
         "name": "Alimentação (almoço + jantar)",
         "type": "trip.expenses.daily",
-        "price": 2297.00,
+        "price": 2297.0,
         "currency": "BRL",
         "person": ""
       },
       {
         "name": "Transporte local (metrô, táxi)",
         "type": "trip.transportation.type.bus",
-        "price": 587.00,
+        "price": 587.0,
         "currency": "BRL",
         "person": ""
       },
       {
         "name": "Compras (supermercado e gerais)",
-        "type": "Compras",
-        "price": 588.00,
+        "type": "trip.expenses.daily",
+        "price": 588.0,
         "currency": "BRL",
         "person": ""
       }
@@ -225,7 +441,13 @@
       "milton": "Milton",
       "marianna": "Marianna"
     },
-    "sharing": { "owner": "", "active": true, "editors": [] },
-    "version": { "lastUpdated": "2026-07-19T12:00:00.000Z" }
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    }
   }
 }

@@ -1,6 +1,6 @@
 {
   "trip": {
-    "title": "Neck Deep 2018",
+    "title": "Neck Deep SP",
     "currency": "BRL",
     "start": {
       "day": 7,
@@ -48,8 +48,7 @@
     "travelers": [
       {
         "id": "gabriel",
-        "name": "Gabriel",
-        "photo": ""
+        "name": "Gabriel"
       }
     ],
     "links": {
@@ -111,7 +110,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "Azul Linhas Aéreas",
+      "company": "azul",
       "points": {
         "origin": "Belo Horizonte (CNF)",
         "destination": "São Paulo (CGH)"
@@ -134,7 +133,7 @@
           "second": 0
         }
       },
-      "duration": "1h20",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "FYTYXP",
       "link": "",
@@ -142,7 +141,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "Azul Linhas Aéreas",
+      "company": "azul",
       "points": {
         "origin": "São Paulo (CGH)",
         "destination": "Belo Horizonte (CNF)"
@@ -165,7 +164,7 @@
           "second": 0
         }
       },
-      "duration": "1h15",
+      "duration": "01:00",
       "direction": "return",
       "reservation": "FYTYXP",
       "link": "",
@@ -190,7 +189,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -203,7 +201,6 @@
           "end": ""
         },
         {
-          "type": "flight",
           "cost": 0,
           "item": {
             "type": "",
@@ -218,7 +215,6 @@
       ],
       "morning": [
         {
-          "type": "transport",
           "cost": 8,
           "item": {
             "type": "",
@@ -231,7 +227,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "cost": 0,
           "item": {
             "type": "",
@@ -244,7 +239,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -259,7 +253,6 @@
       ],
       "afternoon": [
         {
-          "type": "food",
           "cost": 55,
           "item": {
             "type": "",
@@ -272,7 +265,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 0,
           "item": {
             "type": "",
@@ -285,7 +277,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "cost": 0,
           "item": {
             "type": "",
@@ -298,7 +289,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 10,
           "item": {
             "type": "",
@@ -311,7 +301,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "cost": 5,
           "item": {
             "type": "",
@@ -324,7 +313,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 9,
           "item": {
             "type": "",
@@ -337,7 +325,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -350,7 +337,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -365,7 +351,6 @@
       ],
       "night": [
         {
-          "type": "entertainment",
           "cost": 0,
           "item": {
             "type": "",
@@ -378,7 +363,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 30,
           "item": {
             "type": "",
@@ -391,7 +375,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 95,
           "item": {
             "type": "",
@@ -404,7 +387,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 15,
           "item": {
             "type": "",
@@ -417,7 +399,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -448,7 +429,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -461,7 +441,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 0,
           "item": {
             "type": "",
@@ -474,7 +453,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "cost": 0,
           "item": {
             "type": "",
@@ -487,7 +465,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 6,
           "item": {
             "type": "",
@@ -502,7 +479,6 @@
       ],
       "morning": [
         {
-          "type": "flight",
           "cost": 0,
           "item": {
             "type": "",
@@ -522,7 +498,7 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "Transporte Público",
+        "type": "trip.transportation.type.bus",
         "name": "Ônibus e metrô em SP",
         "price": 22.0,
         "currency": "BRL",
@@ -536,7 +512,7 @@
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "name": "Alimentação durante a viagem",
         "price": 169.0,
         "currency": "BRL",
@@ -552,21 +528,21 @@
     ],
     "preTrip": [
       {
-        "type": "Voo",
+        "type": "trip.transportation.type.flights",
         "name": "Azul - BH ↔ SP (ida e volta com pontos TudoAzul)",
         "price": 100.4,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Hospedagem",
+        "type": "trip.accommodation.title",
         "name": "Airbnb - Jardim Paulista (1 noite)",
         "price": 73.14,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Ingresso",
+        "type": "trip.expenses.entertainment",
         "name": "Neck Deep - Fabrique Club (Meia/Promocional)",
         "price": 103.5,
         "currency": "BRL",

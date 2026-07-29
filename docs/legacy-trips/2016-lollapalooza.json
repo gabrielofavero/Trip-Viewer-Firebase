@@ -48,18 +48,15 @@
     "travelers": [
       {
         "id": "gabriel",
-        "name": "Gabriel",
-        "color": "#4CAF50"
+        "name": "Gabriel"
       },
       {
         "id": "lucas",
-        "name": "Lucas",
-        "color": "#2196F3"
+        "name": "Lucas"
       },
       {
         "id": "marina",
-        "name": "Marina",
-        "color": "#E91E63"
+        "name": "Marina"
       }
     ],
     "links": {
@@ -144,7 +141,7 @@
           "second": 0
         }
       },
-      "duration": "1h40",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "",
       "link": "",
@@ -175,7 +172,7 @@
           "second": 0
         }
       },
-      "duration": "1h00",
+      "duration": "01:00",
       "direction": "return",
       "reservation": "",
       "link": "",
@@ -554,28 +551,28 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "hospedagem",
+        "type": "trip.accommodation.title",
         "name": "Diária do hotel (2 noites)",
         "price": 250.0,
         "currency": "BRL",
         "person": ""
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Transporte Aeroporto → Hotel (ônibus)",
         "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "alimentação",
+        "type": "trip.expenses.daily",
         "name": "Almoço dia 1",
         "price": 25.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Metrô Hotel → Interlagos (ida e volta)",
         "price": 7.0,
         "currency": "BRL",
@@ -589,14 +586,14 @@
         "person": "gabriel"
       },
       {
-        "type": "alimentação",
+        "type": "trip.expenses.daily",
         "name": "Almoço dia 2",
         "price": 25.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Metrô Hotel → Interlagos dia 2",
         "price": 3.5,
         "currency": "BRL",
@@ -617,21 +614,21 @@
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Metrô Hotel → Galeria do Rock",
         "price": 7.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "alimentação",
+        "type": "trip.expenses.daily",
         "name": "Almoço O'Malley's",
         "price": 50.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Ônibus Museu → Ibirapuera → Aeroporto",
         "price": 7.6,
         "currency": "BRL",
@@ -640,21 +637,21 @@
     ],
     "preTrip": [
       {
-        "type": "voo",
+        "type": "trip.transportation.type.flights",
         "name": "Passagem aérea BH-SP (ida e volta)",
         "price": 0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "ingresso",
+        "type": "trip.expenses.entertainment",
         "name": "Ingresso Lollapalooza - Dia 1 (Sábado)",
         "price": 0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "ingresso",
+        "type": "trip.expenses.entertainment",
         "name": "Ingresso Lollapalooza - Dia 2 (Domingo)",
         "price": 0,
         "currency": "BRL",

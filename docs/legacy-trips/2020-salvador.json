@@ -15,7 +15,7 @@
     }
   },
   "trip": {
-    "title": "Salvador 2020",
+    "title": "Salvador",
     "currency": "BRL",
     "start": {
       "day": 28,
@@ -129,7 +129,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "Gol",
+      "company": "gol",
       "points": {
         "origin": "Belo Horizonte",
         "destination": "Salvador"
@@ -160,7 +160,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "Gol",
+      "company": "gol",
       "points": {
         "origin": "Salvador",
         "destination": "Belo Horizonte"

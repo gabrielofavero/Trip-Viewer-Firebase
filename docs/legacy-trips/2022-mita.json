@@ -48,8 +48,7 @@
     "travelers": [
       {
         "id": "gabriel",
-        "name": "Gabriel",
-        "color": "#966313"
+        "name": "Gabriel"
       }
     ],
     "links": {
@@ -111,7 +110,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "Azul",
+      "company": "azul",
       "points": {
         "origin": "CNF - Belo Horizonte",
         "destination": "SDU - Rio de Janeiro"
@@ -134,7 +133,7 @@
           "second": 0
         }
       },
-      "duration": "1h05",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "YWZ52E",
       "link": "",
@@ -142,7 +141,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "Azul",
+      "company": "azul",
       "points": {
         "origin": "SDU - Rio de Janeiro",
         "destination": "CNF - Belo Horizonte"
@@ -165,7 +164,7 @@
           "second": 0
         }
       },
-      "duration": "1h05",
+      "duration": "01:00",
       "direction": "return",
       "reservation": "YWZ52E",
       "link": "",
@@ -190,7 +189,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -202,7 +200,6 @@
           "end": ""
         },
         {
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
@@ -214,7 +211,6 @@
           "end": ""
         },
         {
-          "type": "Ida/Volta",
           "item": {
             "type": "",
             "id": "",
@@ -226,7 +222,6 @@
           "end": ""
         },
         {
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
@@ -238,7 +233,6 @@
           "end": ""
         },
         {
-          "type": "Transporte Público",
           "item": {
             "type": "",
             "id": "",
@@ -250,7 +244,6 @@
           "end": ""
         },
         {
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
@@ -264,7 +257,6 @@
       ],
       "morning": [
         {
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
@@ -276,7 +268,6 @@
           "end": ""
         },
         {
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
@@ -288,7 +279,6 @@
           "end": ""
         },
         {
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
@@ -302,7 +292,6 @@
       ],
       "afternoon": [
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -314,7 +303,6 @@
           "end": ""
         },
         {
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
@@ -326,7 +314,6 @@
           "end": ""
         },
         {
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
@@ -338,7 +325,6 @@
           "end": ""
         },
         {
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
@@ -352,7 +338,6 @@
       ],
       "night": [
         {
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
@@ -364,7 +349,6 @@
           "end": ""
         },
         {
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
@@ -376,7 +360,6 @@
           "end": ""
         },
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -388,7 +371,6 @@
           "end": ""
         },
         {
-          "type": "Saídas",
           "item": {
             "type": "",
             "id": "",
@@ -418,7 +400,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -430,7 +411,6 @@
           "end": ""
         },
         {
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
@@ -444,7 +424,6 @@
       ],
       "morning": [
         {
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
@@ -456,7 +435,6 @@
           "end": ""
         },
         {
-          "type": "Transporte Público",
           "item": {
             "type": "",
             "id": "",
@@ -470,7 +448,6 @@
       ],
       "afternoon": [
         {
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
@@ -482,7 +459,6 @@
           "end": ""
         },
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -494,7 +470,6 @@
           "end": ""
         },
         {
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
@@ -506,7 +481,6 @@
           "end": ""
         },
         {
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
@@ -518,7 +492,6 @@
           "end": ""
         },
         {
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
@@ -530,7 +503,6 @@
           "end": ""
         },
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -542,7 +514,6 @@
           "end": ""
         },
         {
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
@@ -554,7 +525,6 @@
           "end": ""
         },
         {
-          "type": "Ida/Volta",
           "item": {
             "type": "",
             "id": "",
@@ -566,7 +536,6 @@
           "end": ""
         },
         {
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
@@ -580,7 +549,6 @@
       ],
       "night": [
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -597,93 +565,82 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "Hospedagem",
-        "value": 171.5,
+        "type": "trip.accommodation.title",
         "person": "",
         "name": "Airbnb - R. Nascimento Silva, 4 Bloco C, apto 1808",
-        "price": 0,
+        "price": 171.5,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
-        "value": 50.0,
+        "type": "trip.expenses.daily",
         "person": "",
         "name": "Nema - Almoço Rápido",
-        "price": 0,
+        "price": 50.0,
         "currency": "BRL"
       },
       {
         "type": "Turismo",
-        "value": 0,
         "person": "",
         "name": "MITA Festival - Almoço/Livre + atrações (Two Doors Cinema Club, The Kooks, Gorillaz)",
         "price": 0,
         "currency": "BRL"
       },
       {
-        "type": "Saídas",
-        "value": 100.0,
+        "type": "trip.expenses.daily",
         "person": "",
         "name": "Saída noturna pós-festival",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL"
       },
       {
-        "type": "Transporte Público",
-        "value": 20.6,
+        "type": "trip.transportation.type.bus",
         "person": "",
         "name": "VLT + Metrô (ida e volta)",
-        "price": 0,
+        "price": 20.6,
         "currency": "BRL"
       },
       {
         "type": "Transporte Privado",
-        "value": 90.0,
         "person": "",
         "name": "Ubers diversos (aeroporto→Airbnb, Airbnb→MITA, MITA→saída, saída→Airbnb, Airbnb→almoço, almoço→Boulevard, MAR→aeroporto)",
-        "price": 0,
+        "price": 90.0,
         "currency": "BRL"
       },
       {
         "type": "Turismo",
-        "value": 100.0,
         "person": "",
         "name": "Low Fire - Almoço",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL"
       },
       {
         "type": "Turismo",
-        "value": 16.5,
         "person": "",
         "name": "Museu do Amanhã - Ingresso meia-entrada universitário",
-        "price": 0,
+        "price": 16.5,
         "currency": "BRL"
       },
       {
         "type": "Turismo",
-        "value": 11.0,
         "person": "",
         "name": "Museu de Arte do Rio (MAR) - Ingresso meia-entrada estudante",
-        "price": 0,
+        "price": 11.0,
         "currency": "BRL"
       }
     ],
     "preTrip": [
       {
         "type": "Ida/Volta",
-        "value": 71.06,
         "person": "",
         "name": "Voo Azul CNF ↔ SDU - Reserva YWZ52E (ida e volta)",
-        "price": 0,
+        "price": 71.06,
         "currency": "BRL"
       },
       {
-        "type": "Ingresso",
-        "value": 385.0,
+        "type": "trip.expenses.entertainment",
         "person": "",
         "name": "MITA Festival - Pista Meia-Entrada - Jockey Clube, Gávea - 21/mai/22 (R$350 + R$35 tx)",
-        "price": 0,
+        "price": 385.0,
         "currency": "BRL"
       }
     ],

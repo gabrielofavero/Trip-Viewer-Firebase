@@ -70,6 +70,178 @@
 }
 
 /*--------------------------------------------------------------
+# Color Section Labels
+--------------------------------------------------------------*/
+.color-section-label {
+	display: block;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--text-secondary, #666);
+	margin-bottom: 8px;
+}
+
+/*--------------------------------------------------------------
+# Color Theme Toggle Row
+--------------------------------------------------------------*/
+.color-toggle-row {
+	margin-bottom: 4px;
+}
+
+.color-toggle-row .switch-label {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--text-secondary, #666);
+}
+
+.color-section-spacer {
+	height: 14px;
+}
+
+/*--------------------------------------------------------------
+/*--------------------------------------------------------------
+# Color Preset Carousel
+--------------------------------------------------------------*/
+.color-preset-carousel {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 4px;
+}
+
+.color-preset-grid {
+	display: flex;
+	flex: 1;
+	flex-wrap: nowrap;
+	gap: 10px;
+	overflow-x: auto;
+	scroll-behavior: smooth;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+	min-width: 0;
+	padding: 4px 4px 26px 4px;
+	margin: -4px -4px -26px -4px;
+}
+
+.color-preset-grid::-webkit-scrollbar {
+	display: none;
+}
+
+.color-preset-arrow {
+	flex-shrink: 0;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	border: 1.5px solid var(--border-color, #ddd);
+	background: var(--nf-input-background-color, #fff);
+	color: var(--text-secondary, #666);
+	font-size: 18px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: border-color 0.2s, color 0.2s, background 0.2s;
+	padding: 0;
+	user-select: none;
+}
+
+.color-preset-arrow:hover {
+	border-color: var(--theme-color, #5859a7);
+	color: var(--theme-color, #5859a7);
+	background: rgba(var(--theme-color-rgb, 88, 89, 167), 0.06);
+}
+
+.color-preset-arrow:active {
+	transform: scale(0.93);
+}
+
+[data-theme="dark"] .color-preset-arrow {
+	border-color: var(--border-color, #404040);
+	background: var(--nf-input-background-color, #303030);
+	color: var(--text-secondary, #a6a6a6);
+}
+
+[data-theme="dark"] .color-preset-arrow:hover {
+	border-color: var(--theme-color);
+	color: var(--theme-color);
+}
+
+.color-preset-swatch {
+	width: 48px;
+	height: 48px;
+	min-width: 48px;
+	flex-shrink: 0;
+	border-radius: var(--radius-md);
+	cursor: pointer;
+	border: 1.5px solid var(--border-color);
+	transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+	position: relative;
+	padding: 4px;
+	background-clip: content-box;
+}
+
+.color-preset-swatch:hover {
+	transform: scale(1.08);
+	border-color: var(--nf-input-focus-border-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.color-preset-swatch.selected {
+	border-color: var(--theme-color, #5859a7);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.25);
+	transform: scale(1.08);
+}
+
+.color-preset-swatch::after {
+	content: attr(data-name);
+	position: absolute;
+	bottom: -20px;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 10px;
+	color: var(--text-secondary, #666);
+	white-space: nowrap;
+	opacity: 0;
+	transition: opacity 0.2s;
+	pointer-events: none;
+}
+
+.color-preset-swatch:hover::after {
+	opacity: 1;
+}
+
+/*--------------------------------------------------------------
+# Color Custom Toggle ("+" swatch at end of preset grid)
+--------------------------------------------------------------*/
+.color-preset-swatch.add-custom {
+	background: var(--nf-input-background-color, #fff);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 24px;
+	font-weight: 300;
+	color: var(--text-secondary, #666);
+	line-height: 1;
+	user-select: none;
+}
+
+.color-preset-swatch.add-custom::before {
+	content: "+";
+}
+
+.color-preset-swatch.add-custom::after {
+	content: attr(data-name);
+}
+
+[data-theme="dark"] .color-preset-swatch.add-custom {
+	background: var(--nf-input-background-color, #303030);
+	color: var(--text-secondary, #a6a6a6);
+}
+
+/*--------------------------------------------------------------
 # Accordion — First/Last border-radius
 --------------------------------------------------------------*/
 .accordion .accordion-item:first-child {
@@ -1723,6 +1895,37 @@ details summary::-webkit-details-marker {
 /* Footer */
 [data-theme="dark"] #footer {
 	background: var(--bg-secondary);
+}
+
+/* Color preset grid — dark mode */
+[data-theme="dark"] .color-preset-swatch {
+	border-color: var(--border-color, #404040);
+}
+
+[data-theme="dark"] .color-preset-swatch:hover {
+	border-color: var(--nf-input-focus-border-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.18);
+}
+
+[data-theme="dark"] .color-preset-swatch.selected {
+	border-color: var(--theme-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.3);
+}
+
+[data-theme="dark"] .color-preset-swatch::after {
+	color: var(--text-secondary, #a6a6a6);
+}
+
+[data-theme="dark"] .color-section-label {
+	color: var(--text-secondary, #a6a6a6);
+}
+
+[data-theme="dark"] .color-toggle-row .switch-label {
+	color: var(--text-secondary, #a6a6a6);
+}
+
+[data-theme="dark"] .color-custom-toggle {
+	color: var(--text-secondary, #a6a6a6);
 }
 
 /*--------------------------------------------------------------

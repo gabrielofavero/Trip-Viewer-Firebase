@@ -48,13 +48,11 @@
     "travelers": [
       {
         "id": "gabriel",
-        "name": "Gabriel",
-        "color": ""
+        "name": "Gabriel"
       },
       {
         "id": "milton",
-        "name": "Milton",
-        "color": ""
+        "name": "Milton"
       }
     ],
     "links": {
@@ -116,7 +114,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "GOL",
+      "company": "gol",
       "points": {
         "origin": "CNF (Belo Horizonte)",
         "destination": "CGH (São Paulo)"
@@ -139,7 +137,7 @@
           "second": 0
         }
       },
-      "duration": "1h20",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "OHLGGC",
       "link": "",
@@ -147,7 +145,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "GOL",
+      "company": "gol",
       "points": {
         "origin": "CGH (São Paulo)",
         "destination": "CNF (Belo Horizonte)"
@@ -170,7 +168,7 @@
           "second": 0
         }
       },
-      "duration": "1h10",
+      "duration": "01:00",
       "direction": "return",
       "reservation": "OHLGGC",
       "link": "",
@@ -195,8 +193,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Ir ao Aeroporto",
-          "description": "Paps",
           "category": "transport",
           "item": {
             "type": "",
@@ -204,13 +200,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ir ao Aeroporto: Paps",
           "start": "",
           "end": ""
         },
         {
-          "title": "Voo CNF → CGH",
-          "description": "Gol OHLGGC. 07:10–08:30",
           "category": "transport",
           "item": {
             "type": "",
@@ -218,15 +212,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voo CNF → CGH: Gol OHLGGC. 07:10–08:30",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Ônibus + Metrô até o Airbnb",
-          "description": "",
           "category": "transport",
           "item": {
             "type": "",
@@ -234,13 +226,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ônibus + Metrô até o Airbnb",
           "start": "",
           "end": ""
         },
         {
-          "title": "Airbnb",
-          "description": "Deixar mala",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -248,13 +238,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Deixar mala",
           "start": "",
           "end": ""
         },
         {
-          "title": "Museu da Diversidade Sexual",
-          "description": "",
           "category": "attraction",
           "item": {
             "type": "",
@@ -262,13 +250,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Museu da Diversidade Sexual",
           "start": "",
           "end": ""
         },
         {
-          "title": "Memorial da Imigração",
-          "description": "",
           "category": "attraction",
           "item": {
             "type": "",
@@ -276,15 +262,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Memorial da Imigração",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Napoli Centrale",
-          "description": "Almoço",
           "category": "food",
           "item": {
             "type": "",
@@ -292,13 +276,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Napoli Centrale: Almoço",
           "start": "",
           "end": ""
         },
         {
-          "title": "Parque Villa Lobos",
-          "description": "",
           "category": "attraction",
           "item": {
             "type": "",
@@ -306,13 +288,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Parque Villa Lobos",
           "start": "",
           "end": ""
         },
         {
-          "title": "Liberdade",
-          "description": "Suprimentos + Compras",
           "category": "shopping",
           "item": {
             "type": "",
@@ -320,13 +300,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Liberdade: Suprimentos + Compras",
           "start": "",
           "end": ""
         },
         {
-          "title": "Liberdade (Lanche)",
-          "description": "Bubble",
           "category": "food",
           "item": {
             "type": "",
@@ -334,15 +312,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Liberdade (Lanche): Bubble",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Airbnb / Livre",
-          "description": "Descanso",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -350,13 +326,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb / Livre: Descanso",
           "start": "",
           "end": ""
         },
         {
-          "title": "Onix Day",
-          "description": "",
           "category": "entertainment",
           "item": {
             "type": "",
@@ -364,7 +338,7 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Onix Day",
           "start": "",
           "end": ""
         }
@@ -388,8 +362,6 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Airbnb",
-          "description": "Arrumar para o Lolla",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -397,13 +369,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Arrumar para o Lolla",
           "start": "",
           "end": ""
         },
         {
-          "title": "Paulista",
-          "description": "Ir nos Mirantes",
           "category": "attraction",
           "item": {
             "type": "",
@@ -411,13 +381,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Paulista: Ir nos Mirantes",
           "start": "",
           "end": ""
         },
         {
-          "title": "Taco Bell",
-          "description": "Almoço",
           "category": "food",
           "item": {
             "type": "",
@@ -425,15 +393,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Taco Bell: Almoço",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Lollapalooza",
-          "description": "Shows: Macklemore, Portugal The Man, Foals, entre outros",
           "category": "entertainment",
           "item": {
             "type": "",
@@ -441,15 +407,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Lollapalooza: Shows: Macklemore, Portugal The Man, Foals, entre outros",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Lollapalooza",
-          "description": "Continuação dos shows",
           "category": "entertainment",
           "item": {
             "type": "",
@@ -457,13 +421,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Lollapalooza: Continuação dos shows",
           "start": "",
           "end": ""
         },
         {
-          "title": "Airbnb",
-          "description": "Delivery ou sair na região",
           "category": "food",
           "item": {
             "type": "",
@@ -471,7 +433,7 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Delivery ou sair na região",
           "start": "",
           "end": ""
         }
@@ -495,8 +457,6 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Livre",
-          "description": "Descanso ou passeio rápido",
           "category": "free",
           "item": {
             "type": "",
@@ -504,13 +464,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre: Descanso ou passeio rápido",
           "start": "",
           "end": ""
         },
         {
-          "title": "Airbnb",
-          "description": "Arrumar para o Lolla",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -518,15 +476,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Arrumar para o Lolla",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Lollapalooza",
-          "description": "Almoçar lá",
           "category": "entertainment",
           "item": {
             "type": "",
@@ -534,15 +490,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Lollapalooza: Almoçar lá",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Lollapalooza",
-          "description": "Continuação dos shows",
           "category": "entertainment",
           "item": {
             "type": "",
@@ -550,13 +504,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Lollapalooza: Continuação dos shows",
           "start": "",
           "end": ""
         },
         {
-          "title": "Blitz Haus",
-          "description": "Rolé LGBTQ+",
           "category": "entertainment",
           "item": {
             "type": "",
@@ -564,13 +516,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Blitz Haus: Rolé LGBTQ+",
           "start": "",
           "end": ""
         },
         {
-          "title": "Airbnb",
-          "description": "Descanso",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -578,7 +528,7 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Descanso",
           "start": "",
           "end": ""
         }
@@ -602,8 +552,6 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Airbnb",
-          "description": "Arrumar para o Lolla",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -611,13 +559,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Arrumar para o Lolla",
           "start": "",
           "end": ""
         },
         {
-          "title": "O Burger",
-          "description": "Almoço",
           "category": "food",
           "item": {
             "type": "",
@@ -625,15 +571,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "O Burger: Almoço",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Lollapalooza",
-          "description": "Último dia de festival",
           "category": "entertainment",
           "item": {
             "type": "",
@@ -641,15 +585,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Lollapalooza: Último dia de festival",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Lollapalooza",
-          "description": "Encerramento",
           "category": "entertainment",
           "item": {
             "type": "",
@@ -657,13 +599,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Lollapalooza: Encerramento",
           "start": "",
           "end": ""
         },
         {
-          "title": "Airbnb",
-          "description": "Delivery ou sair na região",
           "category": "food",
           "item": {
             "type": "",
@@ -671,7 +611,7 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Delivery ou sair na região",
           "start": "",
           "end": ""
         }
@@ -694,8 +634,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Airbnb",
-          "description": "Check-out e arrumar",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -703,15 +641,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Check-out e arrumar",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Livre",
-          "description": "Últimas compras ou passeio",
           "category": "free",
           "item": {
             "type": "",
@@ -719,13 +655,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre: Últimas compras ou passeio",
           "start": "",
           "end": ""
         },
         {
-          "title": "Almoço",
-          "description": "",
           "category": "food",
           "item": {
             "type": "",
@@ -733,15 +667,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Almoço",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Voo CGH → CNF",
-          "description": "Gol OHLGGC. 17:55–19:05",
           "category": "transport",
           "item": {
             "type": "",
@@ -749,7 +681,7 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voo CGH → CNF: Gol OHLGGC. 17:55–19:05",
           "start": "",
           "end": ""
         }
@@ -760,86 +692,86 @@
   "expenses": {
     "duringTrip": [
       {
-        "title": "Airbnb Jardins (Gabriel)",
         "currency": "BRL",
         "notes": "4 diárias",
-        "name": "",
+        "name": "Airbnb Jardins (Gabriel)",
         "price": 650,
-        "person": "gabriel"
+        "person": "gabriel",
+        "type": "trip.expenses.daily"
       },
       {
-        "title": "Airbnb Jardins (Milton)",
         "currency": "BRL",
         "notes": "4 diárias",
-        "name": "",
+        "name": "Airbnb Jardins (Milton)",
         "price": 489,
-        "person": "milton"
+        "person": "milton",
+        "type": "trip.expenses.daily"
       },
       {
-        "title": "Alimentação (Gabriel)",
         "currency": "BRL",
         "notes": "Total de alimentação durante a viagem",
-        "name": "",
+        "name": "Alimentação (Gabriel)",
         "price": 482.2,
-        "person": "gabriel"
+        "person": "gabriel",
+        "type": "trip.expenses.daily"
       },
       {
-        "title": "Alimentação (Milton)",
         "currency": "BRL",
         "notes": "Total de alimentação durante a viagem",
-        "name": "",
+        "name": "Alimentação (Milton)",
         "price": 260.26,
-        "person": "milton"
+        "person": "milton",
+        "type": "trip.expenses.daily"
       },
       {
-        "title": "Atrações/Eventos",
         "currency": "BRL",
         "notes": "Memorial Imigração, Blitz Haus, etc.",
-        "name": "",
+        "name": "Atrações/Eventos",
         "price": 66,
-        "person": "gabriel"
+        "person": "gabriel",
+        "type": "trip.expenses.daily"
       },
       {
-        "title": "Compras (Gabriel)",
         "currency": "BRL",
         "notes": "Suprimentos e compras na Liberdade",
-        "name": "",
+        "name": "Compras (Gabriel)",
         "price": 240.87,
-        "person": "gabriel"
+        "person": "gabriel",
+        "type": "trip.expenses.daily"
       },
       {
-        "title": "Compras (Milton)",
         "currency": "BRL",
         "notes": "",
-        "name": "",
+        "name": "Compras (Milton)",
         "price": 58.77,
-        "person": "milton"
+        "person": "milton",
+        "type": "trip.expenses.daily"
       },
       {
-        "title": "Transporte Público",
         "currency": "BRL",
         "notes": "Metrô e ônibus durante a viagem",
-        "name": "",
+        "name": "Transporte Público",
         "price": 50,
-        "person": "gabriel"
+        "person": "gabriel",
+        "type": "trip.expenses.daily"
       }
     ],
     "preTrip": [
       {
-        "title": "Ingresso Lolla Pass",
         "currency": "BRL",
         "notes": "Lolla Pass R$663 + taxas R$156.60. Transação 180924,4330",
-        "name": "",
+        "name": "Ingresso Lolla Pass",
         "price": 820,
-        "person": "gabriel"
+        "person": "gabriel",
+        "type": "trip.expenses.daily"
       },
       {
-        "title": "Passagem Aérea (Ida e Volta)",
         "currency": "BRL",
         "notes": "GOL. CNF–CGH–CNF. Localizador OHLGGC",
-        "name": "",
+        "name": "Passagem Aérea (Ida e Volta)",
         "price": 213,
-        "person": "gabriel"
+        "person": "gabriel",
+        "type": "trip.expenses.daily"
       }
     ],
     "currency": "BRL",

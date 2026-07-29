@@ -1,6 +1,6 @@
 {
   "trip": {
-    "title": "GP Week SP 2022",
+    "title": "GP Week 2022",
     "currency": "BRL",
     "start": {
       "day": 11,
@@ -48,13 +48,11 @@
     "travelers": [
       {
         "id": "gabriel",
-        "name": "Gabriel",
-        "color": "#966313"
+        "name": "Gabriel"
       },
       {
         "id": "gui",
-        "name": "Guilherme",
-        "color": "#4A90D9"
+        "name": "Guilherme"
       }
     ],
     "links": {
@@ -170,7 +168,7 @@
     },
     "leg-001": {
       "type": "bus",
-      "company": "Expresso Adamantina (Buser)",
+      "company": "buser",
       "points": {
         "origin": "Belo Horizonte - MG",
         "destination": "São Paulo - SP"
@@ -193,7 +191,7 @@
           "second": 0
         }
       },
-      "duration": "8h30",
+      "duration": "08:00",
       "direction": "departure",
       "reservation": "7H11GC",
       "link": "",
@@ -201,7 +199,7 @@
     },
     "leg-002": {
       "type": "bus",
-      "company": "Luxor (Buser)",
+      "company": "buser",
       "points": {
         "origin": "São Paulo - SP",
         "destination": "Belo Horizonte - MG"
@@ -224,7 +222,7 @@
           "second": 0
         }
       },
-      "duration": "8h40",
+      "duration": "08:00",
       "direction": "return",
       "reservation": "GU5VE",
       "link": "",
@@ -252,44 +250,35 @@
       "afternoon": [],
       "night": [
         {
-          "title": "Uber → Rodoviária BH",
-          "description": "Translado até a rodoviária de Belo Horizonte",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → Rodoviária BH: Translado até a rodoviária de Belo Horizonte",
           "start": "20:00",
           "end": ""
         },
         {
-          "title": "Terminal Rodoviário",
-          "description": "Retirar passagem (G2) — Buser 7H11GC",
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Terminal Rodoviário: Retirar passagem (G2) — Buser 7H11GC",
           "start": "20:30",
           "end": ""
         },
         {
-          "title": "Ônibus BH → SP",
-          "description": "Expresso Adamantina — Leito. Previsão de chegada: 06:00",
-          "type": "Ida/Volta",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ônibus BH → SP: Expresso Adamantina — Leito. Previsão de chegada: 06:00",
           "start": "21:30",
           "end": ""
         }
@@ -312,218 +301,173 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Chegada em SP — Metrô",
-          "description": "Desembarque Terminal Tietê → Metrô até o hotel",
-          "type": "Transporte Público",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Chegada em SP — Metrô: Desembarque Terminal Tietê → Metrô até o hotel",
           "start": "06:00",
           "end": ""
         },
         {
-          "title": "Hotel Ibis Budget",
-          "description": "Check In / Descanso no lobby",
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hotel Ibis Budget: Check In / Descanso no lobby",
           "start": "06:30",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Bottanikafé",
-          "description": "Café da manhã reforçado — vibe natureba para brunch",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Bottanikafé: Café da manhã reforçado — vibe natureba para brunch",
           "start": "07:55",
           "end": ""
         },
         {
-          "title": "IMS (Instituto Moreira Salles)",
-          "description": "Turismo rápido — exposições",
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "IMS (Instituto Moreira Salles): Turismo rápido — exposições",
           "start": "10:10",
           "end": ""
         },
         {
-          "title": "Empório Daruma",
-          "description": "Comprinhas pré-show — itens japoneses",
-          "type": "Compras",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Empório Daruma: Comprinhas pré-show — itens japoneses",
           "start": "11:05",
           "end": ""
         },
         {
-          "title": "Hotel Ibis Budget",
-          "description": "Guardar compras / Entrar no quarto",
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hotel Ibis Budget: Guardar compras / Entrar no quarto",
           "start": "11:45",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Uber → Allianz Parque",
-          "description": "Translado para o festival",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → Allianz Parque: Translado para o festival",
           "start": "11:55",
           "end": ""
         },
         {
-          "title": "GP Week — Livre",
-          "description": "Explorar o festival. Abertura dos portões: 13:00",
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "GP Week — Livre: Explorar o festival. Abertura dos portões: 13:00",
           "start": "12:05",
           "end": ""
         },
         {
-          "title": "Fresno",
-          "description": "Show no GP Week",
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Fresno: Show no GP Week",
           "start": "14:00",
           "end": ""
         },
         {
-          "title": "The Band Camino",
-          "description": "Show no GP Week",
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "The Band Camino: Show no GP Week",
           "start": "15:30",
           "end": ""
         },
         {
-          "title": "Hot Chip",
-          "description": "Show no GP Week",
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hot Chip: Show no GP Week",
           "start": "17:00",
           "end": ""
         },
         {
-          "title": "Pré TOP",
-          "description": "Preparação para o headliner",
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Pré TOP: Preparação para o headliner",
           "start": "18:00",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Twenty One Pilots",
-          "description": "Show principal no GP Week",
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Twenty One Pilots: Show principal no GP Week",
           "start": "19:00",
           "end": ""
         },
         {
-          "title": "The Killers",
-          "description": "Show de encerramento no GP Week",
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "The Killers: Show de encerramento no GP Week",
           "start": "20:30",
           "end": ""
         },
         {
-          "title": "Uber → Hotel",
-          "description": "Volta para o Ibis Budget",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → Hotel: Volta para o Ibis Budget",
           "start": "23:30",
           "end": ""
         }
@@ -547,202 +491,160 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Hotel Ibis Budget",
-          "description": "Arrumar / Check Out / Deixar malas",
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hotel Ibis Budget: Arrumar / Check Out / Deixar malas",
           "start": "08:30",
           "end": ""
         },
         {
-          "title": "Metrô → Liberdade",
-          "description": "Translado para o bairro da Liberdade",
-          "type": "Transporte Público",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Metrô → Liberdade: Translado para o bairro da Liberdade",
           "start": "09:40",
           "end": ""
         },
         {
-          "title": "Liberdade — Feirinha",
-          "description": "Passeio e compras na feirinha de artesanato",
-          "type": "Compras",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Liberdade — Feirinha: Passeio e compras na feirinha de artesanato",
           "start": "10:05",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Sukya — Liberdade",
-          "description": "Almoço (ou qualquer outro asiático na região)",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Sukya — Liberdade: Almoço (ou qualquer outro asiático na região)",
           "start": "12:05",
           "end": ""
         },
         {
-          "title": "Metrô → Unibes Cultural",
-          "description": "Translado",
-          "type": "Transporte Público",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Metrô → Unibes Cultural: Translado",
           "start": "13:35",
           "end": ""
         },
         {
-          "title": "Unibes Cultural",
-          "description": "Exposição Diálogo no Escuro (agendado 14:00)",
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Unibes Cultural: Exposição Diálogo no Escuro (agendado 14:00)",
           "start": "14:05",
           "end": ""
         },
         {
-          "title": "Metrô → Hotel",
-          "description": "Pegar malas no Ibis Budget",
-          "type": "Transporte Público",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Metrô → Hotel: Pegar malas no Ibis Budget",
           "start": "15:05",
           "end": ""
         },
         {
-          "title": "Airbnb — La Residence Paulista",
-          "description": "Check in. Livre / Descanso",
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb — La Residence Paulista: Check in. Livre / Descanso",
           "start": "15:30",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Airbnb — Arrumar",
-          "description": "Preparação para a noite",
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb — Arrumar: Preparação para a noite",
           "start": "17:25",
           "end": ""
         },
         {
-          "title": "Metrô → Tan Tan",
-          "description": "Translado para o jantar",
-          "type": "Transporte Público",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Metrô → Tan Tan: Translado para o jantar",
           "start": "18:25",
           "end": ""
         },
         {
-          "title": "Tan Tan",
-          "description": "Jantinha — restaurante asiático",
-          "type": "Saídas",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Tan Tan: Jantinha — restaurante asiático",
           "start": "18:55",
           "end": ""
         },
         {
-          "title": "Uber → Tokyo SP",
-          "description": "Translado para o bar",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → Tokyo SP: Translado para o bar",
           "start": "20:25",
           "end": ""
         },
         {
-          "title": "Tokyo SP",
-          "description": "Bar com Karaokê — bebeeeer!",
-          "type": "Saídas",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Tokyo SP: Bar com Karaokê — bebeeeer!",
           "start": "20:50",
           "end": ""
         },
         {
-          "title": "Uber → Airbnb",
-          "description": "Volta para o Airbnb",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → Airbnb: Volta para o Airbnb",
           "start": "00:00",
           "end": ""
         }
@@ -766,188 +668,149 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Airbnb — Arrumar / Check Out",
-          "description": "Deixar o Airbnb",
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb — Arrumar / Check Out: Deixar o Airbnb",
           "start": "08:00",
           "end": ""
         },
         {
-          "title": "Mugg SP",
-          "description": "Brunch (ou outro na região)",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Mugg SP: Brunch (ou outro na região)",
           "start": "09:05",
           "end": ""
         },
         {
-          "title": "Airbnb — Pegar Malas",
-          "description": "Retirar as malas",
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb — Pegar Malas: Retirar as malas",
           "start": "10:15",
           "end": ""
         },
         {
-          "title": "Uber → INNSiDE Itaim",
-          "description": "Translado para o hotel novo",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → INNSiDE Itaim: Translado para o hotel novo",
           "start": "10:25",
           "end": ""
         },
         {
-          "title": "Hotel INNSiDE By Melia Itaim",
-          "description": "Check in / Deixar malas",
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hotel INNSiDE By Melia Itaim: Check in / Deixar malas",
           "start": "10:50",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Between Buns",
-          "description": "Almoço no Itaim Bibi (hambúrgueres)",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Between Buns: Almoço no Itaim Bibi (hambúrgueres)",
           "start": "12:05",
           "end": ""
         },
         {
-          "title": "Koa Mart",
-          "description": "Comprinhas — itens coreanos",
-          "type": "Compras",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Koa Mart: Comprinhas — itens coreanos",
           "start": "13:40",
           "end": ""
         },
         {
-          "title": "Parque do Povo",
-          "description": "Pra não perder a tradição rs",
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Parque do Povo: Pra não perder a tradição rs",
           "start": "14:15",
           "end": ""
         },
         {
-          "title": "The Good Cop",
-          "description": "Pra não perder a tradição também rs",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "The Good Cop: Pra não perder a tradição também rs",
           "start": "14:50",
           "end": ""
         },
         {
-          "title": "Hotel INNSiDE Itaim",
-          "description": "Descansar / Curtir a chiquesa do hotel",
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hotel INNSiDE Itaim: Descansar / Curtir a chiquesa do hotel",
           "start": "15:15",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Uber → Omalleys",
-          "description": "Translado para o pub",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → Omalleys: Translado para o pub",
           "start": "20:00",
           "end": ""
         },
         {
-          "title": "Omalleys",
-          "description": "Pub Irlandês — favorito do Bibs. Bebeeeeeer!",
-          "type": "Saídas",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Omalleys: Pub Irlandês — favorito do Bibs. Bebeeeeeer!",
           "start": "20:25",
           "end": ""
         },
         {
-          "title": "Uber → Hotel",
-          "description": "Volta para o INNSiDE Itaim",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → Hotel: Volta para o INNSiDE Itaim",
           "start": "23:00",
           "end": ""
         }
@@ -970,260 +833,206 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Hotel INNSiDE Itaim — Arrumar",
-          "description": "Preparação para o dia",
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hotel INNSiDE Itaim — Arrumar: Preparação para o dia",
           "start": "08:00",
           "end": ""
         },
         {
-          "title": "Café da Manhã no Hotel",
-          "description": "Cortesia do INNSiDE Itaim",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Café da Manhã no Hotel: Cortesia do INNSiDE Itaim",
           "start": "08:30",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Uber → Ibirapuera",
-          "description": "Translado para o parque",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → Ibirapuera: Translado para o parque",
           "start": "09:00",
           "end": ""
         },
         {
-          "title": "Parque Ibirapuera",
-          "description": "Curtir o parque no feriado",
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Parque Ibirapuera: Curtir o parque no feriado",
           "start": "09:15",
           "end": ""
         },
         {
-          "title": "Uber → Hotel",
-          "description": "Volta para o hotel",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → Hotel: Volta para o hotel",
           "start": "10:15",
           "end": ""
         },
         {
-          "title": "Hotel INNSiDE Itaim — Check Out",
-          "description": "Descanso / Check Out / Deixar malas",
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hotel INNSiDE Itaim — Check Out: Descanso / Check Out / Deixar malas",
           "start": "10:30",
           "end": ""
         },
         {
-          "title": "Uber → Sughetto",
-          "description": "Translado para o almoço",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → Sughetto: Translado para o almoço",
           "start": "11:30",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Sughetto",
-          "description": "Almoço — casa de massas, varal de parma. Villa SP",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Sughetto: Almoço — casa de massas, varal de parma. Villa SP",
           "start": "11:55",
           "end": ""
         },
         {
-          "title": "A pé → Paulista",
-          "description": "Caminhada pela região",
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "A pé → Paulista: Caminhada pela região",
           "start": "13:25",
           "end": ""
         },
         {
-          "title": "Compras Paulista / Taco Bell",
-          "description": "Comprinhas e Taco Bell",
-          "type": "Compras",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Compras Paulista / Taco Bell: Comprinhas e Taco Bell",
           "start": "14:05",
           "end": ""
         },
         {
-          "title": "Uber → JK Iguatemi",
-          "description": "Translado para o shopping",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → JK Iguatemi: Translado para o shopping",
           "start": "14:35",
           "end": ""
         },
         {
-          "title": "JK Iguatemi — Cinema",
-          "description": "Filminho no shopping de luxo",
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "JK Iguatemi — Cinema: Filminho no shopping de luxo",
           "start": "15:35",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Brugi",
-          "description": "Saída rápida — lanche",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Brugi: Saída rápida — lanche",
           "start": "17:50",
           "end": ""
         },
         {
-          "title": "Uber → Hotel",
-          "description": "Pegar malas no INNSiDE Itaim",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → Hotel: Pegar malas no INNSiDE Itaim",
           "start": "19:20",
           "end": ""
         },
         {
-          "title": "Hotel INNSiDE Itaim — Pegar Malas",
-          "description": "Retirar as malas",
-          "type": "Hospedagem",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hotel INNSiDE Itaim — Pegar Malas: Retirar as malas",
           "start": "19:35",
           "end": ""
         },
         {
-          "title": "Uber → Terminal Tietê",
-          "description": "Translado para a rodoviária",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → Terminal Tietê: Translado para a rodoviária",
           "start": "19:45",
           "end": ""
         },
         {
-          "title": "Sala VIP Levare",
-          "description": "Aguardar embarque",
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Sala VIP Levare: Aguardar embarque",
           "start": "20:20",
           "end": ""
         },
         {
-          "title": "Ônibus SP → BH",
-          "description": "Luxor — GU5VE. Previsão de chegada: 05:40",
-          "type": "Ida/Volta",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ônibus SP → BH: Luxor — GU5VE. Previsão de chegada: 05:40",
           "start": "21:00",
           "end": ""
         }
@@ -1246,30 +1055,24 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Chegada — Praça da Liberdade BH",
-          "description": "Desembarque do ônibus",
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Chegada — Praça da Liberdade BH: Desembarque do ônibus",
           "start": "05:40",
           "end": ""
         },
         {
-          "title": "Uber → Casa",
-          "description": "Translado final — volta pra casa!",
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Uber → Casa: Translado final — volta pra casa!",
           "start": "05:50",
           "end": ""
         }
@@ -1282,101 +1085,89 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "Hospedagem",
-        "value": 313.48,
+        "type": "trip.accommodation.title",
         "person": "",
         "name": "Ibis Budget (1 diária) + Ibis locker (12) + INNSiDE Itaim (check-in antecipado 50)",
-        "price": 0,
+        "price": 313.48,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
-        "value": 535.0,
+        "type": "trip.expenses.daily",
         "person": "",
         "name": "Bottanikafé (150) + Sukya (50) + Mugg SP (70) + Between Buns (75) + The Good Cop (15) + Café INNSiDE (0) + Sughetto (100) + Brugi (75)",
-        "price": 0,
+        "price": 535.0,
         "currency": "BRL"
       },
       {
         "type": "Turismo",
-        "value": 30.0,
         "person": "",
         "name": "IMS (grátis) + Unibes Cultural — Diálogo no Escuro (grátis) + JK Iguatemi Cinema (30)",
-        "price": 0,
+        "price": 30.0,
         "currency": "BRL"
       },
       {
-        "type": "Compras",
-        "value": 180.0,
+        "type": "trip.expenses.daily",
         "person": "",
         "name": "Empório Daruma (50) + Liberdade Feirinha (50) + Koa Mart (50) + Compras Paulista/Taco Bell (30)",
-        "price": 0,
+        "price": 180.0,
         "currency": "BRL"
       },
       {
-        "type": "Saídas",
-        "value": 300.0,
+        "type": "trip.expenses.daily",
         "person": "",
         "name": "Tan Tan (100) + Tokyo SP (100) + Omalleys (100)",
-        "price": 0,
+        "price": 300.0,
         "currency": "BRL"
       },
       {
-        "type": "Transporte Público",
-        "value": 22.0,
+        "type": "trip.transportation.type.bus",
         "person": "",
         "name": "Metrô — 5 bilhetes (translados diversos)",
-        "price": 0,
+        "price": 22.0,
         "currency": "BRL"
       },
       {
         "type": "Transporte Privado",
-        "value": 165.0,
         "person": "",
         "name": "Ubers — Rodoviária, Allianz Parque, volta, Tan Tan/Tokyo, Omalleys, INNSiDE, Ibirapuera, Paulista, JK Iguatemi, Tietê, casa BH",
-        "price": 0,
+        "price": 165.0,
         "currency": "BRL"
       },
       {
         "type": "Ajustes",
-        "value": -365.0,
         "person": "",
         "name": "Acerto entre Gabriel e Guilherme (Guilherme pagou algumas despesas compartilhadas)",
-        "price": 0,
+        "price": -365.0,
         "currency": "BRL"
       }
     ],
     "preTrip": [
       {
         "type": "Ida/Volta",
-        "value": 320.0,
         "person": "",
         "name": "Ônibus Buser BH ↔ SP — Expresso Adamantina, Leito, 2 passageiros (R$640 total / R$320 cada). Ida: 7H11GC, Volta original: Q8URDJ",
-        "price": 0,
+        "price": 320.0,
         "currency": "BRL"
       },
       {
         "type": "Ida/Volta",
-        "value": 320.0,
         "person": "",
         "name": "Ônibus Buser BH ↔ SP — Expresso Adamantina, Leito, 2 passageiros (R$640 total / R$320 cada). Ida: 7H11GC, Volta original: Q8URDJ",
-        "price": 0,
+        "price": 320.0,
         "currency": "BRL"
       },
       {
         "type": "Ingresso/Show",
-        "value": 594.0,
         "person": "",
         "name": "GP Week — Allianz Parque, Pista VIP Box, Meia-Entrada (R$495 + R$99 tx) — Eventim, TicketDirect V040L2K",
-        "price": 0,
+        "price": 594.0,
         "currency": "BRL"
       },
       {
         "type": "Ingresso/Show",
-        "value": 594.0,
         "person": "",
         "name": "GP Week — Allianz Parque, Pista VIP Box, Meia-Entrada (R$495 + R$99 tx) — Eventim, TicketDirect U8AMT2K",
-        "price": 0,
+        "price": 594.0,
         "currency": "BRL"
       }
     ],

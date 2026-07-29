@@ -86,7 +86,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "Azul",
+      "company": "azul",
       "points": {
         "origin": "CNF - Belo Horizonte",
         "destination": "SDU - Rio de Janeiro"
@@ -109,7 +109,7 @@
           "second": 0
         }
       },
-      "duration": "1h05",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "DC1YVL",
       "link": "",
@@ -117,7 +117,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "Azul",
+      "company": "azul",
       "points": {
         "origin": "SDU - Rio de Janeiro",
         "destination": "CNF - Belo Horizonte"
@@ -140,7 +140,7 @@
           "second": 0
         }
       },
-      "duration": "1h05",
+      "duration": "01:00",
       "direction": "return",
       "reservation": "DC1YVL",
       "link": "",
@@ -165,7 +165,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -177,7 +176,6 @@
           "end": ""
         },
         {
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
@@ -189,7 +187,6 @@
           "end": ""
         },
         {
-          "type": "Ida/Volta",
           "item": {
             "type": "",
             "id": "",
@@ -201,7 +198,6 @@
           "end": ""
         },
         {
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
@@ -215,7 +211,6 @@
       ],
       "morning": [
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -227,7 +222,6 @@
           "end": ""
         },
         {
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
@@ -239,7 +233,6 @@
           "end": ""
         },
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -251,7 +244,6 @@
           "end": ""
         },
         {
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
@@ -263,7 +255,6 @@
           "end": ""
         },
         {
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
@@ -277,7 +268,6 @@
       ],
       "afternoon": [
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -289,7 +279,6 @@
           "end": ""
         },
         {
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
@@ -301,7 +290,6 @@
           "end": ""
         },
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -313,7 +301,6 @@
           "end": ""
         },
         {
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
@@ -325,7 +312,6 @@
           "end": ""
         },
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -337,7 +323,6 @@
           "end": ""
         },
         {
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
@@ -349,7 +334,6 @@
           "end": ""
         },
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -361,7 +345,6 @@
           "end": ""
         },
         {
-          "type": "Turismo",
           "item": {
             "type": "",
             "id": "",
@@ -375,7 +358,6 @@
       ],
       "night": [
         {
-          "type": "Saídas",
           "item": {
             "type": "",
             "id": "",
@@ -387,7 +369,6 @@
           "end": ""
         },
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -399,7 +380,6 @@
           "end": ""
         },
         {
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
@@ -411,7 +391,6 @@
           "end": ""
         },
         {
-          "type": "Ida/Volta",
           "item": {
             "type": "",
             "id": "",
@@ -423,7 +402,6 @@
           "end": ""
         },
         {
-          "type": "-",
           "item": {
             "type": "",
             "id": "",
@@ -435,7 +413,6 @@
           "end": ""
         },
         {
-          "type": "Transporte Privado",
           "item": {
             "type": "",
             "id": "",
@@ -453,108 +430,95 @@
     "duringTrip": [
       {
         "type": "Transporte Privado",
-        "value": 50.0,
         "person": "",
         "name": "Uber Casa → Aeroporto CNF",
-        "price": 0,
+        "price": 50.0,
         "currency": "BRL"
       },
       {
         "type": "Transporte Privado",
-        "value": 10.0,
         "person": "",
         "name": "Uber SDU → DarkCoffee Centro Rio",
-        "price": 0,
+        "price": 10.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
-        "value": 50.0,
+        "type": "trip.expenses.daily",
         "person": "",
         "name": "DarkCoffee Centro Rio - Café da Manhã",
-        "price": 0,
+        "price": 50.0,
         "currency": "BRL"
       },
       {
         "type": "Transporte Privado",
-        "value": 10.0,
         "person": "",
         "name": "Uber DarkCoffee → Consulado",
-        "price": 0,
+        "price": 10.0,
         "currency": "BRL"
       },
       {
         "type": "Transporte Privado",
-        "value": 10.0,
         "person": "",
         "name": "Uber Consulado → Low Fire",
-        "price": 0,
+        "price": 10.0,
         "currency": "BRL"
       },
       {
-        "type": "Alimentação",
-        "value": 100.0,
+        "type": "trip.expenses.daily",
         "person": "",
         "name": "Low Fire - Almoço (Bibs)",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL"
       },
       {
         "type": "Transporte Privado",
-        "value": 10.0,
         "person": "",
         "name": "Uber Low Fire → Bandolim",
-        "price": 0,
+        "price": 10.0,
         "currency": "BRL"
       },
       {
         "type": "Transporte Privado",
-        "value": 10.0,
         "person": "",
         "name": "Uber Bandolim → Real Gabinete Português",
-        "price": 0,
+        "price": 10.0,
         "currency": "BRL"
       },
       {
         "type": "Transporte Privado",
-        "value": 10.0,
         "person": "",
         "name": "Uber Real Gabinete → Escadaria Selarón",
-        "price": 0,
+        "price": 10.0,
         "currency": "BRL"
       },
       {
-        "type": "Saídas",
-        "value": 100.0,
+        "type": "trip.expenses.daily",
         "person": "",
         "name": "The Rooftop at Selina Lapa - Drinks",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL"
       },
       {
         "type": "Transporte Privado",
-        "value": 10.0,
         "person": "",
         "name": "Uber Selina Lapa → Aeroporto SDU",
-        "price": 0,
+        "price": 10.0,
         "currency": "BRL"
       },
       {
         "type": "Transporte Privado",
-        "value": 50.0,
         "person": "",
         "name": "Uber Aeroporto CNF → Casa",
-        "price": 0,
+        "price": 50.0,
         "currency": "BRL"
       }
     ],
     "preTrip": [
       {
         "type": "Ida/Volta",
-        "value": 313.86,
         "person": "",
         "name": "Voo Azul CNF ↔ SDU - Reserva DC1YVL (AD 4908 ida + AD 4752 volta). R$313,86 + 53.900 pts TudoAzul",
-        "price": 0,
+        "price": 313.86,
         "currency": "BRL"
       }
     ],

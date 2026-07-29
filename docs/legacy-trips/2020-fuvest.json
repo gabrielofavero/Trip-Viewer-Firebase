@@ -1,6 +1,6 @@
 {
   "trip": {
-    "title": "FUVEST 2020",
+    "title": "FUVEST Fase 2 SP",
     "currency": "BRL",
     "start": {
       "day": 1,
@@ -110,7 +110,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "LATAM",
+      "company": "latam",
       "points": {
         "origin": "Belo Horizonte (CNF)",
         "destination": "São Paulo (CGH)"
@@ -133,7 +133,7 @@
           "second": 0
         }
       },
-      "duration": "1h20",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "AYNBTX",
       "link": "",
@@ -141,7 +141,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "LATAM",
+      "company": "latam",
       "points": {
         "origin": "São Paulo (CGH)",
         "destination": "Belo Horizonte (CNF)"
@@ -164,7 +164,7 @@
           "second": 0
         }
       },
-      "duration": "1h15",
+      "duration": "01:00",
       "direction": "return",
       "reservation": "AYNBTX",
       "link": "",
@@ -204,7 +204,6 @@
       "morning": [
         {
           "expenseType": "Voo",
-          "value": 124.24,
           "item": {
             "type": "",
             "id": "",
@@ -231,7 +230,6 @@
         },
         {
           "expenseType": "Alimentação",
-          "value": 60,
           "item": {
             "type": "",
             "id": "",
@@ -244,7 +242,6 @@
         },
         {
           "expenseType": "Transporte Público",
-          "value": 4.3,
           "item": {
             "type": "",
             "id": "",
@@ -269,7 +266,6 @@
         },
         {
           "expenseType": "Transporte Público",
-          "value": 4.3,
           "item": {
             "type": "",
             "id": "",
@@ -282,7 +278,6 @@
         },
         {
           "expenseType": "Compras",
-          "value": 100,
           "item": {
             "type": "",
             "id": "",
@@ -295,7 +290,6 @@
         },
         {
           "expenseType": "Alimentação",
-          "value": 25,
           "item": {
             "type": "",
             "id": "",
@@ -310,7 +304,6 @@
       "night": [
         {
           "expenseType": "Transporte Público",
-          "value": 4.3,
           "item": {
             "type": "",
             "id": "",
@@ -335,7 +328,6 @@
         },
         {
           "expenseType": "Alimentação",
-          "value": 80,
           "item": {
             "type": "",
             "id": "",
@@ -391,7 +383,6 @@
         },
         {
           "expenseType": "Alimentação",
-          "value": 30,
           "item": {
             "type": "",
             "id": "",
@@ -404,7 +395,6 @@
         },
         {
           "expenseType": "Transporte Público",
-          "value": 4.3,
           "item": {
             "type": "",
             "id": "",
@@ -433,7 +423,6 @@
       "night": [
         {
           "expenseType": "Transporte Público",
-          "value": 4.3,
           "item": {
             "type": "",
             "id": "",
@@ -458,7 +447,6 @@
         },
         {
           "expenseType": "Alimentação",
-          "value": 50,
           "item": {
             "type": "",
             "id": "",
@@ -487,85 +475,75 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "Alimentação",
-        "value": 60,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "O Burger — Almoço",
-        "price": 0,
+        "price": 60,
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 25,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Snow Bubble / Donut — Lanche",
-        "price": 0,
+        "price": 25,
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 80,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Carlos Pizza — Jantar",
-        "price": 0,
+        "price": 80,
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 30,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Taco Bell — Almoço",
-        "price": 0,
+        "price": 30,
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 50,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Bráz Elettrica — Jantar",
-        "price": 0,
+        "price": 50,
         "person": "gabriel"
       },
       {
-        "type": "Compras",
-        "value": 100,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Liberdade — Compras",
-        "price": 0,
+        "price": 100,
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 17.2,
+        "type": "trip.transportation.type.bus",
         "currency": "BRL",
         "name": "Metrô — Deslocamentos",
-        "price": 0,
+        "price": 17.2,
         "person": "gabriel"
       }
     ],
     "preTrip": [
       {
         "type": "Inscrição",
-        "value": 892,
         "currency": "BRL",
         "name": "Inscrição FUVEST",
-        "price": 0,
+        "price": 892,
         "person": "gabriel"
       },
       {
-        "type": "Voo",
-        "value": 248.47,
+        "type": "trip.transportation.type.flights",
         "currency": "BRL",
         "name": "LATAM — Passagem ida e volta (Reserva AYNBTX)",
-        "price": 0,
+        "price": 248.47,
         "person": "gabriel"
       },
       {
-        "type": "Hospedagem",
-        "value": 643.53,
+        "type": "trip.accommodation.title",
         "currency": "BRL",
         "name": "Airbnb Jardins",
-        "price": 0,
+        "price": 643.53,
         "person": "gabriel"
       }
     ],

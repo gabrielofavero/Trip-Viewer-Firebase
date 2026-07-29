@@ -1,6 +1,6 @@
 {
   "trip": {
-    "title": "São Paulo ft. Gui 2021",
+    "title": "São Paulo Bibs & Gui 2021",
     "currency": "BRL",
     "start": {
       "day": 19,
@@ -114,7 +114,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "Azul Linhas Aéreas",
+      "company": "azul",
       "points": {
         "origin": "Belo Horizonte (CNF)",
         "destination": "São Paulo (CGH)"
@@ -137,7 +137,7 @@
           "second": 0
         }
       },
-      "duration": "1h15m",
+      "duration": "01:15",
       "direction": "departure",
       "reservation": "AKLNSK",
       "link": "",
@@ -145,7 +145,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "Gol Transportes Aéreos",
+      "company": "gol",
       "points": {
         "origin": "São Paulo (CGH)",
         "destination": "Belo Horizonte (CNF)"
@@ -168,7 +168,7 @@
           "second": 0
         }
       },
-      "duration": "1h15m",
+      "duration": "01:15",
       "direction": "return",
       "reservation": "VSULJH",
       "link": "",
@@ -193,7 +193,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -205,7 +204,6 @@
           "end": ""
         },
         {
-          "type": "flight",
           "item": {
             "type": "",
             "id": "",
@@ -219,7 +217,6 @@
       ],
       "morning": [
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -231,7 +228,6 @@
           "end": ""
         },
         {
-          "type": "accommodation",
           "item": {
             "type": "",
             "id": "",
@@ -243,7 +239,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "item": {
             "type": "",
             "id": "",
@@ -255,7 +250,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -267,7 +261,6 @@
           "end": ""
         },
         {
-          "type": "shopping",
           "item": {
             "type": "",
             "id": "",
@@ -281,7 +274,6 @@
       ],
       "afternoon": [
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -293,7 +285,6 @@
           "end": ""
         },
         {
-          "type": "accommodation",
           "item": {
             "type": "",
             "id": "",
@@ -305,7 +296,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -317,7 +307,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "item": {
             "type": "",
             "id": "",
@@ -329,7 +318,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -341,7 +329,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "item": {
             "type": "",
             "id": "",
@@ -353,7 +340,6 @@
           "end": ""
         },
         {
-          "type": "leisure",
           "item": {
             "type": "",
             "id": "",
@@ -365,7 +351,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "item": {
             "type": "",
             "id": "",
@@ -377,7 +362,6 @@
           "end": ""
         },
         {
-          "type": "shopping",
           "item": {
             "type": "",
             "id": "",
@@ -389,7 +373,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "item": {
             "type": "",
             "id": "",
@@ -401,7 +384,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "item": {
             "type": "",
             "id": "",
@@ -413,7 +395,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -425,7 +406,6 @@
           "end": ""
         },
         {
-          "type": "accommodation",
           "item": {
             "type": "",
             "id": "",
@@ -439,7 +419,6 @@
       ],
       "night": [
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -451,7 +430,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "item": {
             "type": "",
             "id": "",
@@ -463,7 +441,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -494,7 +471,6 @@
       "earlyMorning": [],
       "morning": [
         {
-          "type": "accommodation",
           "item": {
             "type": "",
             "id": "",
@@ -506,7 +482,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -518,7 +493,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "item": {
             "type": "",
             "id": "",
@@ -530,7 +504,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "item": {
             "type": "",
             "id": "",
@@ -542,7 +515,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -554,7 +526,6 @@
           "end": ""
         },
         {
-          "type": "leisure",
           "item": {
             "type": "",
             "id": "",
@@ -568,7 +539,6 @@
       ],
       "afternoon": [
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -580,7 +550,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "item": {
             "type": "",
             "id": "",
@@ -592,7 +561,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -604,7 +572,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "item": {
             "type": "",
             "id": "",
@@ -616,7 +583,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "item": {
             "type": "",
             "id": "",
@@ -630,7 +596,6 @@
       ],
       "night": [
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -642,7 +607,6 @@
           "end": ""
         },
         {
-          "type": "accommodation",
           "item": {
             "type": "",
             "id": "",
@@ -654,7 +618,6 @@
           "end": ""
         },
         {
-          "type": "nightlife",
           "item": {
             "type": "",
             "id": "",
@@ -685,7 +648,6 @@
       "earlyMorning": [],
       "morning": [
         {
-          "type": "accommodation",
           "item": {
             "type": "",
             "id": "",
@@ -697,7 +659,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "item": {
             "type": "",
             "id": "",
@@ -709,7 +670,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -721,7 +681,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "item": {
             "type": "",
             "id": "",
@@ -733,7 +692,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -745,7 +703,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "item": {
             "type": "",
             "id": "",
@@ -757,7 +714,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "item": {
             "type": "",
             "id": "",
@@ -771,7 +727,6 @@
       ],
       "afternoon": [
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -783,7 +738,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "item": {
             "type": "",
             "id": "",
@@ -795,7 +749,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -807,7 +760,6 @@
           "end": ""
         },
         {
-          "type": "leisure",
           "item": {
             "type": "",
             "id": "",
@@ -819,7 +771,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -831,7 +782,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "item": {
             "type": "",
             "id": "",
@@ -843,7 +793,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -855,7 +804,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "item": {
             "type": "",
             "id": "",
@@ -869,7 +817,6 @@
       ],
       "night": [
         {
-          "type": "accommodation",
           "item": {
             "type": "",
             "id": "",
@@ -881,7 +828,6 @@
           "end": ""
         },
         {
-          "type": "nightlife",
           "item": {
             "type": "",
             "id": "",
@@ -912,7 +858,6 @@
       "earlyMorning": [],
       "morning": [
         {
-          "type": "accommodation",
           "item": {
             "type": "",
             "id": "",
@@ -924,7 +869,6 @@
           "end": ""
         },
         {
-          "type": "accommodation",
           "item": {
             "type": "",
             "id": "",
@@ -936,7 +880,6 @@
           "end": ""
         },
         {
-          "type": "leisure",
           "item": {
             "type": "",
             "id": "",
@@ -948,7 +891,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -960,7 +902,6 @@
           "end": ""
         },
         {
-          "type": "leisure",
           "item": {
             "type": "",
             "id": "",
@@ -972,7 +913,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -984,7 +924,6 @@
           "end": ""
         },
         {
-          "type": "leisure",
           "item": {
             "type": "",
             "id": "",
@@ -998,7 +937,6 @@
       ],
       "afternoon": [
         {
-          "type": "food",
           "item": {
             "type": "",
             "id": "",
@@ -1010,7 +948,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "item": {
             "type": "",
             "id": "",
@@ -1022,7 +959,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -1034,7 +970,6 @@
           "end": ""
         },
         {
-          "type": "accommodation",
           "item": {
             "type": "",
             "id": "",
@@ -1046,7 +981,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "item": {
             "type": "",
             "id": "",
@@ -1058,7 +992,6 @@
           "end": ""
         },
         {
-          "type": "flight",
           "item": {
             "type": "",
             "id": "",
@@ -1076,77 +1009,68 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "Alimentação",
-        "value": 530,
+        "type": "trip.expenses.daily",
         "person": "",
         "name": "Refeições durante a viagem",
-        "price": 0,
+        "price": 530,
         "currency": "BRL"
       },
       {
         "type": "Atrações/Eventos",
-        "value": 64.5,
         "person": "",
         "name": "MASP, Farol Santander, Sampa Sky, IMS",
-        "price": 0,
+        "price": 64.5,
         "currency": "BRL"
       },
       {
         "type": "Compras/Extras",
-        "value": 50,
         "person": "",
         "name": "Compras e extras",
-        "price": 0,
+        "price": 50,
         "currency": "BRL"
       },
       {
         "type": "Saída Noturna",
-        "value": 350,
         "person": "",
         "name": "Olivo, Bar do Cofre, Augusta, Omalleys",
-        "price": 0,
+        "price": 350,
         "currency": "BRL"
       },
       {
-        "type": "Transporte Público",
-        "value": 13.2,
+        "type": "trip.transportation.type.bus",
         "person": "",
         "name": "Metrô",
-        "price": 0,
+        "price": 13.2,
         "currency": "BRL"
       },
       {
         "type": "Transporte Privado",
-        "value": 182.5,
         "person": "",
         "name": "Uber durante a viagem",
-        "price": 0,
+        "price": 182.5,
         "currency": "BRL"
       }
     ],
     "preTrip": [
       {
-        "type": "Voo",
-        "value": 116.5,
+        "type": "trip.transportation.type.flights",
         "person": "",
         "name": "Passagem CNF→CGH (Azul, AKLNSK) + CGH→CNF (Gol, VSULJH)",
-        "price": 0,
+        "price": 116.5,
         "currency": "BRL"
       },
       {
-        "type": "Voo",
-        "value": 116.5,
+        "type": "trip.transportation.type.flights",
         "person": "",
         "name": "Passagem CNF→CGH (Azul, AKLNSK) + CGH→CNF (Gol, VSULJH)",
-        "price": 0,
+        "price": 116.5,
         "currency": "BRL"
       },
       {
-        "type": "Hospedagem",
-        "value": 276,
+        "type": "trip.accommodation.title",
         "person": "",
         "name": "La Residence Paulista — 3 noites (total R$485, R$242,50/pessoa)",
-        "price": 0,
+        "price": 276,
         "currency": "BRL"
       }
     ],

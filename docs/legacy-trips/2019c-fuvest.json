@@ -1,6 +1,6 @@
 {
   "trip": {
-    "title": "FUVEST 2019",
+    "title": "FUVEST Fase 1 SP",
     "currency": "BRL",
     "start": {
       "day": 24,
@@ -48,13 +48,11 @@
     "travelers": [
       {
         "id": "gabriel",
-        "name": "Gabriel",
-        "color": ""
+        "name": "Gabriel"
       },
       {
         "id": "milton",
-        "name": "Milton",
-        "color": ""
+        "name": "Milton"
       }
     ],
     "links": {
@@ -116,7 +114,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "GOL",
+      "company": "gol",
       "points": {
         "origin": "CNF (Belo Horizonte)",
         "destination": "CGH (São Paulo)"
@@ -139,7 +137,7 @@
           "second": 0
         }
       },
-      "duration": "1h20",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "HMH8SG",
       "link": "",
@@ -147,7 +145,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "GOL",
+      "company": "gol",
       "points": {
         "origin": "CGH (São Paulo)",
         "destination": "CNF (Belo Horizonte)"
@@ -195,8 +193,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Ir ao Aeroporto",
-          "description": "Pai",
           "category": "transport",
           "item": {
             "type": "",
@@ -204,13 +200,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ir ao Aeroporto: Pai",
           "start": "",
           "end": ""
         },
         {
-          "title": "Voo CNF → CGH",
-          "description": "Gol HMH8SG. Reserva Trip 10770551517",
           "category": "transport",
           "item": {
             "type": "",
@@ -218,15 +212,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voo CNF → CGH: Gol HMH8SG. Reserva Trip 10770551517",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Ônibus + Metrô até a Paulista",
-          "description": "",
           "category": "transport",
           "item": {
             "type": "",
@@ -234,13 +226,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ônibus + Metrô até a Paulista",
           "start": "",
           "end": ""
         },
         {
-          "title": "Paulista",
-          "description": "Café da manhã",
           "category": "food",
           "item": {
             "type": "",
@@ -248,13 +238,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Paulista: Café da manhã",
           "start": "",
           "end": ""
         },
         {
-          "title": "Japan House",
-          "description": "",
           "category": "attraction",
           "item": {
             "type": "",
@@ -262,13 +250,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Japan House",
           "start": "",
           "end": ""
         },
         {
-          "title": "Casa das Rosas",
-          "description": "",
           "category": "attraction",
           "item": {
             "type": "",
@@ -276,15 +262,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa das Rosas",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Metrô + Ônibus",
-          "description": "Deslocamento",
           "category": "transport",
           "item": {
             "type": "",
@@ -292,13 +276,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Metrô + Ônibus: Deslocamento",
           "start": "",
           "end": ""
         },
         {
-          "title": "The Burger Map",
-          "description": "Almoço",
           "category": "food",
           "item": {
             "type": "",
@@ -306,13 +288,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "The Burger Map: Almoço",
           "start": "",
           "end": ""
         },
         {
-          "title": "Airbnb",
-          "description": "Check-in",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -320,13 +300,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Check-in",
           "start": "",
           "end": ""
         },
         {
-          "title": "Liberdade",
-          "description": "Suprimentos",
           "category": "shopping",
           "item": {
             "type": "",
@@ -334,13 +312,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Liberdade: Suprimentos",
           "start": "",
           "end": ""
         },
         {
-          "title": "Bubble Kill",
-          "description": "Lanche",
           "category": "food",
           "item": {
             "type": "",
@@ -348,15 +324,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Bubble Kill: Lanche",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Mirante 9 de Julho",
-          "description": "",
           "category": "attraction",
           "item": {
             "type": "",
@@ -364,7 +338,7 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Mirante 9 de Julho",
           "start": "",
           "end": ""
         }
@@ -387,8 +361,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Airbnb",
-          "description": "Preparação para a prova",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -396,15 +368,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Preparação para a prova",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Prova FUVEST",
-          "description": "1ª Fase",
           "category": "event",
           "item": {
             "type": "",
@@ -412,15 +382,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Prova FUVEST: 1ª Fase",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Prova FUVEST",
-          "description": "Continuação",
           "category": "event",
           "item": {
             "type": "",
@@ -428,13 +396,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Prova FUVEST: Continuação",
           "start": "",
           "end": ""
         },
         {
-          "title": "Livre",
-          "description": "Descanso ou passeio leve",
           "category": "free",
           "item": {
             "type": "",
@@ -442,15 +408,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre: Descanso ou passeio leve",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Jantar",
-          "description": "Comemoração ou descanso",
           "category": "food",
           "item": {
             "type": "",
@@ -458,7 +422,7 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Jantar: Comemoração ou descanso",
           "start": "",
           "end": ""
         }
@@ -482,8 +446,6 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Mirante Sesc Paulista",
-          "description": "Vista aérea da cidade",
           "category": "attraction",
           "item": {
             "type": "",
@@ -491,13 +453,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Mirante Sesc Paulista: Vista aérea da cidade",
           "start": "",
           "end": ""
         },
         {
-          "title": "Passeio pela Paulista",
-          "description": "",
           "category": "attraction",
           "item": {
             "type": "",
@@ -505,15 +465,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Passeio pela Paulista",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Modern Mamma Osteria",
-          "description": "Almoço",
           "category": "food",
           "item": {
             "type": "",
@@ -521,13 +479,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Modern Mamma Osteria: Almoço",
           "start": "",
           "end": ""
         },
         {
-          "title": "Compras",
-          "description": "",
           "category": "shopping",
           "item": {
             "type": "",
@@ -535,15 +491,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Compras",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Saída Noturna",
-          "description": "",
           "category": "entertainment",
           "item": {
             "type": "",
@@ -551,7 +505,7 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Saída Noturna",
           "start": "",
           "end": ""
         }
@@ -574,8 +528,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Airbnb",
-          "description": "Check-out",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -583,15 +535,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Check-out",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Livre",
-          "description": "Último passeio ou compras",
           "category": "free",
           "item": {
             "type": "",
@@ -599,15 +549,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre: Último passeio ou compras",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Voo CGH → CNF",
-          "description": "Gol HMH8SG",
           "category": "transport",
           "item": {
             "type": "",
@@ -615,7 +563,7 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voo CGH → CNF: Gol HMH8SG",
           "start": "",
           "end": ""
         }
@@ -626,30 +574,30 @@
   "expenses": {
     "duringTrip": [
       {
-        "title": "Gastos durante a viagem (Gabriel)",
         "currency": "BRL",
         "notes": "Alimentação, transporte público, compras",
-        "name": "",
+        "name": "Gastos durante a viagem (Gabriel)",
         "price": 241,
-        "person": "gabriel"
+        "person": "gabriel",
+        "type": "trip.expenses.daily"
       },
       {
-        "title": "Gastos durante a viagem (Milton)",
         "currency": "BRL",
         "notes": "Alimentação, transporte, compras",
-        "name": "",
+        "name": "Gastos durante a viagem (Milton)",
         "price": 1156.44,
-        "person": "milton"
+        "person": "milton",
+        "type": "trip.expenses.daily"
       }
     ],
     "preTrip": [
       {
-        "title": "Gastos antecipados (Milton)",
         "currency": "BRL",
         "notes": "Passagem aérea + Airbnb + taxas",
-        "name": "",
+        "name": "Gastos antecipados (Milton)",
         "price": 1469.09,
-        "person": "milton"
+        "person": "milton",
+        "type": "trip.expenses.daily"
       }
     ],
     "currency": "BRL",

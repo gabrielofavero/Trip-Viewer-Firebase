@@ -183,13 +183,11 @@ def calculate_version(tasks):
 
     backlog_epic_numbers = {t['number'] for t in tasks['backlog'] if t['type'] == 'E'}
 
-    done_tasks_reversed = list(reversed(done_tasks))
-    
     major = 2
     minor = 0
     patch = 0
     
-    for task in done_tasks_reversed:
+    for task in done_tasks:
         # Skip Epics that also exist in backlog (they weren't truly completed)
         if task['type'] == 'E' and task['number'] in backlog_epic_numbers:
             continue

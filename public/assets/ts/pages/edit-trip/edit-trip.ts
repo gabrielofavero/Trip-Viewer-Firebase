@@ -44,6 +44,7 @@ import {
 } from '../../data/firebase/storage.js';
 import { snapshotFormState } from '../../ui/fields.js';
 import { loadEditModule } from '../../theme/visibility.js';
+import { buildColorPresets } from './categories/customization.js';
 import { translate } from '../../i18n/translation.js';
 import { displayFullMessage, MESSAGE_PROPERTIES } from '../../utils/messages.js';
 import { loadPinData, PIN } from './categories/basic-data/protected-data.js';
@@ -113,6 +114,7 @@ export async function loadEditTripPage() {
 	loadLogoSelector();
 
 	loadEventListeners();
+	buildColorPresets();
 	stopLoadingScreen();
 	snapshotFormState();
 
@@ -127,7 +129,8 @@ export async function loadEditTripPage() {
 
 function loadEnabled() {
 	loadEditModule('images');
-	loadEditModule('colors');
+	loadEditModule('theme');
+	loadEditModule('colors', () => {});
 	loadEditModule('links');
 	loadEditModule('expenses');
 	loadEditModule('transportation', addTransportation);

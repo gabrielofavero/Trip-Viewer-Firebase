@@ -1,6 +1,6 @@
 {
   "trip": {
-    "title": "Brasil Game Show 2018",
+    "title": "Brasil Game Show ft. Afonso",
     "currency": "BRL",
     "start": {
       "day": 12,
@@ -48,18 +48,15 @@
     "travelers": [
       {
         "id": "gabriel",
-        "name": "Gabriel",
-        "photo": ""
+        "name": "Gabriel"
       },
       {
         "id": "afonso",
-        "name": "Afonso",
-        "photo": ""
+        "name": "Afonso"
       },
       {
         "id": "bibs",
-        "name": "Bibs",
-        "photo": ""
+        "name": "Bibs"
       }
     ],
     "links": {
@@ -121,7 +118,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "Azul Linhas Aéreas",
+      "company": "azul",
       "points": {
         "origin": "Belo Horizonte (CNF)",
         "destination": "São Paulo (CGH)"
@@ -144,7 +141,7 @@
           "second": 0
         }
       },
-      "duration": "1h20",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "LEPJWG",
       "link": "",
@@ -152,7 +149,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "Azul Linhas Aéreas",
+      "company": "azul",
       "points": {
         "origin": "São Paulo (CGH)",
         "destination": "Belo Horizonte (CNF)"
@@ -175,7 +172,7 @@
           "second": 0
         }
       },
-      "duration": "1h15",
+      "duration": "01:00",
       "direction": "return",
       "reservation": "ODM8FJ",
       "link": "",
@@ -200,7 +197,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -213,7 +209,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -226,7 +221,6 @@
           "end": ""
         },
         {
-          "type": "flight",
           "cost": 0,
           "item": {
             "type": "",
@@ -241,7 +235,6 @@
       ],
       "morning": [
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -254,7 +247,6 @@
           "end": ""
         },
         {
-          "type": "shopping",
           "cost": 12,
           "item": {
             "type": "",
@@ -267,7 +259,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 0,
           "item": {
             "type": "",
@@ -280,7 +271,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "cost": 0,
           "item": {
             "type": "",
@@ -293,7 +283,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -306,7 +295,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 43,
           "item": {
             "type": "",
@@ -321,7 +309,6 @@
       ],
       "afternoon": [
         {
-          "type": "transport",
           "cost": 8,
           "item": {
             "type": "",
@@ -334,7 +321,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -347,7 +333,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -360,7 +345,6 @@
           "end": ""
         },
         {
-          "type": "entertainment",
           "cost": 0,
           "item": {
             "type": "",
@@ -375,7 +359,6 @@
       ],
       "night": [
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -388,7 +371,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 16.75,
           "item": {
             "type": "",
@@ -401,7 +383,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 121.76,
           "item": {
             "type": "",
@@ -414,7 +395,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 20.39,
           "item": {
             "type": "",
@@ -427,7 +407,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -459,7 +438,6 @@
       "earlyMorning": [],
       "morning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -472,7 +450,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 0,
           "item": {
             "type": "",
@@ -485,7 +462,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 15.9,
           "item": {
             "type": "",
@@ -498,7 +474,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -511,7 +486,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "cost": 5,
           "item": {
             "type": "",
@@ -524,7 +498,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 8.72,
           "item": {
             "type": "",
@@ -539,7 +512,6 @@
       ],
       "afternoon": [
         {
-          "type": "food",
           "cost": 46.3,
           "item": {
             "type": "",
@@ -552,7 +524,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -565,7 +536,6 @@
           "end": ""
         },
         {
-          "type": "entertainment",
           "cost": 0,
           "item": {
             "type": "",
@@ -580,7 +550,6 @@
       ],
       "night": [
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -593,7 +562,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -606,7 +574,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 14.6,
           "item": {
             "type": "",
@@ -619,7 +586,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 155.5,
           "item": {
             "type": "",
@@ -632,7 +598,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 15.0,
           "item": {
             "type": "",
@@ -645,7 +610,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -677,7 +641,6 @@
       "earlyMorning": [],
       "morning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -690,7 +653,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -703,7 +665,6 @@
           "end": ""
         },
         {
-          "type": "shopping",
           "cost": 319.37,
           "item": {
             "type": "",
@@ -716,7 +677,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 12.75,
           "item": {
             "type": "",
@@ -729,7 +689,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "cost": 0,
           "item": {
             "type": "",
@@ -742,7 +701,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -757,7 +715,6 @@
       ],
       "afternoon": [
         {
-          "type": "food",
           "cost": 74.45,
           "item": {
             "type": "",
@@ -770,7 +727,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 23.73,
           "item": {
             "type": "",
@@ -783,7 +739,6 @@
           "end": ""
         },
         {
-          "type": "entertainment",
           "cost": 0,
           "item": {
             "type": "",
@@ -798,7 +753,6 @@
       ],
       "night": [
         {
-          "type": "transport",
           "cost": 17.6,
           "item": {
             "type": "",
@@ -811,7 +765,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -824,7 +777,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 7.36,
           "item": {
             "type": "",
@@ -837,7 +789,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 130.0,
           "item": {
             "type": "",
@@ -850,7 +801,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 10.0,
           "item": {
             "type": "",
@@ -863,7 +813,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -895,7 +844,6 @@
       "earlyMorning": [],
       "morning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -908,7 +856,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 7.01,
           "item": {
             "type": "",
@@ -923,7 +870,6 @@
       ],
       "afternoon": [
         {
-          "type": "food",
           "cost": 108.49,
           "item": {
             "type": "",
@@ -936,7 +882,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 8.13,
           "item": {
             "type": "",
@@ -949,7 +894,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 59.8,
           "item": {
             "type": "",
@@ -962,7 +906,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 19.3,
           "item": {
             "type": "",
@@ -977,7 +920,6 @@
       ],
       "night": [
         {
-          "type": "flight",
           "cost": 0,
           "item": {
             "type": "",
@@ -990,7 +932,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 0,
           "item": {
             "type": "",
@@ -1008,14 +949,14 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "name": "Alimentação durante a viagem (todos)",
         "price": 755.2,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Compras",
+        "type": "trip.expenses.daily",
         "name": "Compras na feira e pessoais",
         "price": 422.37,
         "currency": "BRL",
@@ -1029,7 +970,7 @@
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
+        "type": "trip.transportation.type.bus",
         "name": "Ônibus e metrô em SP",
         "price": 80.0,
         "currency": "BRL",
@@ -1045,28 +986,28 @@
     ],
     "preTrip": [
       {
-        "type": "Voo",
+        "type": "trip.transportation.type.flights",
         "name": "Azul - BH → SP (ida com pontos TudoAzul, R$55,15)",
         "price": 55.15,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Voo",
+        "type": "trip.transportation.type.flights",
         "name": "Azul - SP → BH (volta com pontos TudoAzul, R$31,27)",
         "price": 31.27,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Ingresso",
+        "type": "trip.expenses.entertainment",
         "name": "Brasil Game Show 2018",
         "price": 280.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Hospedagem",
+        "type": "trip.accommodation.title",
         "name": "Airbnb - Jardim Paulista (3 noites, valor dividido)",
         "price": 304.88,
         "currency": "BRL",

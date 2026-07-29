@@ -45,7 +45,7 @@ import {
 
 import { loadUploadSelector } from '../../data/firebase/storage.js';
 import { loadListData } from './existing-listing.js';
-import { autoFillDarkColor } from '../edit-trip/categories/customization.js';
+import { autoFillDarkColor, buildColorPresets } from '../edit-trip/categories/customization.js';
 import { loadDestinations } from '../edit-trip/new-trip.js';
 import { setDocument } from '../../utils/set.js';
 import { initEditTabs } from '../../ui/edit-tabs.js';
@@ -80,6 +80,7 @@ export async function loadEditListingPage() {
 	loadLogoSelector();
 
 	loadEventListeners();
+	buildColorPresets();
 	stopLoadingScreen();
 	snapshotFormState();
 
@@ -92,7 +93,7 @@ export async function loadEditListingPage() {
 
 function loadHabilitados() {
 	loadEditModule('images');
-	loadEditModule('colors');
+	loadEditModule('colors', () => {});
 	loadEditModule('links');
 }
 

@@ -99,7 +99,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "Gol",
+      "company": "gol",
       "points": {
         "origin": "Confins (BH)",
         "destination": "Congonhas (SP)"
@@ -122,7 +122,7 @@
           "second": 0
         }
       },
-      "duration": "1h20m",
+      "duration": "01:20",
       "direction": "departure",
       "reservation": "G3-1301",
       "link": "",
@@ -147,203 +147,173 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Casa BH → Confins",
-          "description": "Translado para o aeroporto",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa BH → Confins: Translado para o aeroporto",
           "start": "",
           "end": ""
         },
         {
-          "title": "Confins → Congonhas",
-          "description": "Voo G3-1301 (Gol)",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Confins → Congonhas: Voo G3-1301 (Gol)",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Congonhas → Liberdade",
-          "description": "Ônibus 5630-10",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Congonhas → Liberdade: Ônibus 5630-10",
           "start": "",
           "end": ""
         },
         {
-          "title": "Liberdade",
-          "description": "Compras no bairro da Liberdade",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Liberdade: Compras no bairro da Liberdade",
           "start": "",
           "end": ""
         },
         {
-          "title": "Liberdade → TGI Fridays",
-          "description": "Metrô: L1 + L4 + CPTM09",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Liberdade → TGI Fridays: Metrô: L1 + L4 + CPTM09",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "TGI Fridays",
-          "description": "Almoço",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "TGI Fridays: Almoço",
           "start": "",
           "end": ""
         },
         {
-          "title": "Fridays → Casa",
-          "description": "Uber",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Fridays → Casa: Uber",
           "start": "",
           "end": ""
         },
         {
-          "title": "Casa / Livre",
-          "description": "Curtir meus amigos",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa / Livre: Curtir meus amigos",
           "start": "",
           "end": ""
         },
         {
-          "title": "Casa → Frutaria SP (Açaí)",
-          "description": "Ônibus 516N-10",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa → Frutaria SP (Açaí): Ônibus 516N-10",
           "start": "",
           "end": ""
         },
         {
-          "title": "Frutaria SP (Açaí)",
-          "description": "Açaí na Frutaria SP",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Frutaria SP (Açaí): Açaí na Frutaria SP",
           "start": "",
           "end": ""
         },
         {
-          "title": "Açaí → Casa",
-          "description": "Ônibus 516N-10",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Açaí → Casa: Ônibus 516N-10",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Casa",
-          "description": "Tempo livre",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa: Tempo livre",
           "start": "",
           "end": ""
         },
         {
-          "title": "Casa → O'Malley's",
-          "description": "Uber",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa → O'Malley's: Uber",
           "start": "",
           "end": ""
         },
         {
-          "title": "O'Malley's",
-          "description": "Bar e alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "O'Malley's: Bar e alimentação",
           "start": "",
           "end": ""
         },
         {
-          "title": "O'Malley's → Casa",
-          "description": "Uber",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "O'Malley's → Casa: Uber",
           "start": "",
           "end": ""
         }
@@ -367,123 +337,105 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Casa → Starbucks",
-          "description": "A pé",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa → Starbucks: A pé",
           "start": "",
           "end": ""
         },
         {
-          "title": "Starbucks",
-          "description": "Donuts e café",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Starbucks: Donuts e café",
           "start": "",
           "end": ""
         },
         {
-          "title": "Starbucks → Casa",
-          "description": "A pé",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Starbucks → Casa: A pé",
           "start": "",
           "end": ""
         },
         {
-          "title": "Casa",
-          "description": "Preparação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa: Preparação",
           "start": "",
           "end": ""
         },
         {
-          "title": "Casa → Lollapalooza",
-          "description": "CPTM09 + L4 até Autódromo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa → Lollapalooza: CPTM09 + L4 até Autódromo",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Lollapalooza",
-          "description": "Suricato (14:15) → Glass Animals (15:20) → Cage the Elephant (16:25) → The 1975 (17:30) → Rancid (18:30) → The xx (19:40)",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Lollapalooza: Suricato (14:15) → Glass Animals (15:20) → Cage the Elephant (16:25) → The 1975 (17:30) → Rancid (18:30) → The xx (19:40)",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Lollapalooza → Hooters",
-          "description": "CPTM09 + L4 + L2",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Lollapalooza → Hooters: CPTM09 + L4 + L2",
           "start": "",
           "end": ""
         },
         {
-          "title": "Hooters",
-          "description": "Jantar",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hooters: Jantar",
           "start": "",
           "end": ""
         },
         {
-          "title": "Hooters → Casa",
-          "description": "Uber",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hooters → Casa: Uber",
           "start": "",
           "end": ""
         }
@@ -507,136 +459,116 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Casa → Starbucks",
-          "description": "A pé",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa → Starbucks: A pé",
           "start": "",
           "end": ""
         },
         {
-          "title": "Starbucks",
-          "description": "Donuts e café",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Starbucks: Donuts e café",
           "start": "",
           "end": ""
         },
         {
-          "title": "Starbucks → Casa",
-          "description": "A pé",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Starbucks → Casa: A pé",
           "start": "",
           "end": ""
         },
         {
-          "title": "Casa",
-          "description": "Preparação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa: Preparação",
           "start": "",
           "end": ""
         },
         {
-          "title": "Casa → Jetis",
-          "description": "A pé (Berrini) + CPTM09",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa → Jetis: A pé (Berrini) + CPTM09",
           "start": "",
           "end": ""
         },
         {
-          "title": "Jetis",
-          "description": "Almoço",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Jetis: Almoço",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Jetis → Lollapalooza",
-          "description": "CPTM09 até Autódromo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Jetis → Lollapalooza: CPTM09 até Autódromo",
           "start": "",
           "end": ""
         },
         {
-          "title": "Lollapalooza",
-          "description": "Catfish and the Bottlemen (14:20) → Jimmy Eat World (15:25) → Two Door Cinema Club (17:35) → The Weeknd (18:55) → The Strokes (20:30)",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Lollapalooza: Catfish and the Bottlemen (14:20) → Jimmy Eat World (15:25) → Two Door Cinema Club (17:35) → The Weeknd (18:55) → The Strokes (20:30)",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Lollapalooza → Estação Berrini",
-          "description": "CPTM09",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Lollapalooza → Estação Berrini: CPTM09",
           "start": "",
           "end": ""
         },
         {
-          "title": "Estação Berrini → Casa",
-          "description": "Uber",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Estação Berrini → Casa: Uber",
           "start": "",
           "end": ""
         }
@@ -660,56 +592,48 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Casa → Ibirapuera",
-          "description": "Ônibus 5318-10",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa → Ibirapuera: Ônibus 5318-10",
           "start": "",
           "end": ""
         },
         {
-          "title": "Parque Ibirapuera",
-          "description": "Passeio no parque",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Parque Ibirapuera: Passeio no parque",
           "start": "",
           "end": ""
         },
         {
-          "title": "Ibirapuera → Paulista",
-          "description": "Ônibus 669A-10",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ibirapuera → Paulista: Ônibus 669A-10",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Avenida Paulista",
-          "description": "Almoço e passeio na Paulista",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Avenida Paulista: Almoço e passeio na Paulista",
           "start": "",
           "end": ""
         }
@@ -720,244 +644,214 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "Transporte Público",
-        "value": 7.6,
+        "type": "trip.transportation.type.bus",
         "name": "Ônibus Congonhas → Liberdade (5630-10)",
-        "price": 0,
+        "price": 7.6,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Compras",
-        "value": 100.0,
+        "type": "trip.expenses.daily",
         "name": "Compras na Liberdade",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 3.8,
+        "type": "trip.transportation.type.bus",
         "name": "Metrô Liberdade → Fridays (L1 + L4 + CPTM09)",
-        "price": 0,
+        "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 40.0,
+        "type": "trip.expenses.daily",
         "name": "Almoço TGI Fridays",
-        "price": 0,
+        "price": 40.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Uber",
-        "value": 15.0,
+        "type": "trip.transportation.type.taxi",
         "name": "Uber Fridays → Casa",
-        "price": 0,
+        "price": 15.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 3.8,
+        "type": "trip.transportation.type.bus",
         "name": "Ônibus Casa → Açaí (516N-10)",
-        "price": 0,
+        "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 20.0,
+        "type": "trip.expenses.daily",
         "name": "Açaí Frutaria SP",
-        "price": 0,
+        "price": 20.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 3.8,
+        "type": "trip.transportation.type.bus",
         "name": "Ônibus Açaí → Casa (516N-10)",
-        "price": 0,
+        "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Uber",
-        "value": 20.0,
+        "type": "trip.transportation.type.taxi",
         "name": "Uber Casa → O'Malley's",
-        "price": 0,
+        "price": 20.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 150.0,
+        "type": "trip.expenses.daily",
         "name": "Jantar O'Malley's",
-        "price": 0,
+        "price": 150.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Uber",
-        "value": 20.0,
+        "type": "trip.transportation.type.taxi",
         "name": "Uber O'Malley's → Casa",
-        "price": 0,
+        "price": 20.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 20.0,
+        "type": "trip.expenses.daily",
         "name": "Starbucks (donuts e café)",
-        "price": 0,
+        "price": 20.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 3.8,
+        "type": "trip.transportation.type.bus",
         "name": "CPTM Casa → Lollapalooza",
-        "price": 0,
+        "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 100.0,
+        "type": "trip.expenses.daily",
         "name": "Alimentação no Lollapalooza",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 3.8,
+        "type": "trip.transportation.type.bus",
         "name": "CPTM Lollapalooza → Hooters",
-        "price": 0,
+        "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 100.0,
+        "type": "trip.expenses.daily",
         "name": "Jantar Hooters",
-        "price": 0,
+        "price": 100.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Uber",
-        "value": 20.0,
+        "type": "trip.transportation.type.taxi",
         "name": "Uber Hooters → Casa",
-        "price": 0,
+        "price": 20.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 20.0,
+        "type": "trip.expenses.daily",
         "name": "Starbucks (donuts e café)",
-        "price": 0,
+        "price": 20.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 3.8,
+        "type": "trip.transportation.type.bus",
         "name": "CPTM Casa → Jetis",
-        "price": 0,
+        "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 50.0,
+        "type": "trip.expenses.daily",
         "name": "Almoço Jetis",
-        "price": 0,
+        "price": 50.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 3.8,
+        "type": "trip.transportation.type.bus",
         "name": "CPTM Jetis → Lollapalooza",
-        "price": 0,
+        "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 50.0,
+        "type": "trip.expenses.daily",
         "name": "Alimentação no Lollapalooza",
-        "price": 0,
+        "price": 50.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 3.8,
+        "type": "trip.transportation.type.bus",
         "name": "CPTM Lollapalooza → Berrini",
-        "price": 0,
+        "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Uber",
-        "value": 10.0,
+        "type": "trip.transportation.type.taxi",
         "name": "Uber Berrini → Casa",
-        "price": 0,
+        "price": 10.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 3.8,
+        "type": "trip.transportation.type.bus",
         "name": "Ônibus Casa → Ibirapuera (5318-10)",
-        "price": 0,
+        "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
-        "value": 3.8,
+        "type": "trip.transportation.type.bus",
         "name": "Ônibus Ibirapuera → Paulista (669A-10)",
-        "price": 0,
+        "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Alimentação",
-        "value": 50.0,
+        "type": "trip.expenses.daily",
         "name": "Almoço na Paulista",
-        "price": 0,
+        "price": 50.0,
         "currency": "BRL",
         "person": "gabriel"
       }
     ],
     "preTrip": [
       {
-        "type": "Ingresso",
-        "value": 400.0,
+        "type": "trip.expenses.entertainment",
         "name": "Ingresso Lollapalooza — Meia-Pacote (2 dias)",
-        "price": 0,
+        "price": 400.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
         "type": "Taxa",
-        "value": 80.0,
         "name": "Taxa de conveniência — Ingresso Lollapalooza",
-        "price": 0,
+        "price": 80.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
         "type": "Taxa",
-        "value": 24.0,
         "name": "Taxa de entrega — Ingresso Lollapalooza",
-        "price": 0,
+        "price": 24.0,
         "currency": "BRL",
         "person": "gabriel"
       }

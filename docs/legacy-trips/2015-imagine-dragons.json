@@ -17,7 +17,7 @@
     }
   },
   "trip": {
-    "title": "Imagine Dragons 2015",
+    "title": "Imagine Dragons SP",
     "currency": "BRL",
     "start": {
       "day": 17,
@@ -65,13 +65,11 @@
     "travelers": [
       {
         "id": "gabriel",
-        "name": "Gabriel",
-        "color": "#4CAF50"
+        "name": "Gabriel"
       },
       {
         "id": "lucas",
-        "name": "Lucas",
-        "color": "#2196F3"
+        "name": "Lucas"
       }
     ],
     "links": {
@@ -133,7 +131,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "TAM",
+      "company": "latam",
       "points": {
         "origin": "Belo Horizonte - Confins (CNF)",
         "destination": "São Paulo - Guarulhos (GRU)"
@@ -156,7 +154,7 @@
           "second": 0
         }
       },
-      "duration": "1h25",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "JJ3441",
       "link": "",
@@ -164,7 +162,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "TAM",
+      "company": "latam",
       "points": {
         "origin": "São Paulo - Congonhas (CGH)",
         "destination": "Belo Horizonte - Confins (CNF)"
@@ -187,7 +185,7 @@
           "second": 0
         }
       },
-      "duration": "1h20",
+      "duration": "01:00",
       "direction": "return",
       "reservation": "JJ3214",
       "link": "",
@@ -476,91 +474,91 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "alimentação",
+        "type": "trip.expenses.daily",
         "name": "Alimentação Gabriel — Shopping Center Norte",
         "price": 60.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "alimentação",
+        "type": "trip.expenses.daily",
         "name": "Alimentação Lucas — Shopping Center Norte",
         "price": 30.0,
         "currency": "BRL",
         "person": "lucas"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Táxi — Shopping Center Norte → Hotel",
         "price": 20.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "outros",
+        "type": "trip.expenses.daily",
         "name": "Compras — Suprimentos para o show",
         "price": 40.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Táxi — Hotel → O'Malley's (pós-show)",
         "price": 40.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "alimentação",
+        "type": "trip.expenses.daily",
         "name": "Gastos Gabriel — O'Malley's",
         "price": 50.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "alimentação",
+        "type": "trip.expenses.daily",
         "name": "Gastos Lucas — O'Malley's",
         "price": 80.0,
         "currency": "BRL",
         "person": "lucas"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Táxi — O'Malley's → Hotel (volta)",
         "price": 40.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "hospedagem",
+        "type": "trip.accommodation.title",
         "name": "Hotel (1 diária)",
         "price": 390.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Táxi — Hotel → Shopping Ibirapuera",
         "price": 50.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "alimentação",
+        "type": "trip.expenses.daily",
         "name": "Alimentação Gabriel — Shopping Ibirapuera",
         "price": 60.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "alimentação",
+        "type": "trip.expenses.daily",
         "name": "Alimentação Lucas — Shopping Ibirapuera",
         "price": 30.0,
         "currency": "BRL",
         "person": "lucas"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Táxi — Shopping Ibirapuera → Aeroporto Congonhas",
         "price": 20.0,
         "currency": "BRL",

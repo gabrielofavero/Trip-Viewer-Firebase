@@ -49,32 +49,74 @@
 	],
 	"options": [
 		{
-			"color": "blue",
-			"hex": "#47aeff"
+			"color": "purple",
+			"hex": "#5859a7",
+			"dark": "#7f75b6"
 		},
 		{
-			"color": "yellow",
-			"hex": "#ffbb2c"
+			"color": "rose",
+			"hex": "#d2589c",
+			"dark": "#e399c2"
 		},
 		{
-			"color": "pink",
-			"hex": "#e80368"
+			"color": "magenta",
+			"hex": "#970057",
+			"dark": "#ff84cb"
 		},
 		{
-			"color": "green",
-			"hex": "#52B720"
+			"color": "crimson",
+			"hex": "#ba0c2f",
+			"dark": "#ba0c2f"
+		},
+		{
+			"color": "sunset",
+			"hex": "#dd3e37",
+			"dark": "#f7e100"
+		},
+		{
+			"color": "amber",
+			"hex": "#a46d2d",
+			"dark": "#ce944e"
+		},
+		{
+			"color": "terracotta",
+			"hex": "#a96250",
+			"dark": "#c7735e"
+		},
+		{
+			"color": "forest",
+			"hex": "#5da758",
+			"dark": "#82c98a"
+		},
+		{
+			"color": "sage",
+			"hex": "#aeb284",
+			"dark": "#d5d7bf"
 		},
 		{
 			"color": "teal",
-			"hex": "#11dbcf"
+			"hex": "#019380",
+			"dark": "#00b199"
 		},
 		{
-			"color": "orange",
-			"hex": "#ffa76e"
+			"color": "ocean",
+			"hex": "#4e8b9d",
+			"dark": "#6fbad3"
 		},
 		{
-			"color": "red",
-			"hex": "#ff5828"
+			"color": "steel",
+			"hex": "#5889a7",
+			"dark": "#7695b7"
+		},
+		{
+			"color": "indigo",
+			"hex": "#4c4293",
+			"dark": "#227bb0"
+		},
+		{
+			"color": "gray",
+			"hex": "#808080",
+			"dark": "#c0c0c0"
 		}
 	]
 }

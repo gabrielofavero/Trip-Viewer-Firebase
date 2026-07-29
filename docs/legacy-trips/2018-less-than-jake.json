@@ -1,6 +1,6 @@
 {
   "trip": {
-    "title": "Less Than Jake 2018",
+    "title": "Less Than Jake SP",
     "currency": "BRL",
     "start": {
       "day": 26,
@@ -48,8 +48,7 @@
     "travelers": [
       {
         "id": "gabriel",
-        "name": "Gabriel",
-        "photo": ""
+        "name": "Gabriel"
       }
     ],
     "links": {
@@ -111,7 +110,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "GOL Linhas Aéreas",
+      "company": "gol",
       "points": {
         "origin": "Belo Horizonte (CNF)",
         "destination": "São Paulo (CGH)"
@@ -134,7 +133,7 @@
           "second": 0
         }
       },
-      "duration": "1h20",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "LLGB2Q",
       "link": "",
@@ -142,7 +141,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "GOL Linhas Aéreas",
+      "company": "gol",
       "points": {
         "origin": "São Paulo (CGH)",
         "destination": "Belo Horizonte (CNF)"
@@ -165,7 +164,7 @@
           "second": 0
         }
       },
-      "duration": "1h05",
+      "duration": "01:00",
       "direction": "return",
       "reservation": "LLGB2Q",
       "link": "",
@@ -190,7 +189,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -203,7 +201,6 @@
           "end": ""
         },
         {
-          "type": "flight",
           "cost": 0,
           "item": {
             "type": "",
@@ -218,7 +215,6 @@
       ],
       "morning": [
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -231,7 +227,6 @@
           "end": ""
         },
         {
-          "type": "shopping",
           "cost": 0,
           "item": {
             "type": "",
@@ -244,7 +239,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -257,7 +251,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "cost": 0,
           "item": {
             "type": "",
@@ -272,7 +265,6 @@
       ],
       "afternoon": [
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -285,7 +277,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 52.8,
           "item": {
             "type": "",
@@ -298,7 +289,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -311,7 +301,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -324,7 +313,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -337,7 +325,6 @@
           "end": ""
         },
         {
-          "type": "shopping",
           "cost": 237.28,
           "item": {
             "type": "",
@@ -350,7 +337,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 14,
           "item": {
             "type": "",
@@ -363,7 +349,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -376,7 +361,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -389,7 +373,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -404,7 +387,6 @@
       ],
       "night": [
         {
-          "type": "entertainment",
           "cost": 0,
           "item": {
             "type": "",
@@ -417,7 +399,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 5,
           "item": {
             "type": "",
@@ -430,7 +411,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -443,7 +423,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -456,7 +435,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 0,
           "item": {
             "type": "",
@@ -469,7 +447,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 97,
           "item": {
             "type": "",
@@ -482,7 +459,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 0,
           "item": {
             "type": "",
@@ -495,7 +471,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -527,7 +502,6 @@
       "earlyMorning": [],
       "morning": [
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -540,7 +514,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -553,7 +526,6 @@
           "end": ""
         },
         {
-          "type": "attraction",
           "cost": 0,
           "item": {
             "type": "",
@@ -566,7 +538,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -579,7 +550,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 24.99,
           "item": {
             "type": "",
@@ -592,7 +562,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -605,7 +574,6 @@
           "end": ""
         },
         {
-          "type": "shopping",
           "cost": 17.8,
           "item": {
             "type": "",
@@ -618,7 +586,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 50,
           "item": {
             "type": "",
@@ -631,7 +598,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 0,
           "item": {
             "type": "",
@@ -644,7 +610,6 @@
           "end": ""
         },
         {
-          "type": "food",
           "cost": 20,
           "item": {
             "type": "",
@@ -659,7 +624,6 @@
       ],
       "afternoon": [
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -672,7 +636,6 @@
           "end": ""
         },
         {
-          "type": "",
           "cost": 0,
           "item": {
             "type": "",
@@ -685,7 +648,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 4,
           "item": {
             "type": "",
@@ -700,7 +662,6 @@
       ],
       "night": [
         {
-          "type": "flight",
           "cost": 0,
           "item": {
             "type": "",
@@ -713,7 +674,6 @@
           "end": ""
         },
         {
-          "type": "transport",
           "cost": 0,
           "item": {
             "type": "",
@@ -731,21 +691,21 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "Alimentação",
+        "type": "trip.expenses.daily",
         "name": "Alimentação durante a viagem",
         "price": 263.79,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Compras",
+        "type": "trip.expenses.daily",
         "name": "Compras (discos, itens pessoais)",
         "price": 255.08,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Transporte Público",
+        "type": "trip.transportation.type.bus",
         "name": "Metrô e ônibus em SP",
         "price": 48.0,
         "currency": "BRL",
@@ -754,21 +714,21 @@
     ],
     "preTrip": [
       {
-        "type": "Voo",
+        "type": "trip.transportation.type.flights",
         "name": "GOL - BH ↔ SP (ida e volta)",
         "price": 213.86,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Hospedagem",
+        "type": "trip.accommodation.title",
         "name": "Airbnb - Cond. Saint Cyr (1 noite)",
         "price": 151.91,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "Ingresso",
+        "type": "trip.expenses.entertainment",
         "name": "Less Than Jake - Fabrique Club",
         "price": 126.5,
         "currency": "BRL",

@@ -14,7 +14,7 @@
     }
   },
   "trip": {
-    "title": "São Paulo Jun 2017",
+    "title": "São Paulo Family",
     "currency": "BRL",
     "start": {
       "day": 23,
@@ -151,7 +151,7 @@
           "second": 0
         }
       },
-      "duration": "1h15",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "",
       "link": "",
@@ -207,99 +207,85 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Casa → Aeroporto (Voo 08:25 BH→SP)",
-          "type": "Transporte",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Casa → Aeroporto (Voo 08:25 BH→SP)",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Aeroporto → Hotel (Uber)",
-          "type": "Transporte",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Aeroporto → Hotel (Uber)",
           "start": "",
           "end": ""
         },
         {
-          "title": "Check-In Estanplaza Paulista",
-          "type": "Hotel",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Check-In Estanplaza Paulista",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Eataly (almoço)",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Eataly (almoço)",
           "start": "",
           "end": ""
         },
         {
-          "title": "Japan House",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Japan House",
           "start": "",
           "end": ""
         },
         {
-          "title": "Hotel (descanso)",
-          "type": "Descanso",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hotel (descanso)",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "TGI Fridays (jantar)",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "TGI Fridays (jantar)",
           "start": "",
           "end": ""
         }
@@ -322,86 +308,74 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Parque Ibirapuera",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Parque Ibirapuera",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "25 de Março (compras)",
-          "type": "Compras",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "25 de Março (compras)",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Cão Véio (almoço)",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Cão Véio (almoço)",
           "start": "",
           "end": ""
         },
         {
-          "title": "Hotel (descanso)",
-          "type": "Descanso",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hotel (descanso)",
           "start": "",
           "end": ""
         },
         {
-          "title": "Frutaria SP (açaí)",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Frutaria SP (açaí)",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Hooters (jantar)",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hooters (jantar)",
           "start": "",
           "end": ""
         }
@@ -424,58 +398,50 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Check-Out Estanplaza Paulista",
-          "type": "Hotel",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Check-Out Estanplaza Paulista",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Liberdade (Marukai)",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Liberdade (Marukai)",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Avenida Paulista",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Avenida Paulista",
           "start": "",
           "end": ""
         },
         {
-          "title": "O'Malleys (almoço)",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "O'Malleys (almoço)",
           "start": "",
           "end": ""
         }
@@ -515,7 +481,7 @@
       },
       {
         "name": "Outros (check-in antecipado, taxas)",
-        "type": "Outros",
+        "type": "trip.expenses.daily",
         "price": 50.0,
         "currency": "BRL",
         "person": ""

@@ -19,7 +19,7 @@
     }
   },
   "trip": {
-    "title": "Gramado 2020",
+    "title": "Gramado Family",
     "currency": "BRL",
     "start": {
       "day": 4,
@@ -141,7 +141,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "Azul",
+      "company": "azul",
       "points": {
         "origin": "Belo Horizonte - Confins (CNF)",
         "destination": "Porto Alegre (POA)"
@@ -164,7 +164,7 @@
           "second": 0
         }
       },
-      "duration": "2h30",
+      "duration": "02:00",
       "direction": "departure",
       "reservation": "HFM6TZ / AD 2564",
       "link": "",
@@ -172,7 +172,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "Azul",
+      "company": "azul",
       "points": {
         "origin": "Porto Alegre (POA)",
         "destination": "Belo Horizonte - Confins (CNF)"
@@ -195,7 +195,7 @@
           "second": 0
         }
       },
-      "duration": "2h10",
+      "duration": "02:00",
       "direction": "return",
       "reservation": "HFM6TZ / AD 2565",
       "link": "",
@@ -220,99 +220,85 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Voo CNF→POA (Azul AD 2564, 07:50-10:20)",
-          "type": "Transporte",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voo CNF→POA (Azul AD 2564, 07:50-10:20)",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Translado POA→Gramado + Check-in Hotel Colline de France",
-          "type": "Transporte",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Translado POA→Gramado + Check-in Hotel Colline de France",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Almoço na Rua Coberta",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Almoço na Rua Coberta",
           "start": "",
           "end": ""
         },
         {
-          "title": "Rua Torta (fotos)",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Rua Torta (fotos)",
           "start": "",
           "end": ""
         },
         {
-          "title": "Praça Major Nicoletti",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Praça Major Nicoletti",
           "start": "",
           "end": ""
         },
         {
-          "title": "Mundo de Chocolate",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Mundo de Chocolate",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Hard Rock Café",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Hard Rock Café",
           "start": "",
           "end": ""
         }
@@ -335,73 +321,63 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Café da manhã no hotel",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Café da manhã no hotel",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Lago Negro",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Lago Negro",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Almoço na Rua Coberta",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Almoço na Rua Coberta",
           "start": "",
           "end": ""
         },
         {
-          "title": "Bier Park",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Bier Park",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Boreal Ice Bar (Fondue)",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Boreal Ice Bar (Fondue)",
           "start": "",
           "end": ""
         }
@@ -424,60 +400,52 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Café da manhã no hotel",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Café da manhã no hotel",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Olivas de Gramado (almoço incluso)",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Olivas de Gramado (almoço incluso)",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Olivas de Gramado",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Olivas de Gramado",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Cara de Mau (jantar temático)",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Cara de Mau (jantar temático)",
           "start": "",
           "end": ""
         }
@@ -500,73 +468,63 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Café da manhã no hotel",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Café da manhã no hotel",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Parques da Serra",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Parques da Serra",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Almoço",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Almoço",
           "start": "",
           "end": ""
         },
         {
-          "title": "Mini Mundo",
-          "type": "Passeio",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Mini Mundo",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Chateau dos Plátanos (jantar)",
-          "type": "Alimentação",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Chateau dos Plátanos (jantar)",
           "start": "",
           "end": ""
         }
@@ -590,45 +548,39 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Check-out Hotel Colline de France (12:00)",
-          "type": "Hotel",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Check-out Hotel Colline de France (12:00)",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Translado Gramado→POA",
-          "type": "Transporte",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Translado Gramado→POA",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Voo POA→CNF (Azul AD 2565, 19:05-21:15)",
-          "type": "Transporte",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voo POA→CNF (Azul AD 2565, 19:05-21:15)",
           "start": "",
           "end": ""
         }

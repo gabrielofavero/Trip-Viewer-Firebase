@@ -48,13 +48,11 @@
     "travelers": [
       {
         "id": "gabriel",
-        "name": "Gabriel",
-        "color": ""
+        "name": "Gabriel"
       },
       {
         "id": "milton",
-        "name": "Milton",
-        "color": ""
+        "name": "Milton"
       }
     ],
     "links": {
@@ -116,7 +114,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "GOL",
+      "company": "gol",
       "points": {
         "origin": "CNF (Belo Horizonte)",
         "destination": "SDU (Rio de Janeiro)"
@@ -139,7 +137,7 @@
           "second": 0
         }
       },
-      "duration": "1h05",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "TIVVKS",
       "link": "",
@@ -147,7 +145,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "GOL",
+      "company": "gol",
       "points": {
         "origin": "SDU/GIG (Rio de Janeiro)",
         "destination": "CNF (Belo Horizonte)"
@@ -195,8 +193,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Ir ao Aeroporto",
-          "description": "",
           "category": "transport",
           "item": {
             "type": "",
@@ -204,13 +200,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ir ao Aeroporto",
           "start": "",
           "end": ""
         },
         {
-          "title": "Voo CNF → SDU",
-          "description": "Gol TIVVKS. 06:55–08:00",
           "category": "transport",
           "item": {
             "type": "",
@@ -218,15 +212,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voo CNF → SDU: Gol TIVVKS. 06:55–08:00",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "VLT + Metrô até Ipanema",
-          "description": "",
           "category": "transport",
           "item": {
             "type": "",
@@ -234,13 +226,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "VLT + Metrô até Ipanema",
           "start": "",
           "end": ""
         },
         {
-          "title": "Airbnb",
-          "description": "Deixar malas",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -248,13 +238,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Deixar malas",
           "start": "",
           "end": ""
         },
         {
-          "title": "Suprimentos",
-          "description": "",
           "category": "shopping",
           "item": {
             "type": "",
@@ -262,13 +250,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Suprimentos",
           "start": "",
           "end": ""
         },
         {
-          "title": "Ipanema / Copacabana",
-          "description": "Forte, Confeitaria",
           "category": "attraction",
           "item": {
             "type": "",
@@ -276,15 +262,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ipanema / Copacabana: Forte, Confeitaria",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Taco Bell",
-          "description": "Almoço",
           "category": "food",
           "item": {
             "type": "",
@@ -292,13 +276,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Taco Bell: Almoço",
           "start": "",
           "end": ""
         },
         {
-          "title": "Metrô + BRT até Cidade do Rock",
-          "description": "",
           "category": "transport",
           "item": {
             "type": "",
@@ -306,13 +288,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Metrô + BRT até Cidade do Rock",
           "start": "",
           "end": ""
         },
         {
-          "title": "Rock in Rio",
-          "description": "Palco Mundo 15:30. Panic! At The Disco e outros",
           "category": "entertainment",
           "item": {
             "type": "",
@@ -320,15 +300,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Rock in Rio: Palco Mundo 15:30. Panic! At The Disco e outros",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Rock in Rio",
-          "description": "Continuação dos shows",
           "category": "entertainment",
           "item": {
             "type": "",
@@ -336,13 +314,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Rock in Rio: Continuação dos shows",
           "start": "",
           "end": ""
         },
         {
-          "title": "Airbnb",
-          "description": "Descanso",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -350,7 +326,7 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Descanso",
           "start": "",
           "end": ""
         }
@@ -374,8 +350,6 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Airbnb",
-          "description": "Arrumar",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -383,13 +357,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Arrumar",
           "start": "",
           "end": ""
         },
         {
-          "title": "Mamma Jamma",
-          "description": "Almoço",
           "category": "food",
           "item": {
             "type": "",
@@ -397,13 +369,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Mamma Jamma: Almoço",
           "start": "",
           "end": ""
         },
         {
-          "title": "Cristo Redentor",
-          "description": "",
           "category": "attraction",
           "item": {
             "type": "",
@@ -411,13 +381,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Cristo Redentor",
           "start": "",
           "end": ""
         },
         {
-          "title": "Parque Lage",
-          "description": "",
           "category": "attraction",
           "item": {
             "type": "",
@@ -425,15 +393,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Parque Lage",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Escadaria Selarón",
-          "description": "",
           "category": "attraction",
           "item": {
             "type": "",
@@ -441,13 +407,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Escadaria Selarón",
           "start": "",
           "end": ""
         },
         {
-          "title": "Museu do Amanhã",
-          "description": "",
           "category": "attraction",
           "item": {
             "type": "",
@@ -455,13 +419,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Museu do Amanhã",
           "start": "",
           "end": ""
         },
         {
-          "title": "Airbnb",
-          "description": "Descanso",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -469,15 +431,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Descanso",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Saída Noturna",
-          "description": "Lapa ou região",
           "category": "entertainment",
           "item": {
             "type": "",
@@ -485,13 +445,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Saída Noturna: Lapa ou região",
           "start": "",
           "end": ""
         },
         {
-          "title": "Airbnb",
-          "description": "Descanso",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -499,7 +457,7 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Descanso",
           "start": "",
           "end": ""
         }
@@ -523,8 +481,6 @@
       "earlyMorning": [],
       "morning": [
         {
-          "title": "Airbnb",
-          "description": "Arrumar",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -532,13 +488,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Arrumar",
           "start": "",
           "end": ""
         },
         {
-          "title": "Praia de Ipanema",
-          "description": "Almoço na praia (Riba)",
           "category": "attraction",
           "item": {
             "type": "",
@@ -546,15 +500,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Praia de Ipanema: Almoço na praia (Riba)",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Vista / Mirante",
-          "description": "",
           "category": "attraction",
           "item": {
             "type": "",
@@ -562,13 +514,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Vista / Mirante",
           "start": "",
           "end": ""
         },
         {
-          "title": "Rock in Rio",
-          "description": "Segundo dia de festival",
           "category": "entertainment",
           "item": {
             "type": "",
@@ -576,15 +526,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Rock in Rio: Segundo dia de festival",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "title": "Rock in Rio",
-          "description": "Continuação dos shows",
           "category": "entertainment",
           "item": {
             "type": "",
@@ -592,13 +540,11 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Rock in Rio: Continuação dos shows",
           "start": "",
           "end": ""
         },
         {
-          "title": "Airbnb",
-          "description": "Descanso",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -606,7 +552,7 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Descanso",
           "start": "",
           "end": ""
         }
@@ -629,8 +575,6 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "title": "Airbnb",
-          "description": "Check-out",
           "category": "accommodation",
           "item": {
             "type": "",
@@ -638,15 +582,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Airbnb: Check-out",
           "start": "",
           "end": ""
         }
       ],
       "morning": [
         {
-          "title": "Livre",
-          "description": "Último passeio ou compras",
           "category": "free",
           "item": {
             "type": "",
@@ -654,15 +596,13 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre: Último passeio ou compras",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "title": "Voo de retorno",
-          "description": "Gol TIVVKS. Rio → BH",
           "category": "transport",
           "item": {
             "type": "",
@@ -670,7 +610,7 @@
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voo de retorno: Gol TIVVKS. Rio → BH",
           "start": "",
           "end": ""
         }
@@ -681,62 +621,62 @@
   "expenses": {
     "duringTrip": [
       {
-        "title": "Alimentação (Gabriel)",
         "currency": "BRL",
         "notes": "Total de alimentação durante a viagem",
-        "name": "",
+        "name": "Alimentação (Gabriel)",
         "price": 475,
-        "person": "gabriel"
+        "person": "gabriel",
+        "type": "trip.expenses.daily"
       },
       {
-        "title": "Atrações/Eventos",
         "currency": "BRL",
         "notes": "Cristo Redentor, Museu do Amanhã, etc.",
-        "name": "",
+        "name": "Atrações/Eventos",
         "price": 133,
-        "person": "gabriel"
+        "person": "gabriel",
+        "type": "trip.expenses.daily"
       },
       {
-        "title": "Transporte Público",
         "currency": "BRL",
         "notes": "Metrô, VLT, BRT",
-        "name": "",
+        "name": "Transporte Público",
         "price": 64.7,
-        "person": "gabriel"
+        "person": "gabriel",
+        "type": "trip.expenses.daily"
       },
       {
-        "title": "Transporte Privado (Uber)",
         "currency": "BRL",
         "notes": "Uber durante a viagem",
-        "name": "",
+        "name": "Transporte Privado (Uber)",
         "price": 56.67,
-        "person": "milton"
+        "person": "milton",
+        "type": "trip.expenses.daily"
       }
     ],
     "preTrip": [
       {
-        "title": "Ingresso Rock in Rio",
         "currency": "BRL",
         "notes": "",
-        "name": "",
+        "name": "Ingresso Rock in Rio",
         "price": 590.95,
-        "person": "gabriel"
+        "person": "gabriel",
+        "type": "trip.expenses.daily"
       },
       {
-        "title": "Passagem Aérea",
         "currency": "BRL",
         "notes": "GOL. Localizador TIVVKS",
-        "name": "",
+        "name": "Passagem Aérea",
         "price": 269.44,
-        "person": "gabriel"
+        "person": "gabriel",
+        "type": "trip.expenses.daily"
       },
       {
-        "title": "Airbnb Ipanema",
         "currency": "BRL",
         "notes": "Estúdio em Ipanema, 4 diárias",
-        "name": "",
+        "name": "Airbnb Ipanema",
         "price": 522,
-        "person": "gabriel"
+        "person": "gabriel",
+        "type": "trip.expenses.daily"
       }
     ],
     "currency": "BRL",

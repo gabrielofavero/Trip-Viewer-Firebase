@@ -10,7 +10,6 @@ import { DOCUMENT_ID } from '../../data/state.js';
 import { setCurrentPreferencePIN } from './categories/basic-data/set-protected-data.js';
 import { setTravelers, updateTravelersButtonLabel } from './categories/travelers.js';
 import { loadCustomizationImageData, setCurrentLight } from './categories/customization.js';
-import { visibilityListenerAction } from './support/event-listeners.js';
 import {
 	addTransportation,
 	addAccommodations,
@@ -111,13 +110,22 @@ export function loadCustomizationData(state?) {
 		getID('colors-enabled-content').style.display = 'block';
 	}
 
-	// Visibility
+	// Visibility (theme mode)
 	const visibility = getState().visibility;
 	if (visibility) {
-		visibilityListenerAction(visibility);
-		getID('dark-and-light').checked = visibility.light && visibility.dark;
-		getID('light-exclusive').checked = visibility.light && !visibility.dark;
-		getID('dark-exclusive').checked = !visibility.light && visibility.dark;
+		const isLightOnly = visibility.light && !visibility.dark;
+		const isDarkOnly = !visibility.light && visibility.dark;
+		const isForced = isLightOnly || isDarkOnly;
+
+		getID('theme-enabled').checked = isForced;
+		if (isForced) {
+			getID('theme-enabled-content').style.display = 'block';
+			if (isDarkOnly) {
+				(getID('theme-mode-dark') as HTMLInputElement).checked = true;
+			} else {
+				(getID('theme-mode-light') as HTMLInputElement).checked = true;
+			}
+		}
 	}
 
 	// Custom Links

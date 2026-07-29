@@ -122,7 +122,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "United Airlines / Avianca Brasil",
+      "company": "united",
       "points": {
         "origin": "Belo Horizonte (CNF)",
         "destination": "New York/Newark (EWR)"
@@ -145,7 +145,7 @@
           "second": 0
         }
       },
-      "duration": "14h 05min",
+      "duration": "14:05",
       "direction": "departure",
       "reservation": "MZV9LQ",
       "link": "",
@@ -153,7 +153,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "United Airlines / Avianca Brasil",
+      "company": "united",
       "points": {
         "origin": "New York/LaGuardia (LGA)",
         "destination": "Belo Horizonte (CNF)"
@@ -176,7 +176,7 @@
           "second": 0
         }
       },
-      "duration": "16h 40min",
+      "duration": "16:40",
       "direction": "return",
       "reservation": "MZV9LQ",
       "link": "",
@@ -201,80 +201,74 @@
       "destinationIds": [],
       "earlyMorning": [
         {
-          "text": "Pouso em Newark (EWR) às 05:55",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Pouso em Newark (EWR) às 05:55",
           "start": "05:55",
           "end": ""
         }
       ],
       "morning": [
         {
-          "text": "Fazer Check In e deixar malas no hotel",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Fazer Check In e deixar malas no hotel",
           "start": "",
           "end": ""
         },
         {
-          "text": "Ir na Apple Store e Walmart",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ir na Apple Store e Walmart",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "text": "Voltar para o Hotel para subir com as malas",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voltar para o Hotel para subir com as malas",
           "start": "",
           "end": ""
         },
         {
-          "text": "Passear em volta (Times Square, Rockefeller Center)",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Passear em volta (Times Square, Rockefeller Center)",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "text": "Livre",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre",
           "start": "",
           "end": ""
         }
@@ -298,42 +292,39 @@
       "earlyMorning": [],
       "morning": [
         {
-          "text": "Ir no Outlet Jersey Gardens",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ir no Outlet Jersey Gardens",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "text": "Ir no Outlet Jersey Gardens",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ir no Outlet Jersey Gardens",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "text": "Livre",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre",
           "start": "",
           "end": ""
         }
@@ -357,54 +348,50 @@
       "earlyMorning": [],
       "morning": [
         {
-          "text": "Encontrar com a Conceição",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Encontrar com a Conceição",
           "start": "",
           "end": ""
         },
         {
-          "text": "Ir na BestBuy",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ir na BestBuy",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "text": "Compras (Marshalls, Bed Bath & Beyond)",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Compras (Marshalls, Bed Bath & Beyond)",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "text": "Livre",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre",
           "start": "",
           "end": ""
         }
@@ -428,54 +415,50 @@
       "earlyMorning": [],
       "morning": [
         {
-          "text": "Ir no B&H e Westfield World Trade Center",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ir no B&H e Westfield World Trade Center",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "text": "Almoçar na Eataly",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Almoçar na Eataly",
           "start": "",
           "end": ""
         },
         {
-          "text": "Visitar Ground Zero e 9/11 Memorial & Museum",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Visitar Ground Zero e 9/11 Memorial & Museum",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "text": "Livre (Talvez show Anti-flag)",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre (Talvez show Anti-flag)",
           "start": "",
           "end": ""
         }
@@ -499,42 +482,39 @@
       "earlyMorning": [],
       "morning": [
         {
-          "text": "Passear pelo SoHo",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Passear pelo SoHo",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "text": "Ir no Central Park",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ir no Central Park",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "text": "Livre",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre",
           "start": "",
           "end": ""
         }
@@ -558,78 +538,72 @@
       "earlyMorning": [],
       "morning": [
         {
-          "text": "Atravessar a pé a Brooklyn Bridge",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Atravessar a pé a Brooklyn Bridge",
           "start": "",
           "end": ""
         },
         {
-          "text": "Ir no Brooklyn Bridge Park",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ir no Brooklyn Bridge Park",
           "start": "",
           "end": ""
         },
         {
-          "text": "Almoçar na região",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Almoçar na região",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "text": "Passear na D.U.M.B.O",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Passear na D.U.M.B.O",
           "start": "",
           "end": ""
         },
         {
-          "text": "Ir para o Brooklyn Heights Promenade e East River State Park",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ir para o Brooklyn Heights Promenade e East River State Park",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "text": "Broadway",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Broadway",
           "start": "",
           "end": ""
         }
@@ -653,42 +627,39 @@
       "earlyMorning": [],
       "morning": [
         {
-          "text": "Passear por Chinatown e Little Italy",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Passear por Chinatown e Little Italy",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "text": "Visitar o Museu de História Natural",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Visitar o Museu de História Natural",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "text": "Jogo de Basquete: Brooklyn Nets vs. Indiana Pacers",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Jogo de Basquete: Brooklyn Nets vs. Indiana Pacers",
           "start": "",
           "end": ""
         }
@@ -712,78 +683,72 @@
       "earlyMorning": [],
       "morning": [
         {
-          "text": "Passeio de bondinho",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Passeio de bondinho",
           "start": "",
           "end": ""
         },
         {
-          "text": "Almoçar no Stardust",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Almoçar no Stardust",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "text": "Almoçar no Chelsea Market",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Almoçar no Chelsea Market",
           "start": "",
           "end": ""
         },
         {
-          "text": "Livre",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "text": "Família: Livre",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Família: Livre",
           "start": "",
           "end": ""
         },
         {
-          "text": "Gabriel: Noel Gallagher's High Flying Birds",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Gabriel: Noel Gallagher's High Flying Birds",
           "start": "",
           "end": ""
         }
@@ -807,66 +772,61 @@
       "earlyMorning": [],
       "morning": [
         {
-          "text": "Passear pelo bairro de Chelsea",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Passear pelo bairro de Chelsea",
           "start": "",
           "end": ""
         },
         {
-          "text": "Andar pela High Line",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Andar pela High Line",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "text": "Almoçar no Chelsea Market",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Almoçar no Chelsea Market",
           "start": "",
           "end": ""
         },
         {
-          "text": "Livre",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "text": "McSorley's Old House Ale",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "McSorley's Old House Ale",
           "start": "",
           "end": ""
         }
@@ -890,66 +850,61 @@
       "earlyMorning": [],
       "morning": [
         {
-          "text": "Passear por Williamsburg (Brooklyn)",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Passear por Williamsburg (Brooklyn)",
           "start": "",
           "end": ""
         },
         {
-          "text": "Smorgasburg, Wythe Hotel",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Smorgasburg, Wythe Hotel",
           "start": "",
           "end": ""
         },
         {
-          "text": "Conhecer a Brooklyn Brewery",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Conhecer a Brooklyn Brewery",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "text": "Livre",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "text": "Livre",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre",
           "start": "",
           "end": ""
         }
@@ -973,42 +928,39 @@
       "earlyMorning": [],
       "morning": [
         {
-          "text": "Conhecer o Parque Bryant",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Conhecer o Parque Bryant",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "text": "Stone Street",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Stone Street",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "text": "Livre",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Livre",
           "start": "",
           "end": ""
         }
@@ -1032,66 +984,61 @@
       "earlyMorning": [],
       "morning": [
         {
-          "text": "Check-out do hotel",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Check-out do hotel",
           "start": "",
           "end": ""
         },
         {
-          "text": "Último passeio livre",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Último passeio livre",
           "start": "",
           "end": ""
         }
       ],
       "afternoon": [
         {
-          "text": "Ir para o aeroporto LaGuardia (LGA)",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Ir para o aeroporto LaGuardia (LGA)",
           "start": "",
           "end": ""
         }
       ],
       "night": [
         {
-          "text": "Voo LGA→IAD às 19:25",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Voo LGA→IAD às 19:25",
           "start": "19:25",
           "end": ""
         },
         {
-          "text": "Conexão IAD→GRU às 23:00",
           "item": {
             "type": "",
             "id": "",
             "location": "",
             "category": ""
           },
-          "label": "",
+          "label": "Conexão IAD→GRU às 23:00",
           "start": "23:00",
           "end": ""
         }
@@ -1101,72 +1048,63 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "Alimentação",
-        "value": 768,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Alimentação diária (12 dias)",
-        "price": 0,
+        "price": 768,
         "person": ""
       },
       {
-        "type": "Transporte",
-        "value": 244,
+        "type": "trip.transportation.type.bus",
         "currency": "BRL",
         "name": "Transporte local (metrô, ônibus, táxi)",
-        "price": 0,
+        "price": 244,
         "person": ""
       },
       {
-        "type": "Supermercado",
-        "value": 325,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Compras de supermercado",
-        "price": 0,
+        "price": 325,
         "person": ""
       },
       {
-        "type": "Saídas",
-        "value": 998,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Restaurantes, bares, passeios",
-        "price": 0,
+        "price": 998,
         "person": ""
       },
       {
-        "type": "Atrações",
-        "value": 460,
+        "type": "trip.expenses.entertainment",
         "currency": "BRL",
         "name": "Ingressos para atrações turísticas",
-        "price": 0,
+        "price": 460,
         "person": ""
       },
       {
-        "type": "Outros",
-        "value": 400,
+        "type": "trip.expenses.daily",
         "currency": "BRL",
         "name": "Diversos (gorjetas, compras menores)",
-        "price": 0,
+        "price": 400,
         "person": ""
       },
       {
         "type": "Jogo de Basquete",
-        "value": 252.2,
         "currency": "BRL",
         "name": "Brooklyn Nets vs. Indiana Pacers (14/02)",
-        "price": 0,
+        "price": 252.2,
         "person": ""
       },
       {
         "type": "Show",
-        "value": 103.7,
         "currency": "BRL",
         "name": "Noel Gallagher's High Flying Birds (15/02)",
-        "price": 0,
+        "price": 103.7,
         "person": "gabriel"
       },
       {
-        "type": "Uber",
-        "value": 0,
+        "type": "trip.transportation.type.taxi",
         "currency": "BRL",
         "name": "Corridas de Uber durante a viagem",
         "price": 0,
@@ -1174,57 +1112,50 @@
       },
       {
         "type": "ONU",
-        "value": 10,
         "currency": "BRL",
         "name": "Loja da ONU",
-        "price": 0,
+        "price": 10,
         "person": "gabriel"
       }
     ],
     "preTrip": [
       {
-        "type": "Passagem Aérea",
-        "value": 9500,
+        "type": "trip.transportation.type.flights",
         "currency": "BRL",
         "name": "Passagens aéreas BH→NY→BH (United Airlines, reserva MZV9LQ) - 4 pessoas",
-        "price": 0,
+        "price": 9500,
         "person": ""
       },
       {
-        "type": "Hotel",
-        "value": 6000,
+        "type": "trip.accommodation.title",
         "currency": "BRL",
         "name": "Hospedagem em Manhattan (11 noites)",
-        "price": 0,
+        "price": 6000,
         "person": ""
       },
       {
         "type": "Xbox One X",
-        "value": 536.43,
         "currency": "BRL",
         "name": "Comprado na Microsoft Store e enviado para NY",
-        "price": 0,
+        "price": 536.43,
         "person": "gabriel"
       },
       {
         "type": "Oculus Rift + Touch",
-        "value": 349,
         "currency": "BRL",
         "name": "Comprado na Oculus Store e enviado para NY",
-        "price": 0,
+        "price": 349,
         "person": "gabriel"
       },
       {
         "type": "Envio de Caixas",
-        "value": 512.24,
         "currency": "BRL",
         "name": "Serviço Free Your Arms - envio de caixas dos EUA para o Brasil",
-        "price": 0,
+        "price": 512.24,
         "person": ""
       },
       {
         "type": "Compras Online",
-        "value": 0,
         "currency": "BRL",
         "name": "Compras na Amazon (vinis, roupas, acessórios) enviadas para NY",
         "price": 0,

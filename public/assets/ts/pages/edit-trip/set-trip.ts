@@ -203,10 +203,18 @@ function getLinksObject() {
 }
 
 export function getVisibilityObject() {
-	return {
-		light: getID('dark-and-light').checked || getID('light-exclusive').checked,
-		dark: getID('dark-and-light').checked || getID('dark-exclusive').checked,
-	};
+	const enabled = getID('theme-enabled').checked;
+	if (!enabled) {
+		return { light: true, dark: true }; // dynamic — both modes allowed
+	}
+
+	if (getID('theme-mode-light').checked) {
+		return { light: true, dark: false };
+	}
+	if (getID('theme-mode-dark').checked) {
+		return { light: false, dark: true };
+	}
+	return { light: true, dark: true }; // dynamic (default radio)
 }
 
 function verifyImageUploads(type) {

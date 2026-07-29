@@ -1,6 +1,6 @@
 {
   "trip": {
-    "title": "Simple Plan + Sum 41 2016",
+    "title": "Simple Plan + Sum 41 SP",
     "currency": "BRL",
     "start": {
       "day": 6,
@@ -48,13 +48,11 @@
     "travelers": [
       {
         "id": "gabriel",
-        "name": "Gabriel",
-        "color": "#4CAF50"
+        "name": "Gabriel"
       },
       {
         "id": "lucas",
-        "name": "Lucas",
-        "color": "#2196F3"
+        "name": "Lucas"
       }
     ],
     "links": {
@@ -116,7 +114,7 @@
     },
     "leg-001": {
       "type": "flight",
-      "company": "GOL",
+      "company": "gol",
       "points": {
         "origin": "Belo Horizonte - Confins (CNF)",
         "destination": "São Paulo - Congonhas (CGH)"
@@ -139,7 +137,7 @@
           "second": 0
         }
       },
-      "duration": "1h15",
+      "duration": "01:00",
       "direction": "departure",
       "reservation": "ANKFQE (G3 1305)",
       "link": "",
@@ -147,7 +145,7 @@
     },
     "leg-002": {
       "type": "flight",
-      "company": "GOL",
+      "company": "gol",
       "points": {
         "origin": "São Paulo - Congonhas (CGH)",
         "destination": "Belo Horizonte - Confins (CNF)"
@@ -170,7 +168,7 @@
           "second": 0
         }
       },
-      "duration": "1h10",
+      "duration": "01:00",
       "direction": "return",
       "reservation": "ANKFQE (G3 1304)",
       "link": "",
@@ -736,21 +734,21 @@
   "expenses": {
     "duringTrip": [
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Ônibus Aeroporto → Hotel",
         "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "alimentação",
+        "type": "trip.expenses.daily",
         "name": "Almoço dia 1",
         "price": 30.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Metrô Hotel → Tomie Ohtake (ida e volta)",
         "price": 7.6,
         "currency": "BRL",
@@ -764,84 +762,84 @@
         "person": "gabriel"
       },
       {
-        "type": "alimentação",
+        "type": "trip.expenses.daily",
         "name": "O'Malley's",
         "price": 100.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Ônibus Hotel → Ibirapuera",
         "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Ônibus Ibirapuera → Shopping",
         "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "alimentação",
+        "type": "trip.expenses.daily",
         "name": "Almoço dia 2",
         "price": 30.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Metrô Shopping → Galeria do Rock",
         "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Metrô Galeria → Hotel",
         "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Uber Hotel → Citibank Hall",
         "price": 20.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Uber Citibank Hall → Hotel",
         "price": 30.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Metrô Hotel → Liberdade",
         "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Metrô Liberdade → Jetis",
         "price": 7.6,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "alimentação",
+        "type": "trip.expenses.daily",
         "name": "Almoço Jetis",
         "price": 75.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Metrô Jetis → MASP",
         "price": 7.6,
         "currency": "BRL",
@@ -855,21 +853,21 @@
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Metrô Hotel → Tropical Butantã",
         "price": 3.8,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Uber Tropical Butantã → Hotel",
         "price": 60.0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "transporte",
+        "type": "trip.transportation.type.bus",
         "name": "Uber Hotel → Aeroporto Congonhas",
         "price": 50.0,
         "currency": "BRL",
@@ -878,23 +876,21 @@
     ],
     "preTrip": [
       {
-        "type": "voo",
-        "details": "Localizador ANKFQE. G3 1305 (CNF→CGH) + G3 1304 (CGH→CNF). Comprado por Milton.",
+        "type": "trip.transportation.type.flights",
         "name": "Passagem aérea GOL BH-SP (ida e volta, 2 pessoas)",
         "price": 522.6,
         "currency": "BRL",
         "person": ""
       },
       {
-        "type": "ingresso",
+        "type": "trip.expenses.entertainment",
         "name": "Ingresso Simple Plan - Citibank Hall (2 ingressos)",
         "price": 0,
         "currency": "BRL",
         "person": "gabriel"
       },
       {
-        "type": "ingresso",
-        "details": "Valor: R$ 332,90 + Taxa: R$ 50,40. Tropical Butantã.",
+        "type": "trip.expenses.entertainment",
         "name": "Ingresso Sum 41 - Honorsounds Especial (2x Pista VIP Meia)",
         "price": 383.3,
         "currency": "BRL",

@@ -14,12 +14,23 @@ import { normalizeLegacyJson } from './normalize.js';
 export async function restoreOnClickAction() {
 	const title = translate('account.restore.title');
 	const content = translate('account.restore.prompt');
-	displayPrompt({ title, content, yesAction: openRestoreFilePicker });
+	displayPrompt({
+		title,
+		content,
+		yesAction: () => {
+			closeMessage();
+			startLoadingScreen();
+			openRestoreFilePicker();
+		},
+	});
 }
 
 export function restoreOnFileSelectionAction(event) {
 	const file = event.target.files[0];
-	if (!file) return;
+	if (!file) {
+		stopLoadingScreen();
+		return;
+	}
 
 	const reader = new FileReader();
 	reader.onload = function (e) {
@@ -40,8 +51,7 @@ export function openRestoreFilePicker() {
 }
 
 async function restoreAccountData(restore) {
-	closeMessage();
-	startLoadingScreen();
+	// Loading screen was already started when the user pressed "Yes"
 
 	// Normalize legacy (Portuguese) JSON if detected
 	const normalized = normalizeLegacyJson(restore);

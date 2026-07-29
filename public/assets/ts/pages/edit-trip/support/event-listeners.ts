@@ -35,7 +35,7 @@ import {
 	closeInnerItinerary,
 	innerItineraryConfirmAction,
 } from '../categories/itinerary-module/inner-itinerary/inner-itinerary.js';
-import { getVisibilityObject, setTripData } from '../set-trip.js';
+import { setTripData } from '../set-trip.js';
 import { autoFillDarkColor } from '../categories/customization.js';
 import {
 	applyTransportationTypeVisualization,
@@ -145,11 +145,6 @@ export function loadEventListeners() {
 	// Barra de pesquisa em destinations
 	getID('destinations-search').addEventListener('input', () => searchDestinationsListenerAction());
 
-	// Radios
-	getID('dark-and-light').addEventListener('change', () => visibilityListenerAction());
-	getID('light-exclusive').addEventListener('change', () => visibilityListenerAction());
-	getID('dark-exclusive').addEventListener('change', () => visibilityListenerAction());
-
 	window.addEventListener('beforeunload', (event) => {
 		if (hasUnsavedChanges() && !SUCCESSFUL_SAVE) {
 			event.preventDefault();
@@ -205,13 +200,4 @@ export function addRemoveGalleryListener(j) {
 		},
 	];
 	addRemoveChildListenerDS('gallery', j, dynamicSelects);
-}
-
-export function visibilityListenerAction(visibility?) {
-	if (!visibility) {
-		visibility = getVisibilityObject();
-	}
-
-	getID('light-theme').style.display = visibility.light ? 'block' : 'none';
-	getID('dark-theme').style.display = visibility.dark ? 'block' : 'none';
 }
