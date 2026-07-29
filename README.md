@@ -32,7 +32,7 @@ npm run dev
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 161   | 158  | 3         | 0       |
+| 🐞   | Bug         | B000 | 162   | 159  | 3         | 0       |
 | 🏆   | Feature     | F000 | 169   | 142  | 22        | 5       |
 | 📈   | Improvement | M000 | 159   | 134  | 23        | 2       |
 | ⚔️   | Epic        | E000 | 51    | 34   | 9         | 8       |
@@ -82,6 +82,7 @@ npm run dev
 - 🏆 **F153:** Auto open dev browser on npm run dev
 - 🏆 **F154:** Add AI skills for project
 - 📈 **M159:** Improve skills behavior
+- 🐞 **B162:** People-view transportation wrapper not loading on initial page load
 
 ### June 2026
 - 🐞 **B158:** When clicking on last item of transportation tab, nothing happens

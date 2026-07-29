@@ -425,12 +425,32 @@ function resetSwiperVisibility() {
 			break;
 		case 'people-view':
 			adjustTransportationBoxContainerHeight();
+			getID('transportation-departure').style.display = 'none';
+			getID('transportation-internal').style.display = 'none';
+			getID('transportation-return').style.display = 'none';
+			break;
 	}
 }
 
 function customTransportationSelectAction(value) {
+	// Skip fade if the value hasn't changed — fading the same element
+	// out and in causes a race condition where fadeOut's callback sets
+	// display:none AFTER fadeIn already set display:block.
+	if (ACTIVE_TRANSPORTATION === value) return;
+
 	fade([`transportation-${ACTIVE_TRANSPORTATION}`], [`transportation-${value}`]);
 	ACTIVE_TRANSPORTATION = value;
+
+	// Swipers initialized inside hidden divs (display:none) have zero dimensions.
+	// After fadeIn makes the container visible, update the swiper to recalculate
+	// and re-adjust card heights so flight-boxes get their proper height.
+	setTimeout(() => {
+		const swiperEl = getID(`transportation-${value}-swiper`);
+		if (swiperEl?.swiper) {
+			swiperEl.swiper.update();
+		}
+		adjustCardsHeights('transportation');
+	}, 550); // fadeOut(250ms) + timeout(250ms) + fadeIn animate buffer
 }
 
 function autoNavigateTransportation() {

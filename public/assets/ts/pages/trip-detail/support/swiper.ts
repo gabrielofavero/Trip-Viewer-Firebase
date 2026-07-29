@@ -11,6 +11,8 @@ export function initSwiper(id) {
 		speed: 600,
 		loop: false,
 		spaceBetween: 30,
+		observer: true,
+		observeParents: true,
 		pagination: {
 			el: `.${id}-pagination`,
 			type: 'bullets',
