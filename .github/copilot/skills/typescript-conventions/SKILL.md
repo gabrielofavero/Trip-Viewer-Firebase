@@ -1,6 +1,7 @@
 ---
 name: typescript-conventions
 description: 'Use when you need to write or modify TypeScript code, understand the module organization, page routing, service layer, vendor globals, or coding conventions. Always consult this skill before adding new files or refactoring existing TypeScript.'
+applyTo: 'public/assets/ts/**; public/**/*.html'
 ---
 
 # TypeScript Conventions

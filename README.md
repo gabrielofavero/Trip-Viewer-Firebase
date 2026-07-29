@@ -34,7 +34,7 @@ npm run dev
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 161   | 158  | 3         | 0       |
 | 🏆   | Feature     | F000 | 169   | 142  | 22        | 5       |
-| 📈   | Improvement | M000 | 158   | 133  | 23        | 2       |
+| 📈   | Improvement | M000 | 159   | 134  | 23        | 2       |
 | ⚔️   | Epic        | E000 | 51    | 34   | 9         | 8       |
 
 ## Backlog
@@ -77,6 +77,11 @@ npm run dev
 - 🏆 **F169:** Add option to import only a single trip document
 - 🏆 **F171:** Add single document export
 - 📈 **M157:** Expand single document import/export features by allowing all types
+- 🏆 **F152:** Add firebase rules into repo + deployment
+- 📈 **M158:** Optimize user data + user permissions
+- 🏆 **F153:** Auto open dev browser on npm run dev
+- 🏆 **F154:** Add AI skills for project
+- 📈 **M159:** Improve skills behavior
 
 ### June 2026
 - 🐞 **B158:** When clicking on last item of transportation tab, nothing happens
@@ -120,10 +125,6 @@ npm run dev
   - *[📈M152] All ids, classes and html comments in EN-US (+ better naming)*
 - 🏆 **F167:** Add dev mode for easy debugging
 - ⚔️ **E044:** New Front-End: edit pages
-- 🏆 **F152:** Add firebase rules into repo + deployment
-- 📈 **M158:** Optimize user data + user permissions
-- 🏆 **F153:** Auto open dev browser on npm run dev
-- 🏆 **F154:** Add AI skills for project
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action

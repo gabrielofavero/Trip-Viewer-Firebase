@@ -1,6 +1,7 @@
 ---
 name: css-ui-patterns
 description: 'Use when you need to understand or modify CSS, UI components, styling conventions, dark mode, CSS variables, or visual patterns. Covers the modular CSS architecture, component styles, theme system, and per-page organization.'
+applyTo: 'public/assets/css/**; public/assets/ts/theme/**; public/assets/ts/ui/**'
 ---
 
 # CSS & UI Patterns

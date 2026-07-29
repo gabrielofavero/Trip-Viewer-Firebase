@@ -1,6 +1,7 @@
 ---
 name: git-workflow
 description: 'Use when you need to understand the git branch strategy, commit message conventions, sync workflow, or how to format commits for this project. Always consult this skill before writing commit messages or performing git operations.'
+applyTo: 'scripts/utils/sync.py'
 ---
 
 # Git Workflow

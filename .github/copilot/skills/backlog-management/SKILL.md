@@ -1,6 +1,7 @@
 ---
 name: backlog-management
 description: 'Use when you need to add, update, or understand tasks in the README.md backlog; run the readme.py analysis script; interpret task IDs, emoji types, or version calculation; or modify the task tracking system.'
+applyTo: 'README.md; scripts/utils/readme.py'
 ---
 
 # Backlog & Task Management

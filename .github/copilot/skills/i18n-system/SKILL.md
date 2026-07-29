@@ -1,6 +1,7 @@
 ---
 name: i18n-system
 description: 'Use when you need to add, modify, or understand translations, the internationalization system, language switching, or the dot-path key resolution. Covers the JSON language packs, translate() function, translatePage() for static HTML, and language detection.'
+applyTo: 'public/assets/ts/i18n/**; public/assets/json/languages/**; public/assets/ts/app/config.ts'
 ---
 
 # i18n System
