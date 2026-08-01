@@ -5,7 +5,7 @@ import { FieldValue } from 'firebase-admin/firestore';
 // ============================================================
 // MIGRATION 15 (Phase 3): User Doc Cleanup
 //
-// Four independent, idempotent operations:
+// Five independent, idempotent operations:
 //
 //   1. Embedded summaries → subcollections
 //      Moves trips/destinations/listings objects out of the user
@@ -24,6 +24,10 @@ import { FieldValue } from 'firebase-admin/firestore';
 //   4. Destination image field → add missing image field
 //      Adds `image: { active: false, background: "" }`
 //      to all destination documents and their summaries that lack it.
+//
+//   5. Destination entry images field → add missing images field
+//      Adds `images: []` to every destination entry (restaurants,
+//      snacks, nightlife, tourism, shopping) that lacks it.
 //
 // Idempotent — safe to re-run. Supports ?dryRun=true.
 // ============================================================
@@ -66,6 +70,9 @@ interface Phase3Report {
 	destImagesAlreadyPresent: number;
 	destSummaryImagesAdded: number;
 	destSummaryImagesAlreadyPresent: number;
+	// entry images field migration
+	destEntryImagesAdded: number;
+	destEntryImagesAlreadyPresent: number;
 	errors: string[];
 }
 
@@ -89,6 +96,11 @@ class BatchManager {
 		options?: FirebaseFirestore.SetOptions,
 	) {
 		this.current.set(ref, data, options ?? {});
+		this.rotate();
+	}
+
+	update(ref: FirebaseFirestore.DocumentReference, data: FirebaseFirestore.UpdateData<FirebaseFirestore.DocumentData>) {
+		this.current.update(ref, data);
 		this.rotate();
 	}
 
@@ -139,6 +151,8 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 		destImagesAlreadyPresent: 0,
 		destSummaryImagesAdded: 0,
 		destSummaryImagesAlreadyPresent: 0,
+		destEntryImagesAdded: 0,
+		destEntryImagesAlreadyPresent: 0,
 		errors: [],
 	};
 
@@ -215,6 +229,9 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 
 		// --- Step 5: Add missing image field to destination docs & summaries ---
 		await addDestinationImageField(db, dryRun, report);
+
+		// --- Step 6: Add missing images field to destination entries ---
+		await addDestinationEntryImagesField(db, dryRun, report);
 
 		console.log('[migration-15] Done.', JSON.stringify(report, null, 2));
 		res.status(200).json({ success: true, dryRun, report });
@@ -389,6 +406,8 @@ async function cleanupOldPermissionsDoc(
 
 const DEFAULT_IMAGE = { active: false, background: '' };
 
+const DESTINATION_CATEGORIES = ['restaurants', 'snacks', 'nightlife', 'tourism', 'shopping'];
+
 async function addDestinationImageField(
 	db: FirebaseFirestore.Firestore,
 	dryRun: boolean,
@@ -455,5 +474,62 @@ async function addDestinationImageField(
 		`[migration-15] Step 5 done. ` +
 			`Docs: ${report.destImagesAdded} added, ${report.destImagesAlreadyPresent} already present. ` +
 			`Summaries: ${report.destSummaryImagesAdded} added, ${report.destSummaryImagesAlreadyPresent} already present.`,
+	);
+}
+
+// ============================================================
+// STEP 6: Add missing images field to destination entries
+// ============================================================
+
+async function addDestinationEntryImagesField(
+	db: FirebaseFirestore.Firestore,
+	dryRun: boolean,
+	report: Phase3Report,
+) {
+	console.log('[migration-15] Step 6: Adding images field to destination entries...');
+
+	const destSnap = await db.collection('destinations').get();
+	console.log(`[migration-15] Found ${destSnap.size} destination document(s).`);
+
+	const batch = new BatchManager();
+
+	for (const destDoc of destSnap.docs) {
+		const data = destDoc.data();
+		const patch: Record<string, any> = {};
+
+		for (const category of DESTINATION_CATEGORIES) {
+			const entries = data[category];
+			if (!entries || typeof entries !== 'object') continue;
+
+			for (const [entryId, entry] of Object.entries(entries as Record<string, any>)) {
+				if (!entry || typeof entry !== 'object') continue;
+				if (Array.isArray(entry.images)) {
+					report.destEntryImagesAlreadyPresent++;
+					continue;
+				}
+				patch[`${category}.${entryId}.images`] = [];
+				report.destEntryImagesAdded++;
+			}
+		}
+
+		if (Object.keys(patch).length === 0) continue;
+
+		const noun = Object.keys(patch).length === 1 ? 'entry' : 'entries';
+		if (dryRun) {
+			console.log(`  destinations/${destDoc.id}: would add images field to ${Object.keys(patch).length} ${noun}.`);
+			continue;
+		}
+
+		console.log(`  destinations/${destDoc.id}: adding images field to ${Object.keys(patch).length} ${noun}.`);
+		batch.update(destDoc.ref, patch);
+	}
+
+	if (!dryRun) {
+		await batch.commitAll();
+	}
+
+	console.log(
+		`[migration-15] Step 6 done. ` +
+			`Entries: ${report.destEntryImagesAdded} added, ${report.destEntryImagesAlreadyPresent} already present.`,
 	);
 }

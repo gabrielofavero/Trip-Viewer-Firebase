@@ -89,6 +89,18 @@ interface DestinationEntry {
   media:       string;   // TikTok or YouTube embed URL, or empty string
   price:       string;   // price indicator: "$", "$$", "$$$", "$$$$", or free-text
   rating:      string;   // numeric rating as string: "1"–"5", or empty string
+  images:      EntryImage[];  // images attached to this place (see below)
+}
+```
+
+### `EntryImage` — Entry Images
+
+Added August 2026. Each entry may hold up to 5 images (same shape as trip accommodation images). Entries created before this date may lack the field; Migration 15 (Phase 3) backfills with `[]`.
+
+```ts
+interface EntryImage {
+  description: string;  // caption for the image, or empty string
+  link:        string;  // image URL
 }
 ```
 
@@ -148,7 +160,13 @@ At minimum, `pt` is always present. English (`en`) is set when the user provides
       "region": "Cachambi",
       "media": "https://www.tiktok.com/@erikagentille/video/7258423588607495429",
       "price": "$$$",
-      "rating": "4"
+      "rating": "4",
+      "images": [
+        {
+          "description": "Fachada do restaurante",
+          "link": "https://example.com/taste-lab.jpg"
+        }
+      ]
     }
   },
   "snacks": {
@@ -166,7 +184,8 @@ At minimum, `pt` is always present. English (`en`) is set when the user provides
       "region": "Leblon",
       "media": "https://www.tiktok.com/@caroolnigro/video/7330085048646946053",
       "price": "$",
-      "rating": "3"
+      "rating": "3",
+      "images": []
     }
   },
   "nightlife": {},
@@ -214,6 +233,7 @@ users/{uid}/destinationSummaries/{destId}
 | Aspect | Destination | Trip |
 |---|---|---|
 | Subcollections | None | `accommodations`, `transportation`, `itinerary` |
+| Entry images | `images` per entry (up to 5, link/URL) | `images` per accommodation (up to 5, link/URL) |
 | Protected data | None | PIN-protected reservation codes/links |
 | Categories | Inline entries in the doc itself | Category toggles only (`modules`) |
 | Images | Single `image` object (background only) | Single `image` object |

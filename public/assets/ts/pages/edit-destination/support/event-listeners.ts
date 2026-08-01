@@ -7,6 +7,11 @@ import {
 	deleteDestinationAction,
 } from '../edit-destination.js';
 import { openDescriptionModal, saveDescription } from '../categories/description.js';
+import {
+	openDestinationImages,
+	toggleDestinationImage,
+	confirmDestinationImages,
+} from '../categories/image.js';
 import { openAttributions } from '../../../utils/attributions.js';
 import { closeToast } from '../../../utils/messages.js';
 import { closeModal } from '../../../theme/visibility.js';
@@ -25,6 +30,16 @@ export function loadEditDestinationListeners() {
 			const index = parseInt(target.getAttribute('data-index'));
 			if (category && !isNaN(index)) openDescriptionModal(category, index);
 		},
+		'open-destination-images': (target) => {
+			const category = target.getAttribute('data-category');
+			const index = parseInt(target.getAttribute('data-index'));
+			if (category && !isNaN(index)) openDestinationImages(category, index);
+		},
+		'toggle-destination-image': (target) => {
+			const category = target.getAttribute('data-category');
+			const index = parseInt(target.getAttribute('data-index'));
+			if (category && !isNaN(index)) toggleDestinationImage(category, index);
+		},
 		'move-destination': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
 			const category = target.getAttribute('data-category');
@@ -37,5 +52,6 @@ export function loadEditDestinationListeners() {
 		deleteDestinationAction,
 		moveDestination,
 		saveDescription,
+		confirmDestinationImages,
 	});
 }

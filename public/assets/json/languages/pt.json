@@ -231,6 +231,7 @@
 		"undefined": "Destino não definido",
 		"recent": "Adicionado recentemente",
 		"location_placeholder": "São Paulo",
+		"image_description_placeholder": "Uma foto do destino",
 		"delete": {
 			"title": "Excluir destino",
 			"message": "Tem certeza que deseja excluir o destino \"{{name}}\"? A ação não poderá ser desfeita"

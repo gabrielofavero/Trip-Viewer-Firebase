@@ -162,33 +162,131 @@ function typeCheck() {
 if (watchMode) {
 	console.log("[watch] Watching public/ for changes...");
 
-	// Use a simple polling-based watcher for cross-platform compatibility.
+	// Keep the watcher alive through transient errors. A build watcher restarting
+	// every time the OS watcher hiccups is worse than a noisy log, so we log
+	// uncaught exceptions / rejections and continue running.
+	process.on("uncaughtException", (err) => {
+		console.error("[watch] Uncaught exception (keeping watcher alive):", err);
+	});
+	process.on("unhandledRejection", (reason) => {
+		console.error("[watch] Unhandled rejection (keeping watcher alive):", reason);
+	});
+
 	let debounceTimer = null;
-	const watchDir = (dir) => {
-		try {
-			fs.watch(dir, { recursive: true }, (eventType, filename) => {
-				if (filename) {
-					// Debounce: wait 300ms after last change before rebuilding
-					clearTimeout(debounceTimer);
-					debounceTimer = setTimeout(() => {
-						console.log(`[watch] Change detected: ${filename}`);
-						build();
-					}, 300);
+	let building = false;
+	let queued = false;
+
+	// Debounce + serialize rebuilds: coalesce bursts of change events and never
+	// run build() concurrently with itself.
+	const scheduleBuild = (reason) => {
+		clearTimeout(debounceTimer);
+		debounceTimer = setTimeout(() => {
+			if (building) {
+				queued = true;
+				return;
+			}
+			building = true;
+			try {
+				console.log(`[watch] Change detected: ${reason}`);
+				build();
+			} catch (err) {
+				console.error("[watch] Build failed (watcher continues):", err);
+			} finally {
+				building = false;
+				if (queued) {
+					queued = false;
+					scheduleBuild("queued rebuild (changes arrived during build)");
 				}
-			});
+			}
+		}, 300);
+	};
+
+	// Resilient fs.watch: attach an error handler (a missing handler turns a
+	// watcher 'error' event into an uncaught exception → process crash, the
+	// classic recursive-watch failure on Windows) and recreate the watcher on
+	// error instead of dying.
+	let watcher = null;
+	const createWatcher = () => {
+		const handleEvent = (eventType, filename) => {
+			if (filename) {
+				scheduleBuild(filename);
+			}
+		};
+		const handleError = (err) => {
+			console.error(
+				`[watch] File watcher error (${err && err.message ? err.message : err}). Recreating watcher...`,
+			);
+			// Recreate shortly; the polling heartbeat below covers the gap.
+			setTimeout(() => {
+				watcher = createWatcher();
+			}, 500);
+		};
+		const attach = (w) => {
+			w.on("error", handleError);
+			return w;
+		};
+		try {
+			// Recursive watch — supported on Linux/macOS/Windows.
+			return attach(fs.watch(PUBLIC_DIR, { recursive: true }, handleEvent));
 		} catch {
-			// Some platforms don't support recursive watch — fall back to non-recursive
-			fs.watch(dir, (eventType, filename) => {
-				clearTimeout(debounceTimer);
-				debounceTimer = setTimeout(() => {
-					console.log(`[watch] Change detected: ${filename}`);
-					build();
-				}, 300);
-			});
+			// Some platforms/environments don't support recursive watch.
+			try {
+				return attach(fs.watch(PUBLIC_DIR, handleEvent));
+			} catch (err) {
+				console.error(
+					`[watch] fs.watch unavailable (${err && err.message ? err.message : err}); relying on polling heartbeat.`,
+				);
+				return null;
+			}
 		}
 	};
 
-	watchDir(PUBLIC_DIR);
+	// Polling heartbeat: on some platforms fs.watch can silently stop delivering
+	// events. Snapshot public/ (path → mtime) periodically so changes are still
+	// caught even if the OS watcher goes quiet.
+	const snapshotPublic = () => {
+		const snapshot = new Map();
+		const walk = (dir) => {
+			for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+				const full = path.join(dir, entry.name);
+				if (entry.isDirectory()) {
+					walk(full);
+				} else {
+					try {
+						snapshot.set(full, fs.statSync(full).mtimeMs);
+					} catch {
+						// File vanished mid-scan — ignore.
+					}
+				}
+			}
+		};
+		walk(PUBLIC_DIR);
+		return snapshot;
+	};
+
+	const pollIntervalMs = 2000;
+	let lastSnapshot = snapshotPublic();
+	const poll = () => {
+		try {
+			const current = snapshotPublic();
+			if (current.size !== lastSnapshot.size) {
+				scheduleBuild("polling detected file added/removed");
+			} else {
+				for (const [file, mtime] of current) {
+					if (lastSnapshot.get(file) !== mtime) {
+						scheduleBuild("polling detected file change");
+						break;
+					}
+				}
+			}
+			lastSnapshot = current;
+		} catch (err) {
+			console.error("[watch] Poll scan failed (continuing):", err);
+		}
+	};
+
+	createWatcher();
+	setInterval(poll, pollIntervalMs);
 
 	build();
 } else {

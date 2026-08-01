@@ -450,6 +450,16 @@ export interface PlaceItem {
 	/** was "midia" */
 	media: string;
 	emoji: string;
+	/** was "imagens" — images attached to this place/venue */
+	images: PlaceImage[];
+}
+
+/** An image attached to a destination place/venue (was "imagens[i]" on PlaceItem) */
+export interface PlaceImage {
+	/** Image caption */
+	description: string;
+	/** Image URL */
+	link: string;
 }
 
 /** was "descricao" on PlaceItem */

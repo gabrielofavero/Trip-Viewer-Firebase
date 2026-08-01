@@ -57,6 +57,7 @@ if (IS_DRY_RUN) {
 
 export var CUSTOM_UPLOADS = {
 	accommodations: [],
+	destinations: [],
 	gallery: [],
 };
 var SET_RESPONSES: { message: string; success: boolean }[] = [];

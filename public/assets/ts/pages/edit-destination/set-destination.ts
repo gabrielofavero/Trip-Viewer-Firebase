@@ -10,6 +10,7 @@ import { getUID } from '../../data/firebase/auth.js';
 import { displayError, displayMessage } from '../../utils/messages.js';
 import { translate } from '../../i18n/translation.js';
 import { getDescription } from './categories/description.js';
+import { getDestinationImages } from './categories/image.js';
 import {
 	FIRESTORE_DESTINATIONS_DATA,
 	FIRESTORE_DESTINATIONS_NEW_DATA,
@@ -74,6 +75,7 @@ function buildDestinationCategoryObject(category) {
 		item.map = getID(`${category}-map-${j}`).value;
 		item.media = getID(`${category}-media-${j}`).value;
 		item.rating = getID(`${category}-rating-${j}`).value;
+		item.images = getDestinationImages(category, j);
 
 		const priceSelect = getID(`${category}-price-${j}`);
 		item.price =

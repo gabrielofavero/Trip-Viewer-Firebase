@@ -234,6 +234,7 @@
 		"undefined": "Undefined destination",
 		"recent": "Recently added",
 		"location_placeholder": "Chicago",
+		"image_description_placeholder": "A photo of the destination",
 		"delete": {
 			"title": "Delete destination",
 			"message": "Are you sure you want to delete the destination \"{{name}}\"? This action cannot be undone"

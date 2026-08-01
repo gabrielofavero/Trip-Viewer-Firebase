@@ -465,8 +465,11 @@
 
 /* Caption — helper text below inputs */
 .caption {
+	display: block;
 	font-style: italic;
 	color: var(--text-muted);
+	margin-top: 8px;
+	line-height: 1.4;
 }
 
 .edit-page-content section p:last-child {

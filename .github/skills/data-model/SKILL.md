@@ -179,8 +179,11 @@ Empty categories are `{}`.
   media:       string     // TikTok/YouTube embed URL or ""
   price:       string     // "$", "$$", "$$$", "$$$$", or free-text
   rating:      string     // "1"–"5", or ""
+  images:      { description: string, link: string }[]  // up to 5 images per entry (added Aug 2026)
 }
 ```
+
+> **Note:** The `images` field may be absent in entries created before August 2026. Always guard with optional chaining or `Array.isArray(entry.images)`. Migration 15 (Phase 3) backfills missing `images` with `[]`.
 
 ### `image` Field
 
@@ -295,3 +298,4 @@ Detailed document structure references in `docs/database/`:
 8. **Itinerary destinationIds can be objects** — not just plain string IDs; some docs store `{ id: string, title: string }` entries.
 9. **Destination `image` field may be absent** in documents created before July 2026. Always guard with optional chaining (`dest.image?.active`). Migration 15 backfills missing fields.
 10. **Destination summaries live under `users/{uid}/destinationSummaries/{destId}`** — not embedded in the user doc. The index page reads these, not the full destination documents.
+11. **Destination entry `images` may be absent** in entries created before August 2026 — guard with optional chaining (`entry.images?.length`). Migration 15 (Phase 3) backfills `images: []` on all destination entries across all categories.

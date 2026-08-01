@@ -256,16 +256,8 @@ export function openTripDialog(tripId) {
 		durRow.style.display = 'none';
 	}
 
-	// Destinations
-	const destRow = getID('trip-dialog-dest-row');
-	const destCount = getTripDestinationCount(trip);
-	if (destCount > 0) {
-		destRow.style.display = 'flex';
-		getID('trip-dialog-dests').textContent =
-			destCount + ' ' + translate('destination.title').toLowerCase();
-	} else {
-		destRow.style.display = 'none';
-	}
+	// Last updated
+	getID('trip-dialog-updated').textContent = getLastUpdatedOnText(trip.version?.lastUpdated);
 
 	// Modules
 	const modulesDiv = getID('trip-dialog-modules');
@@ -312,15 +304,6 @@ function getTripDurationDays(trip: Record<string, any>): number {
 	const start = new Date(trip.start.year, trip.start.month - 1, trip.start.day);
 	const end = new Date(trip.end.year, trip.end.month - 1, trip.end.day);
 	return Math.max(1, Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1);
-}
-
-function getTripDestinationCount(trip) {
-	// This is a rough count — we don't have destinations linked at this level,
-	// but we can check if the trip has destinations module active
-	if (!trip.modules || !trip.modules.destinations) return 0;
-	// Count destinations from USER_DATA that might be linked (if we had linkage)
-	// For now, just indicate if destinations module is active
-	return trip.modules.destinations ? 1 : 0;
 }
 
 /*--------------------------------------------------------------

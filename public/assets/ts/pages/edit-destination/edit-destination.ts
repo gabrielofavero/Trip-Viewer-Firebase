@@ -48,6 +48,7 @@ import { getDescription } from './categories/description.js';
 import { setDescription } from './categories/description.js';
 import { updateDescriptionButtonLabel } from './categories/description.js';
 import { loadCurrencySelects } from './categories/price.js';
+import { DESTINATION_IMAGES, removeDestinationImages } from './categories/image.js';
 import { addDestination } from './existing-destination.js';
 import { addDestinationHTML } from './existing-destination.js';
 import { addSnacks } from './new-destination.js';
@@ -202,6 +203,7 @@ export function addListenerToRemoveDestination(category, j) {
 		},
 	];
 	addRemoveChildListenerDS(category, j, dynamicSelects);
+	getID(`remove-${category}-${j}`).addEventListener('click', () => removeDestinationImages(category, j));
 }
 
 async function loadDestinations() {
@@ -359,6 +361,7 @@ export function moveDestination(j, category) {
 			price: getID(`${category}-price-${j}`).value,
 			media: getID(`${category}-media-${j}`).value,
 			rating: getID(`${category}-rating-${j}`).value,
+			images: DESTINATION_IMAGES[`${category}-${j}`] || [],
 		};
 
 		const newJ = getLastJ(`${newCategory}-box`) + 1;

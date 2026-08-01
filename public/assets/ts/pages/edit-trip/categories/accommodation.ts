@@ -22,7 +22,6 @@ import {
 } from '../../../utils/messages.js';
 import { initializeSortableForGroup } from '../../../ui/sortable.js';
 import { loadImageSelector, uploadImages } from '../../../data/firebase/storage.js';
-import { fade } from '../../../theme/animations.js';
 import { FIRESTORE_NEW_DATA } from '../../../data/state.js';
 import { IMAGE_UPLOAD_STATUS } from '../../../data/firebase/storage.js';
 import { CUSTOM_UPLOADS } from '../../../utils/set.js';
@@ -129,7 +128,6 @@ export function openAccommodationImages(j) {
 	properties.title = translate('labels.image.add_title');
 	properties.containers = getContainersInput();
 	properties.content = getAccommodationImageContent(size);
-	properties.icons = [{ type: 'goBack', action: `closeInnerAccommodationImage()` }];
 	properties.buttons = [
 		{
 			type: 'cancel',
@@ -148,10 +146,9 @@ export function openAccommodationImages(j) {
 		if (image) {
 			getID(`accommodations-image-description-${k}`).value = image.description;
 			getID(`link-accommodations-${k}`).value = image.link;
-			getID(`accommodations-image-button-${k}`).innerText =
-				image.description || `${translate('labels.image.title')} ${k}`;
 		}
 
+		updateAccommodationImageButtonLabel(k);
 		loadImageSelector(`accommodations-${k}`);
 		getID(`link-accommodations-${k}`).addEventListener('change', () =>
 			validateImageLink(`link-accommodations-${k}`),
@@ -160,43 +157,40 @@ export function openAccommodationImages(j) {
 }
 
 function getAccommodationImageContent(size = 5) {
-	let buttons = '';
 	let inner = '';
 	for (let k = 1; k <= size; k++) {
-		buttons += `
-        <div class='input-button-container' id="input-button-container-${k}">
-            <button id="accommodations-image-button-${k}" class="btn input-button draggable" data-action="open-inner-accommodation-image" data-index="${k}" style="margin-top:1em">${translate('labels.image.add')}</button>
-            <i class="iconify drag-icon" data-icon="mdi:drag"></i>
-        </div>`;
-
 		inner += `
-        <div id="accommodations-image-${k}" style="display: none">
-            <div class="nice-form-group customization-box" id="accommodations-box-${k}">
-                <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-                <input id="upload-accommodations-${k}" class='image-uploadbox' type="file" accept=".jpg, .jpeg, .png" />
-                <p id="upload-accommodations-${k}-size-message" class="message-text"> <i class='red'>*</i> ${translate('labels.image.upload_limit')}</p>
-            </div>
+        <div class='input-button-container' id="input-button-container-${k}">
+            <button id="accommodations-image-button-${k}" class="btn input-button draggable" data-action="toggle-accommodation-image" data-index="${k}" style="margin-top:1em">${translate('labels.image.add')}</button>
+            <i class="iconify drag-icon" data-icon="mdi:drag"></i>
 
-            <div class="nice-form-group">
-                <input id="link-accommodations-${k}" class='image-input' type="url" placeholder="${translate('labels.image.placeholder')}" value=""
-                class="icon-right">
-            </div>
-
-            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-accommodations-${k}">
-                <div class="nice-form-group">
-                <input type="radio" name="type-accommodations-${k}" id="enable-link-accommodations-${k}" checked>
-                <label for="enable-link-accommodations-${k}">${translate('labels.image.link')}</label>
+            <div id="accommodations-image-${k}" style="display: none">
+                <div class="nice-form-group customization-box" id="accommodations-box-${k}">
+                    <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+                    <input id="upload-accommodations-${k}" class='image-uploadbox' type="file" accept=".jpg, .jpeg, .png" />
+                    <p id="upload-accommodations-${k}-size-message" class="message-text"> <i class='red'>*</i> ${translate('labels.image.upload_limit')}</p>
                 </div>
 
                 <div class="nice-form-group">
-                <input type="radio" name="type-accommodations-${k}" id="enable-upload-accommodations-${k}">
-                <label for="enable-upload-accommodations-${k}">${translate('labels.image.upload')} <span class="opcional"> (${translate('labels.image.upload_limit')})</span></label>
+                    <input id="link-accommodations-${k}" class='image-input' type="url" placeholder="${translate('labels.image.placeholder')}" value="" class="icon-right">
                 </div>
-            </fieldset>
 
-            <div class="nice-form-group">
-                <label>${translate('labels.image.description')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-                <input id="accommodations-image-description-${k}" type="text" placeholder="${translate('trip.accommodation.description_placeholder')}" />
+                <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-accommodations-${k}">
+                    <div class="nice-form-group">
+                    <input type="radio" name="type-accommodations-${k}" id="enable-link-accommodations-${k}" checked>
+                    <label for="enable-link-accommodations-${k}">${translate('labels.image.link')}</label>
+                    </div>
+
+                    <div class="nice-form-group">
+                    <input type="radio" name="type-accommodations-${k}" id="enable-upload-accommodations-${k}">
+                    <label for="enable-upload-accommodations-${k}">${translate('labels.image.upload')} <span class="opcional"> (${translate('labels.image.upload_limit')})</span></label>
+                    </div>
+                </fieldset>
+
+                <div class="nice-form-group">
+                    <label>${translate('labels.image.description')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+                    <input id="accommodations-image-description-${k}" type="text" placeholder="${translate('trip.accommodation.description_placeholder')}" />
+                </div>
             </div>
         </div>
         `;
@@ -205,38 +199,27 @@ function getAccommodationImageContent(size = 5) {
 	return `
     <p style="font-size: 0.8em; margin-top: -20px">${translate('labels.image.quantity_limit')}</p>
     <div class="draggable-area" data-group="image-accommodations" id="image-accommodations-buttons">
-        ${buttons}
-    </div>
-    <div id="inner-accommodations-image">
         ${inner}
     </div>
     `;
 }
 
-export function openInnerAccommodationImage(k) {
-	fade([`image-accommodations-buttons`], [`accommodations-image-${k}`]);
-	getID('back-icon').style.visibility = 'visible';
+export function toggleAccommodationImage(k) {
+	const editor = getID(`accommodations-image-${k}`);
+	if (!editor) return;
+	editor.style.display = editor.style.display === 'block' ? 'none' : 'block';
+	updateAccommodationImageButtonLabel(k);
 }
 
-export function closeInnerAccommodationImage() {
-	for (const orderId of getChildIDs('inner-accommodations-image')) {
-		const k = getJ(orderId);
-		const id = `accommodations-image-${k}`;
-		if (getID(id).style.display == 'block') {
-			let title = translate('labels.image.add');
-
-			if (hasInnerAccommodationImage(k)) {
-				title =
-					getID(`accommodations-image-description-${k}`).value ||
-					`${translate('labels.image.title')} ${k}`;
-			}
-
-			getID(`accommodations-image-button-${k}`).innerText = title;
-			fade([`accommodations-image-${k}`], [`image-accommodations-buttons`]);
-			break;
-		}
+function updateAccommodationImageButtonLabel(k) {
+	const button = getID(`accommodations-image-button-${k}`);
+	if (!button) return;
+	if (hasInnerAccommodationImage(k)) {
+		const description = getID(`accommodations-image-description-${k}`)?.value;
+		button.innerText = description || `${translate('labels.image.title')} ${k}`;
+	} else {
+		button.innerText = translate('labels.image.add');
 	}
-	getID('back-icon').style.visibility = 'hidden';
 }
 
 function hasInnerAccommodationImage(k) {
@@ -248,13 +231,8 @@ function hasInnerAccommodationImage(k) {
 }
 
 export function confirmAccommodationImages(j) {
-	const isEditing = getID(`accommodations-image-${j}`).style.display === 'block';
-	if (isEditing) {
-		closeInnerAccommodationImage();
-	} else {
-		saveAccommodationImages(j);
-		setImageButtonLabel(j);
-	}
+	saveAccommodationImages(j);
+	setImageButtonLabel(j);
 }
 
 export function setImageButtonLabel(j) {

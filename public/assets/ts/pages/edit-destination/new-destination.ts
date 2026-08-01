@@ -4,6 +4,7 @@ import { translate } from '../../i18n/translation.js';
 import { getNewSvg } from '../../theme/icons.js';
 import { getDescriptionHTML } from './categories/description.js';
 import { getOtherPriceVisibility, loadCurrencySelects, PRICE_OPTIONS } from './categories/price.js';
+import { DESTINATION_IMAGES } from './categories/image.js';
 import { addDestinationsListeners } from './edit-destination.js';
 import { addListenerToRemoveDestination } from './edit-destination.js';
 
@@ -62,6 +63,11 @@ export function addRestaurants() {
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <button id="restaurants-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.description.add')}</button>
+          </div>
+
+          <div class="nice-form-group customization-box">
+            <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="restaurants-images-button-${j}" data-action="open-destination-images" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.image.add_title')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -140,6 +146,7 @@ export function addRestaurants() {
     `);
 
 	addCreatedDate(category, j);
+	DESTINATION_IMAGES[`${category}-${j}`] = [];
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	addSelectorDS('region', `restaurants-region-select-${j}`, `restaurants-region-${j}`);
@@ -198,6 +205,11 @@ export function addSnacks() {
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <button id="snacks-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.description.add')}</button>
+          </div>
+
+          <div class="nice-form-group customization-box">
+            <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="snacks-images-button-${j}" data-action="open-destination-images" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.image.add_title')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -277,6 +289,7 @@ export function addSnacks() {
     `);
 
 	addCreatedDate(category, j);
+	DESTINATION_IMAGES[`${category}-${j}`] = [];
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	addSelectorDS('region', `snacks-region-select-${j}`, `snacks-region-${j}`);
@@ -335,6 +348,11 @@ export function addNightlife() {
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <button id="nightlife-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.description.add')}</button>
+          </div>
+
+          <div class="nice-form-group customization-box">
+            <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="nightlife-images-button-${j}" data-action="open-destination-images" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.image.add_title')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -413,6 +431,7 @@ export function addNightlife() {
     `);
 
 	addCreatedDate(category, j);
+	DESTINATION_IMAGES[`${category}-${j}`] = [];
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	addSelectorDS('region', `nightlife-region-select-${j}`, `nightlife-region-${j}`);
@@ -471,6 +490,11 @@ export function addTourism() {
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <button id="tourism-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.description.add')}</button>
+          </div>
+
+          <div class="nice-form-group customization-box">
+            <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="tourism-images-button-${j}" data-action="open-destination-images" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.image.add_title')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -549,6 +573,7 @@ export function addTourism() {
     `);
 
 	addCreatedDate(category, j);
+	DESTINATION_IMAGES[`${category}-${j}`] = [];
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	addSelectorDS('region', `tourism-region-select-${j}`, `tourism-region-${j}`);
@@ -608,6 +633,11 @@ export function addShopping() {
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <button id="shopping-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.description.add')}</button>
+          </div>
+
+          <div class="nice-form-group customization-box">
+            <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="shopping-images-button-${j}" data-action="open-destination-images" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.image.add_title')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -687,6 +717,7 @@ export function addShopping() {
     `);
 
 	addCreatedDate(category, j);
+	DESTINATION_IMAGES[`${category}-${j}`] = [];
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	addSelectorDS('region', `shopping-region-select-${j}`, `shopping-region-${j}`);

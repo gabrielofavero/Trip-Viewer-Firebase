@@ -177,15 +177,19 @@ protegido → protected
 
 ## Phase 3: Hotfixes & Cleanup (`migratePhase3`)
 
-**File:** `functions/src/migrations/15-migrate-phase3-hotfixes.ts`
+**File:** `functions/src/migrations/15-migrate-phase3-improvements.ts`
 
-### Three independent operations per user:
+### Operations:
 
 1. **Embedded summaries → subcollections:** Moves `trips`/`destinations`/`listings` objects from user doc into subcollections. Clears embedded arrays to `[]`.
 
 2. **Permissions migration:** Moves `users/{uid}.permissions.{upload, unlimitedUploadSize}` into `admin/permissions/{type}/{uid}` documents. Cleans up old array-based `admin/permissions` doc.
 
 3. **Legacy field removal:** Strips `name`, `photo`, `visibility`, `permissions`, `permissions_legacy`, `trips`, `destinations`, `listings` from user docs using `FieldValue.delete()`.
+
+4. **Destination image field:** Adds `image: { active: false, background: "" }` to destination documents and destination summaries that lack it.
+
+5. **Destination entry images field:** Adds `images: []` to every destination entry (restaurants, snacks, nightlife, tourism, shopping) that lacks it. Uses dot-path `update()` so only the missing nested field is written.
 
 ---
 

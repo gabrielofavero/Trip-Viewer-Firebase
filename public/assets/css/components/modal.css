@@ -49,6 +49,15 @@
 	margin-bottom: 20px;
 }
 
+/* Message modal header icons (back/close) — right-aligned so the close X sits in the corner */
+.message-text-container > .icon-container {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 12px;
+	margin-bottom: 10px;
+}
+
 .error-message {
 	margin-top: 10px;
 }

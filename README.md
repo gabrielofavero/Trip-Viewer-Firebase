@@ -32,18 +32,17 @@ npm run dev
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 163   | 160  | 3         | 0       |
-| 🏆   | Feature     | F000 | 170   | 146  | 22        | 2       |
-| 📈   | Improvement | M000 | 160   | 135  | 23        | 2       |
+| 🐞   | Bug         | B000 | 164   | 161  | 3         | 0       |
+| 🏆   | Feature     | F000 | 170   | 148  | 22        | 0       |
+| 📈   | Improvement | M000 | 163   | 136  | 23        | 4       |
 | ⚔️   | Epic        | E000 | 51    | 34   | 9         | 8       |
 
 ## Backlog
 
 ### High Priority
 
-- 🏆 **F155:** Add images for each destination item
-- 📈 **M153:** Improve destination preview on trip card for index.html
-- 🏆 **F170:** Add Maps integration into edit page
+- 📈 **M164:** Improve itinerary modal
+- ⚔️ **E045:** Add Maps integration into edit page
 
 ### Medium Priority
 
@@ -51,16 +50,18 @@ npm run dev
 - ⚔️ **E027:** New Front-End: view.html
   - no more iframe/embeds. Use html injection instead
   - destination subcategory to be refined (no more need to read destination on view.html)
-- 📈 **M154:** Reduce firestore calls on index
-- ⚔️ **E045:** New Front-End: itinerary.html
-- ⚔️ **E046:** New Front-End: expenses.html
+- 📈 **M153:** Minor visual improvements on itinerary.html
+- 📈 **M162:** Minor visual improvements on expenses.html
+- ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
+- ⚔️ **E043:** Offline Mode
 
 ### Low Priority
 
-- ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
-- ⚔️ **E043:** Offline Mode
-- ⚔️ **E047:** Implement Unit Tests (after TypeScript migration)
+- 📈 **M154:** Reduce firestore calls on index
+- ⚔️ **E047:** Implement Unit Tests
 - ⚔️ **E019:** Implement Sonarqube
+- ⚔️ **E046:** Implement Playwright
+- 📈 **M163:** Improve live reload functionality
 
 ## Done
 
@@ -68,6 +69,9 @@ npm run dev
 - 🐞 **B163:** Fix color and destination image issues
 - 🏆 **F159:** Add AI skill for browsing pages
 - 📈 **M161:** Improve AI skills detection
+- 🏆 **F155:** Add images for each destination item
+- 🐞 **B164:** Cannot add new itinerary post migration
+- 📈 **M164:** Improve bulletpoints for trip cards on index
 
 ### July 2026
 - ⚔️ **E048:** Database ovehaul

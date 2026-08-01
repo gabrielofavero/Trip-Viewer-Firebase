@@ -201,7 +201,7 @@ async function loadInnerItineraryCurrentData(j, k, period, isNew) {
 
 				const tour = dataEntry.item.id;
 				if (tour) {
-					getID(`inner-itinerary-select-passeio`).value = tour;
+					getID(`inner-itinerary-select-tour`).value = tour;
 					linkedItem.innerText = translate('trip.itinerary.linked_destination');
 				}
 				break;
@@ -217,7 +217,7 @@ async function loadInnerItineraryCurrentData(j, k, period, isNew) {
 
 // Modal Navigation
 export async function openInnerItineraryItem(j) {
-	const height = getID('inner-itinerary-tela-principal').offsetHeight;
+	const height = getID('inner-itinerary-main-screen').offsetHeight;
 	const itemSelect = getID('inner-itinerary-select-item');
 	itemSelect.style.minHeight = `${height}px`;
 
@@ -225,19 +225,19 @@ export async function openInnerItineraryItem(j) {
 		getID('message-title').innerText = translate('trip.itinerary.link_item');
 	}
 
-	animate(['inner-itinerary-item-selecionar'], ['inner-itinerary-tela-principal']);
+	animate(['inner-itinerary-select-item'], ['inner-itinerary-main-screen']);
 	getID('back-icon').style.visibility = 'visible';
 	loadTextReplacementCheckboxes(j);
 	TEXT_REPLACEMENT.applied = false;
 }
 
 export function openInnerItinerarySwap() {
-	const height = getID('inner-itinerary-tela-principal').offsetHeight;
+	const height = getID('inner-itinerary-main-screen').offsetHeight;
 	const itemSwap = getID('inner-itinerary-swap-item');
 	itemSwap.style.minHeight = `${height}px`;
 
 	getID('message-title').innerText = translate('trip.itinerary.swap_title');
-	animate(['inner-itinerary-item-trocar'], ['inner-itinerary-tela-principal']);
+	animate(['inner-itinerary-swap-item'], ['inner-itinerary-main-screen']);
 	getID('back-icon').style.visibility = 'visible';
 }
 
@@ -249,7 +249,7 @@ export function closeInnerItinerary(j) {
 		} else if (getID('inner-itinerary-item-accommodations-radio').checked) {
 			linkedItem.innerText = getSelectCurrentLabel(getID(`inner-itinerary-select-accommodations`));
 		} else if (getID('inner-itinerary-item-destinations-radio').checked) {
-			linkedItem.innerText = getSelectCurrentLabel(getID(`inner-itinerary-select-passeio`));
+			linkedItem.innerText = getSelectCurrentLabel(getID(`inner-itinerary-select-tour`));
 		} else {
 			linkedItem.innerText = translate('trip.itinerary.link_item');
 		}
@@ -261,12 +261,12 @@ export function closeInnerItinerary(j) {
 		replaceTimeIfEnabled();
 		TEXT_REPLACEMENT.applied = true;
 
-		animate(['inner-itinerary-tela-principal'], ['inner-itinerary-item-selecionar']);
+		animate(['inner-itinerary-main-screen'], ['inner-itinerary-select-item']);
 	} else if (getID('inner-itinerary-swap-item').style.display === 'block') {
 		getID('message-title').innerText = getInnerItineraryMessageTitle(j);
 		getID('back-icon').style.visibility = 'hidden';
 
-		animate(['inner-itinerary-tela-principal'], ['inner-itinerary-item-trocar']);
+		animate(['inner-itinerary-main-screen'], ['inner-itinerary-swap-item']);
 	}
 }
 
@@ -331,11 +331,11 @@ function addInnerItinerary(j, k?, period?) {
 			item.id = getID(`inner-itinerary-select-accommodations`).value;
 		} else if (
 			getID('inner-itinerary-item-destinations-radio').checked &&
-			getID(`inner-itinerary-select-passeio`).value
+			getID(`inner-itinerary-select-tour`).value
 		) {
 			item.type = 'destinations';
 			item.location = getID(`inner-itinerary-select-location`).value;
-			item.id = getID(`inner-itinerary-select-passeio`).value;
+			item.id = getID(`inner-itinerary-select-tour`).value;
 			item.category = getID(`inner-itinerary-select-category`).value;
 		}
 
@@ -430,7 +430,7 @@ async function loadInnerItineraryListeners(j) {
 	getID(`inner-itinerary-select-category`).addEventListener('change', () =>
 		innerItinerarySelectCategoryAction(),
 	);
-	getID('inner-itinerary-select-passeio').addEventListener('change', () =>
+	getID('inner-itinerary-select-tour').addEventListener('change', () =>
 		loadTextReplacementCheckboxes(j),
 	);
 
@@ -445,14 +445,14 @@ async function loadInnerItineraryListeners(j) {
 		pairTurnos('inner-itinerary-select-period'),
 	);
 	getID('inner-itinerary-select-swap-period').addEventListener('change', () =>
-		pairTurnos('inner-itinerary-select-troca-period'),
+		pairTurnos('inner-itinerary-select-swap-period'),
 	);
 }
 
 async function innerItinerarySelectLocationAction() {
 	const selectLocal = getID('inner-itinerary-select-location');
 	const selectCategoria = getID('inner-itinerary-select-category');
-	const selectPasseio = getID('inner-itinerary-select-passeio');
+	const selectPasseio = getID('inner-itinerary-select-tour');
 
 	const id = selectLocal.value;
 	const locais =
@@ -474,7 +474,7 @@ async function innerItinerarySelectLocationAction() {
 async function innerItinerarySelectCategoryAction() {
 	const selectLocal = getID('inner-itinerary-select-location');
 	const selectCategoria = getID('inner-itinerary-select-category');
-	const selectPasseio = getID('inner-itinerary-select-passeio');
+	const selectPasseio = getID('inner-itinerary-select-tour');
 
 	const id2 = selectLocal.value;
 	const locais2 =
@@ -583,7 +583,7 @@ export function getPeriod(inicioHora) {
 
 function pairTurnos(callerID) {
 	const id1 = 'inner-itinerary-select-period';
-	const id2 = 'inner-itinerary-select-troca-period';
+	const id2 = 'inner-itinerary-select-swap-period';
 
 	const turno1 = getID(id1).value;
 	const turno2 = getID(id2).value;

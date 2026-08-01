@@ -3,10 +3,10 @@ import { getTravelersFieldset } from '../../travelers.js';
 // Modal Content (HTML)
 export function getInnerItineraryContent(j, k, period, selects, isNew = false) {
 	return `<div class="inner-itinerary" id="inner-itinerary-box">
-                <div id="inner-itinerary-tela-main">
+                <div id="inner-itinerary-main-screen">
                     <div class="nice-form-group" style="display: ${Object.values(selects).some((item: any) => item.active) ? 'block' : 'none'}">
                         <label style="margin-bottom: 0px;">${translate('trip.itinerary.linked_item')} <span class="opcional">(${translate('labels.optional')})</span></label>
-                        <button id="inner-itinerary-item-linked" class="btn input-button placeholder-text" data-action="open-inner-itinerary-item" data-index="${j}" style="margin-top: 8px;">${translate('trip.itinerary.link_item')}</button>
+                        <button id="inner-itinerary-linked-item" class="btn input-button placeholder-text" data-action="open-inner-itinerary-item" data-index="${j}" style="margin-top: 8px;">${translate('trip.itinerary.link_item')}</button>
                     </div>
 
                     <div class="nice-form-group">
@@ -59,8 +59,8 @@ export function getInnerItineraryContent(j, k, period, selects, isNew = false) {
                         </button>
                     </div>
                 </div>
-                <div id="inner-itinerary-item-select" class="inner-itinerary" style="display: none;">
-                    <div class="nice-form-group" id="inner-itinerary-item-select-radio">
+                <div id="inner-itinerary-select-item" class="inner-itinerary" style="display: none;">
+                    <div class="nice-form-group" id="inner-itinerary-select-item-radio">
                         <label>${translate('labels.type')}</label>
                         <fieldset class="nice-form-group">
                             <div class="nice-form-group" id="inner-itinerary-none-radio-container">
@@ -138,16 +138,16 @@ export function getInnerItineraryContent(j, k, period, selects, isNew = false) {
 
                 </div>
 
-                <div id="inner-itinerary-item-swap" class="inner-itinerary" style="display: none;">
+                <div id="inner-itinerary-swap-item" class="inner-itinerary" style="display: none;">
                     <div class="nice-form-group">
                         <label>${translate('labels.date')}</label>
-                        <select class="edit-select" id="inner-itinerary-select-troca-data">
+                        <select class="edit-select" id="inner-itinerary-select-swap-date">
                             ${selects.dates}
                         </select>
                     </div>
                     <div class="nice-form-group">
                         <label>${translate('datetime.time_of_day.title')}</label>
-                        <select class="edit-select" id="inner-itinerary-select-troca-period">
+                        <select class="edit-select" id="inner-itinerary-select-swap-period">
                             <option value="earlyMorning">${translate('datetime.time_of_day.early_hours')}</option>
                             <option value="morning">${translate('datetime.time_of_day.morning')}</option>
                             <option value="afternoon">${translate('datetime.time_of_day.afternoon')}</option>

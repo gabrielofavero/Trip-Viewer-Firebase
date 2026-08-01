@@ -6,6 +6,7 @@ import { translate } from '../../i18n/translation.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../../data/state.js';
 import { setDescription } from './categories/description.js';
 import { updateDescriptionButtonLabel } from './categories/description.js';
+import { DESTINATION_IMAGES, setDestinationImageButtonLabel } from './categories/image.js';
 import { loadCurrencyOptions } from './categories/price.js';
 import { loadCurrencyValueAndVisibility } from './categories/price.js';
 import { addSnacks } from './new-destination.js';
@@ -151,6 +152,9 @@ export function addDestinationHTML(category, j, item) {
 
 	getID(`${category}-media-${j}`).value = item.media || '';
 	getID(`${category}-rating-${j}`).value = item.rating || '';
+
+	DESTINATION_IMAGES[`${category}-${j}`] = Array.isArray(item.images) ? item.images : [];
+	setDestinationImageButtonLabel(category, j);
 }
 
 function loadMapData() {
