@@ -226,6 +226,7 @@ function inject(options = {}) {
 		"shared/scripts-vendor.html": readPartial("scripts-vendor.html"),
 		"shared/scripts-core.html": readPartial("scripts-core.html"),
 		"shared/top-bar.html": readPartial("top-bar.html"),
+		"shared/nav-helper.html": readPartial("nav-helper.html"),
 	};
 
 	// LiveReload is included by default; pass { noLiveReload: true } to skip it

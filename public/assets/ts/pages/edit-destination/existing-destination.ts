@@ -58,8 +58,6 @@ function loadBasicDestinationData() {
 
 	const image = FIRESTORE_DESTINATIONS_DATA?.image || {};
 	loadCustomizationImageData(image.background, 'link-background');
-	loadCustomizationImageData(image.light, 'link-logo-light');
-	loadCustomizationImageData(image.dark, 'link-logo-dark');
 }
 
 function loadCustomizationImageData(value, id) {

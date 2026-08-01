@@ -50,8 +50,6 @@ function getImageObject() {
 	return {
 		active: getID('images-enabled').checked,
 		background: getID('link-background').value || '',
-		light: getID('link-logo-light').value || '',
-		dark: getID('link-logo-dark').value || '',
 	};
 }
 

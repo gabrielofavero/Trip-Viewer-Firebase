@@ -20,14 +20,12 @@ Google My Maps URL for the destination. Empty string if not set.
 ### `image` — `DestinationImage`
 ```ts
 {
-  dark:       string;   // dark-theme image URL
-  light:      string;   // light-theme image URL
-  background: string;   // fallback/background image URL
+  background: string;   // background/hero image URL
   active:     boolean;  // whether the image section is active
 }
 ```
 
-> **Note:** `image` may be absent in legacy documents created before July 2026. Migration 15 (Step 5) populates missing fields with `{ active: false, background: "", light: "", dark: "" }`.
+> **Note:** `image` may be absent in legacy documents created before July 2026. Migration 15 (Step 5) populates missing fields with `{ active: false, background: "" }`.
 
 ### `modules` — `DestinationModules`
 Feature toggles controlling which category sections are visible in the destination viewer.
@@ -116,8 +114,6 @@ At minimum, `pt` is always present. English (`en`) is set when the user provides
   "currency": "BRL",
   "myMaps": "https://www.google.com/maps/d/viewer?mid=1I57N4Q2LvrLCwCz9wKFwIv3TqvFDBN4H&usp=sharing",
   "image": {
-    "dark": "",
-    "light": "",
     "background": "https://example.com/rio-hero.jpg",
     "active": true
   },
@@ -220,7 +216,7 @@ users/{uid}/destinationSummaries/{destId}
 | Subcollections | None | `accommodations`, `transportation`, `itinerary` |
 | Protected data | None | PIN-protected reservation codes/links |
 | Categories | Inline entries in the doc itself | Category toggles only (`modules`) |
-| Images | Single `image` object (same shape as trip) | Single `image` object |
+| Images | Single `image` object (background only) | Single `image` object |
 | Dates | None | `start` / `end` DateObjects |
 | Travelers | None | `travelers` array |
 | Links | Only `myMaps` (single URL) | `links` object with multiple URLs |

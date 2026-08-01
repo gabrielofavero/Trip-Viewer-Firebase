@@ -349,7 +349,7 @@ export function loadDestinationsTab() {
 	let html = '';
 	for (const dest of destinations) {
 		const dateStr = getLastUpdatedOnText(dest.version?.lastUpdated);
-		const bgImage = dest.image?.active ? dest.image.background || dest.image.light || dest.image.dark || '' : '';
+		const bgImage = dest.image?.active ? dest.image.background || '' : '';
 		const imageHTML = bgImage
 			? `<div class="dest-card-image" style="background-image: url('${bgImage}')"></div>`
 			: `<div class="dest-card-image no-image"><i class="iconify card-image-icon" data-icon="material-symbols:location-on"></i></div>`;
@@ -425,7 +425,7 @@ export function openDestDialog(destId) {
 
 	// Image
 	const imgDiv = getID('dest-dialog-image');
-	const bgImage = dest.image?.active ? dest.image.background || dest.image.light || dest.image.dark || '' : '';
+	const bgImage = dest.image?.active ? dest.image.background || '' : '';
 	if (bgImage) {
 		imgDiv.style.backgroundImage = `url('${bgImage}')`;
 		imgDiv.className = 'dialog-image';

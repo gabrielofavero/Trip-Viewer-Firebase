@@ -189,6 +189,7 @@ if (watchMode) {
 	};
 
 	watchDir(PUBLIC_DIR);
+
 	build();
 } else {
 	build();

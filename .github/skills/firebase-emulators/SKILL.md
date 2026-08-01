@@ -108,6 +108,13 @@ npm run backup
 firebase emulators:export ./.emulator-data
 ```
 
+> **Note — test credentials live in the export:** each export includes `auth_export/accounts.json`
+> with the Auth emulator's test users. Each account has an `email` and a `passwordHash` in the form
+> `fakeHash:salt=...:password=<PLAINTEXT>` — the plaintext password is embedded after `password=`.
+> To sign in an AI/browser session, read these credentials and authenticate (see the
+> `browser-navigation` skill). The real-time export at `.emulator-data/auth_export/accounts.json` is
+> kept fresh by `npm run dev`'s `--export-on-exit`.
+
 ### Import (restore saved state)
 ```bash
 firebase emulators:start --import=./.emulator-data

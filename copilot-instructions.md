@@ -9,10 +9,11 @@ This is **TripViewer** — a vanilla TypeScript/JavaScript single-page applicati
 
 ## Skills
 
-This workspace has **11 domain-specific skills** in `.github/copilot/skills/`. When working on relevant files or topics, read the corresponding SKILL.md:
+This workspace has **12 domain-specific agent skills** in `.github/skills/`. These are registered skills that Copilot discovers automatically — you do NOT need the user to invoke them with `/`. Load them proactively:
 
 | Skill | When to Read |
 |---|---|
+| `browser-navigation` | Navigating the TripViewer app in the browser (routes, URL params, auth, loading states) |
 | `query-firestore` | Reading the local Firestore emulator data |
 | `data-model` | Understanding Firestore schemas, PIN-protected storage, security rules |
 | `build-pipeline` | Building, watching, debugging the build process |
@@ -25,7 +26,10 @@ This workspace has **11 domain-specific skills** in `.github/copilot/skills/`. W
 | `backlog-management` | README task IDs, readme.py script, version calculation |
 | `git-workflow` | Branch strategy, commit conventions, sync/deploy flow |
 
-**Before answering questions about any of these domains, read the relevant SKILL.md first.**
+**Rules for using these skills:**
+1. **Before answering any question that touches one of these domains, you MUST read the matching `SKILL.md` first** — never answer from general knowledge.
+2. The file-scoped skills (e.g. `typescript-conventions`, `css-ui-patterns`, `i18n-system`, `build-pipeline`, `migration-system`, `firebase-emulators`, `backup-restore`, `backlog-management`, `git-workflow`) are auto-loaded via their `applyTo` globs when you touch matching files — do not skip them.
+3. The task-scoped skills (`browser-navigation`, `query-firestore`, `data-model`) have no `applyTo`; load them based on the task description match.
 
 ## Key Files & Locations
 

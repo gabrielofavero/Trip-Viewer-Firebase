@@ -734,6 +734,7 @@
 			"images": {
 				"title": "Custom images",
 				"subtitle": "Add a wallpaper and a logo",
+				"background_subtitle": "Add a background image",
 				"logo_light": "Logo: Light mode",
 				"logo_dark": "Logo: Dark mode"
 			},

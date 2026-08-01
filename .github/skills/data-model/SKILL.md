@@ -141,7 +141,7 @@ Full reference: `docs/database/destination-document-structure.md`
   title:    string              // display name (e.g. "Rio de Janeiro")
   currency: string              // 3-letter code (BRL, EUR, USD)
   myMaps:   string              // Google My Maps URL, or ""
-  image:    { dark, light, background: string, active: bool }
+  image:    { background: string, active: bool }
   modules:  { restaurants, snacks, nightlife, tourism, shopping, map: bool }
   sharing:  { owner: uid, active: true, editors: [] }
   version:  { lastUpdated: string }
@@ -184,13 +184,13 @@ Empty categories are `{}`.
 
 ### `image` Field
 
-New as of July 2026. Same shape as trip/listings:
+New as of July 2026. Background image only (no per-theme logos):
 
 ```ts
-{ dark: string, light: string, background: string, active: boolean }
+{ background: string, active: boolean }
 ```
 
-May be absent in legacy documents. Migration 15 (Step 5) backfills with `{ active: false, background: "", light: "", dark: "" }`.
+May be absent in legacy documents. Migration 15 (Step 5) backfills with `{ active: false, background: "" }`.
 
 ### User Summary Subcollection
 

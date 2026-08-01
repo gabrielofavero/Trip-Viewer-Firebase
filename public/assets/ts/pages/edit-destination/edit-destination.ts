@@ -35,7 +35,11 @@ import {
 import { hideContent, loadEditModule, showContent } from '../../theme/visibility.js';
 import { closeAccordions, openLastAccordion } from '../../ui/accordion.js';
 import { translate } from '../../i18n/translation.js';
-import { deleteUserObjectDB, getSingleData } from '../../data/firebase/database.js';
+import { deleteUserObjectDB, getPermissions, getSingleData } from '../../data/firebase/database.js';
+import {
+	loadImageSelector,
+	setPermissions,
+} from '../../data/firebase/storage.js';
 import { loadVisibilityIndex } from '../home/support/visibility.js';
 import { loadEditDestinationListeners } from './support/event-listeners.js';
 import { getVisibility } from '../../theme/theme.js';
@@ -78,6 +82,8 @@ export async function loadEditDestinationPage() {
 	setDocumentId(getURLParam('d'));
 	populateDevPage();
 
+	setPermissions(await getPermissions());
+
 	loadVisibilityIndex();
 	initEditTabs();
 	loadEnabled();
@@ -86,6 +92,8 @@ export async function loadEditDestinationPage() {
 	if (DOCUMENT_ID) {
 		await loadDestinations();
 	}
+
+	loadImageSelector('background');
 
 	loadEventListeners();
 	stopLoadingScreen();
@@ -152,8 +160,6 @@ function loadEventListeners() {
 
 	// Image Validation in Customization module
 	getID('link-background').addEventListener('change', () => validateImageLink('link-background'));
-	getID('link-logo-light').addEventListener('change', () => validateImageLink('link-logo-light'));
-	getID('link-logo-dark').addEventListener('change', () => validateImageLink('link-logo-dark'));
 
 	getID('save-btn').addEventListener('click', () => {
 		startLoadingScreen();

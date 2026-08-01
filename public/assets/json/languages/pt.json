@@ -731,6 +731,7 @@
 			"images": {
 				"title": "Imagens Personalizadas",
 				"subtitle": "Adicione um papel de parede e um logotipo",
+				"background_subtitle": "Adicione uma imagem de fundo",
 				"logo_light": "Logotipo: Tema Claro",
 				"logo_dark": "Logotipo: Tema Escuro"
 			},

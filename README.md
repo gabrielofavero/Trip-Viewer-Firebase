@@ -32,7 +32,7 @@ npm run dev
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 162   | 159  | 3         | 0       |
+| 🐞   | Bug         | B000 | 163   | 160  | 3         | 0       |
 | 🏆   | Feature     | F000 | 170   | 146  | 22        | 2       |
 | 📈   | Improvement | M000 | 160   | 135  | 23        | 2       |
 | ⚔️   | Epic        | E000 | 51    | 34   | 9         | 8       |
@@ -63,6 +63,11 @@ npm run dev
 - ⚔️ **E019:** Implement Sonarqube
 
 ## Done
+
+### August 2026
+- 🐞 **B163:** Fix color and destination image issues
+- 🏆 **F159:** Add AI skill for browsing pages
+- 📈 **M161:** Improve AI skills detection
 
 ### July 2026
 - ⚔️ **E048:** Database ovehaul

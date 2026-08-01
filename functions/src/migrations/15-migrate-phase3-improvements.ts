@@ -22,7 +22,7 @@ import { FieldValue } from 'firebase-admin/firestore';
 //      from user docs.
 //
 //   4. Destination image field → add missing image field
-//      Adds `image: { active: false, background: "", light: "", dark: "" }`
+//      Adds `image: { active: false, background: "" }`
 //      to all destination documents and their summaries that lack it.
 //
 // Idempotent — safe to re-run. Supports ?dryRun=true.
@@ -387,7 +387,7 @@ async function cleanupOldPermissionsDoc(
 // STEP 5: Add missing image field to destination docs & summaries
 // ============================================================
 
-const DEFAULT_IMAGE = { active: false, background: '', light: '', dark: '' };
+const DEFAULT_IMAGE = { active: false, background: '' };
 
 async function addDestinationImageField(
 	db: FirebaseFirestore.Firestore,

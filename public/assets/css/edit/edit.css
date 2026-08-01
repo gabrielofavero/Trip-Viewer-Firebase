@@ -62,6 +62,7 @@
 .side-by-side-color-box {
 	display: flex;
 	gap: 16px;
+	margin-top: 16px;
 }
 
 .side-by-side-color-box .nice-form-group {
