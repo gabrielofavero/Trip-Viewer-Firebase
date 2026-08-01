@@ -343,7 +343,7 @@ function typeToSummarySubcollection(type: string): string {
 function getSummaryKeys(type: string): string[] {
 	switch (type) {
 		case 'destinations':
-			return ['currency', 'title', 'version'];
+			return ['currency', 'image', 'title', 'version'];
 		case 'listings':
 			return ['colors', 'description', 'image', 'subtitle', 'title', 'version'];
 		case 'trips':
@@ -359,6 +359,7 @@ function getSingleUserData(type: string, data: Record<string, unknown>): Record<
 		case 'destinations':
 			return {
 				currency: data.currency,
+				image: data.image,
 				title: data.title,
 				version: data.version,
 			};

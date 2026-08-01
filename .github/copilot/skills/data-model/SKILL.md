@@ -15,7 +15,7 @@ TripViewer uses Firebase Firestore with a **two-tier PIN-protected architecture*
 |---|---|---|
 | `admin` | `admin` | List of admin UIDs (`{ admins: string[] }`) |
 | `config` | `system` | Global config (`{ registrationOpen: boolean }`) |
-| `users` | `{authUid}` | User profile with `destinations`, `trips`, `listings` arrays |
+| `users` | `{authUid}` | User profile with `destinationSummaries`, `tripSummaries`, `listingSummaries` subcollections |
 | `trips` | `{tripId}` | Trip document (non-sensitive fields) |
 | `trips/{tripId}/accommodations` | `{accId}` | Accommodation sub-documents |
 | `trips/{tripId}/transportation` | `{legId}` | Transport leg sub-documents (+ `_settings` doc) |
@@ -23,7 +23,8 @@ TripViewer uses Firebase Firestore with a **two-tier PIN-protected architecture*
 | `trips/protected/{pin}/{tripId}` | — | Protected sensitive data (reservation codes, links) |
 | `expenses` | `{tripId}` | Expenses document (matches parent trip ID) |
 | `expenses/protected/{pin}/{tripId}` | — | Protected expenses for PIN-enabled trips |
-| `destinations` | `{destId}` | Destination documents |
+| `destinations` | `{destId}` | Destination documents (self-contained, no subcollections) |
+| `users/{uid}/destinationSummaries` | `{destId}` | Lightweight destination summary for index cards |
 | `listings` | `{listingId}` | Listing documents |
 | `protected` | `{tripId}` | PIN lookup (`{ pin: string, sharing: { owner, active, editors } }`) |\n| `protected` | `_placeholder` | Placeholder document to ensure collection exists |
 | `admin/permissions` | `{userId}` | Per-user permission flags |
@@ -127,6 +128,82 @@ The `type` field stores **i18n translation keys** (e.g., `trip.transportation.ty
 
 ---
 
+## Destination Document (`destinations/{destId}`)
+
+Destination documents are self-contained — no subcollections. They store curated location guides with category-grouped entries.
+
+Full reference: `docs/database/destination-document-structure.md`
+
+### Top-Level Fields
+
+```ts
+{
+  title:    string              // display name (e.g. "Rio de Janeiro")
+  currency: string              // 3-letter code (BRL, EUR, USD)
+  myMaps:   string              // Google My Maps URL, or ""
+  image:    { dark, light, background: string, active: bool }
+  modules:  { restaurants, snacks, nightlife, tourism, shopping, map: bool }
+  sharing:  { owner: uid, active: true, editors: [] }
+  version:  { lastUpdated: string }
+  // + five category fields (see below)
+}
+```
+
+### Category Fields
+
+Each category is a map of `entryId → DestinationEntry`:
+
+| Category | Field | Typical entries |
+|---|---|---|
+| Restaurants | `restaurants` | Full-service dining |
+| Snacks | `snacks` | Cafés, bakeries, brunch, fast food |
+| Nightlife | `nightlife` | Bars, pubs, clubs |
+| Tourism | `tourism` | Attractions, landmarks, museums |
+| Shopping | `shopping` | Shops, markets, malls |
+
+Empty categories are `{}`.
+
+### DestinationEntry
+
+```ts
+{
+  isNew:       boolean    // marked as recently added
+  createdAt:   string     // ISO 8601
+  name:        string     // display name
+  emoji:       string     // emoji icon (e.g. "🍴", "☕🧇")
+  description: { pt?: string, en?: string }  // multi-language
+  website:     string     // official URL or ""
+  map:         string     // Google Maps URL
+  instagram:   string     // Instagram profile URL or ""
+  region:      string     // neighborhood/area (e.g. "Ipanema")
+  media:       string     // TikTok/YouTube embed URL or ""
+  price:       string     // "$", "$$", "$$$", "$$$$", or free-text
+  rating:      string     // "1"–"5", or ""
+}
+```
+
+### `image` Field
+
+New as of July 2026. Same shape as trip/listings:
+
+```ts
+{ dark: string, light: string, background: string, active: boolean }
+```
+
+May be absent in legacy documents. Migration 15 (Step 5) backfills with `{ active: false, background: "", light: "", dark: "" }`.
+
+### User Summary Subcollection
+
+Each destination has a lightweight summary at `users/{uid}/destinationSummaries/{destId}`:
+
+```ts
+{ title: string, currency: string, image: DestinationImage, version: { lastUpdated: string } }
+```
+
+These summaries power the index page destination cards. The `image` field was added July 2026.
+
+---
+
 ## PIN-Based Protected Storage
 
 The two-tier system works as follows:
@@ -191,11 +268,18 @@ The canonical TypeScript interfaces are in `public/assets/ts/models/`:
 - `trip.model.ts` — `Trip`, `Accommodation`, `TransportLeg`, `ItineraryDay`, etc.
 - `expense.model.ts` — `ExpensesDoc`, `ExpenseEntry`
 - `traveler.model.ts` — `Traveler`
-- `destination.model.ts` — Destination interface
+- `destination.model.ts` — `Destination`, `DestinationEntry`
 - `new-schema.ts` — Post-migration English field names
 
 Service layer in `public/assets/ts/data/services/` wraps Firestore CRUD:
 - `trip.service.ts`, `expense.service.ts`, `destination.service.ts`, `auth.service.ts`
+
+### Database Documentation
+
+Detailed document structure references in `docs/database/`:
+- `trip-document-structure.md` — Trip document, subcollections, protected data
+- `expenses-document-structure.md` — Expenses document structure
+- `destination-document-structure.md` — Destination document, entry fields, summary subcollection
 
 ---
 
@@ -209,3 +293,5 @@ Service layer in `public/assets/ts/data/services/` wraps Firestore CRUD:
 6. **DateObject.second may be missing** in some `end` dates of legacy documents — treat as optional when reading.
 7. **Traveler.id may be absent** in legacy documents — the `validateTravelersObject()` function in `traveler.model.ts` backfills missing IDs at runtime.
 8. **Itinerary destinationIds can be objects** — not just plain string IDs; some docs store `{ id: string, title: string }` entries.
+9. **Destination `image` field may be absent** in documents created before July 2026. Always guard with optional chaining (`dest.image?.active`). Migration 15 backfills missing fields.
+10. **Destination summaries live under `users/{uid}/destinationSummaries/{destId}`** — not embedded in the user doc. The index page reads these, not the full destination documents.

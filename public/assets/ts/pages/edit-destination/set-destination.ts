@@ -27,6 +27,7 @@ export async function buildDestinationObject() {
 		currency:
 			getID('currency').value == 'other' ? getID('other-currency').value : getID('currency').value,
 		myMaps: getID('map-link').value,
+		image: getImageObject(),
 		modules: {
 			snacks: getID(`snacks-enabled`).checked,
 			shopping: getID(`shopping-enabled`).checked,
@@ -43,6 +44,15 @@ export async function buildDestinationObject() {
 			lastUpdated: new Date().toISOString(),
 		},
 	});
+}
+
+function getImageObject() {
+	return {
+		active: getID('images-enabled').checked,
+		background: getID('link-background').value || '',
+		light: getID('link-logo-light').value || '',
+		dark: getID('link-logo-dark').value || '',
+	};
 }
 
 function buildDestinationCategoryObject(category) {

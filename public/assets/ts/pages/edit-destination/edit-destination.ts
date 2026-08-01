@@ -26,6 +26,7 @@ import {
 import {
 	hasUnsavedChanges,
 	snapshotFormState,
+	validateImageLink,
 	validateInstagramLink,
 	validateLink,
 	validateMapLink,
@@ -95,6 +96,7 @@ export async function loadEditDestinationPage() {
 }
 
 function loadEnabled() {
+	loadEditModule('images');
 	loadEditModule('restaurants');
 	loadEditModule('snacks');
 	loadEditModule('nightlife');
@@ -147,6 +149,11 @@ function loadEventListeners() {
 		openLastAccordion('shopping');
 		buildDS('region');
 	});
+
+	// Image Validation in Customization module
+	getID('link-background').addEventListener('change', () => validateImageLink('link-background'));
+	getID('link-logo-light').addEventListener('change', () => validateImageLink('link-logo-light'));
+	getID('link-logo-dark').addEventListener('change', () => validateImageLink('link-logo-dark'));
 
 	getID('save-btn').addEventListener('click', () => {
 		startLoadingScreen();

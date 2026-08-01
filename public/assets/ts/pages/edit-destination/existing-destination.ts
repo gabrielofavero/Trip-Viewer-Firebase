@@ -49,6 +49,25 @@ function loadBasicDestinationData() {
 	}
 
 	loadCurrencyOptions();
+
+	// Load image customization data
+	if (FIRESTORE_DESTINATIONS_DATA?.image?.active === true) {
+		getID('images-enabled').checked = true;
+		getID('images-enabled-content').style.display = 'block';
+	}
+
+	const image = FIRESTORE_DESTINATIONS_DATA?.image || {};
+	loadCustomizationImageData(image.background, 'link-background');
+	loadCustomizationImageData(image.light, 'link-logo-light');
+	loadCustomizationImageData(image.dark, 'link-logo-dark');
+}
+
+function loadCustomizationImageData(value, id) {
+	if (value && typeof value === 'string') {
+		getID(id).value = value;
+	} else if (value && value.link) {
+		getID(id).value = value.link;
+	}
 }
 
 function loadExistingDestination(category) {

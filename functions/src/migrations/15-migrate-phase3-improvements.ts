@@ -1,10 +1,11 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { FieldValue } from 'firebase-admin/firestore';
 
 // ============================================================
 // MIGRATION 15 (Phase 3): User Doc Cleanup
 //
-// Three independent, idempotent operations per user doc:
+// Four independent, idempotent operations:
 //
 //   1. Embedded summaries → subcollections
 //      Moves trips/destinations/listings objects out of the user
@@ -19,6 +20,10 @@ import * as admin from 'firebase-admin';
 //   3. Legacy fields → FieldValue.delete()
 //      Strips name, photo, visibility, permissions, permissions_legacy
 //      from user docs.
+//
+//   4. Destination image field → add missing image field
+//      Adds `image: { active: false, background: "", light: "", dark: "" }`
+//      to all destination documents and their summaries that lack it.
 //
 // Idempotent — safe to re-run. Supports ?dryRun=true.
 // ============================================================
@@ -56,6 +61,11 @@ interface Phase3Report {
 	permissionsAlreadyExist: number;
 	// legacy field removal
 	fieldsRemoved: number;
+	// image field migration
+	destImagesAdded: number;
+	destImagesAlreadyPresent: number;
+	destSummaryImagesAdded: number;
+	destSummaryImagesAlreadyPresent: number;
 	errors: string[];
 }
 
@@ -73,8 +83,12 @@ class BatchManager {
 		this.batches.push(this.current);
 	}
 
-	set(ref: FirebaseFirestore.DocumentReference, data: FirebaseFirestore.DocumentData) {
-		this.current.set(ref, data);
+	set(
+		ref: FirebaseFirestore.DocumentReference,
+		data: FirebaseFirestore.DocumentData,
+		options?: FirebaseFirestore.SetOptions,
+	) {
+		this.current.set(ref, data, options ?? {});
 		this.rotate();
 	}
 
@@ -121,6 +135,10 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 		permissionsMigrated: 0,
 		permissionsAlreadyExist: 0,
 		fieldsRemoved: 0,
+		destImagesAdded: 0,
+		destImagesAlreadyPresent: 0,
+		destSummaryImagesAdded: 0,
+		destSummaryImagesAlreadyPresent: 0,
 		errors: [],
 	};
 
@@ -194,6 +212,9 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 
 		// --- Step 4: Clean up old array-based admin/permissions doc ---
 		await cleanupOldPermissionsDoc(db, dryRun);
+
+		// --- Step 5: Add missing image field to destination docs & summaries ---
+		await addDestinationImageField(db, dryRun, report);
 
 		console.log('[migration-15] Done.', JSON.stringify(report, null, 2));
 		res.status(200).json({ success: true, dryRun, report });
@@ -295,7 +316,7 @@ async function migratePermissions(
 		}
 
 		console.log(`  Creating admin/permissions/${permType}/${uid}`);
-		batch.set(permDocRef, { _created: admin.firestore.FieldValue.serverTimestamp() });
+		batch.set(permDocRef, { _created: FieldValue.serverTimestamp() });
 		report.permissionsMigrated++;
 	}
 
@@ -314,7 +335,7 @@ async function removeLegacyFields(
 	const patch: Record<string, any> = {};
 	for (const field of FIELDS_TO_REMOVE) {
 		if (field in data) {
-			patch[field] = admin.firestore.FieldValue.delete();
+			patch[field] = FieldValue.delete();
 			report.fieldsRemoved++;
 		}
 	}
@@ -360,4 +381,79 @@ async function cleanupOldPermissionsDoc(
 
 	console.log('[migration-15] Deleting old admin/permissions doc (array format).');
 	await oldDocRef.delete();
+}
+
+// ============================================================
+// STEP 5: Add missing image field to destination docs & summaries
+// ============================================================
+
+const DEFAULT_IMAGE = { active: false, background: '', light: '', dark: '' };
+
+async function addDestinationImageField(
+	db: FirebaseFirestore.Firestore,
+	dryRun: boolean,
+	report: Phase3Report,
+) {
+	console.log('[migration-15] Step 5: Adding image field to destination documents...');
+
+	const destSnap = await db.collection('destinations').get();
+	console.log(`[migration-15] Found ${destSnap.size} destination document(s).`);
+
+	const batch = new BatchManager();
+
+	for (const destDoc of destSnap.docs) {
+		const data = destDoc.data();
+		if (!data.image) {
+			if (dryRun) {
+				report.destImagesAdded++;
+				console.log(`  destinations/${destDoc.id}: would add image field.`);
+			} else {
+				console.log(`  destinations/${destDoc.id}: adding image field.`);
+				batch.set(destDoc.ref, { image: DEFAULT_IMAGE }, { merge: true });
+				report.destImagesAdded++;
+			}
+		} else {
+			report.destImagesAlreadyPresent++;
+		}
+	}
+
+	if (!dryRun) {
+		await batch.commitAll();
+	}
+
+	// Now update destination summaries in user subcollections
+	console.log('[migration-15] Step 5: Adding image field to destination summaries...');
+
+	const usersSnap = await db.collection('users').get();
+	const summaryBatch = new BatchManager();
+
+	for (const userDoc of usersSnap.docs) {
+		const summariesSnap = await userDoc.ref.collection('destinationSummaries').get();
+
+		for (const summaryDoc of summariesSnap.docs) {
+			const summaryData = summaryDoc.data();
+			if (!summaryData.image) {
+				if (dryRun) {
+					report.destSummaryImagesAdded++;
+					console.log(`  users/${userDoc.id}/destinationSummaries/${summaryDoc.id}: would add image field.`);
+				} else {
+					console.log(`  users/${userDoc.id}/destinationSummaries/${summaryDoc.id}: adding image field.`);
+					summaryBatch.set(summaryDoc.ref, { image: DEFAULT_IMAGE }, { merge: true });
+					report.destSummaryImagesAdded++;
+				}
+			} else {
+				report.destSummaryImagesAlreadyPresent++;
+			}
+		}
+	}
+
+	if (!dryRun) {
+		await summaryBatch.commitAll();
+	}
+
+	console.log(
+		`[migration-15] Step 5 done. ` +
+			`Docs: ${report.destImagesAdded} added, ${report.destImagesAlreadyPresent} already present. ` +
+			`Summaries: ${report.destSummaryImagesAdded} added, ${report.destSummaryImagesAlreadyPresent} already present.`,
+	);
 }

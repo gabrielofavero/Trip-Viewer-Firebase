@@ -98,6 +98,86 @@
               data-translate="currency.title" />
           </div>
 
+          <div class="nice-form-group">
+            <input id="images-enabled" type="checkbox" class="switch" />
+            <label for="check-4">
+              <span data-translate="labels.customization.images.title"></span>
+              <small data-translate="labels.customization.images.subtitle"></small>
+            </label>
+          </div>
+
+          <div class="transparent-background" id="images-enabled-content" style="display: none;">
+
+            <div class="nice-form-group customization-box" id="background-box">
+              <label><span data-translate="labels.wallpaper"></span> <span class="optional">(<span
+                    data-translate="labels.optional"></span>)</span></label>
+              <input id="upload-background" class="image-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
+              <p id="upload-background-size-message" class="message-text"> <i class='red'>*</i> <span
+                  data-translate="labels.image.upload_limit"></span></p>
+            </div>
+
+            <div class="nice-form-group">
+              <input id="link-background" class="image-input" type="url" data-translate="labels.image.placeholder"
+                value="" class="icon-right">
+            </div>
+
+            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-background">
+              <div class="modern-radio-group">
+                <div class="nice-form-group">
+                  <input type="radio" name="type-background" id="enable-link-background" checked>
+                  <label for="enable-link-background" data-translate="labels.image.link"></label>
+                </div>
+
+                <div class="nice-form-group">
+                  <input type="radio" name="type-background" id="enable-upload-background">
+                  <label for="enable-upload-background"><span data-translate="labels.image.upload"></span><span
+                      class="optional"> (<span data-translate="labels.image.upload_limit"></span>)</span></label>
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="nice-form-group customization-box">
+              <label><span data-translate="labels.customization.images.logo_light"></span> <span class="optional">(<span
+                    data-translate="labels.optional"></span>)</span></label>
+              <input id="upload-logo-light" type="file" accept=".png" />
+              <p id="upload-logo-light-size-message" class="message-text"> <i class='red'>*</i> <span
+                  data-translate="labels.image.upload_limit"></span></p>
+            </div>
+
+            <div class="nice-form-group">
+              <input id="link-logo-light" class="image-input" type="url" data-translate="labels.image.placeholder"
+                value="" class="icon-right">
+            </div>
+
+            <div class="nice-form-group customization-box">
+              <label><span data-translate="labels.customization.images.logo_dark"></span> <span class="optional">(<span
+                    data-translate="labels.optional"></span>)</span></label>
+              <input id="upload-logo-dark" class="image-uploadbox" type="file" accept=".png" />
+              <p id="upload-logo-dark-size-message" class="message-text"> <i class='red'>*</i> <span
+                  data-translate="labels.image.upload_limit"></span></p>
+            </div>
+
+            <div class="nice-form-group">
+              <input id="link-logo-dark" class="image-input" type="url" data-translate="labels.image.placeholder"
+                value="" class="icon-right">
+            </div>
+
+            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-logo">
+              <div class="modern-radio-group">
+                <div class="nice-form-group">
+                  <input type="radio" name="type-logo" id="enable-link-logo" checked>
+                  <label for="enable-link-logo" data-translate="labels.image.link"></label>
+                </div>
+
+                <div class="nice-form-group">
+                  <input type="radio" name="type-logo" id="enable-upload-logo">
+                  <label for="enable-upload-logo"><span data-translate="labels.image.upload"></span><span
+                      class="optional"> (<span data-translate="labels.image.upload_limit"></span>)</span></label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
           <div id="delete-text" style="display: none;">
             <a href="#" data-action="delete-destination" data-translate="destination.delete.title"></a>
           </div>

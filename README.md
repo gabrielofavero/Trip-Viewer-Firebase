@@ -33,7 +33,7 @@ npm run dev
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 162   | 159  | 3         | 0       |
-| 🏆   | Feature     | F000 | 170   | 144  | 22        | 4       |
+| 🏆   | Feature     | F000 | 170   | 146  | 22        | 2       |
 | 📈   | Improvement | M000 | 160   | 135  | 23        | 2       |
 | ⚔️   | Epic        | E000 | 51    | 34   | 9         | 8       |
 
@@ -41,9 +41,7 @@ npm run dev
 
 ### High Priority
 
-- 🏆 **F168:** Add image for destination documents
 - 🏆 **F155:** Add images for each destination item
-- 🏆 **F157:** Add destination images on index.html
 - 📈 **M153:** Improve destination preview on trip card for index.html
 - 🏆 **F170:** Add Maps integration into edit page
 
@@ -85,6 +83,8 @@ npm run dev
 - 📈 **M160:** Improve emulator data backup actions
 - 🏆 **F156:** Add support for legacy trips
 - 🏆 **F158:** Add default color options for trips
+- 🏆 **F168:** Add image for destination documents
+- 🏆 **F157:** Add destination images on index.html
 
 ### June 2026
 - 🐞 **B158:** When clicking on last item of transportation tab, nothing happens

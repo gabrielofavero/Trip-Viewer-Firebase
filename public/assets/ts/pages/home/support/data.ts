@@ -349,11 +349,14 @@ export function loadDestinationsTab() {
 	let html = '';
 	for (const dest of destinations) {
 		const dateStr = getLastUpdatedOnText(dest.version?.lastUpdated);
+		const bgImage = dest.image?.active ? dest.image.background || dest.image.light || dest.image.dark || '' : '';
+		const imageHTML = bgImage
+			? `<div class="dest-card-image" style="background-image: url('${bgImage}')"></div>`
+			: `<div class="dest-card-image no-image"><i class="iconify card-image-icon" data-icon="material-symbols:location-on"></i></div>`;
+
 		html += `
 			<div class="dest-card" data-action="open-dest-dialog" data-dest-id="${dest.id}">
-				<div class="dest-card-image no-image">
-					<i class="iconify card-image-icon" data-icon="material-symbols:location-on"></i>
-				</div>
+				${imageHTML}
 				<div class="dest-card-body">
 					<div class="dest-card-title">${dest.title || translate('labels.no_title')}</div>
 					<div class="dest-card-meta">
@@ -419,6 +422,19 @@ export function openDestDialog(destId) {
 	if (!dest) return;
 
 	getID('dest-dialog-title').textContent = dest.title || translate('labels.no_title');
+
+	// Image
+	const imgDiv = getID('dest-dialog-image');
+	const bgImage = dest.image?.active ? dest.image.background || dest.image.light || dest.image.dark || '' : '';
+	if (bgImage) {
+		imgDiv.style.backgroundImage = `url('${bgImage}')`;
+		imgDiv.className = 'dialog-image';
+		imgDiv.innerHTML = '';
+	} else {
+		imgDiv.style.backgroundImage = '';
+		imgDiv.className = 'dialog-image no-image';
+		imgDiv.innerHTML = `<i class="iconify dialog-image-icon" data-icon="material-symbols:location-on"></i>`;
+	}
 
 	// Currency
 	const currRow = getID('dest-dialog-currency-row');
