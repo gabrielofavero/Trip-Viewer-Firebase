@@ -2,9 +2,17 @@
 
 # Description
 
-A **vanilla JavaScript** single-page application for planning, managing, and viewing trips, destinations, expenses, and itineraries. Data is stored in **Firebase Firestore**, with authentication via **Firebase Auth** and image uploads through **Firebase Storage**. The app is built as a static site — no framework, no bundler — with a lightweight Node.js build script that copies assets and injects HTML partials.
-
+A web application for planning, managing, and viewing trips, destinations, expenses, and itineraries.
 # How it works
+
+## Stack
+- Vanilla web application
+- Modularized HTML with partials injection for reutilization
+- Modularized CSS 
+- TypeScript that is compiled into ESM modularized JavaScript
+- Built to be ran with Google's Firebase (Firestore for data and Authenticarion for account management. Storage and Functions disabled to stay on free tier)
+- API integration with Places API
+- Customized dev environment with AI tooling to speed development / debugging
 
 ## Build Instructions
 
