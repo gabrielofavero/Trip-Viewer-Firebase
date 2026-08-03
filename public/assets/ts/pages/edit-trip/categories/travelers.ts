@@ -27,6 +27,7 @@ export function openTravelersInfo() {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	properties.title = translate('trip.travelers.info');
 	properties.containers = getContainersInput();
+	properties.fullscreen = true;
 	properties.content = getTravelersInfoContent();
 	properties.buttons = [
 		{

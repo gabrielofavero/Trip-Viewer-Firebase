@@ -1,4 +1,9 @@
-import { displayError } from '../../../utils/messages.js';
+import {
+	displayError,
+	animateDialogOpen,
+	animateDialogClose,
+	DIALOG_LEAVE_CLASS,
+} from '../../../utils/messages.js';
 import {
 	getUserData,
 	registerIfUserNotPresent,
@@ -288,15 +293,39 @@ export function openTripDialog(tripId) {
 		editTrip(trip.id);
 	};
 
-	// Show dialog with scroll lock
-	dialog.style.display = 'flex';
+	// Show dialog with scroll lock (standardized open animation on the card)
+	animateDialogOpen(dialog, 'flex');
+	const card = dialog.querySelector<HTMLElement>('.dialog-card');
+	if (card) animateDialogOpen(card);
 	document.body.classList.add('dialog-open');
 }
 
+/** Close an index dialog (overlay + card) with the standardized animation. */
+function closeIndexDialog(dialogId: string, onDone?: () => void) {
+	const dialog = getID(dialogId);
+	if (!dialog || dialog.style.display === 'none') {
+		onDone?.();
+		return;
+	}
+	const card = dialog.querySelector<HTMLElement>('.dialog-card');
+	if (card) {
+		// Fade the backdrop out while the card slides down; hide once it ends.
+		dialog.classList.add(DIALOG_LEAVE_CLASS);
+		animateDialogClose(card, () => {
+			dialog.classList.remove(DIALOG_LEAVE_CLASS);
+			dialog.style.display = 'none';
+			onDone?.();
+		});
+	} else {
+		animateDialogClose(dialog, onDone);
+	}
+}
+
 export function closeTripDialog() {
-	getID('trip-dialog').style.display = 'none';
-	document.body.classList.remove('dialog-open');
-	SELECTED_TRIP_ID = null;
+	closeIndexDialog('trip-dialog', () => {
+		document.body.classList.remove('dialog-open');
+		SELECTED_TRIP_ID = null;
+	});
 }
 
 function getTripDurationDays(trip: Record<string, any>): number {
@@ -441,13 +470,16 @@ export function openDestDialog(destId) {
 		editDestination(dest.id);
 	};
 
-	getID('dest-dialog').style.display = 'flex';
+	animateDialogOpen(getID('dest-dialog'), 'flex');
+	const destCard = getID('dest-dialog')?.querySelector<HTMLElement>('.dialog-card');
+	if (destCard) animateDialogOpen(destCard);
 	document.body.classList.add('dialog-open');
 }
 
 export function closeDestDialog() {
-	getID('dest-dialog').style.display = 'none';
-	document.body.classList.remove('dialog-open');
+	closeIndexDialog('dest-dialog', () => {
+		document.body.classList.remove('dialog-open');
+	});
 }
 
 /*--------------------------------------------------------------
@@ -495,13 +527,16 @@ export function openListDialog(listId) {
 		editListing(list.id);
 	};
 
-	getID('list-dialog').style.display = 'flex';
+	animateDialogOpen(getID('list-dialog'), 'flex');
+	const listCard = getID('list-dialog')?.querySelector<HTMLElement>('.dialog-card');
+	if (listCard) animateDialogOpen(listCard);
 	document.body.classList.add('dialog-open');
 }
 
 export function closeListDialog() {
-	getID('list-dialog').style.display = 'none';
-	document.body.classList.remove('dialog-open');
+	closeIndexDialog('list-dialog', () => {
+		document.body.classList.remove('dialog-open');
+	});
 }
 
 /*--------------------------------------------------------------

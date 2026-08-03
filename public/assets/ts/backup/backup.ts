@@ -134,6 +134,7 @@ export function displayPinRequestBackup() {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	properties.title = translate('trip.basic_information.pin.title');
 	properties.containers = getContainersInput();
+	properties.fullscreen = true;
 	properties.content = getContent();
 	properties.buttons = [
 		{ type: 'cancel' },

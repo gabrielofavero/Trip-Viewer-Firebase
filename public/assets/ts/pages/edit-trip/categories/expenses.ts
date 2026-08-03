@@ -130,6 +130,7 @@ export function openInnerExpense(category, type = '', index = -1) {
 	properties.content = getInnerExpenseContent(category, type, index);
 	properties.icons = [{ type: 'goBack', action: '' }];
 	properties.containers = getContainersInput();
+	properties.fullscreen = true;
 	properties.buttons = [
 		{
 			type: 'cancel',

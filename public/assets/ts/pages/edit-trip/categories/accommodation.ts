@@ -127,6 +127,7 @@ export function openAccommodationImages(j) {
 
 	properties.title = translate('labels.image.add_title');
 	properties.containers = getContainersInput();
+	properties.fullscreen = true;
 	properties.content = getAccommodationImageContent(size);
 	properties.buttons = [
 		{

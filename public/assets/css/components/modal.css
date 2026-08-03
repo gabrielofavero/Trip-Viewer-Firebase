@@ -43,6 +43,185 @@
 	line-height: 1.5;
 }
 
+/*--------------------------------------------------------------
+# Dialog sizing & scrolling
+# All dialogs scroll internally when their content is taller than
+# the viewport (desktop). Input/intervention dialogs additionally
+# become full-screen on mobile via the `.fullscreen-dialog` class.
+--------------------------------------------------------------*/
+.message-container,
+.input-container,
+.itinerary-container,
+.destinations-container,
+.label-container {
+	max-height: calc(100vh - 80px);
+	overflow-y: auto;
+}
+
+/* Flex auto-margin keeps short dialogs vertically centered while letting
+   tall dialogs scroll from the top (instead of clipping the start). */
+.message-container > .message-text-container,
+.input-container > .message-text-container {
+	margin: auto;
+}
+
+/* Mobile: input/intervention dialogs fill the screen, no border radius,
+   so they read as a separate page. Same auto-scroll awareness applies. */
+@media (max-width: 768px) {
+	.message-container.fullscreen-dialog,
+	.input-container.fullscreen-dialog,
+	.itinerary-container.fullscreen-dialog,
+	.destinations-container.fullscreen-dialog,
+	.label-container.fullscreen-dialog {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 100%;
+		height: 100%;
+		max-width: none;
+		max-height: none;
+		transform: none;
+		border-radius: 0;
+		overflow-y: auto;
+		padding: 24px 20px 32px;
+		animation: fullscreenDialogUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	/* Inside a fullscreen dialog let the inner itinerary screens grow
+	   naturally — the dialog itself is the scroll container on mobile. */
+	.fullscreen-dialog #inner-itinerary-box > .inner-itinerary,
+	.fullscreen-dialog #inner-itinerary-main-screen {
+		max-height: none;
+		overflow: visible;
+	}
+
+	/* Message-style fullscreen dialogs become a top → description → buttons
+	   column: icon + title pinned to the top, buttons pinned to the bottom,
+	   and the description filling the middle and scrolling on its own. */
+	.message-container.fullscreen-dialog,
+	.input-container.fullscreen-dialog {
+		overflow: hidden;
+	}
+
+	.fullscreen-dialog > .message-text-container {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		min-height: 0;
+		margin: 0;
+	}
+
+	.fullscreen-dialog > .message-text-container > .icon-container,
+	.fullscreen-dialog > .message-text-container > .message-title,
+	.fullscreen-dialog > .message-text-container > .error-message,
+	.fullscreen-dialog > .message-text-container > .button-box,
+	.fullscreen-dialog > .message-text-container > .button-box-right {
+		flex-shrink: 0;
+	}
+
+	.fullscreen-dialog > .message-text-container > .message-description {
+		flex: 1 1 auto;
+		min-height: 0;
+		overflow-y: auto;
+	}
+
+	/* Fullscreen dialogs (mobile only) leave by sliding down, mirroring the
+	   `fullscreenDialogUp` entrance. On desktop these dialogs also carry the
+	   `.fullscreen-dialog` class, but they stay centered via
+	   `translate(-50%, -50%)`, so they must use the standard `messageSlideDown`
+	   (which preserves that centering) instead of this translateY-only keyframe. */
+	.message-container.fullscreen-dialog.dialog-leave,
+	.input-container.fullscreen-dialog.dialog-leave,
+	.itinerary-container.fullscreen-dialog.dialog-leave,
+	.destinations-container.fullscreen-dialog.dialog-leave,
+	.label-container.fullscreen-dialog.dialog-leave {
+		animation: fullscreenDialogDown 0.22s ease-in forwards;
+	}
+
+	@keyframes fullscreenDialogDown {
+		from {
+			transform: translateY(0);
+			opacity: 1;
+		}
+		to {
+			transform: translateY(40px);
+			opacity: 0;
+		}
+	}
+}
+
+@keyframes fullscreenDialogUp {
+	from {
+		transform: translateY(40px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+/*--------------------------------------------------------------
+# Standardized dialog close animation
+# Mirrors the open keyframes (messageSlideUp / fullscreenDialogUp /
+# dialogSlideUp) so opening and closing feel like the same gesture.
+# The `.dialog-leave` class is added by utils/messages.ts
+# (`animateDialogClose()`), which also hides the element once the
+# animation completes.
+--------------------------------------------------------------*/
+.message-container.dialog-leave,
+.input-container.dialog-leave,
+.itinerary-container.dialog-leave,
+.destinations-container.dialog-leave,
+.label-container.dialog-leave {
+	animation: messageSlideDown 0.22s ease-in forwards;
+}
+
+@keyframes messageSlideDown {
+	from {
+		opacity: 1;
+		transform: translate(-50%, -50%) translateY(0) scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: translate(-50%, -50%) translateY(24px) scale(0.92);
+	}
+}
+
+/* Index dialog / modal cards (flex-centered, no translate base) */
+.dialog-card.dialog-leave,
+.modal-card.dialog-leave {
+	animation: dialogSlideDown 0.22s ease-in forwards;
+}
+
+@keyframes dialogSlideDown {
+	from {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(24px) scale(0.92);
+	}
+}
+
+/* Index dialog / modal backdrops fade out while the card slides down */
+.dialog-overlay.dialog-leave,
+.modal-overlay.dialog-leave {
+	animation: overlayFadeOut 0.22s ease-in forwards;
+}
+
+@keyframes overlayFadeOut {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
 .message-title {
 	font-size: 24px;
 	font-weight: 700;

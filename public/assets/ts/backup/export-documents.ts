@@ -164,6 +164,7 @@ async function showDocumentList(docType: DocType) {
 	properties.title = translate('account.export_documents.title') + ' — ' + typeLabel;
 	properties.content = '<p class="export-subtitle">' + translate('account.export_documents.select_hint') + '</p>' + buildCheckboxList(summaries, docType);
 	properties.extraClass = 'export-documents-dialog';
+	properties.fullscreen = true;
 	properties.buttons = [
 		{ type: 'cancel' },
 		{
@@ -256,6 +257,7 @@ function showPinRequestDialog(selectedIds: string[]) {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	properties.title = translate('trip.basic_information.pin.title');
 	properties.content = buildPinContent();
+	properties.fullscreen = true;
 	properties.buttons = [
 		{ type: 'cancel' },
 		{ type: 'confirm', label: translate('account.export_documents.export_button'), action: () => collectPinsAndExport(selectedIds) },

@@ -270,6 +270,20 @@
 .tab-content.active {
 	display: block;
 }
+/* Leaving animation when switching tabs (added by switchPanel in utils/messages.js) */
+.tab-content.panel-leave {
+	animation: panelSlideOut 0.22s ease-in forwards;
+}
+@keyframes panelSlideOut {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-18px);
+	}
+}
 
 /*--------------------------------------------------------------
 # Tab Header Row
@@ -837,17 +851,6 @@ body.dialog-open {
 	align-items: center;
 	gap: 12px;
 	box-shadow: var(--shadow-lg);
-	animation: toastIn 0.3s ease;
-}
-@keyframes toastIn {
-	from {
-		opacity: 0;
-		transform: translateX(-50%) translateY(20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateX(-50%) translateY(0);
-	}
 }
 .toast-close {
 	cursor: pointer;

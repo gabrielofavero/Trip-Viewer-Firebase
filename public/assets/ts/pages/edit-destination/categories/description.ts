@@ -75,6 +75,7 @@ export function openDescriptionModal(category, j) {
 		: translate('labels.description.add');
 	modalProperties.title = getID(`${category}-name-${j}`).value || defaultTitle;
 	modalProperties.containers = getContainersInput();
+	modalProperties.fullscreen = true;
 	modalProperties.content = getDescriptionContent(category);
 	modalProperties.buttons = [
 		{

@@ -244,6 +244,7 @@ function showSimpleConflictPrompt(conflicts: ConflictItem[]) {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	properties.title = translate('account.import_documents.conflict_title');
 	properties.content = buildConflictContent(conflicts);
+	properties.fullscreen = true;
 	properties.buttons = [
 		{ type: 'cancel' },
 		{ type: 'confirm', label: translate('account.import_documents.override_confirm'), action: () => executeImports(pendingFiles, false) },
@@ -258,6 +259,7 @@ function showComplexConflictPrompt(conflicts: ConflictItem[]) {
 	properties.content = buildConflictContent(conflicts) + `
 		<p class="import-conflict-hint">${translate('account.import_documents.complex_hint')}</p>
 	`;
+	properties.fullscreen = true;
 	properties.buttons = [
 		{ type: 'cancel' },
 		{ type: 'confirm', label: translate('account.import_documents.import_main_only'), action: () => executeImports(pendingFiles, true) },

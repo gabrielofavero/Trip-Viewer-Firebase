@@ -139,6 +139,9 @@ export function displayInnerItineraryMessage(index) {
 	properties.title = CURRENT_INNER_ITINERARY[index].title;
 	properties.content = CURRENT_INNER_ITINERARY[index].content;
 	properties.buttons = [];
+	// Content-heavy detail view (flight/hotel/destination boxes + galleries):
+	// auto-scrolls on desktop and fills the screen on mobile.
+	properties.fullscreen = true;
 	properties.containers.main = CURRENT_INNER_ITINERARY[index].container;
 
 	displayFullMessage(properties);

@@ -159,9 +159,7 @@ scripts/
 │   ├── build.js              ← Main build orchestrator
 │   ├── inject-partials.js    ← HTML include processor
 │   ├── deploy.py             ← Python deploy script
-│   ├── setup.ps1             ← PowerShell setup
-│   ├── translate-ids.js      ← ID translation utility
-│   └── id-class-map.json     ← Old→new ID mappings
+│   └── setup.ps1             ← PowerShell setup
 ├── dev/
 │   └── query-firestore.js    ← Firestore emulator query tool
 ├── export-maps-data/         ← Google Places API data fetcher

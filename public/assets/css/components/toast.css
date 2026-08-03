@@ -44,3 +44,38 @@
 		min-width: 80%;
 	}
 }
+
+/*--------------------------------------------------------------
+# Standardized toast open/close animations
+# `.toast-enter` / `.toast-leave` are added by utils/messages.ts
+# (`openToast()` / `closeToast()`). Both keep the base
+# `translateX(-50%)` centering so the toast never jumps sideways.
+--------------------------------------------------------------*/
+#toast.toast-enter {
+	animation: toastIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+#toast.toast-leave {
+	animation: toastOut 0.22s ease-in forwards;
+}
+
+@keyframes toastIn {
+	from {
+		opacity: 0;
+		transform: translateX(-50%) translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
+}
+
+@keyframes toastOut {
+	from {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateX(-50%) translateY(16px);
+	}
+}

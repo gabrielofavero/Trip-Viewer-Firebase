@@ -98,6 +98,9 @@ function build() {
 		console.warn("[build] WARNING: index.js not found at project root.");
 	}
 
+	// 2d. Sync package.json version to the version calculated from README.md
+	syncPackageVersion();
+
 	// Signal live-reload clients immediately after compilation (before slow type-check)
 	fs.writeFileSync(path.join(DIST_DIR, "reload"), String(Date.now()));
 
@@ -107,6 +110,56 @@ function build() {
 	// 4. Type-check TypeScript (runs after compilation so reload isn't blocked)
 	console.log("[build] Type-checking TypeScript...");
 	typeCheck();
+}
+
+// --- Package version sync ---
+
+/**
+ * Read the semantic version calculated by the README maintenance script
+ * (scripts/utils/readme.py) and persist it into package.json.
+ *
+ * The README is the single source of truth for the version; build keeps
+ * package.json in sync. Idempotent — only writes when the version differs.
+ */
+function syncPackageVersion() {
+	try {
+		const output = execSync("python scripts/utils/readme.py --version", {
+			cwd: ROOT,
+			encoding: "utf8",
+		})
+			.trim()
+			.split(/\r?\n/)
+			.filter(Boolean)
+			.pop()
+			.trim();
+
+		if (!/^\d+\.\d+\.\d+$/.test(output)) {
+			console.warn(
+				`[build] WARNING: unexpected version output "${output}"; skipping package version sync.`,
+			);
+			return;
+		}
+
+		const packageJsonPath = path.join(ROOT, "package.json");
+		if (fs.existsSync(packageJsonPath)) {
+			const pkg = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
+			if (pkg.version !== output) {
+				pkg.version = output;
+				fs.writeFileSync(
+					packageJsonPath,
+					JSON.stringify(pkg, null, 2) + "\n",
+				);
+				console.log(`[build] package.json version ${pkg.version} → ${output}`);
+			} else {
+				console.log(`[build] package.json already at ${output}.`);
+			}
+		}
+	} catch (err) {
+		console.warn(
+			"[build] WARNING: could not sync package version from README:",
+			err && err.message ? err.message : err,
+		);
+	}
 }
 
 /**

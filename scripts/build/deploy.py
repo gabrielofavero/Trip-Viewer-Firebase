@@ -363,7 +363,7 @@ def main():
         # Compute system version once from README
         try:
             import sys as _sys
-            _sys.path.insert(0, str(BASE_DIR / "scripts"))
+            _sys.path.insert(0, str(BASE_DIR / "scripts" / "utils"))
             from readme import get_system_version
             system_version = get_system_version()
         except Exception:

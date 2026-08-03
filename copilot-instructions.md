@@ -13,7 +13,7 @@ This workspace has **12 domain-specific agent skills** in `.github/skills/`. The
 
 | Skill | When to Read |
 |---|---|
-| `browser-navigation` | Navigating the TripViewer app in the browser (routes, URL params, auth, loading states) |
+| `browser-navigation` | Building TripViewer page URLs (t/d/l/e), emulator sign-in, waiting for Firestore-backed content, Loading Error triage |
 | `query-firestore` | Reading the local Firestore emulator data |
 | `data-model` | Understanding Firestore schemas, PIN-protected storage, security rules |
 | `build-pipeline` | Building, watching, debugging the build process |
@@ -29,7 +29,7 @@ This workspace has **12 domain-specific agent skills** in `.github/skills/`. The
 **Rules for using these skills:**
 1. **Before answering any question that touches one of these domains, you MUST read the matching `SKILL.md` first** — never answer from general knowledge.
 2. The file-scoped skills (e.g. `typescript-conventions`, `css-ui-patterns`, `i18n-system`, `build-pipeline`, `migration-system`, `firebase-emulators`, `backup-restore`, `backlog-management`, `git-workflow`) are auto-loaded via their `applyTo` globs when you touch matching files — do not skip them.
-3. The task-scoped skills (`browser-navigation`, `query-firestore`, `data-model`) have no `applyTo`; load them based on the task description match.
+3. The task-scoped skills (`browser-navigation`, `query-firestore`, `data-model`) have no `applyTo`; load them based on the task description match. For `browser-navigation`, read it only when the task requires URL building, emulator sign-in, waiting for Firestore-backed content, or `Loading Error` triage — for a trivial re-check of an already-loaded/verified page, skip it and just re-read the page.
 
 ## Key Files & Locations
 

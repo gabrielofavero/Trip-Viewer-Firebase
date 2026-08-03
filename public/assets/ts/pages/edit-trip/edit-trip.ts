@@ -18,6 +18,7 @@ import {
 	jsDateToKey,
 } from '../../utils/dates.js';
 import { cloneObject, getID, getURLParam } from '../../utils/dom.js';
+import { canAccessEditPage } from '../../utils/access.js';
 import {
 	deleteUserObjectDB,
 	deleteSubcollection,
@@ -89,6 +90,13 @@ startLoadingScreen();
 export async function loadEditTripPage() {
 	setDocumentId(getURLParam('t'));
 	populateDevPage();
+
+	// ── Access guard: block unauthenticated users and non-owners ──
+	// Firestore rules also enforce this server-side; this prevents the edit
+	// form from even loading for users without edit permission.
+	if (!(await canAccessEditPage(COLLECTION.TRIPS, DOCUMENT_ID))) {
+		return;
+	}
 
 	setPermissions(await getPermissions());
 
@@ -213,7 +221,10 @@ export async function deleteTripAction() {
 	const uid = await getUID();
 	if (uid) {
 		subTasks.push(
-			deleteDocument(`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.TRIP_SUMMARIES}/${DOCUMENT_ID}`, true),
+			deleteDocument(
+				`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.TRIP_SUMMARIES}/${DOCUMENT_ID}`,
+				true,
+			),
 		);
 	}
 
@@ -295,7 +306,8 @@ async function getMergedTripObject(tripData) {
 		const id = tripData.transportation.data[i].id;
 		tripData.transportation.data[i].reservation =
 			FIRESTORE_PROTECTED_DATA.transportation?.[id]?.reservation || '';
-		tripData.transportation.data[i].link = FIRESTORE_PROTECTED_DATA.transportation?.[id]?.link || '';
+		tripData.transportation.data[i].link =
+			FIRESTORE_PROTECTED_DATA.transportation?.[id]?.link || '';
 	}
 
 	if (!tripData.accommodations?.length) {
@@ -352,22 +364,30 @@ function populateDevPage() {
 
 	// ── New data objects built on save (live getters so they reflect latest values) ──
 	Object.defineProperty(page, 'newData', {
-		get() { return FIRESTORE_NEW_DATA; },
+		get() {
+			return FIRESTORE_NEW_DATA;
+		},
 		enumerable: true,
 		configurable: true,
 	});
 	Object.defineProperty(page, 'protectedNewData', {
-		get() { return FIRESTORE_PROTECTED_NEW_DATA; },
+		get() {
+			return FIRESTORE_PROTECTED_NEW_DATA;
+		},
 		enumerable: true,
 		configurable: true,
 	});
 	Object.defineProperty(page, 'expensesNewData', {
-		get() { return FIRESTORE_EXPENSES_NEW_DATA; },
+		get() {
+			return FIRESTORE_EXPENSES_NEW_DATA;
+		},
 		enumerable: true,
 		configurable: true,
 	});
 	Object.defineProperty(page, 'expensesProtectedNewData', {
-		get() { return FIRESTORE_EXPENSES_PROTECTED_NEW_DATA; },
+		get() {
+			return FIRESTORE_EXPENSES_PROTECTED_NEW_DATA;
+		},
 		enumerable: true,
 		configurable: true,
 	});

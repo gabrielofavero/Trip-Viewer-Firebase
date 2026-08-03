@@ -593,7 +593,9 @@
 			"message": {
 				"access": "You don't have permission to access this page. Please check your credentials",
 				"edit": "You don't have permission to edit this page. Please check your credentials",
-				"default": "You don't have permission to access this resource"
+				"default": "You don't have permission to access this resource",
+				"unauthenticated": "You must be signed in to edit this document. Please log in and try again",
+				"not_owner": "Only the document owner can edit this document. You don't have permission to make changes"
 			}
 		},
 		"documents": {

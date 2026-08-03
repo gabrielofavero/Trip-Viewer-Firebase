@@ -3,7 +3,6 @@ import { stopLoadingScreen, stopLoadingTimer } from './loading.js';
 import { translate } from '../i18n/translation.js';
 import { disableScroll, getVisibility } from '../theme/visibility.js';
 import { getHTMLpage } from '../app/main.js';
-import { fadeIn, fadeOut } from '../theme/animations.js';
 
 export let MESSAGE_MODAL_OPEN = false;
 // Use var (not const) to avoid TDZ errors from circular module dependencies
@@ -12,6 +11,9 @@ export var MESSAGE_PROPERTIES: Record<string, any> = {
 	content: '',
 	critical: false,
 	blur: true,
+	// Marks the dialog as an input/intervention dialog: on mobile it fills the
+	// whole screen (no border radius) so it feels like a separate page.
+	fullscreen: false,
 	erro: {},
 	icons: [],
 	buttons: [
@@ -25,6 +27,160 @@ export var MESSAGE_PROPERTIES: Record<string, any> = {
 		buttons: 'button-box',
 	},
 };
+
+/**
+ * Class added to fullscreen-capable dialogs (see `properties.fullscreen`).
+ * Styling lives in components/modal.css (`.fullscreen-dialog`).
+ */
+export const FULLSCREEN_CLASS = 'fullscreen-dialog';
+
+/*--------------------------------------------------------------
+# Standardized dialog open/close animations
+# Shared by message modals, toasts, and page dialogs (dialog-card,
+# modal-card, index tab-content...). The matching CSS lives in
+# components/modal.css and components/toast.css. Kept here so any
+# page can reuse the same open/close gesture.
+--------------------------------------------------------------*/
+export const DIALOG_LEAVE_CLASS = 'dialog-leave';
+export const TOAST_ENTER_CLASS = 'toast-enter';
+export const TOAST_LEAVE_CLASS = 'toast-leave';
+export const PANEL_LEAVE_CLASS = 'panel-leave';
+// Must stay in sync with the CSS animation durations below.
+const DIALOG_ANIM_DURATION = 220; // ms (.dialog-leave / overlay fade)
+const TOAST_ANIM_DURATION = 220; // ms (.toast-leave)
+const PANEL_ANIM_DURATION = 220; // ms (.panel-leave)
+
+/**
+ * Show `element` with the standardized dialog open animation. The element's
+ * CSS animation plays as soon as it becomes visible; this just clears any
+ * leftover closing state and forces a reflow so the animation restarts.
+ *
+ * @param display Optional `display` value to set (e.g. 'flex') before animating.
+ */
+export function animateDialogOpen(element: HTMLElement | null, display?: string) {
+	if (!element) return;
+	if (display) {
+		element.style.display = display;
+	} else if ((element as any)._prevDisplay !== undefined) {
+		// Restore the display the element had before a previous close hid it
+		// (captured in `_animateOut`). Without this, persistent cards/dialogs
+		// reopen with an invisible box — only the backdrop shows.
+		element.style.display = (element as any)._prevDisplay;
+	}
+	delete (element as any)._prevDisplay;
+	element.classList.remove(DIALOG_LEAVE_CLASS);
+	void element.offsetWidth;
+}
+
+/**
+ * Hide `element` with the standardized dialog close animation, then call
+ * `onComplete`. Timing follows the CSS `animationend` event (with a small
+ * safety timeout so the element always ends up hidden).
+ */
+export function animateDialogClose(element: HTMLElement | null, onComplete?: () => void) {
+	if (!element) {
+		onComplete?.();
+		return;
+	}
+	if (element.classList.contains(DIALOG_LEAVE_CLASS) || element.style.display === 'none') {
+		onComplete?.();
+		return;
+	}
+	// Restart the leave animation from the start.
+	element.classList.remove(DIALOG_LEAVE_CLASS);
+	void element.offsetWidth;
+	_animateOut(element, DIALOG_LEAVE_CLASS, DIALOG_ANIM_DURATION, onComplete);
+}
+
+let _panelSwitching = false;
+/**
+ * Switch from `oldContent` to `newContent` with a standardized leaving
+ * animation on the outgoing panel (used by the index tab-content). Rapid
+ * calls while an animation is running are ignored so panels never get stuck.
+ * Returns whether the switch was started.
+ */
+export function switchPanel(
+	oldContent: HTMLElement | null,
+	newContent: HTMLElement | null,
+	onDone?: () => void,
+): boolean {
+	if (_panelSwitching) return false;
+	if (!newContent) {
+		onDone?.();
+		return false;
+	}
+	if (!oldContent || oldContent === newContent) {
+		newContent.classList.add('active');
+		onDone?.();
+		return true;
+	}
+	_panelSwitching = true;
+	oldContent.classList.add(PANEL_LEAVE_CLASS);
+	const finish = () => {
+		_panelSwitching = false;
+		oldContent.classList.remove('active', PANEL_LEAVE_CLASS);
+		newContent.classList.add('active');
+		onDone?.();
+	};
+	oldContent.addEventListener(
+		'animationend',
+		(e) => {
+			if (e.target !== oldContent) return;
+			finish();
+		},
+		{ once: true },
+	);
+	setTimeout(finish, PANEL_ANIM_DURATION + 60);
+	return true;
+}
+
+/**
+ * Add a `leaveClass` to `element`, wait for it to finish (CSS `animationend`
+ * from the element itself, or a safety timeout), then remove the class, hide
+ * the element and call `onComplete`. Any previously pending close on the same
+ * element is cancelled first (e.g. reopening a toast mid-close).
+ */
+function _animateOut(
+	element: HTMLElement,
+	leaveClass: string,
+	duration: number,
+	onComplete?: () => void,
+) {
+	cancelAnimateOut(element);
+	// Remember how the element is currently displayed (inline style, or '' when
+	// it comes from CSS) so `animateDialogOpen()` can restore it when the same
+	// element is reopened after being hidden here.
+	(element as any)._prevDisplay = element.style.display;
+	element.classList.add(leaveClass);
+	let cancelled = false;
+	(element as any)._animOutCancel = () => {
+		cancelled = true;
+	};
+	const finish = () => {
+		if (cancelled) return;
+		(element as any)._animOutCancel = null;
+		element.classList.remove(leaveClass);
+		element.style.display = 'none';
+		onComplete?.();
+	};
+	element.addEventListener(
+		'animationend',
+		(e) => {
+			if (e.target !== element) return;
+			finish();
+		},
+		{ once: true },
+	);
+	setTimeout(finish, duration + 80);
+}
+
+/** Cancel a pending `_animateOut` on `element` (e.g. reopening it mid-close). */
+function cancelAnimateOut(element: HTMLElement | null) {
+	if (element && (element as any)._animOutCancel) {
+		(element as any)._animOutCancel();
+		(element as any)._animOutCancel = null;
+	}
+}
 
 // Generic Message
 export function displayMessage(title, content) {
@@ -85,6 +241,12 @@ export function displayFullMessage(properties = cloneObject(MESSAGE_PROPERTIES))
 	// Container
 	const container = document.createElement('div');
 	container.className = properties.containers.principal;
+
+	// Input/intervention dialogs become full-screen on mobile (feels like a
+	// separate page) — handled by the `.fullscreen-dialog` styles.
+	if (properties.fullscreen) {
+		container.classList.add(FULLSCREEN_CLASS);
+	}
 
 	// Text Container
 	const textDiv = document.createElement('div');
@@ -197,7 +359,7 @@ export function displayForbidden(content, redirectTo = 'view.html') {
 	properties.critical = true;
 	properties.buttons = [
 		{
-			type: 'back',
+			type: 'goBack',
 			action: redirectTo,
 		},
 	];
@@ -208,19 +370,34 @@ export function displayForbidden(content, redirectTo = 'view.html') {
 export function closeMessage() {
 	if (MESSAGE_MODAL_OPEN) {
 		const preloader = getID('preloader');
-		if (preloader) {
-			preloader.style.opacity = '0';
-			(preloader as any)._closeMsgTimeout = setTimeout(() => {
+		const dialog = preloader ? (preloader.firstElementChild as HTMLElement | null) : null;
+
+		MESSAGE_MODAL_OPEN = false;
+		document.removeEventListener('keydown', handleMessageKeydown);
+
+		const finishClose = () => {
+			if ((preloader as any)?._closeMsgTimeout) {
+				clearTimeout((preloader as any)._closeMsgTimeout);
+				delete (preloader as any)._closeMsgTimeout;
+			}
+			if (preloader) {
 				preloader.innerHTML = '';
 				preloader.style.background = '';
 				preloader.style.display = 'none';
 				preloader.style.opacity = '';
-				delete (preloader as any)._closeMsgTimeout;
-			}, 200);
+			}
+			if (typeof stopLoadingScreen === 'function') stopLoadingScreen();
+		};
+
+		if (preloader && dialog) {
+			// Fade the overlay out while the dialog plays its leave animation.
+			preloader.style.opacity = '0';
+			animateDialogClose(dialog, finishClose);
+			// Safety net (also the legacy cancel point used by startLoadingScreen).
+			(preloader as any)._closeMsgTimeout = setTimeout(finishClose, DIALOG_ANIM_DURATION + 120);
+		} else {
+			finishClose();
 		}
-		MESSAGE_MODAL_OPEN = false;
-		document.removeEventListener('keydown', handleMessageKeydown);
-		if (typeof stopLoadingScreen === 'function') stopLoadingScreen();
 	} else {
 		console.warn('Cannot close an unopened message modal.');
 	}
@@ -243,9 +420,11 @@ export function getIconsBox(icons) {
 		const backIcon = document.createElement('i');
 		backIcon.id = 'back-icon';
 		backIcon.className = 'bx bx-arrow-back';
-		backIcon.setAttribute('onclick', icons[0].action);
 		backIcon.style.visibility = 'hidden';
 		backIcon.style.cursor = 'pointer';
+
+		// Resolve the action via the message action registry (no window globals)
+		_setButtonAction(backIcon, icons[0].action, undefined);
 
 		iconContainer.appendChild(backIcon);
 	}
@@ -603,17 +782,26 @@ function _setButtonAction(button, action, defaultFn) {
 }
 
 export function openToast(text) {
+	const toast = getID('toast');
+	if (!toast) return;
 	getID('toast-text').innerHTML = text;
-	fadeIn(['toast']);
+	// Cancel any pending close animation, then play the standardized open one.
+	cancelAnimateOut(toast);
+	toast.classList.remove(TOAST_LEAVE_CLASS);
+	void toast.offsetWidth;
+	toast.classList.add(TOAST_ENTER_CLASS);
+	toast.style.display = 'flex';
 	setTimeout(() => {
 		closeToast();
 	}, 10000);
 }
 
 export function closeToast() {
-	if (getID('toast').style.display != 'none') {
-		fadeOut(['toast']);
-	}
+	const toast = getID('toast');
+	if (!toast || toast.style.display === 'none') return;
+	if (toast.classList.contains(TOAST_LEAVE_CLASS)) return;
+	toast.classList.remove(TOAST_ENTER_CLASS);
+	_animateOut(toast, TOAST_LEAVE_CLASS, TOAST_ANIM_DURATION);
 }
 
 export function handleMessageKeydown(e) {

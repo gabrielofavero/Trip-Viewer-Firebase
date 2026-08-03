@@ -590,7 +590,9 @@
 			"message": {
 				"access": "Você não tem permissão para acessar esta página. Por favor, verifique suas credenciais",
 				"edit": "Você não tem permissão para editar esta página. Por favor, verifique suas credenciais",
-				"default": "Acesso não autorizado para este documento"
+				"default": "Acesso não autorizado para este documento",
+				"unauthenticated": "Você precisa estar logado para editar este documento. Faça login e tente novamente",
+				"not_owner": "Apenas o proprietário do documento pode editar este documento. Você não tem permissão para fazer alterações"
 			}
 		},
 		"documents": {

@@ -33,16 +33,18 @@ npm run dev
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 164   | 161  | 3         | 0       |
-| 🏆   | Feature     | F000 | 170   | 148  | 22        | 0       |
-| 📈   | Improvement | M000 | 163   | 136  | 23        | 4       |
+| 🏆   | Feature     | F000 | 174   | 149  | 22        | 3       |
+| 📈   | Improvement | M000 | 166   | 139  | 23        | 4       |
 | ⚔️   | Epic        | E000 | 51    | 34   | 9         | 8       |
 
 ## Backlog
 
 ### High Priority
 
-- 📈 **M164:** Improve itinerary modal
+- 🏆 **F170:** Create progress bar loading (restore operations)
 - ⚔️ **E045:** Add Maps integration into edit page
+  - *[🏆F172] Get place information*
+  - *[🏆F173] Update integrated places*
 
 ### Medium Priority
 
@@ -72,6 +74,9 @@ npm run dev
 - 🏆 **F155:** Add images for each destination item
 - 🐞 **B164:** Cannot add new itinerary post migration
 - 📈 **M164:** Improve bulletpoints for trip cards on index
+- 🏆 **F174:** Block edit trip page for unauthenticated users and non-owners
+- 📈 **M165:** Improve itinerary modal
+- 📈 **M166:** Improve input boxes animation and visibility
 
 ### July 2026
 - ⚔️ **E048:** Database ovehaul

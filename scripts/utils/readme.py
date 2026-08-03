@@ -42,6 +42,7 @@ def parse_readme(content):
     }
     
     current_section = None
+    current_month = None
     
     for line in content.split('\n'):
         if '## Backlog' in line:
@@ -50,6 +51,13 @@ def parse_readme(content):
             current_section = 'done'
         elif '### Discarded' in line:
             current_section = 'discarded'
+        
+        # Track the current "### <Month Year>" heading inside Done so tasks can
+        # be reordered chronologically later (see calculate_version).
+        if current_section == 'done':
+            month_match = re.match(r'^###\s+(.+)$', line)
+            if month_match:
+                current_month = month_match.group(1).strip()
         
         if current_section:
             common = re.search(r'\*\*([A-Z]\d+):\*\*', line)
@@ -65,7 +73,8 @@ def parse_readme(content):
                     'id': task_id,
                     'type': task_type,
                     'number': task_number,
-                    'line': line
+                    'line': line,
+                    'month': current_month if current_section == 'done' else None
                 })
     
     return tasks
@@ -178,16 +187,40 @@ def check_inconsistencies(tasks):
 
 
 def calculate_version(tasks):
-    """Calculate semantic version based on completed tasks (chronological order)."""
+    """Calculate semantic version based on completed tasks (chronological order).
+
+    Done months are listed newest-first in README.md, so to reconstruct true
+    chronological order we walk the month groups bottom-to-top (oldest month
+    first) and the tasks top-to-bottom within each month (top is old, bottom
+    is new). This makes the version reflect the newest completed task, so
+    appending a task to the current month's Done section bumps the patch.
+    """
     done_tasks = tasks['done']
 
     backlog_epic_numbers = {t['number'] for t in tasks['backlog'] if t['type'] == 'E'}
+
+    # Group Done tasks by their "### <Month Year>" heading, keeping the order
+    # they appear in the file (newest month first, old→new inside each month).
+    month_order = []
+    month_groups = {}
+    for task in done_tasks:
+        key = task.get('month')
+        if key not in month_groups:
+            month_groups[key] = []
+            month_order.append(key)
+        month_groups[key].append(task)
+
+    # Rebuild the Done list oldest → newest: reverse the month groups and keep
+    # tasks in file order (top is old, bottom is new) inside each month.
+    chronological = []
+    for key in reversed(month_order):
+        chronological.extend(month_groups[key])
 
     major = 2
     minor = 0
     patch = 0
     
-    for task in done_tasks:
+    for task in chronological:
         # Skip Epics that also exist in backlog (they weren't truly completed)
         if task['type'] == 'E' and task['number'] in backlog_epic_numbers:
             continue
@@ -304,4 +337,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 1 and sys.argv[1] == "--version":
+        # Print only the calculated version (used by the build script).
+        print(get_system_version())
+    else:
+        main()

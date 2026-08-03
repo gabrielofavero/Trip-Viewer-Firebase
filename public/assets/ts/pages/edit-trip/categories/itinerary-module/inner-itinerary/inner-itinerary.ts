@@ -28,6 +28,7 @@ import { getDataSelectOptions } from '../../../edit-trip.js';
 export var INNER_ITINERARY = {};
 var INNER_ITINERARY_DESTINATIONS_DATA = {};
 var LAST_OPENED_PERIOD = {};
+var INNER_ITINERARY_IS_NEW = false;
 
 // Main Loading
 export function loadInnerItineraryHTML(j) {
@@ -64,12 +65,14 @@ export function loadInnerItineraryHTML(j) {
 export async function openInnerItinerary(j, k?, period?) {
 	const selects = getInnerItinerarySelects(j);
 	const isNew = !k && !period;
+	INNER_ITINERARY_IS_NEW = isNew;
 
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	properties.title = getInnerItineraryMessageTitle(j);
 	properties.containers = getContainersInput();
+	properties.fullscreen = true;
 	properties.content = getInnerItineraryContent(j, k, period, selects, isNew);
-	properties.icons = [{ type: 'back', action: `closeInnerItinerary(${j})` }];
+	properties.icons = [{ type: 'goBack', action: `closeInnerItinerary(${j})` }];
 	properties.buttons = [
 		{
 			type: 'cancel',
@@ -165,29 +168,23 @@ async function loadInnerItineraryCurrentData(j, k, period, isNew) {
 		INNER_ITINERARY[key][period][k - 1]
 	) {
 		const dataEntry = INNER_ITINERARY[key][period][k - 1];
-		const linkedItem = getID('inner-itinerary-linked-item');
 
 		getID(`inner-itinerary`).value = dataEntry.label;
 		getID(`inner-itinerary-start`).value = dataEntry.start;
 		getID(`inner-itinerary-end`).value = dataEntry.end;
 		updateTravelersFieldset('inner-itinerary-travelers', dataEntry.people || []);
+		syncInnerItineraryButton();
 
 		switch (dataEntry?.item?.type) {
 			case 'transportation':
 				getID(`inner-itinerary-item-transportation-radio`).checked = true;
 				getID(`inner-itinerary-item-transportation`).style.display = 'block';
 				getID(`inner-itinerary-select-transportation`).value = dataEntry.item.id;
-				linkedItem.innerText = getSelectCurrentLabel(
-					getID(`inner-itinerary-select-transportation`),
-				);
 				break;
 			case 'accommodations':
 				getID(`inner-itinerary-item-accommodations-radio`).checked = true;
 				getID(`inner-itinerary-item-accommodations`).style.display = 'block';
 				getID(`inner-itinerary-select-accommodations`).value = dataEntry.item.id;
-				linkedItem.innerText = getSelectCurrentLabel(
-					getID(`inner-itinerary-select-accommodations`),
-				);
 				break;
 			case 'destinations':
 				getID(`inner-itinerary-item-destinations-radio`).checked = true;
@@ -202,7 +199,6 @@ async function loadInnerItineraryCurrentData(j, k, period, isNew) {
 				const tour = dataEntry.item.id;
 				if (tour) {
 					getID(`inner-itinerary-select-tour`).value = tour;
-					linkedItem.innerText = translate('trip.itinerary.linked_destination');
 				}
 				break;
 			default:
@@ -213,6 +209,8 @@ async function loadInnerItineraryCurrentData(j, k, period, isNew) {
 		selectPeriod.value = getNewPeriod(j);
 		LAST_OPENED_PERIOD[j] = selectPeriod.value;
 	}
+
+	syncInnerItineraryButton();
 }
 
 // Modal Navigation
@@ -221,12 +219,22 @@ export async function openInnerItineraryItem(j) {
 	const itemSelect = getID('inner-itinerary-select-item');
 	itemSelect.style.minHeight = `${height}px`;
 
-	if (getID('inner-itinerary').value) {
-		getID('message-title').innerText = translate('trip.itinerary.link_item');
-	}
+	getID('message-title').innerText = translate('trip.itinerary.title');
 
 	animate(['inner-itinerary-select-item'], ['inner-itinerary-main-screen']);
 	getID('back-icon').style.visibility = 'visible';
+	itemSelect.scrollTop = 0;
+
+	// Brand-new entries have no linked item yet — default to the "none" radio
+	// (without overriding a selection the user makes on a later visit).
+	if (INNER_ITINERARY_IS_NEW) {
+		const radios = Array.from(document.getElementsByName('inner-itinerary-item-radio'));
+		const hasSelection = radios.some((radio) => (radio as HTMLInputElement).checked);
+		if (!hasSelection) {
+			getID('inner-itinerary-item-none-radio').checked = true;
+		}
+	}
+
 	loadTextReplacementCheckboxes(j);
 	TEXT_REPLACEMENT.applied = false;
 }
@@ -243,16 +251,7 @@ export function openInnerItinerarySwap() {
 
 export function closeInnerItinerary(j) {
 	if (getID('inner-itinerary-select-item').style.display === 'block') {
-		const linkedItem = getID('inner-itinerary-linked-item');
-		if (getID('inner-itinerary-item-transportation-radio').checked) {
-			linkedItem.innerText = getSelectCurrentLabel(getID(`inner-itinerary-select-transportation`));
-		} else if (getID('inner-itinerary-item-accommodations-radio').checked) {
-			linkedItem.innerText = getSelectCurrentLabel(getID(`inner-itinerary-select-accommodations`));
-		} else if (getID('inner-itinerary-item-destinations-radio').checked) {
-			linkedItem.innerText = getSelectCurrentLabel(getID(`inner-itinerary-select-tour`));
-		} else {
-			linkedItem.innerText = translate('trip.itinerary.link_item');
-		}
+		syncInnerItineraryButton();
 
 		getID('message-title').innerText = getInnerItineraryMessageTitle(j);
 		getID('back-icon').style.visibility = 'hidden';
@@ -268,6 +267,15 @@ export function closeInnerItinerary(j) {
 
 		animate(['inner-itinerary-main-screen'], ['inner-itinerary-swap-item']);
 	}
+}
+
+// Keep the main-screen "Itinerary" button in sync with the title input
+// (which lives on the link-item screen).
+function syncInnerItineraryButton() {
+	const button = getID('inner-itinerary-button');
+	const value = getID('inner-itinerary').value.trim();
+	button.classList.toggle('placeholder-text', !value);
+	button.textContent = value || translate('trip.itinerary.placeholder');
 }
 
 function getInnerItineraryMessageTitle(j) {

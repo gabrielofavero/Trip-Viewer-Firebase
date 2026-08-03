@@ -4,14 +4,9 @@ import { getTravelersFieldset } from '../../travelers.js';
 export function getInnerItineraryContent(j, k, period, selects, isNew = false) {
 	return `<div class="inner-itinerary" id="inner-itinerary-box">
                 <div id="inner-itinerary-main-screen">
-                    <div class="nice-form-group" style="display: ${Object.values(selects).some((item: any) => item.active) ? 'block' : 'none'}">
-                        <label style="margin-bottom: 0px;">${translate('trip.itinerary.linked_item')} <span class="opcional">(${translate('labels.optional')})</span></label>
-                        <button id="inner-itinerary-linked-item" class="btn input-button placeholder-text" data-action="open-inner-itinerary-item" data-index="${j}" style="margin-top: 8px;">${translate('trip.itinerary.link_item')}</button>
-                    </div>
-
                     <div class="nice-form-group">
                         <label>${translate('trip.itinerary.title')}</label>
-                        <input required class="nice-form-group" id="inner-itinerary" type="text" placeholder="${translate('trip.itinerary.placeholder')}" maxlength="50" autocomplete="off" />
+                        <button id="inner-itinerary-button" class="btn input-button placeholder-text" data-action="open-inner-itinerary-item" data-index="${j}" style="margin-top: 8px;">${translate('trip.itinerary.placeholder')}</button>
                     </div>
 
                     ${getTravelersFieldset('inner-itinerary-travelers', [])}
@@ -60,8 +55,13 @@ export function getInnerItineraryContent(j, k, period, selects, isNew = false) {
                     </div>
                 </div>
                 <div id="inner-itinerary-select-item" class="inner-itinerary" style="display: none;">
+                    <div class="nice-form-group">
+                        <label>${translate('trip.itinerary.title')}</label>
+                        <input required class="nice-form-group" id="inner-itinerary" type="text" placeholder="${translate('trip.itinerary.placeholder')}" maxlength="50" autocomplete="off" />
+                    </div>
+
                     <div class="nice-form-group" id="inner-itinerary-select-item-radio">
-                        <label>${translate('labels.type')}</label>
+                        <label>${translate('trip.itinerary.linked_item')}</label>
                         <fieldset class="nice-form-group">
                             <div class="nice-form-group" id="inner-itinerary-none-radio-container">
                                 <input type="radio" name="inner-itinerary-item-radio" id="inner-itinerary-item-none-radio">

@@ -1333,6 +1333,15 @@
 	margin-bottom: 8px;
 }
 
+/* Inner itinerary modal screens — auto-scroll when content is taller than the viewport */
+#inner-itinerary-box > .inner-itinerary,
+#inner-itinerary-main-screen {
+	max-height: 70vh;
+	overflow-y: auto;
+	scroll-behavior: smooth;
+	padding-right: 4px;
+}
+
 .expenses-item {
 	margin-bottom: 16px;
 }
@@ -1570,6 +1579,51 @@
 .itinerary-cards .destination-card {
 	padding: 6px 12px;
 	font-size: 0.8125rem;
+}
+
+/*--------------------------------------------------------------
+# Inner Itinerary Modal — Compact Layout
+# Reduces modal height: travelers in columns + start/end side by side
+--------------------------------------------------------------*/
+
+/* Travelers checkboxes — auto columns (3 on desktop, collapses for fewer) */
+.double-fieldset {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+	gap: 4px 16px;
+	margin: 8px 0 0;
+	padding: 0;
+	border: none;
+}
+
+.double-fieldset .nice-form-group {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 0;
+	white-space: nowrap;
+}
+
+/* Start / End time inputs — two columns side by side */
+.side-by-side-box-fixed {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	align-items: start;
+}
+
+/* Spacing between the travelers fieldset and the start/end time box */
+#inner-itinerary-main-screen .side-by-side-box-fixed {
+	margin-top: 16px;
+}
+
+.side-by-side-box-fixed .side-by-side-fixed {
+	margin-top: 0;
+	min-width: 0;
+}
+
+.side-by-side-box-fixed .flex-input-50-50 {
+	width: 100%;
 }
 
 /*--------------------------------------------------------------

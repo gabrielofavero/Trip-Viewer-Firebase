@@ -19,7 +19,13 @@ import {
 	closeListDialog,
 } from './data.js';
 import { openAttributions } from '../../../utils/attributions.js';
-import { closeToast } from '../../../utils/messages.js';
+import {
+	closeToast,
+	animateDialogOpen,
+	animateDialogClose,
+	DIALOG_LEAVE_CLASS,
+	switchPanel,
+} from '../../../utils/messages.js';
 import { registerActions } from '../../../ui/actions.js';
 
 export function loadListenersIndex() {
@@ -33,26 +39,27 @@ export function loadListenersIndex() {
 	tabs.forEach((tab) => {
 		tab.addEventListener('click', function () {
 			const target = this.getAttribute('data-tab');
-
-			// Update active tab
-			tabs.forEach((t) => t.classList.remove('active'));
-			this.classList.add('active');
-
-			// Show target content
-			document.querySelectorAll('.tab-content').forEach((c) => c.classList.remove('active'));
 			const content = document.getElementById('tab-' + target);
-			if (content) content.classList.add('active');
+			const current = document.querySelector('.tab-content.active') as HTMLElement | null;
+
+			// Standardized panel switch: the current content plays its leaving
+			// animation while the target plays its entering one.
+			if (switchPanel(current, content)) {
+				tabs.forEach((t) => t.classList.remove('active'));
+				this.classList.add('active');
+			}
 		});
 	});
 
 	// Profile icon → settings tab
 	getID('profile-icon').addEventListener('click', function () {
-		tabs.forEach((t) => t.classList.remove('active'));
-		document.querySelectorAll('.tab-content').forEach((c) => c.classList.remove('active'));
-		const settingsTab = document.querySelector('.category-tab[data-tab="settings"]');
-		if (settingsTab) settingsTab.classList.add('active');
+		const current = document.querySelector('.tab-content.active') as HTMLElement | null;
 		const settingsContent = document.getElementById('tab-settings');
-		if (settingsContent) settingsContent.classList.add('active');
+		if (switchPanel(current, settingsContent)) {
+			tabs.forEach((t) => t.classList.remove('active'));
+			const settingsTab = document.querySelector('.category-tab[data-tab="settings"]');
+			if (settingsTab) settingsTab.classList.add('active');
+		}
 	});
 
 	// New item buttons
@@ -115,9 +122,24 @@ export function loadListenersIndex() {
 }
 
 export function openModal() {
-	getID('modal').style.display = 'flex';
+	const modal = getID('modal');
+	animateDialogOpen(modal, 'flex');
+	const card = modal?.querySelector<HTMLElement>('.modal-card');
+	if (card) animateDialogOpen(card);
 }
 
 export function closeModal() {
-	getID('modal').style.display = 'none';
+	const modal = getID('modal');
+	if (!modal || modal.style.display === 'none') return;
+	const card = modal.querySelector<HTMLElement>('.modal-card');
+	if (card) {
+		// Fade the backdrop out while the card slides down; hide once it ends.
+		modal.classList.add(DIALOG_LEAVE_CLASS);
+		animateDialogClose(card, () => {
+			modal.classList.remove(DIALOG_LEAVE_CLASS);
+			modal.style.display = 'none';
+		});
+	} else {
+		animateDialogClose(modal);
+	}
 }
