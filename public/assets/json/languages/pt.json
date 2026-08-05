@@ -24,7 +24,15 @@
 			"invalid_file": "O arquivo selecionado não é um backup válido",
 			"incorrect_owner": "O backup selecionado pertence a outro usuário",
 			"success": "Restauração realizada com sucesso",
-			"owner_updated": "Restauração realizada com sucesso ({{count}} proprietário(s) atualizados para sua conta.)"
+			"owner_updated": "Restauração realizada com sucesso ({{count}} proprietário(s) atualizados para sua conta.)",
+			"loading": {
+				"reading": "Lendo arquivo de backup",
+				"validating": "Validando arquivo de backup",
+				"deleting": "Excluindo dados atuais",
+				"writing": "Restaurando seus dados",
+				"summaries": "Atualizando resumos da conta",
+				"finishing": "Finalizando"
+			}
 		},
 		"import_documents": {
 			"title": "Importar Documento(s)",
@@ -39,7 +47,13 @@
 			"override_confirm": "Importar Todos",
 			"import_main_only": "Importar Apenas Documentos Principais",
 			"in_db": "Na sua conta",
-			"in_file": "No arquivo"
+			"in_file": "No arquivo",
+			"loading": {
+				"reading": "Lendo documento(s)",
+				"checking": "Verificando conflitos",
+				"importing": "Importando documento {{current}} de {{total}}",
+				"finishing": "Finalizando"
+			}
 		},
 		"export_documents": {
 			"title": "Exportar Documento",
@@ -78,10 +92,10 @@
 			"subtitle": "Adicione aqui as principais informações da sua viagem",
 			"title_placeholder": "Digite o título da viagem",
 			"security": {
-				"title": "Proteger dados da viagem",
-				"disabled": "Desabilitado",
+				"title": "Proteção de dados",
+				"disabled": "Desabilitada",
 				"sensitive_only": "Apenas dados sensíveis",
-				"all_data": "Habilitado"
+				"all_data": "Habilitada"
 			},
 			"pin": {
 				"title": "PIN de Acesso",
@@ -231,7 +245,6 @@
 		"undefined": "Destino não definido",
 		"recent": "Adicionado recentemente",
 		"location_placeholder": "São Paulo",
-		"image_description_placeholder": "Uma foto do destino",
 		"delete": {
 			"title": "Excluir destino",
 			"message": "Tem certeza que deseja excluir o destino \"{{name}}\"? A ação não poderá ser desfeita"
@@ -590,9 +603,7 @@
 			"message": {
 				"access": "Você não tem permissão para acessar esta página. Por favor, verifique suas credenciais",
 				"edit": "Você não tem permissão para editar esta página. Por favor, verifique suas credenciais",
-				"default": "Acesso não autorizado para este documento",
-				"unauthenticated": "Você precisa estar logado para editar este documento. Faça login e tente novamente",
-				"not_owner": "Apenas o proprietário do documento pode editar este documento. Você não tem permissão para fazer alterações"
+				"default": "Acesso não autorizado para este documento"
 			}
 		},
 		"documents": {
@@ -734,35 +745,15 @@
 			"images": {
 				"title": "Imagens Personalizadas",
 				"subtitle": "Adicione um papel de parede e um logotipo",
-				"background_subtitle": "Adicione uma imagem de fundo",
 				"logo_light": "Logotipo: Tema Claro",
 				"logo_dark": "Logotipo: Tema Escuro"
 			},
-			"theme": {
-				"title": "Tema personalizado",
-				"subtitle": "Forçar a exibição da viagem em modo claro ou escuro",
-				"dynamic": "Dinâmico",
-				"light_only": "Apenas modo claro",
-				"dark_only": "Apenas modo escuro"
-			},
 			"colors": {
 				"title": "Cores Personalizadas",
-				"custom": "Cor personalizada",
-				"presets": {
-					"purple": "Roxo",
-					"rose": "Rosa",
-					"magenta": "Magenta",
-					"crimson": "Carmim",
-					"sunset": "Pôr do sol",
-					"amber": "Âmbar",
-					"terracotta": "Terracota",
-					"forest": "Floresta",
-					"sage": "Sálvia",
-					"teal": "Verde-azulado",
-					"ocean": "Oceano",
-					"steel": "Aço",
-					"indigo": "Índigo",
-					"gray": "Cinza"
+				"themes": {
+					"light_and_dark": "Ambos",
+					"light": "Modo claro",
+					"dark": "Modo escuro"
 				}
 			},
 			"links": {

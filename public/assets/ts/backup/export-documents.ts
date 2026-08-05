@@ -277,9 +277,11 @@ function showPinRequestDialog(selectedIds: string[]) {
 
 		return `
 			<p class="pin-backup-instruction">${translate('account.export_documents.pin_instruction')}</p>
-			<table class="pin-backup-table">
-				${rows}
-			</table>
+			<div class="pin-backup-scroll">
+				<table class="pin-backup-table">
+					${rows}
+				</table>
+			</div>
 		`;
 	}
 }

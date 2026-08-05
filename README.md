@@ -40,8 +40,8 @@ npm run dev
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 164   | 161  | 3         | 0       |
-| 🏆   | Feature     | F000 | 174   | 149  | 22        | 3       |
+| 🐞   | Bug         | B000 | 165   | 162  | 3         | 0       |
+| 🏆   | Feature     | F000 | 174   | 150  | 22        | 2       |
 | 📈   | Improvement | M000 | 166   | 139  | 23        | 4       |
 | ⚔️   | Epic        | E000 | 51    | 34   | 9         | 8       |
 
@@ -49,7 +49,6 @@ npm run dev
 
 ### High Priority
 
-- 🏆 **F170:** Create progress bar loading (restore operations)
 - ⚔️ **E045:** Add Maps integration into edit page
   - *[🏆F172] Get place information*
   - *[🏆F173] Update integrated places*
@@ -85,6 +84,8 @@ npm run dev
 - 🏆 **F174:** Block edit trip page for unauthenticated users and non-owners
 - 📈 **M165:** Improve itinerary modal
 - 📈 **M166:** Improve input boxes animation and visibility
+- 🏆 **F170:** Create progress bar loading (restore operations)
+- 🐞 **B163:** Fix dark mode backup/restore elements and dialog visual issues
 
 ### July 2026
 - ⚔️ **E048:** Database ovehaul

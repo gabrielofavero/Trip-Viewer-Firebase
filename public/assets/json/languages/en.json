@@ -24,7 +24,15 @@
 			"invalid_file": "The selected file is not a valid backup file",
 			"incorrect_owner": "The selected backup file does not belong to the current user",
 			"success": "The account restoration was completed successfully",
-			"owner_updated": "The account restoration was completed successfully ({{count}} owner(s) updated to your account.)"
+			"owner_updated": "The account restoration was completed successfully ({{count}} owner(s) updated to your account.)",
+			"loading": {
+				"reading": "Reading backup file",
+				"validating": "Validating backup file",
+				"deleting": "Deleting current data",
+				"writing": "Restoring your data",
+				"summaries": "Updating account summaries",
+				"finishing": "Finishing up"
+			}
 		},
 		"import_documents": {
 			"title": "Import Document(s)",
@@ -39,7 +47,13 @@
 			"override_confirm": "Import All",
 			"import_main_only": "Import Main Documents Only",
 			"in_db": "In your account",
-			"in_file": "In file"
+			"in_file": "In file",
+			"loading": {
+				"reading": "Reading document(s)",
+				"checking": "Checking for conflicts",
+				"importing": "Importing document {{current}} of {{total}}",
+				"finishing": "Finishing up"
+			}
 		},
 		"export_documents": {
 			"title": "Export Document",
@@ -234,7 +248,6 @@
 		"undefined": "Undefined destination",
 		"recent": "Recently added",
 		"location_placeholder": "Chicago",
-		"image_description_placeholder": "A photo of the destination",
 		"delete": {
 			"title": "Delete destination",
 			"message": "Are you sure you want to delete the destination \"{{name}}\"? This action cannot be undone"
@@ -593,9 +606,7 @@
 			"message": {
 				"access": "You don't have permission to access this page. Please check your credentials",
 				"edit": "You don't have permission to edit this page. Please check your credentials",
-				"default": "You don't have permission to access this resource",
-				"unauthenticated": "You must be signed in to edit this document. Please log in and try again",
-				"not_owner": "Only the document owner can edit this document. You don't have permission to make changes"
+				"default": "You don't have permission to access this resource"
 			}
 		},
 		"documents": {
@@ -737,35 +748,15 @@
 			"images": {
 				"title": "Custom images",
 				"subtitle": "Add a wallpaper and a logo",
-				"background_subtitle": "Add a background image",
 				"logo_light": "Logo: Light mode",
 				"logo_dark": "Logo: Dark mode"
 			},
-			"theme": {
-				"title": "Custom theme",
-				"subtitle": "Force the trip to display in light or dark mode",
-				"dynamic": "Dynamic",
-				"light_only": "Light mode only",
-				"dark_only": "Dark mode only"
-			},
 			"colors": {
 				"title": "Custom colors",
-				"custom": "Custom color",
-				"presets": {
-					"purple": "Purple",
-					"rose": "Rose",
-					"magenta": "Magenta",
-					"crimson": "Crimson",
-					"sunset": "Sunset",
-					"amber": "Amber",
-					"terracotta": "Terracotta",
-					"forest": "Forest",
-					"sage": "Sage",
-					"teal": "Teal",
-					"ocean": "Ocean",
-					"steel": "Steel",
-					"indigo": "Indigo",
-					"gray": "Gray"
+				"themes": {
+					"light_and_dark": "Both",
+					"light": "Light mode",
+					"dark": "Dark mode"
 				}
 			},
 			"links": {

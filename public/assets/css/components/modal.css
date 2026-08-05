@@ -333,6 +333,17 @@
 	text-align: left;
 }
 
+/* Desktop only: keep the PIN dialog compact when many protected items are
+   listed — the table scrolls internally instead of stretching the dialog.
+   Mobile keeps its fullscreen behavior (dialog grows + scrolls as a whole),
+   so no constraint is applied below the 769px breakpoint. */
+@media (min-width: 769px) {
+	.pin-backup-scroll {
+		max-height: 300px;
+		overflow-y: auto;
+	}
+}
+
 .pin-backup-table td.pin-backup-label {
 	text-align: left;
 	padding: 8px 12px 8px 0;

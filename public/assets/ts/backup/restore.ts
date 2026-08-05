@@ -1,4 +1,9 @@
-import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
+import { startLoadingScreen } from '../utils/loading.js';
+import {
+	startProgressLoading,
+	stopProgressLoading,
+	updateProgressLoading,
+} from '../ui/progress-loading.js';
 import {
 	closeMessage,
 	displayError,
@@ -28,7 +33,7 @@ export async function restoreOnClickAction() {
 export function restoreOnFileSelectionAction(event) {
 	const file = event.target.files[0];
 	if (!file) {
-		stopLoadingScreen();
+		stopProgressLoading();
 		return;
 	}
 
@@ -38,7 +43,7 @@ export function restoreOnFileSelectionAction(event) {
 			const jsonData = JSON.parse((e.target as FileReader).result as string);
 			restoreAccountData(jsonData);
 		} catch (err) {
-			stopLoadingScreen();
+			stopProgressLoading();
 			displayError(translate('messages.documents.get.error'));
 			console.error(err);
 		}
@@ -62,7 +67,7 @@ async function restoreAccountData(restore) {
 	}
 
 	if (!isRestoreValid(normalized)) {
-		stopLoadingScreen();
+		stopProgressLoading();
 		displayMessage(
 			translate('account.restore.error_title'),
 			translate('account.restore.invalid_file'),
@@ -88,13 +93,13 @@ async function restoreAccountData(restore) {
 			: translate('account.restore.success');
 		openToast(successMsg);
 
-		// Keep the loading screen visible — the page will auto-refresh shortly.
+		// Keep the progress bar at 100% — the page will auto-refresh shortly.
 		setTimeout(() => {
 			location.reload();
 		}, 5000);
 	} catch (err) {
 		console.error('Restoration failed:', err);
-		stopLoadingScreen();
+		stopProgressLoading();
 		displayError(err.message || translate('account.restore.error_title'));
 	}
 }
@@ -168,14 +173,26 @@ function fixRestoreOwnership(restore, uid: string): number {
 async function restoreAccount(restore) {
 	const uid = await getUID();
 
+	// Progress: 0 → 35 — removing current data
+	startProgressLoading({
+		message: translate('account.restore.loading.deleting'),
+		progress: 5,
+	});
+
 	console.log('Preparing delete operations...');
 	const deleteOps = await collectDeleteOps(uid);
 	console.log(`${deleteOps.length} delete operations.`);
 
 	console.log('Executing delete batches...');
-	await commitInChunks(deleteOps);
+	await commitInChunks(deleteOps, 450, (fraction) => {
+		updateProgressLoading({
+			message: translate('account.restore.loading.deleting'),
+			progress: 5 + fraction * 30,
+		});
+	});
 	console.log('Deletions complete');
 
+	// Progress: 35 → 70 — writing restored documents
 	console.log('Preparing create operations...');
 	const createOps = await collectCreateOps(restore);
 	console.log(`${createOps.length} create operations.`);
@@ -188,27 +205,48 @@ async function restoreAccount(restore) {
 	}
 
 	console.log('Executing create batches...');
-	await commitInChunks(createOps);
+	await commitInChunks(createOps, 450, (fraction) => {
+		updateProgressLoading({
+			message: translate('account.restore.loading.writing'),
+			progress: 35 + fraction * 35,
+		});
+	});
 	console.log('Restoration complete');
 
-	// Write user summary subcollections (tripSummaries, destinationSummaries, listingSummaries)
+	// Progress: 70 → 90 — user summary subcollections
+	// (tripSummaries, destinationSummaries, listingSummaries)
 	const summaryOps = collectUserSummaryOps(restore, uid);
 	if (summaryOps.length > 0) {
 		console.log(`${summaryOps.length} user summary operations.`);
+		updateProgressLoading({
+			message: translate('account.restore.loading.summaries'),
+			progress: 80,
+		});
 		await commitInChunks(summaryOps);
 		console.log('User summaries complete');
 	}
 
+	// Progress: 90 → 100 — user document update
 	console.log('Preparing user update...');
 	const userUpdateOp = collectUserUpdateOp(restore, uid);
 
 	console.log('Executing user update...');
+	updateProgressLoading({
+		message: translate('account.restore.loading.finishing'),
+		progress: 95,
+	});
 	await commitInChunks([userUpdateOp]);
 	console.log('User update complete');
 
+	updateProgressLoading({
+		message: translate('account.restore.loading.finishing'),
+		progress: 100,
+	});
+
 	console.log('All operations finished successfully');
 
-	async function commitInChunks(ops, chunkSize = 450) {
+	async function commitInChunks(ops, chunkSize = 450, onProgress?: (fraction: number) => void) {
+		const total = ops.length;
 		for (let i = 0; i < ops.length; i += chunkSize) {
 			const batch = firebase.firestore().batch();
 			const slice = ops.slice(i, i + chunkSize);
@@ -222,6 +260,9 @@ async function restoreAccount(restore) {
 			}
 
 			await batch.commit();
+			if (onProgress && total > 0) {
+				onProgress(Math.min((i + slice.length) / total, 1));
+			}
 		}
 	}
 

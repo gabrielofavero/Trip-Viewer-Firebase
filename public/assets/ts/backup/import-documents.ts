@@ -1,4 +1,8 @@
-import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
+import {
+	startProgressLoading,
+	stopProgressLoading,
+	updateProgressLoading,
+} from '../ui/progress-loading.js';
 import { displayError, displayFullMessage, displayMessage, openToast, MESSAGE_PROPERTIES } from '../utils/messages.js';
 import { translate } from '../i18n/translation.js';
 import { getUID } from '../data/firebase/auth.js';
@@ -88,7 +92,10 @@ export async function importDocumentsOnFileSelectionAction(event: Event) {
 	const files = target.files;
 	if (!files || files.length === 0) return;
 
-	startLoadingScreen();
+	startProgressLoading({
+		message: translate('account.import_documents.loading.reading'),
+		progress: 5,
+	});
 
 	// Step 1: Parse all files
 	const parsed: ParsedFile[] = [];
@@ -116,7 +123,7 @@ export async function importDocumentsOnFileSelectionAction(event: Event) {
 	target.value = '';
 
 	if (parsed.length === 0) {
-		stopLoadingScreen();
+		stopProgressLoading();
 		displayMessage(
 			translate('account.import_documents.error_title'),
 			translate('account.import_documents.none_imported'),
@@ -127,9 +134,14 @@ export async function importDocumentsOnFileSelectionAction(event: Event) {
 	// Step 2: Check for conflicts
 	const uid = await getUID();
 	if (!uid) {
-		stopLoadingScreen();
+		stopProgressLoading();
 		return;
 	}
+
+	updateProgressLoading({
+		message: translate('account.import_documents.loading.checking'),
+		progress: 35,
+	});
 
 	const existingTrips = await getUserTripSummaries(uid);
 	const existingDestinations = await getUserDestinationSummaries(uid);
@@ -142,7 +154,7 @@ export async function importDocumentsOnFileSelectionAction(event: Event) {
 		allDestinationsConflict(pf, conflicts),
 	);
 
-	stopLoadingScreen();
+	stopProgressLoading();
 
 	if (conflicts.length === 0) {
 		// No conflicts — import directly
@@ -305,10 +317,17 @@ function buildConflictContent(conflicts: ConflictItem[]): string {
 // ============================================================
 
 async function executeImports(parsed: ParsedFile[], skipAllDestinations: boolean) {
-	startLoadingScreen();
+	startProgressLoading({
+		message: translate('account.import_documents.loading.importing', {
+			current: 1,
+			total: parsed.length,
+		}),
+		progress: 5,
+	});
 
 	let imported = 0;
 	let skipped = 0;
+	let completed = 0;
 
 	for (const pf of parsed) {
 		try {
@@ -320,16 +339,30 @@ async function executeImports(parsed: ParsedFile[], skipAllDestinations: boolean
 			skipped++;
 			console.error('[import-documents] Failed to import file:', pf.fileName, err);
 		}
+		completed++;
+		updateProgressLoading({
+			message: translate('account.import_documents.loading.importing', {
+				current: completed,
+				total: parsed.length,
+			}),
+			progress: 5 + (completed / parsed.length) * 90,
+		});
 	}
 
 	pendingFiles = [];
 	pendingSkipDestinations = [];
-	stopLoadingScreen();
 
 	if (imported > 0) {
+		// Keep the loading screen up at 100% — a success toast is shown and
+		// the page auto-refreshes shortly (mirrors the account restore flow).
+		updateProgressLoading({
+			message: translate('account.import_documents.loading.finishing'),
+			progress: 100,
+		});
 		openToast(translate('account.import_documents.success', { count: String(imported) }));
 		setTimeout(() => { location.reload(); }, 3000);
 	} else {
+		stopProgressLoading();
 		displayMessage(
 			translate('account.import_documents.error_title'),
 			translate('account.import_documents.none_imported'),

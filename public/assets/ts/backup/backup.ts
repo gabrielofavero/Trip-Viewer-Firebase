@@ -157,9 +157,11 @@ export function displayPinRequestBackup() {
 		}
 		return `
 			<p class="pin-backup-instruction">${translate('account.backup.pin_instruction')}</p>
-			<table class="pin-backup-table">
-				${rows.join('')}
-			</table>
+			<div class="pin-backup-scroll">
+				<table class="pin-backup-table">
+					${rows.join('')}
+				</table>
+			</div>
 		`;
 	}
 }

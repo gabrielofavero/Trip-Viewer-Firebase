@@ -1,0 +1,92 @@
+/*--------------------------------------------------------------
+# Progress Loading — reusable full-screen loading with a progress bar
+#
+# Built by ui/progress-loading.ts inside the existing #preloader.
+# The bar is pill-shaped and uses the theme color.
+--------------------------------------------------------------*/
+
+/* Hide the preloader's default spinner — progress mode draws its own ring */
+#preloader.progress-mode:before,
+.preloader.progress-mode:before {
+	display: none;
+}
+
+.progress-loading {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 10001;
+	width: min(420px, 82vw);
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	gap: 18px;
+	text-align: center;
+}
+
+.progress-loading.active {
+	display: flex;
+}
+
+/* Theme-colored spinning ring */
+.progress-loading-spinner {
+	width: 44px;
+	height: 44px;
+	flex-shrink: 0;
+	border: 4px solid var(--theme-color);
+	border-top-color: transparent;
+	border-bottom-color: transparent;
+	border-radius: 50%;
+	animation: progress-loading-spin 1s linear infinite;
+}
+
+@keyframes progress-loading-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.progress-loading-message {
+	font-size: 1rem;
+	font-weight: 500;
+	color: var(--text-primary);
+	line-height: 1.4;
+	min-height: 1.4em;
+}
+
+.progress-loading-message-enter {
+	animation: progress-loading-message-in 0.25s ease both;
+}
+
+@keyframes progress-loading-message-in {
+	from {
+		opacity: 0;
+		transform: translateY(4px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Pill-shaped track */
+.progress-loading-track {
+	width: 100%;
+	height: 14px;
+	border-radius: 999px;
+	background: var(--box-color);
+	overflow: hidden;
+}
+
+/* Theme-colored pill-shaped bar */
+.progress-loading-bar {
+	height: 100%;
+	width: 0%;
+	border-radius: 999px;
+	background: var(--theme-color);
+	transition: width 0.35s ease;
+}

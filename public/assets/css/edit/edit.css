@@ -1670,9 +1670,19 @@
 
 /*--------------------------------------------------------------
 # PIN Input Overrides
-# Restore dedicated pin-input styling that the general
-# .nice-form-group > input rules would otherwise clobber
+# Matches the shared PIN modal styling used on the expenses page
+# (flex-centered wrapper, square input boxes, hidden `.pin` value
+# holder) while also restoring dedicated pin-input styling that the
+# general .nice-form-group > input rules would otherwise clobber.
 --------------------------------------------------------------*/
+.pin-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 30px;
+	margin-bottom: 5px;
+}
+
 .nice-form-group > input.pin-input,
 .nice-form-group > input.pin-input-invalid,
 input.pin-input,
@@ -1683,8 +1693,9 @@ input.pin-input-invalid {
 	border: 1px solid #d7d7d7;
 	border-radius: 6px;
 	outline: none;
-	margin: 0 5px;
+	margin: 1px;
 	text-align: center;
+	margin: 0 5px;
 	background: #eeeeee;
 	font-size: 20px;
 	color: var(--font-color);
@@ -1695,6 +1706,13 @@ input.pin-input-invalid {
 	color: #3a3838;
 	background: #eee0e0;
 	border-color: #dbbbbb;
+}
+
+.pin {
+	color: #ffffff;
+	font-size: 20px;
+	text-align: center;
+	display: none;
 }
 
 [data-theme="dark"] input.pin-input {

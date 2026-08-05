@@ -332,6 +332,12 @@
 	background: rgba(0, 0, 0, 0.7);
 }
 
+[data-theme="dark"] .security-warning-text {
+	color: #ffe9a8;
+	background: #3d3516;
+	border-color: #6b5d1c;
+}
+
 /* ===== Language Selector ===== */
 [data-theme="dark"] .lang-selector {
 	position: relative;
@@ -440,6 +446,16 @@
 	color: #ffffff;
 	background: #463838;
 	border-color: #403434;
+}
+
+[data-theme="dark"] .pin-backup-input {
+	background: #3b3b3b;
+	border: 1px solid #414040;
+	color: var(--text-color);
+}
+
+[data-theme="dark"] .pin-backup-input::placeholder {
+	color: var(--text-muted, #8e8e93);
 }
 
 [data-theme="dark"] .pin {
