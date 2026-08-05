@@ -1,5 +1,7 @@
 # Changelog
 
+## [2.22.1] - 2026-08-05
+
 ## [2.22.0] - 2026-08-04
 
 - ⚔️ **E048:** Database overhaul (TypeScript migration)

@@ -60,17 +60,22 @@ export async function loadUserIndex() {
 				await registerIfUserNotPresent();
 				showLoggedView();
 
-				setUserData(await getUserData(user.uid));
+				// Read profile fields from the Firestore user document first,
+				// falling back to the Auth user only when they're missing.
+				const userData = await getUserData(user.uid);
+				setUserData(userData);
 
-			const displayName = user.displayName || '';
-			const photo = user.photoURL || '';
-				const photoURL = photo ? 'url(' + photo + ')' : '';
+				const displayName = userData?.name || user.displayName || '';
+				const email = userData?.email || user.email || '';
+				const photo = userData?.photoURL || user.photoURL || '';
+				const photoURL = photo ? `url(${photo})` : '';
 
 				getID('title-name').innerHTML = displayName ? displayName.split(' ')[0] : '';
 				getID('greeting-avatar').style.backgroundImage = photoURL;
 				getID('greeting-avatar').style.backgroundSize = 'cover';
 
 				getID('settings-user-name').innerHTML = displayName;
+				getID('settings-user-email').innerHTML = email;
 				getID('settings-avatar').style.backgroundImage = photoURL;
 				getID('settings-avatar').style.backgroundSize = 'cover';
 

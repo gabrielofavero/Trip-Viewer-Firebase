@@ -677,6 +677,12 @@ body.dialog-open {
 	font-weight: 700;
 	color: var(--text-primary);
 }
+.settings-user-email {
+	font-size: 13px;
+	color: var(--text-secondary);
+	margin-top: 2px;
+	word-break: break-word;
+}
 .settings-section {
 	background: rgba(255, 255, 255, 0.7);
 	backdrop-filter: blur(16px);

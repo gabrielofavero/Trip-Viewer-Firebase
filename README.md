@@ -42,7 +42,7 @@ npm run dev
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 165   | 162  | 3         | 0       |
 | 🏆   | Feature     | F000 | 175   | 151  | 22        | 2       |
-| 📈   | Improvement | M000 | 166   | 139  | 23        | 4       |
+| 📈   | Improvement | M000 | 167   | 140  | 23        | 4       |
 | ⚔️   | Epic        | E000 | 51    | 34   | 9         | 8       |
 
 ## Backlog
@@ -85,8 +85,9 @@ npm run dev
 - 📈 **M165:** Improve itinerary modal
 - 📈 **M166:** Improve input boxes animation and visibility
 - 🏆 **F170:** Create progress bar loading (restore operations)
-- 🐞 **B164:** Fix dark mode backup/restore elements and dialog visual issues
+- 🐞 **B165:** Fix dark mode backup/restore elements and dialog visual issues
 - 🏆 **F175:** Add real versioning
+- 📈 **M167:** Add database profile info since auth data is not always filled
 
 ### July 2026
 - ⚔️ **E048:** Database ovehaul

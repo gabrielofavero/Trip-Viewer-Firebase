@@ -17,18 +17,10 @@ admin.initializeApp();
 //          Usage: ?dryRun=true for preview, ?cleanup=true to delete old data
 // ============================================================
 
-// Phase 1: Translate & Restructure (was migrations 13–18)
-import * as phase1 from './migrations/13-migrate-phase1-translate-restructure';
-export const migratePhase1 = phase1.migrate;
-
-// Phase 2: Rename & Finalize (was migrations 19–22)
-import * as phase2 from './migrations/14-migrate-phase2-rename-finalize';
-export const migratePhase2 = phase2.migrate;
-
-// Migration 15: Phase 3 cleanup (embedded summaries, permissions migration, legacy field removal)
-import * as phase3 from './migrations/15-migrate-phase3-improvements';
-export const migratePhase3 = phase3.migrate;
-
 // Dev: initialize a fresh local Firestore emulator database
 import * as initLocalDbModule from './dev/init-local-db';
 export const initLocalDb = initLocalDbModule.initLocalDb;
+
+// Migration 16: Backfill user profile fields (name, email, photoURL) from Auth
+import * as userProfileMigration from './migrations/16-migrate-user-profile-fields';
+export const migrateUserProfile = userProfileMigration.migrate;

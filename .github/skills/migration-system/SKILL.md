@@ -43,8 +43,9 @@ curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase2?cleanup=tr
 | **13** | **`migratePhase1`** | **Translate field names/values Pt→En + restructure data (embeds → subcollections)** |
 | **14** | **`migratePhase2`** | **Rename collections Pt→En + fix itinerary/destination values + optional cleanup** |
 | **15** | **`migratePhase3`** | **Cleanup: embedded summaries → subcollections, permissions migration, legacy field removal** |
+| **16** | **`migrateUserProfile`** | **Backfill user profile fields (`name`, `email`, `photoURL`) from Auth into every `users/{uid}` document** |
 
-Migrations 1–12 are **legacy** (already applied in production). Migrations 13–15 are the **current consolidation** phases. They are exported from `functions/src/index.ts` as `migratePhase1`, `migratePhase2`, `migratePhase3`.
+Migrations 1–12 are **legacy** (already applied in production). Migrations 13–15 are the **consolidation phases**; migration 16 is the current profile-fields backfill. They are exported from `functions/src/index.ts` as `migratePhase1`, `migratePhase2`, `migratePhase3`, and `migrateUserProfile`.
 
 ---
 
@@ -193,6 +194,27 @@ protegido → protected
 
 ---
 
+## Migration 16: User Profile Fields (`migrateUserProfile`)
+
+**File:** `functions/src/migrations/16-migrate-user-profile-fields.ts`
+
+Backfills every `users/{uid}` document with the profile fields `name`, `email` and `photoURL`, sourced from the matching Firebase Auth user record (`displayName`, `email`, `photoURL`).
+
+### Operations:
+1. Scan all `users/{uid}` documents.
+2. **Idempotency check:** skip any user whose doc already has all three fields (absent / `null` / `''` all count as "missing").
+3. Fetch the Auth record via `admin.auth().getUser(uid)` to source the values.
+4. Build an `update()` patch containing **only the missing fields** — existing profile values are never overwritten.
+5. `?dryRun=true` logs what would change without committing.
+
+### Run it:
+```bash
+curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateUserProfile?dryRun=true"
+curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateUserProfile"
+```
+
+---
+
 ## How to Run Migrations
 
 ### On the Emulator (Local)
@@ -229,7 +251,7 @@ Then call the production URL (same pattern, different project).
 ```
 functions/src/migrations/{NN}-migrate-{short-description}.ts
 ```
-Use the next available number (currently up to 15).
+Use the next available number (currently up to 16).
 
 ### Template
 
@@ -279,10 +301,13 @@ export const migrateNewFeature = newMigration.migrateNewFeature;
 ```
 
 ### Best practices
-- Always support `?dryRun=true`
-- Always include an idempotency check (marker field or existence check)
-- Use `BatchManager` if processing more than 500 documents
-- Return a JSON report with counts
+- Always support `?dryRun=true` (log/report what would change, never commit)
+- Always include an idempotency check so re-runs are no-ops. Two patterns in use:
+  - **Marker field:** write `_migrated_<name>: true` and skip docs that have it (Migrations 13–15 style).
+  - **Field-presence check:** skip docs that already have the target fields (Migration 16 style — preferable for additive backfills, since it needs no extra field and survives partial runs).
+- Never overwrite existing values in a backfill — build an `update()` patch containing only the missing fields.
+- Use `BatchManager` if processing more than 500 documents (Firestore 500-op batch limit)
+- Return a JSON report with counts (`{ success, dryRun, report }`)
 - Log progress for long-running migrations
 - Test on emulator first, then deploy
 

@@ -96,6 +96,10 @@ export async function registerIfUserNotPresent() {
 		await create(
 			`${COLLECTION.USERS}`,
 			{
+				// Profile fields — read from Firestore first, Auth as fallback
+				name: user.displayName || '',
+				email: user.email || '',
+				photoURL: user.photoURL || '',
 				listings: [],
 				trips: [],
 				destinations: [],

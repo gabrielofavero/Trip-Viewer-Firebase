@@ -23,18 +23,20 @@ export const initLocalDb = functions.https.onRequest(async (req, res) => {
 
 	try {
 		// ---------------------------------------------------------------
-		// Fetch auth user for name & photo
+		// Fetch auth user for name, email & photo
 		// ---------------------------------------------------------------
 		let displayName = '';
+		let email = '';
 		let photoURL = '';
 		try {
 			const userRecord = await admin.auth().getUser(uid);
 			displayName = userRecord.displayName || '';
+			email = userRecord.email || '';
 			photoURL = userRecord.photoURL || '';
 		} catch (err) {
 			console.warn(
 				`Could not fetch auth user "${uid}": ${(err as Error).message}. ` +
-					'Name and photo will be empty.',
+					'Name, email and photo will be empty.',
 			);
 		}
 
@@ -67,6 +69,9 @@ export const initLocalDb = functions.https.onRequest(async (req, res) => {
 
 		// --- users collection ---
 		batch.set(db.collection('users').doc(uid), {
+			name: displayName,
+			email,
+			photoURL,
 			destinations: [],
 			trips: [],
 			listings: [],

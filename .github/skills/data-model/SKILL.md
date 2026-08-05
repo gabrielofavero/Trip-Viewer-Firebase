@@ -15,7 +15,7 @@ TripViewer uses Firebase Firestore with a **two-tier PIN-protected architecture*
 |---|---|---|
 | `admin` | `admin` | List of admin UIDs (`{ admins: string[] }`) |
 | `config` | `system` | Global config (`{ registrationOpen: boolean }`) |
-| `users` | `{authUid}` | User profile with `destinationSummaries`, `tripSummaries`, `listingSummaries` subcollections |
+| `users` | `{authUid}` | User profile (`name`, `email`, `photoURL`) with `destinationSummaries`, `tripSummaries`, `listingSummaries` subcollections |
 | `trips` | `{tripId}` | Trip document (non-sensitive fields) |
 | `trips/{tripId}/accommodations` | `{accId}` | Accommodation sub-documents |
 | `trips/{tripId}/transportation` | `{legId}` | Transport leg sub-documents (+ `_settings` doc) |
@@ -28,6 +28,40 @@ TripViewer uses Firebase Firestore with a **two-tier PIN-protected architecture*
 | `listings` | `{listingId}` | Listing documents |
 | `protected` | `{tripId}` | PIN lookup (`{ pin: string, sharing: { owner, active, editors } }`) |\n| `protected` | `_placeholder` | Placeholder document to ensure collection exists |
 | `admin/permissions` | `{userId}` | Per-user permission flags |
+
+---
+
+## User Document (`users/{uid}`)
+
+```ts
+{
+  name:     string   // display name — from Auth displayName
+  email:    string   // email address — from Auth email
+  photoURL: string   // avatar URL — from Auth photoURL
+  trips:    []       // embedded arrays (legacy; kept empty, summaries live in subcollections)
+  destinations: []
+  listings: []
+  // + subcollections: tripSummaries, destinationSummaries, listingSummaries
+}
+```
+
+The profile fields (`name`, `email`, `photoURL`) were added in **August 2026** (Migration 16) and are sourced from the matching Firebase Auth user record (`displayName`, `email`, `photoURL`).
+
+### Profile Field Read Order (DB-first, Auth fallback)
+
+The app reads profile fields **from Firestore first**, and only falls back to the Auth user when a field is missing:
+
+- `public/assets/ts/pages/home/support/data.ts` → `loadUserIndex()`:
+  ```ts
+  const userData = await getUserData(user.uid);
+  const displayName = userData?.name || user.displayName || '';
+  const email = userData?.email || user.email || '';
+  const photo = userData?.photoURL || user.photoURL || '';
+  ```
+- `public/assets/ts/data/firebase/auth.ts` → `registerIfUserNotPresent()` writes `name`/`email`/`photoURL` (from the Auth user) when creating a new user document.
+- Migration 16 backfills existing user documents from Auth so the DB copy is complete.
+
+> **Why:** the Firestore user document is the source of truth for the UI; Auth is only a fallback for users whose doc predates Migration 16 or lacks a field.
 
 ---
 
@@ -299,3 +333,4 @@ Detailed document structure references in `docs/database/`:
 9. **Destination `image` field may be absent** in documents created before July 2026. Always guard with optional chaining (`dest.image?.active`). Migration 15 backfills missing fields.
 10. **Destination summaries live under `users/{uid}/destinationSummaries/{destId}`** — not embedded in the user doc. The index page reads these, not the full destination documents.
 11. **Destination entry `images` may be absent** in entries created before August 2026 — guard with optional chaining (`entry.images?.length`). Migration 15 (Phase 3) backfills `images: []` on all destination entries across all categories.
+12. **User profile fields (`name`, `email`, `photoURL`) may be absent** in user documents created before August 2026. The app reads them from Firestore and falls back to the Auth user record when missing (`userData?.name || user.displayName || ''`). Migration 16 backfills them from Auth.
