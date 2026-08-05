@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 README.md Maintenance Script
-Updates task counts, checks for inconsistencies, and calculates version
+Updates task counts and checks for inconsistencies.
 """
 
 import re
@@ -42,7 +42,6 @@ def parse_readme(content):
     }
     
     current_section = None
-    current_month = None
     
     for line in content.split('\n'):
         if '## Backlog' in line:
@@ -51,13 +50,6 @@ def parse_readme(content):
             current_section = 'done'
         elif '### Discarded' in line:
             current_section = 'discarded'
-        
-        # Track the current "### <Month Year>" heading inside Done so tasks can
-        # be reordered chronologically later (see calculate_version).
-        if current_section == 'done':
-            month_match = re.match(r'^###\s+(.+)$', line)
-            if month_match:
-                current_month = month_match.group(1).strip()
         
         if current_section:
             common = re.search(r'\*\*([A-Z]\d+):\*\*', line)
@@ -73,8 +65,7 @@ def parse_readme(content):
                     'id': task_id,
                     'type': task_type,
                     'number': task_number,
-                    'line': line,
-                    'month': current_month if current_section == 'done' else None
+                    'line': line
                 })
     
     return tasks
@@ -186,53 +177,6 @@ def check_inconsistencies(tasks):
     return issues
 
 
-def calculate_version(tasks):
-    """Calculate semantic version based on completed tasks (chronological order).
-
-    Done months are listed newest-first in README.md, so to reconstruct true
-    chronological order we walk the month groups bottom-to-top (oldest month
-    first) and the tasks top-to-bottom within each month (top is old, bottom
-    is new). This makes the version reflect the newest completed task, so
-    appending a task to the current month's Done section bumps the patch.
-    """
-    done_tasks = tasks['done']
-
-    backlog_epic_numbers = {t['number'] for t in tasks['backlog'] if t['type'] == 'E'}
-
-    # Group Done tasks by their "### <Month Year>" heading, keeping the order
-    # they appear in the file (newest month first, old→new inside each month).
-    month_order = []
-    month_groups = {}
-    for task in done_tasks:
-        key = task.get('month')
-        if key not in month_groups:
-            month_groups[key] = []
-            month_order.append(key)
-        month_groups[key].append(task)
-
-    # Rebuild the Done list oldest → newest: reverse the month groups and keep
-    # tasks in file order (top is old, bottom is new) inside each month.
-    chronological = []
-    for key in reversed(month_order):
-        chronological.extend(month_groups[key])
-
-    major = 2
-    minor = 0
-    patch = 0
-    
-    for task in chronological:
-        # Skip Epics that also exist in backlog (they weren't truly completed)
-        if task['type'] == 'E' and task['number'] in backlog_epic_numbers:
-            continue
-        if task['type'] == 'E':
-            minor += 1
-            patch = 0
-        else:
-            patch += 1
-    
-    return f"{major}.{minor}.{patch}"
-
-
 def update_table(content, counts):
     """Update the task count table in README."""
     type_map = {
@@ -265,18 +209,6 @@ def update_table(content, counts):
     updated_content = content[:table_start] + new_table + content[table_end:]
     
     return updated_content
-
-
-def get_system_version():
-    """Get current system version from README without full analysis."""
-    readme_path = BASE_DIR / 'README.md'
-    
-    if not readme_path.exists():
-        return "2.0.0"
-    
-    content = readme_path.read_text(encoding="utf-8")
-    tasks = parse_readme(content)
-    return calculate_version(tasks)
 
 
 def main():
@@ -327,9 +259,6 @@ def main():
     else:
         print(f"\n{Colors.GREEN}✓ No inconsistencies found{Colors.RESET}")
     
-    version = calculate_version(tasks)
-    print(f"\n{Colors.BOLD}{Colors.MAGENTA}🏷️  Calculated Version: {version}{Colors.RESET}")
-    
     updated_content = update_table(content, counts)
     readme_path.write_text(updated_content, encoding="utf-8")
     
@@ -337,8 +266,4 @@ def main():
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == "--version":
-        # Print only the calculated version (used by the build script).
-        print(get_system_version())
-    else:
-        main()
+    main()

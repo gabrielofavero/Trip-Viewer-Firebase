@@ -6,7 +6,7 @@ applyTo: 'README.md; scripts/utils/readme.py'
 
 # Backlog & Task Management
 
-TripViewer tracks all work in `README.md` using a structured task system with IDs, emoji types, and sections. A Python script (`scripts/utils/readme.py`) auto-updates task counts, checks for inconsistencies, and calculates the semantic version.
+TripViewer tracks all work in `README.md` using a structured task system with IDs, emoji types, and sections. A Python script (`scripts/utils/readme.py`) auto-updates task counts and checks for inconsistencies.
 
 ---
 
@@ -145,7 +145,7 @@ README.md Analysis
 
 ## Calculating Things
 
-Everything is derived from the README by `readme.py` — nothing is hand-maintained. **The AI only picks the next task ID and places tasks correctly; `npm run readme` does all the counting, inconsistency checks, and version calculation.**
+Everything is derived from the README by `readme.py` — nothing is hand-maintained. **The AI only picks the next task ID and places tasks correctly; `npm run readme` does all the counting and inconsistency checks.**
 
 ### The summary table (`# Tasks`)
 | Column | Meaning |
@@ -155,12 +155,8 @@ Everything is derived from the README by `readme.py` — nothing is hand-maintai
 | `Cancelled` | Discarded tasks of that type |
 | `Pending` | Open (Backlog) tasks of that type |
 
-### Version (`2.minor.patch`)
-> **The AI never calculates the version.** It is computed automatically by `npm run readme` — just run it and read the output. The breakdown below is informational only.
-- `minor` = number of completed **Epics** (`E` tasks in Done)
-- `patch` = number of completed **non-Epic** tasks (B/F/M in Done)
-- Each completed Epic bumps `minor` and resets `patch` to `0`
-- Epics still in Backlog are **not** counted, even if they also appear in Done
+### Version
+> **The AI never calculates the version.** Versions live in `CHANGELOG.md` and are chosen at deploy time via `scripts/build/deploy.py` (use the last version, bump minor, or bump patch). The deploy script stamps the `## [version] - <date>` entry and syncs `package.json` / `version.json`.
 
 ### Next available ID for a type
 1. Find the highest existing number for that type (across Backlog + Done + Discarded). E.g. highest `M` is `M166` → next is `M167`.
@@ -192,20 +188,17 @@ Move it from Backlog to `### Discarded`. Its number is **never reused**.
 
 ---
 
-## Version Auto-Calculation
+## Versioning (CHANGELOG-driven)
 
-The version is **not manually maintained** and the AI does **not** compute it — `npm run readme` derives it from completed tasks and prints it. The mechanics below are just to understand the output:
+The version is **not** derived from README task counts anymore. It lives in `CHANGELOG.md` and is chosen when deploying:
 
-```
-2.34.21 = Major 2 + 34 completed Epics + 21 completed non-Epic tasks
-```
-
-- Tasks are walked in **chronological order** (oldest → newest).
-- `## Done` months are listed newest-first, so the script reads the month groups **bottom-to-top** (down → up) and tasks **top-to-bottom within each month** (top is old, bottom is new) before applying the version rules.
-- Because of that, appending a new task to the bottom of the current month's `Done` list bumps the `patch` — it is never "overwritten" by older months.
-
-### Epic detection edge case
-If an Epic appears in **both** Backlog and Done, it's treated as still in progress (counted from Backlog only). This prevents epics with pending sub-tasks from inflating the version.
+- `scripts/build/deploy.py` prompts for the version label after the project selection:
+  - **Label as `X.X.X`** — use the last version on the changelog (stamps today's date on it).
+  - **Create `X.X+1.X`** — bump minor.
+  - **Create `X.X.X+1`** — bump patch.
+- For production (`trip-viewer-prd`) deploys, the script adds/updates the `## [version] - <date>` entry at the top of `CHANGELOG.md`.
+- The chosen version is applied to `package.json`, `package-lock.json` (during build/deploy) and `public/assets/json/version.json`.
+- `npm run readme` no longer prints or calculates a version — it only maintains the task table and checks consistency.
 
 ---
 

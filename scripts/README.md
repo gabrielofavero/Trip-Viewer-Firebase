@@ -19,7 +19,7 @@ Utility scripts for the Trip Viewer Firebase project.
 |--------|-------------|
 | `build.js` | Copies `public/` → `dist/`, injects HTML partials, copies Firebase config. `--watch` for watch mode. |
 | `inject-partials.js` | Called by `build.js`. Replaces `<!-- #include ... -->` directives with shared partial content. |
-| `deploy.py` | Firebase deployment with build-based cache busting. Prompts for target project (dev / prd / both), increments build number, applies cache-busting params, deploys, restores HTML files. |
+| `deploy.py` | Firebase deployment with build-based cache busting. Prompts for target project (dev / prd / both), labels the release version from `CHANGELOG.md` (use last / bump minor / bump patch), stamps the changelog entry, increments build number, applies cache-busting params, deploys, restores HTML files. |
 | `setup.ps1` | One-time environment setup. Checks Node.js/Python, runs `npm install`, installs `pre-commit` hooks. |
 
 ### `lint/` — Code Quality
@@ -39,7 +39,7 @@ Utility scripts for the Trip Viewer Firebase project.
 
 | Script | Description |
 |--------|-------------|
-| `readme.py` | README.md maintenance. Analyzes task distribution, validates task IDs and emoji consistency, detects missing/duplicate tasks, calculates semantic version. |
+| `readme.py` | README.md maintenance. Analyzes task distribution, validates task IDs and emoji consistency, detects missing/duplicate tasks. |
 | `sync.py` | Force-syncs `master` branch to match `develop`. Shows confirmation before proceeding. |
 
 ### `export-maps-data/` — Place Data Export

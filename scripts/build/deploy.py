@@ -142,6 +142,107 @@ def save_version_json(version_data, project, system_version, firebase_version=No
 
 
 # ============================================================
+# Changelog Version Selection
+# ============================================================
+
+def get_last_changelog_version():
+    """Return the latest version (topmost '## [X.Y.Z]' heading) from CHANGELOG.md."""
+    changelog_path = BASE_DIR / "CHANGELOG.md"
+    if not changelog_path.exists():
+        print(f"{Colors.YELLOW}CHANGELOG.md not found, defaulting to 2.0.0.{Colors.RESET}")
+        return "2.0.0"
+    content = changelog_path.read_text(encoding="utf-8")
+    match = re.search(r'^## \[(\d+\.\d+\.\d+)\]', content, re.MULTILINE)
+    if not match:
+        print(f"{Colors.YELLOW}No version heading found in CHANGELOG.md, defaulting to 2.0.0.{Colors.RESET}")
+        return "2.0.0"
+    return match.group(1)
+
+
+def _bump_minor(version):
+    """Bump the minor (2.22.0 → 2.23.0)."""
+    major, minor, _ = version.split(".")
+    return f"{major}.{int(minor) + 1}.0"
+
+
+def _bump_patch(version):
+    """Bump the patch (2.22.0 → 2.22.1)."""
+    major, minor, patch = version.split(".")
+    return f"{major}.{minor}.{int(patch) + 1}"
+
+
+def select_version():
+    """Ask the user how to label the version for this deployment."""
+    last_version = get_last_changelog_version()
+    minor_version = _bump_minor(last_version)
+    patch_version = _bump_patch(last_version)
+
+    print(f"\n{Colors.BOLD}{Colors.CYAN}Version Label{Colors.RESET}")
+    print(f"   {Colors.BLUE}Last version on changelog:{Colors.RESET} {Colors.BOLD}{last_version}{Colors.RESET}")
+    print(f"{Colors.BLUE}1.{Colors.RESET} Label as {Colors.BOLD}{last_version}{Colors.RESET} (last version on the changelog)")
+    print(f"{Colors.BLUE}2.{Colors.RESET} Create {Colors.BOLD}{minor_version}{Colors.RESET} (minor)")
+    print(f"{Colors.BLUE}3.{Colors.RESET} Create {Colors.BOLD}{patch_version}{Colors.RESET} (patch)")
+    print(f"{Colors.BLUE}0.{Colors.RESET} Cancel")
+
+    while True:
+        choice = input(f"\n{Colors.BOLD}Select an option (0-3):{Colors.RESET} ").strip()
+        if choice == "0":
+            print(f"{Colors.YELLOW}Deployment cancelled.{Colors.RESET}")
+            sys.exit(0)
+        elif choice == "1":
+            return last_version
+        elif choice == "2":
+            return minor_version
+        elif choice == "3":
+            return patch_version
+        else:
+            print(f"{Colors.RED}Invalid option. Please select 0-3.{Colors.RESET}")
+
+
+def update_changelog(version):
+    """Stamp the deployed version as '## [version] - <date>' at the top of CHANGELOG.md."""
+    changelog_path = BASE_DIR / "CHANGELOG.md"
+    if not changelog_path.exists():
+        print(f"{Colors.YELLOW}CHANGELOG.md not found, skipping changelog update.{Colors.RESET}")
+        return
+
+    today = datetime.now().strftime("%Y-%m-%d")
+    content = changelog_path.read_text(encoding="utf-8")
+    lines = content.split("\n")
+
+    # Locate the topmost "## [X.Y.Z]" heading.
+    top_idx = None
+    for i, line in enumerate(lines):
+        if re.match(r'^## \[\d+\.\d+\.\d+\]', line.strip()):
+            top_idx = i
+            break
+
+    if top_idx is not None and lines[top_idx].strip().startswith(f"## [{version}]"):
+        if " - " in lines[top_idx]:
+            print(f"{Colors.GREEN}✓{Colors.RESET} CHANGELOG: ## [{version}] already stamped")
+        else:
+            lines[top_idx] = f"## [{version}] - {today}"
+            changelog_path.write_text("\n".join(lines).rstrip("\n") + "\n", encoding="utf-8")
+            print(f"{Colors.GREEN}✓{Colors.RESET} CHANGELOG: ## [{version}] - {today}")
+        return
+
+    # New version — insert a fresh entry above the current top (or after the title).
+    insert_at = top_idx
+    if insert_at is None:
+        insert_at = 0
+        for i, line in enumerate(lines):
+            if line.strip().startswith("# "):
+                insert_at = i + 1
+                break
+        while insert_at < len(lines) and lines[insert_at].strip() == "":
+            insert_at += 1
+
+    lines[insert_at:insert_at] = [f"## [{version}] - {today}", ""]
+    changelog_path.write_text("\n".join(lines).rstrip("\n") + "\n", encoding="utf-8")
+    print(f"{Colors.GREEN}✓{Colors.RESET} CHANGELOG: added ## [{version}] - {today}")
+
+
+# ============================================================
 # Package Version Update
 # ============================================================
 
@@ -360,14 +461,12 @@ def main():
 
         target_projects = select_deployment_targets()
 
-        # Compute system version once from README
-        try:
-            import sys as _sys
-            _sys.path.insert(0, str(BASE_DIR / "scripts" / "utils"))
-            from readme import get_system_version
-            system_version = get_system_version()
-        except Exception:
-            system_version = "Unknown"
+        # Choose the deployment version label (from the changelog)
+        system_version = select_version()
+
+        # Stamp the release entry in CHANGELOG.md for production deployments
+        if "trip-viewer-prd" in target_projects:
+            update_changelog(system_version)
 
         run_build()
 

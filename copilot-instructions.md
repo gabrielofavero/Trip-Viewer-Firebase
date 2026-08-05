@@ -23,7 +23,7 @@ This workspace has **12 domain-specific agent skills** in `.github/skills/`. The
 | `typescript-conventions` | Module organization, page routing, service layer, coding conventions |
 | `i18n-system` | Translations, language switching, JSON language packs |
 | `backup-restore` | Account backup/restore, document export/import |
-| `backlog-management` | README task IDs, readme.py script, version calculation |
+| `backlog-management` | README task IDs, readme.py script |
 | `git-workflow` | Branch strategy, commit conventions, sync/deploy flow |
 
 **Rules for using these skills:**
@@ -64,3 +64,14 @@ node scripts/dev/query-firestore.js --list-collections   # Query emulator
 5. Named exports only — no `export default`
 6. Vendor libs (jQuery, Bootstrap, etc.) are globals — do not import them
 7. Test locally with `npm run dev` before deploying
+
+## Feature Validation
+
+After implementing a feature request, before wrapping up, confirm how it should be validated — don't assume:
+
+1. **Simple** — just verify the build passes (`npm run build`). Good for changes that don't meaningfully alter runtime behavior (e.g. simple refactors, typing fixes, CSS tweaks, translation updates).
+2. **Complex** — simulate the user flow with Playwright against the emulators (sign in, navigate to the feature, exercise it end-to-end). Good for anything that changes user-facing behavior, data flow, or backend logic.
+
+**Be adaptive:**
+- If the change is truly trivial (e.g. a one-line comment, a copy change, or a small non-behavioral tweak), skip the question and note that no validation is needed.
+- Otherwise, ask the user which validation level applies before declaring the feature done.

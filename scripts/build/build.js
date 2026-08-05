@@ -115,30 +115,32 @@ function build() {
 // --- Package version sync ---
 
 /**
- * Read the semantic version calculated by the README maintenance script
- * (scripts/utils/readme.py) and persist it into package.json.
+ * Read the latest version from CHANGELOG.md (the deployment-driven source of
+ * truth for versions) and persist it into package.json.
  *
- * The README is the single source of truth for the version; build keeps
+ * The CHANGELOG is the single source of truth for the version; build keeps
  * package.json in sync. Idempotent — only writes when the version differs.
  */
 function syncPackageVersion() {
 	try {
-		const output = execSync("python scripts/utils/readme.py --version", {
-			cwd: ROOT,
-			encoding: "utf8",
-		})
-			.trim()
-			.split(/\r?\n/)
-			.filter(Boolean)
-			.pop()
-			.trim();
-
-		if (!/^\d+\.\d+\.\d+$/.test(output)) {
+		const changelogPath = path.join(ROOT, "CHANGELOG.md");
+		if (!fs.existsSync(changelogPath)) {
 			console.warn(
-				`[build] WARNING: unexpected version output "${output}"; skipping package version sync.`,
+				"[build] WARNING: CHANGELOG.md not found; skipping package version sync.",
 			);
 			return;
 		}
+
+		const changelog = fs.readFileSync(changelogPath, "utf8");
+		const match = changelog.match(/^## \[(\d+\.\d+\.\d+)\]/m);
+		if (!match) {
+			console.warn(
+				"[build] WARNING: no version heading found in CHANGELOG.md; skipping package version sync.",
+			);
+			return;
+		}
+
+		const output = match[1];
 
 		const packageJsonPath = path.join(ROOT, "package.json");
 		if (fs.existsSync(packageJsonPath)) {
