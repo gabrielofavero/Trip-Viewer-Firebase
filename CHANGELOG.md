@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.22.0]
+## [2.22.0] - 2026-08-04
 
 - ⚔️ **E048:** Database overhaul (TypeScript migration)
 - ⚔️ **E044:** New Front-End: edit pages

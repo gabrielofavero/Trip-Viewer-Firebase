@@ -104,11 +104,11 @@ def load_version_json():
         print(f"version.json does not exist. Creating new file at {version_json_path}")
         version_json_path.parent.mkdir(parents=True, exist_ok=True)
         initial_data = {"build": 0, "projects": {}}
-        version_json_path.write_text(json.dumps(initial_data, indent=2) + "\n")
+        version_json_path.write_text(json.dumps(initial_data, indent=2) + "\n", encoding="utf-8")
         return initial_data
     
     try:
-        version_data = json.loads(version_json_path.read_text())
+        version_data = json.loads(version_json_path.read_text(encoding="utf-8"))
         if "build" not in version_data:
             version_data = {"build": 0, "projects": {}}
         if "deployed_at" in version_data:
@@ -137,7 +137,7 @@ def save_version_json(version_data, project, system_version, firebase_version=No
         }
     }
     
-    version_json_path.write_text(json.dumps(version_data, indent=2) + "\n")
+    version_json_path.write_text(json.dumps(version_data, indent=2) + "\n", encoding="utf-8")
     print(f"{Colors.GREEN}✓{Colors.RESET} Updated version.json: {Colors.BOLD}build={version_data['build']}{Colors.RESET}, firebase={firebase_version}, system={system_version}")
 
 
@@ -257,11 +257,11 @@ def update_package_jsons(system_version):
 
     # Update package.json
     if package_json_path.exists():
-        data = json.loads(package_json_path.read_text())
+        data = json.loads(package_json_path.read_text(encoding="utf-8"))
         original_version = data.get("version")
         if original_version and original_version != system_version:
             data["version"] = system_version
-            package_json_path.write_text(json.dumps(data, indent=2) + "\n")
+            package_json_path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
             originals["package.json"] = original_version
             print(f"  {Colors.GREEN}✓{Colors.RESET} package.json: {Colors.BOLD}{original_version}{Colors.RESET} \u2192 {Colors.GREEN}{system_version}{Colors.RESET}")
         else:
@@ -269,7 +269,7 @@ def update_package_jsons(system_version):
 
     # Update package-lock.json (top-level and packages[""] version)
     if package_lock_path.exists():
-        data = json.loads(package_lock_path.read_text())
+        data = json.loads(package_lock_path.read_text(encoding="utf-8"))
         original_top_version = data.get("version")
         modified = False
         original_pkg_version = None
@@ -286,7 +286,7 @@ def update_package_jsons(system_version):
                 modified = True
 
         if modified:
-            package_lock_path.write_text(json.dumps(data, indent=2) + "\n")
+            package_lock_path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
             originals["package-lock.json"] = {
                 "version": original_top_version,
                 "packages_version": original_pkg_version
@@ -307,19 +307,19 @@ def restore_package_jsons(originals):
 
     if "package.json" in originals:
         package_json_path = BASE_DIR / "package.json"
-        data = json.loads(package_json_path.read_text())
+        data = json.loads(package_json_path.read_text(encoding="utf-8"))
         data["version"] = originals["package.json"]
-        package_json_path.write_text(json.dumps(data, indent=2) + "\n")
+        package_json_path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
         print(f"  {Colors.GREEN}✓{Colors.RESET} package.json restored to {Colors.BOLD}{originals['package.json']}{Colors.RESET}")
 
     if "package-lock.json" in originals:
         package_lock_path = BASE_DIR / "package-lock.json"
-        data = json.loads(package_lock_path.read_text())
+        data = json.loads(package_lock_path.read_text(encoding="utf-8"))
         orig = originals["package-lock.json"]
         data["version"] = orig["version"]
         if orig.get("packages_version") is not None and "" in data.get("packages", {}):
             data["packages"][""]["version"] = orig["packages_version"]
-        package_lock_path.write_text(json.dumps(data, indent=2) + "\n")
+        package_lock_path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
         print(f"  {Colors.GREEN}✓{Colors.RESET} package-lock.json restored to {Colors.BOLD}{orig['version']}{Colors.RESET}")
 
     print(f"{Colors.GREEN}✓{Colors.RESET} Restored {len(originals)} package file(s) to original state")
@@ -346,7 +346,7 @@ def update_html_cache_busting(build_number):
     modified_files = {}
     
     for html_file in html_files:
-        content = html_file.read_text()
+        content = html_file.read_text(encoding="utf-8")
         original_content = content
         
         def replace_script(match):
@@ -374,7 +374,7 @@ def update_html_cache_busting(build_number):
         )
         
         if content != original_content:
-            html_file.write_text(content)
+            html_file.write_text(content, encoding="utf-8")
             modified_files[html_file] = original_content
             print(f"  {Colors.GREEN}✓{Colors.RESET} {html_file}")
     
@@ -396,7 +396,7 @@ def restore_html_files(modified_files):
     print(f"\n{Colors.BOLD}{Colors.CYAN}Restoring HTML files...{Colors.RESET}")
     
     for html_file, original_content in modified_files.items():
-        html_file.write_text(original_content)
+        html_file.write_text(original_content, encoding="utf-8")
         print(f"  {Colors.GREEN}✓{Colors.RESET} {html_file}")
     
     print(f"{Colors.GREEN}✓{Colors.RESET} Restored {len(modified_files)} file(s) to original state")
@@ -474,9 +474,10 @@ def main():
         build_number = increment_build_number(version_data)
 
         modified_files = update_html_cache_busting(build_number)
-        package_originals = update_package_jsons(system_version)
+        package_originals = {}
 
         try:
+            package_originals = update_package_jsons(system_version)
             for project in target_projects:
                 firebase_version = deploy_firebase(project)
                 save_version_json(version_data, project, system_version, firebase_version)
