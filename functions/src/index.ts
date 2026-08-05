@@ -20,7 +20,3 @@ admin.initializeApp();
 // Dev: initialize a fresh local Firestore emulator database
 import * as initLocalDbModule from './dev/init-local-db';
 export const initLocalDb = initLocalDbModule.initLocalDb;
-
-// Migration 16: Backfill user profile fields (name, email, photoURL) from Auth
-import * as userProfileMigration from './migrations/16-migrate-user-profile-fields';
-export const migrateUserProfile = userProfileMigration.migrate;
