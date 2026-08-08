@@ -22,7 +22,7 @@ import * as initLocalDbModule from './dev/init-local-db';
 export const initLocalDb = initLocalDbModule.initLocalDb;
 
 // Migration 17: Places API prep — grants the canUsePlacesAPI permission
-// to UIDs passed in the request body and adds `placeID` to destination
-// entries. Usage: ?dryRun=true for preview; POST {"uids": [...]} to grant.
+// to UIDs passed in the request body and adds a `placeAPI` object to
+// destination entries. Usage: ?dryRun=true for preview; POST {"uids": [...]} to grant.
 import * as migratePlacesApiModule from './migrations/17-migrate-places-api';
 export const migratePlacesApi = migratePlacesApiModule.migrate;

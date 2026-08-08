@@ -13,10 +13,13 @@ import { FieldValue } from 'firebase-admin/firestore';
 //      (also accepts a comma-separated string or the ?uids= query param).
 //      If no UIDs are provided, this step is skipped entirely.
 //
-//   2. placeID field → every destination entry
-//      Adds `placeID: ""` to every destination entry (restaurants,
-//      snacks, nightlife, tourism, shopping) that lacks it, so entries
-//      can later store the Google Place ID used for Places API lookups.
+//   2. placeAPI object → every destination entry
+//      Adds a `placeAPI` object to every destination entry (restaurants,
+//      snacks, nightlife, tourism, shopping) that lacks it. The object
+//      mirrors the output of scripts/export-maps-data/export-maps-data.py
+//      (the app's destination format), so entries can later store the
+//      normalized Google Places API data (id, name, description, etc.).
+//      Any legacy `placeID` string field from an earlier run is removed.
 //
 // Idempotent — safe to re-run. Supports ?dryRun=true.
 // ============================================================
@@ -25,12 +28,33 @@ const DESTINATION_CATEGORIES = ['restaurants', 'snacks', 'nightlife', 'tourism',
 
 const PERMISSION_TYPE = 'canUsePlacesAPI';
 
+/**
+ * Empty placeholder for a destination entry's `placeAPI` object.
+ * Holds the normalized Places API data fields from
+ * scripts/export-maps-data/export-maps-data.py (DestinationData.to_dict()).
+ * Omits fields the app manages itself (`media`, `isNew`) and tracks the
+ * last Places API sync via `updatedAt` (instead of the script's `createdAt`).
+ */
+const EMPTY_PLACE_API: Record<string, any> = {
+	region: '',
+	name: '',
+	website: '',
+	rating: '',
+	price: '',
+	description: { en: '', pt: '' },
+	emoji: '',
+	map: '',
+	updatedAt: '',
+	instagram: '',
+	id: '',
+};
+
 interface PlacesApiReport {
 	// permission grant
 	permissionsRequested: number;
 	permissionsGranted: number;
 	permissionsAlreadyExist: number;
-	// placeID backfill
+	// placeAPI backfill
 	destinationsScanned: number;
 	entriesScanned: number;
 	entriesUpdated: number;
@@ -168,9 +192,9 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 		}
 
 		// -----------------------------------------------------------
-		// Step 2: Add placeID field to every destination entry
+		// Step 2: Add placeAPI object to every destination entry
 		// -----------------------------------------------------------
-		await addPlaceIDField(db, dryRun, report);
+		await addPlaceAPIField(db, dryRun, report);
 
 		console.log('[migration-17] Done.', JSON.stringify(report, null, 2));
 		res.status(200).json({ success: true, dryRun, uids, report });
@@ -182,15 +206,15 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 });
 
 // ============================================================
-// STEP 2: Add missing placeID field to destination entries
+// STEP 2: Add missing placeAPI object to destination entries
 // ============================================================
 
-async function addPlaceIDField(
+async function addPlaceAPIField(
 	db: FirebaseFirestore.Firestore,
 	dryRun: boolean,
 	report: PlacesApiReport,
 ) {
-	console.log('[migration-17] Step 2: Adding placeID field to destination entries...');
+	console.log('[migration-17] Step 2: Adding placeAPI object to destination entries...');
 
 	const destSnap = await db.collection('destinations').get();
 	console.log(`[migration-17] Found ${destSnap.size} destination document(s).`);
@@ -209,12 +233,14 @@ async function addPlaceIDField(
 			for (const [entryId, entry] of Object.entries(entries as Record<string, any>)) {
 				if (!entry || typeof entry !== 'object') continue;
 				report.entriesScanned++;
-				// Idempotency check — skip entries that already carry the field.
-				if (typeof entry.placeID === 'string') {
+				// Idempotency check — skip entries that already carry the object.
+				if (entry.placeAPI && typeof entry.placeAPI === 'object') {
 					report.entriesAlreadyPresent++;
 					continue;
 				}
-				patch[`${category}.${entryId}.placeID`] = '';
+				patch[`${category}.${entryId}.placeAPI`] = EMPTY_PLACE_API;
+				// Replace the legacy string placeID (empty placeholder from an earlier run).
+				patch[`${category}.${entryId}.placeID`] = FieldValue.delete();
 				report.entriesUpdated++;
 			}
 		}
@@ -224,13 +250,13 @@ async function addPlaceIDField(
 		const noun = Object.keys(patch).length === 1 ? 'entry' : 'entries';
 		if (dryRun) {
 			console.log(
-				`  destinations/${destDoc.id}: would add placeID field to ${Object.keys(patch).length} ${noun}.`,
+				`  destinations/${destDoc.id}: would add placeAPI object to ${Object.keys(patch).length} ${noun}.`,
 			);
 			continue;
 		}
 
 		console.log(
-			`  destinations/${destDoc.id}: adding placeID field to ${Object.keys(patch).length} ${noun}.`,
+			`  destinations/${destDoc.id}: adding placeAPI object to ${Object.keys(patch).length} ${noun}.`,
 		);
 		batch.update(destDoc.ref, patch);
 	}

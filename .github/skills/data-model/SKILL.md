@@ -220,7 +220,7 @@ Empty categories are `{}`.
   description: { pt?: string, en?: string }  // multi-language
   website:     string     // official URL or ""
   map:         string     // Google Maps URL
-  placeID:     string     // Google Place ID for Places API lookups (added Aug 2026)
+  placeAPI:    PlaceAPI   // normalized Places API data (added Aug 2026)
   instagram:   string     // Instagram profile URL or ""
   region:      string     // neighborhood/area (e.g. "Ipanema")
   media:       string     // TikTok/YouTube embed URL or ""
@@ -232,7 +232,7 @@ Empty categories are `{}`.
 
 > **Note:** The `images` field may be absent in entries created before August 2026. Always guard with optional chaining or `Array.isArray(entry.images)`. Migration 15 (Phase 3) backfills missing `images` with `[]`.
 
-> **Note:** The `placeID` field may be absent in entries created before August 2026. Always guard with `typeof entry.placeID === 'string'`. Migration 17 backfills missing `placeID` with `""`.
+> **Note:** The `placeAPI` object may be absent in entries created before August 2026. Always guard with optional chaining (e.g. `entry.placeAPI?.id`). Migration 17 backfills missing `placeAPI` with an empty template (subset of `scripts/export-maps-data/export-maps-data.py` output: `region`, `name`, `website`, `rating`, `price`, `description`, `emoji`, `map`, `updatedAt`, `instagram`, `id` — omits the app-managed `media`/`isNew` and uses `updatedAt` instead of the script's `createdAt`).
 
 ### `image` Field
 

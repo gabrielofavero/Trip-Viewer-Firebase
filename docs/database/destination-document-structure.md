@@ -84,7 +84,7 @@ interface DestinationEntry {
   description: Description;  // multi-language description (see below)
   website:     string;   // official website URL, or empty string
   map:         string;   // Google Maps URL
-  placeID:     string;   // Google Place ID used for Places API lookups, or empty string (added Aug 2026)
+  placeAPI:    PlaceAPI;  // normalized Places API data (see below)
   instagram:   string;   // Instagram profile URL, or empty string
   region:      string;   // neighborhood/area within the destination (e.g. "Ipanema", "Botafogo")
   media:       string;   // TikTok or YouTube embed URL, or empty string
@@ -94,7 +94,30 @@ interface DestinationEntry {
 }
 ```
 
-> **Note:** The `placeID` field may be absent in entries created before August 2026. Always guard with `typeof entry.placeID === 'string'`. Migration 17 backfills missing `placeID` with `""`.
+> **Note:** The `placeAPI` field may be absent in entries created before August 2026. Always guard with `typeof entry.placeAPI?.id === 'string'` or optional chaining. Migration 17 backfills missing `placeAPI` with an empty template.
+
+### `PlaceAPI` — Places API Data
+
+Added August 2026. Stores a subset of the output of `scripts/export-maps-data/export-maps-data.py` (the app's destination format produced from Google Places API data) — only the actual place-data fields. The app-managed `media`/`isNew` are omitted, and `updatedAt` (instead of the script's `createdAt`) tracks the last Places API sync. Entries created before this date may lack the field; Migration 17 backfills with an empty template.
+
+```ts
+interface PlaceAPI {
+  region:      string;  // neighborhood/area (e.g. "Ipanema", "Botafogo")
+  name:        string;  // display name (e.g. "Taste Lab", "Arp Bar")
+  website:     string;  // official website URL, or empty string
+  rating:      string;  // numeric rating as string: "1"–"5", or empty string
+  price:       string;  // price indicator: "$", "$$", "$$$", "$$$$", or "-"
+  description: Description;  // multi-language description
+  emoji:       string;  // emoji icon for the entry (e.g. "🍴", "🥙", "☕🧇")
+  map:         string;  // Google Maps URL
+  updatedAt:   string;  // ISO 8601 timestamp of the last Places API sync
+  instagram:   string;  // Instagram profile URL, or empty string
+  id:          string;  // Google Place ID used for Places API lookups, or empty string
+}
+```
+```
+
+> **Note:** The `placeAPI` field may be absent in entries created before August 2026. Always guard with optional chaining (e.g. `entry.placeAPI?.id`). Migration 17 backfills missing `placeAPI` with an empty template.
 
 ### `EntryImage` — Entry Images
 
@@ -159,7 +182,22 @@ At minimum, `pt` is always present. English (`en`) is set when the user provides
       },
       "website": "",
       "map": "https://maps.app.goo.gl/1P5phcxjkkTCjCJs8",
-      "placeID": "",
+      "placeAPI": {
+        "region": "",
+        "name": "",
+        "website": "",
+        "rating": "",
+        "price": "",
+        "description": {
+          "en": "",
+          "pt": ""
+        },
+        "emoji": "",
+        "map": "",
+        "updatedAt": "",
+        "instagram": "",
+        "id": ""
+      },
       "instagram": "",
       "region": "Cachambi",
       "media": "https://www.tiktok.com/@erikagentille/video/7258423588607495429",
@@ -184,7 +222,22 @@ At minimum, `pt` is always present. English (`en`) is set when the user provides
       },
       "website": "",
       "map": "https://maps.app.goo.gl/AE8n8eMBS354kjmo8",
-      "placeID": "",
+      "placeAPI": {
+        "region": "",
+        "name": "",
+        "website": "",
+        "rating": "",
+        "price": "",
+        "description": {
+          "en": "",
+          "pt": ""
+        },
+        "emoji": "",
+        "map": "",
+        "updatedAt": "",
+        "instagram": "",
+        "id": ""
+      },
       "instagram": "https://www.instagram.com/kebabshop.br/",
       "region": "Leblon",
       "media": "https://www.tiktok.com/@caroolnigro/video/7330085048646946053",
