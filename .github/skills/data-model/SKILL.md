@@ -27,7 +27,19 @@ TripViewer uses Firebase Firestore with a **two-tier PIN-protected architecture*
 | `users/{uid}/destinationSummaries` | `{destId}` | Lightweight destination summary for index cards |
 | `listings` | `{listingId}` | Listing documents |
 | `protected` | `{tripId}` | PIN lookup (`{ pin: string, sharing: { owner, active, editors } }`) |\n| `protected` | `_placeholder` | Placeholder document to ensure collection exists |
-| `admin/permissions` | `{userId}` | Per-user permission flags |
+| `admin/permissions` | `{userId}` | Per-user permission flags (existence = granted) |
+
+### Permissions (`admin/permissions/{type}/{uid}`)
+
+Each permission is a subcollection under `admin/permissions` — **document existence = permission granted** (e.g. a doc at `admin/permissions/upload/{uid}` means that UID can upload). The app reads them via `getPermissions()` in `public/assets/ts/data/firebase/database.ts`.
+
+| Permission | Purpose |
+|---|---|
+| `upload` | Can upload images to Storage |
+| `unlimitedUploadSize` | Bypasses the image upload size limit |
+| `canUsePlacesAPI` | Can use the Google Places API (added Aug 2026, migration 17) |
+
+Granting = creating the doc (e.g. `{ _created: <server timestamp> }`) at `admin/permissions/{type}/{uid}`. `initLocalDb` grants `upload`, `unlimitedUploadSize` and `canUsePlacesAPI` to the initialized user.
 
 ---
 
@@ -208,6 +220,7 @@ Empty categories are `{}`.
   description: { pt?: string, en?: string }  // multi-language
   website:     string     // official URL or ""
   map:         string     // Google Maps URL
+  placeID:     string     // Google Place ID for Places API lookups (added Aug 2026)
   instagram:   string     // Instagram profile URL or ""
   region:      string     // neighborhood/area (e.g. "Ipanema")
   media:       string     // TikTok/YouTube embed URL or ""
@@ -218,6 +231,8 @@ Empty categories are `{}`.
 ```
 
 > **Note:** The `images` field may be absent in entries created before August 2026. Always guard with optional chaining or `Array.isArray(entry.images)`. Migration 15 (Phase 3) backfills missing `images` with `[]`.
+
+> **Note:** The `placeID` field may be absent in entries created before August 2026. Always guard with `typeof entry.placeID === 'string'`. Migration 17 backfills missing `placeID` with `""`.
 
 ### `image` Field
 

@@ -84,6 +84,7 @@ interface DestinationEntry {
   description: Description;  // multi-language description (see below)
   website:     string;   // official website URL, or empty string
   map:         string;   // Google Maps URL
+  placeID:     string;   // Google Place ID used for Places API lookups, or empty string (added Aug 2026)
   instagram:   string;   // Instagram profile URL, or empty string
   region:      string;   // neighborhood/area within the destination (e.g. "Ipanema", "Botafogo")
   media:       string;   // TikTok or YouTube embed URL, or empty string
@@ -92,6 +93,8 @@ interface DestinationEntry {
   images:      EntryImage[];  // images attached to this place (see below)
 }
 ```
+
+> **Note:** The `placeID` field may be absent in entries created before August 2026. Always guard with `typeof entry.placeID === 'string'`. Migration 17 backfills missing `placeID` with `""`.
 
 ### `EntryImage` — Entry Images
 
@@ -156,6 +159,7 @@ At minimum, `pt` is always present. English (`en`) is set when the user provides
       },
       "website": "",
       "map": "https://maps.app.goo.gl/1P5phcxjkkTCjCJs8",
+      "placeID": "",
       "instagram": "",
       "region": "Cachambi",
       "media": "https://www.tiktok.com/@erikagentille/video/7258423588607495429",
@@ -180,6 +184,7 @@ At minimum, `pt` is always present. English (`en`) is set when the user provides
       },
       "website": "",
       "map": "https://maps.app.goo.gl/AE8n8eMBS354kjmo8",
+      "placeID": "",
       "instagram": "https://www.instagram.com/kebabshop.br/",
       "region": "Leblon",
       "media": "https://www.tiktok.com/@caroolnigro/video/7330085048646946053",
