@@ -114,7 +114,7 @@ function initializeApp() {
 
 	APP.projectId = firebase.app().options.projectId;
 	const versions = getVersions();
-	APP.version = versions[APP.projectId]?.version?.system || 'Unknown';
+	APP.version = versions?.projects?.[APP.projectId]?.version?.system || 'Unknown';
 
 	// Initialize the centralized delegated click handler (replaces all inline onclick)
 	initActions();
