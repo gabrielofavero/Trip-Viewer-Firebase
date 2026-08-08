@@ -126,8 +126,11 @@ def increment_build_number(version_data):
 
 
 def save_version_json(version_data, project, system_version, firebase_version=None):
-    """Save updated version.json with deployment info."""
-    version_json_path = BASE_DIR / "public" / "assets" / "json" / "version.json"
+    """Save updated version.json with deployment info (public/ and dist/)."""
+    version_json_paths = [
+        BASE_DIR / "public" / "assets" / "json" / "version.json",
+        BASE_DIR / "dist" / "assets" / "json" / "version.json",
+    ]
     
     version_data["projects"][project] = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -137,7 +140,9 @@ def save_version_json(version_data, project, system_version, firebase_version=No
         }
     }
     
-    version_json_path.write_text(json.dumps(version_data, indent=2) + "\n", encoding="utf-8")
+    for version_json_path in version_json_paths:
+        if version_json_path.parent.exists():
+            version_json_path.write_text(json.dumps(version_data, indent=2) + "\n", encoding="utf-8")
     print(f"{Colors.GREEN}✓{Colors.RESET} Updated version.json: {Colors.BOLD}build={version_data['build']}{Colors.RESET}, firebase={firebase_version}, system={system_version}")
 
 
@@ -177,8 +182,7 @@ def select_version():
     minor_version = _bump_minor(last_version)
     patch_version = _bump_patch(last_version)
 
-    print(f"\n{Colors.BOLD}{Colors.CYAN}Version Label{Colors.RESET}")
-    print(f"   {Colors.BLUE}Last version on changelog:{Colors.RESET} {Colors.BOLD}{last_version}{Colors.RESET}")
+    print(f"\n{Colors.BOLD}{Colors.CYAN}Version{Colors.RESET}")
     print(f"{Colors.BLUE}1.{Colors.RESET} Label as {Colors.BOLD}{last_version}{Colors.RESET} (last version on the changelog)")
     print(f"{Colors.BLUE}2.{Colors.RESET} Create {Colors.BOLD}{minor_version}{Colors.RESET} (minor)")
     print(f"{Colors.BLUE}3.{Colors.RESET} Create {Colors.BOLD}{patch_version}{Colors.RESET} (patch)")
@@ -326,83 +330,6 @@ def restore_package_jsons(originals):
 
 
 # ============================================================
-# HTML Cache Busting
-# ============================================================
-
-def update_html_cache_busting(build_number):
-    """Add cache busting parameters to HTML files with data-main attribute."""
-    print(f"\n{Colors.BOLD}{Colors.CYAN}Cache Busting{Colors.RESET} (b={build_number})")
-    
-    public_dir = BASE_DIR / "public"
-    html_files = []
-    
-    if public_dir.exists():
-        html_files.extend(public_dir.glob("*.html"))
-    
-    edit_dir = public_dir / "edit"
-    if edit_dir.exists():
-        html_files.extend(edit_dir.glob("*.html"))
-    
-    modified_files = {}
-    
-    for html_file in html_files:
-        content = html_file.read_text(encoding="utf-8")
-        original_content = content
-        
-        def replace_script(match):
-            tag = match.group(0)
-            tag = re.sub(r'[?&]b=\d+', '', tag)
-            tag = re.sub(r'(src="[^"?]+)([^"]*")', rf'\1?b={build_number}\2', tag)
-            return tag
-        
-        content = re.sub(
-            r'<script[^>]*data-main[^>]*src="[^"]*"[^>]*>',
-            replace_script,
-            content
-        )
-        
-        def replace_link(match):
-            tag = match.group(0)
-            tag = re.sub(r'[?&]b=\d+', '', tag)
-            tag = re.sub(r'(href="[^"?]+)([^"]*")', rf'\1?b={build_number}\2', tag)
-            return tag
-        
-        content = re.sub(
-            r'<link[^>]*data-main[^>]*href="[^"]*"[^>]*>',
-            replace_link,
-            content
-        )
-        
-        if content != original_content:
-            html_file.write_text(content, encoding="utf-8")
-            modified_files[html_file] = original_content
-            print(f"  {Colors.GREEN}✓{Colors.RESET} {html_file}")
-    
-    if not modified_files:
-        print(f"  {Colors.YELLOW}No files with data-main attribute found.{Colors.RESET}")
-    
-    return modified_files
-
-
-# ============================================================
-# HTML Restoration
-# ============================================================
-
-def restore_html_files(modified_files):
-    """Restore HTML files to their original content."""
-    if not modified_files:
-        return
-    
-    print(f"\n{Colors.BOLD}{Colors.CYAN}Restoring HTML files...{Colors.RESET}")
-    
-    for html_file, original_content in modified_files.items():
-        html_file.write_text(original_content, encoding="utf-8")
-        print(f"  {Colors.GREEN}✓{Colors.RESET} {html_file}")
-    
-    print(f"{Colors.GREEN}✓{Colors.RESET} Restored {len(modified_files)} file(s) to original state")
-
-
-# ============================================================
 # Firebase Deployment
 # ============================================================
 
@@ -473,7 +400,13 @@ def main():
         version_data = load_version_json()
         build_number = increment_build_number(version_data)
 
-        modified_files = update_html_cache_busting(build_number)
+        # Persist the incremented build into the deployed version.json (dist/) so the
+        # live version.json matches the version shown in the app (previously it
+        # stayed one build behind because only public/ was updated).
+        dist_version_path = BASE_DIR / "dist" / "assets" / "json" / "version.json"
+        if dist_version_path.parent.exists():
+            dist_version_path.write_text(json.dumps(version_data, indent=2) + "\n", encoding="utf-8")
+
         package_originals = {}
 
         try:
@@ -488,7 +421,6 @@ def main():
             )
 
         finally:
-            restore_html_files(modified_files)
             restore_package_jsons(package_originals)
 
     except KeyboardInterrupt:

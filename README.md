@@ -34,9 +34,6 @@ npm run serve
 
 # Full dev mode (build + serve + live reload on port 3000)
 npm run dev
-
-# Dev against the real cloud project (trip-viewer-dev) — no emulators
-npm run dev:live
 ```
 
 # Tasks
@@ -44,15 +41,14 @@ npm run dev:live
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 171   | 168  | 3         | 0       |
-| 🏆   | Feature     | F000 | 176   | 156  | 17        | 3       |
-| 📈   | Improvement | M000 | 168   | 142  | 22        | 4       |
-| ⚔️   | Epic        | E000 | 51    | 35   | 6         | 10      |
+| 🏆   | Feature     | F000 | 177   | 157  | 17        | 3       |
+| 📈   | Improvement | M000 | 170   | 144  | 22        | 4       |
+| ⚔️   | Epic        | E000 | 51    | 35   | 7         | 9       |
 
 ## Backlog
 
 ### High Priority
 
-- ⚔️ **E028:** Places API Text Search
 - ⚔️ **E045:** Add Maps integration into edit page
   - *[🏆F172] Get place information*
   - *[🏆F173] Update integrated places*
@@ -103,6 +99,9 @@ npm run dev:live
 - 🐞 **B171:** Image dialog not transitioning when user clicks on add image button
 - 📈 **M168:** [DEV] Auto restart if emulator functions failed
 - 🏆 **F176:** Add custom colors on trip cards
+- 📈 **M169:** Improve cache busting
+- 🏆 **F177:** Add app version on footers
+- 📈 **M170:** Improve import/export icons on index
 
 ### July 2026
 
@@ -756,7 +755,10 @@ npm run dev:live
   - 🏆 **F090:** *Account Import/Export: Interface*
 - 📈 **M086:** Improved error pop-up
 
+
 ### Discarded
+
+- ⚔️ **E028:** Places API Text Search
 - 🐞 **B031:** Fix gallery image from twitter opening with wrong proportions in GLightbox
 - 📈 **M072:** Improve automatic date adjustment in edit trips
 - 📈 **M076:** Automate PRD to DEV data restore (weekly) + Manual Function

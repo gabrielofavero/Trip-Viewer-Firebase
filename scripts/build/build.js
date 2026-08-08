@@ -98,6 +98,13 @@ function build() {
 		console.warn("[build] WARNING: index.js not found at project root.");
 	}
 
+	// 2e. Content-hash built JS/CSS (deep, dependency-aware) so the immutable
+	// Cache-Control on *.js/*.css is always correct after a deploy.
+	console.log("[build] Hashing assets...");
+	const { hashAssets } = require("./hash-assets.js");
+	const rewrittenRefs = hashAssets(DIST_DIR);
+	console.log(`[build] Hashed assets (${rewrittenRefs} references rewritten).`);
+
 	// 2d. Sync package.json version to the version calculated from README.md
 	syncPackageVersion();
 

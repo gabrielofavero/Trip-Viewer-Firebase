@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.22.2]
+## [2.22.2] - 2026-08-08
 
 - 🐞 **B167:** Edit trip labels on customization not showing
 - 🐞 **B166:** Can't save new transportations

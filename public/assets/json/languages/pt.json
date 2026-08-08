@@ -56,7 +56,7 @@
 			}
 		},
 		"export_documents": {
-			"title": "Exportar Documento",
+			"title": "Exportar Documento(s)",
 			"select_hint": "Selecione os documentos para exportar",
 			"security_warning": "⚠️ Os arquivos exportados contêm seus dados em texto simples, incluindo informações protegidas (códigos de reserva, links) se os PINs forem fornecidos. Qualquer pessoa com acesso ao arquivo pode ler esses dados. Armazene os arquivos exportados com segurança e exclua-os quando não forem mais necessários.",
 			"no_documents": "Nenhum documento disponível para exportar nesta categoria.",
@@ -718,6 +718,7 @@
 		"try_again": "Tentar novamente",
 		"all": "Todos",
 		"developed_by": "Desenvolvido por",
+		"tripviewer_version": "TripViewer v{{version}}",
 		"credits": "Atribuições",
 		"last_updated_on": "Última atualização em",
 		"unauthenticated": "Não autenticado",

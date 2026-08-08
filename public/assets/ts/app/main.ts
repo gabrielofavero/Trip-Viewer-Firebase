@@ -28,6 +28,7 @@ export async function main(pageLoaders: Record<string, () => void> = {}) {
 		await loadAllConfigs(getLanguagePackName());
 		translatePage();
 		initializeApp();
+		populateFooterVersion();
 		loadLangSelectorSelect();
 		loadPage(pageLoaders);
 	} catch (error) {
@@ -117,6 +118,17 @@ function initializeApp() {
 
 	// Initialize the centralized delegated click handler (replaces all inline onclick)
 	initActions();
+}
+
+/**
+ * Fill the footer "TripViewer v{version}" badge from version.json (APP.version).
+ * Runs after initializeApp() sets APP.version.
+ */
+function populateFooterVersion() {
+	const elements = document.querySelectorAll<HTMLElement>('.tripviewer-version');
+	elements.forEach((el) => {
+		el.textContent = translate('labels.tripviewer_version', { version: APP.version });
+	});
 }
 
 export function setPageName(pageName?) {

@@ -56,7 +56,7 @@
 			}
 		},
 		"export_documents": {
-			"title": "Export Document",
+			"title": "Export Document(s)",
 			"select_hint": "Select documents to export",
 			"security_warning": "⚠️ Exported files contain your document data in plain text, including any protected information (reservation codes, booking links) if PINs are provided. Anyone with access to the file can read this data. Store exported files securely and delete them when no longer needed.",
 			"no_documents": "No documents available to export for this category.",
@@ -721,6 +721,7 @@
 		"try_again": "Try Again",
 		"all": "All",
 		"developed_by": "Developed by",
+		"tripviewer_version": "TripViewer v{{version}}",
 		"credits": "Credits",
 		"last_updated_on": "Last updated on",
 		"unauthenticated": "Not authenticated",
