@@ -288,7 +288,7 @@ export function removeEmptyChild(category) {
 	if (itens.length > 0) {
 		const j = getFirstJ(`${category}-box`);
 		if (j && !hasUserData(itens, j)) {
-			removeChild(`${category}-${j}`);
+			removeChildWithValidation(category, j);
 		}
 	}
 

@@ -46,7 +46,8 @@ def parse_readme(content):
     for line in content.split('\n'):
         if '## Backlog' in line:
             current_section = 'backlog'
-        elif '## Done' in line:
+        elif '## Done' in line or '### Duplicated' in line:
+            # '### Duplicated (Already Done)' tasks count as done, never cancelled
             current_section = 'done'
         elif '### Discarded' in line:
             current_section = 'discarded'

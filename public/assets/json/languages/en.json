@@ -248,6 +248,7 @@
 		"undefined": "Undefined destination",
 		"recent": "Recently added",
 		"location_placeholder": "Chicago",
+		"image_description_placeholder": "A photo of the destination",
 		"delete": {
 			"title": "Delete destination",
 			"message": "Are you sure you want to delete the destination \"{{name}}\"? This action cannot be undone"
@@ -606,7 +607,9 @@
 			"message": {
 				"access": "You don't have permission to access this page. Please check your credentials",
 				"edit": "You don't have permission to edit this page. Please check your credentials",
-				"default": "You don't have permission to access this resource"
+				"default": "You don't have permission to access this resource",
+				"unauthenticated": "You must be signed in to edit this document. Please log in and try again",
+				"not_owner": "Only the document owner can edit this document. You don't have permission to make changes"
 			}
 		},
 		"documents": {
@@ -748,15 +751,36 @@
 			"images": {
 				"title": "Custom images",
 				"subtitle": "Add a wallpaper and a logo",
+				"background_subtitle": "Add a background image",
 				"logo_light": "Logo: Light mode",
 				"logo_dark": "Logo: Dark mode"
 			},
+			"theme": {
+				"title": "Custom theme",
+				"subtitle": "Force the trip to display in light or dark mode",
+				"dynamic": "Dynamic",
+				"light_only": "Light mode only",
+				"dark_only": "Dark mode only"
+			},
 			"colors": {
 				"title": "Custom colors",
-				"themes": {
-					"light_and_dark": "Both",
-					"light": "Light mode",
-					"dark": "Dark mode"
+				"theme_toggle": "Use custom colors",
+				"custom": "Custom color",
+				"presets": {
+					"purple": "Purple",
+					"rose": "Rose",
+					"magenta": "Magenta",
+					"crimson": "Crimson",
+					"sunset": "Sunset",
+					"amber": "Amber",
+					"terracotta": "Terracotta",
+					"forest": "Forest",
+					"sage": "Sage",
+					"teal": "Teal",
+					"ocean": "Ocean",
+					"steel": "Steel",
+					"indigo": "Indigo",
+					"gray": "Gray"
 				}
 			},
 			"links": {

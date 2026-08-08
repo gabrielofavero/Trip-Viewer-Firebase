@@ -1342,6 +1342,14 @@
 	padding-right: 4px;
 }
 
+/* Image editor modal screens — auto-scroll when content is taller than the viewport */
+.image-editor-box > .image-editor-screen {
+	max-height: 70vh;
+	overflow-y: auto;
+	scroll-behavior: smooth;
+	padding-right: 4px;
+}
+
 .expenses-item {
 	margin-bottom: 16px;
 }

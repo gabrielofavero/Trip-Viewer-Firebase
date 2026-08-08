@@ -14,6 +14,7 @@ import {
 import { validateImageLink, validateLink } from '../../../ui/fields.js';
 import { closeAccordions, openLastAccordion } from '../../../ui/accordion.js';
 import { translate } from '../../../i18n/translation.js';
+import { animate } from '../../../theme/animations.js';
 import {
 	closeMessage,
 	displayFullMessage,
@@ -28,6 +29,8 @@ import { CUSTOM_UPLOADS } from '../../../utils/set.js';
 import { addAccommodations } from '../new-trip.js';
 
 export var ACCOMMODATION_IMAGES = {};
+// Tracks which image slot editor is currently open (0 = none).
+var OPEN_ACCOMMODATION_IMAGE_SLOT = 0;
 
 export function getAccommodationArray(protectedReservationCodes = false) {
 	let result = [];
@@ -129,6 +132,7 @@ export function openAccommodationImages(j) {
 	properties.containers = getContainersInput();
 	properties.fullscreen = true;
 	properties.content = getAccommodationImageContent(size);
+	properties.icons = [{ type: 'goBack', action: 'closeAccommodationImages()' }];
 	properties.buttons = [
 		{
 			type: 'cancel',
@@ -139,11 +143,12 @@ export function openAccommodationImages(j) {
 		},
 	];
 
+	OPEN_ACCOMMODATION_IMAGE_SLOT = 0;
 	displayFullMessage(properties);
 	initializeSortableForGroup(`image-accommodations`, { onEnd: '' });
 
 	for (let k = 1; k <= size; k++) {
-		const image = ACCOMMODATION_IMAGES[j][k - 1];
+		const image = ACCOMMODATION_IMAGES[j]?.[k - 1];
 		if (image) {
 			getID(`accommodations-image-description-${k}`).value = image.description;
 			getID(`link-accommodations-${k}`).value = image.link;
@@ -158,40 +163,51 @@ export function openAccommodationImages(j) {
 }
 
 function getAccommodationImageContent(size = 5) {
-	let inner = '';
+	let buttons = '';
+	let editors = '';
 	for (let k = 1; k <= size; k++) {
-		inner += `
+		buttons += `
         <div class='input-button-container' id="input-button-container-${k}">
-            <button id="accommodations-image-button-${k}" class="btn input-button draggable" data-action="toggle-accommodation-image" data-index="${k}" style="margin-top:1em">${translate('labels.image.add')}</button>
+            <button id="accommodations-image-button-${k}" class="btn input-button draggable" data-action="open-accommodation-image" data-index="${k}" style="margin-top:1em">${translate('labels.image.add')}</button>
             <i class="iconify drag-icon" data-icon="mdi:drag"></i>
+        </div>
+        `;
 
-            <div id="accommodations-image-${k}" style="display: none">
-                <div class="nice-form-group customization-box" id="accommodations-box-${k}">
-                    <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-                    <input id="upload-accommodations-${k}" class='image-uploadbox' type="file" accept=".jpg, .jpeg, .png" />
-                    <p id="upload-accommodations-${k}-size-message" class="message-text"> <i class='red'>*</i> ${translate('labels.image.upload_limit')}</p>
+		editors += `
+        <div id="accommodations-image-editor-${k}" class="image-editor-screen" style="display: none">
+            <div class="nice-form-group customization-box" id="accommodations-box-${k}">
+                <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+                <input id="upload-accommodations-${k}" class='image-uploadbox' type="file" accept=".jpg, .jpeg, .png" />
+                <p id="upload-accommodations-${k}-size-message" class="message-text"> <i class='red'>*</i> ${translate('labels.image.upload_limit')}</p>
+            </div>
+
+            <div class="nice-form-group">
+                <input id="link-accommodations-${k}" class='image-input' type="url" placeholder="${translate('labels.image.placeholder')}" value="">
+            </div>
+
+            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-accommodations-${k}">
+                <div class="nice-form-group">
+                <input type="radio" name="type-accommodations-${k}" id="enable-link-accommodations-${k}" checked>
+                <label for="enable-link-accommodations-${k}">${translate('labels.image.link')}</label>
                 </div>
 
                 <div class="nice-form-group">
-                    <input id="link-accommodations-${k}" class='image-input' type="url" placeholder="${translate('labels.image.placeholder')}" value="" class="icon-right">
+                <input type="radio" name="type-accommodations-${k}" id="enable-upload-accommodations-${k}">
+                <label for="enable-upload-accommodations-${k}">${translate('labels.image.upload')} <span class="opcional"> (${translate('labels.image.upload_limit')})</span></label>
                 </div>
+            </fieldset>
 
-                <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-accommodations-${k}">
-                    <div class="nice-form-group">
-                    <input type="radio" name="type-accommodations-${k}" id="enable-link-accommodations-${k}" checked>
-                    <label for="enable-link-accommodations-${k}">${translate('labels.image.link')}</label>
-                    </div>
+            <div class="nice-form-group">
+                <label>${translate('labels.image.description')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+                <input id="accommodations-image-description-${k}" type="text" placeholder="${translate('trip.accommodation.description_placeholder')}" />
+            </div>
 
-                    <div class="nice-form-group">
-                    <input type="radio" name="type-accommodations-${k}" id="enable-upload-accommodations-${k}">
-                    <label for="enable-upload-accommodations-${k}">${translate('labels.image.upload')} <span class="opcional"> (${translate('labels.image.upload_limit')})</span></label>
-                    </div>
-                </fieldset>
-
-                <div class="nice-form-group">
-                    <label>${translate('labels.image.description')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-                    <input id="accommodations-image-description-${k}" type="text" placeholder="${translate('trip.accommodation.description_placeholder')}" />
-                </div>
+            <div class="button-box-right" style="margin-top: 8px; margin-bottom: 8px;">
+                <button data-action="remove-accommodation-image" data-index="${k}" class="btn btn-basic btn-format">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
             </div>
         </div>
         `;
@@ -199,17 +215,57 @@ function getAccommodationImageContent(size = 5) {
 
 	return `
     <p style="font-size: 0.8em; margin-top: -20px">${translate('labels.image.quantity_limit')}</p>
-    <div class="draggable-area" data-group="image-accommodations" id="image-accommodations-buttons">
-        ${inner}
+    <div id="accommodations-images-box" class="image-editor-box">
+        <div id="accommodations-images-main-screen" class="image-editor-screen">
+            <div class="draggable-area" data-group="image-accommodations" id="image-accommodations-buttons">
+                ${buttons}
+            </div>
+        </div>
+        ${editors}
     </div>
     `;
 }
 
-export function toggleAccommodationImage(k) {
-	const editor = getID(`accommodations-image-${k}`);
-	if (!editor) return;
-	editor.style.display = editor.style.display === 'block' ? 'none' : 'block';
+// Navigate to the dedicated editor screen for image slot k (mirrors the
+// itinerary "link item" flow) instead of expanding the form inline.
+export function openAccommodationImage(k) {
+	const editor = getID(`accommodations-image-editor-${k}`);
+	const mainScreen = getID('accommodations-images-main-screen');
+	if (!editor || !mainScreen) return;
+
+	OPEN_ACCOMMODATION_IMAGE_SLOT = k;
+	getID('message-title').innerText = `${translate('labels.image.title')} ${k}`;
+	getID('back-icon').style.visibility = 'visible';
+	animate([`accommodations-image-editor-${k}`], ['accommodations-images-main-screen']);
+}
+
+// Return from the editor screen to the images list (triggered by the modal's
+// back arrow, the confirm button, or removing an image).
+export function closeAccommodationImages() {
+	const k = OPEN_ACCOMMODATION_IMAGE_SLOT;
+	if (!k) return;
+
+	OPEN_ACCOMMODATION_IMAGE_SLOT = 0;
+	getID('message-title').innerText = translate('labels.image.add_title');
+	getID('back-icon').style.visibility = 'hidden';
 	updateAccommodationImageButtonLabel(k);
+	animate(['accommodations-images-main-screen'], [`accommodations-image-editor-${k}`]);
+}
+
+// Clear image slot k and return to the images list.
+export function removeAccommodationImage(k) {
+	const link = getID(`link-accommodations-${k}`);
+	const upload = getID(`upload-accommodations-${k}`);
+	const description = getID(`accommodations-image-description-${k}`);
+	const enableLink = getID(`enable-link-accommodations-${k}`);
+
+	if (link) link.value = '';
+	if (upload) upload.value = '';
+	if (description) description.value = '';
+	if (enableLink) enableLink.checked = true;
+
+	updateAccommodationImageButtonLabel(k);
+	closeAccommodationImages();
 }
 
 function updateAccommodationImageButtonLabel(k) {
@@ -232,6 +288,11 @@ function hasInnerAccommodationImage(k) {
 }
 
 export function confirmAccommodationImages(j) {
+	// If an image editor screen is open, treat confirm as "back to the list".
+	if (OPEN_ACCOMMODATION_IMAGE_SLOT) {
+		closeAccommodationImages();
+		return;
+	}
 	saveAccommodationImages(j);
 	setImageButtonLabel(j);
 }

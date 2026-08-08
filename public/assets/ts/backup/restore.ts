@@ -173,6 +173,19 @@ function fixRestoreOwnership(restore, uid: string): number {
 async function restoreAccount(restore) {
 	const uid = await getUID();
 
+	/**
+	 * Firestore security rules can only call get()/exists() on a limited number
+	 * of DISTINCT documents per request (~10 for the web SDK; admin/admin and
+	 * users/{uid} add 2 cached reads on top). Ops whose rule reads the same doc
+	 * can share a batch without increasing that count, so we group ops by the
+	 * document(s) their rule reads and flush a batch once it would exceed
+	 * MAX_RULE_READ_DOCS distinct targets. Ops are ordered by trip (see
+	 * collectSubcollectionCreateOps/collectDeleteOps), so this yields batches of
+	 * a few trips each instead of one huge multi-trip batch that would raise
+	 * "PERMISSION_DENIED: evaluation error" on every subcollection write.
+	 */
+	const MAX_RULE_READ_DOCS = 8;
+
 	// Progress: 0 → 35 — removing current data
 	startProgressLoading({
 		message: translate('account.restore.loading.deleting'),
@@ -184,7 +197,7 @@ async function restoreAccount(restore) {
 	console.log(`${deleteOps.length} delete operations.`);
 
 	console.log('Executing delete batches...');
-	await commitInChunks(deleteOps, 450, (fraction) => {
+	await commitInChunksByRead(deleteOps, (fraction) => {
 		updateProgressLoading({
 			message: translate('account.restore.loading.deleting'),
 			progress: 5 + fraction * 30,
@@ -192,25 +205,42 @@ async function restoreAccount(restore) {
 	});
 	console.log('Deletions complete');
 
-	// Progress: 35 → 70 — writing restored documents
+	// Progress: 35 → 65 — writing restored documents (main collections)
 	console.log('Preparing create operations...');
 	const createOps = await collectCreateOps(restore);
 	console.log(`${createOps.length} create operations.`);
-
-	// Add subcollection writes from _subcollections
-	const subOps = collectSubcollectionCreateOps(restore);
-	if (subOps.length > 0) {
-		console.log(`${subOps.length} subcollection create operations.`);
-		createOps.push(...subOps);
-	}
 
 	console.log('Executing create batches...');
 	await commitInChunks(createOps, 450, (fraction) => {
 		updateProgressLoading({
 			message: translate('account.restore.loading.writing'),
-			progress: 35 + fraction * 35,
+			progress: 35 + fraction * 30,
 		});
 	});
+	console.log('Main documents restored');
+
+	// Trip subcollections (accommodations, transportation, itinerary) are
+	// written in a SEPARATE phase, AFTER the parent trip docs are committed:
+	//  1. The rules for trip subcollections check the parent trip doc via
+	//     exists()/get(). Within one batch those functions see the PRE-batch
+	//     state, so mixing a trip create with its subcollection creates in the
+	//     same batch would make tripExists() return false → PERMISSION_DENIED.
+	//  2. Each subcollection op reads the parent trip doc, and Firestore rules
+	//     cap get()/exists() at ~10 DISTINCT documents per request. Batching
+	//     hundreds of ops across many trips exceeds that limit and raises an
+	//     "evaluation error". commitInChunksByRead keeps each batch under the cap.
+	const subOps = collectSubcollectionCreateOps(restore);
+	if (subOps.length > 0) {
+		console.log(`${subOps.length} subcollection create operations.`);
+		await commitInChunksByRead(subOps, (fraction) => {
+			updateProgressLoading({
+				message: translate('account.restore.loading.writing'),
+				progress: 65 + fraction * 5,
+			});
+		});
+		console.log('Subcollections restored');
+	}
+
 	console.log('Restoration complete');
 
 	// Progress: 70 → 90 — user summary subcollections
@@ -263,6 +293,80 @@ async function restoreAccount(restore) {
 			if (onProgress && total > 0) {
 				onProgress(Math.min((i + slice.length) / total, 1));
 			}
+		}
+	}
+
+	/** Canonical document path that this op's security rule reads via get()/exists(). */
+	function ruleReadKey(op): string {
+		const p = op.ref.path;
+		const segs = p.split('/');
+
+		// Trips + trip subcollections: the rule reads the PARENT trip doc.
+		if (segs[0] === 'trips') {
+			if (segs[1] === 'protected') {
+				// trips/protected/{pin}/{id}: create reads admin+user only;
+				// delete (canUpdateDoc → isOwnerDB) reads its own doc.
+				return op.type === 'delete' ? `read:${p}` : 'shared';
+			}
+			// trips/{id} or trips/{id}/{sub}/{docId}
+			return `trip:${segs[1]}`;
+		}
+
+		// destinations/listings/expenses: create reads admin+user only (shared);
+		// delete (canUpdateDoc → isOwnerDB) reads the doc itself.
+		if (segs[0] === 'destinations' || segs[0] === 'listings' || segs[0] === 'expenses') {
+			return op.type === 'delete' ? `read:${p}` : 'shared';
+		}
+
+		// protected/{id}: write is canCreateDoc (isAdmin || isOwnerResource) → shared.
+		if (segs[0] === 'protected') {
+			return 'shared';
+		}
+
+		// users/{uid}/...: rule reads the user doc.
+		if (segs[0] === 'users') {
+			return `user:${segs[1]}`;
+		}
+
+		return 'shared';
+	}
+
+	async function commitInChunksByRead(ops, onProgress?: (fraction: number) => void) {
+		const total = ops.length;
+		if (total === 0) return;
+
+		let batch = firebase.firestore().batch();
+		const readKeys = new Set<string>();
+		let count = 0;
+
+		const flush = async (index: number) => {
+			await batch.commit();
+			batch = firebase.firestore().batch();
+			readKeys.clear();
+			count = 0;
+			if (onProgress) onProgress(Math.min(index / total, 1));
+		};
+
+		for (let i = 0; i < ops.length; i++) {
+			const op = ops[i];
+			const key = ruleReadKey(op);
+
+			if (count >= 450 || (readKeys.size >= MAX_RULE_READ_DOCS && !readKeys.has(key))) {
+				await flush(i);
+			}
+
+			readKeys.add(key);
+			if (op.type === 'delete') {
+				batch.delete(op.ref);
+			} else if (op.type === 'set') {
+				batch.set(op.ref, op.data, op.options || {});
+			}
+			count++;
+		}
+
+		if (count > 0) {
+			await batch.commit();
+			if (onProgress) onProgress(1);
 		}
 	}
 

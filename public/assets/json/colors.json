@@ -66,11 +66,11 @@
 		{
 			"color": "crimson",
 			"hex": "#ba0c2f",
-			"dark": "#ba0c2f"
+			"dark": "#cf556d"
 		},
 		{
 			"color": "sunset",
-			"hex": "#dd3e37",
+			"hex": "#d4a017",
 			"dark": "#f7e100"
 		},
 		{
@@ -111,7 +111,7 @@
 		{
 			"color": "indigo",
 			"hex": "#4c4293",
-			"dark": "#227bb0"
+			"dark": "#827bb3"
 		},
 		{
 			"color": "gray",

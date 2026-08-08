@@ -5,6 +5,10 @@ import { disableScroll, getVisibility } from '../theme/visibility.js';
 import { getHTMLpage } from '../app/main.js';
 
 export let MESSAGE_MODAL_OPEN = false;
+// Tracks whether the currently-open message modal can be dismissed via the X
+// close button / Escape. Mirrors `properties.closeButton`; kept as a module
+// var so handleMessageKeydown can enforce it without the modal properties.
+let MESSAGE_CLOSABLE = true;
 // Use var (not const) to avoid TDZ errors from circular module dependencies
 export var MESSAGE_PROPERTIES: Record<string, any> = {
 	title: '',
@@ -14,6 +18,11 @@ export var MESSAGE_PROPERTIES: Record<string, any> = {
 	// Marks the dialog as an input/intervention dialog: on mobile it fills the
 	// whole screen (no border radius) so it feels like a separate page.
 	fullscreen: false,
+	// Whether the X close button is shown. Set to false on dialogs that must
+	// be dismissed via an explicit action button (e.g. the save-success dialog
+	// on edit pages) so the user can't dismiss them back to the form without
+	// choosing Home / View / Edit (or refreshing the page).
+	closeButton: true,
 	erro: {},
 	icons: [],
 	buttons: [
@@ -235,6 +244,7 @@ export function displayFullMessage(properties = cloneObject(MESSAGE_PROPERTIES))
 	}
 
 	MESSAGE_MODAL_OPEN = true;
+	MESSAGE_CLOSABLE = properties.closeButton !== false;
 	document.addEventListener('keydown', handleMessageKeydown);
 	disableScroll();
 
@@ -252,8 +262,8 @@ export function displayFullMessage(properties = cloneObject(MESSAGE_PROPERTIES))
 	const textDiv = document.createElement('div');
 	textDiv.className = 'message-text-container';
 
-	// Criticidade — always show the icon box (includes X close button)
-	const buttonsBox = getIconsBox(properties.icons);
+	// Criticidade — icon box (includes the X close button unless disabled)
+	const buttonsBox = getIconsBox(properties.icons, properties.closeButton !== false);
 	textDiv.appendChild(buttonsBox);
 
 	// Title
@@ -373,6 +383,7 @@ export function closeMessage() {
 		const dialog = preloader ? (preloader.firstElementChild as HTMLElement | null) : null;
 
 		MESSAGE_MODAL_OPEN = false;
+		MESSAGE_CLOSABLE = true;
 		document.removeEventListener('keydown', handleMessageKeydown);
 
 		const finishClose = () => {
@@ -411,7 +422,7 @@ export function getContainersInput() {
 	};
 }
 
-export function getIconsBox(icons) {
+export function getIconsBox(icons, showCloseButton = true) {
 	const iconContainer = document.createElement('div');
 	iconContainer.className = 'icon-container';
 	iconContainer.style.textAlign = 'right';
@@ -429,13 +440,17 @@ export function getIconsBox(icons) {
 		iconContainer.appendChild(backIcon);
 	}
 
-	const cancelIcon = document.createElement('i');
-	cancelIcon.id = 'cancel-icon';
-	cancelIcon.className = 'iconify';
-	cancelIcon.setAttribute('data-icon', 'material-symbols-light:close');
-	cancelIcon.style.cursor = 'pointer';
+	// X close button — omitted when the dialog must be dismissed via an
+	// explicit action button (see properties.closeButton / displaySaveSuccess).
+	if (showCloseButton) {
+		const cancelIcon = document.createElement('i');
+		cancelIcon.id = 'cancel-icon';
+		cancelIcon.className = 'iconify';
+		cancelIcon.setAttribute('data-icon', 'material-symbols-light:close');
+		cancelIcon.style.cursor = 'pointer';
 
-	iconContainer.appendChild(cancelIcon);
+		iconContainer.appendChild(cancelIcon);
+	}
 
 	// Use event delegation on the container so the close button works
 	// even if Iconify replaces the <i> element with an <svg> at runtime.
@@ -633,6 +648,10 @@ export function displaySaveSuccess({
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	properties.title = '';
 	properties.content = content || translate('messages.documents.save.success');
+	// Save-success dialog: no X close button (and Escape won't dismiss it). The
+	// user must pick an explicit action (Edit / Home / View) or refresh the page
+	// to leave, so they can't silently dismiss it and keep editing.
+	properties.closeButton = false;
 	properties.buttons = [
 		{ type: 'edit', action: { type, docId } },
 		{ type: 'home' },
@@ -816,6 +835,10 @@ export function handleMessageKeydown(e) {
 	}
 
 	if (e.key === 'Escape') {
+		// Dialogs that must be dismissed via an explicit action (closeButton:
+		// false, e.g. save-success on edit pages) can't be closed with Escape.
+		if (!MESSAGE_CLOSABLE) return;
+
 		const close = getID('message-close');
 		if (close) {
 			e.preventDefault();

@@ -7,6 +7,7 @@
 	background: url("/assets/img/backgrounds/home-light.jpg") top center no-repeat;
 	background-size: cover;
 	background-position: 50% 50%;
+	background-attachment: fixed;
 	position: relative;
 	overflow-y: auto;
 }
@@ -17,6 +18,10 @@
 	background: rgba(255, 255, 255, 0.82);
 	z-index: 0;
 	pointer-events: none;
+}
+
+[data-theme="dark"] #hero {
+	background-attachment: fixed;
 }
 
 /*--------------------------------------------------------------
@@ -639,6 +644,48 @@ body.dialog-open {
 .dialog-action-btn {
 	flex: 1;
 	height: 42px;
+}
+
+/* Trip Dialog — Custom Accent (per-trip via JS; falls back to theme color) */
+#trip-dialog {
+	--trip-dialog-accent: var(--theme-color);
+	--trip-dialog-accent-rgb: var(--theme-color-rgb);
+	--trip-dialog-accent-hover: var(--theme-secondary);
+	--trip-dialog-accent-soft: rgba(var(--theme-color-rgb), 0.08);
+}
+#trip-dialog .dialog-close {
+	color: var(--text-primary);
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
+}
+#trip-dialog .dialog-close:hover {
+	color: var(--text-primary);
+	background: var(--bg-tertiary);
+	transform: scale(1.05);
+}
+#trip-dialog .dialog-meta-item .iconify {
+	color: var(--trip-dialog-accent);
+}
+#trip-dialog .dialog-badge.dialog-badge-custom {
+	background: var(--trip-dialog-accent);
+	color: #fff;
+}
+#trip-dialog .dialog-action-btn.btn-primary-theme {
+	background: var(--trip-dialog-accent);
+	box-shadow: 0 2px 8px rgba(var(--trip-dialog-accent-rgb), 0.3);
+}
+#trip-dialog .dialog-action-btn.btn-primary-theme:hover {
+	background: var(--trip-dialog-accent-hover);
+	box-shadow: 0 4px 16px rgba(var(--trip-dialog-accent-rgb), 0.4);
+}
+#trip-dialog .dialog-action-btn.btn-outline-theme {
+	color: var(--trip-dialog-accent);
+	border-color: var(--trip-dialog-accent);
+}
+#trip-dialog .dialog-action-btn.btn-outline-theme:hover {
+	color: var(--trip-dialog-accent);
+	border-color: var(--trip-dialog-accent);
+	background: var(--trip-dialog-accent-soft);
 }
 
 /*--------------------------------------------------------------

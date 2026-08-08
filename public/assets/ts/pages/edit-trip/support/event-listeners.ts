@@ -20,7 +20,9 @@ import { switchPin } from '../categories/basic-data/protected-data.js';
 import { closeToast } from '../../../utils/messages.js';
 import {
 	openAccommodationImages,
-	toggleAccommodationImage,
+	openAccommodationImage,
+	closeAccommodationImages,
+	removeAccommodationImage,
 	accommodationsAddListenerAction,
 	confirmAccommodationImages,
 } from '../categories/accommodation.js';
@@ -65,9 +67,13 @@ export function loadEventListeners() {
 			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) openInnerItinerary(index);
 		},
-		'toggle-accommodation-image': (target) => {
+		'open-accommodation-image': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
-			if (!isNaN(index)) toggleAccommodationImage(index);
+			if (!isNaN(index)) openAccommodationImage(index);
+		},
+		'remove-accommodation-image': (target) => {
+			const index = parseInt(target.getAttribute('data-index'));
+			if (!isNaN(index)) removeAccommodationImage(index);
 		},
 		'delete-inner-expense': (target) => {
 			const category = target.getAttribute('data-category');
@@ -101,6 +107,7 @@ export function loadEventListeners() {
 		validatePin,
 		deleteTripAction,
 		confirmAccommodationImages,
+		closeAccommodationImages,
 		saveInnerExpense,
 		closeInnerItinerary,
 		innerItineraryConfirmAction,

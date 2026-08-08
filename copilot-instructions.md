@@ -30,6 +30,7 @@ This workspace has **12 domain-specific agent skills** in `.github/skills/`. The
 1. **Before answering any question that touches one of these domains, you MUST read the matching `SKILL.md` first** — never answer from general knowledge.
 2. The file-scoped skills (e.g. `typescript-conventions`, `css-ui-patterns`, `i18n-system`, `build-pipeline`, `migration-system`, `firebase-emulators`, `backup-restore`, `backlog-management`, `git-workflow`) are auto-loaded via their `applyTo` globs when you touch matching files — do not skip them.
 3. The task-scoped skills (`browser-navigation`, `query-firestore`, `data-model`) have no `applyTo`; load them based on the task description match. For `browser-navigation`, read it only when the task requires URL building, emulator sign-in, waiting for Firestore-backed content, or `Loading Error` triage — for a trivial re-check of an already-loaded/verified page, skip it and just re-read the page.
+4. **Browser / Playwright requires explicit approval.** Do NOT open the integrated browser, navigate pages, click/type, take screenshots, or drive the app with Playwright unless the user has explicitly approved browser validation for the current task. When a task could be checked in the browser but the user hasn't approved it, **ask first** — don't assume. Prefer non-browser verification (`npm run build`, `query-firestore`, reading code) unless approval is given.
 
 ## Key Files & Locations
 
@@ -70,7 +71,7 @@ node scripts/dev/query-firestore.js --list-collections   # Query emulator
 After implementing a feature request, before wrapping up, confirm how it should be validated — don't assume:
 
 1. **Simple** — just verify the build passes (`npm run build`). Good for changes that don't meaningfully alter runtime behavior (e.g. simple refactors, typing fixes, CSS tweaks, translation updates).
-2. **Complex** — simulate the user flow with Playwright against the emulators (sign in, navigate to the feature, exercise it end-to-end). Good for anything that changes user-facing behavior, data flow, or backend logic.
+2. **Complex** — simulate the user flow with Playwright against the emulators (sign in, navigate to the feature, exercise it end-to-end). Good for anything that changes user-facing behavior, data flow, or backend logic. **Requires explicit approval** — do not open a browser or run Playwright unless the user approves this validation level for the task.
 
 **Be adaptive:**
 - If the change is truly trivial (e.g. a one-line comment, a copy change, or a small non-behavioral tweak), skip the question and note that no validation is needed.

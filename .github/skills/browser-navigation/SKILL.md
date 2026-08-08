@@ -7,6 +7,18 @@ description: 'Use when you must build a TripViewer page URL (params t/d/l/e/visi
 
 Fast-path reference for driving the TripViewer web app in the integrated browser (dev emulators or production).
 
+## ⚠️ Explicit Approval Required (Playwright / Browser)
+
+This skill drives the integrated browser with Playwright (open pages, navigate, click/type, screenshot, sign in). Per the project instructions, **do NOT use any browser/Playwright tools unless the user has explicitly approved browser validation for the current task** — this includes:
+
+- Opening a page or tab
+- Navigating between pages
+- Clicking, typing, or otherwise interacting with the page
+- Taking screenshots
+- Signing in via the browser console or UI
+
+If a task could be checked in the browser but the user hasn't approved it, **ask first**. Prefer non-browser verification (`npm run build`, `query-firestore`, `dev.firestore.get(...)`) instead. Only after the user approves (e.g. "yes, validate in the browser") should you follow the steps below.
+
 ## When to Use
 
 - Building correct page URLs (params `t`/`d`/`l`/`e`) and navigating between pages

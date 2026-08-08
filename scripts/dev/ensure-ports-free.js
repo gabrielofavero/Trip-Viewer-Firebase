@@ -34,7 +34,7 @@ async function main() {
   }
 
   if (busyPorts.length === 0) {
-    console.log('\u2705 Dev ports are free \u2014 no need to kill anything.');
+    console.log('Dev ports are free');
     return;
   }
 

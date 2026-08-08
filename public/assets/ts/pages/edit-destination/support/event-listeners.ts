@@ -9,7 +9,9 @@ import {
 import { openDescriptionModal, saveDescription } from '../categories/description.js';
 import {
 	openDestinationImages,
-	toggleDestinationImage,
+	openDestinationImage,
+	closeDestinationImages,
+	removeDestinationImage,
 	confirmDestinationImages,
 } from '../categories/image.js';
 import { openAttributions } from '../../../utils/attributions.js';
@@ -35,10 +37,15 @@ export function loadEditDestinationListeners() {
 			const index = parseInt(target.getAttribute('data-index'));
 			if (category && !isNaN(index)) openDestinationImages(category, index);
 		},
-		'toggle-destination-image': (target) => {
+		'open-destination-image': (target) => {
 			const category = target.getAttribute('data-category');
 			const index = parseInt(target.getAttribute('data-index'));
-			if (category && !isNaN(index)) toggleDestinationImage(category, index);
+			if (category && !isNaN(index)) openDestinationImage(category, index);
+		},
+		'remove-destination-image': (target) => {
+			const category = target.getAttribute('data-category');
+			const index = parseInt(target.getAttribute('data-index'));
+			if (category && !isNaN(index)) removeDestinationImage(category, index);
 		},
 		'move-destination': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
@@ -53,5 +60,6 @@ export function loadEditDestinationListeners() {
 		moveDestination,
 		saveDescription,
 		confirmDestinationImages,
+		closeDestinationImages,
 	});
 }

@@ -35,6 +35,8 @@ import {
 	viewListing,
 	editListing,
 } from './navigation.js';
+import { isOnDarkMode } from '../../../theme/visibility.js';
+import { getDarkerColor, getLighterColor, hexToRgb } from '../../../theme/colors.js';
 
 var INDEX_DATA: Record<string, any> = {};
 var CURRENT_TRIPS: any[] = [];
@@ -249,7 +251,34 @@ export function openTripDialog(tripId) {
 				? translate('index.upcoming')
 				: translate('index.finished');
 	badge.textContent = badgeLabel;
-	badge.className = 'dialog-badge ' + badgeClass;
+
+	// Custom trip accent — applied to the dialog only (trip-card badge stays as-is)
+	const tripColors = trip.colors || {};
+	const hasCustomColors = tripColors.active === true && tripColors.light && tripColors.dark;
+	const accent = hasCustomColors ? (isOnDarkMode() ? tripColors.dark : tripColors.light) : null;
+
+	const ACCENT_VARS = [
+		'--trip-dialog-accent',
+		'--trip-dialog-accent-rgb',
+		'--trip-dialog-accent-hover',
+		'--trip-dialog-accent-soft',
+	];
+	for (const prop of ACCENT_VARS) dialog.style.removeProperty(prop);
+
+	if (accent) {
+		const [r, g, b] = hexToRgb(accent);
+		const hoverColor = isOnDarkMode()
+			? getDarkerColor(accent, 10)
+			: getLighterColor(accent, 10);
+		dialog.style.setProperty('--trip-dialog-accent', accent);
+		dialog.style.setProperty('--trip-dialog-accent-rgb', `${r}, ${g}, ${b}`);
+		dialog.style.setProperty('--trip-dialog-accent-hover', hoverColor);
+		dialog.style.setProperty('--trip-dialog-accent-soft', `rgba(${r}, ${g}, ${b}, 0.08)`);
+	}
+
+	badge.className = hasCustomColors
+		? 'dialog-badge dialog-badge-custom'
+		: 'dialog-badge ' + badgeClass;
 
 	// Dates
 	getID('trip-dialog-dates').textContent =

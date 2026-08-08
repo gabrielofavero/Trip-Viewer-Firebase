@@ -19,12 +19,13 @@ TripViewer tracks all work in `README.md` using a structured task system with ID
 | `# Tasks` table | Summary counts per type (auto-updated by `npm run readme`). **Don't hand-edit.** |
 | `## Backlog` | Active work, grouped by `### High / Medium / Low Priority`. |
 | `## Done` | Completed work, grouped by month (`### June 2026`, etc.). |
+| `### Duplicated (Already Done)` | Tasks that were done but duplicated elsewhere — **counted as `done`**, never cancelled. Lives inside `## Done`. |
 | `### Discarded` | Cancelled/abandoned tasks, kept for reference. Lives at the end of `## Done`. |
 
 Quick orientation:
 - **Looking for the version?** Run `npm run readme` — it prints the calculated version. There is no hardcoded version string in the repo.
 - **Looking for a specific task?** Search by its ID (e.g. `B161`). Each task appears in exactly one place — Backlog, Done, or Discarded.
-- **Wondering where a task belongs?** Not done → `## Backlog`; done → `## Done` under the current month; abandoned → `### Discarded`.
+- **Wondering where a task belongs?** Not done → `## Backlog`; done → `## Done` under the current month; duplicated work that's already done → `### Duplicated (Already Done)`; abandoned → `### Discarded`.
 - **Epics in Backlog** may show their sub-tasks as indented bullets underneath; each sub-task has its own ID and is listed in Done individually when finished.
 
 ### Ordering rules (important)
@@ -88,8 +89,11 @@ Completed tasks, organized chronologically by month (**newest month first**):
 ```
 New tasks are **appended to the bottom** of the current month. New months go at the **top** of `## Done`.
 
+### `### Duplicated (Already Done)`
+Tasks that were done but got duplicated elsewhere. Kept for reference inside `## Done`. **`readme.py` counts these as `done`** (not cancelled) — the only section counted as cancelled is `### Discarded`.
+
 ### `### Discarded`
-Cancelled/abandoned tasks. Kept for reference. Located at the very end of `## Done`.
+Cancelled/abandoned tasks. Kept for reference. Located at the very end of `## Done`. **This is the only section counted as cancelled.**
 
 ---
 

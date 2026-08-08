@@ -34,21 +34,25 @@ npm run serve
 
 # Full dev mode (build + serve + live reload on port 3000)
 npm run dev
+
+# Dev against the real cloud project (trip-viewer-dev) — no emulators
+npm run dev:live
 ```
 
 # Tasks
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 165   | 162  | 3         | 0       |
-| 🏆   | Feature     | F000 | 175   | 151  | 22        | 2       |
-| 📈   | Improvement | M000 | 167   | 140  | 23        | 4       |
-| ⚔️   | Epic        | E000 | 51    | 34   | 9         | 8       |
+| 🐞   | Bug         | B000 | 171   | 168  | 3         | 0       |
+| 🏆   | Feature     | F000 | 176   | 156  | 17        | 3       |
+| 📈   | Improvement | M000 | 168   | 142  | 22        | 4       |
+| ⚔️   | Epic        | E000 | 51    | 35   | 6         | 10      |
 
 ## Backlog
 
 ### High Priority
 
+- ⚔️ **E028:** Places API Text Search
 - ⚔️ **E045:** Add Maps integration into edit page
   - *[🏆F172] Get place information*
   - *[🏆F173] Update integrated places*
@@ -66,7 +70,9 @@ npm run dev
 
 ### Low Priority
 
-- 📈 **M154:** Reduce firestore calls on index
+- ⚔️ **E017:** Optimize firebase operations usage (reads, cloud functions)
+  *- [📈M154] Reduce firestore calls on index*
+- 🏆 **F063:** Allow adding multiple regions to a destination (edit/trip.html)
 - ⚔️ **E047:** Implement Unit Tests
 - ⚔️ **E019:** Implement Sonarqube
 - ⚔️ **E046:** Implement Playwright
@@ -75,9 +81,10 @@ npm run dev
 ## Done
 
 ### August 2026
+
 - 🐞 **B163:** Fix color and destination image issues
-- 🏆 **F159:** Add AI skill for browsing pages
-- 📈 **M161:** Improve AI skills detection
+- 🏆 **F159:** [DEV] Add AI skill for browsing pages
+- 📈 **M161:** [DEV] Improve AI skills detection
 - 🏆 **F155:** Add images for each destination item
 - 🐞 **B164:** Cannot add new itinerary post migration
 - 📈 **M164:** Improve bulletpoints for trip cards on index
@@ -88,30 +95,40 @@ npm run dev
 - 🐞 **B165:** Fix dark mode backup/restore elements and dialog visual issues
 - 🏆 **F175:** Add real versioning
 - 📈 **M167:** Add database profile info since auth data is not always filled
+- 🐞 **B167:** Edit trip labels on customization not showing
+- 🐞 **B166:** Can't save new transportations
+- 🐞 **B168:** We can close the dialog on saved document and it doesnt refresh the page
+- 🐞 **B169:** Account restore giving "Access Denied"
+- 🐞 **B170:** Fix mismatched color preset pairs on edit trip
+- 🐞 **B171:** Image dialog not transitioning when user clicks on add image button
+- 📈 **M168:** [DEV] Auto restart if emulator functions failed
+- 🏆 **F176:** Add custom colors on trip cards
 
 ### July 2026
+
 - ⚔️ **E048:** Database ovehaul
 - 🐞 **B161:** Fix page issues post migration
 - 📈 **M155:** Load dark/light mode as soon as page starts (no flicker)
 - 📈 **M156:** Export useful dev scripts into npm run
 - ⚔️ **E049:** Code translation (PT -> EN)
-- ⚔️ **E050:** Create proper dev env (emulators, data preparation scripts, easy config)
+- ⚔️ **E050:** [DEV] Create proper dev env (emulators, data preparation scripts, easy config)
 - 🏆 **F169:** Add option to import only a single trip document
 - 🏆 **F171:** Add single document export
 - 📈 **M157:** Expand single document import/export features by allowing all types
-- 🏆 **F152:** Add firebase rules into repo + deployment
+- 🏆 **F152:** Add firestore rules into deployment
 - 📈 **M158:** Optimize user data + user permissions
-- 🏆 **F153:** Auto open dev browser on npm run dev
-- 🏆 **F154:** Add AI skills for project
-- 📈 **M159:** Improve skills behavior
+- 🏆 **F153:** [DEV] Auto open dev browser on npm run dev
+- 🏆 **F154:** [DEV] Add AI skills for project
+- 📈 **M159:** [DEV] Improve skills behavior
 - 🐞 **B162:** People-view transportation wrapper not loading on initial page load
-- 📈 **M160:** Improve emulator data backup actions
+- 📈 **M160:** [DEV] Improve emulator data backup actions
 - 🏆 **F156:** Add support for legacy trips
 - 🏆 **F158:** Add default color options for trips
 - 🏆 **F168:** Add image for destination documents
 - 🏆 **F157:** Add destination images on index.html
 
 ### June 2026
+
 - 🐞 **B158:** When clicking on last item of transportation tab, nothing happens
 - 📈 **M145:** If "long loading" pop up shows, close it if loading finishes
 - 🐞 **B157:** Trip being considered as finished on last day (index only)
@@ -155,6 +172,7 @@ npm run dev
 - ⚔️ **E044:** New Front-End: edit pages
 
 ### May 2026
+
 - 🐞 **B159:** Fix travelers saving action
 
 ### February 2026
@@ -729,18 +747,20 @@ npm run dev
 - ⚔️ **E005:** Backend structure via Cloud Functions (NodeJS with TypeScript)
 - ⚔️ **E006:** Main backend read functions (get.ts)
 
-### Discarded (Most will be done on the 2.0 version)
+### Duplicated (Already Done)
 
 - 🏆 **F047:** Firebase Firestore Rules in Front-End
-  - *Security risk exposing rules to user*
-- 🐞 **B031:** Fix gallery image from twitter opening with wrong proportions in GLightbox
-- 📈 **M072:** Improve automatic date adjustment in edit trips
-- 📈 **M076:** Automate PRD to DEV data restore (weekly) + Manual Function
-- 📈 **M077:** Weekly PRD Backups + oldest backup exclusion (3 weeks only)
 - ⚔️ **E030:** Account Import/Export
   - 🏆 **F088:** *Export Selected (Functions Only)*
   - 🏆 **F089:** *Import Selected (Functions Only)*
   - 🏆 **F090:** *Account Import/Export: Interface*
+- 📈 **M086:** Improved error pop-up
+
+### Discarded
+- 🐞 **B031:** Fix gallery image from twitter opening with wrong proportions in GLightbox
+- 📈 **M072:** Improve automatic date adjustment in edit trips
+- 📈 **M076:** Automate PRD to DEV data restore (weekly) + Manual Function
+- 📈 **M077:** Weekly PRD Backups + oldest backup exclusion (3 weeks only)
 - ⚔️ **E031:** Document History
   - 🏆 **F084:** Store copies within the document itself
   - 🏆 **F091:** Restore function + compatibility check
@@ -749,28 +769,11 @@ npm run dev
   - 🏆 **F085:** Create printable trip/destination page
   - 🏆 **F093:** Automatic PDF export + Interface
 - 🏆 **F087:** Single load of destinations
-  - *All destinations loaded*
-  - *Switch via function*
-  - *Switch via tab*
-  - *Lightbox persists (no reload)*
-- ⚔️ **E028:** Places API Text Search
-- ⚔️ **E017:** Optimize firebase operations usage (reads, cloud functions)
 - 📈 **M096:** Mobile and webview adjustments
 - 📈 **M097:** Itinerary automations (edit/trip.html)
 - 🏆 **F069:** Tab for selecting destinations within the page
-- 🏆 **F063:** Allow adding multiple regions to a destination (edit/trip.html)
-  - *Change in get and set (edit/trip.html)*
-  - *Create structure in front (edit/trip.html)*
-  - *Change in get (view.html and destination.html)*
-  - *Change in dynamic select (edit/trip.html)*
-  - *Migration script*
 - 🏆 **F065:** Show if accommodation was prepaid or not
 - 🏆 **F071:** Multi-person expenses
-- 📈 **M086:** Improved error pop-up
-  - *Force Refresh (Home or try again)*
-  - *Try again enabled on first load, disabled later*
-  - *Message in English at the end with different highlight*
-  - *Ensure a notification is always shown to the user*
 - ⚔️ **E021:** Implementation: Lineup in view.html
   - *Instead of being in Destinations, it's a new category*
   - *Displays list of artists as a festival lineup (Example: RiR site)*
@@ -784,7 +787,7 @@ npm run dev
 - ⚔️ **E014:** Implementation: Wishlist
   - *Find a template online and apply (credit the source)*
 - 📈 **M104:** All external links should open via window.open
-- 📈 **M087:** Destination load loads everything immediately
+- 📈 **M087:** Destination loads everything immediately
 - 🏆 **F070:** Add to calendar component
 - 📈 **M100:** Storage size limit for document (10MB)
 - 📈 **M101:** Put Swiper inside accommodation image box when accommodation has more than one image

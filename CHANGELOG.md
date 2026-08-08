@@ -1,6 +1,19 @@
 # Changelog
 
+## [2.22.2]
+
+- 🐞 **B167:** Edit trip labels on customization not showing
+- 🐞 **B166:** Can't save new transportations
+- 🐞 **B168:** We can close the dialog on saved document and it doesnt refresh the page
+- 🐞 **B169:** Account restore giving "Access Denied"
+- 🐞 **B170:** Fix mismatched color preset pairs on edit trip
+- 🐞 **B171:** Image dialog not transitioning when user clicks on add image button
+- 📈 **M167:** [DEV] Auto restart if emulator functions failed
+- 🏆 **F176:** Add custom colors on trip cards
+
 ## [2.22.1] - 2026-08-05
+
+- 📈 **M167:** Add database profile info since auth data is not always filled
 
 ## [2.22.0] - 2026-08-04
 

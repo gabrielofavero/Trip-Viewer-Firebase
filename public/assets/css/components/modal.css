@@ -97,6 +97,12 @@
 		overflow: visible;
 	}
 
+	/* Same for the image editor screens inside fullscreen dialogs. */
+	.fullscreen-dialog .image-editor-box > .image-editor-screen {
+		max-height: none;
+		overflow: visible;
+	}
+
 	/* Message-style fullscreen dialogs become a top → description → buttons
 	   column: icon + title pinned to the top, buttons pinned to the bottom,
 	   and the description filling the middle and scrolling on its own. */
@@ -331,6 +337,10 @@
 	width: 100%;
 	border-collapse: collapse;
 	text-align: left;
+	/* Fixed layout keeps the table inside the dialog: long document names
+	   truncate with an ellipsis instead of pushing the table wider and
+	   causing horizontal scroll. */
+	table-layout: fixed;
 }
 
 /* Desktop only: keep the PIN dialog compact when many protected items are
@@ -348,12 +358,15 @@
 	text-align: left;
 	padding: 8px 12px 8px 0;
 	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	vertical-align: middle;
 }
 
 .pin-backup-table td.pin-backup-input-cell {
 	padding: 8px 0 8px 12px;
 	vertical-align: middle;
+	width: 110px;
 }
 
 .pin-backup-input {

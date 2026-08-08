@@ -9,6 +9,7 @@ functions/lib/
 
 # Dev
 /dev/
+tmp/
 
 # Logs
 logs
