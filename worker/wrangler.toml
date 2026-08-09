@@ -27,3 +27,22 @@ FIREBASE_AUTH_EMULATOR_HOST = "127.0.0.1:9099"
 #
 #   (PHOTO_URL_SECRET was dropped — no HMAC/byte proxy in v1. Photos use the
 #   stable CDN photoUri resolved by the worker and stored on Firestore.)
+#
+# Quota / budget protection (worker/src/quota.js): the worker self-accounts
+# monthly Google calls per key. Every search/details request is billed at the
+# ENTERPRISE + ATMOSPHERE SKU (the mask requests rating/priceLevel/priceRange/
+# websiteUri + reviewSummary/editorialSummary), free allowance 1,000/mo. So
+# both budgets default to 1000 (= the free cap), degrade at 90%, hard-block at
+# 100% → never cross into paid. (0 = DISABLED — never call that key; optional):
+#   wrangler secret put PLACES_MAIN_BUDGET          # search/details cap (default 1000)
+#   wrangler secret put PLACES_PHOTOS_BUDGET        # photos cap (default 1000)
+#   wrangler secret put PLACES_QUOTA_DEGRADE_RATIO  # optional, default 0.9
+#
+# Optional: share the quota ledger across worker isolates with a KV namespace.
+# Create once (`npx wrangler kv namespace create PLACES_QUOTA`), then uncomment
+# and paste the ids below and redeploy. Without it the ledger is in-memory
+# (per-isolate, best-effort — fine for a single editor).
+# [[kv_namespaces]]
+# binding = "PLACES_QUOTA"
+# id = "<production_namespace_id>"
+# preview_id = "<preview_namespace_id>"

@@ -38,6 +38,7 @@ import {
 	getStepData,
 	getStepLoadingMessage,
 	goTo,
+	notifyPlacesLimited,
 	registerStepRenderer,
 	setStepData,
 	withDialogLoading,
@@ -87,7 +88,13 @@ async function renderDetailsStep(context: PlacesDialogContext): Promise<string> 
 		// Firebase token + lang are resolved by the service; photos default to
 		// true here because the place was just searched (new — no saved id yet).
 		details = await withDialogLoading(
-			(signal) => getPlace(placeId, { signal }),
+			(signal) =>
+				getPlace(placeId, {
+					signal,
+					onLimited: (limited) => {
+						if (limited) notifyPlacesLimited();
+					},
+				}),
 			getStepLoadingMessage('details'),
 		);
 	} catch (error) {

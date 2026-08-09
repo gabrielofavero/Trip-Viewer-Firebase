@@ -11,6 +11,7 @@
  *   NotFoundError   → 404
  *   BadRequestError → 400 (bad `q` / `lang`)
  *   UpstreamError   → 429 (Google 429) / 502 / 503
+ *   QuotaExceededError → 429 (monthly budget spent, quota.js)
  *   anything else   → 500
  */
 
@@ -68,6 +69,14 @@ export class UpstreamError extends ApiError {
 	constructor(status, message = 'Upstream service error') {
 		super(status, 'places/upstream', message);
 		this.name = 'UpstreamError';
+	}
+}
+
+/** Monthly budget exhausted (worker self-accounting, quota.js) → 429. */
+export class QuotaExceededError extends ApiError {
+	constructor(message = 'Places API monthly quota exceeded') {
+		super(429, 'places/quota-exceeded', message);
+		this.name = 'QuotaExceededError';
 	}
 }
 

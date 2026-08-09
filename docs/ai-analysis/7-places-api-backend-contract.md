@@ -277,10 +277,18 @@ Three environments, all served by **one worker codebase and one deployed route**
 | `403` | No `canUsePlacesAPI` permission, or bad Origin | `placesApi.errors.network` |
 | `404` | Unknown `placeId` (routes 2/3) | `placesApi.errors.network` |
 | `429` | Google rate limit / quota | `placesApi.errors.network` (frontend shows generic network error) |
+| `429` | **Monthly budget exhausted** (`places/quota-exceeded`, quota.js) | `placesApi.errors.quotaExceeded` (frontend shows "monthly quota reached") |
 | `502` / `503` | Google upstream failure / timeout | `placesApi.errors.network` |
 | `500` | Worker internal error | `placesApi.errors.network` |
 
 > The frontend only checks `response.ok` and throws a friendly translatable error (`translate('placesApi.errors.network')`); it does **not** parse the error body. The envelope exists so the worker is debuggable and consistent.
+
+> **Quota / budget protection** (worker/src/quota.js): the worker self-accounts
+> monthly calls per key because Google exposes no usage API. When a budget is
+> ≥ 90% spent it returns **`200` with `"limited": true`** (routes 1/2 degrade
+> `photos=true → false` onto the free main key; route 3 returns `{ photos: [],
+> limited: true }`) so the frontend can show a "search has been limited" toast.
+> A fully spent budget returns **`429 places/quota-exceeded`** (see §10.2).
 
 ---
 

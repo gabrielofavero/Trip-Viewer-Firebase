@@ -62,17 +62,23 @@ export interface PlacePhoto {
 // The Cloudflare routes return these wrapper objects; the service layer
 // unwraps them so callers receive the plain data.
 
-/** Route 1 response: { results: [...] } */
+/** Route 1 response: { results: [...], limited? } */
 export interface PlaceSearchResponse {
 	results: PlaceSearchResult[];
+	/** True when the worker degraded the request (monthly quota nearly reached — photos off). */
+	limited?: boolean;
 }
 
-/** Route 2 response: { place: {...} } */
+/** Route 2 response: { place: {...}, limited? } */
 export interface PlaceDetailsResponse {
 	place: PlaceDetails;
+	/** True when the worker degraded the request (monthly quota nearly reached — photos off). */
+	limited?: boolean;
 }
 
-/** Route 3 response: { photos: [...] } */
+/** Route 3 response: { photos: [...], limited? } */
 export interface PlacePhotosResponse {
 	photos: PlacePhoto[];
+	/** True when the worker skipped photos (monthly quota nearly reached — no Google call). */
+	limited?: boolean;
 }

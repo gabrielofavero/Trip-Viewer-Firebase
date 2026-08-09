@@ -939,9 +939,13 @@
 			},
 			"success": "Os lugares foram atualizados com sucesso"
 		},
+		"limited": {
+			"message": "A cota de Lugares está quase no limite. A busca e as informações do lugar continuam funcionando, mas as fotos estão temporariamente desativadas."
+		},
 		"errors": {
 			"network": "Erro de rede. Verifique sua conexão e tente novamente",
-			"routeNotConfigured": "A rota da API de Lugares ainda não está configurada"
+			"routeNotConfigured": "A rota da API de Lugares ainda não está configurada",
+			"quotaExceeded": "A cota mensal da API de Lugares foi atingida. Tente novamente no próximo mês."
 		}
 	}
 }

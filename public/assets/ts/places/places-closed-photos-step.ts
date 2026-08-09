@@ -38,6 +38,7 @@ import {
 	getStepData,
 	getStepLoadingMessage,
 	goTo,
+	notifyPlacesLimited,
 	registerStepRenderer,
 	setStepData,
 	withDialogLoading,
@@ -118,7 +119,13 @@ async function renderPhotosStep(_context: PlacesDialogContext): Promise<string> 
 		try {
 			// uid + lang are resolved by the service (getUID + active language pack).
 			const photos = await withDialogLoading(
-				(signal) => getPlacePhotos(details.id, { signal }),
+				(signal) =>
+					getPlacePhotos(details.id, {
+						signal,
+						onLimited: (limited) => {
+							if (limited) notifyPlacesLimited();
+						},
+					}),
 				getStepLoadingMessage('photos'),
 			);
 			if (photos === null) return ''; // cancelled (dialog closed / X clicked)
@@ -206,7 +213,13 @@ async function loadAndRenderPhotos(): Promise<void> {
 
 	try {
 		const photos = await withDialogLoading(
-			(signal) => getPlacePhotos(details.id, { signal }),
+			(signal) =>
+				getPlacePhotos(details.id, {
+					signal,
+					onLimited: (limited) => {
+						if (limited) notifyPlacesLimited();
+					},
+				}),
 			getStepLoadingMessage('photos'),
 		);
 		if (photos === null) return; // cancelled

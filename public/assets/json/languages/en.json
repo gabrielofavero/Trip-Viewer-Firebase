@@ -942,9 +942,13 @@
 			},
 			"success": "The places were updated successfully"
 		},
+		"limited": {
+			"message": "Places quota is nearly reached. Search and place info still work, but photos are temporarily disabled."
+		},
 		"errors": {
 			"network": "Network error. Please check your connection and try again",
-			"routeNotConfigured": "The Places API route is not configured yet"
+			"routeNotConfigured": "The Places API route is not configured yet",
+			"quotaExceeded": "The monthly Places API quota has been reached. Please try again next month."
 		}
 	}
 }

@@ -25,6 +25,7 @@ import {
 	displayFullMessage,
 	getContainersInput,
 	MESSAGE_PROPERTIES,
+	openToast,
 } from '../utils/messages.js';
 import { translate } from '../i18n/translation.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../data/state.js';
@@ -66,6 +67,16 @@ const STEP_LOADING_KEYS: Partial<Record<PlacesDialogStep, string>> = {
 	details: 'placesApi.loading.fetching',
 	photos: 'placesApi.loading.importing',
 };
+
+/**
+ * Toast shown when the worker degrades a response because the monthly Places
+ * quota is nearly reached (photos disabled; search/details still returned).
+ * `#toast` (z-index 10000) renders above the fullscreen dialog modal (preloader
+ * z-index 9999), so it is visible while the Places dialog is open.
+ */
+export function notifyPlacesLimited(): void {
+	openToast(translate('placesApi.limited.message'));
+}
 
 // ------------------------------------------------------------------
 // Lifecycle

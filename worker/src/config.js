@@ -80,16 +80,21 @@ function parseHost(origin) {
  * `PLACES_API_MOCK`).
  *
  * Two Google keys (user decision 2026-08-09):
- *   - `PLACES_API_KEY`        — main key; used when `photos=false`.
- *   - `PLACES_PHOTOS_API_KEY` — dedicated photos key; used for any request that
- *     touches photos (`photos=true` on routes 1/2 and route 3 incl. the media
- *     endpoint). The `photos` param picks the key via `apiKeyFor()`.
+ *   - `PLACES_API_KEY`        — main key (FREE / trial); used when `photos=false`.
+ *   - `PLACES_PHOTOS_API_KEY` — dedicated photos key (REAL / paid); used for any
+ *     request that touches photos (`photos=true` on routes 1/2 and route 3 incl.
+ *     the media endpoint). The `photos` param picks the key via `apiKeyFor()`.
+ *
+ * Quota / budget protection (quota.js): the worker self-accounts monthly calls
+ * per key. Budgets are env-configurable (see `PLACES_MAIN_BUDGET` /
+ * `PLACES_PHOTOS_BUDGET` / `PLACES_QUOTA_DEGRADE_RATIO`) — set `PLACES_PHOTOS_BUDGET`
+ * to the real key's monthly limit so the worker can stop before charges accrue.
  *
  * Note: `PHOTO_URL_SECRET` was dropped (photoUri strategy — no HMAC/byte proxy
  * in v1; see docs/ai-analysis/8 §Deviation).
  *
  * @param {Record<string, string|undefined>} env - The worker `env` bindings.
- * @returns {{placesApiKey: string, placesPhotosApiKey: string, allowedUidsJson: string, emulatorHost: string, isMock: boolean}}
+ * @returns {{placesApiKey: string, placesPhotosApiKey: string, allowedUidsJson: string, emulatorHost: string, isMock: boolean, budgets: {main: number, photos: number}, quotaDegradeRatio: number}}
  */
 export function readEnv(env) {
 	const isMock = Boolean(env?.PLACES_API_MOCK);
@@ -97,6 +102,25 @@ export function readEnv(env) {
 	const placesPhotosApiKey = env?.PLACES_PHOTOS_API_KEY ?? '';
 	const allowedUidsJson = env?.ALLOWED_UIDS_JSON ?? '';
 	const emulatorHost = env?.FIREBASE_AUTH_EMULATOR_HOST ?? '127.0.0.1:9099';
+
+	// Monthly call budgets per key. `0` DISABLES that key (never called); a
+	// positive number is a monthly call cap (degraded at 90%, hard-blocked at
+	// 100%).
+	//
+	// IMPORTANT — tier: the field mask requests Enterprise fields (rating,
+	// priceLevel, priceRange, websiteUri) AND Atmosphere fields (reviewSummary,
+	// editorialSummary — for the description), so every search/details request
+	// is billed at the ENTERPRISE + ATMOSPHERE SKU. Its free allowance is only
+	// 1,000 events/mo per SKU (Text Search E+A, Place Details E+A, and Place
+	// Details Photos). Defaults are therefore main 1,000/mo and photos 1,000/mo
+	// — the $0 cap. Raise only if your Google project truly allows more free.
+	const budgets = {
+		main: parseBudget(env?.PLACES_MAIN_BUDGET, 1_000),
+		photos: parseBudget(env?.PLACES_PHOTOS_BUDGET, 1_000),
+	};
+	const degrade = parseFloat(env?.PLACES_QUOTA_DEGRADE_RATIO ?? '');
+	const quotaDegradeRatio =
+		Number.isFinite(degrade) && degrade > 0 && degrade < 1 ? degrade : 0.9;
 
 	if (!isMock) {
 		const missing = [];
@@ -111,7 +135,29 @@ export function readEnv(env) {
 		}
 	}
 
-	return { placesApiKey, placesPhotosApiKey, allowedUidsJson, emulatorHost, isMock };
+	return {
+		placesApiKey,
+		placesPhotosApiKey,
+		allowedUidsJson,
+		emulatorHost,
+		isMock,
+		budgets,
+		quotaDegradeRatio,
+	};
+}
+
+/**
+ * Parse a budget env var: `0` stays `0` (DISABLED — never call this key); any
+ * positive integer is used as the monthly cap; missing / non-numeric / negative
+ * → `fallback`.
+ * @param {string|undefined} raw
+ * @param {number} fallback
+ * @returns {number}
+ */
+function parseBudget(raw, fallback) {
+	const n = Number.parseInt(raw ?? '', 10);
+	if (Number.isNaN(n)) return fallback;
+	return n >= 0 ? n : fallback;
 }
 
 /**

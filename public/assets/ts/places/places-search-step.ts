@@ -30,6 +30,7 @@ import type { PlaceSearchResult } from '../models/places-api.model.js';
 import {
 	getStepLoadingMessage,
 	goTo,
+	notifyPlacesLimited,
 	registerStepRenderer,
 	setStepData,
 	withDialogLoading,
@@ -89,7 +90,13 @@ async function runSearch(): Promise<void> {
 	try {
 		// uid + lang are resolved by the service (getUID + active language pack).
 		results = await withDialogLoading(
-			(signal) => searchPlaces(query, { signal }),
+			(signal) =>
+				searchPlaces(query, {
+					signal,
+					onLimited: (limited) => {
+						if (limited) notifyPlacesLimited();
+					},
+				}),
 			getStepLoadingMessage('search'),
 		);
 	} catch (error) {

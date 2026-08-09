@@ -45,6 +45,31 @@ export interface PlacesApiOptions {
 	lang?: string;
 	/** AbortSignal so callers can cancel in-flight requests (e.g. dialog close). */
 	signal?: AbortSignal;
+	/**
+	 * Called with `true` when the worker returns a degraded response (monthly
+	 * Places quota nearly reached — photos disabled, search/details still
+	 * returned). Use it to show a "search has been limited" toast on the modal.
+	 */
+	onLimited?: (limited: boolean) => void;
+}
+
+/**
+ * Error carrying the worker's machine-readable `places/*` code (error envelope
+ * §10.1), so callers can distinguish a quota block from a generic failure.
+ */
+export class PlacesApiError extends Error {
+	constructor(
+		public readonly code: string,
+		message: string,
+	) {
+		super(message);
+		this.name = 'PlacesApiError';
+	}
+}
+
+/** True when an error is the worker's hard quota block (429 places/quota-exceeded). */
+export function isQuotaExceededError(error: unknown): boolean {
+	return error instanceof PlacesApiError && error.code === 'places/quota-exceeded';
 }
 
 /**
@@ -99,7 +124,8 @@ function assertConfigured(): void {
 }
 
 /** Shared fetch wrapper: returns typed JSON or throws a friendly error. */
-async function request<T>(url: string, token: string, signal?: AbortSignal): Promise<T> {
+async function request<T>(url: string, token: string, options: PlacesApiOptions = {}): Promise<T> {
+	const { signal, onLimited } = options;
 	let response: Response;
 	try {
 		const headers = new Headers();
@@ -111,13 +137,27 @@ async function request<T>(url: string, token: string, signal?: AbortSignal): Pro
 		throw new Error(translate('placesApi.errors.network'));
 	}
 	if (!response.ok) {
+		// The worker's envelope is `{ error: { code, message } }` — read the code
+		// so a quota block (429 places/quota-exceeded) is treated distinctly.
+		let code = '';
+		try {
+			const body = (await response.json()) as { error?: { code?: string } };
+			code = body?.error?.code ?? '';
+		} catch {
+			// Non-JSON error body — fall through to the generic network error.
+		}
+		if (code === 'places/quota-exceeded') {
+			throw new PlacesApiError(code, translate('placesApi.errors.quotaExceeded'));
+		}
 		throw new Error(`${translate('placesApi.errors.network')} (${response.status})`);
 	}
-	try {
-		return (await response.json()) as T;
-	} catch {
-		throw new Error(translate('placesApi.errors.network'));
+	const body = (await response.json()) as T;
+	// The worker tags 200 responses with `limited: true` when it degraded the
+	// request (quota nearly reached) — notify the caller so it can show a toast.
+	if (onLimited && (body as { limited?: boolean })?.limited === true) {
+		onLimited(true);
 	}
+	return body;
 }
 
 /**
@@ -143,7 +183,7 @@ export async function searchPlaces(
 		photos: photos ? 'true' : 'false',
 	};
 	const url = buildUrl(`${PLACES_API_BASE_URL}/places/search`, params);
-	const data = await request<PlaceSearchResponse>(url, token, options.signal);
+	const data = await request<PlaceSearchResponse>(url, token, options);
 	return data.results ?? [];
 }
 
@@ -163,7 +203,7 @@ export async function getPlace(id: string, options: PlacesApiOptions = {}): Prom
 	assertConfigured();
 	const params: Record<string, string> = { lang, photos: photos ? 'true' : 'false' };
 	const url = buildUrl(`${PLACES_API_BASE_URL}/places/${encodeURIComponent(id)}`, params);
-	const data = await request<PlaceDetailsResponse>(url, token, options.signal);
+	const data = await request<PlaceDetailsResponse>(url, token, options);
 	return data.place;
 }
 
@@ -187,7 +227,7 @@ export async function getPlacePhotos(
 	// so the `photos` flag does not apply here.
 	const params: Record<string, string> = { lang };
 	const url = buildUrl(`${PLACES_API_BASE_URL}/places/${encodeURIComponent(id)}/photos`, params);
-	const data = await request<PlacePhotosResponse>(url, token, options.signal);
+	const data = await request<PlacePhotosResponse>(url, token, options);
 	return data.photos ?? [];
 }
 

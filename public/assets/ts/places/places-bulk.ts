@@ -50,6 +50,7 @@ import { removeSelectorDS } from '../ui/dynamic-select.js';
 import { removeDestinationImages } from '../pages/edit-destination/categories/image.js';
 import type { PlaceDetails } from '../models/places-api.model.js';
 import type { PlaceAPI, PlaceDescription, PlaceItem } from '../models/schema.js';
+import { notifyPlacesLimited } from './places-dialog.js';
 import {
 	applyPlaceData,
 	buildClosedState,
@@ -251,7 +252,13 @@ async function fetchLinkedPlaces(
 				// Firebase token + lang are resolved by the service. Only the info
 				// route is called with photos=false — the bulk flow refreshes
 				// existing places and never fetches/compares images.
-				const newPlace = await getPlace(placeId, { signal, photos: false });
+				const newPlace = await getPlace(placeId, {
+					signal,
+					photos: false,
+					onLimited: (limited) => {
+						if (limited) notifyPlacesLimited();
+					},
+				});
 				if (signal.aborted) return;
 				results[i] = {
 					category,
