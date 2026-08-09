@@ -1,0 +1,22 @@
+# Local-only secrets for `wrangler dev`.
+# Copy this file to `.dev.vars`, fill in the values, and NEVER commit `.dev.vars`.
+
+# Google Places API (New) — main key, used when the request does NOT include
+# photos (photos=false). From Google Cloud Console > APIs & Services.
+# Required unless you only smoke-test the auth/permission gates (set PLACES_API_MOCK=true).
+PLACES_API_KEY=
+
+# Dedicated Google Places API (New) key for photo-related traffic:
+# photos=true on routes 1/2, and route 3 (incl. the photo media endpoint).
+# Keeps photo quota/cost separate from the main key. Required in non-mock use.
+PLACES_PHOTOS_API_KEY=
+
+# Optional: JSON array of Firebase UIDs allowed to call the API.
+# When omitted, the worker falls back to the starter allowlist in
+# src/permissions.js (P2).
+# Example: ["abc123firebaseUid", "def456firebaseUid"]
+ALLOWED_UIDS_JSON=
+
+# Optional: PLACES_API_MOCK=true lets you run the auth/permission/rate-limit
+# gates locally without a real Google key (no live Places calls).
+PLACES_API_MOCK=

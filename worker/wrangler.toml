@@ -1,0 +1,29 @@
+# TripViewer Places API worker — Cloudflare configuration.
+#
+# One deployed route serves all environments (local / dev / prd). The
+# environment is NOT chosen by the client: it is derived server-side from
+# the Origin header + the Firebase ID token `aud` claim (see src/config.js
+# and the backend contract §6.5).
+
+name = "trip-viewer-places-api"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+
+[vars]
+# Used only by the LOCAL worker (`wrangler dev`) to verify Firebase Auth
+# emulator tokens. The deployed worker ignores this and verifies against
+# Google's public keys via the token `aud`/`iss` claims.
+FIREBASE_AUTH_EMULATOR_HOST = "127.0.0.1:9099"
+
+# Secrets — NEVER commit these values here. Set them with:
+#   wrangler secret put PLACES_API_KEY
+#   wrangler secret put PLACES_PHOTOS_API_KEY
+#   wrangler secret put ALLOWED_UIDS_JSON   (optional)
+#
+#   PLACES_API_KEY          — Google Places API (New) key (main; used when photos=false).
+#   PLACES_PHOTOS_API_KEY   — dedicated photos key (photos=true on routes 1/2 + route 3 + media).
+#   ALLOWED_UIDS_JSON       — optional JSON array of Firebase UIDs allowed to
+#                             call the API (v1 allowlist; see permissions.js).
+#
+#   (PHOTO_URL_SECRET was dropped — no HMAC/byte proxy in v1. Photos use the
+#   stable CDN photoUri resolved by the worker and stored on Firestore.)

@@ -122,7 +122,7 @@ export async function getUID() {
 	});
 }
 
-export async function getFirebaseIdToken(user) {
+export async function getFirebaseIdToken(user = null) {
 	if (!user) {
 		user = firebase.auth().currentUser;
 	}

@@ -3,7 +3,7 @@
 // Extracted from: view/categories/summary.js, edit-trip/
 
 import { convertFromDateObject, getFormattedDate } from '../utils/dates.js';
-import type { Trip, DateObject, Traveler } from './new-schema.js';
+import type { Trip, DateObject, Traveler } from './schema.js';
 
 // ======= Trip Duration & Traveler Count =======
 

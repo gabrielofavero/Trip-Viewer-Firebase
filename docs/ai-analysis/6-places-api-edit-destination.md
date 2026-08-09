@@ -19,6 +19,7 @@
 4. **Bulk "Update with Maps"** button on the main edit screen, visible when **at least one entry has a place ID**. Opens a dialog: "will try to get info from X linked items" → confirm → loading → for each linked item, fetch + compare against saved `placeAPI` → **report** (X fields can be updated, Y places no longer operational) with options:
    - **Fields:** *replace everything* with new data, OR *replace only the auto-filled fields* (compare destination data ↔ old place data ↔ new place data).
    - **Closed places:** *auto-delete* the items, OR add a `[Closed]` label to the title.
+   > **No photos in bulk:** the bulk flow only calls the *info* route per place ID — it **never** calls the photos route. Photo import exists **only** in the per-item dialog (Step 3).
 
 ---
 
@@ -43,7 +44,13 @@
 
 ---
 
-## 3. Proposed Contracts (placeholders — confirm against real Cloudflare routes)
+## 3. Contracts (placeholders — confirm against real Cloudflare routes)
+
+> **✅ Prompt 13 (done):** The **finalized backend contract** now lives in
+> [`docs/ai-analysis/7-places-api-backend-contract.md`](7-places-api-backend-contract.md)
+> — exact request/response JSON, `businessStatus` handling, photo reference format,
+> and the auth/uid/lang contract for the Cloudflare worker. The summary below is kept
+> in sync as a quick reference; the contract doc is the source of truth.
 
 Placeholder base URL constant (single place to change when routes are ready):
 
@@ -218,7 +225,7 @@ public/assets/ts/
 - **Deps:** P1, P3.
 - **Files:** `places/places-bulk.ts` (new), `places-apply.ts` (reuse).
 - **Steps:**
-  1. Confirm → dialog-scoped loading → for each linked entry (bounded concurrency, e.g. 5), `getPlace(id, { uid, lang })` (+ photos if desired).
+  1. Confirm → dialog-scoped loading → for each linked entry (bounded concurrency, e.g. 5), call **only** `getPlace(id, { uid, lang })` (the info route). **No photos route call** — the bulk flow never fetches/compares images; images are only handled in the per-item dialog (P8/P9).
   2. Compare new place vs stored `placeAPI`: compute **fields updatable** (any `FIELD_KEYS` value differs) and **closed count** (businessStatus closed).
   3. Render **report**: "X fields can have its data updated, Y places are no longer operational".
 - **Done when:** report renders from mock data with correct counts.
@@ -238,6 +245,7 @@ public/assets/ts/
 - **Files:** this planning doc (§3) + optionally `docs/ai-analysis/` follow-up; no runtime code.
 - **Steps:** Finalize the 3 routes' request/response JSON, `businessStatus` handling, photo reference format, and the auth/uid/lang contract so the Cloudflare worker can be implemented to match.
 - **Done when:** a backend dev can implement the worker without asking the frontend team.
+- **✅ Done (2026-08-08):** created `docs/ai-analysis/7-places-api-backend-contract.md` with the finalized contract (§4 data model, §5 field masks, §6 auth/uid/lang, §7 field mapping, §8 businessStatus, §9 photo refs, §10 errors, §11 worker checklist); §3 above now links to it.
 
 ---
 
@@ -296,13 +304,13 @@ flowchart TD
 
 ## 7. Open Questions (confirm before/while executing)
 
-1. **Bulk button placement:** "main page" = the **edit destination page** toolbar (assumed) or the **destination viewer page** (`public/destination.html`)? (Affects P10 file set.)
+1. **Bulk button placement:** "main page" = the **edit destination page** toolbar (assumed) or the **destination viewer page** (`public/destination.html`)? Edit destination page! (Affects P10 file set.)
 2. **"Auto-filled" rule (bulk, replace-auto-only):** proposal = `entry[field] === oldPlaceAPI[field]` (unchanged since last import). For entries with **no** stored `placeAPI`, treat empty fields as auto-fillable and non-empty as user-edited? Confirm.
 3. **`[Closed]` representation:** store a `placeAPI.closed: boolean` (proposal) and render `[Closed] ` prefix in titles (`getDestinationTitle` on the viewer + edit title-text). Confirm the flag name and whether it must survive a "replace everything" run.
-4. **Permission gating:** show the buttons only for `canUsePlacesAPI` holders (proposal), or for all users (backend would reject invalid ones anyway)? 
+4. **Permission gating:** show the buttons only for `canUsePlacesAPI` holders (proposal), or for all users (backend would reject invalid ones anyway)? only users with the permission
 5. **Route contract details:** param names (`q`/`uid`/`lang`), HTTP method (GET proposed), response envelope — to match the real Cloudflare worker.
 6. **Description merge:** only the requested language key is written on apply (proposal); confirm we preserve the other language.
-7. **Photos:** replace the entry's `images` with the 3 imported ones, or merge/append? Confirm. (Proposal: replace with the 3 when import is chosen.)
+7. **Photos:** replace the entry's `images` with the 3 imported ones, or merge/append? Confirm. (Proposal: replace with the 3 when import is chosen. **Per-item dialog only** — the bulk "Update with Maps" flow does not fetch photos at all.)
 8. **Closed definition:** count only `CLOSED_PERMANENTLY`, or also `CLOSED_TEMPORARILY`? (Proposal: permanent only.)
 9. **Persistence timing (P9/P12):** immediate dot-path `update()` on confirm (proposal), or stage into the page's existing Save flow (`buildDestinationObject`)? Confirm to match the save UX.
 10. **Dialog reload semantics:** when opening the dialog for an entry that already has `placeAPI.id`, jump straight to **Step 2 (details)** (proposal) instead of Step 1 search.

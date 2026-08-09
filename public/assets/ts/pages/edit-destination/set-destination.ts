@@ -83,6 +83,18 @@ function buildDestinationCategoryObject(category) {
 				? priceSelect.value
 				: getID(`${category}-other-price-${j}`).value;
 
+		// Preserve the normalized Places API data (migration 17 / Places dialog
+		// apply) — the form has no field for `placeAPI`, so without this a Save
+		// would wipe it. Existing entries keep the loaded (possibly just-applied)
+		// placeAPI; brand-new entries pick up the one staged by the Places dialog
+		// via refreshPendingData (see places/places-apply-flow.ts).
+		const placeAPI =
+			FIRESTORE_DESTINATIONS_DATA?.[category]?.[id]?.placeAPI ??
+			FIRESTORE_DESTINATIONS_NEW_DATA?.[category]?.[id]?.placeAPI;
+		if (placeAPI) {
+			item.placeAPI = placeAPI;
+		}
+
 		result[id] = item;
 	}
 

@@ -870,5 +870,81 @@
 		"trip_destinations": "Trip Destinations",
 		"view_trip": "View Trip",
 		"edit_trip": "Edit Trip"
+	},
+	"placesApi": {
+		"fetchInfo": "Fetch Info With Maps",
+		"updateWithMaps": "Update with Maps",
+		"dialog": {
+			"title": "Places"
+		},
+		"noPermission": "You don't have permission to use the Places API",
+		"search": {
+			"title": "Search",
+			"placeholder": "Search for a place...",
+			"button": "Search",
+			"noResults": "No results found",
+			"error": "An error occurred while searching. Please try again"
+		},
+		"details": {
+			"updateLabel": "Update with this info",
+			"back": "Back",
+			"continue": "Continue",
+			"error": "An error occurred while loading the place information. Please try again"
+		},
+		"photos": {
+			"import": "Import photos",
+			"canImport": "Photos can be imported",
+			"none": "No photos available to import"
+		},
+		"closed": {
+			"title": "Place no longer operational",
+			"message": "This place appears to be no longer operational",
+			"option": {
+				"delete": "Delete item",
+				"ignore": "Ignore",
+				"label": "Add [Closed] label"
+			},
+			"label": "[Closed]"
+		},
+		"loading": {
+			"search": "Searching...",
+			"fetching": "Fetching place information...",
+			"importing": "Importing photos...",
+			"applying": "Applying place information..."
+		},
+		"apply": {
+			"title": "Apply information",
+			"confirm": "Apply",
+			"fields": "{{count}} field(s) will be updated",
+			"photos": "{{count}} photo(s) will be imported",
+			"closedLabel": "A [Closed] label will be added to the title",
+			"deleteItem": "This item will be deleted",
+			"success": "Place information applied successfully",
+			"error": "An error occurred while applying the place information"
+		},
+		"bulk": {
+			"confirm": "Try to get information from {{count}} linked item(s)?",
+			"report": {
+				"fields": "{{count}} field(s) can have its data updated",
+				"closed": "{{count}} place(s) are no longer operational"
+			},
+			"options": {
+				"fields": {
+					"title": "Fields",
+					"all": "Replace everything with the new data",
+					"auto": "Replace only the auto-filled fields"
+				},
+				"closed": {
+					"title": "Closed places",
+					"delete": "Auto-delete closed items",
+					"label": "Add [Closed] label to closed items"
+				}
+			},
+			"success": "The places were updated successfully"
+		},
+		"errors": {
+			"network": "Network error. Please check your connection and try again",
+			"routeNotConfigured": "The Places API route is not configured yet"
+		}
 	}
 }

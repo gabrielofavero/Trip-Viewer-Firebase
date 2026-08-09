@@ -7,7 +7,7 @@ import { getUserLanguage, translate } from '../i18n/translation.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../data/state.js';
 import { FILTER_SORT_KEYS_ORDER } from '../pages/destination/support/sort-and-filter/sort-and-filter.js';
 import { getPriceBuckets } from '../pages/destination/support/sort-and-filter/support/price-bucket.js';
-import type { PlaceItem } from './new-schema.js';
+import type { PlaceItem } from './schema.js';
 
 // ======= Destination Value Formatting =======
 

@@ -1,0 +1,293 @@
+// ======= Places API (New) — Service Layer =======
+// Wraps the Google Places API (New) Cloudflare routes.
+// The backend routes are NOT built yet: while PLACES_API_MOCK is true the
+// service returns fixture data so every downstream feature is buildable and
+// demoable. When the worker ships, set PLACES_API_MOCK = false and point
+// PLACES_API_BASE_URL at the real endpoint — nothing else needs to change.
+//
+// Every request sends the Firebase ID token (`Authorization: Bearer <token>`)
+// plus `lang` and `photos`; Cloudflare derives the `uid` from the verified
+// token (see docs/ai-analysis/7-places-api-backend-contract.md §6.1). The
+// client never sends `uid` — a raw uid is spoofable, the token is not.
+// Every function throws a friendly, translatable Error on failure; callers
+// should surface it via displayError() from utils/messages.ts.
+//
+// References:
+// - docs/ai-analysis/6-places-api-edit-destination.md (§3, P1)
+// - docs/ai-analysis/7-places-api-backend-contract.md (worker contract)
+// - models/places-api.model.ts (types + response envelopes)
+
+import { getLanguagePackName, translate } from '../../i18n/translation.js';
+import type {
+	PlaceDetails,
+	PlaceDetailsResponse,
+	PlacePhoto,
+	PlacePhotosResponse,
+	PlaceSearchResponse,
+	PlaceSearchResult,
+} from '../../models/places-api.model.js';
+import { getFirebaseIdToken } from '../firebase/auth.js';
+
+/** Real Cloudflare base URL — TODO: replace with the real endpoint when the worker ships. */
+export const PLACES_API_BASE_URL = 'https://PLACEHOLDER.api.tripviewer.dev';
+/** Mock mode — TODO: set false once the Cloudflare routes are live. */
+export const PLACES_API_MOCK = true;
+
+/** Options shared by every Places API call. */
+export interface PlacesApiOptions {
+	/**
+	 * Include photo references in the response. `true` when building a NEW place
+	 * (no place id yet — e.g. search); `false` when refreshing an existing place
+	 * (e.g. bulk update). Defaults to `true`.
+	 */
+	photos?: boolean;
+	/** Language pack name ('en' | 'pt'). */
+	lang?: string;
+	/** AbortSignal so callers can cancel in-flight requests (e.g. dialog close). */
+	signal?: AbortSignal;
+}
+
+/**
+ * Resolve lang + Firebase ID token defaults when the caller didn't provide them.
+ * lang comes from the active language pack; the token comes from
+ * getFirebaseIdToken() and is sent as `Authorization: Bearer <token>`. The
+ * token fetch is best-effort (mock mode / unauthenticated → empty string).
+ */
+async function resolveOptions(
+	options: PlacesApiOptions = {},
+): Promise<{ lang: string; token: string }> {
+	const lang = options.lang ?? getLanguagePackName();
+	let token = '';
+	try {
+		token = await getFirebaseIdToken();
+	} catch {
+		// Unauthenticated (or mock): no token. In production the worker returns 401.
+	}
+	return { lang, token };
+}
+
+/** Resolve the `photos` flag (default `true` — new-place fetch, no id yet). */
+function resolvePhotos(options: PlacesApiOptions = {}): boolean {
+	return options.photos ?? true;
+}
+
+/** Build a GET URL with query params, skipping empty values. */
+function buildUrl(basePath: string, params: Record<string, string>): string {
+	const searchParams = new URLSearchParams();
+	for (const [key, value] of Object.entries(params)) {
+		if (value !== undefined && value !== null && value !== '') {
+			searchParams.set(key, value);
+		}
+	}
+	const query = searchParams.toString();
+	return query ? `${basePath}?${query}` : basePath;
+}
+
+/** Throw AbortError if the caller cancelled the request. */
+function throwIfAborted(signal?: AbortSignal): void {
+	if (signal?.aborted) {
+		throw new DOMException('The operation was aborted.', 'AbortError');
+	}
+}
+
+/** Guard against shipping with the placeholder URL (no backend yet). */
+function assertConfigured(): void {
+	if (PLACES_API_MOCK) return;
+	if (!PLACES_API_BASE_URL || PLACES_API_BASE_URL.includes('PLACEHOLDER')) {
+		throw new Error(translate('placesApi.errors.routeNotConfigured'));
+	}
+}
+
+/** Shared fetch wrapper: returns typed JSON or throws a friendly error. */
+async function request<T>(url: string, token: string, signal?: AbortSignal): Promise<T> {
+	let response: Response;
+	try {
+		const headers = new Headers();
+		if (token) headers.set('Authorization', `Bearer ${token}`);
+		response = await fetch(url, { signal, headers });
+	} catch (error) {
+		// Let callers handle cancellation themselves (e.g. dialog close button).
+		if ((error as Error)?.name === 'AbortError') throw error;
+		throw new Error(translate('placesApi.errors.network'));
+	}
+	if (!response.ok) {
+		throw new Error(`${translate('placesApi.errors.network')} (${response.status})`);
+	}
+	try {
+		return (await response.json()) as T;
+	} catch {
+		throw new Error(translate('placesApi.errors.network'));
+	}
+}
+
+/**
+ * Route 1 — name search. Returns up to 5 results with all needed data.
+ * @param query Free-text name to search for.
+ */
+export async function searchPlaces(
+	query: string,
+	options: PlacesApiOptions = {},
+): Promise<PlaceSearchResult[]> {
+	const { lang, token } = await resolveOptions(options);
+	const photos = resolvePhotos(options); // new place — no id yet → photos on
+
+	if (PLACES_API_MOCK) {
+		throwIfAborted(options.signal);
+		return mockSearch(query);
+	}
+
+	assertConfigured();
+	const params: Record<string, string> = {
+		q: query,
+		lang,
+		photos: photos ? 'true' : 'false',
+	};
+	const url = buildUrl(`${PLACES_API_BASE_URL}/places/search`, params);
+	const data = await request<PlaceSearchResponse>(url, token, options.signal);
+	return data.results ?? [];
+}
+
+/**
+ * Route 2 — full place info by Google Place ID.
+ * @param id Google Place ID.
+ */
+export async function getPlace(id: string, options: PlacesApiOptions = {}): Promise<PlaceDetails> {
+	const { lang, token } = await resolveOptions(options);
+	const photos = resolvePhotos(options); // false on refresh (e.g. bulk); true when building a new place
+
+	if (PLACES_API_MOCK) {
+		throwIfAborted(options.signal);
+		return mockGetPlace(id);
+	}
+
+	assertConfigured();
+	const params: Record<string, string> = { lang, photos: photos ? 'true' : 'false' };
+	const url = buildUrl(`${PLACES_API_BASE_URL}/places/${encodeURIComponent(id)}`, params);
+	const data = await request<PlaceDetailsResponse>(url, token, options.signal);
+	return data.place;
+}
+
+/**
+ * Route 3 — direct URLs for the place's photos (first 3).
+ * @param id Google Place ID.
+ */
+export async function getPlacePhotos(
+	id: string,
+	options: PlacesApiOptions = {},
+): Promise<PlacePhoto[]> {
+	const { lang, token } = await resolveOptions(options);
+
+	if (PLACES_API_MOCK) {
+		throwIfAborted(options.signal);
+		return mockGetPhotos(id);
+	}
+
+	assertConfigured();
+	// Route 3 is the dedicated photos route — it always returns photo URLs,
+	// so the `photos` flag does not apply here.
+	const params: Record<string, string> = { lang };
+	const url = buildUrl(`${PLACES_API_BASE_URL}/places/${encodeURIComponent(id)}/photos`, params);
+	const data = await request<PlacePhotosResponse>(url, token, options.signal);
+	return data.photos ?? [];
+}
+
+// ============================================================
+// MOCK fixtures (used while PLACES_API_MOCK === true)
+// ============================================================
+// A few fake places so every downstream prompt is testable without a backend.
+// Includes one CLOSED_PERMANENTLY place and several photo references.
+
+const MOCK_PLACES: PlaceSearchResult[] = [
+	{
+		id: 'mock-place-pizzeria',
+		name: 'Pizzeria Bella Napoli',
+		description: 'Authentic Neapolitan wood-fired pizza in the historic center.',
+		region: 'Historic Center',
+		website: 'https://example.com/bella-napoli',
+		instagram: 'bellanapoli.pizza',
+		rating: '4',
+		price: '$$',
+		emoji: '🍕',
+		map: 'https://maps.google.com/?q=Pizzeria+Bella+Napoli',
+		businessStatus: 'OPERATIONAL',
+		photos: [
+			{ name: 'mock-photo-pizzeria-1' },
+			{ name: 'mock-photo-pizzeria-2' },
+			{ name: 'mock-photo-pizzeria-3' },
+		],
+	},
+	{
+		id: 'mock-place-museum',
+		name: 'Museum of Modern Art',
+		description: 'Contemporary art exhibitions and a rooftop café.',
+		region: 'Downtown',
+		website: 'https://example.com/museum',
+		instagram: 'museum.modern',
+		rating: '5',
+		price: '$$$',
+		emoji: '🖼️',
+		map: 'https://maps.google.com/?q=Museum+of+Modern+Art',
+		businessStatus: 'OPERATIONAL',
+		photos: [{ name: 'mock-photo-museum-1' }, { name: 'mock-photo-museum-2' }],
+	},
+	{
+		id: 'mock-place-coffee',
+		name: 'Corner Coffee',
+		description: 'Specialty coffee and homemade pastries.',
+		region: 'Riverside',
+		website: 'https://example.com/corner-coffee',
+		instagram: 'cornercoffee',
+		rating: '4',
+		price: '$',
+		emoji: '☕',
+		map: 'https://maps.google.com/?q=Corner+Coffee',
+		businessStatus: 'OPERATIONAL',
+	},
+	{
+		id: 'mock-place-gelato',
+		name: 'Gelato & Co',
+		description: 'Handcrafted gelato with seasonal flavors.',
+		region: 'Beachfront',
+		rating: '3',
+		price: '$',
+		emoji: '🍦',
+		map: 'https://maps.google.com/?q=Gelato+and+Co',
+		businessStatus: 'OPERATIONAL',
+	},
+	{
+		id: 'mock-place-closed',
+		name: 'Old Nightclub',
+		description: 'Former live-music venue.',
+		region: 'Industrial District',
+		rating: '-',
+		price: '$$',
+		emoji: '🎸',
+		map: 'https://maps.google.com/?q=Old+Nightclub',
+		businessStatus: 'CLOSED_PERMANENTLY',
+		photos: [{ name: 'mock-photo-closed-1' }],
+	},
+];
+
+function mockSearch(query: string): PlaceSearchResult[] {
+	const q = query.trim().toLowerCase();
+	// Blank query returns everything so the demo always has results to show.
+	if (!q) return [...MOCK_PLACES].slice(0, 5);
+	return MOCK_PLACES.filter((place) => place.name.toLowerCase().includes(q)).slice(0, 5);
+}
+
+function mockGetPlace(id: string): PlaceDetails {
+	const place = MOCK_PLACES.find((p) => p.id === id);
+	if (!place) {
+		throw new Error(translate('placesApi.errors.notFound'));
+	}
+	return { ...place };
+}
+
+function mockGetPhotos(id: string): PlacePhoto[] {
+	const place = MOCK_PLACES.find((p) => p.id === id);
+	if (!place) return [];
+	return (place.photos ?? []).map((photo) => ({
+		name: photo.name,
+		url: `https://picsum.photos/seed/${encodeURIComponent(photo.name)}/600/400`,
+	}));
+}
