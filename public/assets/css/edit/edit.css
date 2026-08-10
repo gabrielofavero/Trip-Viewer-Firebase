@@ -1309,27 +1309,11 @@
 .places-fetch-wrapper {
 	display: flex;
 	justify-content: flex-end;
-	margin: 0 0 12px;
+	margin: 12px 0;
 }
 
-.places-fetch-button {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	flex-shrink: 0;
-	font-weight: 600;
-	line-height: 1;
-	white-space: nowrap;
-}
-
-.places-fetch-button .iconify {
-	font-size: 16px;
-}
-
-@media (max-width: 575px) {
-	.places-fetch-button .places-fetch-label {
-		display: none;
-	}
+.accordion-body .places-fetch-wrapper {
+	margin-top: 0;
 }
 
 /*--------------------------------------------------------------
@@ -2643,13 +2627,20 @@ fieldset.modern-radio-group {
 	text-align: left;
 }
 
-/* Header row: back button (left) + close X (right) */
+/* Header row: back button (left); the close X lives in the shared icon box
+   above the title (see .message-text-container > .icon-container in modal.css) */
 .places-dialog-header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	gap: 8px;
 	margin-bottom: 14px;
+}
+
+/* Center the dialog title — .input-container is left-aligned by default, but
+   these dialogs should match the standard message modal (X above, title centered). */
+.places-dialog-container .message-title {
+	text-align: center;
 }
 
 .places-dialog-back {
@@ -2670,20 +2661,6 @@ fieldset.modern-radio-group {
 
 .places-dialog-back:hover {
 	background: var(--bg-tertiary);
-}
-
-.places-dialog-close {
-	font-size: 28px;
-	color: var(--text-secondary);
-	cursor: pointer;
-	/* Always keep the close X at the top-right, even while the back button is
-	   hidden — justify-content: space-between alone would push it to the left. */
-	margin-left: auto;
-	transition: color var(--transition-fast, 0.2s);
-}
-
-.places-dialog-close:hover {
-	color: var(--text-primary);
 }
 
 /* Step body — scrolls internally when the content is tall */
@@ -3382,25 +3359,6 @@ fieldset.modern-radio-group {
 	position: relative;
 	text-align: left;
 	min-height: 200px;
-}
-
-/* Header row: close X (top-right, mirrors .places-dialog-header) */
-.places-bulk-header {
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	margin-bottom: 6px;
-}
-
-.places-bulk-close {
-	font-size: 26px;
-	color: var(--text-secondary);
-	cursor: pointer;
-	transition: color var(--transition-fast, 0.2s);
-}
-
-.places-bulk-close:hover {
-	color: var(--text-primary);
 }
 
 /* Report body — scrolls internally when the content is tall */

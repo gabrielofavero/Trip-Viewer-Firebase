@@ -223,6 +223,8 @@ curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateUserProfile"
 Prepares the database for the Places API integration (epic E045) with two independent, idempotent operations:
 
 1. **`canUsePlacesAPI` permission:** creates `admin/permissions/canUsePlacesAPI/{uid}` docs for each UID passed in the **request body** (`{ "uids": [...] }`) — existence = granted. Accepts an array of UIDs, a comma-separated string, or the `?uids=` query param. If no UIDs are provided, this step is skipped entirely.
+
+   **Single-user convenience:** POST `{ "uid": "..." }` (or `?uid=`) instead creates the permission **and adds the user** — pushes the UID into `admin/admin.admins` (idempotent `arrayUnion`) and creates `users/{uid}` if missing (profile fields pulled from Auth when available).
 2. **`placeAPI` object:** adds a `placeAPI` object to every destination entry (restaurants, snacks, nightlife, tourism, shopping) that lacks it, using dot-path `update()` so only the missing nested field is written. The object is a subset of `scripts/export-maps-data/export-maps-data.py` output (the app's destination format): `{ region, name, website, rating, price, description, emoji, map, updatedAt, instagram, id }` — omits the app-managed `media`/`isNew` and uses `updatedAt` instead of the script's `createdAt`. Also removes any legacy `placeID` string field. Idempotency check: skips entries that already carry a `placeAPI` object.
 
 ### Run it:
@@ -239,6 +241,11 @@ curl -X POST "http://localhost:5001/trip-viewer-dev/us-central1/migratePlacesApi
 curl -X POST "http://localhost:5001/trip-viewer-dev/us-central1/migratePlacesApi" \
   -H "Content-Type: application/json" \
   -d '{"uids": "uid1,uid2"}'
+
+# Single-user grant: permission + add the user (admin/admin.admins + users/{uid})
+curl -X POST "http://localhost:5001/trip-viewer-dev/us-central1/migratePlacesApi" \
+  -H "Content-Type: application/json" \
+  -d '{"uid": "gVrXZ68LVac9Ot02slN6zqD3sP3X"}'
 ```
 
 ---

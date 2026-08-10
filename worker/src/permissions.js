@@ -13,10 +13,14 @@
  * direct Firestore check can replace it later without touching callers.
  */
 
-// Starter allowlist committed for local/dev convenience.
-// Replace with the Firestore permission check later.
-// `eySHdjIyK0MNAgiPU77xE0d1CTjp` = the local dev admin (Auth emulator).
-const FALLBACK_ALLOWED_UIDS = new Set(['eySHdjIyK0MNAgiPU77xE0d1CTjp']);
+// Allowlist committed for deploy. This is what the deployed worker uses when
+// `ALLOWED_UIDS_JSON` is not set — REAL (production) users only. Local/dev
+// users live in `.dev.vars` `ALLOWED_UIDS_JSON` instead (see worker README
+// "Granting a user access"). Replace with the Firestore permission check later.
+const FALLBACK_ALLOWED_UIDS = new Set([
+	'9fEm1PhkusNpfTLi37A9xpInZjf1',
+	'SihZPW7xcEek6DNOnHSbfQSD5Ru2',
+]);
 
 /**
  * Resolve the set of allowed UIDs: env `ALLOWED_UIDS_JSON` (a JSON array of

@@ -94,7 +94,7 @@ function parseHost(origin) {
  * in v1; see docs/ai-analysis/8 §Deviation).
  *
  * @param {Record<string, string|undefined>} env - The worker `env` bindings.
- * @returns {{placesApiKey: string, placesPhotosApiKey: string, allowedUidsJson: string, emulatorHost: string, isMock: boolean, budgets: {main: number, photos: number}, quotaDegradeRatio: number}}
+ * @returns {{placesApiKey: string, placesPhotosApiKey: string, allowedUidsJson: string, emulatorHost: string, isMock: boolean, photosEnabled: boolean, budgets: {main: number, photos: number}, quotaDegradeRatio: number}}
  */
 export function readEnv(env) {
 	const isMock = Boolean(env?.PLACES_API_MOCK);
@@ -102,6 +102,16 @@ export function readEnv(env) {
 	const placesPhotosApiKey = env?.PLACES_PHOTOS_API_KEY ?? '';
 	const allowedUidsJson = env?.ALLOWED_UIDS_JSON ?? '';
 	const emulatorHost = env?.FIREBASE_AUTH_EMULATOR_HOST ?? '127.0.0.1:9099';
+
+	// PHOTOS MASTER SWITCH — `PLACES_PHOTOS_ENABLED=false` disables ALL photo
+	// API usage (routes 1/2 never request photos, route 3 returns `[]`), so the
+	// paid photos key is never called regardless of budget. Default `true`.
+	// Easiest toggle: a plain variable in the Cloudflare dashboard (no
+	// redeploy) or one line in `.dev.vars`. Effectively forces the same state
+	// as `PLACES_PHOTOS_BUDGET=0`, but explicit and dashboard-editable.
+	const photosEnabled = !['false', '0', 'no'].includes(
+		String(env?.PLACES_PHOTOS_ENABLED ?? '').trim().toLowerCase(),
+	);
 
 	// Monthly call budgets per key. `0` DISABLES that key (never called); a
 	// positive number is a monthly call cap (degraded at 90%, hard-blocked at
@@ -141,6 +151,7 @@ export function readEnv(env) {
 		allowedUidsJson,
 		emulatorHost,
 		isMock,
+		photosEnabled,
 		budgets,
 		quotaDegradeRatio,
 	};

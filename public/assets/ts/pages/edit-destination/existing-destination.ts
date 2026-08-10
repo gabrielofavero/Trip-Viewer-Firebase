@@ -14,6 +14,7 @@ import { addShopping } from './new-destination.js';
 import { addRestaurants } from './new-destination.js';
 import { addNightlife } from './new-destination.js';
 import { addTourism } from './new-destination.js';
+import { updatePlacesFetchButtonLabel } from './new-destination.js';
 
 // Existing Destination
 export function populateExistingDestinationForm() {

@@ -151,11 +151,19 @@ async function route(request, url, env, corsHeaders, origin) {
  *   places/quota-exceeded).
  * @param {ReturnType<typeof createQuotaTracker>} quota
  * @param {boolean} photosRequested - The raw `photos` query param.
+ * @param {boolean} photosEnabled - The `PLACES_PHOTOS_ENABLED` master switch.
  * @returns {Promise<{photos: boolean, limited: boolean}>}
  */
-async function resolveQuota(quota, photosRequested) {
+async function resolveQuota(quota, photosRequested, photosEnabled) {
 	let photos = photosRequested;
 	let limited = false;
+	if (photos && !photosEnabled) {
+		// PHOTOS MASTER SWITCH off (PLACES_PHOTOS_ENABLED=false) — never touch
+		// the paid photos key; degrade to the free main key and tag `limited`
+		// so the frontend shows "photos temporarily disabled".
+		photos = false;
+		limited = true;
+	}
 	if (photos) {
 		const state = await quota.check('photos');
 		if (!state.allowed) throw new QuotaExceededError();
@@ -210,7 +218,7 @@ async function handleSearch(url, _placeId, { config, quota }) {
 		throw new BadRequestError('places/missing-q', 'Missing required query parameter: q');
 	}
 	const lang = parseLang(url);
-	const { photos, limited } = await resolveQuota(quota, parsePhotos(url));
+	const { photos, limited } = await resolveQuota(quota, parsePhotos(url), config.photosEnabled);
 	const apiKey = apiKeyFor(config, photos);
 	const data = await searchText(q.trim(), { apiKey, lang, photos });
 	const results = (data?.places ?? []).map((place) => normalizePlace(place, { photos }));
@@ -231,7 +239,7 @@ async function handleSearch(url, _placeId, { config, quota }) {
  */
 async function handleDetails(url, placeId, { config, quota }) {
 	const lang = parseLang(url);
-	const { photos, limited } = await resolveQuota(quota, parsePhotos(url));
+	const { photos, limited } = await resolveQuota(quota, parsePhotos(url), config.photosEnabled);
 	const apiKey = apiKeyFor(config, photos);
 	const raw = await getPlace(placeId, { apiKey, lang, photos });
 	const place = normalizePlace(raw, { photos });
@@ -259,10 +267,11 @@ async function handleDetails(url, placeId, { config, quota }) {
 async function handlePhotos(url, placeId, { config, quota }) {
 	const lang = parseLang(url);
 	const state = await quota.check('photos');
-	if (state.disabled || state.limited) {
-		// Photos key disabled (budget 0) or nearly spent — no Google calls at
-		// all; tag so the frontend can show "photos temporarily disabled"
-		// without breaking the flow.
+	if (!config.photosEnabled || state.disabled || state.limited) {
+		// Photos master switch off (PLACES_PHOTOS_ENABLED=false), key disabled
+		// (budget 0), or nearly spent — no Google calls at all; tag so the
+		// frontend can show "photos temporarily disabled" without breaking
+		// the flow.
 		return { photos: [], limited: true };
 	}
 	if (!state.allowed) {

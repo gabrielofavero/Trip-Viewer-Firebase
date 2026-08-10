@@ -95,3 +95,4 @@ scripts/export-maps-data/output.json
 scripts/export-maps-data/input/*
 !scripts/export-maps-data/input/.gitkeep
 scripts/translation/results/*
+scripts/gmaps-scraper/output/*

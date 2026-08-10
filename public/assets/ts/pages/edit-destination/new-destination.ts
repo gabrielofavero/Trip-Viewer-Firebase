@@ -23,7 +23,7 @@ function getPlacesFetchButtonHTML(category: string, j: number): string {
       <div class="places-fetch-wrapper">
         <button type="button" id="${category}-places-${j}" data-action="open-places-dialog"
           data-category="${category}" data-index="${j}" data-stop-propagation
-          class="places-fetch-button btn btn-basic btn-sm" title="${label}" aria-label="${label}">
+          class="btn btn-basic btn-sm" title="${label}" aria-label="${label}">
           <i class="iconify" data-icon="${GOOGLE_MAPS_ICON}"></i>
           <span class="places-fetch-label">${label}</span>
         </button>

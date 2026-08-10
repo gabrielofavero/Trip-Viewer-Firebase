@@ -15,6 +15,13 @@ compatibility_date = "2026-08-01"
 # Google's public keys via the token `aud`/`iss` claims.
 FIREBASE_AUTH_EMULATOR_HOST = "127.0.0.1:9099"
 
+# PHOTOS MASTER SWITCH — plain variable (NOT a secret) so you can flip it in
+# the Cloudflare dashboard: Workers → trip-viewer-places-api → Settings →
+# Variables → set `PLACES_PHOTOS_ENABLED` to `false` → Save (no redeploy).
+# `false` disables ALL photo API usage — the paid photos key is never called.
+# Default `true`.
+PLACES_PHOTOS_ENABLED = "true"
+
 # Secrets — NEVER commit these values here. Set them with:
 #   wrangler secret put PLACES_API_KEY
 #   wrangler secret put PLACES_PHOTOS_API_KEY

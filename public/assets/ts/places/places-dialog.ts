@@ -101,9 +101,12 @@ export function openPlacesDialog(category: string, j: number): void {
 	// Mark the container so the CSS can widen this data-heavy dialog.
 	properties.containers.principal = `${properties.containers.principal} places-dialog-container`;
 	properties.fullscreen = true;
-	// The shell renders its own close button (which also cancels the in-flight
-	// request), so disable the default message X / Escape close.
+	// The X close button renders in the standard icon box (above the title);
+	// its action cancels the in-flight request before closing (closeDialog).
+	// closeButton stays false so Escape keeps going through closeDialog (which
+	// aborts) instead of the generic closeMessage.
 	properties.closeButton = false;
+	properties.icons = [{ type: 'close', action: closeDialog }];
 	properties.buttons = [];
 	properties.content = getDialogShellHTML();
 	displayFullMessage(properties);
@@ -275,8 +278,6 @@ function getDialogShellHTML(): string {
 				<i class="iconify" data-icon="material-symbols-light:arrow-back"></i>
 				<span>${translate('placesApi.details.back')}</span>
 			</button>
-			<i id="places-dialog-close" class="iconify places-dialog-close"
-				data-icon="material-symbols-light:close" role="button"></i>
 		</div>
 		<div id="places-dialog-step" class="places-dialog-step"></div>
 		<div id="places-dialog-loading" class="places-dialog-loading" style="display: none">
@@ -297,9 +298,7 @@ function wireDialogControls(): void {
 	dialog.addEventListener('click', (event) => {
 		const target = event.target as Element | null;
 		if (!target) return;
-		if (target.closest('#places-dialog-close')) {
-			closeDialog();
-		} else if (target.closest('#places-dialog-back')) {
+		if (target.closest('#places-dialog-back')) {
 			goBack();
 		} else if (target.closest('#places-dialog-loading-cancel')) {
 			abortCurrentRequest();

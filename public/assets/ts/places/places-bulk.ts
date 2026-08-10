@@ -344,9 +344,11 @@ function openBulkDialog(): void {
 	properties.containers = getContainersInput();
 	properties.containers.principal = `${properties.containers.principal} places-dialog-container`;
 	properties.fullscreen = true;
-	// The bulk shell renders its own close X (which also cancels the in-flight
-	// fetch), so disable the default message X / Escape close.
+	// The X close button renders in the standard icon box (above the title);
+	// its action cancels the in-flight fetch before closing (closeBulkDialog).
+	// closeButton stays false so Escape keeps going through closeBulkDialog.
 	properties.closeButton = false;
+	properties.icons = [{ type: 'close', action: closeBulkDialog }];
 	properties.buttons = [];
 	properties.content = getBulkShellHTML();
 	displayFullMessage(properties);
@@ -361,10 +363,6 @@ function openBulkDialog(): void {
 function getBulkShellHTML(): string {
 	return `
 	<div class="places-bulk" id="places-bulk">
-		<div class="places-bulk-header">
-			<i id="places-bulk-close" class="iconify places-bulk-close"
-				data-icon="material-symbols-light:close" role="button"></i>
-		</div>
 		<div id="places-bulk-content" class="places-bulk-content"></div>
 		<!-- Dialog-scoped loading overlay — reuses the P5 .places-dialog-loading
 		     spinner ring + cancel X (see edit.css). -->
@@ -394,7 +392,7 @@ function handleBulkClick(event: MouseEvent): void {
 	if (!target) return;
 	// Event delegation keeps the buttons working after Iconify replaces the
 	// close <i> icons with <svg> at runtime (same pattern as places-dialog).
-	if (target.closest('#places-bulk-close') || target.closest('#places-bulk-loading-cancel')) {
+	if (target.closest('#places-bulk-loading-cancel')) {
 		closeBulkDialog();
 	}
 }

@@ -386,6 +386,20 @@ The default budgets already do exactly this:
 - Only set a budget to `0` if you want to **disable that key entirely** —
   optional, not required for $0.
 
+**"Disable photos entirely" — the easiest switch**
+
+Set `PLACES_PHOTOS_ENABLED=false` to turn off **all** photo API usage at once:
+routes 1/2 stop requesting photos and route 3 returns `{ photos: [], limited:
+true }` — the paid photos key is never called, no matter the budget. Default is
+`true`.
+
+This is the **easiest thing to toggle** because it's a plain variable, not a
+secret: edit it in the Cloudflare dashboard (Workers → trip-viewer-places-api
+→ Settings → Variables) and hit **Save** — no redeploy, no `wrangler secret`.
+Locally it's one line in `.dev.vars` (`PLACES_PHOTOS_ENABLED=true|false`).
+Setting `PLACES_PHOTOS_BUDGET=0` is the budget-based alternative that disables
+just the photos key.
+
 To see your project's actual free caps, check **Google Cloud Console →
 Google Maps Platform → Quotas** (per-API free usage caps + current usage).
 
@@ -440,8 +454,13 @@ access; the app's real source of truth is the Firestore doc
 
 1. Create the Firestore doc `admin/permissions/canUsePlacesAPI/{uid}` (frontend
    `getPermissions()` reads this — auth alone is not enough).
-2. Add the UID to `ALLOWED_UIDS_JSON` (deployed) — or rely on the committed
-   starter allowlist in `src/permissions.js` locally.
+2. Add the UID to the worker allowlist:
+   - **Deployed** — set the `ALLOWED_UIDS_JSON` secret to the real users
+     (`wrangler secret put ALLOWED_UIDS_JSON` → `["<realUid1>","<realUid2>"]`).
+   - **Local** — the committed fallback allowlist in `src/permissions.js`
+     holds ONLY real (production) users; add your local/dev UID to
+     `.dev.vars` `ALLOWED_UIDS_JSON` instead (it overrides the fallback
+     locally).
 
 Few users hold this permission, so the duplication is acceptable for v1.
 `isUidAllowed` stays thin so a direct Firestore check can replace it later

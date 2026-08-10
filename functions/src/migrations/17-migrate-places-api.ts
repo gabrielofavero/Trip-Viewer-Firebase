@@ -7,11 +7,15 @@ import { FieldValue } from 'firebase-admin/firestore';
 //
 // Two independent, idempotent operations:
 //
-//   1. canUsePlacesAPI permission → admin/permissions/canUsePlacesAPI/{uid}
-//      Grants the new Places API permission to the UIDs passed in the
-//      request body:  { "uids": ["uid1", "uid2"] }
-//      (also accepts a comma-separated string or the ?uids= query param).
-//      If no UIDs are provided, this step is skipped entirely.
+//   1a. Single-user grant (convenience) — POST { "uid": "..." } (or ?uid=)
+//       Creates admin/permissions/canUsePlacesAPI/{uid}, adds the UID to
+//       admin/admin.admins (arrayUnion), and creates users/{uid} if missing.
+//
+//   1b. canUsePlacesAPI permission → admin/permissions/canUsePlacesAPI/{uid}
+//       Grants the new Places API permission to the UIDs passed in the
+//       request body:  { "uids": ["uid1", "uid2"] }
+//       (also accepts a comma-separated string or the ?uids= query param).
+//       If neither `uid` nor `uids` are provided, this step is skipped.
 //
 //   2. placeAPI object → every destination entry
 //      Adds a `placeAPI` object to every destination entry (restaurants,
@@ -54,6 +58,11 @@ interface PlacesApiReport {
 	permissionsRequested: number;
 	permissionsGranted: number;
 	permissionsAlreadyExist: number;
+	// single-user "add user" flow
+	usersCreated: number;
+	usersAlreadyExist: number;
+	adminsAdded: number;
+	adminsAlreadyPresent: number;
 	// placeAPI backfill
 	destinationsScanned: number;
 	entriesScanned: number;
@@ -121,6 +130,81 @@ function parseUids(value: unknown): string[] {
 	return [];
 }
 
+/**
+ * Single-user convenience (POST { "uid": "..." } / ?uid=): grants
+ * canUsePlacesAPI, adds the UID to admin/admin.admins (arrayUnion, idempotent),
+ * and creates users/{uid} if missing. Safe to re-run.
+ */
+async function grantUser(
+	db: FirebaseFirestore.Firestore,
+	dryRun: boolean,
+	report: PlacesApiReport,
+	uid: string,
+) {
+	// 1) canUsePlacesAPI permission doc
+	report.permissionsRequested++;
+	const permDocRef = db
+		.collection('admin')
+		.doc('permissions')
+		.collection(PERMISSION_TYPE)
+		.doc(uid);
+	const permSnap = await permDocRef.get();
+	if (permSnap.exists) {
+		report.permissionsAlreadyExist++;
+		console.log(`  admin/permissions/${PERMISSION_TYPE}/${uid}: already exists, skipping.`);
+	} else if (!dryRun) {
+		report.permissionsGranted++;
+		await permDocRef.set({ _created: FieldValue.serverTimestamp() });
+		console.log(`  Created admin/permissions/${PERMISSION_TYPE}/${uid}`);
+	} else {
+		report.permissionsGranted++;
+		console.log(`  [DRY RUN] Would create admin/permissions/${PERMISSION_TYPE}/${uid}`);
+	}
+
+	// 2) add to admin/admin.admins (idempotent arrayUnion)
+	const adminDocRef = db.collection('admin').doc('admin');
+	const adminSnap = await adminDocRef.get();
+	const adminsData = adminSnap.data()?.admins;
+	const admins: string[] = Array.isArray(adminsData) ? (adminsData as string[]) : [];
+	if (admins.includes(uid)) {
+		report.adminsAlreadyPresent++;
+		console.log(`  admin/admin.admins: ${uid} already present, skipping.`);
+	} else if (!dryRun) {
+		report.adminsAdded++;
+		await adminDocRef.set({ admins: FieldValue.arrayUnion(uid) }, { merge: true });
+		console.log(`  admin/admin.admins: added ${uid}`);
+	} else {
+		report.adminsAdded++;
+		console.log(`  [DRY RUN] Would add ${uid} to admin/admin.admins`);
+	}
+
+	// 3) users/{uid} doc if missing (profile from Auth when available)
+	const userDocRef = db.collection('users').doc(uid);
+	const userSnap = await userDocRef.get();
+	if (userSnap.exists) {
+		report.usersAlreadyExist++;
+		console.log(`  users/${uid}: already exists, skipping.`);
+	} else if (!dryRun) {
+		report.usersCreated++;
+		let name = '';
+		let email = '';
+		let photoURL = '';
+		try {
+			const rec = await admin.auth().getUser(uid);
+			name = rec.displayName || '';
+			email = rec.email || '';
+			photoURL = rec.photoURL || '';
+		} catch (err) {
+			console.warn(`  Could not fetch auth user "${uid}": ${(err as Error).message}`);
+		}
+		await userDocRef.set({ name, email, photoURL, destinations: [], trips: [], listings: [] });
+		console.log(`  users/${uid}: created.`);
+	} else {
+		report.usersCreated++;
+		console.log(`  [DRY RUN] Would create users/${uid}`);
+	}
+}
+
 // ============================================================
 // MAIN MIGRATION FUNCTION
 // ============================================================
@@ -129,16 +213,28 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 	const dryRun = req.query.dryRun === 'true';
 	// UIDs to pre-grant the permission to (optional — from body or query).
 	const uids = parseUids(req.body?.uids ?? req.query?.uids);
+	// Single-user convenience: POST { "uid": "..." } (or ?uid=) creates the
+	// permission AND adds the user (admin/admin.admins + users/{uid}).
+	const singleUid =
+		typeof (req.body?.uid ?? req.query?.uid) === 'string'
+			? String(req.body?.uid ?? req.query?.uid).trim()
+			: '';
 
 	console.log(
 		`[migration-17] Starting Places API prep${dryRun ? ' (DRY RUN)' : ''}... ` +
-			`${uids.length} uid(s) requested for canUsePlacesAPI.`,
+			(singleUid
+				? `Single-user grant requested for uid ${singleUid}.`
+				: `${uids.length} uid(s) requested for canUsePlacesAPI.`),
 	);
 
 	const report: PlacesApiReport = {
 		permissionsRequested: 0,
 		permissionsGranted: 0,
 		permissionsAlreadyExist: 0,
+		usersCreated: 0,
+		usersAlreadyExist: 0,
+		adminsAdded: 0,
+		adminsAlreadyPresent: 0,
 		destinationsScanned: 0,
 		entriesScanned: 0,
 		entriesUpdated: 0,
@@ -150,9 +246,16 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 		const db = admin.firestore();
 
 		// -----------------------------------------------------------
-		// Step 1: Grant canUsePlacesAPI to the requested UIDs
+		// Step 1: Grant canUsePlacesAPI (and add the user) for requested UIDs
+		//   - single `uid` (POST { "uid": "..." } / ?uid=) → permission + add user
+		//   - `uids` list (POST { "uids": [...] } / ?uids=) → permission only
 		// -----------------------------------------------------------
-		if (uids.length > 0) {
+		if (singleUid) {
+			console.log(
+				`[migration-17] Step 1: Granting ${PERMISSION_TYPE} to ${singleUid} and adding the user...`,
+			);
+			await grantUser(db, dryRun, report, singleUid);
+		} else if (uids.length > 0) {
 			console.log(`[migration-17] Step 1: Granting ${PERMISSION_TYPE} permission...`);
 			const permBatch = new BatchManager();
 
@@ -186,8 +289,9 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 			}
 		} else {
 			console.log(
-				`[migration-17] Step 1 skipped — no UIDs provided. ` +
-					`Pass { "uids": ["..."] } in the request body to pre-grant ${PERMISSION_TYPE}.`,
+				`[migration-17] Step 1 skipped — no uid/uids provided. ` +
+					`Pass { "uid": "..." } to also add the user, or { "uids": ["..."] } ` +
+					`to pre-grant ${PERMISSION_TYPE}.`,
 			);
 		}
 
@@ -197,11 +301,11 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 		await addPlaceAPIField(db, dryRun, report);
 
 		console.log('[migration-17] Done.', JSON.stringify(report, null, 2));
-		res.status(200).json({ success: true, dryRun, uids, report });
+		res.status(200).json({ success: true, dryRun, uid: singleUid || undefined, uids, report });
 	} catch (err: any) {
 		console.error('[migration-17] Fatal error:', err);
 		report.errors.push(err.message || String(err));
-		res.status(500).json({ success: false, dryRun, uids, report });
+		res.status(500).json({ success: false, dryRun, uid: singleUid || undefined, uids, report });
 	}
 });
 
