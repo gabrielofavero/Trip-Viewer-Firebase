@@ -880,7 +880,8 @@
 			"placeholder": "Busque um lugar...",
 			"button": "Buscar",
 			"noResults": "Nenhum resultado encontrado",
-			"error": "Ocorreu um erro ao buscar. Tente novamente"
+			"error": "Ocorreu um erro ao buscar. Tente novamente",
+			"includePhotos": "Incluir fotos"
 		},
 		"details": {
 			"updateLabel": "Atualizar com estas informações",
@@ -888,6 +889,14 @@
 			"back": "Voltar",
 			"continue": "Continuar",
 			"error": "Ocorreu um erro ao carregar as informações do lugar. Tente novamente"
+		},
+		"linked": {
+			"title": "Este lugar já está vinculado",
+			"message": "Você pode atualizar as informações do lugar vinculado ou vincular esta entrada a outro lugar.",
+			"update": "Atualizar este lugar",
+			"updateHint": "Atualizar as informações do lugar vinculado",
+			"search": "Encontrar outro lugar",
+			"searchHint": "Buscar outro lugar no Google"
 		},
 		"photos": {
 			"import": "Importar fotos",

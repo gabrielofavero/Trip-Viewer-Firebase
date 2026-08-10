@@ -883,7 +883,8 @@
 			"placeholder": "Search for a place...",
 			"button": "Search",
 			"noResults": "No results found",
-			"error": "An error occurred while searching. Please try again"
+			"error": "An error occurred while searching. Please try again",
+			"includePhotos": "Include photos"
 		},
 		"details": {
 			"updateLabel": "Update with this info",
@@ -891,6 +892,14 @@
 			"back": "Back",
 			"continue": "Continue",
 			"error": "An error occurred while loading the place information. Please try again"
+		},
+		"linked": {
+			"title": "This place is already linked",
+			"message": "You can refresh the linked place's info, or map this entry to a different place.",
+			"update": "Update this place",
+			"updateHint": "Refresh the linked place's info",
+			"search": "Find a different place",
+			"searchHint": "Search Google for another place"
 		},
 		"photos": {
 			"import": "Import photos",

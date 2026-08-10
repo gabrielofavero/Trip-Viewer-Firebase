@@ -8,10 +8,10 @@
 // in-flight request via an AbortController).
 //
 // Step CONTENT is provided by later prompts via registerStepRenderer():
+//   - places-linked-step.ts         (P6b) renders the 'linked' step (already-linked entries)
 //   - places-search-step.ts         (P6)  renders the 'search' step
 //   - places-details-step.ts        (P7)  renders the 'details' step
 //   - places-closed-photos-step.ts  (P8)  renders the 'photos' / 'closed' steps
-//   - places-apply.ts               (P3)  handles the 'done' step (in parallel)
 // Until a step has a renderer, a small placeholder is shown so the shell is
 // buildable and demoable on its own.
 //
@@ -31,7 +31,7 @@ import { translate } from '../i18n/translation.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../data/state.js';
 
 /** The steps the Places dialog can be in. */
-export type PlacesDialogStep = 'search' | 'details' | 'photos' | 'closed' | 'done';
+export type PlacesDialogStep = 'linked' | 'search' | 'details' | 'photos' | 'closed' | 'done';
 
 /** Entry context the dialog was opened for. */
 export interface PlacesDialogContext {
@@ -84,7 +84,9 @@ export function notifyPlacesLimited(): void {
 
 /**
  * Open the Places dialog for the given destination entry.
- * Reads the current entry name + saved `placeAPI` and starts at the search step.
+ * Reads the current entry name + saved `placeAPI`. Entries already linked to a
+ * Google place start on the 'linked' step (update it vs find a different one);
+ * brand-new entries start at the search step.
  */
 export function openPlacesDialog(category: string, j: number): void {
 	if (_active) return;
@@ -110,11 +112,13 @@ export function openPlacesDialog(category: string, j: number): void {
 	_context = { category, j, entryName, destinationTitle, placeAPI };
 	_stepData = {};
 	_history = [];
-	_step = 'search';
+	// Already-linked entries start on the 'linked' step (update this place vs
+	// find a different place); brand-new entries go straight to search.
+	_step = placeAPI?.id ? 'linked' : 'search';
 
 	wireDialogControls();
 	document.addEventListener('keydown', handlePlacesKeydown);
-	void goTo('search');
+	void goTo(_step);
 }
 
 /** Close the dialog, cancelling any in-flight request first. */

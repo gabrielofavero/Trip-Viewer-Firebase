@@ -34,6 +34,7 @@ import { getLanguagePackName, translate } from '../i18n/translation.js';
 import { getPlace } from '../data/services/places-api.service.js';
 import type { PlaceDetails, PlaceSearchResult } from '../models/places-api.model.js';
 import { buildClosedState, FIELD_KEYS, type PlaceFieldKey } from './places-apply.js';
+import { applyAndClose } from './places-apply-flow.js';
 import {
 	getStepData,
 	getStepLoadingMessage,
@@ -50,6 +51,12 @@ import { getID } from '../utils/dom.js';
 export const DETAILS_KEY = 'placeDetails';
 /** Cross-step data key for the fields the user checked (P9 reads it). */
 export const CHECKED_KEY = 'checkedFields';
+/**
+ * Cross-step data flag: set when the user chose to UPDATE the existing linked
+ * place (kept its id). The details route runs WITHOUT photos and the flow
+ * skips the photos step (applies directly).
+ */
+export const UPDATE_EXISTING_KEY = 'updateExisting';
 /** Key P6 uses to store the selected search result. */
 const CANDIDATE_KEY = 'placeDetailsCandidate';
 
@@ -90,12 +97,13 @@ async function renderDetailsStep(context: PlacesDialogContext): Promise<string> 
 		details = candidate;
 	} else {
 		try {
-			// Firebase token + lang are resolved by the service; photos default to
-			// true here because the place was just searched (new — no saved id yet).
+			// Updating an existing linked place: refresh its info WITHOUT photos
+			// (free main key) — photos are not re-imported on this path.
 			details = await withDialogLoading(
 				(signal) =>
 					getPlace(placeId, {
 						signal,
+						photos: false,
 						onLimited: (limited) => {
 							if (limited) notifyPlacesLimited();
 						},
@@ -196,11 +204,19 @@ function handleContinue(): void {
 	const checked = collectCheckedFields();
 	setStepData(CHECKED_KEY, checked);
 
-	// Closed places branch off to the 'closed' step (P8); everything else
-	// continues to the photos step (P8). The shell shows a placeholder until
-	// P8 registers those renderers.
+	// Closed places branch off to the 'closed' step (P8). Updating an existing
+	// linked place skips the photos step (its info was fetched without photos)
+	// and applies directly; everything else continues to the photos step (P8).
 	const { closed } = buildClosedState(details);
-	void goTo(closed ? 'closed' : 'photos');
+	if (closed) {
+		void goTo('closed');
+		return;
+	}
+	if (getStepData<boolean>(UPDATE_EXISTING_KEY)) {
+		applyAndClose();
+		return;
+	}
+	void goTo('photos');
 }
 
 /** Read which "Update with this info" checkboxes are checked. */

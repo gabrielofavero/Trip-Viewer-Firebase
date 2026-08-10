@@ -63,7 +63,9 @@ export function getDescriptionValue(item: PlaceItem): string {
 
 export function getPriceBucket(value: number): string {
 	const currencies = getCurrencies();
-	const range = currencies.scaleNumeric[FIRESTORE_DESTINATIONS_DATA.currency]; // was "escala_numerica"/"moeda"
+	const range =
+		currencies.scaleNumeric[FIRESTORE_DESTINATIONS_DATA?.currency] ||
+		currencies.scaleNumeric['BRL']; // was "escala_numerica"/"moeda"
 	if (isNaN(value)) return 'default';
 	if (value === 0) return '-';
 	if (value >= range['$'][0] && value <= range['$'][1]) return '$';

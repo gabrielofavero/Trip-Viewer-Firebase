@@ -77,6 +77,9 @@ import { openPlacesDialog } from '../../places/places-dialog.js';
 // Places API step 1 — search (P6). Side-effect import: self-registers the
 // 'search' step renderer + actions on import.
 import '../../places/places-search-step.js';
+// Places API — linked-place decision (P6b). Side-effect import: self-registers
+// the 'linked' step renderer + actions on import.
+import '../../places/places-linked-step.js';
 // Places API step 2 — details (P7). Side-effect import: self-registers the
 // 'details' step renderer + actions on import.
 import '../../places/places-details-step.js';

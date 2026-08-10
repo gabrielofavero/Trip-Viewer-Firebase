@@ -3,6 +3,7 @@ import { addSelectorDS } from '../../ui/dynamic-select.js';
 import { translate } from '../../i18n/translation.js';
 import { getNewSvg, GOOGLE_MAPS_ICON } from '../../theme/icons.js';
 import { PERMISSIONS } from '../../data/firebase/storage.js';
+import { FIRESTORE_DESTINATIONS_DATA, FIRESTORE_DESTINATIONS_NEW_DATA } from '../../data/state.js';
 import { getDescriptionHTML } from './categories/description.js';
 import { getOtherPriceVisibility, loadCurrencySelects, PRICE_OPTIONS } from './categories/price.js';
 import { DESTINATION_IMAGES } from './categories/image.js';
@@ -27,6 +28,34 @@ function getPlacesFetchButtonHTML(category: string, j: number): string {
           <span class="places-fetch-label">${label}</span>
         </button>
       </div>`;
+}
+
+/**
+ * Refresh a per-item Places button's label/title based on whether the entry is
+ * already linked to a Google place: "Update with Maps" when linked, "Fetch
+ * Info With Maps" otherwise. Called after loading an entry or applying place
+ * data (the button's initial label defaults to "Fetch Info With Maps").
+ */
+export function updatePlacesFetchButtonLabel(category: string, j: number): void {
+	const button = getID<HTMLButtonElement>(`${category}-places-${j}`);
+	if (!button) return;
+	const label = hasLinkedPlace(category, j)
+		? translate('placesApi.updateWithMaps')
+		: translate('placesApi.fetchInfo');
+	button.title = label;
+	button.setAttribute('aria-label', label);
+	const labelEl = button.querySelector('.places-fetch-label');
+	if (labelEl) labelEl.textContent = label;
+}
+
+/** Whether the entry at category/j is already linked to a Google place. */
+function hasLinkedPlace(category: string, j: number): boolean {
+	const id = getID(`${category}-id-${j}`)?.value;
+	if (!id) return false;
+	const entry =
+		FIRESTORE_DESTINATIONS_DATA?.[category]?.[id] ??
+		FIRESTORE_DESTINATIONS_NEW_DATA?.[category]?.[id];
+	return Boolean(entry?.placeAPI?.id);
 }
 
 // Adicionar

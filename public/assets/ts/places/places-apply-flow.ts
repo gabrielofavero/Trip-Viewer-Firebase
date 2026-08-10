@@ -34,6 +34,7 @@ import {
 	setDestinationImageButtonLabel,
 } from '../pages/edit-destination/categories/image.js';
 import { applyPlaceData, getClosedLabel, type PlaceFieldKey } from './places-apply.js';
+import { updatePlacesFetchButtonLabel } from '../pages/edit-destination/new-destination.js';
 // Places API bulk "Update with Maps" (P11). Side-effect import: guarantees the
 // bulk module (runBulkUpdate + report) is part of the edit-destination bundle.
 // Loaded here (P9's file) so it does NOT touch P10's files (edit-destination.ts
@@ -133,6 +134,10 @@ export function applyAndClose(): void {
 		// Refresh the pending destination data (same keys buildDestinationCategoryObject uses).
 		// No Firestore write here — the page's Save button persists everything.
 		refreshPendingData(category, id, entry);
+
+		// The entry is now linked to a Google place — flip its button label to
+		// "Update with Maps" without needing a page reload.
+		updatePlacesFetchButtonLabel(category, j);
 
 		closeDialog();
 		void refreshBulkButton();

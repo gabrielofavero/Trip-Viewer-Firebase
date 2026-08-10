@@ -68,6 +68,12 @@ const PANEL_ANIM_DURATION = 220; // ms (.panel-leave)
  */
 export function animateDialogOpen(element: HTMLElement | null, display?: string) {
 	if (!element) return;
+	// Cancel any pending close animation on this element before showing it
+	// (mirrors the explicit `cancelAnimateOut(toast)` in openToast). Without
+	// this, reopening an element mid-close leaves a stale close timer/listener
+	// that later hides it again — so the blurred backdrop stays visible but the
+	// card/dialog never reappears until a page refresh.
+	cancelAnimateOut(element);
 	if (display) {
 		element.style.display = display;
 	} else if ((element as any)._prevDisplay !== undefined) {

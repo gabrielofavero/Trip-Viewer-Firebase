@@ -69,6 +69,10 @@ function renderSearchStep(context: PlacesDialogContext): string {
 				<button id="places-search-submit" class="places-search-submit" type="button"
 					data-action="places-search-run">${translate('placesApi.search.button')}</button>
 			</div>
+			<label class="places-search-photos">
+				<input type="checkbox" id="places-search-photos-input" class="places-search-photos-input" />
+				<span>${escapeHtml(translate('placesApi.search.includePhotos'))}</span>
+			</label>
 		</div>
 		<div id="places-search-results" class="places-search-results" aria-live="polite"></div>
 	</div>`;
@@ -85,6 +89,12 @@ async function runSearch(): Promise<void> {
 	if (!getID('places-search-input')) return;
 
 	const query = getID<HTMLInputElement>('places-search-input')?.value.trim() ?? '';
+	// "Include photos" toggle (default OFF): off → photos:false runs on the FREE
+	// main key; on → photos:true uses the paid photos key (photo refs in the
+	// results). Photos can still be imported later via the photos step, which
+	// fetches them by place id regardless.
+	const includePhotos =
+		getID<HTMLInputElement>('places-search-photos-input')?.checked ?? false;
 
 	let results: PlaceSearchResult[] | null;
 	try {
@@ -93,11 +103,7 @@ async function runSearch(): Promise<void> {
 			(signal) =>
 				searchPlaces(query, {
 					signal,
-					// A brand-new import always needs photo refs, so search requests
-					// `photos: true` (runs on the paid photos key). `photos: false`
-					// is only for refreshing an existing entry (bulk update), where
-					// images are not re-imported.
-					photos: true,
+					photos: includePhotos,
 					onLimited: (limited) => {
 						if (limited) notifyPlacesLimited();
 					},

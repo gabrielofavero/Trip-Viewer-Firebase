@@ -40,9 +40,9 @@ npm run dev
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 171   | 168  | 3         | 0       |
+| 🐞   | Bug         | B000 | 173   | 168  | 3         | 2       |
 | 🏆   | Feature     | F000 | 177   | 157  | 17        | 3       |
-| 📈   | Improvement | M000 | 170   | 144  | 22        | 4       |
+| 📈   | Improvement | M000 | 171   | 144  | 22        | 5       |
 | ⚔️   | Epic        | E000 | 51    | 35   | 7         | 9       |
 
 ## Backlog
@@ -73,6 +73,9 @@ npm run dev
 - ⚔️ **E019:** Implement Sonarqube
 - ⚔️ **E046:** Implement Playwright
 - 📈 **M163:** Improve live reload functionality
+- 🐞 **B172:** Fix error when switching a destination category
+- 📈 **M171:** Safeguard unauthenticated access message
+- 🐞 **B173:** Fix issues with index cards closing and not reopening
 
 ## Done
 
