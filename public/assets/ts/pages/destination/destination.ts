@@ -1,5 +1,5 @@
 import { getDestinations } from '../../app/config.js';
-import { get } from '../../data/firebase/database.js';
+import { get, haveErrorFromGetRequest } from '../../data/firebase/database.js';
 import { displayError } from '../../utils/messages.js';
 import {
 	setState,
@@ -8,7 +8,7 @@ import {
 	setDocumentId,
 	setFirestoreDestinationsData,
 } from '../../data/state.js';
-import { getID, getJs, getURLParams } from '../../utils/dom.js';
+import { getID, getJs, getURLParams, getErrorFromGetRequestMessage } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
 import { stopLoadingScreen } from '../../utils/loading.js';
 import { loadCloseCustomSelectListeners, loadCustomSelect } from '../../ui/custom-select.js';
@@ -36,7 +36,7 @@ import { loadDestinationVisibility } from './support/visibility.js';
 export { ACTIVE_CATEGORY };
 export var CONTENT = [];
 
-export async function loadDestinationsData(data?) {
+export async function loadDestinationsData(data?): Promise<boolean> {
 	const urlParams = getURLParams();
 	setDocumentId(urlParams['d']);
 
@@ -52,6 +52,18 @@ export async function loadDestinationsData(data?) {
 		get(path),
 	]);
 
+	// ── Access guard ──
+	// If the Firestore read was denied (e.g. the user is unauthenticated and the
+	// document isn't public), surface the proper access-denied message up front
+	// and abort the load. Without this the page would proceed with `undefined`
+	// data and crash mid-flow (e.g. `can't access property "currency" of
+	// undefined`), only showing a generic error afterwards.
+	if (haveErrorFromGetRequest() && !destinosData) {
+		displayError(getErrorFromGetRequestMessage(), true);
+		stopLoadingScreen();
+		return false;
+	}
+
 	if (!destinosData) {
 		console.warn('[destination] Document not found at path:', path);
 		throw new Error(translate('messages.errors.missing_data') + ` (not found: ${path})`);
@@ -62,6 +74,8 @@ export async function loadDestinationsData(data?) {
 
 	loadPlannedDestination();
 	loadActiveCategory(urlParams);
+
+	return true;
 }
 
 export async function loadDestinationPage() {
@@ -69,7 +83,11 @@ export async function loadDestinationPage() {
 
 	loadDestinationListeners();
 
-	await loadDestinationsData();
+	// Abort early when the read failed (e.g. access denied for unauthenticated
+	// users) — the proper message was already shown by loadDestinationsData.
+	if (!(await loadDestinationsData())) {
+		return;
+	}
 
 	if (!FIRESTORE_DESTINATIONS_DATA) {
 		const error = translate('messages.errors.missing_data');
@@ -282,7 +300,9 @@ export function isPlanned(id) {
 }
 
 export async function refreshDestination() {
-	setFirestoreDestinationsData(await get(`destinations/${DOCUMENT_ID}`));
+	const data = await get(`destinations/${DOCUMENT_ID}`);
+	if (!data) return;
+	setFirestoreDestinationsData(data);
 	loadDestinationByType(ACTIVE_CATEGORY);
 }
 

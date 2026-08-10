@@ -44,7 +44,7 @@ curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase2?cleanup=tr
 | **14** | **`migratePhase2`** | **Rename collections Pt→En + fix itinerary/destination values + optional cleanup** |
 | **15** | **`migratePhase3`** | **Cleanup: embedded summaries → subcollections, permissions migration, legacy field removal** |
 | **16** | **`migrateUserProfile`** | **Backfill user profile fields (`name`, `email`, `photoURL`) from Auth into every `users/{uid}` document** |
-| **17** | **`migratePlacesApi`** | **Places API prep: grant `canUsePlacesAPI` to body-provided UIDs + add `placeID` to every destination entry** |
+| **17** | **`migratePlacesApi`** | **Places API prep: grant `canUsePlacesAPI` to body-provided UIDs + add `placeAPI` object to every destination entry** |
 
 Migrations 1–12 are **legacy** (already applied in production). Migrations 13–15 are the **consolidation phases**; migrations 16–17 are the post-consolidation backfills (profile fields, then Places API prep). They are exported from `functions/src/index.ts` as `migratePhase1`, `migratePhase2`, `migratePhase3`, `migrateUserProfile`, and `migratePlacesApi`.
 
@@ -223,11 +223,11 @@ curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateUserProfile"
 Prepares the database for the Places API integration (epic E045) with two independent, idempotent operations:
 
 1. **`canUsePlacesAPI` permission:** creates `admin/permissions/canUsePlacesAPI/{uid}` docs for each UID passed in the **request body** (`{ "uids": [...] }`) — existence = granted. Accepts an array of UIDs, a comma-separated string, or the `?uids=` query param. If no UIDs are provided, this step is skipped entirely.
-2. **`placeID` field:** adds `placeID: ""` to every destination entry (restaurants, snacks, nightlife, tourism, shopping) that lacks it, using dot-path `update()` so only the missing nested field is written. Idempotency check: skips entries where `typeof entry.placeID === 'string'`.
+2. **`placeAPI` object:** adds a `placeAPI` object to every destination entry (restaurants, snacks, nightlife, tourism, shopping) that lacks it, using dot-path `update()` so only the missing nested field is written. The object is a subset of `scripts/export-maps-data/export-maps-data.py` output (the app's destination format): `{ region, name, website, rating, price, description, emoji, map, updatedAt, instagram, id }` — omits the app-managed `media`/`isNew` and uses `updatedAt` instead of the script's `createdAt`. Also removes any legacy `placeID` string field. Idempotency check: skips entries that already carry a `placeAPI` object.
 
 ### Run it:
 ```bash
-# Dry run first (placeID backfill only — no UIDs)
+# Dry run first (placeAPI backfill only — no UIDs)
 curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePlacesApi?dryRun=true"
 
 # Apply + pre-grant the permission to specific UIDs

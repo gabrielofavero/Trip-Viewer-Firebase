@@ -55,11 +55,13 @@ export function getDestinationsAccordionBodyHTML({
 	editBtn = true,
 }) {
 	if (!values) {
-		values = getCurrencies().scale[FIRESTORE_DESTINATIONS_DATA.currency];
+		values =
+			getCurrencies().scale[FIRESTORE_DESTINATIONS_DATA?.currency] ||
+			getCurrencies().scale['BRL'];
 	}
 
 	if (!currency) {
-		currency = FIRESTORE_DESTINATIONS_DATA.currency;
+		currency = FIRESTORE_DESTINATIONS_DATA?.currency || 'BRL';
 	}
 
 	const ediText = editBtn
@@ -218,7 +220,8 @@ function getRegionOptionsHTML() {
 }
 
 function getValuesOptionsHTML() {
-	const currencies = getCurrencies().scale[FIRESTORE_DESTINATIONS_DATA.currency];
+	const currencies =
+		getCurrencies().scale[FIRESTORE_DESTINATIONS_DATA?.currency] || getCurrencies().scale['BRL'];
 	return `
         <option value="$">${currencies['$']}</option>
         <option value="$$">${currencies['$$']}</option>

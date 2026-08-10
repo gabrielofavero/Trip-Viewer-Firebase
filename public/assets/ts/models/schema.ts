@@ -452,6 +452,8 @@ export interface PlaceItem {
 	emoji: string;
 	/** was "imagens" — images attached to this place/venue */
 	images: PlaceImage[];
+	/** Normalized Places API data (migration 17) — may be absent on pre-Aug-2026 entries */
+	placeAPI?: PlaceAPI;
 }
 
 /** An image attached to a destination place/venue (was "imagens[i]" on PlaceItem) */
@@ -466,6 +468,45 @@ export interface PlaceImage {
 export interface PlaceDescription {
 	pt: string;
 	en: string;
+}
+
+// -----------------------------------------------------------
+// PlaceAPI — normalized Places API data on a destination entry
+// (added by migration 17 — see docs/database/destination-document-structure.md)
+// -----------------------------------------------------------
+
+/**
+ * Normalized Google Places API data stored on a destination entry.
+ * Subset of scripts/export-maps-data/export-maps-data.py output (omits the
+ * app-managed media/isNew and uses `updatedAt` instead of the script's
+ * `createdAt`). May be absent on entries created before August 2026 — always
+ * guard with optional chaining (e.g. `entry.placeAPI?.id`).
+ */
+export interface PlaceAPI {
+	/** Neighborhood/area (e.g. "Ipanema", "Botafogo"). */
+	region: string;
+	/** Display name. */
+	name: string;
+	/** Official website URL, or empty string. */
+	website: string;
+	/** Numeric rating as string: "1"–"5", or empty string. */
+	rating: string;
+	/** Price indicator: "$" | "$$" | "$$$" | "$$$$" | "-" | "default". */
+	price: string;
+	/** Multi-language description — only the requested language is written on apply. */
+	description: PlaceDescription;
+	/** Emoji icon. */
+	emoji: string;
+	/** Google Maps URL. */
+	map: string;
+	/** ISO 8601 timestamp of the last Places API sync. */
+	updatedAt: string;
+	/** Instagram profile URL, or empty string. */
+	instagram: string;
+	/** Google Place ID used for Places API lookups, or empty string. */
+	id: string;
+	/** Whether the place is no longer operational (proposed — see plan Open Q3). */
+	closed?: boolean;
 }
 
 // -----------------------------------------------------------

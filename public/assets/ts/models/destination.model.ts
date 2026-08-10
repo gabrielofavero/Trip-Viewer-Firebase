@@ -7,7 +7,7 @@ import { getUserLanguage, translate } from '../i18n/translation.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../data/state.js';
 import { FILTER_SORT_KEYS_ORDER } from '../pages/destination/support/sort-and-filter/sort-and-filter.js';
 import { getPriceBuckets } from '../pages/destination/support/sort-and-filter/support/price-bucket.js';
-import type { PlaceItem } from './new-schema.js';
+import type { PlaceItem } from './schema.js';
 
 // ======= Destination Value Formatting =======
 
@@ -63,12 +63,14 @@ export function getDescriptionValue(item: PlaceItem): string {
 
 export function getPriceBucket(value: number): string {
 	const currencies = getCurrencies();
-	const range = currencies.numericScale[FIRESTORE_DESTINATIONS_DATA.currency]; // was "moeda"
+	const range =
+		currencies.scaleNumeric[FIRESTORE_DESTINATIONS_DATA?.currency] ||
+		currencies.scaleNumeric['BRL']; // was "escala_numerica"/"moeda"
 	if (isNaN(value)) return 'default';
 	if (value === 0) return '-';
 	if (value >= range['$'][0] && value <= range['$'][1]) return '$';
-	if (value >= range['$$'][0] && value <= range['$$'][0]) return '$$';
-	if (value >= range['$$$'][0] && value <= range['$$$'][0]) return '$$$';
+	if (value >= range['$$'][0] && value <= range['$$'][1]) return '$$';
+	if (value >= range['$$$'][0] && value <= range['$$$'][1]) return '$$$';
 	if (value >= range['$$$$'][0]) return '$$$$';
 	return 'default';
 }

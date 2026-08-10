@@ -1,3 +1,6 @@
+/** Google Maps icon name (Iconify) used by the Places API integration. */
+export const GOOGLE_MAPS_ICON = 'simple-icons:googlemaps';
+
 export function getNewSvg(id = '') {
 	const idValue = id ? `id="${id}"` : '';
 	return `<svg ${idValue} class="new" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"

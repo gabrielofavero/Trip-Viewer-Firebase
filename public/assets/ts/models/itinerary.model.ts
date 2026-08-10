@@ -13,7 +13,7 @@ import { ITINERARY_HTML } from '../pages/itinerary/itinerary-formatter.js';
 import { getTimeStringFromDateObj } from '../utils/dates.js';
 import { getPeriod } from '../pages/destination/categories.js';
 import { getScheduleTitle } from '../pages/trip-detail/categories/itinerary-module/inner-itinerary.js';
-import type { ItineraryDay, PeriodItem } from './new-schema.js';
+import type { ItineraryDay, PeriodItem } from './schema.js';
 
 // ======= Itinerary Content Generator (Multi-format) =======
 

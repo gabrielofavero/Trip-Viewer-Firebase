@@ -1,0 +1,48 @@
+# TripViewer Places API worker — Cloudflare configuration.
+#
+# One deployed route serves all environments (local / dev / prd). The
+# environment is NOT chosen by the client: it is derived server-side from
+# the Origin header + the Firebase ID token `aud` claim (see src/config.js
+# and the backend contract §6.5).
+
+name = "trip-viewer-places-api"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+
+[vars]
+# Used only by the LOCAL worker (`wrangler dev`) to verify Firebase Auth
+# emulator tokens. The deployed worker ignores this and verifies against
+# Google's public keys via the token `aud`/`iss` claims.
+FIREBASE_AUTH_EMULATOR_HOST = "127.0.0.1:9099"
+
+# Secrets — NEVER commit these values here. Set them with:
+#   wrangler secret put PLACES_API_KEY
+#   wrangler secret put PLACES_PHOTOS_API_KEY
+#   wrangler secret put ALLOWED_UIDS_JSON   (optional)
+#
+#   PLACES_API_KEY          — Google Places API (New) key (main; used when photos=false).
+#   PLACES_PHOTOS_API_KEY   — dedicated photos key (photos=true on routes 1/2 + route 3 + media).
+#   ALLOWED_UIDS_JSON       — optional JSON array of Firebase UIDs allowed to
+#                             call the API (v1 allowlist; see permissions.js).
+#
+#   (PHOTO_URL_SECRET was dropped — no HMAC/byte proxy in v1. Photos use the
+#   stable CDN photoUri resolved by the worker and stored on Firestore.)
+#
+# Quota / budget protection (worker/src/quota.js): the worker self-accounts
+# monthly Google calls per key. Every search/details request is billed at the
+# ENTERPRISE + ATMOSPHERE SKU (the mask requests rating/priceLevel/priceRange/
+# websiteUri + reviewSummary/editorialSummary), free allowance 1,000/mo. So
+# both budgets default to 1000 (= the free cap), degrade at 90%, hard-block at
+# 100% → never cross into paid. (0 = DISABLED — never call that key; optional):
+#   wrangler secret put PLACES_MAIN_BUDGET          # search/details cap (default 1000)
+#   wrangler secret put PLACES_PHOTOS_BUDGET        # photos cap (default 1000)
+#   wrangler secret put PLACES_QUOTA_DEGRADE_RATIO  # optional, default 0.9
+#
+# Optional: share the quota ledger across worker isolates with a KV namespace.
+# Create once (`npx wrangler kv namespace create PLACES_QUOTA`), then uncomment
+# and paste the ids below and redeploy. Without it the ledger is in-memory
+# (per-isolate, best-effort — fine for a single editor).
+# [[kv_namespaces]]
+# binding = "PLACES_QUOTA"
+# id = "dc6732b03c0749b5ab5de4cd7e3a1676"
+# preview_id = "<preview_namespace_id>"

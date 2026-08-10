@@ -1,12 +1,62 @@
 import { getID, getNextJ } from '../../utils/dom.js';
 import { addSelectorDS } from '../../ui/dynamic-select.js';
 import { translate } from '../../i18n/translation.js';
-import { getNewSvg } from '../../theme/icons.js';
+import { getNewSvg, GOOGLE_MAPS_ICON } from '../../theme/icons.js';
+import { PERMISSIONS } from '../../data/firebase/storage.js';
+import { FIRESTORE_DESTINATIONS_DATA, FIRESTORE_DESTINATIONS_NEW_DATA } from '../../data/state.js';
 import { getDescriptionHTML } from './categories/description.js';
 import { getOtherPriceVisibility, loadCurrencySelects, PRICE_OPTIONS } from './categories/price.js';
 import { DESTINATION_IMAGES } from './categories/image.js';
 import { addDestinationsListeners } from './edit-destination.js';
 import { addListenerToRemoveDestination } from './edit-destination.js';
+
+/**
+ * "Fetch Info With Maps" button for an entry (Places API, P4). Rendered at the
+ * top of the entry's accordion body, so it shows when the accordion is
+ * expanded. Only rendered for users who hold the canUsePlacesAPI permission;
+ * returns '' otherwise.
+ */
+function getPlacesFetchButtonHTML(category: string, j: number): string {
+	if (PERMISSIONS?.canUsePlacesAPI !== true) return '';
+	const label = translate('placesApi.fetchInfo');
+	return `
+      <div class="places-fetch-wrapper">
+        <button type="button" id="${category}-places-${j}" data-action="open-places-dialog"
+          data-category="${category}" data-index="${j}" data-stop-propagation
+          class="places-fetch-button btn btn-basic btn-sm" title="${label}" aria-label="${label}">
+          <i class="iconify" data-icon="${GOOGLE_MAPS_ICON}"></i>
+          <span class="places-fetch-label">${label}</span>
+        </button>
+      </div>`;
+}
+
+/**
+ * Refresh a per-item Places button's label/title based on whether the entry is
+ * already linked to a Google place: "Update with Maps" when linked, "Fetch
+ * Info With Maps" otherwise. Called after loading an entry or applying place
+ * data (the button's initial label defaults to "Fetch Info With Maps").
+ */
+export function updatePlacesFetchButtonLabel(category: string, j: number): void {
+	const button = getID<HTMLButtonElement>(`${category}-places-${j}`);
+	if (!button) return;
+	const label = hasLinkedPlace(category, j)
+		? translate('placesApi.updateWithMaps')
+		: translate('placesApi.fetchInfo');
+	button.title = label;
+	button.setAttribute('aria-label', label);
+	const labelEl = button.querySelector('.places-fetch-label');
+	if (labelEl) labelEl.textContent = label;
+}
+
+/** Whether the entry at category/j is already linked to a Google place. */
+function hasLinkedPlace(category: string, j: number): boolean {
+	const id = getID(`${category}-id-${j}`)?.value;
+	if (!id) return false;
+	const entry =
+		FIRESTORE_DESTINATIONS_DATA?.[category]?.[id] ??
+		FIRESTORE_DESTINATIONS_NEW_DATA?.[category]?.[id];
+	return Boolean(entry?.placeAPI?.id);
+}
 
 // Adicionar
 export function addRestaurants() {
@@ -19,7 +69,7 @@ export function addRestaurants() {
 
 	$('#restaurants-box').append(`
     <div id="restaurants-${j}" class="accordion-item accordion-restaurants" >
-      <h2 class="accordion-header" id="heading-restaurants-${j}">
+      <h2 class="accordion-header accordion-header--places" id="heading-restaurants-${j}">
         <button id="restaurants-title-${j}" class="accordion-button collapsed flex-button" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-restaurants-${j}" aria-expanded="true"
           aria-controls="collapse-restaurants-${j}">
@@ -32,7 +82,8 @@ export function addRestaurants() {
       <div id="collapse-restaurants-${j}" class="accordion-collapse collapse"
         data-bs-parent="#restaurants-box">
         <div class="accordion-body">
-  
+          ${getPlacesFetchButtonHTML(category, j)}
+
           <div class="nice-form-group">
             <input type="checkbox" id="restaurants-isNew-${j}" class="switch" />
             <label for="restaurants-isNew-${j}">${translate('destination.recent')}</label>
@@ -162,7 +213,7 @@ export function addSnacks() {
 
 	$('#snacks-box').append(`
     <div id="snacks-${j}" class="accordion-item accordion-snacks" >
-      <h2 class="accordion-header" id="heading-snacks-${j}">
+      <h2 class="accordion-header accordion-header--places" id="heading-snacks-${j}">
         <button id="snacks-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-snacks-${j}" aria-expanded="true" aria-controls="collapse-snacks-${j}">
           <div class="flex-button-inner">
@@ -174,7 +225,8 @@ export function addSnacks() {
       <div id="collapse-snacks-${j}" class="accordion-collapse collapse" aria-labelledby="heading-snacks-${j}"
         data-bs-parent="#snacks-box">
         <div class="accordion-body">
-  
+          ${getPlacesFetchButtonHTML(category, j)}
+
           <div class="nice-form-group">
             <input type="checkbox" id="snacks-isNew-${j}" class="switch" />
             <label for="snacks-isNew-${j}">${translate('destination.recent')}</label>
@@ -305,7 +357,7 @@ export function addNightlife() {
 
 	$('#nightlife-box').append(`
     <div id="nightlife-${j}" class="accordion-item accordion-nightlife" >
-      <h2 class="accordion-header" id="heading-nightlife-${j}">
+      <h2 class="accordion-header accordion-header--places" id="heading-nightlife-${j}">
         <button id="nightlife-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-nightlife-${j}" aria-expanded="true" aria-controls="collapse-nightlife-${j}">
           <div class="flex-button-inner">
@@ -317,7 +369,8 @@ export function addNightlife() {
       <div id="collapse-nightlife-${j}" class="accordion-collapse collapse" aria-labelledby="heading-nightlife-${j}"
         data-bs-parent="#nightlife-box">
         <div class="accordion-body">
-  
+          ${getPlacesFetchButtonHTML(category, j)}
+
           <div class="nice-form-group">
             <input type="checkbox" id="nightlife-isNew-${j}" class="switch" />
             <label for="nightlife-isNew-${j}">${translate('destination.recent')}</label>
@@ -447,8 +500,8 @@ export function addTourism() {
 
 	$('#tourism-box').append(`
     <div id="tourism-${j}" class="accordion-item accordion-tourism" >
-      <h2 class="accordion-header" id="heading-tourism-${j}">
-        <button id="tourism-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+      <h2 class="accordion-header accordion-header--places" id="heading-tourism-${j}">
+        <button id="tourism-title-${j}" class="accordion-button collapsed flex-button" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-tourism-${j}" aria-expanded="true" aria-controls="collapse-tourism-${j}">
           <div class="flex-button-inner">
             <span class="title-text" id="tourism-title-text-${j}">${translate('destination.tourism.title_singular')} ${j}</span> 
@@ -459,7 +512,8 @@ export function addTourism() {
       <div id="collapse-tourism-${j}" class="accordion-collapse collapse" aria-labelledby="heading-tourism-${j}"
         data-bs-parent="#tourism-box">
         <div class="accordion-body">
-  
+          ${getPlacesFetchButtonHTML(category, j)}
+
           <div class="nice-form-group">
             <input type="checkbox" id="tourism-isNew-${j}" class="switch" />
             <label for="tourism-isNew-${j}">${translate('destination.recent')}</label>
@@ -589,7 +643,7 @@ export function addShopping() {
 
 	$('#shopping-box').append(`
     <div id="shopping-${j}" class="accordion-item accordion-shopping" >
-      <h2 class="accordion-header" id="heading-shopping-${j}">
+      <h2 class="accordion-header accordion-header--places" id="heading-shopping-${j}">
         <button id="shopping-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-shopping-${j}" aria-expanded="true" aria-controls="collapse-shopping-${j}">
           <div class="flex-button-inner">
@@ -602,7 +656,8 @@ export function addShopping() {
       <div id="collapse-shopping-${j}" class="accordion-collapse collapse" aria-labelledby="heading-shopping-${j}"
         data-bs-parent="#shopping-box">
         <div class="accordion-body">
-  
+          ${getPlacesFetchButtonHTML(category, j)}
+
           <div class="nice-form-group">
             <input type="checkbox" id="shopping-isNew-${j}" class="switch" />
             <label for="shopping-isNew-${j}">${translate('destination.recent')}</label>

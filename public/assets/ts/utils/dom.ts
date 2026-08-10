@@ -510,9 +510,11 @@ export async function normalizeTikTokLink(link) {
 }
 
 export function getDestinationTitle(item) {
+	// Places API "closed" entries get a translatable "[Closed]" prefix (P12).
+	const closed = item?.placeAPI?.closed ? `${translate('placesApi.closed.label')} ` : '';
 	if (item.name && item.emoji) {
-		return `${item.name} ${item.emoji}`;
-	} else return item.name;
+		return `${closed}${item.name} ${item.emoji}`;
+	} else return `${closed}${item.name}`;
 }
 
 export function getDestinationsBoxHTML({

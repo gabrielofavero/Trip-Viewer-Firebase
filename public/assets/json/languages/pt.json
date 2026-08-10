@@ -867,5 +867,95 @@
 		"trip_destinations": "Destinos da Viagem",
 		"view_trip": "Ver Viagem",
 		"edit_trip": "Editar Viagem"
+	},
+	"placesApi": {
+		"fetchInfo": "Buscar Informações com Maps",
+		"updateWithMaps": "Atualizar com Maps",
+		"dialog": {
+			"title": "Lugares"
+		},
+		"noPermission": "Você não tem permissão para usar a API de Lugares",
+		"search": {
+			"title": "Buscar",
+			"placeholder": "Busque um lugar...",
+			"button": "Buscar",
+			"noResults": "Nenhum resultado encontrado",
+			"error": "Ocorreu um erro ao buscar. Tente novamente",
+			"includePhotos": "Incluir fotos"
+		},
+		"details": {
+			"updateLabel": "Atualizar com estas informações",
+			"noData": "Nenhuma informação disponível para este lugar",
+			"back": "Voltar",
+			"continue": "Continuar",
+			"error": "Ocorreu um erro ao carregar as informações do lugar. Tente novamente"
+		},
+		"linked": {
+			"title": "Este lugar já está vinculado",
+			"message": "Você pode atualizar as informações do lugar vinculado ou vincular esta entrada a outro lugar.",
+			"update": "Atualizar este lugar",
+			"updateHint": "Atualizar as informações do lugar vinculado",
+			"search": "Encontrar outro lugar",
+			"searchHint": "Buscar outro lugar no Google"
+		},
+		"photos": {
+			"import": "Importar fotos",
+			"canImport": "Fotos podem ser importadas",
+			"none": "Nenhuma foto disponível para importar"
+		},
+		"closed": {
+			"title": "Lugar não está mais em operação",
+			"message": "Este lugar parece não estar mais em operação",
+			"option": {
+				"delete": "Excluir item",
+				"ignore": "Ignorar",
+				"label": "Adicionar etiqueta [Closed]"
+			},
+			"label": "[Closed]"
+		},
+		"loading": {
+			"search": "Buscando...",
+			"fetching": "Obtendo informações do lugar...",
+			"importing": "Importando fotos...",
+			"applying": "Aplicando informações do lugar..."
+		},
+		"apply": {
+			"title": "Aplicar informações",
+			"confirm": "Aplicar",
+			"fields": "{{count}} campo(s) serão atualizados",
+			"photos": "{{count}} foto(s) serão importadas",
+			"closedLabel": "Uma etiqueta [Closed] será adicionada ao título",
+			"deleteItem": "Este item será excluído",
+			"success": "Informações do lugar aplicadas com sucesso",
+			"error": "Ocorreu um erro ao aplicar as informações do lugar"
+		},
+		"bulk": {
+			"confirm": "Tentar obter informações de {{count}} item(ns) vinculado(s)?",
+			"report": {
+				"fields": "{{count}} campo(s) podem ter seus dados atualizados",
+				"closed": "{{count}} lugar(es) não estão mais em operação"
+			},
+			"options": {
+				"fields": {
+					"title": "Campos",
+					"all": "Substituir tudo pelos novos dados",
+					"auto": "Substituir apenas os campos preenchidos automaticamente"
+				},
+				"closed": {
+					"title": "Lugares fechados",
+					"delete": "Excluir automaticamente itens fechados",
+					"label": "Adicionar etiqueta [Closed] aos itens fechados"
+				}
+			},
+			"success": "Os lugares foram atualizados com sucesso"
+		},
+		"limited": {
+			"message": "A cota de Lugares está quase no limite. A busca e as informações do lugar continuam funcionando, mas as fotos estão temporariamente desativadas."
+		},
+		"errors": {
+			"network": "Erro de rede. Verifique sua conexão e tente novamente",
+			"routeNotConfigured": "A rota da API de Lugares ainda não está configurada",
+			"quotaExceeded": "A cota mensal da API de Lugares foi atingida. Tente novamente no próximo mês."
+		}
 	}
 }

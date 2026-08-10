@@ -1294,6 +1294,45 @@
 }
 
 /*--------------------------------------------------------------
+# Places API — "Fetch Info With Maps" button at the top of entry accordion bodies (P4)
+--------------------------------------------------------------*/
+.accordion-header--places {
+	display: flex;
+	align-items: center;
+}
+
+.accordion-header--places .accordion-button {
+	flex: 1 1 auto;
+	width: auto;
+}
+
+.places-fetch-wrapper {
+	display: flex;
+	justify-content: flex-end;
+	margin: 0 0 12px;
+}
+
+.places-fetch-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	flex-shrink: 0;
+	font-weight: 600;
+	line-height: 1;
+	white-space: nowrap;
+}
+
+.places-fetch-button .iconify {
+	font-size: 16px;
+}
+
+@media (max-width: 575px) {
+	.places-fetch-button .places-fetch-label {
+		display: none;
+	}
+}
+
+/*--------------------------------------------------------------
 # Drag Icon (sortable accordion items)
 --------------------------------------------------------------*/
 .drag-icon {
@@ -2581,4 +2620,911 @@ fieldset.modern-radio-group {
 	.edit-page-content section {
 		padding: 12px;
 	}
+}
+
+/*--------------------------------------------------------------
+# Places API — Multi-step Dialog (P5)
+# Shell + dialog-scoped loading for the "Fetch Info With Maps" flow.
+# The spinner reuses the preloader's `animate-preloader` ring animation
+# (base/preloader.css). The step CONTENTS are rendered by later prompts
+# (P6 search / P7 details / P8 photos+closed).
+--------------------------------------------------------------*/
+
+/* The dialog carries more data than a regular message — widen it a bit. */
+.input-container.places-dialog-container {
+	width: min(560px, 92vw);
+}
+
+.places-dialog {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	min-height: 240px;
+	text-align: left;
+}
+
+/* Header row: back button (left) + close X (right) */
+.places-dialog-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	margin-bottom: 14px;
+}
+
+.places-dialog-back {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 12px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: transparent;
+	color: var(--text-primary);
+	font-size: 0.875rem;
+	font-weight: 600;
+	font-family: inherit;
+	cursor: pointer;
+	transition: background var(--transition-fast, 0.2s);
+}
+
+.places-dialog-back:hover {
+	background: var(--bg-tertiary);
+}
+
+.places-dialog-close {
+	font-size: 28px;
+	color: var(--text-secondary);
+	cursor: pointer;
+	/* Always keep the close X at the top-right, even while the back button is
+	   hidden — justify-content: space-between alone would push it to the left. */
+	margin-left: auto;
+	transition: color var(--transition-fast, 0.2s);
+}
+
+.places-dialog-close:hover {
+	color: var(--text-primary);
+}
+
+/* Step body — scrolls internally when the content is tall */
+.places-dialog-step {
+	position: relative;
+	min-height: 200px;
+	max-height: calc(100vh - 260px);
+	overflow-y: auto;
+}
+
+/* Dialog-scoped loading overlay — sits over the dialog body and reuses the
+   app's spinner ring animation (see base/preloader.css animate-preloader). */
+.places-dialog-loading {
+	position: absolute;
+	inset: 0;
+	z-index: 20;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
+	background: rgba(255, 255, 255, 0.88);
+	backdrop-filter: blur(2px);
+	-webkit-backdrop-filter: blur(2px);
+	border-radius: var(--radius-md, 8px);
+}
+
+[data-theme="dark"] .places-dialog-loading {
+	background: rgba(28, 28, 30, 0.88);
+}
+
+.places-dialog-loading-ring {
+	width: 46px;
+	height: 46px;
+	border: 5px solid var(--theme-color);
+	border-top-color: var(--bg-primary);
+	border-bottom-color: var(--bg-primary);
+	border-radius: 50%;
+	animation: animate-preloader 1s linear infinite;
+}
+
+.places-dialog-loading-message {
+	font-size: 0.9375rem;
+	font-weight: 600;
+	color: var(--text-secondary);
+	text-align: center;
+	padding: 0 16px;
+}
+
+.places-dialog-loading-cancel {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 26px;
+	color: var(--text-secondary);
+	cursor: pointer;
+	transition: color var(--transition-fast, 0.2s);
+}
+
+.places-dialog-loading-cancel:hover {
+	color: var(--text-primary);
+}
+
+/* Placeholder / error states (shown before a step renderer is registered) */
+.places-dialog-placeholder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 200px;
+	color: var(--text-secondary);
+	text-align: center;
+}
+
+.places-dialog-placeholder-icon {
+	font-size: 40px;
+	opacity: 0.6;
+}
+
+.places-dialog-placeholder-title {
+	font-size: 1rem;
+	font-weight: 700;
+	color: var(--text-primary);
+	margin: 0;
+}
+
+.places-dialog-placeholder-note {
+	font-size: 0.8125rem;
+	margin: 0;
+}
+
+.places-dialog-error {
+	padding: 18px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: rgba(var(--theme-color-rgb), 0.06);
+	color: var(--text-primary);
+	text-align: center;
+}
+
+/* Mobile: let the step body flex-fill the fullscreen dialog and scroll on its
+   own (the dialog itself is the page on mobile, see components/modal.css). */
+@media (max-width: 768px) {
+	.fullscreen-dialog .places-dialog {
+		height: 100%;
+		min-height: 0;
+	}
+
+	.fullscreen-dialog .places-dialog-step {
+		max-height: none;
+		flex: 1 1 auto;
+		min-height: 0;
+	}
+
+	/* The places dialog container must fill the screen on mobile — undo the
+	   desktop width above so the .fullscreen-dialog rules in
+	   components/modal.css win (same specificity, declared later here). */
+	.places-dialog-container.fullscreen-dialog {
+		width: 100%;
+		max-width: none;
+	}
+}
+
+/*--------------------------------------------------------------
+# Places API — Step 1: Search (P6)
+# Search bar + result list for the "Fetch Info With Maps" dialog.
+# The input mirrors the .nice-form-group unified input style but is
+# styled directly because it sits inside a flex wrapper (.places-search-bar).
+--------------------------------------------------------------*/
+
+.places-search-bar {
+	display: flex;
+	gap: 10px;
+}
+
+/* "Include photos" toggle under the search bar */
+.places-search-photos {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 12px;
+	font-size: 0.875rem;
+	color: var(--text-secondary);
+	cursor: pointer;
+	user-select: none;
+}
+
+.places-search-photos-input {
+	accent-color: var(--theme-color);
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	cursor: pointer;
+}
+
+.places-search-input {
+	background: var(--nf-input-background-color, var(--bg-secondary));
+	font-family: var(--nf-input-font-family, inherit);
+	font-size: var(--nf-input-font-size, 0.9375rem);
+	box-shadow: none;
+	border-radius: var(--nf-input-border-radius, var(--radius-md));
+	border: var(--nf-input-border-width, 1.5px) solid var(--nf-input-border-color, var(--border-color));
+	color: var(--nf-input-color, var(--text-primary));
+	width: 100%;
+	flex: 1;
+	min-width: 0;
+	padding: 12px 16px;
+	height: auto;
+	min-height: 48px;
+	line-height: normal;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	transition:
+		border var(--transition-fast, 0.2s),
+		box-shadow var(--transition-fast, 0.2s);
+	outline: none;
+}
+
+.places-search-input:focus {
+	outline: none;
+	border-color: var(--nf-input-focus-border-color, var(--theme-color));
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.places-search-input::placeholder {
+	color: var(--nf-input-placeholder-color, var(--text-muted));
+}
+
+.places-search-submit {
+	flex-shrink: 0;
+	padding: 0 18px;
+	height: 48px;
+	border: none;
+	border-radius: var(--radius-md, 8px);
+	background: var(--theme-color);
+	color: var(--bg-primary);
+	font-family: inherit;
+	font-size: 0.9375rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: opacity var(--transition-fast, 0.2s);
+}
+
+.places-search-submit:hover {
+	opacity: 0.85;
+}
+
+.places-search-results {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-top: 16px;
+}
+
+.places-search-empty,
+.places-search-error {
+	padding: 18px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: rgba(var(--theme-color-rgb), 0.06);
+	color: var(--text-primary);
+	text-align: center;
+	font-size: 0.9375rem;
+}
+
+.places-search-error {
+	background: rgba(231, 76, 60, 0.08);
+}
+
+.places-search-result {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+	padding: 12px 14px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: var(--bg-secondary);
+	color: var(--text-primary);
+	font-family: inherit;
+	text-align: left;
+	cursor: pointer;
+	transition:
+		border-color var(--transition-fast, 0.2s),
+		background var(--transition-fast, 0.2s);
+}
+
+.places-search-result:hover {
+	border-color: var(--theme-color);
+	background: var(--bg-tertiary);
+}
+
+.places-search-result-emoji {
+	font-size: 1.375rem;
+	flex-shrink: 0;
+	width: 32px;
+	text-align: center;
+}
+
+.places-search-result-info {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.places-search-result-name {
+	font-weight: 600;
+	font-size: 0.9375rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.places-search-result-region {
+	font-size: 0.8125rem;
+	color: var(--text-secondary);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.places-search-result-meta {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-shrink: 0;
+}
+
+.places-search-result-rating {
+	font-size: 0.8125rem;
+	font-weight: 700;
+	color: var(--theme-color);
+}
+
+.places-search-result-price {
+	font-size: 0.875rem;
+	color: var(--text-secondary);
+}
+
+@media (max-width: 480px) {
+	.places-search-result {
+		flex-wrap: wrap;
+	}
+}
+
+/*--------------------------------------------------------------
+# Places API — Step 2: Details (P7)
+# Disabled (read-only) field previews + "Update with this info"
+# checkboxes for the "Fetch Info With Maps" dialog.
+--------------------------------------------------------------*/
+
+.places-details-fields {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+/* Empty state — every field was empty, so there's nothing to preview */
+.places-details-empty {
+	padding: 18px;
+	border: 1px dashed var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	color: var(--text-secondary);
+	text-align: center;
+	font-size: 0.9375rem;
+}
+
+/* The read-only preview sits on top of the "nice-form-group" label, so the
+   checkbox row is separated with a small margin. */
+.places-detail-field {
+	margin-bottom: 0;
+}
+
+.places-detail-input[disabled] {
+	opacity: 0.9;
+	color: var(--text-secondary);
+	background: var(--bg-secondary);
+	cursor: default;
+}
+
+/* Checkbox row: "Update with this info" */
+.places-detail-check {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 8px;
+	font-size: 0.8125rem;
+	color: var(--text-secondary);
+	cursor: pointer;
+	user-select: none;
+}
+
+.places-detail-check-input {
+	accent-color: var(--theme-color);
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	cursor: pointer;
+}
+
+/* Footer: primary action (Continue / Confirm) */
+.places-details-footer {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	margin-top: 20px;
+	padding-top: 14px;
+	border-top: 1px solid var(--border-color);
+}
+
+.places-details-continue {
+	padding: 10px 22px;
+	border: none;
+	border-radius: var(--radius-md, 8px);
+	background: var(--theme-color);
+	color: var(--bg-primary);
+	font-family: inherit;
+	font-size: 0.9375rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: opacity var(--transition-fast, 0.2s);
+}
+
+.places-details-continue:hover {
+	opacity: 0.85;
+}
+
+/* Inline error state (keeps the dialog open for a retry) */
+.places-detail-error {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
+	padding: 18px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: rgba(231, 76, 60, 0.08);
+	color: var(--text-primary);
+	text-align: center;
+	font-size: 0.9375rem;
+}
+
+.places-detail-error .btn {
+	margin: 0;
+}
+
+/*--------------------------------------------------------------
+# Places API — Step 3: Closed + Photos (P8)
+# Closed-place notice/options + conditional photo import preview
+# for the "Fetch Info With Maps" dialog.
+--------------------------------------------------------------*/
+
+/* --- Closed-place notice + options --- */
+.places-closed {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 14px;
+	text-align: center;
+	padding: 12px 0;
+}
+
+.places-closed-icon {
+	font-size: 44px;
+	line-height: 1;
+	color: var(--theme-color);
+	opacity: 0.85;
+}
+
+.places-closed-title {
+	margin: 0;
+	font-size: 1.125rem;
+	font-weight: 700;
+	color: var(--text-primary);
+}
+
+.places-closed-message {
+	margin: 0;
+	font-size: 0.9375rem;
+	color: var(--text-secondary);
+	max-width: 420px;
+}
+
+.places-closed-options {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+	max-width: 320px;
+	margin-top: 8px;
+}
+
+.places-closed-option {
+	padding: 12px 18px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: var(--bg-secondary);
+	color: var(--text-primary);
+	font-family: inherit;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background var(--transition-fast, 0.2s), border-color var(--transition-fast, 0.2s);
+}
+
+.places-closed-option:hover {
+	background: var(--bg-tertiary);
+	border-color: var(--theme-color);
+}
+
+/* Destructive action (Delete item) */
+.places-closed-option-danger {
+	border-color: rgba(231, 76, 60, 0.45);
+	color: #e74c3c;
+}
+
+.places-closed-option-danger:hover {
+	background: rgba(231, 76, 60, 0.1);
+	border-color: #e74c3c;
+}
+
+/* --- Already-linked place: update vs find a different place --- */
+.places-linked {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 14px;
+	text-align: center;
+	padding: 12px 0;
+}
+
+.places-linked-icon {
+	font-size: 44px;
+	line-height: 1;
+	color: var(--theme-color);
+	opacity: 0.85;
+}
+
+.places-linked-title {
+	margin: 0;
+	font-size: 1.125rem;
+	font-weight: 700;
+	color: var(--text-primary);
+}
+
+.places-linked-message {
+	margin: 0;
+	font-size: 0.9375rem;
+	color: var(--text-secondary);
+	max-width: 420px;
+}
+
+.places-linked-options {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+	max-width: 360px;
+	margin-top: 8px;
+}
+
+.places-linked-option {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 14px 18px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: var(--bg-secondary);
+	color: var(--text-primary);
+	font-family: inherit;
+	text-align: left;
+	cursor: pointer;
+	transition: background var(--transition-fast, 0.2s), border-color var(--transition-fast, 0.2s);
+}
+
+.places-linked-option:hover {
+	background: var(--bg-tertiary);
+	border-color: var(--theme-color);
+}
+
+.places-linked-option-title {
+	font-size: 0.9375rem;
+	font-weight: 700;
+}
+
+.places-linked-option-caption {
+	font-size: 0.8125rem;
+	font-weight: 400;
+	color: var(--text-secondary);
+}
+
+/* --- Photos import --- */
+.places-photos {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.places-photos-hint {
+	margin: 0;
+	font-size: 0.9375rem;
+	color: var(--text-secondary);
+}
+
+/* "Import photos" checkbox row */
+.places-photos-import {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	color: var(--text-primary);
+	cursor: pointer;
+	user-select: none;
+	align-self: flex-start;
+}
+
+.places-photos-import-input {
+	accent-color: var(--theme-color);
+	width: 17px;
+	height: 17px;
+	flex-shrink: 0;
+	cursor: pointer;
+}
+
+/* Preview grid (first 3 photos) */
+.places-photos-preview {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+}
+
+.places-photos-preview-item {
+	margin: 0;
+	position: relative;
+	border-radius: var(--radius-md, 8px);
+	overflow: hidden;
+	aspect-ratio: 4 / 3;
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
+}
+
+.places-photos-preview-item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.places-photos-preview-item figcaption {
+	position: absolute;
+	top: 6px;
+	left: 6px;
+	width: 22px;
+	height: 22px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: rgba(0, 0, 0, 0.55);
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 700;
+}
+
+/* Empty / error state inside the preview area */
+.places-photos-empty {
+	margin: 0;
+	grid-column: 1 / -1;
+	font-size: 0.875rem;
+	color: var(--text-secondary);
+	text-align: center;
+	padding: 12px 0;
+}
+
+/* Mobile: single-column preview */
+@media (max-width: 480px) {
+	.places-photos-preview {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* --- Apply/persist (done step) --- */
+.places-apply {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 14px;
+	text-align: center;
+	padding: 12px 0;
+}
+
+.places-apply-icon {
+	font-size: 44px;
+	line-height: 1;
+	color: var(--theme-color);
+	opacity: 0.85;
+}
+
+.places-apply-title {
+	margin: 0;
+	font-size: 1.125rem;
+	font-weight: 700;
+	color: var(--text-primary);
+}
+
+.places-apply-summary {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	max-width: 420px;
+}
+
+.places-apply-summary li {
+	font-size: 0.9375rem;
+	color: var(--text-secondary);
+}
+
+/*--------------------------------------------------------------
+# Places API — Bulk "Update with Maps" (P11)
+# Report dialog for the bulk flow. Reuses .places-dialog-container width and
+# the .places-dialog-loading dialog-scoped overlay (spinner ring + cancel X)
+# from P5 — the bulk shell references those exact classes.
+--------------------------------------------------------------*/
+
+/* Wrapper is the positioning context for the absolute loading overlay. */
+.places-bulk {
+	position: relative;
+	text-align: left;
+	min-height: 200px;
+}
+
+/* Header row: close X (top-right, mirrors .places-dialog-header) */
+.places-bulk-header {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	margin-bottom: 6px;
+}
+
+.places-bulk-close {
+	font-size: 26px;
+	color: var(--text-secondary);
+	cursor: pointer;
+	transition: color var(--transition-fast, 0.2s);
+}
+
+.places-bulk-close:hover {
+	color: var(--text-primary);
+}
+
+/* Report body — scrolls internally when the content is tall */
+.places-bulk-content {
+	position: relative;
+	min-height: 160px;
+	max-height: calc(100vh - 260px);
+	overflow-y: auto;
+}
+
+/* Report */
+.places-bulk-report-icon {
+	font-size: 44px;
+	text-align: center;
+	opacity: 0.9;
+	margin-bottom: 8px;
+}
+
+.places-bulk-report-counts {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin: 10px 0 14px;
+	padding: 10px 14px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: rgba(var(--theme-color-rgb), 0.06);
+	font-size: 0.9375rem;
+	color: var(--text-primary);
+}
+
+.places-bulk-report-list {
+	list-style: none;
+	margin: 0 0 14px;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.places-bulk-report-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+	padding: 8px 10px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: var(--bg-tertiary);
+	font-size: 0.875rem;
+}
+
+.places-bulk-report-item-name {
+	font-weight: 600;
+	color: var(--text-primary);
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.places-bulk-report-item-meta {
+	color: var(--text-secondary);
+	font-size: 0.8125rem;
+}
+
+.places-bulk-report-item-error {
+	color: #e74c3c;
+	font-size: 0.8125rem;
+}
+
+/* "[Closed]" badge (shared with the per-item closed flow) */
+.places-bulk-badge {
+	font-size: 0.75rem;
+	font-weight: 700;
+	padding: 2px 8px;
+	border-radius: 999px;
+	background: rgba(231, 76, 60, 0.1);
+	color: #e74c3c;
+	border: 1px solid rgba(231, 76, 60, 0.45);
+}
+
+.places-bulk-footer {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 4px;
+}
+
+/* Bulk apply options (P12) — fields + closed strategies */
+.places-bulk-options {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	margin: 4px 0 14px;
+	padding: 12px 14px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: var(--bg-tertiary);
+}
+
+.places-bulk-options-group {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.places-bulk-options-title {
+	margin: 0 0 2px;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	color: var(--text-secondary);
+}
+
+.places-bulk-option {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.875rem;
+	color: var(--text-primary);
+	cursor: pointer;
+}
+
+.places-bulk-option input[type="radio"] {
+	margin: 0;
+	accent-color: var(--theme-color, #7c3aed);
 }

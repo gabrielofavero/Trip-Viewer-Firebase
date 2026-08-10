@@ -4,7 +4,7 @@
 
 import { getRandomID } from '../utils/dom.js';
 import { TRAVELERS } from '../data/state.js';
-import type { Traveler } from './new-schema.js';
+import type { Traveler } from './schema.js';
 
 /**
  * Generates a new unique traveler ID

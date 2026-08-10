@@ -465,7 +465,7 @@ export async function getPermissions(): Promise<Record<string, boolean>> {
 	const uid = await getUID();
 	if (!uid) return {};
 
-	const permissionTypes = ['unlimitedUploadSize', 'upload'];
+	const permissionTypes = ['unlimitedUploadSize', 'upload', 'canUsePlacesAPI'];
 	const permissions: Record<string, boolean> = {};
 
 	await Promise.all(

@@ -123,6 +123,8 @@ export function addDestinationHTML(category, j, item) {
 	if (id) {
 		getID(`${category}-id-${j}`).value = id;
 	}
+	// Entries previously fetched with Maps show an "Update with Maps" label.
+	updatePlacesFetchButtonLabel(category, j);
 
 	const createdAt = item.createdAt;
 	if (createdAt) {

@@ -111,34 +111,38 @@ class Colors:
 
 @dataclass
 class DestinationData:
-    """Represents the output destination format."""
-    midia: str = ""
-    regiao: str = ""
-    nome: str = ""
+    """Represents the output destination format.
+
+    Uses English field names to match the app's destination entry schema
+    (migrations 13-15 translated field names from Portuguese to English).
+    """
+    media: str = ""
+    region: str = ""
+    name: str = ""
     website: str = ""
-    nota: str = ""
-    valor: str = ""
-    descricao: dict[str, str] = field(default_factory=dict)
+    rating: str = ""
+    price: str = ""
+    description: dict[str, str] = field(default_factory=dict)
     emoji: str = ""
-    novo: bool = True
-    mapa: str = ""
-    criadoEm: str = ""
+    isNew: bool = True
+    map: str = ""
+    createdAt: str = ""
     instagram: str = ""
     id: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "midia": self.midia,
-            "regiao": self.regiao,
-            "nome": self.nome,
+            "media": self.media,
+            "region": self.region,
+            "name": self.name,
             "website": self.website,
-            "nota": self.nota,
-            "valor": self.valor,
-            "descricao": self.descricao,
+            "rating": self.rating,
+            "price": self.price,
+            "description": self.description,
             "emoji": self.emoji,
-            "novo": self.novo,
-            "mapa": self.mapa,
-            "criadoEm": self.criadoEm,
+            "isNew": self.isNew,
+            "map": self.map,
+            "createdAt": self.createdAt,
             "instagram": self.instagram,
             "id": self.id,
         }
@@ -490,51 +494,51 @@ class GooglePlacesTransformer:
 
         dest = DestinationData()
 
-        # --- midia ---
-        dest.midia = ""
+        # --- media ---
+        dest.media = ""
 
-        # --- regiao ---
-        dest.regiao = str(safe_get(primary, "postalAddress", "sublocality", default=""))
+        # --- region ---
+        dest.region = str(safe_get(primary, "postalAddress", "sublocality", default=""))
 
-        # --- nome ---
-        dest.nome = str(safe_get(primary, "displayName", "text", default=""))
+        # --- name ---
+        dest.name = str(safe_get(primary, "displayName", "text", default=""))
 
         # --- website / instagram ---
         website_uri = str(safe_get(primary, "websiteUri", default=""))
         dest.website, dest.instagram = split_website_instagram(website_uri)
 
-        # --- nota ---
-        dest.nota = round_rating(safe_get(primary, "rating", default=None))
+        # --- rating ---
+        dest.rating = round_rating(safe_get(primary, "rating", default=None))
 
-        # --- valor ---
+        # --- price ---
         price_range = primary.get("priceRange")
         price_level = primary.get("priceLevel")
-        dest.valor = resolve_price_level(
+        dest.price = resolve_price_level(
             price_range, price_level, self.moedas, self.price_level_map
         )
 
-        # --- descricao ---
-        dest.descricao = {}
+        # --- description ---
+        dest.description = {}
         for lang in SUPPORTED_LANGUAGES:
             short_key = LANGUAGE_MAP["short"].get(lang, lang)
             place = places_by_lang.get(lang)
             if place:
-                dest.descricao[short_key] = resolve_description(place)
+                dest.description[short_key] = resolve_description(place)
             else:
-                dest.descricao[short_key] = ""
+                dest.description[short_key] = ""
 
         # --- emoji ---
         types_list = primary.get("types")
         dest.emoji = resolve_emoji(types_list, self.emoji_map)
 
-        # --- novo ---
-        dest.novo = True
+        # --- isNew ---
+        dest.isNew = True
 
-        # --- mapa ---
-        dest.mapa = str(safe_get(primary, "googleMapsUri", default=""))
+        # --- map ---
+        dest.map = str(safe_get(primary, "googleMapsUri", default=""))
 
-        # --- criadoEm ---
-        dest.criadoEm = utc_timestamp()
+        # --- createdAt ---
+        dest.createdAt = utc_timestamp()
 
         # --- id ---
         dest.id = str(safe_get(primary, "id", default=""))
@@ -561,24 +565,24 @@ class PeplerTransformer:
         """Transform a single Pepler record into DestinationData."""
         dest = DestinationData()
 
-        # --- midia ---
-        dest.midia = ""
+        # --- media ---
+        dest.media = ""
 
-        # --- regiao ---
-        dest.regiao = self._extract_region(pepler_item)
+        # --- region ---
+        dest.region = self._extract_region(pepler_item)
 
-        # --- nome ---
-        dest.nome = str(pepler_item.get("Business Name", ""))
+        # --- name ---
+        dest.name = str(pepler_item.get("Business Name", ""))
 
         # --- website / instagram ---
         website_raw = str(pepler_item.get("Website", ""))
         dest.website, dest.instagram = split_website_instagram(website_raw)
 
-        # --- nota ---
-        dest.nota = round_rating(pepler_item.get("Rating"))
+        # --- rating ---
+        dest.rating = round_rating(pepler_item.get("Rating"))
 
-        # --- valor ---
-        dest.valor = "default"
+        # --- price ---
+        dest.price = "default"
 
         # --- emoji ---
         categories = [
@@ -593,17 +597,17 @@ class PeplerTransformer:
         ]
         dest.emoji = resolve_emoji_from_categories(categories, self.emoji_map)
 
-        # --- descricao ---
-        dest.descricao = self._resolve_pepler_description(pepler_item)
+        # --- description ---
+        dest.description = self._resolve_pepler_description(pepler_item)
 
-        # --- novo ---
-        dest.novo = True
+        # --- isNew ---
+        dest.isNew = True
 
-        # --- mapa ---
-        dest.mapa = self._clean_maps_link(pepler_item.get("Maps Link", ""))
+        # --- map ---
+        dest.map = self._clean_maps_link(pepler_item.get("Maps Link", ""))
 
-        # --- criadoEm ---
-        dest.criadoEm = utc_timestamp()
+        # --- createdAt ---
+        dest.createdAt = utc_timestamp()
 
         # --- id ---
         dest.id = str(pepler_item.get("Place ID", ""))
