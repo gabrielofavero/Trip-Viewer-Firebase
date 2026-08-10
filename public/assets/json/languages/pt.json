@@ -884,6 +884,7 @@
 		},
 		"details": {
 			"updateLabel": "Atualizar com estas informações",
+			"noData": "Nenhuma informação disponível para este lugar",
 			"back": "Voltar",
 			"continue": "Continuar",
 			"error": "Ocorreu um erro ao carregar as informações do lugar. Tente novamente"

@@ -10,21 +10,23 @@ import { addDestinationsListeners } from './edit-destination.js';
 import { addListenerToRemoveDestination } from './edit-destination.js';
 
 /**
- * "Fetch Info With Maps" button for an entry's accordion header (Places API,
- * P4). Rendered as a SIBLING of the collapse toggle — never nested inside it
- * (a <button> inside a <button> is invalid). Only rendered for users who hold
- * the canUsePlacesAPI permission; returns '' otherwise.
+ * "Fetch Info With Maps" button for an entry (Places API, P4). Rendered at the
+ * top of the entry's accordion body, so it shows when the accordion is
+ * expanded. Only rendered for users who hold the canUsePlacesAPI permission;
+ * returns '' otherwise.
  */
 function getPlacesFetchButtonHTML(category: string, j: number): string {
 	if (PERMISSIONS?.canUsePlacesAPI !== true) return '';
 	const label = translate('placesApi.fetchInfo');
 	return `
-      <button type="button" id="${category}-places-${j}" data-action="open-places-dialog"
-        data-category="${category}" data-index="${j}" data-stop-propagation
-        class="places-fetch-button btn btn-basic btn-sm" title="${label}" aria-label="${label}">
-        <i class="iconify" data-icon="${GOOGLE_MAPS_ICON}"></i>
-        <span class="places-fetch-label">${label}</span>
-      </button>`;
+      <div class="places-fetch-wrapper">
+        <button type="button" id="${category}-places-${j}" data-action="open-places-dialog"
+          data-category="${category}" data-index="${j}" data-stop-propagation
+          class="places-fetch-button btn btn-basic btn-sm" title="${label}" aria-label="${label}">
+          <i class="iconify" data-icon="${GOOGLE_MAPS_ICON}"></i>
+          <span class="places-fetch-label">${label}</span>
+        </button>
+      </div>`;
 }
 
 // Adicionar
@@ -47,12 +49,12 @@ export function addRestaurants() {
             <div class="icon-container">${getNewSvg(`restaurants-title-icon-${j}`)}</div>
           </div>
         </button>
-        ${getPlacesFetchButtonHTML(category, j)}
       </h2>
       <div id="collapse-restaurants-${j}" class="accordion-collapse collapse"
         data-bs-parent="#restaurants-box">
         <div class="accordion-body">
-  
+          ${getPlacesFetchButtonHTML(category, j)}
+
           <div class="nice-form-group">
             <input type="checkbox" id="restaurants-isNew-${j}" class="switch" />
             <label for="restaurants-isNew-${j}">${translate('destination.recent')}</label>
@@ -190,12 +192,12 @@ export function addSnacks() {
             <div class="icon-container">${getNewSvg(`snacks-title-icon-${j}`)}</div>
           </div>
         </button>
-        ${getPlacesFetchButtonHTML(category, j)}
       </h2>
       <div id="collapse-snacks-${j}" class="accordion-collapse collapse" aria-labelledby="heading-snacks-${j}"
         data-bs-parent="#snacks-box">
         <div class="accordion-body">
-  
+          ${getPlacesFetchButtonHTML(category, j)}
+
           <div class="nice-form-group">
             <input type="checkbox" id="snacks-isNew-${j}" class="switch" />
             <label for="snacks-isNew-${j}">${translate('destination.recent')}</label>
@@ -334,12 +336,12 @@ export function addNightlife() {
             <div class="icon-container">${getNewSvg(`nightlife-title-icon-${j}`)}</i></div>
           </div>
         </button>
-        ${getPlacesFetchButtonHTML(category, j)}
       </h2>
       <div id="collapse-nightlife-${j}" class="accordion-collapse collapse" aria-labelledby="heading-nightlife-${j}"
         data-bs-parent="#nightlife-box">
         <div class="accordion-body">
-  
+          ${getPlacesFetchButtonHTML(category, j)}
+
           <div class="nice-form-group">
             <input type="checkbox" id="nightlife-isNew-${j}" class="switch" />
             <label for="nightlife-isNew-${j}">${translate('destination.recent')}</label>
@@ -477,12 +479,12 @@ export function addTourism() {
             <div class="icon-container">${getNewSvg(`tourism-title-icon-${j}`)}</div>
           </div>
         </button>
-        ${getPlacesFetchButtonHTML(category, j)}
       </h2>
       <div id="collapse-tourism-${j}" class="accordion-collapse collapse" aria-labelledby="heading-tourism-${j}"
         data-bs-parent="#tourism-box">
         <div class="accordion-body">
-  
+          ${getPlacesFetchButtonHTML(category, j)}
+
           <div class="nice-form-group">
             <input type="checkbox" id="tourism-isNew-${j}" class="switch" />
             <label for="tourism-isNew-${j}">${translate('destination.recent')}</label>
@@ -620,13 +622,13 @@ export function addShopping() {
             <div class="icon-container">${getNewSvg(`shopping-title-icon-${j}`)}</div>
           </div>
         </button>
-        ${getPlacesFetchButtonHTML(category, j)}
       </h2>
 
       <div id="collapse-shopping-${j}" class="accordion-collapse collapse" aria-labelledby="heading-shopping-${j}"
         data-bs-parent="#shopping-box">
         <div class="accordion-body">
-  
+          ${getPlacesFetchButtonHTML(category, j)}
+
           <div class="nice-form-group">
             <input type="checkbox" id="shopping-isNew-${j}" class="switch" />
             <label for="shopping-isNew-${j}">${translate('destination.recent')}</label>

@@ -1,9 +1,9 @@
 // ======= Places API (New) — Service Layer =======
-// Wraps the Google Places API (New) Cloudflare routes.
-// The backend routes are NOT built yet: while PLACES_API_MOCK is true the
-// service returns fixture data so every downstream feature is buildable and
-// demoable. When the worker ships, set PLACES_API_MOCK = false and point
-// PLACES_API_BASE_URL at the real endpoint — nothing else needs to change.
+// Wraps the Google Places API (New) Cloudflare routes (deployed worker).
+// PLACES_API_BASE_URL resolves per environment by hostname (same pattern as
+// firebase-config.js): localhost → wrangler dev (:8787); dev/prd → the single
+// deployed worker route. Mock fixtures are only used while PLACES_API_MOCK is
+// true (local development without the worker running).
 //
 // Every request sends the Firebase ID token (`Authorization: Bearer <token>`)
 // plus `lang` and `photos`; Cloudflare derives the `uid` from the verified
@@ -28,10 +28,26 @@ import type {
 } from '../../models/places-api.model.js';
 import { getFirebaseIdToken } from '../firebase/auth.js';
 
-/** Real Cloudflare base URL — TODO: replace with the real endpoint when the worker ships. */
-export const PLACES_API_BASE_URL = 'https://PLACEHOLDER.api.tripviewer.dev';
-/** Mock mode — TODO: set false once the Cloudflare routes are live. */
-export const PLACES_API_MOCK = true;
+/** Deployed Cloudflare worker route (dev + prd share this one URL). */
+const WORKER_DEPLOYED_URL = 'https://trip-viewer-places-api.gabriel-o-favero.workers.dev';
+/** Local worker via `wrangler dev` (worker/README.md → Run locally). */
+const WORKER_LOCAL_URL = 'http://localhost:8787';
+
+/**
+ * Resolve the worker base URL per environment by hostname (same pattern as
+ * firebase-config.js): localhost → wrangler dev; any deployed Firebase host →
+ * the single deployed route.
+ */
+function resolveApiBaseUrl(): string {
+	const hostname = window?.location?.hostname || '';
+	if (hostname === 'localhost' || hostname === '127.0.0.1') return WORKER_LOCAL_URL;
+	return WORKER_DEPLOYED_URL;
+}
+
+/** Cloudflare worker base URL, resolved per environment by hostname. */
+export const PLACES_API_BASE_URL = resolveApiBaseUrl();
+/** Mock mode — off: the Cloudflare routes are live. */
+export const PLACES_API_MOCK = false;
 
 /** Options shared by every Places API call. */
 export interface PlacesApiOptions {
@@ -228,7 +244,11 @@ export async function getPlacePhotos(
 	const params: Record<string, string> = { lang };
 	const url = buildUrl(`${PLACES_API_BASE_URL}/places/${encodeURIComponent(id)}/photos`, params);
 	const data = await request<PlacePhotosResponse>(url, token, options);
-	return data.photos ?? [];
+	// The worker returns `photoUri` (a keyless CDN URL); the app consumes `url`.
+	return (data.photos ?? []).map((photo) => ({
+		name: photo.name,
+		url: photo.photoUri ?? '',
+	}));
 }
 
 // ============================================================

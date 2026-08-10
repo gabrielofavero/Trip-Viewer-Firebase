@@ -74,7 +74,8 @@ async function throwUpstreamError(res) {
 }
 
 /**
- * Text search (route 1). `POST /places:searchText`, ≤ 5 results.
+ * Text search (route 1). `POST /places:searchText`, ≤ 20 results (pageSize max
+ * per request — cost is per request, not per result, so more results is free).
  * @param {string} query - The text query (`q`).
  * @param {{apiKey: string, lang?: string, photos?: boolean}} opts
  * @returns {Promise<Record<string, unknown>>} Raw Google JSON body.
@@ -88,7 +89,7 @@ export async function searchText(query, { apiKey, lang = 'en', photos = false } 
 			'X-Goog-Api-Key': apiKey,
 			'X-Goog-FieldMask': fieldMask({ photos, search: true }),
 		},
-		body: JSON.stringify({ textQuery: query, pageSize: 5, languageCode }),
+		body: JSON.stringify({ textQuery: query, pageSize: 20, languageCode }),
 		signal: AbortSignal.timeout(TIMEOUT_MS),
 	});
 	if (!res.ok) await throwUpstreamError(res);

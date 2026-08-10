@@ -193,7 +193,7 @@ async function authenticate(request, { mode, config, env }) {
 // --- Route handlers -------------------------------------------------------
 
 /**
- * Route 1: `GET /places/search?q&lang&photos` → `{ results }` (≤ 5).
+ * Route 1: `GET /places/search?q&lang&photos` → `{ results }` (≤ 20).
  *
  * Quota: a `photos=true` request runs on the real (paid) photos key; when that
  * budget is ≥ 90% spent the worker degrades it to `photos=false` (free trial

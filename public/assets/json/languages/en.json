@@ -887,6 +887,7 @@
 		},
 		"details": {
 			"updateLabel": "Update with this info",
+			"noData": "No information available for this place",
 			"back": "Back",
 			"continue": "Continue",
 			"error": "An error occurred while loading the place information. Please try again"

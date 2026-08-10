@@ -75,8 +75,10 @@ const FIELD_LABEL_KEYS: Record<PlaceFieldKey, string> = {
  * loading overlay, then render the read-only field previews + checkboxes.
  */
 async function renderDetailsStep(context: PlacesDialogContext): Promise<string> {
-	// Resolve the place id: the selected search result, else the entry's
-	// previously-saved placeAPI.id (jump straight to details, Open Question 10).
+	// The selected search result (route 1) already carries the full normalized
+	// place data, so we reuse it directly and skip the redundant details call
+	// (route 2). Route 2 only runs for a previously-saved placeAPI.id (jump
+	// straight to details, Open Question 10) where there is no search result.
 	const candidate = getStepData<PlaceSearchResult>(CANDIDATE_KEY);
 	const placeId = candidate?.id ?? context.placeAPI?.id ?? '';
 	if (!placeId) {
@@ -84,26 +86,30 @@ async function renderDetailsStep(context: PlacesDialogContext): Promise<string> 
 	}
 
 	let details: PlaceDetails | null;
-	try {
-		// Firebase token + lang are resolved by the service; photos default to
-		// true here because the place was just searched (new — no saved id yet).
-		details = await withDialogLoading(
-			(signal) =>
-				getPlace(placeId, {
-					signal,
-					onLimited: (limited) => {
-						if (limited) notifyPlacesLimited();
-					},
-				}),
-			getStepLoadingMessage('details'),
-		);
-	} catch (error) {
-		// Non-abort failure — surface inline so the user can retry in place.
-		console.error('[places-details] Failed to load place', error);
-		return renderError(error);
-	}
+	if (candidate) {
+		details = candidate;
+	} else {
+		try {
+			// Firebase token + lang are resolved by the service; photos default to
+			// true here because the place was just searched (new — no saved id yet).
+			details = await withDialogLoading(
+				(signal) =>
+					getPlace(placeId, {
+						signal,
+						onLimited: (limited) => {
+							if (limited) notifyPlacesLimited();
+						},
+					}),
+				getStepLoadingMessage('details'),
+			);
+		} catch (error) {
+			// Non-abort failure — surface inline so the user can retry in place.
+			console.error('[places-details] Failed to load place', error);
+			return renderError(error);
+		}
 
-	if (details === null) return ''; // cancelled (dialog closed / X clicked)
+		if (details === null) return ''; // cancelled (dialog closed / X clicked)
+	}
 
 	setStepData(DETAILS_KEY, details);
 	return renderDetailsHTML(details);
@@ -113,18 +119,21 @@ async function renderDetailsStep(context: PlacesDialogContext): Promise<string> 
 function renderDetailsHTML(details: PlaceDetails): string {
 	const lang = getLanguagePackName();
 
-	const rows = FIELD_KEYS.map((field) => {
-		const label = translate(FIELD_LABEL_KEYS[field]);
-		const value = getFieldDisplayValue(details, field);
-		const caption =
-			field === 'description' && value !== ''
-				? `<div class="caption">${escapeHtml(
-						translate('labels.description.lang', {
-							lang: translate(`labels.language.${lang}`),
-						}),
-					)}</div>`
-				: '';
-		return `
+	// Skip empty fields: nothing to preview, and no "Update with this info"
+	// checkbox to offer — an empty value can never overwrite existing data.
+	const rows = FIELD_KEYS.filter((field) => getFieldDisplayValue(details, field) !== '')
+		.map((field) => {
+			const label = translate(FIELD_LABEL_KEYS[field]);
+			const value = getFieldDisplayValue(details, field);
+			const caption =
+				field === 'description'
+					? `<div class="caption">${escapeHtml(
+							translate('labels.description.lang', {
+								lang: translate(`labels.language.${lang}`),
+							}),
+						)}</div>`
+					: '';
+			return `
 		<div class="nice-form-group places-detail-field">
 			<label>${escapeHtml(label)}</label>
 			<input type="text" class="places-detail-input" value="${escapeAttr(value)}" disabled />
@@ -134,11 +143,17 @@ function renderDetailsHTML(details: PlaceDetails): string {
 				<span>${translate('placesApi.details.updateLabel')}</span>
 			</label>
 		</div>`;
-	}).join('');
+		})
+		.join('');
+
+	const emptyState =
+		rows === ''
+			? `<p class="places-details-empty">${escapeHtml(translate('placesApi.details.noData'))}</p>`
+			: '';
 
 	return `
 	<div class="places-details">
-		<div class="places-details-fields">${rows}</div>
+		<div class="places-details-fields">${rows}${emptyState}</div>
 		<div class="places-details-footer">
 			<button type="button" class="places-details-continue" data-action="places-details-continue">
 				${translate('placesApi.details.continue')}

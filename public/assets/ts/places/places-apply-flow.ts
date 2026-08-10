@@ -1,20 +1,16 @@
-// ======= Places API — Apply & Persist (per-item) (P9) =======
-// The final "done" step of the "Fetch Info With Maps" dialog. Renders a short
-// summary of what will be applied and an Apply button; on confirm it:
+// ======= Places API — Apply (per-item) (P9) =======
+// Applies the fetched place info to the entry and closes the dialog. It is
+// called directly when the "Fetch Info With Maps" flow finishes (photos step
+// or a closed-place decision) — there is NO separate confirmation step. It:
 //
 //   1. Always saves the fetched info into the entry's `placeAPI`
 //      (applyPlaceData persistence rule — see docs/ai-analysis/6-places-api-edit-destination.md §1.3).
 //   2. Overrides the entry values only for the fields the user checked.
 //   3. Applies the closed-place decision (delete / ignore / add [Closed] label).
 //   4. Replaces `entry.images` with the imported photos (first 3) when chosen.
-//   5. Updates the edit form DOM, refreshes the pending destination data, and
-//      persists immediately via a dot-path `updateDestination()` so the dialog's
-//      work is never lost (plan §5 P9 step 3 — default: immediate update).
-//
-// This module self-registers (at import time):
-//   - the 'done' step renderer via registerStepRenderer(),
-//   - the 'places-apply-confirm' click action via registerActions()
-//     (data-action delegation, see ui/actions.ts).
+//   5. Updates the edit form DOM and refreshes the pending destination data —
+//      NO immediate Firestore write. The page's normal Save button persists
+//      everything; the dialog only stages the data locally.
 //
 // Reads cross-step data produced by the earlier steps:
 //   - P7 (places-details-step): DETAILS_KEY / CHECKED_KEY
@@ -23,16 +19,13 @@
 //
 // References:
 // - docs/ai-analysis/6-places-api-edit-destination.md (§4, §5 P9)
-// - places/places-dialog.ts (P5 shell: registerStepRenderer, getStepData, closeDialog, …)
-// - data/services/destination.service.ts (updateDestination dot-path)
+// - places/places-dialog.ts (P5 shell: getStepData, closeDialog, …)
 
-import { registerActions } from '../ui/actions.js';
 import { getLanguagePackName, translate } from '../i18n/translation.js';
 import { getID, getOrCreateCategoryID, removeChildWithValidation } from '../utils/dom.js';
 import { displayError, openToast } from '../utils/messages.js';
 import { buildDS, removeSelectorDS, updateValueDS } from '../ui/dynamic-select.js';
-import { DOCUMENT_ID, FIRESTORE_DESTINATIONS_DATA, FIRESTORE_DESTINATIONS_NEW_DATA } from '../data/state.js';
-import { updateDestination } from '../data/services/destination.service.js';
+import { FIRESTORE_DESTINATIONS_DATA, FIRESTORE_DESTINATIONS_NEW_DATA } from '../data/state.js';
 import { setDescription, updateDescriptionButtonLabel } from '../pages/edit-destination/categories/description.js';
 import { loadCurrencyValueAndVisibility } from '../pages/edit-destination/categories/price.js';
 import {
@@ -51,10 +44,8 @@ import {
 	getDialogContext,
 	getStepData,
 	hideDialogLoading,
-	registerStepRenderer,
 	showDialogLoading,
 } from './places-dialog.js';
-import type { PlacesDialogContext } from './places-dialog.js';
 import { CHECKED_KEY, DETAILS_KEY } from './places-details-step.js';
 import {
 	CLOSED_DECISION_KEY,
@@ -69,69 +60,16 @@ import type { PlaceAPI, PlaceImage, PlaceItem } from '../models/schema.js';
 const MAX_PHOTOS = 3;
 
 // ------------------------------------------------------------------
-// Step renderer: done
+// Apply (called directly at the end of the flow — no confirmation step)
 // ------------------------------------------------------------------
 
 /**
- * Render the 'done' step: a summary of what will be applied + an Apply button.
- * Reached from P8 via goTo('done') — the back button returns to the previous
- * step (photos / closed) so the user can still change their mind.
+ * Apply the fetched place to the entry, update the form + pending data, and
+ * close the dialog. Nothing is written to Firestore here — the page's Save
+ * button persists it. Exported so the photos/closed step (P8) calls it when
+ * the user finishes the flow.
  */
-function renderDoneStep(_context: PlacesDialogContext): string {
-	const details = getStepData<PlaceDetails>(DETAILS_KEY);
-	const checked = getStepData<PlaceFieldKey[]>(CHECKED_KEY) ?? [];
-	const closedDecision = getStepData<ClosedDecision>(CLOSED_DECISION_KEY);
-	const importPhotos = getStepData<boolean>(IMPORT_PHOTOS_KEY) ?? false;
-	const importedPhotos = getStepData<PlaceImage[]>(IMPORTED_PHOTOS_KEY) ?? [];
-
-	if (!details) {
-		return `<div class="places-dialog-error">${escapeHtml(
-			translate('placesApi.apply.error'),
-		)}</div>`;
-	}
-
-	const lines: string[] = [];
-
-	if (closedDecision === 'delete') {
-		lines.push(escapeHtml(translate('placesApi.apply.deleteItem')));
-	} else {
-		lines.push(escapeHtml(translate('placesApi.apply.fields', { count: String(checked.length) })));
-		if (closedDecision === 'label') {
-			lines.push(escapeHtml(translate('placesApi.apply.closedLabel')));
-		}
-		if (importPhotos && importedPhotos.length > 0) {
-			lines.push(
-				escapeHtml(translate('placesApi.apply.photos', { count: String(importedPhotos.length) })),
-			);
-		}
-	}
-
-	return `
-	<div class="places-apply">
-		<div class="places-apply-icon">
-			<i class="iconify" data-icon="material-symbols-light:check_circle"></i>
-		</div>
-		<h3 class="places-apply-title">${escapeHtml(translate('placesApi.apply.title'))}</h3>
-		<ul class="places-apply-summary">
-			${lines.map((line) => `<li>${line}</li>`).join('')}
-		</ul>
-		<div class="places-details-footer">
-			<button type="button" class="places-details-continue" data-action="places-apply-confirm">
-				${escapeHtml(translate('placesApi.apply.confirm'))}
-			</button>
-		</div>
-	</div>`;
-}
-
-// ------------------------------------------------------------------
-// Confirm handler (apply + persist)
-// ------------------------------------------------------------------
-
-/**
- * Apply the fetched place to the entry, update the form, refresh the pending
- * data, and persist immediately via dot-path updateDestination().
- */
-async function handleApplyConfirm(): Promise<void> {
+export function applyAndClose(): void {
 	const context = getDialogContext();
 	if (!context) return;
 
@@ -149,13 +87,6 @@ async function handleApplyConfirm(): Promise<void> {
 	const category = context.category;
 	const j = context.j;
 
-	// Whether the entry already exists in Firestore: the hidden id input is
-	// populated for loaded destinations, empty for brand-new, never-saved
-	// entries. Only existing entries are written to the DB immediately — new
-	// entries are staged in the form + pending data and created by the page's
-	// normal Save flow (which reuses this id, made sticky below).
-	const hadExistingId = Boolean(getID(`${category}-id-${j}`)?.value);
-
 	const id = getOrCreateCategoryID(category, j);
 	// Make the generated id sticky so a later Save uses the same entry id.
 	const idInput = getID(`${category}-id-${j}`);
@@ -164,9 +95,9 @@ async function handleApplyConfirm(): Promise<void> {
 	showDialogLoading(translate('placesApi.loading.applying'));
 
 	try {
-		// Closed-place "delete" decision: remove the item everywhere.
+		// Closed-place "delete" decision: remove the item locally.
 		if (closedDecision === 'delete') {
-			await deleteItem(category, j, id, hadExistingId);
+			deleteItem(category, j, id);
 			return;
 		}
 
@@ -200,12 +131,8 @@ async function handleApplyConfirm(): Promise<void> {
 		updateFormEntry(category, j, entry, checked, applyClosedLabel, applyPhotos);
 
 		// Refresh the pending destination data (same keys buildDestinationCategoryObject uses).
+		// No Firestore write here — the page's Save button persists everything.
 		refreshPendingData(category, id, entry);
-
-		// Persist immediately (dot-path update) so the dialog's work is never lost.
-		if (hadExistingId) {
-			await persistEntry(category, id, entry, checked, applyPhotos);
-		}
 
 		closeDialog();
 		void refreshBulkButton();
@@ -218,68 +145,15 @@ async function handleApplyConfirm(): Promise<void> {
 }
 
 // ------------------------------------------------------------------
-// Persistence (dot-path update / delete)
+// Delete handling (local-only)
 // ------------------------------------------------------------------
 
 /**
- * Persist the entry via a single dot-path update on destinations/{id}:
- * placeAPI is always written; checked fields override the entry values; images
- * are written only when photos were imported.
+ * Apply the "delete" closed decision: remove the entry from the form and the
+ * in-memory data. No Firestore write happens here — the page's Save button
+ * persists the removal.
  */
-async function persistEntry(
-	category: string,
-	id: string,
-	entry: PlaceItem,
-	fieldsToApply: readonly PlaceFieldKey[],
-	applyPhotos: boolean,
-): Promise<void> {
-	if (!DOCUMENT_ID) {
-		throw new Error(translate('placesApi.apply.error'));
-	}
-
-	const base = `${category}.${id}`;
-	const updates: Record<string, unknown> = {
-		[`${base}.placeAPI`]: entry.placeAPI,
-	};
-
-	for (const field of fieldsToApply) {
-		if (field === 'description') {
-			updates[`${base}.description`] = entry.description;
-		} else {
-			updates[`${base}.${field}`] = entry[field];
-		}
-	}
-
-	if (applyPhotos) {
-		updates[`${base}.images`] = entry.images;
-	}
-
-	const result = await updateDestination(DOCUMENT_ID, updates);
-	if (!result?.success) {
-		throw new Error(result?.message || translate('placesApi.apply.error'));
-	}
-}
-
-/**
- * Apply the "delete" closed decision: remove the entry from the form, the
- * in-memory data, and (when it was already persisted) from Firestore.
- */
-async function deleteItem(
-	category: string,
-	j: number,
-	id: string,
-	hadExistingId: boolean,
-): Promise<void> {
-	// Persist the deletion first, so a DB failure leaves the form intact.
-	if (hadExistingId && DOCUMENT_ID) {
-		const result = await updateDestination(DOCUMENT_ID, {
-			[`${category}.${id}`]: firebase.firestore.FieldValue.delete(),
-		});
-		if (!result?.success) {
-			throw new Error(result?.message || translate('placesApi.apply.error'));
-		}
-	}
-
+function deleteItem(category: string, j: number, id: string): void {
 	// Remove the accordion item + its dynamic selectors + staged images.
 	removeChildWithValidation(category, j);
 	removeSelectorDS('region', `${category}-region-select-${j}`);
@@ -456,32 +330,4 @@ function updateAccordionTitle(category: string, j: number, applyClosedLabel = fa
 	}
 }
 
-// ------------------------------------------------------------------
-// Event wiring
-// ------------------------------------------------------------------
 
-/** Register the 'done' step renderer + the confirm action (runs once on import). */
-function registerApplyFlow(): void {
-	registerStepRenderer('done', renderDoneStep);
-	registerActions({
-		'places-apply-confirm': () => {
-			void handleApplyConfirm();
-		},
-	});
-}
-
-// ------------------------------------------------------------------
-// Init (self-registration)
-// ------------------------------------------------------------------
-
-registerApplyFlow();
-
-// ------------------------------------------------------------------
-// HTML escaping helpers (local copies, same pattern as backup modules)
-// ------------------------------------------------------------------
-
-function escapeHtml(value: string): string {
-	const div = document.createElement('div');
-	div.textContent = value;
-	return div.innerHTML;
-}

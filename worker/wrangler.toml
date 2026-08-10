@@ -44,5 +44,5 @@ FIREBASE_AUTH_EMULATOR_HOST = "127.0.0.1:9099"
 # (per-isolate, best-effort — fine for a single editor).
 # [[kv_namespaces]]
 # binding = "PLACES_QUOTA"
-# id = "<production_namespace_id>"
+# id = "dc6732b03c0749b5ab5de4cd7e3a1676"
 # preview_id = "<preview_namespace_id>"

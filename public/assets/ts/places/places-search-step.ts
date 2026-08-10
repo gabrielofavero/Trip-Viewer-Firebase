@@ -41,8 +41,8 @@ import { getID } from '../utils/dom.js';
 /** Cross-step data key where the selected search result is stored (P7 reads it). */
 const CANDIDATE_KEY = 'placeDetailsCandidate';
 
-/** Max results rendered (the route returns ≤ 5; defensive cap). */
-const MAX_RESULTS = 5;
+/** Max results rendered (the route returns ≤ 20; defensive cap). */
+const MAX_RESULTS = 20;
 
 /** Results of the most recent search, indexed by `data-index` in the DOM. */
 let _results: PlaceSearchResult[] = [];
@@ -93,6 +93,11 @@ async function runSearch(): Promise<void> {
 			(signal) =>
 				searchPlaces(query, {
 					signal,
+					// A brand-new import always needs photo refs, so search requests
+					// `photos: true` (runs on the paid photos key). `photos: false`
+					// is only for refreshing an existing entry (bulk update), where
+					// images are not re-imported.
+					photos: true,
 					onLimited: (limited) => {
 						if (limited) notifyPlacesLimited();
 					},

@@ -211,7 +211,7 @@ Common error codes:
 
 | Route | Params | Response |
 |---|---|---|
-| `GET /places/search` | `q`, `lang`, `photos=true`; token in header | `{ results }` (≤ 5) |
+| `GET /places/search` | `q`, `lang`, `photos=true`; token in header | `{ results }` (≤ 20) |
 | `GET /places/{placeId}` | `lang`, `photos`; token in header | `{ place }` |
 | `GET /places/{placeId}/photos` | `lang`; token in header | `{ photos }` (first 3, each `{ name, photoUri }`) |
 
@@ -474,7 +474,7 @@ curl -i -H "Origin: http://localhost:8787" \
   -H "Authorization: Bearer <token>" \
   "http://localhost:8787/places/search?q=restaurant&lang=xx"
 
-# 200 — search (≤ 5 normalized results)
+# 200 — search (≤ 20 normalized results)
 curl -i -H "Origin: http://localhost:8787" \
   -H "Authorization: Bearer <token>" \
   "http://localhost:8787/places/search?q=pizza%20rome&lang=en"

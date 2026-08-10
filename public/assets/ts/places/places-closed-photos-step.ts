@@ -44,6 +44,7 @@ import {
 	withDialogLoading,
 } from './places-dialog.js';
 import type { PlacesDialogContext } from './places-dialog.js';
+import { applyAndClose } from './places-apply-flow.js';
 import { getID } from '../utils/dom.js';
 
 /** Cross-step data key where P7 stores the fetched full place details. */
@@ -241,16 +242,16 @@ async function loadAndRenderPhotos(): Promise<void> {
 // Action handlers
 // ------------------------------------------------------------------
 
-/** Delete option — record the decision and end the flow (P9 deletes the item). */
+/** Delete option — record the decision and apply it (deletes the item + closes). */
 function handleClosedDelete(): void {
 	setStepData(CLOSED_DECISION_KEY, 'delete' satisfies ClosedDecision);
-	void goTo('done');
+	applyAndClose();
 }
 
-/** Ignore option — record the decision and end the flow (P9 keeps the entry). */
+/** Ignore option — record the decision and apply the checked fields (+ close). */
 function handleClosedIgnore(): void {
 	setStepData(CLOSED_DECISION_KEY, 'ignore' satisfies ClosedDecision);
-	void goTo('done');
+	applyAndClose();
 }
 
 /** Add [Closed] label option — record the decision and continue the normal flow. */
@@ -259,14 +260,14 @@ function handleClosedLabel(): void {
 	void goTo('photos');
 }
 
-/** Finish the photos step: sync the checkbox state into cross-step data. */
+/** Finish the photos step: sync the checkbox state, then apply + close. */
 function handlePhotosContinue(): void {
 	const checkbox = getID<HTMLInputElement>('places-photos-import-input');
 	if (checkbox && !checkbox.checked) {
 		setStepData(IMPORT_PHOTOS_KEY, false);
 		setStepData(IMPORTED_PHOTOS_KEY, []);
 	}
-	void goTo('done');
+	applyAndClose();
 }
 
 // ------------------------------------------------------------------

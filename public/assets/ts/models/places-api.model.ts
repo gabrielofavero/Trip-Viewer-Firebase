@@ -48,7 +48,15 @@ export interface PlaceSearchResult {
 /** Route 2 response item: same shape as PlaceSearchResult, fully populated. */
 export interface PlaceDetails extends PlaceSearchResult {}
 
-/** Route 3 response item — a directly fetchable image. */
+/** Route 3 wire item (as returned by the worker) — a directly fetchable image. */
+export interface PlacePhotoWire {
+	/** Photo reference id. */
+	name: string;
+	/** Direct image URL (keyless CDN). */
+	photoUri: string;
+}
+
+/** Route 3 response item — the app's internal shape (url aliases photoUri). */
 export interface PlacePhoto {
 	/** Photo reference id. */
 	name: string;
@@ -78,7 +86,7 @@ export interface PlaceDetailsResponse {
 
 /** Route 3 response: { photos: [...], limited? } */
 export interface PlacePhotosResponse {
-	photos: PlacePhoto[];
+	photos: PlacePhotoWire[];
 	/** True when the worker skipped photos (monthly quota nearly reached — no Google call). */
 	limited?: boolean;
 }

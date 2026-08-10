@@ -1294,7 +1294,7 @@
 }
 
 /*--------------------------------------------------------------
-# Places API — "Fetch Info With Maps" button in entry accordion headers (P4)
+# Places API — "Fetch Info With Maps" button at the top of entry accordion bodies (P4)
 --------------------------------------------------------------*/
 .accordion-header--places {
 	display: flex;
@@ -1306,11 +1306,16 @@
 	width: auto;
 }
 
+.places-fetch-wrapper {
+	display: flex;
+	justify-content: flex-end;
+	margin: 0 0 12px;
+}
+
 .places-fetch-button {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
-	margin-right: 8px;
 	flex-shrink: 0;
 	font-weight: 600;
 	line-height: 1;
@@ -2671,6 +2676,9 @@ fieldset.modern-radio-group {
 	font-size: 28px;
 	color: var(--text-secondary);
 	cursor: pointer;
+	/* Always keep the close X at the top-right, even while the back button is
+	   hidden — justify-content: space-between alone would push it to the left. */
+	margin-left: auto;
 	transition: color var(--transition-fast, 0.2s);
 }
 
@@ -2789,6 +2797,14 @@ fieldset.modern-radio-group {
 		max-height: none;
 		flex: 1 1 auto;
 		min-height: 0;
+	}
+
+	/* The places dialog container must fill the screen on mobile — undo the
+	   desktop width above so the .fullscreen-dialog rules in
+	   components/modal.css win (same specificity, declared later here). */
+	.places-dialog-container.fullscreen-dialog {
+		width: 100%;
+		max-width: none;
 	}
 }
 
@@ -2967,6 +2983,16 @@ fieldset.modern-radio-group {
 	display: flex;
 	flex-direction: column;
 	gap: 14px;
+}
+
+/* Empty state — every field was empty, so there's nothing to preview */
+.places-details-empty {
+	padding: 18px;
+	border: 1px dashed var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	color: var(--text-secondary);
+	text-align: center;
+	font-size: 0.9375rem;
 }
 
 /* The read-only preview sits on top of the "nice-form-group" label, so the

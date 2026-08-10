@@ -341,6 +341,13 @@ export function displayError(error, tryAgain = false) {
 		buttons.push({ type: 'home' });
 	}
 	properties.buttons = buttons;
+
+	// Error dialogs carry explicit actions (Try again / Home) — hide the X
+	// close button (and Escape dismissal) so the user must act. Only keep the
+	// X when there's no dismissible button at all (e.g. a bare error on the
+	// index page) so the dialog can never get stuck open.
+	properties.closeButton = buttons.length === 0;
+
 	displayFullMessage(properties);
 }
 
