@@ -46,6 +46,7 @@ import {
 import type { PlacesDialogContext } from './places-dialog.js';
 import { applyAndClose } from './places-apply-flow.js';
 import { UPDATE_EXISTING_KEY } from './places-details-step.js';
+import { INCLUDE_PHOTOS_KEY } from './places-search-step.js';
 import { getID } from '../utils/dom.js';
 
 /** Cross-step data key where P7 stores the fetched full place details. */
@@ -258,8 +259,12 @@ function handleClosedIgnore(): void {
 /** Add [Closed] label option — record the decision and continue the normal flow. */
 function handleClosedLabel(): void {
 	setStepData(CLOSED_DECISION_KEY, 'label' satisfies ClosedDecision);
-	// Updating an existing linked place skips the photos step → apply directly.
-	if (getStepData<boolean>(UPDATE_EXISTING_KEY)) {
+	// Skip the photos step when updating an existing linked place OR when the
+	// user left "Include photos" off on search — never touch the photos route.
+	if (
+		getStepData<boolean>(UPDATE_EXISTING_KEY) ||
+		!getStepData<boolean>(INCLUDE_PHOTOS_KEY)
+	) {
 		applyAndClose();
 		return;
 	}

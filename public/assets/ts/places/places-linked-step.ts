@@ -29,10 +29,6 @@ import { UPDATE_EXISTING_KEY } from './places-details-step.js';
 function renderLinkedStep(_context: PlacesDialogContext): string {
 	return `
 	<div class="places-linked">
-		<div class="places-linked-icon">
-			<i class="iconify" data-icon="material-symbols-light:link"></i>
-		</div>
-		<h3 class="places-linked-title">${escapeHtml(translate('placesApi.linked.title'))}</h3>
 		<p class="places-linked-message">${escapeHtml(translate('placesApi.linked.message'))}</p>
 		<div class="places-linked-options">
 			<button type="button" class="places-linked-option" data-action="places-linked-update">

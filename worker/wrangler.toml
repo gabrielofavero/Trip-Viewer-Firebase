@@ -45,11 +45,14 @@ PLACES_PHOTOS_ENABLED = "true"
 #   wrangler secret put PLACES_PHOTOS_BUDGET        # photos cap (default 1000)
 #   wrangler secret put PLACES_QUOTA_DEGRADE_RATIO  # optional, default 0.9
 #
-# Optional: share the quota ledger across worker isolates with a KV namespace.
-# Create once (`npx wrangler kv namespace create PLACES_QUOTA`), then uncomment
-# and paste the ids below and redeploy. Without it the ledger is in-memory
-# (per-isolate, best-effort — fine for a single editor).
-# [[kv_namespaces]]
-# binding = "PLACES_QUOTA"
-# id = "dc6732b03c0749b5ab5de4cd7e3a1676"
-# preview_id = "<preview_namespace_id>"
+# Quota ledger persistence (worker/src/quota.js). The PLACES_QUOTA KV
+# namespace backs the monthly call counters:
+#   - `wrangler dev` (local) — miniflare emulates this KV and persists it to
+#     `.wrangler/state/` on disk, so the ledger survives dev restarts.
+#   - Deployed — the same binding shares the ledger across every isolate.
+# (If the namespace ever needs recreating: `npx wrangler kv namespace create
+# PLACES_QUOTA`, then paste the new id here. `preview_id` is deprecated in
+# current wrangler — omit it.)
+[[kv_namespaces]]
+binding = "PLACES_QUOTA"
+id = "938e283bc132459faf824b4d22c40888"

@@ -322,7 +322,7 @@ flowchart TD
 ```
 placesApi.fetchInfo              // "Fetch Info With Maps"
 placesApi.updateWithMaps         // "Update with Maps"
-placesApi.dialog.title           // "Places"
+placesApi.dialog.title           // "Import with maps"
 placesApi.noPermission           // "You don't have permission to use Places API"
 placesApi.search.title           // "Search"
 placesApi.search.placeholder

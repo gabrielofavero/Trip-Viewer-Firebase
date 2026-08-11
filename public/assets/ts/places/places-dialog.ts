@@ -22,6 +22,7 @@
 import { cloneObject, getID } from '../utils/dom.js';
 import {
 	closeMessage,
+	displayError,
 	displayFullMessage,
 	getContainersInput,
 	MESSAGE_PROPERTIES,
@@ -29,6 +30,7 @@ import {
 } from '../utils/messages.js';
 import { translate } from '../i18n/translation.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../data/state.js';
+import { PLACES_API_ENABLED } from '../data/services/places-api.service.js';
 
 /** The steps the Places dialog can be in. */
 export type PlacesDialogStep = 'linked' | 'search' | 'details' | 'photos' | 'closed' | 'done';
@@ -89,6 +91,12 @@ export function notifyPlacesLimited(): void {
  * brand-new entries start at the search step.
  */
 export function openPlacesDialog(category: string, j: number): void {
+	// HARD CHECK — the Places feature is local-environments only. Even if the
+	// button somehow rendered on a deployed host, opening the dialog refuses.
+	if (PLACES_API_ENABLED !== true) {
+		displayError(new Error(translate('placesApi.errors.localOnly')));
+		return;
+	}
 	if (_active) return;
 
 	const entryName = getID(`${category}-name-${j}`)?.value ?? '';
@@ -325,7 +333,21 @@ function setDialogContent(html: string): void {
 	if (step) step.innerHTML = html;
 }
 
+/** Set the text shown in the message modal's title bar (id `message-title`). */
+function setDialogTitle(title: string): void {
+	const titleEl = getID('message-title');
+	if (!titleEl) return;
+	titleEl.textContent = title;
+}
+
 async function renderStep(step: PlacesDialogStep): Promise<void> {
+	// The title bar follows the current step: the 'linked' step shows its own
+	// title ("This place is already linked"), every other step shows the
+	// dialog's default title. It reverts as soon as the user confirms an
+	// option on the 'linked' step (update vs find a different place).
+	setDialogTitle(
+		step === 'linked' ? translate('placesApi.linked.title') : translate('placesApi.dialog.title'),
+	);
 	const renderer = _stepRenderers[step];
 	if (!renderer) {
 		setDialogContent(getPlaceholderHTML(step));

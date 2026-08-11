@@ -872,7 +872,7 @@
 		"fetchInfo": "Buscar Informações com Maps",
 		"updateWithMaps": "Atualizar com Maps",
 		"dialog": {
-			"title": "Lugares"
+			"title": "Importar com mapas"
 		},
 		"noPermission": "Você não tem permissão para usar a API de Lugares",
 		"search": {
@@ -953,6 +953,7 @@
 			"message": "A cota de Lugares está quase no limite. A busca e as informações do lugar continuam funcionando, mas as fotos estão temporariamente desativadas."
 		},
 		"errors": {
+			"localOnly": "Este recurso está disponível apenas no desenvolvimento local",
 			"network": "Erro de rede. Verifique sua conexão e tente novamente",
 			"routeNotConfigured": "A rota da API de Lugares ainda não está configurada",
 			"quotaExceeded": "A cota mensal da API de Lugares foi atingida. Tente novamente no próximo mês."

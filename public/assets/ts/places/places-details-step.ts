@@ -35,6 +35,7 @@ import { getPlace } from '../data/services/places-api.service.js';
 import type { PlaceDetails, PlaceSearchResult } from '../models/places-api.model.js';
 import { buildClosedState, FIELD_KEYS, type PlaceFieldKey } from './places-apply.js';
 import { applyAndClose } from './places-apply-flow.js';
+import { INCLUDE_PHOTOS_KEY } from './places-search-step.js';
 import {
 	getStepData,
 	getStepLoadingMessage,
@@ -206,13 +207,19 @@ function handleContinue(): void {
 
 	// Closed places branch off to the 'closed' step (P8). Updating an existing
 	// linked place skips the photos step (its info was fetched without photos)
-	// and applies directly; everything else continues to the photos step (P8).
+	// and applies directly; so does a search with "Include photos" left off —
+	// the paid photos key / photos route is NEVER called then. Everything else
+	// continues to the photos step (P8).
 	const { closed } = buildClosedState(details);
 	if (closed) {
 		void goTo('closed');
 		return;
 	}
 	if (getStepData<boolean>(UPDATE_EXISTING_KEY)) {
+		applyAndClose();
+		return;
+	}
+	if (!getStepData<boolean>(INCLUDE_PHOTOS_KEY)) {
 		applyAndClose();
 		return;
 	}

@@ -34,14 +34,41 @@ const WORKER_DEPLOYED_URL = 'https://trip-viewer-places-api.gabriel-o-favero.wor
 const WORKER_LOCAL_URL = 'http://localhost:8787';
 
 /**
+ * Hostnames that count as a LOCAL development environment.
+ *
+ * The Places API feature is HARD-GATED to local environments only: on any
+ * deployed host (dev/prd) the buttons never render and every service call
+ * throws a friendly error — regardless of the `canUsePlacesAPI` permission.
+ * This is a deliberate safety gate (the worker proxies real Google Places
+ * calls) — see docs/ai-analysis/7-places-api-backend-contract.md.
+ */
+const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
+
+/**
+ * Whether the app is running on a local development environment
+ * (localhost / 127.0.0.1 / [::1]).
+ * @returns {boolean}
+ */
+export function isLocalEnv(): boolean {
+	const hostname = window?.location?.hostname || '';
+	return LOCAL_HOSTS.has(hostname);
+}
+
+/**
+ * HARD CHECK — the edit-destination Places feature is enabled ONLY on local
+ * environments. `false` on any deployed host, so the whole feature is
+ * unreachable there. Used by the buttons (UI) and the service calls (thrown
+ * guard). Mirrors `isLocalEnv()` and drives `resolveApiBaseUrl()`.
+ */
+export const PLACES_API_ENABLED = isLocalEnv();
+
+/**
  * Resolve the worker base URL per environment by hostname (same pattern as
  * firebase-config.js): localhost → wrangler dev; any deployed Firebase host →
  * the single deployed route.
  */
 function resolveApiBaseUrl(): string {
-	const hostname = window?.location?.hostname || '';
-	if (hostname === 'localhost' || hostname === '127.0.0.1') return WORKER_LOCAL_URL;
-	return WORKER_DEPLOYED_URL;
+	return isLocalEnv() ? WORKER_LOCAL_URL : WORKER_DEPLOYED_URL;
 }
 
 /** Cloudflare worker base URL, resolved per environment by hostname. */
@@ -139,6 +166,17 @@ function assertConfigured(): void {
 	}
 }
 
+/**
+ * HARD CHECK — the Places API is enabled only on local environments.
+ * Throws a friendly, translatable error on any deployed host, so even a
+ * direct programmatic call (console, stray button) can't reach the worker.
+ */
+function assertLocalOnly(): void {
+	if (!PLACES_API_ENABLED) {
+		throw new Error(translate('placesApi.errors.localOnly'));
+	}
+}
+
 /** Shared fetch wrapper: returns typed JSON or throws a friendly error. */
 async function request<T>(url: string, token: string, options: PlacesApiOptions = {}): Promise<T> {
 	const { signal, onLimited } = options;
@@ -184,6 +222,7 @@ export async function searchPlaces(
 	query: string,
 	options: PlacesApiOptions = {},
 ): Promise<PlaceSearchResult[]> {
+	assertLocalOnly(); // HARD CHECK — local environments only
 	const { lang, token } = await resolveOptions(options);
 	const photos = resolvePhotos(options); // new place — no id yet → photos on
 
@@ -208,6 +247,7 @@ export async function searchPlaces(
  * @param id Google Place ID.
  */
 export async function getPlace(id: string, options: PlacesApiOptions = {}): Promise<PlaceDetails> {
+	assertLocalOnly(); // HARD CHECK — local environments only
 	const { lang, token } = await resolveOptions(options);
 	const photos = resolvePhotos(options); // false on refresh (e.g. bulk); true when building a new place
 
@@ -231,6 +271,7 @@ export async function getPlacePhotos(
 	id: string,
 	options: PlacesApiOptions = {},
 ): Promise<PlacePhoto[]> {
+	assertLocalOnly(); // HARD CHECK — local environments only
 	const { lang, token } = await resolveOptions(options);
 
 	if (PLACES_API_MOCK) {

@@ -3,6 +3,7 @@ import { addSelectorDS } from '../../ui/dynamic-select.js';
 import { translate } from '../../i18n/translation.js';
 import { getNewSvg, GOOGLE_MAPS_ICON } from '../../theme/icons.js';
 import { PERMISSIONS } from '../../data/firebase/storage.js';
+import { PLACES_API_ENABLED } from '../../data/services/places-api.service.js';
 import { FIRESTORE_DESTINATIONS_DATA, FIRESTORE_DESTINATIONS_NEW_DATA } from '../../data/state.js';
 import { getDescriptionHTML } from './categories/description.js';
 import { getOtherPriceVisibility, loadCurrencySelects, PRICE_OPTIONS } from './categories/price.js';
@@ -13,11 +14,12 @@ import { addListenerToRemoveDestination } from './edit-destination.js';
 /**
  * "Fetch Info With Maps" button for an entry (Places API, P4). Rendered at the
  * top of the entry's accordion body, so it shows when the accordion is
- * expanded. Only rendered for users who hold the canUsePlacesAPI permission;
- * returns '' otherwise.
+ * expanded. Only rendered for users who hold the canUsePlacesAPI permission
+ * AND on local environments (HARD CHECK — PLACES_API_ENABLED); returns ''
+ * otherwise.
  */
 function getPlacesFetchButtonHTML(category: string, j: number): string {
-	if (PERMISSIONS?.canUsePlacesAPI !== true) return '';
+	if (!PLACES_API_ENABLED || PERMISSIONS?.canUsePlacesAPI !== true) return '';
 	const label = translate('placesApi.fetchInfo');
 	return `
       <div class="places-fetch-wrapper">

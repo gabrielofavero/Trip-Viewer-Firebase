@@ -875,7 +875,7 @@
 		"fetchInfo": "Fetch Info With Maps",
 		"updateWithMaps": "Update with Maps",
 		"dialog": {
-			"title": "Places"
+			"title": "Import with maps"
 		},
 		"noPermission": "You don't have permission to use the Places API",
 		"search": {
@@ -956,6 +956,7 @@
 			"message": "Places quota is nearly reached. Search and place info still work, but photos are temporarily disabled."
 		},
 		"errors": {
+			"localOnly": "This feature is only available in local development",
 			"network": "Network error. Please check your connection and try again",
 			"routeNotConfigured": "The Places API route is not configured yet",
 			"quotaExceeded": "The monthly Places API quota has been reached. Please try again next month."

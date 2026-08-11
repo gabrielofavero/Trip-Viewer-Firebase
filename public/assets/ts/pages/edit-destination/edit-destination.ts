@@ -41,6 +41,7 @@ import {
 	PERMISSIONS,
 	setPermissions,
 } from '../../data/firebase/storage.js';
+import { PLACES_API_ENABLED } from '../../data/services/places-api.service.js';
 import { loadVisibilityIndex } from '../home/support/visibility.js';
 import { loadEditDestinationListeners } from './support/event-listeners.js';
 import { getVisibility } from '../../theme/theme.js';
@@ -237,8 +238,9 @@ function loadEventListeners() {
 // ============================================================
 
 /**
- * Show/hide the bulk "Update with Maps" button. Visible only when the user
- * holds the canUsePlacesAPI permission AND at least one entry is linked.
+ * Show/hide the bulk "Update with Maps" button. Visible only when running on
+ * a LOCAL environment (HARD CHECK — PLACES_API_ENABLED) AND the user holds the
+ * canUsePlacesAPI permission AND at least one entry is linked.
  * The linked-item count comes from P11's countLinkedItems() (places/places-bulk.ts)
  * so the confirm message always matches what the bulk flow will process.
  * Called on page load, and re-called after per-item applies (P9) / bulk apply
@@ -247,7 +249,10 @@ function loadEventListeners() {
 export function refreshPlacesBulkButton(): void {
 	const button = getID<HTMLButtonElement>('places-bulk-btn');
 	if (!button) return;
-	const visible = PERMISSIONS?.canUsePlacesAPI === true && countLinkedItems() > 0;
+	const visible =
+		PLACES_API_ENABLED === true &&
+		PERMISSIONS?.canUsePlacesAPI === true &&
+		countLinkedItems() > 0;
 	button.style.display = visible ? '' : 'none';
 }
 
@@ -257,6 +262,10 @@ export function refreshPlacesBulkButton(): void {
  * runBulkUpdate() which owns the bulk loading + report.
  */
 function openPlacesBulkDialog(): void {
+	if (PLACES_API_ENABLED !== true) {
+		displayError(new Error(translate('placesApi.errors.localOnly')));
+		return;
+	}
 	if (PERMISSIONS?.canUsePlacesAPI !== true) {
 		displayError(new Error(translate('placesApi.noPermission')));
 		return;

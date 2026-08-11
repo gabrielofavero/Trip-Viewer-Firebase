@@ -41,6 +41,13 @@ import { getID } from '../utils/dom.js';
 /** Cross-step data key where the selected search result is stored (P7 reads it). */
 const CANDIDATE_KEY = 'placeDetailsCandidate';
 
+/**
+ * Cross-step data key: whether the user checked "Include photos" on search.
+ * When `false`, the flow skips the photos step entirely so the photos route /
+ * paid photos key is NEVER called (P7 and P8 read it).
+ */
+export const INCLUDE_PHOTOS_KEY = 'includePhotos';
+
 /** Max results rendered (the route returns ≤ 20; defensive cap). */
 const MAX_RESULTS = 20;
 
@@ -90,11 +97,13 @@ async function runSearch(): Promise<void> {
 
 	const query = getID<HTMLInputElement>('places-search-input')?.value.trim() ?? '';
 	// "Include photos" toggle (default OFF): off → photos:false runs on the FREE
-	// main key; on → photos:true uses the paid photos key (photo refs in the
-	// results). Photos can still be imported later via the photos step, which
-	// fetches them by place id regardless.
+	// main key and the photos step is SKIPPED entirely (never touches the paid
+	// photos key / photos route); on → photos:true uses the paid photos key and
+	// the photos step is offered (import up to 3 photos by place id).
 	const includePhotos =
 		getID<HTMLInputElement>('places-search-photos-input')?.checked ?? false;
+	// Persist across steps so P7/P8 know whether to offer/skip the photos step.
+	setStepData(INCLUDE_PHOTOS_KEY, includePhotos);
 
 	let results: PlaceSearchResult[] | null;
 	try {

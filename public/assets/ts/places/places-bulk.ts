@@ -45,7 +45,10 @@ import {
 	FIRESTORE_DESTINATIONS_NEW_DATA,
 } from '../data/state.js';
 import { COLLECTION, createBatchOps } from '../data/services/destination.service.js';
-import { getPlace } from '../data/services/places-api.service.js';
+import {
+	getPlace,
+	PLACES_API_ENABLED,
+} from '../data/services/places-api.service.js';
 import { removeSelectorDS } from '../ui/dynamic-select.js';
 import { removeDestinationImages } from '../pages/edit-destination/categories/image.js';
 import type { PlaceDetails } from '../models/places-api.model.js';
@@ -186,6 +189,13 @@ export function collectLinkedEntries(): BulkLinkedEntry[] {
  *    places, then render the report.
  */
 export async function runBulkPlacesUpdate(): Promise<void> {
+	// HARD CHECK — local environments only. Guard the direct entry point
+	// (data-action="places-bulk-run" / message action) too, even though
+	// getPlace() already throws on deployed hosts.
+	if (PLACES_API_ENABLED !== true) {
+		displayError(new Error(translate('placesApi.errors.localOnly')));
+		return;
+	}
 	if (_bulkRunning) return;
 	const entries = collectLinkedEntries();
 	if (entries.length === 0) {

@@ -304,6 +304,11 @@ Requests from `http://localhost:8787` (Origin `http://localhost:8787`) map to
 `local` mode, so you can smoke-test from a browser or curl with the `Origin`
 header set.
 
+`wrangler dev` also emulates the `PLACES_QUOTA` KV binding locally and persists
+it to `.wrangler/state/` (gitignored) — so the monthly quota ledger survives
+restarts of `wrangler dev`. It never touches Cloudflare; the KV is emulated
+in-process by miniflare.
+
 ---
 
 ## Deploy
@@ -413,24 +418,23 @@ wrangler secret put PLACES_QUOTA_DEGRADE_RATIO  # optional, default 0.9
 
 ### Sharing the ledger across worker isolates
 
-The default counters are in-memory (per-isolate, best-effort — fine for a
-single editor). For a real cost guarantee, bind a Cloudflare KV namespace so
-every isolate shares the same counters:
+**Already done.** This worker binds the `PLACES_QUOTA` KV namespace in
+`wrangler.toml`, so the ledger is shared and persistent:
+
+- **Locally (`wrangler dev`)** — the KV is emulated by miniflare and persisted
+to `.wrangler/state/` (gitignored), so counters survive dev restarts. It never
+calls Cloudflare.
+- **Deployed** — the same binding shares the counters across every isolate.
+
+The counters reset automatically on the 1st of each month. If the namespace
+never needs recreating:
 
 ```bash
 npx wrangler kv namespace create PLACES_QUOTA
 ```
 
-Then add the returned `id` (and `preview_id`) to `wrangler.toml`:
-
-```toml
-[[kv_namespaces]]
-binding = "PLACES_QUOTA"
-id = "<production_namespace_id>"
-preview_id = "<preview_namespace_id>"
-```
-
-and redeploy. The counters reset automatically on the 1st of each month.
+and paste the returned `id` into `wrangler.toml` (the `preview_id` field is
+deprecated in current wrangler — omit it).
 
 ### Smoke test
 
