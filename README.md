@@ -41,19 +41,14 @@ npm run dev
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 173   | 168  | 3         | 2       |
-| 🏆   | Feature     | F000 | 179   | 157  | 17        | 5       |
-| 📈   | Improvement | M000 | 172   | 144  | 22        | 6       |
-| ⚔️   | Epic        | E000 | 51    | 35   | 7         | 9       |
+| 🏆   | Feature     | F000 | 179   | 161  | 17        | 1       |
+| 📈   | Improvement | M000 | 172   | 145  | 22        | 5       |
+| ⚔️   | Epic        | E000 | 51    | 36   | 7         | 8       |
 
 ## Backlog
 
 ### High Priority
 
-- ⚔️ **E045:** Add Maps integration into edit page (dev only poc)
-  - *[🏆F172] Get place information*
-  - *[🏆F173] Update integrated places*
-  - *[🏆F178] Add local scraper for testing*
-  - *[🏆F179] Add dev stats*
 - 📈 **M172:** Minor visual improvements on index.html (search, order, image loading)
 
 ### Medium Priority
@@ -70,7 +65,6 @@ npm run dev
 ### Low Priority
 
 - ⚔️ **E017:** Optimize firebase operations usage (reads, cloud functions)
-  *- [📈M154] Reduce firestore calls on index*
 - 🏆 **F063:** Allow adding multiple regions to a destination (edit/trip.html)
 - ⚔️ **E047:** Implement Unit Tests
 - ⚔️ **E019:** Implement Sonarqube
@@ -108,6 +102,11 @@ npm run dev
 - 📈 **M169:** Improve cache busting
 - 🏆 **F177:** Add app version on footers
 - 📈 **M170:** Improve import/export icons on index
+- ⚔️ **E045:** Add Maps integration into edit page (dev only poc)
+  - *[🏆F172] Get place information*
+  - *[🏆F173] Update integrated places*
+  - *[🏆F178] Add local scraper for testing*
+  - *[🏆F179] Add dev stats*
 
 ### July 2026
 
@@ -760,7 +759,7 @@ npm run dev
   - 🏆 **F089:** *Import Selected (Functions Only)*
   - 🏆 **F090:** *Account Import/Export: Interface*
 - 📈 **M086:** Improved error pop-up
-
+- 📈 **M154:** Reduce firestore calls on index
 
 ### Discarded
 
