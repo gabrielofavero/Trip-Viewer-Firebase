@@ -904,6 +904,7 @@
 			"updateLabel": "Update with this info",
 			"descriptionBoth": "Description imported in English and Portuguese",
 			"noData": "No information available for this place",
+			"allUpToDate": "All information already matches what you have",
 			"back": "Back",
 			"continue": "Continue",
 			"error": "An error occurred while loading the place information. Please try again"
@@ -919,7 +920,8 @@
 		"photos": {
 			"import": "Import photos",
 			"canImport": "Photos can be imported",
-			"none": "No photos available to import"
+			"none": "No photos available to import",
+			"count": "{{count}} photo(s) selected"
 		},
 		"closed": {
 			"title": "Place no longer operational",

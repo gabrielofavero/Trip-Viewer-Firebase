@@ -121,14 +121,24 @@ async function renderDetailsStep(context: PlacesDialogContext): Promise<string> 
 	}
 
 	setStepData(DETAILS_KEY, details);
-	return renderDetailsHTML(details);
+	return renderDetailsHTML(context, details);
 }
 
 /** Render the field previews (disabled inputs) + checkboxes + footer. */
-function renderDetailsHTML(details: PlaceDetails): string {
-	// Skip empty fields: nothing to preview, and no "Update with this info"
-	// checkbox to offer — an empty value can never overwrite existing data.
-	const rows = FIELD_KEYS.filter((field) => getFieldDisplayValue(details, field) !== '')
+function renderDetailsHTML(context: PlacesDialogContext, details: PlaceDetails): string {
+	// Show a field only when it carries a non-empty scraped value AND that
+	// value differs from what the entry already has — inputs whose data already
+	// matches are skipped (there is nothing to update). When every scraped
+	// value already matches, an "up to date" message replaces the inputs
+	// entirely; when the scraper returned nothing at all, the regular "no data"
+	// state is shown. Either way the footer Continue button stays.
+	let hadScrapedData = false;
+	const rows = FIELD_KEYS.filter((field) => {
+		const value = getFieldDisplayValue(details, field);
+		if (value === '') return false;
+		hadScrapedData = true;
+		return fieldDiffers(details, field, context);
+	})
 		.map((field) => {
 			const label = translate(FIELD_LABEL_KEYS[field]);
 			const value = getFieldDisplayValue(details, field);
@@ -151,7 +161,13 @@ function renderDetailsHTML(details: PlaceDetails): string {
 
 	const emptyState =
 		rows === ''
-			? `<p class="places-details-empty">${escapeHtml(translate('placesApi.details.noData'))}</p>`
+			? `<p class="places-details-empty">${escapeHtml(
+					translate(
+						hadScrapedData
+							? 'placesApi.details.allUpToDate'
+							: 'placesApi.details.noData',
+					),
+				)}</p>`
 			: '';
 
 	return `
@@ -167,8 +183,86 @@ function renderDetailsHTML(details: PlaceDetails): string {
 
 /** Read the display value for a field from the fetched place ('' when empty). */
 function getFieldDisplayValue(details: PlaceDetails, field: PlaceFieldKey): string {
+	if (field === 'description') return getDescriptionDisplayValue(details);
 	const value = details[field];
 	return typeof value === 'string' ? value : '';
+}
+
+/**
+ * The description text to preview. The local gmaps scraper returns BOTH
+ * languages (`descriptions`), so the ACTIVE language is shown — this keeps the
+ * preview in sync with the page language even if the request itself went out
+ * in the other language. The Places API path returns only the requested
+ * language (`description`), which is used as-is.
+ */
+function getDescriptionDisplayValue(details: PlaceDetails): string {
+	const both = details.descriptions;
+	const lang = getLanguagePackName();
+	if (both && typeof both[lang] === 'string' && both[lang] !== '') return both[lang];
+	return typeof details.description === 'string' ? details.description : '';
+}
+
+/** Normalize a value for the "already matches" comparison. */
+function normalizeForCompare(value: string): string {
+	return (value ?? '').trim().toLowerCase();
+}
+
+/**
+ * Whether the scraped value for a field differs from what the entry already
+ * has in the form. Fields that match are hidden (nothing to update).
+ */
+function fieldDiffers(
+	details: PlaceDetails,
+	field: PlaceFieldKey,
+	context: PlacesDialogContext,
+): boolean {
+	return (
+		normalizeForCompare(getFieldDisplayValue(details, field)) !==
+		normalizeForCompare(getCurrentEntryValue(context, field))
+	);
+}
+
+/** Read the entry's current value for a field from the edit form. */
+function getCurrentEntryValue(context: PlacesDialogContext, field: PlaceFieldKey): string {
+	const cat = context.category;
+	const j = context.j;
+	switch (field) {
+		case 'name':
+			return getInputValue(`${cat}-name-${j}`);
+		case 'website':
+			return getInputValue(`${cat}-website-${j}`);
+		case 'instagram':
+			return getInputValue(`${cat}-instagram-${j}`);
+		case 'map':
+			return getInputValue(`${cat}-map-${j}`);
+		case 'emoji':
+			return getInputValue(`${cat}-emoji-${j}`);
+		case 'region':
+			return getInputValue(`${cat}-region-${j}`) || getSelectValue(`${cat}-region-select-${j}`);
+		case 'rating':
+			return getInputValue(`${cat}-rating-${j}`);
+		case 'price':
+			return getCurrentPriceValue(cat, j);
+		case 'description':
+			return getInputValue(`${cat}-description-${getLanguagePackName()}-${j}`);
+	}
+	return '';
+}
+
+function getInputValue(id: string): string {
+	return getID<HTMLInputElement>(id)?.value?.trim() ?? '';
+}
+
+function getSelectValue(id: string): string {
+	return getID<HTMLSelectElement>(id)?.value?.trim() ?? '';
+}
+
+/** Mirror set-destination.ts: the price select value, or the "other" input. */
+function getCurrentPriceValue(cat: string, j: number): string {
+	const priceSelect = getID<HTMLSelectElement>(`${cat}-price-${j}`);
+	const otherPrice = getID<HTMLInputElement>(`${cat}-other-price-${j}`);
+	if (priceSelect?.innerHTML && priceSelect.value !== 'other') return priceSelect.value.trim();
+	return otherPrice?.value?.trim() ?? '';
 }
 
 /**

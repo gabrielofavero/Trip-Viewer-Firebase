@@ -19,7 +19,7 @@
  */
 
 // ---------- internal sentinel ----------
-const BUILTINS = new Set(['help', 'list', 'isEnabled', 'host', 'firestore', 'messages']);
+const BUILTINS = new Set(['help', 'list', 'isEnabled', 'host', 'firestore', 'messages', 'places']);
 const STORE_KEY = Symbol('store');
 const GETTER_KEY = Symbol('getter');
 
@@ -243,6 +243,110 @@ function createFirestoreNs(): any {
 	return ns;
 }
 
+// ---------- places helpers (Places API + gmaps-scraper call counter) ----------
+import {
+	getPlacesStats,
+	resetPlacesStats,
+} from '../data/services/places-counter.js';
+import type { PlacesApiCall, GscraperCall } from '../data/services/places-counter.js';
+
+/**
+ * Per-route Places API breakdown: how many times each route was called and,
+ * for search/details, how many asked for photos (true) vs not (false). The
+ * dedicated 'photos' route always returns photos — it sends no flag, so it
+ * only counts toward the route total, never the photos buckets.
+ */
+function buildPlacesApiBreakdown(calls: PlacesApiCall[]): {
+	total: number;
+	routes: Record<
+		string,
+		{
+			count: number;
+			photosTrue: number;
+			photosFalse: number;
+			calls: { subject: string; photos: boolean }[];
+		}
+	>;
+} {
+	const routes: Record<
+		string,
+		{
+			count: number;
+			photosTrue: number;
+			photosFalse: number;
+			calls: { subject: string; photos: boolean }[];
+		}
+	> = {
+		search: { count: 0, photosTrue: 0, photosFalse: 0, calls: [] },
+		details: { count: 0, photosTrue: 0, photosFalse: 0, calls: [] },
+		photos: { count: 0, photosTrue: 0, photosFalse: 0, calls: [] },
+	};
+	for (const call of calls) {
+		const bucket = routes[call.route];
+		if (!bucket) continue;
+		bucket.count += 1;
+		if (call.route !== 'photos') {
+			if (call.photos) bucket.photosTrue += 1;
+			else bucket.photosFalse += 1;
+		}
+		bucket.calls.push({ subject: call.subject, photos: call.photos });
+	}
+	return { total: calls.length, routes };
+}
+
+/**
+ * gmaps-scraper breakdown: how many scrape requests were made and what they
+ * were (each request carries the Google Maps URLs it scraped).
+ */
+function buildGscraperBreakdown(calls: GscraperCall[]): {
+	total: number;
+	routes: { urls: string[] }[];
+	urlCount: number;
+	urls: string[];
+} {
+	return {
+		total: calls.length,
+		routes: calls.map((call) => ({ urls: [...call.urls] })),
+		urlCount: calls.reduce((sum, call) => sum + call.urls.length, 0),
+		urls: calls.flatMap((call) => call.urls),
+	};
+}
+
+function createPlacesNs(): any {
+	const ns = createNamespace('places');
+
+	// All recorded calls (raw — see data/services/places-counter.ts).
+	Object.defineProperty(ns, 'stats', {
+		get() {
+			return getPlacesStats();
+		},
+		enumerable: true,
+		configurable: true,
+	});
+
+	// Places API breakdown: the routes called + photos true/false counts.
+	Object.defineProperty(ns, 'placesApi', {
+		get() {
+			return buildPlacesApiBreakdown(getPlacesStats().placesApi);
+		},
+		enumerable: true,
+		configurable: true,
+	});
+
+	// gmaps-scraper breakdown: how many requests and what was scraped.
+	Object.defineProperty(ns, 'gscraper', {
+		get() {
+			return buildGscraperBreakdown(getPlacesStats().gscraper);
+		},
+		enumerable: true,
+		configurable: true,
+	});
+
+	ns.reset = resetPlacesStats;
+
+	return ns;
+}
+
 // ---------- public interface ----------
 export interface DevHost {
 	isEnabled: true;
@@ -257,6 +361,32 @@ export interface DevHost {
 			writeOps: { type: string; path: string }[];
 		};
 		resetStats(): void;
+		[key: string]: any;
+	};
+	places: {
+		stats: {
+			placesApi: { route: string; photos: boolean; subject: string }[];
+			gscraper: { urls: string[] }[];
+		};
+		placesApi: {
+			total: number;
+			routes: Record<
+				string,
+				{
+					count: number;
+					photosTrue: number;
+					photosFalse: number;
+					calls: { subject: string; photos: boolean }[];
+				}
+			>;
+		};
+		gscraper: {
+			total: number;
+			routes: { urls: string[] }[];
+			urlCount: number;
+			urls: string[];
+		};
+		reset(): void;
 		[key: string]: any;
 	};
 	messages: {
@@ -280,6 +410,7 @@ export function initDev(): DevHost | null {
 	// ---- pre-populate namespaces ----
 	(rootNs as any).firestore = createFirestoreNs();
 	(rootNs as any).messages = createMessagesNs();
+	(rootNs as any).places = createPlacesNs();
 
 	const rootStore = (rootNs as any)[STORE_KEY] as Record<string, any>;
 
@@ -310,6 +441,26 @@ export function initDev(): DevHost | null {
 		);
 		console.log(
 			'  %cdev.firestore.resetStats()%c — reset read/write counters',
+			'font-weight:bold;',
+			'',
+		);
+		console.log(
+			'  %cdev.places.stats%c       — all Places API + gmaps-scraper calls',
+			'font-weight:bold;',
+			'',
+		);
+		console.log(
+			'  %cdev.places.placesApi%c   — Places API routes + photos true/false',
+			'font-weight:bold;',
+			'',
+		);
+		console.log(
+			'  %cdev.places.gscraper%c    — gmaps-scraper requests + what was scraped',
+			'font-weight:bold;',
+			'',
+		);
+		console.log(
+			'  %cdev.places.reset()%c     — reset Places call counters',
 			'font-weight:bold;',
 			'',
 		);

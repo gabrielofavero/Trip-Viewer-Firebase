@@ -16,10 +16,11 @@
 // placeAPI.sourceUrl), so the entry can always be re-scraped by link later
 // (per-item: pre-filled in this input; bulk: the local bulk path).
 //
-// Photos: the scraper returns direct image URLs. The photos route is NOT used
-// (it needs an official place id), so INCLUDE_PHOTOS_KEY is set false to skip
-// the photos step, while IMPORT_PHOTOS_KEY/IMPORTED_PHOTOS_KEY carry the
-// scraper images straight into the apply step.
+// Photos: the scraper returns direct image URLs (carried via SCRAPER_PHOTOS_KEY
+// + IMPORT_PHOTOS_KEY/IMPORTED_PHOTOS_KEY). When the scraper also returned an
+// official place id, the photos step additionally calls the Places API photos
+// route and merges those in on top (deduped by URL). The step runs whenever
+// there are scraper images or an official id to fetch photos by.
 //
 // References:
 // - places/places-dialog.ts (P5 shell: registerStepRenderer, withDialogLoading)
@@ -41,7 +42,11 @@ import {
 import type { PlacesDialogContext } from './places-dialog.js';
 import { CANDIDATE_KEY } from './places-details-step.js';
 import { INCLUDE_PHOTOS_KEY } from './places-search-step.js';
-import { IMPORTED_PHOTOS_KEY, IMPORT_PHOTOS_KEY } from './places-closed-photos-step.js';
+import {
+	IMPORTED_PHOTOS_KEY,
+	IMPORT_PHOTOS_KEY,
+	SCRAPER_PHOTOS_KEY,
+} from './places-closed-photos-step.js';
 import { getID } from '../utils/dom.js';
 import type { PlaceImage } from '../models/schema.js';
 
@@ -54,8 +59,12 @@ export const LOCAL_SOURCE_URL_KEY = 'localSourceUrl';
 
 /** Render the 'local' step: Maps-link input (pre-filled when already linked). */
 function renderLocalStep(context: PlacesDialogContext): string {
-	// Pre-fill from a previous local import so refreshing is one click.
-	const prefill = context.placeAPI?.sourceUrl ?? context.placeAPI?.map ?? '';
+	// Auto-paste the link already present in the destination item's manual data
+	// (the form's `${category}-map-${j}` input, i.e. `item.map`) so there is
+	// nothing to paste when the user already has a Maps link. Falls back to a
+	// previously-saved local/Places API link so refreshing stays one click.
+	const manualLink = getID(`${context.category}-map-${context.j}`)?.value?.trim() ?? '';
+	const prefill = manualLink || context.placeAPI?.sourceUrl || context.placeAPI?.map || '';
 
 	return `
 	<div class="places-local">
@@ -124,14 +133,19 @@ async function runLocalImport(): Promise<void> {
 		// Stash the normalized place as the details-step candidate (it reuses it
 		// directly — no extra fetch, no official id needed).
 		setStepData(CANDIDATE_KEY, place);
-		// Skip the photos step entirely (the photos route needs an official id).
-		setStepData(INCLUDE_PHOTOS_KEY, false);
-		// The scraper gives direct image URLs — carry them into the apply step.
+		// The scraper gives direct image URLs — carry them into the flow. The
+		// photos step runs whenever there are scraper images OR the scraper
+		// returned an official place id (so the Places API photos route can be
+		// called and merged in on top); only when neither exists is the step
+		// skipped and the flow applies directly.
 		const images: PlaceImage[] = (place.imageUrls ?? []).map((url) => ({
 			description: '',
 			link: url,
 		}));
-		setStepData(IMPORT_PHOTOS_KEY, images.length > 0);
+		const hasPhotos = images.length > 0 || Boolean(place.id);
+		setStepData(INCLUDE_PHOTOS_KEY, hasPhotos);
+		setStepData(IMPORT_PHOTOS_KEY, hasPhotos);
+		setStepData(SCRAPER_PHOTOS_KEY, images);
 		setStepData(IMPORTED_PHOTOS_KEY, images);
 		// Canonical link → persisted as placeAPI.sourceUrl for later refresh.
 		setStepData(LOCAL_SOURCE_URL_KEY, place.sourceUrl || link);

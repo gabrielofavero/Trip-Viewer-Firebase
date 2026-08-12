@@ -61,8 +61,6 @@ import { LOCAL_SOURCE_URL_KEY } from './places-local-step.js';
 import type { PlaceDetails } from '../models/places-api.model.js';
 import type { PlaceAPI, PlaceImage, PlaceItem } from '../models/schema.js';
 
-/** Max photos imported from the photos route (route returns ≤ 3; defensive cap). */
-const MAX_PHOTOS = 3;
 
 // ------------------------------------------------------------------
 // Apply (called directly at the end of the flow — no confirmation step)
@@ -132,8 +130,11 @@ export function applyAndClose(): void {
 			applyClosedLabel = true;
 		}
 
-		// Photos import → replace the entry's images with the first 3 imported.
-		const photosToApply = importPhotos ? importedPhotos.slice(0, MAX_PHOTOS) : [];
+		// Photos import → replace the entry's images with exactly the imported
+		// photos the user previewed + kept selected in the photos step (no
+		// hidden cap — the photos route returns ≤ 3, the scraper returns all
+		// of its images).
+		const photosToApply = importPhotos ? importedPhotos : [];
 		const applyPhotos = photosToApply.length > 0;
 		if (applyPhotos) {
 			entry.images = photosToApply;

@@ -1964,20 +1964,25 @@ details summary::-webkit-details-marker {
 }
 
 /* Buttons */
-[data-theme="dark"] .btn-secondary-theme,
-[data-theme="dark"] .input-button {
+[data-theme="dark"] .btn-secondary-theme {
 	background: var(--bg-secondary);
 	color: var(--text-primary);
 	border-color: var(--border-color);
 }
 
-[data-theme="dark"] .btn-secondary-theme:hover,
-[data-theme="dark"] .input-button:hover {
+[data-theme="dark"] .btn-secondary-theme:hover {
 	background: var(--bg-tertiary);
 }
 
-[data-theme="dark"] .period-box .input-button {
-	background: var(--bg-primary);
+/* Input-button — match the nice-form-group input field color (same as light mode) */
+[data-theme="dark"] .input-button {
+	background: var(--nf-input-background-color, #404040);
+	color: var(--nf-input-color, #e2e2e2);
+	border-color: var(--nf-input-border-color, #383838);
+}
+
+[data-theme="dark"] .input-button:hover {
+	background: var(--bg-tertiary);
 }
 
 /* Delete */
@@ -2657,8 +2662,16 @@ fieldset.modern-radio-group {
 	border-radius: var(--radius-md, 8px);
 }
 
+/* Dark mode: the light 2px blur is invisible against dark content, so the
+   overlay turns into a flat dark box. Match the app's dark glass treatment
+   (see base/dark-mode.css top-bar) — stronger blur + saturation so the
+   frosted degrade looks natural instead of muddy. The tint matches the
+   dialog's #303030 background (dark-mode.css .input-container) so the
+   overlay isn't darker than the dialog behind it. */
 [data-theme="dark"] .places-dialog-loading {
-	background: rgba(28, 28, 30, 0.88);
+	background: rgba(48, 48, 48, 0.85);
+	backdrop-filter: blur(20px) saturate(180%);
+	-webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
 .places-dialog-loading-ring {
@@ -3220,6 +3233,22 @@ fieldset.modern-radio-group {
 	cursor: pointer;
 }
 
+/* Selected-photo count badge next to the "Import photos" label */
+.places-photos-import-count {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 20px;
+	height: 20px;
+	padding: 0 5px;
+	border-radius: 999px;
+	font-size: 0.75rem;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	background: var(--theme-color);
+}
+
 /* Preview grid (first 3 photos) */
 .places-photos-preview {
 	display: grid;
@@ -3235,6 +3264,24 @@ fieldset.modern-radio-group {
 	aspect-ratio: 4 / 3;
 	background: var(--bg-secondary);
 	border: 1px solid var(--border-color);
+	cursor: pointer;
+	transition: opacity var(--transition-fast, 0.2s), border-color var(--transition-fast, 0.2s),
+		filter var(--transition-fast, 0.2s);
+}
+
+.places-photos-preview-item:hover {
+	border-color: var(--theme-color);
+}
+
+/* Deselected (clicked off): dimmed + grayscale + ✕ badge */
+.places-photos-preview-item.is-deselected {
+	opacity: 0.35;
+	filter: grayscale(0.6);
+	border-color: var(--border-color);
+}
+
+.places-photos-preview-item.is-deselected figcaption {
+	background: rgba(0, 0, 0, 0.45);
 }
 
 .places-photos-preview-item img {
@@ -3268,6 +3315,14 @@ fieldset.modern-radio-group {
 	color: var(--text-secondary);
 	text-align: center;
 	padding: 12px 0;
+}
+
+/* Preview taller than two rows scrolls internally (gmaps-scraper can return
+   many photos — keeps the Continue button in view) */
+.places-photos-preview--scroll {
+	overscroll-behavior: contain;
+	scrollbar-width: thin;
+	padding-right: 4px;
 }
 
 /* Mobile: single-column preview */

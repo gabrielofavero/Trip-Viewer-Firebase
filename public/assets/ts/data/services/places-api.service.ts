@@ -27,6 +27,7 @@ import type {
 	PlaceSearchResult,
 } from '../../models/places-api.model.js';
 import { getFirebaseIdToken } from '../firebase/auth.js';
+import { trackPlacesApiCall } from './places-counter.js';
 
 /** Deployed Cloudflare worker route (dev + prd share this one URL). */
 const WORKER_DEPLOYED_URL = 'https://trip-viewer-places-api.gabriel-o-favero.workers.dev';
@@ -226,6 +227,9 @@ export async function searchPlaces(
 	const { lang, token } = await resolveOptions(options);
 	const photos = resolvePhotos(options); // new place — no id yet → photos on
 
+	// Dev-mode call tracking (mirrors the Firestore counter — dev.places).
+	trackPlacesApiCall({ route: 'search', photos, subject: query });
+
 	if (PLACES_API_MOCK) {
 		throwIfAborted(options.signal);
 		return mockSearch(query);
@@ -251,6 +255,9 @@ export async function getPlace(id: string, options: PlacesApiOptions = {}): Prom
 	const { lang, token } = await resolveOptions(options);
 	const photos = resolvePhotos(options); // false on refresh (e.g. bulk); true when building a new place
 
+	// Dev-mode call tracking (mirrors the Firestore counter — dev.places).
+	trackPlacesApiCall({ route: 'details', photos, subject: id });
+
 	if (PLACES_API_MOCK) {
 		throwIfAborted(options.signal);
 		return mockGetPlace(id);
@@ -273,6 +280,10 @@ export async function getPlacePhotos(
 ): Promise<PlacePhoto[]> {
 	assertLocalOnly(); // HARD CHECK — local environments only
 	const { lang, token } = await resolveOptions(options);
+
+	// Dev-mode call tracking (mirrors the Firestore counter — dev.places). The
+	// dedicated photos route always returns photos — no flag sent.
+	trackPlacesApiCall({ route: 'photos', photos: true, subject: id });
 
 	if (PLACES_API_MOCK) {
 		throwIfAborted(options.signal);

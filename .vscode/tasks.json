@@ -6,6 +6,18 @@
 			"type": "shell",
 			"command": "node scripts/build/build.js",
 			"group": "build"
+		},
+		{
+			"label": "rebuild",
+			"type": "shell",
+			"command": "node scripts/build/build.js",
+			"group": "build"
+		},
+		{
+			"label": "rebuild",
+			"type": "shell",
+			"command": "node scripts/build/build.js",
+			"group": "build"
 		}
 	]
 }

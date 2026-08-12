@@ -41,7 +41,7 @@ npm run dev
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 173   | 168  | 3         | 2       |
-| 🏆   | Feature     | F000 | 177   | 157  | 17        | 3       |
+| 🏆   | Feature     | F000 | 179   | 157  | 17        | 5       |
 | 📈   | Improvement | M000 | 172   | 144  | 22        | 6       |
 | ⚔️   | Epic        | E000 | 51    | 35   | 7         | 9       |
 
@@ -49,9 +49,11 @@ npm run dev
 
 ### High Priority
 
-- ⚔️ **E045:** Add Maps integration into edit page
+- ⚔️ **E045:** Add Maps integration into edit page (dev only poc)
   - *[🏆F172] Get place information*
   - *[🏆F173] Update integrated places*
+  - *[🏆F178] Add local scraper for testing*
+  - *[🏆F179] Add dev stats*
 - 📈 **M172:** Minor visual improvements on index.html (search, order, image loading)
 
 ### Medium Priority

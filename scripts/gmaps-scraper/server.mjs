@@ -281,7 +281,9 @@ export function normalizeRecord(record, lang = DEFAULT_LANG) {
 		...place,
 		// Extra fields (not part of PlaceDetails) the frontend consumes.
 		sourceUrl,
-		imageUrls: images.slice(0, 6),
+		// No cap — the frontend previews every scraper image (it scrolls after
+		// two rows), so the user gets "as much as we can" to pick from.
+		imageUrls: images,
 	};
 }
 

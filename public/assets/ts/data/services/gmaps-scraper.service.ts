@@ -15,6 +15,7 @@
 // - places/places-local-step.ts (per-item import) + places/places-bulk.ts (bulk)
 
 import { getLanguagePackName, translate } from '../../i18n/translation.js';
+import { trackGscraperCall } from './places-counter.js';
 
 /** Local gmaps-scraper server (fixed route — see package.json `gmaps:server`). */
 export const GMAPS_SCRAPER_URL = 'http://127.0.0.1:8788';
@@ -97,6 +98,9 @@ export async function scrapePlaces(
 ): Promise<GmapsScrapeResult[]> {
 	assertLocalOnly(); // HARD CHECK — local environments only
 	const lang = options.lang ?? getLanguagePackName();
+
+	// Dev-mode call tracking (mirrors the Firestore counter — dev.places).
+	trackGscraperCall({ urls });
 
 	let response: Response;
 	try {
