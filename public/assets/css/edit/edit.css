@@ -2627,41 +2627,10 @@ fieldset.modern-radio-group {
 	text-align: left;
 }
 
-/* Header row: back button (left); the close X lives in the shared icon box
-   above the title (see .message-text-container > .icon-container in modal.css) */
-.places-dialog-header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 8px;
-	margin-bottom: 14px;
-}
-
-/* Center the dialog title — .input-container is left-aligned by default, but
-   these dialogs should match the standard message modal (X above, title centered). */
-.places-dialog-container .message-title {
-	text-align: center;
-}
-
-.places-dialog-back {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	padding: 6px 12px;
-	border: 1px solid var(--border-color);
-	border-radius: var(--radius-md, 8px);
-	background: transparent;
-	color: var(--text-primary);
-	font-size: 0.875rem;
-	font-weight: 600;
-	font-family: inherit;
-	cursor: pointer;
-	transition: background var(--transition-fast, 0.2s);
-}
-
-.places-dialog-back:hover {
-	background: var(--bg-tertiary);
-}
+/* Header icons (back arrow + close X) live in the shared icon box above the
+   title (see .message-text-container > .icon-container in modal.css), matching
+   the itinerary dialog. The title stays left-aligned like every other
+   .input-container dialog — no text-align override needed here. */
 
 /* Step body — scrolls internally when the content is tall */
 .places-dialog-step {
@@ -3486,3 +3455,45 @@ fieldset.modern-radio-group {
 	margin: 0;
 	accent-color: var(--theme-color, #7c3aed);
 }
+
+/*--------------------------------------------------------------
+# Places API — Import source + local (gmaps scraper) steps
+# The 'source' step reuses the linked-step option cards
+# (.places-linked-options / .places-linked-option); 'local' adds the
+# Maps-link input (the input/button reuse .places-search-bar styles).
+--------------------------------------------------------------*/
+
+/* Import-source prompt: same centered column layout as the linked step. */
+.places-source {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 14px;
+	text-align: center;
+	padding: 12px 0;
+}
+
+/* Local import step: message + link input + inline status. */
+.places-local {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.places-local-message {
+	margin: 0;
+	font-size: 0.9375rem;
+	color: var(--text-secondary);
+	max-width: 420px;
+}
+
+.places-local-status {
+	margin: 0;
+}
+
+/* The local link input inherits .places-search-input sizing; widen it a touch
+   since a Maps URL is longer than a search term. */
+.places-local .places-search-input {
+	width: 100%;
+}
+

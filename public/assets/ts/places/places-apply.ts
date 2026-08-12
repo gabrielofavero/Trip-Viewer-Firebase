@@ -85,6 +85,30 @@ export function applyPlaceData(params: ApplyPlaceDataParams): PlaceItem {
 }
 
 /**
+ * Resolve the multi-language description object from a fetched place.
+ * The local gmaps scraper returns BOTH languages (`descriptions`) → both slots
+ * are written. The Places API returns only the requested language
+ * (`description`) → only that slot is refreshed, the other is preserved.
+ */
+function resolveDescription(
+	previous: PlaceDescription,
+	newPlace: PlaceDetails,
+	lang: string,
+): PlaceDescription {
+	const both = newPlace.descriptions;
+	if (both && (both.en || both.pt)) {
+		return {
+			en: both.en || previous.en || '',
+			pt: both.pt || previous.pt || '',
+		} as PlaceDescription;
+	}
+	if (typeof newPlace.description === 'string' && newPlace.description !== '') {
+		return { ...previous, [lang]: newPlace.description } as PlaceDescription;
+	}
+	return previous;
+}
+
+/**
  * Build the persisted placeAPI object from a fetched place.
  * placeAPI always mirrors the latest fetched info (missing API values coalesce
  * to ''); `description` keeps its multi-language shape and only the requested
@@ -97,10 +121,7 @@ export function mergePlaceAPI(
 	lang: string,
 ): PlaceAPI {
 	const previousDescription: PlaceDescription = previous?.description ?? { pt: '', en: '' };
-	const description =
-		typeof newPlace.description === 'string' && newPlace.description !== ''
-			? ({ ...previousDescription, [lang]: newPlace.description } as PlaceDescription)
-			: previousDescription;
+	const description = resolveDescription(previousDescription, newPlace, lang);
 
 	return {
 		...previous,
@@ -115,6 +136,9 @@ export function mergePlaceAPI(
 		updatedAt,
 		instagram: newPlace.instagram ?? '',
 		id: newPlace.id ?? '',
+		// Local (gmaps scraper) imports carry a refresh link; keep any previous
+		// one when a Places API refresh (which has no sourceUrl) overwrites it.
+		sourceUrl: newPlace.sourceUrl ?? previous?.sourceUrl ?? '',
 	};
 }
 
@@ -130,12 +154,11 @@ export function applyFieldToEntry(
 	lang: string,
 ): PlaceItem {
 	if (field === 'description') {
-		if (typeof newPlace.description === 'string' && newPlace.description !== '') {
-			entry.description = {
-				...(entry.description ?? { pt: '', en: '' }),
-				[lang]: newPlace.description,
-			} as PlaceDescription;
-		}
+		entry.description = resolveDescription(
+			entry.description ?? { pt: '', en: '' },
+			newPlace,
+			lang,
+		);
 		return entry;
 	}
 

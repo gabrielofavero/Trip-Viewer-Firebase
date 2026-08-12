@@ -26,7 +26,10 @@ import { getID, getOrCreateCategoryID, removeChildWithValidation } from '../util
 import { displayError, openToast } from '../utils/messages.js';
 import { buildDS, removeSelectorDS, updateValueDS } from '../ui/dynamic-select.js';
 import { FIRESTORE_DESTINATIONS_DATA, FIRESTORE_DESTINATIONS_NEW_DATA } from '../data/state.js';
-import { setDescription, updateDescriptionButtonLabel } from '../pages/edit-destination/categories/description.js';
+import {
+	setDescription,
+	updateDescriptionButtonLabel,
+} from '../pages/edit-destination/categories/description.js';
 import { loadCurrencyValueAndVisibility } from '../pages/edit-destination/categories/price.js';
 import {
 	DESTINATION_IMAGES,
@@ -54,6 +57,7 @@ import {
 	IMPORT_PHOTOS_KEY,
 	type ClosedDecision,
 } from './places-closed-photos-step.js';
+import { LOCAL_SOURCE_URL_KEY } from './places-local-step.js';
 import type { PlaceDetails } from '../models/places-api.model.js';
 import type { PlaceAPI, PlaceImage, PlaceItem } from '../models/schema.js';
 
@@ -114,6 +118,13 @@ export function applyAndClose(): void {
 			lang,
 		});
 
+		// Local (gmaps scraper) imports persist the canonical Maps link so the
+		// entry stays refreshable even when the scraper left `id` blank.
+		const sourceUrl = getStepData<string>(LOCAL_SOURCE_URL_KEY);
+		if (sourceUrl) {
+			entry.placeAPI = { ...entry.placeAPI, sourceUrl } as PlaceAPI;
+		}
+
 		// "[Closed]" label decision → flag + title marker.
 		let applyClosedLabel = false;
 		if (closedDecision === 'label') {
@@ -166,7 +177,8 @@ function deleteItem(category: string, j: number, id: string): void {
 
 	// Remove from in-memory data.
 	if (FIRESTORE_DESTINATIONS_DATA?.[category]) delete FIRESTORE_DESTINATIONS_DATA[category][id];
-	if (FIRESTORE_DESTINATIONS_NEW_DATA?.[category]) delete FIRESTORE_DESTINATIONS_NEW_DATA[category][id];
+	if (FIRESTORE_DESTINATIONS_NEW_DATA?.[category])
+		delete FIRESTORE_DESTINATIONS_NEW_DATA[category][id];
 
 	closeDialog();
 	void refreshBulkButton();
@@ -334,5 +346,3 @@ function updateAccordionTitle(category: string, j: number, applyClosedLabel = fa
 			: 'none';
 	}
 }
-
-

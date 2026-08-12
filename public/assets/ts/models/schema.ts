@@ -505,6 +505,12 @@ export interface PlaceAPI {
 	instagram: string;
 	/** Google Place ID used for Places API lookups, or empty string. */
 	id: string;
+	/**
+	 * Canonical Google Maps link used to re-scrape this place locally (gmaps
+	 * scraper import). Kept even when `id` is blank so the entry can still be
+	 * refreshed by link (the local import path) — see places/places-local-step.ts.
+	 */
+	sourceUrl?: string;
 	/** Whether the place is no longer operational (proposed — see plan Open Q3). */
 	closed?: boolean;
 }

@@ -57,7 +57,9 @@ function hasLinkedPlace(category: string, j: number): boolean {
 	const entry =
 		FIRESTORE_DESTINATIONS_DATA?.[category]?.[id] ??
 		FIRESTORE_DESTINATIONS_NEW_DATA?.[category]?.[id];
-	return Boolean(entry?.placeAPI?.id);
+	// "Linked" = refreshable: a Google Place id (Places API) OR a local scrape
+	// link (gmaps scraper import — may have a blank id but stays refreshable).
+	return Boolean(entry?.placeAPI?.id || entry?.placeAPI?.sourceUrl);
 }
 
 // Adicionar

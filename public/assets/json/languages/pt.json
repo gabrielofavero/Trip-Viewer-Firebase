@@ -875,6 +875,20 @@
 			"title": "Importar com mapas"
 		},
 		"noPermission": "Você não tem permissão para usar a API de Lugares",
+		"source": {
+			"message": "Como você quer importar este lugar?",
+			"local": "Local (gmaps scraper)",
+			"localHint": "Cole um link do Google Maps para fazer o scrape nesta máquina",
+			"api": "Via API de Lugares",
+			"apiHint": "Busque no Google e importe os dados oficiais"
+		},
+		"local": {
+			"title": "Link do Google Maps",
+			"message": "Cole um link do Google Maps para importar este lugar localmente.",
+			"placeholder": "https://maps.app.goo.gl/...",
+			"import": "Importar",
+			"notFound": "Não foi possível obter dados deste link"
+		},
 		"search": {
 			"title": "Buscar",
 			"placeholder": "Busque um lugar...",
@@ -885,6 +899,7 @@
 		},
 		"details": {
 			"updateLabel": "Atualizar com estas informações",
+			"descriptionBoth": "Descrição importada em inglês e português",
 			"noData": "Nenhuma informação disponível para este lugar",
 			"back": "Voltar",
 			"continue": "Continuar",
@@ -915,6 +930,7 @@
 		},
 		"loading": {
 			"search": "Buscando...",
+			"scraping": "Fazendo scrape das informações do lugar...",
 			"fetching": "Obtendo informações do lugar...",
 			"importing": "Importando fotos...",
 			"applying": "Aplicando informações do lugar..."
@@ -931,6 +947,9 @@
 		},
 		"bulk": {
 			"confirm": "Tentar obter informações de {{count}} item(ns) vinculado(s)?",
+			"local": {
+				"none": "Nenhuma entrada pode ser atualizada localmente (nenhuma tem um link do Google Maps)"
+			},
 			"report": {
 				"fields": "{{count}} campo(s) podem ter seus dados atualizados",
 				"closed": "{{count}} lugar(es) não estão mais em operação"
@@ -956,7 +975,11 @@
 			"localOnly": "Este recurso está disponível apenas no desenvolvimento local",
 			"network": "Erro de rede. Verifique sua conexão e tente novamente",
 			"routeNotConfigured": "A rota da API de Lugares ainda não está configurada",
-			"quotaExceeded": "A cota mensal da API de Lugares foi atingida. Tente novamente no próximo mês."
+			"quotaExceeded": "A cota mensal da API de Lugares foi atingida. Tente novamente no próximo mês.",
+			"invalidMapLink": "Isso não parece um link válido do Google Maps",
+			"scraperUnavailable": "O scraper local não está rodando. Inicie com npm run dev e verifique se o Docker Desktop está aberto.",
+			"scraperFailed": "O scraper local não conseguiu importar este lugar. Tente novamente.",
+			"rateLimited": "Nenhum dado retornado para este lugar. O Google provavelmente está limitando os scrapes — aguarde alguns minutos e tente novamente."
 		}
 	}
 }

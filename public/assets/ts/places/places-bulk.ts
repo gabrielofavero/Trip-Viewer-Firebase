@@ -45,10 +45,8 @@ import {
 	FIRESTORE_DESTINATIONS_NEW_DATA,
 } from '../data/state.js';
 import { COLLECTION, createBatchOps } from '../data/services/destination.service.js';
-import {
-	getPlace,
-	PLACES_API_ENABLED,
-} from '../data/services/places-api.service.js';
+import { getPlace, PLACES_API_ENABLED } from '../data/services/places-api.service.js';
+import { GMAPS_SCRAPER_ENABLED, scrapePlaces } from '../data/services/gmaps-scraper.service.js';
 import { removeSelectorDS } from '../ui/dynamic-select.js';
 import { removeDestinationImages } from '../pages/edit-destination/categories/image.js';
 import type { PlaceDetails } from '../models/places-api.model.js';
@@ -96,8 +94,10 @@ export interface BulkLinkedEntry {
 	entry: PlaceItem;
 	/** The entry's saved placeAPI (always present — this is what makes it linked). */
 	placeAPI: PlaceAPI;
-	/** Google Place ID (placeAPI.id). */
+	/** Google Place ID (placeAPI.id), or '' for local-only imports. */
 	placeId: string;
+	/** Maps link used by the local (gmaps scraper) refresh path, when available. */
+	scrapeUrl?: string;
 }
 
 /** Per-entry result after fetching fresh info for a linked item. */
@@ -173,12 +173,64 @@ export function collectLinkedEntries(): BulkLinkedEntry[] {
 	return [...byKey.values()];
 }
 
+/**
+ * Collect every entry that can be refreshed by the LOCAL (gmaps scraper) path:
+ * any entry with a scrape-able Maps link (placeAPI.sourceUrl or placeAPI.map).
+ * This includes local imports that have a BLANK place id (sourceUrl only),
+ * which the Places API bulk path can't reach. Pending data wins over the
+ * loaded document for the same id.
+ */
+export function collectLocalScrapeEntries(): BulkLinkedEntry[] {
+	const byKey = new Map<string, BulkLinkedEntry>();
+	const addFrom = (source: Record<string, any> | null | undefined): void => {
+		if (!source) return;
+		for (const category of DESTINATION_CATEGORIES) {
+			const map: Record<string, any> | undefined = source[category];
+			if (!map || typeof map !== 'object') continue;
+			for (const [id, rawEntry] of Object.entries(map)) {
+				const placeAPI = rawEntry?.placeAPI as PlaceAPI | undefined;
+				if (!placeAPI) continue;
+				const scrapeUrl = placeAPI.sourceUrl ?? placeAPI.map ?? '';
+				if (!scrapeUrl) continue;
+				byKey.set(`${category}:${id}`, {
+					category,
+					id,
+					entry: rawEntry as PlaceItem,
+					placeAPI,
+					placeId: placeAPI.id ?? '',
+					scrapeUrl,
+				});
+			}
+		}
+	};
+	addFrom(FIRESTORE_DESTINATIONS_DATA);
+	addFrom(FIRESTORE_DESTINATIONS_NEW_DATA); // newer pending data wins
+	return [...byKey.values()];
+}
+
+/** Count local-scrapeable entries (sourceUrl/map present). */
+export function countLocalScrapeEntries(): number {
+	return collectLocalScrapeEntries().length;
+}
+
+/**
+ * Count entries refreshable by EITHER source: linked by a place id OR carrying
+ * a local scrape link. Drives the bulk button visibility (the button should
+ * show as long as at least one entry can be updated somehow).
+ */
+export function countBulkEligibleEntries(): number {
+	const keys = new Set<string>();
+	for (const entry of collectLinkedEntries()) keys.add(`${entry.category}:${entry.id}`);
+	for (const entry of collectLocalScrapeEntries()) keys.add(`${entry.category}:${entry.id}`);
+	return keys.size;
+}
+
 // ------------------------------------------------------------------
 // Main entry point (P10's Confirm button calls this)
 // ------------------------------------------------------------------
 
 /**
- * Run the bulk fetch + report flow.
+ * Run the bulk fetch + report flow for the PLACES API source.
  *
  * 1. Collect every linked entry (placeAPI.id).
  * 2. Show a dialog-scoped loading overlay (spinner ring + cancel X).
@@ -196,13 +248,91 @@ export async function runBulkPlacesUpdate(): Promise<void> {
 		displayError(new Error(translate('placesApi.errors.localOnly')));
 		return;
 	}
-	if (_bulkRunning) return;
 	const entries = collectLinkedEntries();
 	if (entries.length === 0) {
 		// P10 gates the button on count > 0 — this is a safety net.
 		console.warn('[places-bulk] No linked items to update');
 		return;
 	}
+	await runBulkFetch(entries, (item, signal) =>
+		getPlace(item.placeId, {
+			signal,
+			photos: false,
+			onLimited: (limited) => {
+				if (limited) notifyPlacesLimited();
+			},
+		}),
+	);
+}
+
+/** @deprecated Alias for {@link runBulkPlacesUpdate} (the P10 contract name). */
+export { runBulkPlacesUpdate as runBulkUpdate };
+
+/**
+ * Run the bulk fetch + report flow for the LOCAL (gmaps scraper) source.
+ * Collects every entry with a scrape-able Maps link (sourceUrl/map — includes
+ * local imports with a blank place id) and refreshes them ALL in ONE local
+ * request (scrapePlaces), then reuses the same report + apply options as
+ * P11/P12. Local scrapes never touch the Places API/photos keys.
+ */
+export async function runBulkLocalUpdate(): Promise<void> {
+	// HARD CHECK — local-only (the scraper route only exists on the dev machine).
+	if (PLACES_API_ENABLED !== true || GMAPS_SCRAPER_ENABLED !== true) {
+		displayError(new Error(translate('placesApi.errors.localOnly')));
+		return;
+	}
+	const entries = collectLocalScrapeEntries();
+	if (entries.length === 0) {
+		displayError(new Error(translate('placesApi.bulk.local.none')));
+		return;
+	}
+	// Sequential (concurrency 1): each entry is one local docker run, and
+	// back-to-back runs get rate-limited by Google — never fan them out.
+	await runBulkFetch(
+		entries,
+		async (item, signal) => {
+			const url = item.scrapeUrl ?? '';
+			const places = await scrapePlaces([url], {
+				signal,
+				lang: getLanguagePackName(),
+			});
+			const place = places[0];
+			if (!place || !place.name) {
+				// Empty result → blocked/rate-limited; surface it per entry.
+				throw new Error(translate('placesApi.errors.rateLimited'));
+			}
+			return place;
+		},
+		1,
+	);
+}
+
+/**
+ * Build the aggregate report from per-item results. Exported so P12 can reuse
+ * it after applying options.
+ */
+export function computeBulkReport(items: BulkItemResult[]): BulkReport {
+	const totalUpdatableFields = items.reduce((sum, item) => sum + item.updatableFields.length, 0);
+	const closedCount = items.filter((item) => item.closed).length;
+	return { items, totalUpdatableFields, closedCount };
+}
+
+// ------------------------------------------------------------------
+// Shared fetch driver (both sources)
+// ------------------------------------------------------------------
+
+/**
+ * Open the bulk dialog, fetch fresh info for `entries` with bounded
+ * concurrency via `fetcher`, and render the report. Shared by the Places API
+ * (runBulkPlacesUpdate) and local scraper (runBulkLocalUpdate) paths.
+ */
+async function runBulkFetch(
+	entries: BulkLinkedEntry[],
+	fetcher: (item: BulkLinkedEntry, signal: AbortSignal) => Promise<PlaceDetails>,
+	concurrency = CONCURRENCY,
+): Promise<void> {
+	if (_bulkRunning) return;
+	if (entries.length === 0) return;
 
 	_bulkRunning = true;
 	openBulkDialog();
@@ -210,7 +340,7 @@ export async function runBulkPlacesUpdate(): Promise<void> {
 	const controller = new AbortController();
 	_bulkAbort = controller;
 	try {
-		const items = await fetchLinkedPlaces(entries, controller.signal);
+		const items = await fetchPlaces(entries, fetcher, controller.signal, concurrency);
 		if (controller.signal.aborted) return; // cancelled by the X / Escape
 		renderBulkReport(computeBulkReport(items));
 	} catch (error) {
@@ -224,31 +354,21 @@ export async function runBulkPlacesUpdate(): Promise<void> {
 	}
 }
 
-/** @deprecated Alias for {@link runBulkPlacesUpdate} (the P10 contract name). */
-export { runBulkPlacesUpdate as runBulkUpdate };
-
-/**
- * Build the aggregate report from per-item results. Exported so P12 can reuse
- * it after applying options.
- */
-export function computeBulkReport(items: BulkItemResult[]): BulkReport {
-	const totalUpdatableFields = items.reduce((sum, item) => sum + item.updatableFields.length, 0);
-	const closedCount = items.filter((item) => item.closed).length;
-	return { items, totalUpdatableFields, closedCount };
-}
-
-// ------------------------------------------------------------------
-// Fetch (bounded concurrency)
-// ------------------------------------------------------------------
-
 /** Whether `error` is a user-cancelled AbortError (same check as places-dialog). */
 function isAbortError(error: unknown): boolean {
 	return (error as Error)?.name === 'AbortError';
 }
 
-async function fetchLinkedPlaces(
+/**
+ * Fetch fresh info for every entry via `fetcher` with bounded concurrency,
+ * building a per-item BulkItemResult. A single failure records + skips rather
+ * than aborting the run.
+ */
+async function fetchPlaces(
 	entries: BulkLinkedEntry[],
+	fetcher: (item: BulkLinkedEntry, signal: AbortSignal) => Promise<PlaceDetails>,
 	signal: AbortSignal,
+	concurrency = CONCURRENCY,
 ): Promise<BulkItemResult[]> {
 	const lang = getLanguagePackName();
 	const results: Array<BulkItemResult | undefined> = new Array(entries.length);
@@ -259,21 +379,14 @@ async function fetchLinkedPlaces(
 			const i = index++;
 			const { category, id, entry, placeAPI, placeId } = entries[i];
 			try {
-				// Firebase token + lang are resolved by the service. Only the info
-				// route is called with photos=false — the bulk flow refreshes
-				// existing places and never fetches/compares images.
-				const newPlace = await getPlace(placeId, {
-					signal,
-					photos: false,
-					onLimited: (limited) => {
-						if (limited) notifyPlacesLimited();
-					},
-				});
+				const newPlace = await fetcher(entries[i], signal);
 				if (signal.aborted) return;
 				results[i] = {
 					category,
 					id,
-					placeId,
+					// Fresh id wins — a local scrape may return a real place id
+					// where the saved one was blank.
+					placeId: newPlace.id || placeId,
 					entry,
 					oldPlaceAPI: placeAPI,
 					newPlace,
@@ -294,18 +407,13 @@ async function fetchLinkedPlaces(
 					newPlace: {} as PlaceDetails,
 					updatableFields: [],
 					closed: false,
-					error:
-						error instanceof Error
-							? error.message
-							: translate('placesApi.errors.network'),
+					error: error instanceof Error ? error.message : translate('placesApi.errors.network'),
 				};
 			}
 		}
 	};
 
-	await Promise.all(
-		Array.from({ length: Math.min(CONCURRENCY, entries.length) }, () => worker()),
-	);
+	await Promise.all(Array.from({ length: Math.min(concurrency, entries.length) }, () => worker()));
 	return results.filter((result): result is BulkItemResult => Boolean(result));
 }
 
@@ -444,10 +552,7 @@ function getReportHTML(report: BulkReport): string {
 	const rows = items
 		.map((item) => {
 			const name =
-				item.entry?.name ||
-				item.newPlace?.name ||
-				item.placeId ||
-				`${item.category}:${item.id}`;
+				item.entry?.name || item.newPlace?.name || item.placeId || `${item.category}:${item.id}`;
 			if (item.error) {
 				return `
 				<li class="places-bulk-report-item">
@@ -546,9 +651,7 @@ function renderBulkError(error: unknown): void {
 	const content = getID('places-bulk-content');
 	if (!content) return;
 	const message =
-		error instanceof Error && error.message
-			? error.message
-			: translate('placesApi.errors.network');
+		error instanceof Error && error.message ? error.message : translate('placesApi.errors.network');
 	content.innerHTML = `
 	<div class="places-bulk-report">
 		<div class="places-bulk-report-icon">
@@ -674,7 +777,8 @@ async function applyBulk(report: BulkReport, options: BulkApplyOptions): Promise
  */
 function removeLinkedEntry(category: string, id: string): void {
 	if (FIRESTORE_DESTINATIONS_DATA?.[category]) delete FIRESTORE_DESTINATIONS_DATA[category][id];
-	if (FIRESTORE_DESTINATIONS_NEW_DATA?.[category]) delete FIRESTORE_DESTINATIONS_NEW_DATA[category][id];
+	if (FIRESTORE_DESTINATIONS_NEW_DATA?.[category])
+		delete FIRESTORE_DESTINATIONS_NEW_DATA[category][id];
 
 	const j = findJFromID(id, category);
 	if (getID(`${category}-id-${j}`)?.value === id) {
@@ -747,6 +851,7 @@ window.addEventListener('load', () => {
 	const dev = (window as any).dev;
 	if (dev?.isEnabled) {
 		dev.page.runBulkPlaces = runBulkPlacesUpdate;
+		dev.page.runBulkLocal = runBulkLocalUpdate;
 		dev.page.countLinkedPlaces = countLinkedItems;
 	}
 });

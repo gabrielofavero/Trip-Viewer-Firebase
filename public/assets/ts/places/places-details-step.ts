@@ -58,8 +58,8 @@ export const CHECKED_KEY = 'checkedFields';
  * skips the photos step (applies directly).
  */
 export const UPDATE_EXISTING_KEY = 'updateExisting';
-/** Key P6 uses to store the selected search result. */
-const CANDIDATE_KEY = 'placeDetailsCandidate';
+/** Key P6 (search) and the local import step use to store the selected place. */
+export const CANDIDATE_KEY = 'placeDetailsCandidate';
 
 /** Display label key per entry field (reuses the edit form's labels). */
 const FIELD_LABEL_KEYS: Record<PlaceFieldKey, string> = {
@@ -126,8 +126,6 @@ async function renderDetailsStep(context: PlacesDialogContext): Promise<string> 
 
 /** Render the field previews (disabled inputs) + checkboxes + footer. */
 function renderDetailsHTML(details: PlaceDetails): string {
-	const lang = getLanguagePackName();
-
 	// Skip empty fields: nothing to preview, and no "Update with this info"
 	// checkbox to offer — an empty value can never overwrite existing data.
 	const rows = FIELD_KEYS.filter((field) => getFieldDisplayValue(details, field) !== '')
@@ -136,11 +134,7 @@ function renderDetailsHTML(details: PlaceDetails): string {
 			const value = getFieldDisplayValue(details, field);
 			const caption =
 				field === 'description'
-					? `<div class="caption">${escapeHtml(
-							translate('labels.description.lang', {
-								lang: translate(`labels.language.${lang}`),
-							}),
-						)}</div>`
+					? `<div class="caption">${escapeHtml(getDescriptionCaption(details))}</div>`
 					: '';
 			return `
 		<div class="nice-form-group places-detail-field">
@@ -175,6 +169,23 @@ function renderDetailsHTML(details: PlaceDetails): string {
 function getFieldDisplayValue(details: PlaceDetails, field: PlaceFieldKey): string {
 	const value = details[field];
 	return typeof value === 'string' ? value : '';
+}
+
+/**
+ * Caption under the description input. The local gmaps scraper imports the
+ * description in BOTH languages — the preview shows the active language but the
+ * caption flags that both were imported. The Places API path returns only the
+ * requested language, so it keeps the plain "Description in {lang}" caption.
+ */
+function getDescriptionCaption(details: PlaceDetails): string {
+	const both = details.descriptions;
+	if (both && both.en && both.pt) {
+		return translate('placesApi.details.descriptionBoth');
+	}
+	const lang = getLanguagePackName();
+	return translate('labels.description.lang', {
+		lang: translate(`labels.language.${lang}`),
+	});
 }
 
 /** Render the inline error state (keeps the dialog open for a retry). */
@@ -229,14 +240,14 @@ function handleContinue(): void {
 /** Read which "Update with this info" checkboxes are checked. */
 function collectCheckedFields(): PlaceFieldKey[] {
 	const checked: PlaceFieldKey[] = [];
-	getID('places-dialog')?.querySelectorAll<HTMLInputElement>('.places-detail-check-input')?.forEach(
-		(input) => {
+	getID('places-dialog')
+		?.querySelectorAll<HTMLInputElement>('.places-detail-check-input')
+		?.forEach((input) => {
 			const field = input.getAttribute('data-field');
 			if (input.checked && field && (FIELD_KEYS as readonly string[]).includes(field)) {
 				checked.push(field as PlaceFieldKey);
 			}
-		},
-	);
+		});
 	return checked;
 }
 

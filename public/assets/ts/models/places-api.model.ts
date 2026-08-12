@@ -29,6 +29,13 @@ export interface PlaceSearchResult {
 	name: string;
 	/** Localized — only present in the requested language. */
 	description?: string;
+	/**
+	 * BOTH languages' descriptions (gmaps scraper import only; Places API
+	 * results leave it unset). `description` above is the active-language text
+	 * the dialog shows; this carries the raw en + pt texts so the apply step
+	 * can write both into the entry's `description` object.
+	 */
+	descriptions?: { en?: string; pt?: string };
 	region?: string;
 	website?: string;
 	instagram?: string;
@@ -43,6 +50,11 @@ export interface PlaceSearchResult {
 	businessStatus?: string;
 	/** Photo references (route 3 consumes these). */
 	photos?: PlacePhotoRef[];
+	/**
+	 * Canonical Google Maps link to re-scrape this place locally (gmaps scraper
+	 * import). Set by the local route only; Places API results leave it empty.
+	 */
+	sourceUrl?: string;
 }
 
 /** Route 2 response item: same shape as PlaceSearchResult, fully populated. */

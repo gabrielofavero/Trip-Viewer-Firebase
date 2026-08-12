@@ -33,7 +33,15 @@ import { FIRESTORE_DESTINATIONS_DATA } from '../data/state.js';
 import { PLACES_API_ENABLED } from '../data/services/places-api.service.js';
 
 /** The steps the Places dialog can be in. */
-export type PlacesDialogStep = 'linked' | 'search' | 'details' | 'photos' | 'closed' | 'done';
+export type PlacesDialogStep =
+	| 'source'
+	| 'local'
+	| 'linked'
+	| 'search'
+	| 'details'
+	| 'photos'
+	| 'closed'
+	| 'done';
 
 /** Entry context the dialog was opened for. */
 export interface PlacesDialogContext {
@@ -66,6 +74,7 @@ const _stepRenderers: Partial<Record<PlacesDialogStep, StepRenderer>> = {};
 /** Loading message key per step ('' when the step has no fetch of its own). */
 const STEP_LOADING_KEYS: Partial<Record<PlacesDialogStep, string>> = {
 	search: 'placesApi.loading.search',
+	local: 'placesApi.loading.scraping',
 	details: 'placesApi.loading.fetching',
 	photos: 'placesApi.loading.importing',
 };
@@ -86,9 +95,11 @@ export function notifyPlacesLimited(): void {
 
 /**
  * Open the Places dialog for the given destination entry.
- * Reads the current entry name + saved `placeAPI`. Entries already linked to a
- * Google place start on the 'linked' step (update it vs find a different one);
- * brand-new entries start at the search step.
+ * Reads the current entry name + saved `placeAPI`. Every dialog starts on the
+ * 'source' step, where the user picks the import source (local gmaps-scraper
+ * vs Places API). From there: Places API routes already-linked entries to the
+ * 'linked' step (update it vs find a different one) and brand-new entries to
+ * search; "Local" routes to the maps-link import step.
  */
 export function openPlacesDialog(category: string, j: number): void {
 	// HARD CHECK — the Places feature is local-environments only. Even if the
@@ -109,12 +120,17 @@ export function openPlacesDialog(category: string, j: number): void {
 	// Mark the container so the CSS can widen this data-heavy dialog.
 	properties.containers.principal = `${properties.containers.principal} places-dialog-container`;
 	properties.fullscreen = true;
-	// The X close button renders in the standard icon box (above the title);
-	// its action cancels the in-flight request before closing (closeDialog).
-	// closeButton stays false so Escape keeps going through closeDialog (which
-	// aborts) instead of the generic closeMessage.
+	// Header icons mirror the itinerary dialog: a back arrow rendered in the
+	// standard icon box (top-right, above the title), shown when there is step
+	// history, plus the X close button. The X's action cancels the in-flight
+	// request before closing (closeDialog). closeButton stays false so Escape
+	// keeps going through closeDialog (which aborts) instead of the generic
+	// closeMessage.
 	properties.closeButton = false;
-	properties.icons = [{ type: 'close', action: closeDialog }];
+	properties.icons = [
+		{ type: 'goBack', action: goBack },
+		{ type: 'close', action: closeDialog },
+	];
 	properties.buttons = [];
 	properties.content = getDialogShellHTML();
 	displayFullMessage(properties);
@@ -123,9 +139,8 @@ export function openPlacesDialog(category: string, j: number): void {
 	_context = { category, j, entryName, destinationTitle, placeAPI };
 	_stepData = {};
 	_history = [];
-	// Already-linked entries start on the 'linked' step (update this place vs
-	// find a different place); brand-new entries go straight to search.
-	_step = placeAPI?.id ? 'linked' : 'search';
+	// Always start by asking the user how they want to import (Local vs API).
+	_step = 'source';
 
 	wireDialogControls();
 	document.addEventListener('keydown', handlePlacesKeydown);
@@ -281,12 +296,6 @@ export function isAbortError(error: unknown): boolean {
 function getDialogShellHTML(): string {
 	return `
 	<div class="places-dialog" id="places-dialog">
-		<div class="places-dialog-header">
-			<button id="places-dialog-back" type="button" class="places-dialog-back" style="display: none">
-				<i class="iconify" data-icon="material-symbols-light:arrow-back"></i>
-				<span>${translate('placesApi.details.back')}</span>
-			</button>
-		</div>
 		<div id="places-dialog-step" class="places-dialog-step"></div>
 		<div id="places-dialog-loading" class="places-dialog-loading" style="display: none">
 			<div class="places-dialog-loading-ring"></div>
@@ -306,9 +315,7 @@ function wireDialogControls(): void {
 	dialog.addEventListener('click', (event) => {
 		const target = event.target as Element | null;
 		if (!target) return;
-		if (target.closest('#places-dialog-back')) {
-			goBack();
-		} else if (target.closest('#places-dialog-loading-cancel')) {
+		if (target.closest('#places-dialog-loading-cancel')) {
 			abortCurrentRequest();
 		}
 	});
@@ -322,9 +329,11 @@ function handlePlacesKeydown(event: KeyboardEvent): void {
 }
 
 function updateBackButton(): void {
-	const back = getID('places-dialog-back');
+	// The back arrow is the shared #back-icon in the top-right icon box (same
+	// element the itinerary dialog uses). Hidden when there is no history.
+	const back = getID('back-icon');
 	if (!back) return;
-	back.style.display = _history.length > 0 ? 'inline-flex' : 'none';
+	back.style.visibility = _history.length > 0 ? 'visible' : 'hidden';
 }
 
 function setDialogContent(html: string): void {

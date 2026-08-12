@@ -270,17 +270,25 @@ export function validateLink(id) {
 	openToast(`${title}: ${content}`);
 }
 
-export function validateMapLink(id) {
-	const div = getID(id);
-	const link = div.value;
-
+/**
+ * Pure check that a link is a Google Maps / Apple Maps link. Shared by the
+ * edit form's `validateMapLink` and the Places "Import with maps" local step
+ * (gmaps scraper) — both must agree on what counts as a valid Maps URL.
+ */
+export function isValidMapLink(link) {
 	const isGoogleMaps =
 		(link.includes('google') && link.includes('maps')) ||
 		link.includes('goo.gl/maps') ||
 		link.includes('maps.app.goo.gl');
 	const isAppleMaps = link.includes('maps.apple.com');
+	return isHttp(link) && (isGoogleMaps || isAppleMaps);
+}
 
-	if (!link || (isHttp(link) && (isGoogleMaps || isAppleMaps))) return;
+export function validateMapLink(id) {
+	const div = getID(id);
+	const link = div.value;
+
+	if (!link || isValidMapLink(link)) return;
 
 	closeAllSelects();
 	div.value = '';
