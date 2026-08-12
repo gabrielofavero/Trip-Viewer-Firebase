@@ -867,5 +867,121 @@
 		"trip_destinations": "Destinos da Viagem",
 		"view_trip": "Ver Viagem",
 		"edit_trip": "Editar Viagem"
+	},
+	"placesApi": {
+		"fetchInfo": "Buscar Informações com Maps",
+		"updateWithMaps": "Atualizar com Maps",
+		"dialog": {
+			"title": "Importar com mapas"
+		},
+		"noPermission": "Você não tem permissão para usar a API de Lugares",
+		"source": {
+			"message": "Como você quer importar este lugar?",
+			"local": "Local (gmaps scraper)",
+			"localHint": "Cole um link do Google Maps para fazer o scrape nesta máquina",
+			"api": "Via API de Lugares",
+			"apiHint": "Busque no Google e importe os dados oficiais"
+		},
+		"local": {
+			"title": "Link do Google Maps",
+			"message": "Cole um link do Google Maps para importar este lugar localmente.",
+			"placeholder": "https://maps.app.goo.gl/...",
+			"import": "Importar",
+			"notFound": "Não foi possível obter dados deste link"
+		},
+		"search": {
+			"title": "Buscar",
+			"placeholder": "Busque um lugar...",
+			"button": "Buscar",
+			"noResults": "Nenhum resultado encontrado",
+			"error": "Ocorreu um erro ao buscar. Tente novamente",
+			"includePhotos": "Incluir fotos"
+		},
+		"details": {
+			"updateLabel": "Atualizar com estas informações",
+			"descriptionBoth": "Descrição importada em inglês e português",
+			"noData": "Nenhuma informação disponível para este lugar",
+			"allUpToDate": "Todas as informações já correspondem ao que você tem",
+			"back": "Voltar",
+			"continue": "Continuar",
+			"error": "Ocorreu um erro ao carregar as informações do lugar. Tente novamente"
+		},
+		"linked": {
+			"title": "Este lugar já está vinculado",
+			"message": "Você pode atualizar as informações do lugar vinculado ou vincular esta entrada a outro lugar.",
+			"update": "Atualizar este lugar",
+			"updateHint": "Atualizar as informações do lugar vinculado",
+			"search": "Encontrar outro lugar",
+			"searchHint": "Buscar outro lugar no Google"
+		},
+		"photos": {
+			"import": "Importar fotos",
+			"canImport": "Fotos podem ser importadas",
+			"none": "Nenhuma foto disponível para importar",
+			"count": "{{count}} foto(s) selecionada(s)"
+		},
+		"closed": {
+			"title": "Lugar não está mais em operação",
+			"message": "Este lugar parece não estar mais em operação",
+			"option": {
+				"delete": "Excluir item",
+				"ignore": "Ignorar",
+				"label": "Adicionar etiqueta [Closed]"
+			},
+			"label": "[Closed]"
+		},
+		"loading": {
+			"search": "Buscando...",
+			"scraping": "Fazendo scrape das informações do lugar...",
+			"fetching": "Obtendo informações do lugar...",
+			"importing": "Importando fotos...",
+			"applying": "Aplicando informações do lugar..."
+		},
+		"apply": {
+			"title": "Aplicar informações",
+			"confirm": "Aplicar",
+			"fields": "{{count}} campo(s) serão atualizados",
+			"photos": "{{count}} foto(s) serão importadas",
+			"closedLabel": "Uma etiqueta [Closed] será adicionada ao título",
+			"deleteItem": "Este item será excluído",
+			"success": "Informações do lugar aplicadas com sucesso",
+			"error": "Ocorreu um erro ao aplicar as informações do lugar"
+		},
+		"bulk": {
+			"confirm": "Tentar obter informações de {{count}} item(ns) vinculado(s)?",
+			"local": {
+				"none": "Nenhuma entrada pode ser atualizada localmente (nenhuma tem um link do Google Maps)"
+			},
+			"report": {
+				"fields": "{{count}} campo(s) podem ter seus dados atualizados",
+				"closed": "{{count}} lugar(es) não estão mais em operação"
+			},
+			"options": {
+				"fields": {
+					"title": "Campos",
+					"all": "Substituir tudo pelos novos dados",
+					"auto": "Substituir apenas os campos preenchidos automaticamente"
+				},
+				"closed": {
+					"title": "Lugares fechados",
+					"delete": "Excluir automaticamente itens fechados",
+					"label": "Adicionar etiqueta [Closed] aos itens fechados"
+				}
+			},
+			"success": "Os lugares foram atualizados com sucesso"
+		},
+		"limited": {
+			"message": "A cota de Lugares está quase no limite. A busca e as informações do lugar continuam funcionando, mas as fotos estão temporariamente desativadas."
+		},
+		"errors": {
+			"localOnly": "Este recurso está disponível apenas no desenvolvimento local",
+			"network": "Erro de rede. Verifique sua conexão e tente novamente",
+			"routeNotConfigured": "A rota da API de Lugares ainda não está configurada",
+			"quotaExceeded": "A cota mensal da API de Lugares foi atingida. Tente novamente no próximo mês.",
+			"invalidMapLink": "Isso não parece um link válido do Google Maps",
+			"scraperUnavailable": "O scraper local não está rodando. Inicie com npm run dev e verifique se o Docker Desktop está aberto.",
+			"scraperFailed": "O scraper local não conseguiu importar este lugar. Tente novamente.",
+			"rateLimited": "Nenhum dado retornado para este lugar. O Google provavelmente está limitando os scrapes — aguarde alguns minutos e tente novamente."
+		}
 	}
 }

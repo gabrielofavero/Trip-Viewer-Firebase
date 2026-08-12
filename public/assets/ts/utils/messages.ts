@@ -68,6 +68,12 @@ const PANEL_ANIM_DURATION = 220; // ms (.panel-leave)
  */
 export function animateDialogOpen(element: HTMLElement | null, display?: string) {
 	if (!element) return;
+	// Cancel any pending close animation on this element before showing it
+	// (mirrors the explicit `cancelAnimateOut(toast)` in openToast). Without
+	// this, reopening an element mid-close leaves a stale close timer/listener
+	// that later hides it again — so the blurred backdrop stays visible but the
+	// card/dialog never reappears until a page refresh.
+	cancelAnimateOut(element);
 	if (display) {
 		element.style.display = display;
 	} else if ((element as any)._prevDisplay !== undefined) {
@@ -341,6 +347,13 @@ export function displayError(error, tryAgain = false) {
 		buttons.push({ type: 'home' });
 	}
 	properties.buttons = buttons;
+
+	// Error dialogs carry explicit actions (Try again / Home) — hide the X
+	// close button (and Escape dismissal) so the user must act. Only keep the
+	// X when there's no dismissible button at all (e.g. a bare error on the
+	// index page) so the dialog can never get stuck open.
+	properties.closeButton = buttons.length === 0;
+
 	displayFullMessage(properties);
 }
 
@@ -427,6 +440,14 @@ export function getIconsBox(icons, showCloseButton = true) {
 	iconContainer.className = 'icon-container';
 	iconContainer.style.textAlign = 'right';
 
+	// Optional custom close action — lets a dialog cancel in-flight work before
+	// closing (e.g. the Places dialog). Takes the form { type: 'close', action }.
+	let closeAction: string | ((...args: any[]) => void) | undefined;
+	if (Array.isArray(icons)) {
+		const closeIcon = icons.find((ic) => ic && ic.type === 'close');
+		if (closeIcon) closeAction = closeIcon.action;
+	}
+
 	if (icons && icons[0] && icons[0].type === 'goBack') {
 		const backIcon = document.createElement('i');
 		backIcon.id = 'back-icon';
@@ -441,8 +462,9 @@ export function getIconsBox(icons, showCloseButton = true) {
 	}
 
 	// X close button — omitted when the dialog must be dismissed via an
-	// explicit action button (see properties.closeButton / displaySaveSuccess).
-	if (showCloseButton) {
+	// explicit action button (see properties.closeButton / displaySaveSuccess),
+	// unless a custom close action was provided (which implies the X is wanted).
+	if (showCloseButton || closeAction) {
 		const cancelIcon = document.createElement('i');
 		cancelIcon.id = 'cancel-icon';
 		cancelIcon.className = 'iconify';
@@ -456,7 +478,19 @@ export function getIconsBox(icons, showCloseButton = true) {
 	// even if Iconify replaces the <i> element with an <svg> at runtime.
 	iconContainer.addEventListener('click', (e) => {
 		const icon = (e.target as Element).closest("[data-icon='material-symbols-light:close']");
-		if (icon) closeMessage();
+		if (!icon) return;
+
+		if (typeof closeAction === 'function') {
+			closeAction();
+		} else if (typeof closeAction === 'string' && closeAction) {
+			// Resolve string actions against the message action registry.
+			const name = closeAction.match(/^([\w.]+)/)?.[1] ?? closeAction;
+			const fn = _actionRegistry[name];
+			if (typeof fn === 'function') fn();
+			else closeMessage();
+		} else {
+			closeMessage();
+		}
 	});
 
 	return iconContainer;

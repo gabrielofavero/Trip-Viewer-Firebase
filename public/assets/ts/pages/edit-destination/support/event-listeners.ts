@@ -15,6 +15,7 @@ import {
 	confirmDestinationImages,
 } from '../categories/image.js';
 import { openAttributions } from '../../../utils/attributions.js';
+import { openPlacesDialog } from '../../../places/places-dialog.js';
 import { closeToast } from '../../../utils/messages.js';
 import { closeModal } from '../../../theme/visibility.js';
 
@@ -51,6 +52,11 @@ export function loadEditDestinationListeners() {
 			const index = parseInt(target.getAttribute('data-index'));
 			const category = target.getAttribute('data-category');
 			if (!isNaN(index) && category) openMoveDestinationModal(index, category);
+		},
+		'open-places-dialog': (target) => {
+			const category = target.getAttribute('data-category');
+			const index = parseInt(target.getAttribute('data-index'));
+			if (category && !isNaN(index)) openPlacesDialog(category, index);
 		},
 	});
 

@@ -44,8 +44,9 @@ curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase2?cleanup=tr
 | **14** | **`migratePhase2`** | **Rename collections Pt→En + fix itinerary/destination values + optional cleanup** |
 | **15** | **`migratePhase3`** | **Cleanup: embedded summaries → subcollections, permissions migration, legacy field removal** |
 | **16** | **`migrateUserProfile`** | **Backfill user profile fields (`name`, `email`, `photoURL`) from Auth into every `users/{uid}` document** |
+| **17** | **`migratePlacesApi`** | **Places API prep: grant `canUsePlacesAPI` to body-provided UIDs + add `placeAPI` object to every destination entry** |
 
-Migrations 1–12 are **legacy** (already applied in production). Migrations 13–15 are the **consolidation phases**; migration 16 is the current profile-fields backfill. They are exported from `functions/src/index.ts` as `migratePhase1`, `migratePhase2`, `migratePhase3`, and `migrateUserProfile`.
+Migrations 1–12 are **legacy** (already applied in production). Migrations 13–15 are the **consolidation phases**; migrations 16–17 are the post-consolidation backfills (profile fields, then Places API prep). They are exported from `functions/src/index.ts` as `migratePhase1`, `migratePhase2`, `migratePhase3`, `migrateUserProfile`, and `migratePlacesApi`.
 
 ---
 
@@ -215,6 +216,40 @@ curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateUserProfile"
 
 ---
 
+## Migration 17: Places API prep (`migratePlacesApi`)
+
+**File:** `functions/src/migrations/17-migrate-places-api.ts`
+
+Prepares the database for the Places API integration (epic E045) with two independent, idempotent operations:
+
+1. **`canUsePlacesAPI` permission:** creates `admin/permissions/canUsePlacesAPI/{uid}` docs for each UID passed in the **request body** (`{ "uids": [...] }`) — existence = granted. Accepts an array of UIDs, a comma-separated string, or the `?uids=` query param. If no UIDs are provided, this step is skipped entirely.
+
+   **Single-user convenience:** POST `{ "uid": "..." }` (or `?uid=`) instead creates the permission **and adds the user** — pushes the UID into `admin/admin.admins` (idempotent `arrayUnion`) and creates `users/{uid}` if missing (profile fields pulled from Auth when available).
+2. **`placeAPI` object:** adds a `placeAPI` object to every destination entry (restaurants, snacks, nightlife, tourism, shopping) that lacks it, using dot-path `update()` so only the missing nested field is written. The object is a subset of `scripts/export-maps-data/export-maps-data.py` output (the app's destination format): `{ region, name, website, rating, price, description, emoji, map, updatedAt, instagram, id }` — omits the app-managed `media`/`isNew` and uses `updatedAt` instead of the script's `createdAt`. Also removes any legacy `placeID` string field. Idempotency check: skips entries that already carry a `placeAPI` object.
+
+### Run it:
+```bash
+# Dry run first (placeAPI backfill only — no UIDs)
+curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePlacesApi?dryRun=true"
+
+# Apply + pre-grant the permission to specific UIDs
+curl -X POST "http://localhost:5001/trip-viewer-dev/us-central1/migratePlacesApi" \
+  -H "Content-Type: application/json" \
+  -d '{"uids": ["eySHdjIyK0MNAgiPU77xE0d1CTjp"]}'
+
+# Comma-separated string also works
+curl -X POST "http://localhost:5001/trip-viewer-dev/us-central1/migratePlacesApi" \
+  -H "Content-Type: application/json" \
+  -d '{"uids": "uid1,uid2"}'
+
+# Single-user grant: permission + add the user (admin/admin.admins + users/{uid})
+curl -X POST "http://localhost:5001/trip-viewer-dev/us-central1/migratePlacesApi" \
+  -H "Content-Type: application/json" \
+  -d '{"uid": "gVrXZ68LVac9Ot02slN6zqD3sP3X"}'
+```
+
+---
+
 ## How to Run Migrations
 
 ### On the Emulator (Local)
@@ -251,7 +286,7 @@ Then call the production URL (same pattern, different project).
 ```
 functions/src/migrations/{NN}-migrate-{short-description}.ts
 ```
-Use the next available number (currently up to 16).
+Use the next available number (currently up to 17).
 
 ### Template
 

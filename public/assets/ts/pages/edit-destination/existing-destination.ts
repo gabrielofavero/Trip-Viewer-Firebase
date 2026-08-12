@@ -14,6 +14,7 @@ import { addShopping } from './new-destination.js';
 import { addRestaurants } from './new-destination.js';
 import { addNightlife } from './new-destination.js';
 import { addTourism } from './new-destination.js';
+import { updatePlacesFetchButtonLabel } from './new-destination.js';
 
 // Existing Destination
 export function populateExistingDestinationForm() {
@@ -123,6 +124,8 @@ export function addDestinationHTML(category, j, item) {
 	if (id) {
 		getID(`${category}-id-${j}`).value = id;
 	}
+	// Entries previously fetched with Maps show an "Update with Maps" label.
+	updatePlacesFetchButtonLabel(category, j);
 
 	const createdAt = item.createdAt;
 	if (createdAt) {

@@ -843,21 +843,25 @@
 }
 
 /* Buttons */
-[data-theme="dark"] .btn-secondary-theme,
-[data-theme="dark"] .input-button {
+[data-theme="dark"] .btn-secondary-theme {
 	background: var(--bg-secondary);
 	color: var(--text-primary);
 	border-color: var(--border-color);
 }
 
-[data-theme="dark"] .btn-secondary-theme:hover,
-[data-theme="dark"] .input-button:hover {
+[data-theme="dark"] .btn-secondary-theme:hover {
 	background: var(--bg-tertiary);
 }
 
-/* Period-box input differentiation in dark mode */
-[data-theme="dark"] .period-box .input-button {
-	background: var(--bg-primary);
+/* Input-button — match the nice-form-group input field color (same as light mode) */
+[data-theme="dark"] .input-button {
+	background: var(--nf-input-background-color, #404040);
+	color: var(--nf-input-color, #e2e2e2);
+	border-color: var(--nf-input-border-color, #383838);
+}
+
+[data-theme="dark"] .input-button:hover {
+	background: var(--bg-tertiary);
 }
 
 /* Button Box */

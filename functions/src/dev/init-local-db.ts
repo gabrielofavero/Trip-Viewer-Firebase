@@ -61,6 +61,10 @@ export const initLocalDb = functions.https.onRequest(async (req, res) => {
 			db.collection('admin').doc('permissions').collection('upload').doc(uid),
 			{ _created: FieldValue.serverTimestamp() },
 		);
+		batch.set(
+			db.collection('admin').doc('permissions').collection('canUsePlacesAPI').doc(uid),
+			{ _created: FieldValue.serverTimestamp() },
+		);
 
 		// --- config collection ---
 		batch.set(db.collection('config').doc('system'), {

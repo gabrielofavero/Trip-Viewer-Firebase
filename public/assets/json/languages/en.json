@@ -870,5 +870,121 @@
 		"trip_destinations": "Trip Destinations",
 		"view_trip": "View Trip",
 		"edit_trip": "Edit Trip"
+	},
+	"placesApi": {
+		"fetchInfo": "Fetch Info With Maps",
+		"updateWithMaps": "Update with Maps",
+		"dialog": {
+			"title": "Import with maps"
+		},
+		"noPermission": "You don't have permission to use the Places API",
+		"source": {
+			"message": "How do you want to import this place?",
+			"local": "Local (gmaps scraper)",
+			"localHint": "Paste a Google Maps link to scrape it on this machine",
+			"api": "Via Places API",
+			"apiHint": "Search Google and import official data"
+		},
+		"local": {
+			"title": "Google Maps link",
+			"message": "Paste a Google Maps link to import this place locally.",
+			"placeholder": "https://maps.app.goo.gl/...",
+			"import": "Import",
+			"notFound": "No place data could be retrieved from that link"
+		},
+		"search": {
+			"title": "Search",
+			"placeholder": "Search for a place...",
+			"button": "Search",
+			"noResults": "No results found",
+			"error": "An error occurred while searching. Please try again",
+			"includePhotos": "Include photos"
+		},
+		"details": {
+			"updateLabel": "Update with this info",
+			"descriptionBoth": "Description imported in English and Portuguese",
+			"noData": "No information available for this place",
+			"allUpToDate": "All information already matches what you have",
+			"back": "Back",
+			"continue": "Continue",
+			"error": "An error occurred while loading the place information. Please try again"
+		},
+		"linked": {
+			"title": "This place is already linked",
+			"message": "You can refresh the linked place's info, or map this entry to a different place.",
+			"update": "Update this place",
+			"updateHint": "Refresh the linked place's info",
+			"search": "Find a different place",
+			"searchHint": "Search Google for another place"
+		},
+		"photos": {
+			"import": "Import photos",
+			"canImport": "Photos can be imported",
+			"none": "No photos available to import",
+			"count": "{{count}} photo(s) selected"
+		},
+		"closed": {
+			"title": "Place no longer operational",
+			"message": "This place appears to be no longer operational",
+			"option": {
+				"delete": "Delete item",
+				"ignore": "Ignore",
+				"label": "Add [Closed] label"
+			},
+			"label": "[Closed]"
+		},
+		"loading": {
+			"search": "Searching...",
+			"scraping": "Scraping place information...",
+			"fetching": "Fetching place information...",
+			"importing": "Importing photos...",
+			"applying": "Applying place information..."
+		},
+		"apply": {
+			"title": "Apply information",
+			"confirm": "Apply",
+			"fields": "{{count}} field(s) will be updated",
+			"photos": "{{count}} photo(s) will be imported",
+			"closedLabel": "A [Closed] label will be added to the title",
+			"deleteItem": "This item will be deleted",
+			"success": "Place information applied successfully",
+			"error": "An error occurred while applying the place information"
+		},
+		"bulk": {
+			"confirm": "Try to get information from {{count}} linked item(s)?",
+			"local": {
+				"none": "No entries can be updated locally (none have a Google Maps link)"
+			},
+			"report": {
+				"fields": "{{count}} field(s) can have its data updated",
+				"closed": "{{count}} place(s) are no longer operational"
+			},
+			"options": {
+				"fields": {
+					"title": "Fields",
+					"all": "Replace everything with the new data",
+					"auto": "Replace only the auto-filled fields"
+				},
+				"closed": {
+					"title": "Closed places",
+					"delete": "Auto-delete closed items",
+					"label": "Add [Closed] label to closed items"
+				}
+			},
+			"success": "The places were updated successfully"
+		},
+		"limited": {
+			"message": "Places quota is nearly reached. Search and place info still work, but photos are temporarily disabled."
+		},
+		"errors": {
+			"localOnly": "This feature is only available in local development",
+			"network": "Network error. Please check your connection and try again",
+			"routeNotConfigured": "The Places API route is not configured yet",
+			"quotaExceeded": "The monthly Places API quota has been reached. Please try again next month.",
+			"invalidMapLink": "That doesn't look like a valid Google Maps link",
+			"scraperUnavailable": "The local scraper is not running. Start it with npm run dev and make sure Docker Desktop is open.",
+			"scraperFailed": "The local scraper could not import this place. Please try again.",
+			"rateLimited": "No data returned for this place. Google is likely rate-limiting scrapes — wait a few minutes and try again."
+		}
 	}
 }

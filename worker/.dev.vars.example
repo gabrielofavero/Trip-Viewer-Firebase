@@ -1,0 +1,37 @@
+# Local-only secrets for `wrangler dev`.
+# Copy this file to `.dev.vars`, fill in the values, and NEVER commit `.dev.vars`.
+
+# Google Places API (New) — main key, used when the request does NOT include
+# photos (photos=false). From Google Cloud Console > APIs & Services.
+# Required unless you only smoke-test the auth/permission gates (set PLACES_API_MOCK=true).
+PLACES_API_KEY=
+
+# Dedicated Google Places API (New) key for photo-related traffic:
+# photos=true on routes 1/2, and route 3 (incl. the photo media endpoint).
+# Keeps photo quota/cost separate from the main key. Required in non-mock use.
+PLACES_PHOTOS_API_KEY=
+
+# Optional: JSON array of Firebase UIDs allowed to call the API.
+# When omitted, the worker falls back to the starter allowlist in
+# src/permissions.js (P2).
+# Example: ["abc123firebaseUid", "def456firebaseUid"]
+ALLOWED_UIDS_JSON=
+
+# Optional: PLACES_API_MOCK=true lets you run the auth/permission/rate-limit
+# gates locally without a real Google key (no live Places calls).
+PLACES_API_MOCK=
+
+# --- Quota / budget protection (worker/src/quota.js) ---
+# The worker self-accounts monthly Google calls per key and stops before
+# charges accrue. A positive budget is a monthly call cap: "limited" mode at
+# 90%, hard block (429) at 100%. NOTE: every search/details request is billed
+# at the ENTERPRISE + ATMOSPHERE SKU (the field mask requests rating,
+# priceLevel, priceRange, websiteUri + reviewSummary/editorialSummary), whose
+# free allowance is only 1,000 events/mo. So BOTH keys default to 1000/mo —
+# use the free allowance, never cross into paid. (Budget 0 DISABLES a key.)
+PLACES_MAIN_BUDGET=
+PLACES_PHOTOS_BUDGET=
+PLACES_QUOTA_DEGRADE_RATIO=
+
+# Optional: bind a KV namespace named PLACES_QUOTA in wrangler.toml to share
+# the quota ledger across worker isolates (see wrangler.toml comments).

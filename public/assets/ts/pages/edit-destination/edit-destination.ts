@@ -36,10 +36,8 @@ import { hideContent, loadEditModule, showContent } from '../../theme/visibility
 import { closeAccordions, openLastAccordion } from '../../ui/accordion.js';
 import { translate } from '../../i18n/translation.js';
 import { deleteUserObjectDB, getPermissions, getSingleData } from '../../data/firebase/database.js';
-import {
-	loadImageSelector,
-	setPermissions,
-} from '../../data/firebase/storage.js';
+import { loadImageSelector, PERMISSIONS, setPermissions } from '../../data/firebase/storage.js';
+import { PLACES_API_ENABLED } from '../../data/services/places-api.service.js';
 import { loadVisibilityIndex } from '../home/support/visibility.js';
 import { loadEditDestinationListeners } from './support/event-listeners.js';
 import { getVisibility } from '../../theme/theme.js';
@@ -69,6 +67,52 @@ import {
 } from '../../data/state.js';
 import { MESSAGE_PROPERTIES } from '../../utils/messages.js';
 import { initEditTabs } from '../../ui/edit-tabs.js';
+// Places API dialog shell (P5). Imported here so it's part of the edit page
+// bundle; `populateDevPage` exposes it for console testing until P4 wires the
+// real accordion button.
+import { openPlacesDialog } from '../../places/places-dialog.js';
+// Places API step 1 — search (P6). Side-effect import: self-registers the
+// 'search' step renderer + actions on import.
+import '../../places/places-search-step.js';
+// Places API — linked-place decision (P6b). Side-effect import: self-registers
+// the 'linked' step renderer + actions on import.
+import '../../places/places-linked-step.js';
+// Places API step 2 — details (P7). Side-effect import: self-registers the
+// 'details' step renderer + actions on import.
+import '../../places/places-details-step.js';
+// Places API step 3 — closed + photos (P8). Side-effect import: self-registers
+// the 'closed' and 'photos' step renderers + actions on import.
+import '../../places/places-closed-photos-step.js';
+// Places API apply & persist (P9). Side-effect import: self-registers the
+// 'done' step renderer + the apply/confirm action on import.
+import '../../places/places-apply-flow.js';
+// Places API — bulk "Update with Maps" (P10 hand-off to P11, run in parallel).
+// P11 (places/places-bulk.ts) exports the contract used here:
+//   export async function runBulkUpdate(): Promise<void> — bulk fetch + report
+//   export function countLinkedItems(): number           — linked-item count
+// runBulkUpdate() owns the dialog-scoped loading, the per-linked-item
+// getPlace() fetches, and the report rendering (see docs/ai-analysis/6-places-api-edit-destination.md §5 P11).
+// countBulkEligibleEntries() drives the button visibility (any entry linked by
+// id OR carrying a local scrape link); runBulkLocalUpdate() is the bulk
+// gmaps-scraper path.
+import {
+	countBulkEligibleEntries,
+	countLinkedItems,
+	runBulkLocalUpdate,
+	runBulkUpdate,
+} from '../../places/places-bulk.js';
+// Places API — import source selection + local (gmaps scraper) step. The
+// source step module self-registers its 'source' step renderer + per-item
+// actions on import; the local step registers the maps-link import step.
+// getSourceOptionsHTML() + the bulk action names are reused by the bulk
+// "Update all" prompt below so both flows show the same option cards.
+import {
+	getSourceOptionsHTML,
+	SOURCE_API_BULK_ACTION,
+	SOURCE_LOCAL_BULK_ACTION,
+} from '../../places/places-source-step.js';
+import '../../places/places-local-step.js';
+import { registerActions } from '../../ui/actions.js';
 
 const TODAY = getTodayFormatted();
 const TOMORROW = getTomorrowFormatted();
@@ -174,6 +218,12 @@ function loadEventListeners() {
 		window.location.href = `../index?visibility=${getVisibility()}`;
 	});
 
+	// Places API — bulk "Update with Maps" (P10). Hidden by default;
+	// refreshPlacesBulkButton() shows it when the user holds canUsePlacesAPI and
+	// at least one entry has a linked Google Place. Click opens the confirm
+	// dialog, which hands off to the bulk flow (P11).
+	getID('places-bulk-btn').addEventListener('click', openPlacesBulkDialog);
+
 	getID('currency').addEventListener('change', () => {
 		if (getID('currency').value == 'other') {
 			getID('other-currency').style.display = 'block';
@@ -193,7 +243,103 @@ function loadEventListeners() {
 			event.returnValue = translate('messages.exit_confirmation');
 		}
 	});
+
+	// Form is populated by now (loaded + newly added entries) — sync the bulk
+	// button visibility. Re-called after per-item applies (P9) / bulk apply (P12).
+	refreshPlacesBulkButton();
 }
+
+// ============================================================
+// Places API — bulk "Update with Maps" (P10)
+// ============================================================
+
+/**
+ * Show/hide the bulk "Update with Maps" button. Visible only when running on
+ * a LOCAL environment (HARD CHECK — PLACES_API_ENABLED) AND the user holds the
+ * canUsePlacesAPI permission AND at least one entry can be refreshed (linked
+ * by id OR carrying a local scrape link — countBulkEligibleEntries()).
+ * Called on page load, and re-called after per-item applies (P9) / bulk apply
+ * (P12) so the button stays in sync with the form.
+ */
+export function refreshPlacesBulkButton(): void {
+	const button = getID<HTMLButtonElement>('places-bulk-btn');
+	if (!button) return;
+	const visible =
+		PLACES_API_ENABLED === true &&
+		PERMISSIONS?.canUsePlacesAPI === true &&
+		countBulkEligibleEntries() > 0;
+	button.style.display = visible ? '' : 'none';
+}
+
+/**
+ * Bulk "Update with Maps" entry point (P10). FIRST shows the import-source
+ * prompt (Local gmaps scraper vs Places API) — the same option cards the
+ * per-item dialog shows. Choosing a source then continues to that flow:
+ *   - "Via Places API" → openPlacesBulkConfirm() (the existing confirm dialog).
+ *   - "Local (gmaps scraper)" → runBulkLocalUpdate() (bulk local scrape).
+ */
+function openPlacesBulkDialog(): void {
+	if (PLACES_API_ENABLED !== true) {
+		displayError(new Error(translate('placesApi.errors.localOnly')));
+		return;
+	}
+	if (PERMISSIONS?.canUsePlacesAPI !== true) {
+		displayError(new Error(translate('placesApi.noPermission')));
+		return;
+	}
+
+	const properties = cloneObject(MESSAGE_PROPERTIES);
+	properties.title = translate('placesApi.updateWithMaps');
+	properties.content = getSourceOptionsHTML(SOURCE_LOCAL_BULK_ACTION, SOURCE_API_BULK_ACTION);
+	properties.containers = getContainersInput();
+	properties.buttons = [];
+	displayFullMessage(properties);
+}
+
+/**
+ * Bulk "Update with Maps" confirm dialog (P10, Places API source). Asks the
+ * user to confirm fetching fresh info for all linked entries; on confirm,
+ * hands off to P11's runBulkUpdate() which owns the bulk loading + report.
+ */
+function openPlacesBulkConfirm(): void {
+	const count = countLinkedItems();
+	if (count <= 0) {
+		// No linked items — shouldn't happen while the button is hidden; guard anyway.
+		refreshPlacesBulkButton();
+		return;
+	}
+
+	const properties = cloneObject(MESSAGE_PROPERTIES);
+	properties.title = translate('placesApi.updateWithMaps');
+	properties.content = translate('placesApi.bulk.confirm', { count: String(count) });
+	properties.containers = getContainersInput();
+	properties.buttons = [
+		{ type: 'cancel' },
+		{
+			type: 'confirm',
+			// Close the confirm modal, then start the bulk flow (P11 owns it).
+			action: () => {
+				closeMessage();
+				void runBulkUpdate();
+			},
+		},
+	];
+	displayFullMessage(properties);
+}
+
+// Bulk "Update all" import-source actions (the per-item ones are registered by
+// places-source-step.ts). Choosing a source closes this prompt and starts the
+// corresponding bulk flow.
+registerActions({
+	[SOURCE_LOCAL_BULK_ACTION]: () => {
+		closeMessage();
+		void runBulkLocalUpdate();
+	},
+	[SOURCE_API_BULK_ACTION]: () => {
+		closeMessage();
+		openPlacesBulkConfirm();
+	},
+});
 
 export function addListenerToRemoveDestination(category, j) {
 	const dynamicSelects = [
@@ -203,7 +349,9 @@ export function addListenerToRemoveDestination(category, j) {
 		},
 	];
 	addRemoveChildListenerDS(category, j, dynamicSelects);
-	getID(`remove-${category}-${j}`).addEventListener('click', () => removeDestinationImages(category, j));
+	getID(`remove-${category}-${j}`).addEventListener('click', () =>
+		removeDestinationImages(category, j),
+	);
 }
 
 async function loadDestinations() {
@@ -436,6 +584,15 @@ function populateDevPage() {
 
 	// ── New data object built on save ──
 	page.newData = FIRESTORE_DESTINATIONS_NEW_DATA;
+
+	// Places API dialog (P5) — TEMP dev hook: console-open the dialog for an
+	// entry, e.g. dev.page.openPlacesDialog('restaurants', 1). Remove when P4
+	// wires the real "Fetch Info With Maps" accordion button.
+	page.openPlacesDialog = openPlacesDialog;
+
+	// Places API bulk (P10) — dev hook: console-open the bulk confirm dialog,
+	// e.g. dev.page.openPlacesBulkDialog(). Remove when the toolbar button is final.
+	page.openPlacesBulkDialog = openPlacesBulkDialog;
 
 	page.successfulSave = SUCCESSFUL_SAVE;
 

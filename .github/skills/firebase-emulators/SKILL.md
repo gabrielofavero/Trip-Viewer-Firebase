@@ -85,6 +85,7 @@ What it creates:
 | `admin/admin` | `{ admins: [uid] }` |
 | `admin/permissions/upload/{uid}` | Permission flag |
 | `admin/permissions/unlimitedUploadSize/{uid}` | Permission flag |
+| `admin/permissions/canUsePlacesAPI/{uid}` | Permission flag (Places API) |
 | `config/system` | `{ registrationOpen: false }` |
 | `users/{uid}` | `{ destinations: [], trips: [], listings: [] }` |
 | `trips/protected` | Empty container doc |

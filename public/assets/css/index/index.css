@@ -653,12 +653,22 @@ body.dialog-open {
 	--trip-dialog-accent-hover: var(--theme-secondary);
 	--trip-dialog-accent-soft: rgba(var(--theme-color-rgb), 0.08);
 }
-#trip-dialog .dialog-close {
+/* All detail dialogs share the same neutral close button: themed background
+   with a text-color icon (dark icon on light mode, light icon on dark mode).
+   The ID-scoped selector is required — the global
+   `[data-theme="dark"] a { color: var(--a-color) }` link rule would otherwise
+   override the generic `.dialog-close` and render the icon blue on the
+   destination/list dialogs. */
+#trip-dialog .dialog-close,
+#dest-dialog .dialog-close,
+#list-dialog .dialog-close {
 	color: var(--text-primary);
 	background: var(--bg-secondary);
 	border: 1px solid var(--border-color);
 }
-#trip-dialog .dialog-close:hover {
+#trip-dialog .dialog-close:hover,
+#dest-dialog .dialog-close:hover,
+#list-dialog .dialog-close:hover {
 	color: var(--text-primary);
 	background: var(--bg-tertiary);
 	transform: scale(1.05);
