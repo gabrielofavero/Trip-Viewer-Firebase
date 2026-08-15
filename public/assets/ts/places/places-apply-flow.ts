@@ -88,7 +88,7 @@ export function applyAndClose(): void {
 	const importedPhotos = getStepData<PlaceImage[]>(IMPORTED_PHOTOS_KEY) ?? [];
 
 	if (!details) {
-		displayError(new Error(translate('placesApi.apply.error')));
+		displayError(new Error(translate('placesApi.apply.error')), false, false);
 		return;
 	}
 
@@ -162,7 +162,7 @@ export function applyAndClose(): void {
 	} catch (error) {
 		console.error('[places-apply] Failed to apply place info', error);
 		hideDialogLoading();
-		displayError(error instanceof Error ? error : new Error(translate('placesApi.apply.error')));
+		displayError(error instanceof Error ? error : new Error(translate('placesApi.apply.error')), false, false);
 	}
 }
 

@@ -278,7 +278,7 @@ export function refreshPlacesBulkButton(): void {
  */
 function openPlacesBulkDialog(): void {
 	if (PLACES_API_ENABLED !== true) {
-		displayError(new Error(translate('placesApi.errors.localOnly')));
+		displayError(new Error(translate('placesApi.errors.localOnly')), false, false);
 		return;
 	}
 	if (PERMISSIONS?.canUsePlacesAPI !== true) {

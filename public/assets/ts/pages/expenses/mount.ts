@@ -214,7 +214,7 @@ async function loadExpenses(
 			return;
 		}
 		console.error(error);
-		displayError(translate('messages.errors.unknown'));
+		displayError(translate('messages.errors.unknown'), false, false);
 		hideLoading();
 	}
 }
@@ -265,6 +265,8 @@ export function applyExpenses() {
 		translate('messages.errors.no_data_on_module', {
 			module: translate('trip.expenses.title'),
 		}),
+		false,
+		false,
 	);
 
 	function applyAndLoadTravelerExpenses() {

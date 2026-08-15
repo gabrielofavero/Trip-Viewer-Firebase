@@ -180,7 +180,7 @@ async function syncModules() {
 		stopLoadingScreen();
 		adjustDestinationsHTML();
 	} catch (error) {
-		displayError(error);
+		displayError(error, false, false);
 		throw error;
 	}
 }

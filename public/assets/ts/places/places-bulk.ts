@@ -245,7 +245,7 @@ export async function runBulkPlacesUpdate(): Promise<void> {
 	// (data-action="places-bulk-run" / message action) too, even though
 	// getPlace() already throws on deployed hosts.
 	if (PLACES_API_ENABLED !== true) {
-		displayError(new Error(translate('placesApi.errors.localOnly')));
+		displayError(new Error(translate('placesApi.errors.localOnly')), false, false);
 		return;
 	}
 	const entries = collectLinkedEntries();
@@ -278,12 +278,12 @@ export { runBulkPlacesUpdate as runBulkUpdate };
 export async function runBulkLocalUpdate(): Promise<void> {
 	// HARD CHECK — local-only (the scraper route only exists on the dev machine).
 	if (PLACES_API_ENABLED !== true || GMAPS_SCRAPER_ENABLED !== true) {
-		displayError(new Error(translate('placesApi.errors.localOnly')));
+		displayError(new Error(translate('placesApi.errors.localOnly')), false, false);
 		return;
 	}
 	const entries = collectLocalScrapeEntries();
 	if (entries.length === 0) {
-		displayError(new Error(translate('placesApi.bulk.local.none')));
+		displayError(new Error(translate('placesApi.bulk.local.none')), false, false);
 		return;
 	}
 	// Sequential (concurrency 1): each entry is one local docker run, and

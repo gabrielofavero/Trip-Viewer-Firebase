@@ -49,7 +49,7 @@ export async function signInWithEmailAndPassword() {
 		return user; // Optionally return the user for further use
 	} catch (error) {
 		console.error('Error signing in:', error.message);
-		displayError(error);
+		displayError(error, false, false);
 	}
 }
 

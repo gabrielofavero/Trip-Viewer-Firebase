@@ -334,7 +334,7 @@ export function displayFullMessage(properties = cloneObject(MESSAGE_PROPERTIES))
 }
 
 // Mensagem de Erro
-export function displayError(error, tryAgain = false) {
+export function displayError(error, tryAgain = false, blocking = true) {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 
 	properties.title = translate('messages.errors.load_title');
@@ -346,11 +346,15 @@ export function displayError(error, tryAgain = false) {
 	if (!window.location.href.includes('index.html')) {
 		buttons.push({ type: 'home' });
 	}
-	// Error dialogs never show the X close button (and Escape won't dismiss
-	// them) — they carry explicit actions. When no action is available (e.g. a
-	// bare error on the index page), add a dismissible "Understood" button so
-	// the dialog can never get stuck open.
-	properties.closeButton = false;
+	// Blocking errors (the default) never show the X close button (and Escape
+	// won't dismiss them) — they carry explicit actions, and are used for
+	// permission denials and failures on critical operations. Non-blocking
+	// errors pass `blocking = false` (unexpected exceptions after the main
+	// content is already loaded, or soft failures) so they can be dismissed
+	// with the X / Escape. When no action is available (e.g. a bare error on
+	// the index page), add a dismissible "Understood" button so the dialog can
+	// never get stuck open.
+	properties.closeButton = !blocking;
 	if (buttons.length === 0) {
 		buttons.push({ type: 'close' });
 	}

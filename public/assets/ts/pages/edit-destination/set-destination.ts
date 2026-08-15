@@ -206,7 +206,7 @@ export async function updateTikTokLinks() {
 			}
 		}
 	} catch (error) {
-		displayError(error);
+		displayError(error, false, false);
 		console.error(error);
 	}
 

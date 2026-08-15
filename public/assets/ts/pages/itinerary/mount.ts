@@ -178,7 +178,7 @@ async function loadProtectedItinerary(container: HTMLElement, mandatory = false)
 			requestPinItineraryInvalido(mandatory);
 		} else {
 			console.error(error);
-			displayError(translate('messages.errors.unknown'));
+			displayError(translate('messages.errors.unknown'), false, false);
 		}
 		stopLoadingScreen();
 	}

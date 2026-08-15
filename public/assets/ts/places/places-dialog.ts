@@ -105,7 +105,7 @@ export function openPlacesDialog(category: string, j: number): void {
 	// HARD CHECK — the Places feature is local-environments only. Even if the
 	// button somehow rendered on a deployed host, opening the dialog refuses.
 	if (PLACES_API_ENABLED !== true) {
-		displayError(new Error(translate('placesApi.errors.localOnly')));
+		displayError(new Error(translate('placesApi.errors.localOnly')), false, false);
 		return;
 	}
 	if (_active) return;

@@ -52,7 +52,7 @@ export function convertCurrency(from: string, to: string, amount: number): numbe
 		return amount / CURRENCY_CONVERSION[to + from];
 	} else {
 		console.error(`Conversion error: from ${amount} ${from} to ? ${to}`);
-		displayError(translate('messages.errors.unknown'));
+		displayError(translate('messages.errors.unknown'), false, false);
 		return 0;
 	}
 }
