@@ -42,21 +42,18 @@ npm run dev
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 173   | 168  | 3         | 2       |
 | 🏆   | Feature     | F000 | 179   | 161  | 17        | 1       |
-| 📈   | Improvement | M000 | 172   | 145  | 22        | 5       |
-| ⚔️   | Epic        | E000 | 51    | 36   | 7         | 8       |
+| 📈   | Improvement | M000 | 175   | 148  | 22        | 5       |
+| ⚔️   | Epic        | E000 | 51    | 38   | 7         | 6       |
 
 ## Backlog
 
 ### High Priority
 
+- ⚔️ **E016:** New Front-End: destination.html
 - 📈 **M172:** Minor visual improvements on index.html (search, order, image loading)
 
 ### Medium Priority
 
-- ⚔️ **E016:** New Front-End: destination.html
-- ⚔️ **E027:** New Front-End: view.html
-  - no more iframe/embeds. Use html injection instead
-  - destination subcategory to be refined (no more need to read destination on view.html)
 - 📈 **M153:** Minor visual improvements on itinerary.html
 - 📈 **M162:** Minor visual improvements on expenses.html
 - ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
@@ -64,7 +61,6 @@ npm run dev
 
 ### Low Priority
 
-- ⚔️ **E017:** Optimize firebase operations usage (reads, cloud functions)
 - 🏆 **F063:** Allow adding multiple regions to a destination (edit/trip.html)
 - ⚔️ **E047:** Implement Unit Tests
 - ⚔️ **E019:** Implement Sonarqube
@@ -107,6 +103,11 @@ npm run dev
   - *[🏆F173] Update integrated places*
   - *[🏆F178] Add local scraper for testing*
   - *[🏆F179] Add dev stats*
+- ⚔️ **E017:** Optimize firebase operations usage
+- ⚔️ **E027:** New Front-End: view.html
+  - *[📈M173] Extract expenses/itinerary/destination render logic into shared mount components*
+  - *[📈M174] No more iframe/embeds. Use html injection instead*
+  - *[📈M175] No more need to read destination on view.html*
 
 ### July 2026
 

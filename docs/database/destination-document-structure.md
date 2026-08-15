@@ -284,6 +284,10 @@ users/{uid}/destinationSummaries/{destId}
 
 > **Note:** Summaries created before July 2026 may not have the `image` field. Migration 15 (Step 5) adds it with default values.
 
+### Denormalized metadata on trip docs
+
+Trip documents also cache a lightweight copy of destination metadata at `trips/{id}.destinationRefs[i]` (since **August 2026**, migration 18 + trip save) so `view.html` can render the destination section without fetching the destination document on load: `{ id, title, image, categories, version }`. The `categories` object holds per-category **“has entries”** booleans — **not** this document's editor-side `modules` toggles. See `docs/database/trip-document-structure.md` for the full `DestinationRef` shape.
+
 ---
 
 ## Key Differences: Destination vs Trip

@@ -46,7 +46,7 @@ import {
 	loadViewVisibility,
 	mainView,
 } from './support/visibility.js';
-import { loadViewEmbed, openExpensesEmbed } from './support/embed.js';
+import { openExpensesEmbed, initViewEmbed } from './support/embed.js';
 import {
 	loadSensitiveReservations,
 	requestDocumentPin,
@@ -64,7 +64,6 @@ import { loadSummary } from './categories/summary.js';
 import { loadTransportation } from './categories/transportation-module.js';
 import { loadAccommodations } from './categories/accommodation-module.js';
 import { loadItinerarySchedule } from './categories/itinerary-module/itinerary-module.js';
-import { ACTIVE_EMBEDS } from './support/embed.js';
 
 var REFRESHED = false;
 export var TYPE = 'trips';
@@ -132,7 +131,10 @@ export async function loadViewPage() {
 
 	if (TYPE === COLLECTION.TRIPS) {
 		const tripId = getURLParam('t');
-		firestoreData = await getTripComplete(tripId);
+		// Metadata-only: destination docs are NOT fetched on load (the trip doc's
+		// destinationRefs carry title/image/categories/version). Full destination
+		// docs are fetched lazily on demand (e.g. itinerary destination popups).
+		firestoreData = await getTripComplete(tripId, false);
 	} else {
 		firestoreData = await getSingleData(TYPE);
 	}
@@ -194,7 +196,7 @@ function prepareViewData() {
 
 	loadHeader();
 	loadModules();
-	loadViewEmbed();
+	initViewEmbed();
 }
 
 function loadStartEnd(data = getState()) {
@@ -216,7 +218,8 @@ function loadHeader() {
 		let dates = [new Date(getState().version.lastUpdated)];
 
 		for (const destination of (getState().destinations || getState().destinationRefs)) {
-			const lastUpdated = destination.destinations.version.lastUpdated;
+			const lastUpdated =
+				destination.version?.lastUpdated || destination.destinations?.version?.lastUpdated;
 			if (lastUpdated) {
 				dates.push(new Date(lastUpdated));
 			}
@@ -380,11 +383,9 @@ function loadModules() {
 
 	function loadExpensesModule() {
 		const active = getState().modules?.expenses === true;
-		localStorage.setItem('expenses', JSON.stringify({ active, pin: getState().pin || 'no-pin' }));
 
 		if (active) {
 			openExpensesEmbed();
-			ACTIVE_EMBEDS['expenses'] = true;
 		} else {
 			getID('expensesNav').innerHTML = '';
 			getID('expenses').innerHTML = '';
@@ -472,7 +473,7 @@ function loadModules() {
 		}
 
 		function setUniqueDestinationText() {
-			const title = DESTINATIONS[0].destinations.title;
+			const title = DESTINATIONS[0]?.title || DESTINATIONS[0]?.destinations?.title;
 			getID('destinations-title').innerHTML = title;
 			getID('destinationsNavText').innerHTML = title;
 		}
@@ -505,7 +506,6 @@ function populateDevPage(rawFirestoreData?: any) {
 	page.pin = () => getState().pin;
 	page.title = () => getState().title;
 	page.raw = rawFirestoreData;
-	page.activeEmbeds = ACTIVE_EMBEDS;
 
 	console.log(
 		'%c[DEV]%c dev.page populated — type %cdev.page%c to explore',

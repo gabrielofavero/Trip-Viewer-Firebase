@@ -52,7 +52,7 @@ If a task could be checked in the browser but the user hasn't approved it, **ask
 | Page | URL | Params | Firestore source | Entry module |
 |---|---|---|---|---|
 | Dashboard | `index.html` | — | `users/{uid}` summaries | `pages/home` |
-| Trip detail | `view.html` | `t=<tripId>` | `trips/{id}` + subcollections | `pages/trip-detail` |
+| Trip detail | `view.html` | `t=<tripId>` | `trips/{id}` + subcollections (destination boxes render from cached `destinationRefs` metadata) | `pages/trip-detail` |
 | Destination detail | `destination` | `d=<destId>` (+ optional `t=<tripId>`, `type=`) | `destinations/{id}` | `pages/destination` |
 | Listing detail | `view` | `l=<listId>` | `listings/{id}` | `pages/trip-detail` (TYPE=listings) |
 | Itinerary | `itinerary` | `t=<tripId>` | `trips/{id}/itinerary` | `pages/itinerary` |

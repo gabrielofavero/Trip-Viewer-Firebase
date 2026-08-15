@@ -18,6 +18,8 @@ import {
 
 import { getUID } from '../firebase/auth.js';
 
+import type { DestinationCategories, DestinationRef } from '../../models/schema.js';
+
 // Re-export raw database functions that destination pages may still use during transition
 export {
 	get,
@@ -47,6 +49,65 @@ export async function getDestination(destId, containerID?) {
  */
 export async function getDestinationRaw(destId) {
 	return await get(`${COLLECTION.DESTINATIONS}/${destId}`, false);
+}
+
+// ── Destination metadata (denormalized cache for trip docs) ──
+
+/**
+ * Categories whose entry counts determine which category boxes appear on
+ * view.html's destinationsBox (mirrors migration 18 in functions/src).
+ */
+export const DESTINATION_CATEGORIES = [
+	'restaurants',
+	'snacks',
+	'nightlife',
+	'tourism',
+	'shopping',
+] as const;
+
+/** Whether a destination category map contains at least one entry. */
+function categoryHasEntries(entries: any): boolean {
+	return !!entries && typeof entries === 'object' && Object.keys(entries).length > 0;
+}
+
+/**
+ * Build the lightweight metadata saved onto trip docs (destinationRefs[i])
+ * so view.html can render the destinations section without fetching the
+ * destination document on load. The `categories` booleans mean "has entries".
+ */
+export function buildDestinationMetadata(dest: any): Omit<DestinationRef, 'id'> {
+	const categories: DestinationCategories = {
+		restaurants: categoryHasEntries(dest?.restaurants),
+		snacks: categoryHasEntries(dest?.snacks),
+		nightlife: categoryHasEntries(dest?.nightlife),
+		tourism: categoryHasEntries(dest?.tourism),
+		shopping: categoryHasEntries(dest?.shopping),
+	};
+
+	return {
+		title: dest?.title || '',
+		image:
+			dest?.image && typeof dest.image === 'object'
+				? dest.image
+				: { active: false, background: '' },
+		categories,
+		version:
+			dest?.version && typeof dest.version === 'object'
+				? dest.version
+				: { lastUpdated: '' },
+	};
+}
+
+/**
+ * Fetch a destination and build its metadata for caching on a trip doc.
+ * Returns null when the destination document doesn't exist.
+ */
+export async function getDestinationMetadata(
+	destId: string,
+): Promise<Omit<DestinationRef, 'id'> | null> {
+	const dest = await get(`${COLLECTION.DESTINATIONS}/${destId}`, false);
+	if (!dest) return null;
+	return buildDestinationMetadata(dest);
 }
 
 /**

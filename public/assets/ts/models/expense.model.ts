@@ -8,7 +8,7 @@ import { translate } from '../i18n/translation.js';
 import { getEmptyChar } from '../utils/dom.js';
 import { isOnDarkMode } from '../theme/visibility.js';
 import { hexToRgb, rgbToText } from '../theme/colors.js';
-import { EXPENSES_DATA } from '../pages/expenses/expenses.js';
+import { EXPENSES_DATA } from '../pages/expenses/mount.js';
 import {
 	CURRENCIES,
 	DEFAULT_CURRENCY,

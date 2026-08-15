@@ -1,77 +1,31 @@
-import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
-import { getState, setState, DOCUMENT_ID, setDocumentId } from '../../data/state.js';
+// ======= Itinerary Page Bootstrap (itinerary.html) =======
+// Standalone entry: parses URL params, mounts the full-itinerary component
+// into #content, then wires the page chrome (top-bar night mode, mobile
+// drawer). All data fetching, PIN gating and rendering live in ./mount.js
+// (mountFullItinerary).
+
 import { getID, getURLParam, on, select } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
-import {
-	closeMessage,
-	displayError,
-	displayPrompt,
-	openToast,
-	registerActions,
-} from '../../utils/messages.js';
-import { getItineraryContent } from '../../models/itinerary.model.js';
 import { isOnDarkMode, loadVisibility, switchVisibility } from '../../theme/visibility.js';
-import { loadEmbedVisibility } from '../../ui/embed.js';
-import { get, haveErrorFromGetRequest } from '../../data/firebase/database.js';
 import { setPageName } from '../../app/main.js';
-import { requestPin } from '../../utils/pin.js';
-
-var FIRESTORE_PROTECTED_DATA;
-
 import { loadItineraryListeners } from './support/event-listeners.js';
-import { requestInvalidPin } from '../../utils/pin.js';
+import { exportItinerary, mountFullItinerary } from './mount.js';
 
 export async function loadItineraryPage() {
-	registerActions({
-		loadItinerary,
-		requestPinItinerary,
-		loadProtectedItinerary,
-	});
 	loadItineraryListeners();
-
-	setDocumentId(getURLParam('t'));
 	setPageName(translate('trip.itinerary.title'));
 
-	if (!DOCUMENT_ID) {
-		displayError(
-			`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}`,
-		);
-	}
+	const container = getID('content');
+	if (!container) return;
 
-	setState(await get(`trips/${DOCUMENT_ID}`));
-	if (!getState()) {
-		displayError(
-			`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.not_found'))}`,
-		);
-	}
+	// Render the itinerary into #content (component owns data fetch + PIN gate).
+	// Page chrome runs after mount so getState() is populated and the trip's
+	// colors can be applied by loadVisibility().
+	await mountFullItinerary(container, { tripId: getURLParam('t') || '' });
 
-	loadItineraryVisibility();
-	getID('title').innerText = getState().title;
-
-	switch (getState().pin) {
-		case 'all-data':
-			stopLoadingScreen();
-			requestPinItinerary(true);
-			return;
-		case 'sensitive-only':
-			stopLoadingScreen();
-			displaySensitiveItineraryPrompt();
-			return;
-		default:
-			await loadItinerary();
-	}
-}
-
-async function loadItinerary() {
-	if (document.querySelector('.input-container') || document.querySelector('.message-container')) {
-		closeMessage();
-	}
-
-	getID('content').innerHTML = await getItineraryContent('page');
-
-	getID('print').addEventListener('click', () => print());
-	getID('export').addEventListener('click', () => exportItinerary());
-
+	// Page chrome — top-bar night mode + mobile drawer.
+	loadVisibility();
+	loadNightModeButtonLabel();
 	initializeMobileMenu();
 }
 
@@ -115,95 +69,7 @@ function closeMobileMenu() {
 	}
 }
 
-// Visibility
-function loadItineraryVisibility() {
-	loadVisibility();
-	loadEmbedVisibility();
-	loadNightModeButtonLabel();
-}
-
 function loadNightModeButtonLabel() {
 	const label = isOnDarkMode() ? translate('labels.light_mode') : translate('labels.dark_mode');
 	getID('mobile-night-mode-label').innerText = label;
-}
-
-// Messages
-function requestPinItinerary(mandatory = false) {
-	if (document.querySelector('.message-container')) {
-		closeMessage();
-	}
-
-	const confirmAction = `loadProtectedItinerary(${mandatory})`;
-	const cancelAction = mandatory ? null : 'loadItinerary()';
-	requestPin({ confirmAction, cancelAction, precontent: undefined });
-}
-
-function requestPinItineraryInvalido(mandatory = false) {
-	const confirmAction = `loadProtectedItinerary(${mandatory})`;
-	const cancelAction = mandatory ? null : 'loadItinerary()';
-	requestInvalidPin({ confirmAction, cancelAction, precontent: undefined });
-}
-
-function displaySensitiveItineraryPrompt() {
-	const title = translate('trip.protected');
-	const content = translate('messages.protected.prompt');
-	const yesAction = 'requestPinItinerary()';
-	const noAction = 'loadItinerary()';
-	const critico = true;
-	displayPrompt({
-		title: title,
-		content: content,
-		yesAction,
-		noAction,
-		critical: critico,
-	});
-}
-
-async function loadProtectedItinerary(mandatory = false) {
-	const pin = getID('pin-code')?.innerText || '';
-	const pinType = getState().pin;
-	closeMessage();
-	startLoadingScreen();
-
-	try {
-		const protectedData = await get(`trips/protected/${pin}/${DOCUMENT_ID}`);
-		if (haveErrorFromGetRequest() || !protectedData) {
-			stopLoadingScreen();
-			requestPinItineraryInvalido(mandatory);
-			return;
-		}
-
-		if (pinType == 'sensitive-only') {
-			FIRESTORE_PROTECTED_DATA = protectedData;
-		} else {
-			setState(protectedData);
-		}
-
-		loadItinerary();
-	} catch (error) {
-		if (error?.message == 'Missing or insufficient permissions.') {
-			console.warn(error.message);
-			requestPinItineraryInvalido(mandatory);
-		} else {
-			console.error(error);
-			displayError(translate('messages.errors.unknown'));
-		}
-		stopLoadingScreen();
-	}
-
-	stopLoadingScreen();
-}
-
-async function exportItinerary() {
-	const html = await getItineraryContent('notes');
-	const plainText = await getItineraryContent('text');
-
-	await navigator.clipboard.write([
-		new ClipboardItem({
-			'text/html': new Blob([html], { type: 'text/html' }),
-			'text/plain': new Blob([plainText], { type: 'text/plain' }),
-		}),
-	]);
-
-	openToast(translate('messages.itinerary_copied'));
 }

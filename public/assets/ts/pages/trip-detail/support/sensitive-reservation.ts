@@ -6,7 +6,7 @@ import { get, haveErrorFromGetRequest } from '../../../data/firebase/database.js
 import { translate } from '../../../i18n/translation.js';
 import { requestPin } from '../../../utils/pin.js';
 import { copyToClipboard } from '../categories/transportation-module.js';
-import { sendToExpenses } from '../support/embed.js';
+import { syncExpensesPin } from '../support/embed.js';
 import { getURLParam } from '../../../utils/dom.js';
 
 // Determine document type from URL params (avoids circular dependency with view.js)
@@ -236,7 +236,7 @@ export async function protectedDataConfirmAction(afterAction?: string | ((data: 
 	}
 
 	if (getState().modules.expenses) {
-		sendToExpenses('pin', PIN);
+		syncExpensesPin(PIN);
 	}
 
 	if (typeof afterAction === 'function') {

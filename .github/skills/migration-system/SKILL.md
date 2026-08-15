@@ -45,8 +45,9 @@ curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase2?cleanup=tr
 | **15** | **`migratePhase3`** | **Cleanup: embedded summaries → subcollections, permissions migration, legacy field removal** |
 | **16** | **`migrateUserProfile`** | **Backfill user profile fields (`name`, `email`, `photoURL`) from Auth into every `users/{uid}` document** |
 | **17** | **`migratePlacesApi`** | **Places API prep: grant `canUsePlacesAPI` to body-provided UIDs + add `placeAPI` object to every destination entry** |
+| **18** | **`migrateTripDestinationMetadata`** | **Backfill trips: enrich `destinationRefs[i]` with denormalized destination metadata (`title`, `image`, `categories` “has entries” booleans, `version`)** |
 
-Migrations 1–12 are **legacy** (already applied in production). Migrations 13–15 are the **consolidation phases**; migrations 16–17 are the post-consolidation backfills (profile fields, then Places API prep). They are exported from `functions/src/index.ts` as `migratePhase1`, `migratePhase2`, `migratePhase3`, `migrateUserProfile`, and `migratePlacesApi`.
+Migrations 1–12 are **legacy** (already applied in production). Migrations 13–15 are the **consolidation phases**; migrations 16–18 are the post-consolidation backfills (profile fields, Places API prep, then trip destination metadata). They are exported from `functions/src/index.ts` as `migratePhase1`, `migratePhase2`, `migratePhase3`, `migrateUserProfile`, `migratePlacesApi`, and `migrateTripDestinationMetadata`.
 
 ---
 
@@ -250,6 +251,32 @@ curl -X POST "http://localhost:5001/trip-viewer-dev/us-central1/migratePlacesApi
 
 ---
 
+## Migration 18: Trip destination metadata backfill (`migrateTripDestinationMetadata`)
+
+**File:** `functions/src/migrations/18-migrate-trip-destination-metadata.ts`
+
+Backfills every `trips/{id}.destinationRefs[i]` entry with a denormalized copy of the destination's lightweight metadata so `view.html` can render the destinations section **without fetching each `destinations/{id}` document on load** (first step of the “reduce Firestore calls on view load” effort, epic E027).
+
+### Operations:
+1. Scans all `trips` documents.
+2. For each ref, fetches the destination document (cached across trips) and writes:
+   - `title` — destination title
+   - `image` — destination hero image (`{ background, active }`)
+   - `categories` — per-category **“has entries”** booleans (`restaurants`, `snacks`, `nightlife`, `tourism`, `shopping`) that drive which category boxes render on view.html
+   - `version` — destination version
+3. **Idempotency check:** skips refs that already carry a `categories` object (re-runs are no-ops). Missing destination docs leave the ref unchanged.
+4. Writes the enriched array back to `destinationRefs` (normalizes legacy trips that only had a `destinations` refs array).
+
+> **Note:** the same metadata is also written on every trip save (`getDestinationsArray()` in `edit-trip`). Migration 18 only backfills existing trips.
+
+### Run it:
+```bash
+curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateTripDestinationMetadata?dryRun=true"
+curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateTripDestinationMetadata"
+```
+
+---
+
 ## How to Run Migrations
 
 ### On the Emulator (Local)
@@ -286,7 +313,7 @@ Then call the production URL (same pattern, different project).
 ```
 functions/src/migrations/{NN}-migrate-{short-description}.ts
 ```
-Use the next available number (currently up to 17).
+Use the next available number (currently up to 18).
 
 ### Template
 

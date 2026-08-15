@@ -75,7 +75,7 @@ function stripSubcollections(tripObject: Record<string, any>): Record<string, an
 
 async function getUnprotectedTripObject() {
 	return {
-		destinationRefs: getDestinationsArray(),
+		destinationRefs: await getDestinationsArray(),
 		sharing: await getSharingObject(),
 		colors: getColorsObject(),
 		end: getID('end').value ? formattedDateToDateObject(getID('end').value) : '',
@@ -115,7 +115,7 @@ function getSensitiveTripObject() {
 
 async function getTripObjectFull(protectedReservationCodes = false) {
 	return {
-		destinationRefs: getDestinationsArray(),
+		destinationRefs: await getDestinationsArray(),
 		sharing: await getSharingObject(),
 		colors: getColorsObject(),
 		end: getID('end').value ? formattedDateToDateObject(getID('end').value) : '',

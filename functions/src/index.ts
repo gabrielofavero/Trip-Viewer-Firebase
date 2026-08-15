@@ -26,3 +26,12 @@ export const initLocalDb = initLocalDbModule.initLocalDb;
 // destination entries. Usage: ?dryRun=true for preview; POST {"uids": [...]} to grant.
 import * as migratePlacesApiModule from './migrations/17-migrate-places-api';
 export const migratePlacesApi = migratePlacesApiModule.migrate;
+
+// Migration 18: Trip destination metadata backfill — enriches each
+// trips/{id}.destinationRefs[i] with denormalized destination metadata
+// (title, image, per-category "has entries" booleans, version) so view.html
+// can render the destinations section without fetching the destination docs.
+// Usage: ?dryRun=true for preview.
+import * as migrateTripDestinationMetadataModule from './migrations/18-migrate-trip-destination-metadata';
+export const migrateTripDestinationMetadata =
+	migrateTripDestinationMetadataModule.migrate;

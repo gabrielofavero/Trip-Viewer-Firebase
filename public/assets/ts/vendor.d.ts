@@ -18,8 +18,7 @@ declare var Waypoint: any;
 // Dev mode (set on localhost only)
 declare var dev: import('./utils/dev.js').DevHost;
 
-// Window extensions (iframe communication, embed scripts)
+// Window extensions (embed scripts)
 interface Window {
-	closeViewEmbed?: () => void;
 	[key: string]: any;
 }

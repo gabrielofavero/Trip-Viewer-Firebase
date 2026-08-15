@@ -1,4 +1,4 @@
-import { getState, DESTINATIONS, DOCUMENT_ID } from '../../../../data/state.js';
+import { getState, DESTINATIONS } from '../../../../data/state.js';
 import { getID } from '../../../../utils/dom.js';
 import {
 	convertFromDateObject,
@@ -9,8 +9,7 @@ import {
 import { getColorNameFromOptions } from '../../../../theme/colors.js';
 import { loadCalendar } from './calendar.js';
 import { loadCalendarItem } from './inner-itinerary.js';
-import { openViewEmbed } from '../../support/embed.js';
-import { getVisibility } from '../../../../theme/theme.js';
+import { openItineraryLightbox } from '../../support/embed.js';
 import { END_DATE } from '../../view.js';
 import { START_DATE } from '../../view.js';
 import { CURRENT_SCHEDULE_DATE, SCHEDULE_OPEN } from './inner-itinerary.js';
@@ -68,7 +67,7 @@ function loadSchedulePills(multipleColors = true) {
 				? `pill-circle pill-circle-${getColorNameFromOptions(i)}`
 				: `pill-circle pill-circle-default`;
 			innerHTML += `<div class="pill" id="pill-${destinoID}">
-                            <span class="${circleClass}" id="pill-circle-${destinoID}"></span><span>${destination.destinations.title}</span>
+                            <span class="${circleClass}" id="pill-circle-${destinoID}"></span><span>${destination.title || destination.destinations?.title}</span>
                           </div>`;
 		}
 
@@ -194,6 +193,5 @@ function loadScheduleTodayButton() {
 
 // Full Schedule
 function openFullItinerary() {
-	const url = `itinerary?t=${DOCUMENT_ID}&visibility=${getVisibility()}`;
-	openViewEmbed(url);
+	openItineraryLightbox();
 }

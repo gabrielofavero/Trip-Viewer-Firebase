@@ -4,6 +4,13 @@
 <head>
   <!-- #include shared/head.html -->
   <link href="assets/css/main.css" rel="stylesheet">
+  <!-- Component stylesheets for the sections view.html now renders inline
+       (expenses module + full itinerary / destination detail lightbox).
+       Loaded before view.css so view.css's page-level selectors win for the
+       page chrome while the component classes (cards, tabs, drawer) apply. -->
+  <link href="assets/css/expenses/expenses.css" rel="stylesheet">
+  <link href="assets/css/itinerary/itinerary.css" rel="stylesheet">
+  <link href="assets/css/destination/destination.css" rel="stylesheet">
   <link data-main href="assets/css/view/view.css" rel="stylesheet">
 
 </head>
@@ -158,7 +165,7 @@
           </div>
 
           <div id="expenses-embed">
-            <iframe id="expenses-embed-frame"></iframe>
+            <!-- #include shared/expenses-content.html -->
           </div>
         </div>
       </section>
@@ -346,10 +353,52 @@
         </div>
       </section><!-- End Gallery Section -->
 
-      <!-- ======= Support: LightBox ======= -->
+      <!-- ======= Support: LightBox (inline components) ======= -->
       <div id="lightbox" class="lightbox">
         <div id="lightbox-content" class="lightbox-content">
-          <iframe id="lightbox-iframe"></iframe>
+          <div class="lightbox-toolbar">
+            <button id="lightbox-close" class="lightbox-close" aria-label="Close">✕</button>
+          </div>
+
+          <!-- Shared title area (full itinerary + destination detail) -->
+          <div class="section-title">
+            <h1 id="title"></h1>
+            <div id="destinations-subtitle"></div>
+          </div>
+
+          <!-- Destination chrome (sort & filter) -->
+          <div class="section-buttons" id="filter-sort-container">
+            <button class="filter-sort" id="filter" data-action="open-filter-drawer">
+              <i class="iconify" data-icon="tdesign:filter"></i>
+              <span data-translate="destination.filter.title"></span>
+            </button>
+            <button class="filter-sort" id="sort" data-action="open-sort-drawer">
+              <i class="iconify" data-icon="ant-design:sort-ascending-outlined"></i>
+              <span data-translate="destination.sort.title"></span>
+            </button>
+          </div>
+
+          <!-- Render target: mountFullItinerary / mountDestination render here.
+               id="content" matches what the destination component expects. -->
+          <div id="content" class="content"></div>
+
+          <div class="add-container" style="display: none">
+            <button class="edit-btn" id="add-button" data-action="add-destination">
+              <i class="iconify user-data-icon" data-icon="gridicons:add-outline"></i>
+              <span data-translate="labels.add"></span>
+            </button>
+          </div>
+
+          <!-- Destination sort/filter drawer -->
+          <div class="drawer-overlay" id="overlay" data-action="close-drawer">
+            <div class="drawer" id="drawer" data-stop-propagation>
+              <div class="drawer-header">
+                <span id="drawerTitle"></span>
+                <button class="close-btn" data-action="close-drawer">✕</button>
+              </div>
+              <div class="drawer-body" id="drawerContent"></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -381,6 +430,8 @@
   </div>
 
   <!-- #include shared/scripts-vendor.html -->
+  <!-- Chart.js — required by the expenses summary/preTrip/duringTrip charts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
   <!-- #include shared/scripts-core.html -->
 
   <!-- #include shared/nav-helper.html -->

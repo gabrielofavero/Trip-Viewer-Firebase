@@ -13,7 +13,6 @@ import '../destination/support/content.js';
 import '../destination/destination.js';
 import './support/currency.js';
 import './support/data.js';
-import './support/embed.js';
 import './categories.js';
 import './expenses-converted.js';
 import './support/event-listeners.js';

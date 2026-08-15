@@ -2,16 +2,30 @@ import { getChildIDs, getID, getIDs, getJ } from '../../../utils/dom.js';
 import { getHTMLpage } from '../../../app/main.js';
 import { translate } from '../../../i18n/translation.js';
 import { loadItineraryListeners } from './itinerary-module/itinerary-module.js';
+import { getDestinationMetadata } from '../../../data/services/destination.service.js';
 
 var DESTINATIONS = [];
 export var DESTINOS_DATA = {};
 export var ACTIVE_DESTINATIONS = [];
 
-export function getDestinationsArray() {
+/**
+ * Build the destinationRefs array for the trip doc. Each entry carries the
+ * destination id plus denormalized metadata (title, image, per-category
+ * "has entries" booleans, version) so view.html can render the destinations
+ * section without fetching the destination documents on load.
+ */
+export async function getDestinationsArray() {
 	const result = [];
 	for (const dest of ACTIVE_DESTINATIONS) {
 		const destinationId = dest.destinationId;
-		result.push({ id: destinationId });
+		const entry: any = { id: destinationId, title: dest.title || '' };
+		try {
+			const meta = await getDestinationMetadata(destinationId);
+			if (meta) Object.assign(entry, meta);
+		} catch (e) {
+			console.warn(`Failed to load metadata for destination ${destinationId}:`, e);
+		}
+		result.push(entry);
 	}
 	return result;
 }

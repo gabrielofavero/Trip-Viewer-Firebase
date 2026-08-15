@@ -191,9 +191,38 @@ export interface TripGallery {
 	titles: string[];
 }
 
-/** was "destinos[i].destinosID" */
+/** was "destinos[i].destinosID" — enriched with denormalized destination metadata */
 export interface DestinationRef {
 	id: string;
+	/**
+	 * Cached destination title (denormalized on trip save + migration 18) so
+	 * view.html can render the destinations section without fetching the doc.
+	 */
+	title?: string;
+	/** Cached destination hero image (denormalized). */
+	image?: DestinationImage;
+	/**
+	 * Cached per-category "has entries" booleans (denormalized). Drives which
+	 * category boxes appear in view.html's destinationsBox.
+	 */
+	categories?: DestinationCategories;
+	/** Cached destination version (denormalized). */
+	version?: DestinationVersion;
+}
+
+/** Per-category "has entries" flags cached on trip docs (trips/{id}.destinationRefs[i]) */
+export interface DestinationCategories {
+	restaurants: boolean;
+	snacks: boolean;
+	nightlife: boolean;
+	tourism: boolean;
+	shopping: boolean;
+}
+
+/** Destination hero image (was "imagem") — background only */
+export interface DestinationImage {
+	background: string;
+	active: boolean;
 }
 
 /** Header/hero image — top-level trip field (was "imagem") */
@@ -379,6 +408,9 @@ export interface Destination {
 	/** was "modulos" */
 	modules: DestinationModules;
 	myMaps: string;
+
+	/** Hero image (was "imagem") — may be absent in legacy docs */
+	image?: DestinationImage;
 
 	/** was "restaurantes" — object keyed by random ID */
 	restaurants: Record<string, PlaceItem>;
@@ -600,6 +632,8 @@ export interface DestinationSummary {
 	currency: string;
 	/** was "versao" */
 	version: DestinationVersion;
+	/** Hero image (added July 2026) — may be absent in older summaries */
+	image?: DestinationImage;
 }
 
 /** Document at users/{uid}/listingSummaries/{id}  was "listagens" inside user doc */

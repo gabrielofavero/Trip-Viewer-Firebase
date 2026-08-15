@@ -5,7 +5,6 @@ import {
 	DIALOG_LEAVE_CLASS,
 } from '../../../utils/messages.js';
 import {
-	getUserData,
 	registerIfUserNotPresent,
 	setUserData,
 	USER_DATA,
@@ -59,13 +58,15 @@ export async function loadUserIndex() {
 	try {
 		firebase.auth().onAuthStateChanged(async (user) => {
 			if (user) {
-				await registerIfUserNotPresent();
+				// registerIfUserNotPresent() reads users/{uid} (creating it if
+				// missing) and returns that document, so reuse it here instead of
+				// calling getUserData() again (avoids a duplicate read).
+				const userData = await registerIfUserNotPresent();
+				setUserData(userData);
 				showLoggedView();
 
 				// Read profile fields from the Firestore user document first,
 				// falling back to the Auth user only when they're missing.
-				const userData = await getUserData(user.uid);
-				setUserData(userData);
 
 				const displayName = userData?.name || user.displayName || '';
 				const email = userData?.email || user.email || '';

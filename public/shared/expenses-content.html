@@ -1,0 +1,84 @@
+<!--
+  Shared expenses skeleton — included at build time by scripts/inject-partials.js.
+  Used by:
+    - expenses.html (inside #expenses-content)
+    - view.html     (inside #expenses-embed, Workstream D inline rendering)
+  mountExpenses() fills this skeleton; it must already exist in the DOM.
+-->
+<div id="expenses-container">
+  <div class="tabs-container">
+    <div class="tabs" id="tab-currencies" style="display: none;">
+    </div>
+  </div>
+  <div class="tabs-container" id="tabs-container-expenses">
+    <div class="tabs" id="tab-expenses" style="display: none;">
+      <input type="radio" style="display: none;" id="radio-summary" name="tabs-expenses" checked />
+      <label class="tab" for="radio-summary" data-translate="labels.overview"></label>
+      <input type="radio" style="display: none;" id="radio-preTrip" name="tabs-expenses" />
+      <label class="tab" for="radio-preTrip" data-translate="trip.expenses.min.pre_trip"></label>
+      <input type="radio" style="display: none;" id="radio-duringTrip" name="tabs-expenses" />
+      <label class="tab" for="radio-duringTrip" data-translate="trip.expenses.min.during_trip"></label>
+      <input type="radio" style="display: none;" id="radio-expensesTravelers" name="tabs-expenses" />
+      <label class="tab" for="radio-expensesTravelers" data-translate="trip.travelers.title"></label>
+      <span class="glider"></span>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div id="conversion"></div>
+  <div id="summary" class="main-container">
+    <div id="summary-container" class="expenses-container">
+      <div class="expenses-card grafico">
+        <h2 id="summary-title" class="expenses-title" data-translate="labels.overview"></h2>
+        <div id="summary-total" class="expenses-subtitle"></div>
+        <canvas id="summary-chart" width="300" height="300"></canvas>
+      </div>
+
+      <div id="summary-preTrip" class="expenses-card expenses-receipt" style="display: none;">
+        <h2 class="expenses-title" id="summary-preTrip-title" data-translate="trip.expenses.pre_trip"></h2>
+        <table id="summary-preTrip-table" class="card-full-size">
+        </table>
+      </div>
+
+      <div id="summary-duringTrip" class="expenses-card expenses-receipt" style="display: none;">
+        <h2 class="expenses-title" id="summary-duringTrip-title" data-translate="trip.expenses.during_trip"></h2>
+        <table id="summary-duringTrip-table" class="card-full-size">
+        </table>
+      </div>
+
+      <div id="summary-expensesTravelers" class="expenses-card expenses-receipt" style="display: none;">
+        <h2 class="expenses-title" id="summary-expensesTravelers-title" data-translate="trip.travelers.title"></h2>
+        <table id="summary-expensesTravelers-table" class="card-full-size">
+        </table>
+      </div>
+    </div>
+  </div>
+  <div id="preTrip" class="main-container" style="display: none">
+    <div id="preTrip-container" class="expenses-container">
+      <div class="expenses-card grafico">
+        <h2 id="preTrip-title" class="expenses-title" data-translate="trip.expenses.pre_trip"></h2>
+        <div id="preTrip-total" class="expenses-subtitle"></div>
+        <canvas id="preTrip-chart" style="margin-top: 16px;" width="300" height="150"></canvas>
+      </div>
+    </div>
+  </div>
+  <div id="duringTrip" class="main-container" style="display: none">
+    <div id="duringTrip-container" class="expenses-container">
+      <div class="expenses-card grafico">
+        <h2 id="duringTrip-title" class="expenses-title" data-translate="trip.expenses.during_trip"></h2>
+        <div id="duringTrip-total" class="expenses-subtitle"></div>
+        <canvas id="duringTrip-chart" style="margin-top: 16px;" width="150" height="75"></canvas>
+      </div>
+    </div>
+  </div>
+  <div id="expensesTravelers" class="main-container" style="display: none">
+    <div id="expensesTravelers-container" class="expenses-container">
+      <div class="expenses-card grafico">
+        <h2 id="expensesTravelers-title" class="expenses-title" data-translate="trip.travelers.title"></h2>
+        <div id="expensesTravelers-total" class="expenses-subtitle"></div>
+        <canvas id="expensesTravelers-chart" style="margin-top: 16px;" width="300" height="150"></canvas>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,7 @@ import {
 	getChartConfig,
 	getChartData,
 } from '../../../models/expense.model.js';
-import { EXPENSES_DATA } from '../expenses.js';
+import { EXPENSES_DATA } from '../mount.js';
 
 var EXPENSES_CHARTS = {};
 

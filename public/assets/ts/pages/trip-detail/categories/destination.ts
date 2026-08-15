@@ -1,11 +1,10 @@
 import { getDestinations, getLanguage } from '../../../app/config.js';
-import { getState, DESTINATIONS, DOCUMENT_ID, setDestinations } from '../../../data/state.js';
+import { getState, DESTINATIONS, setDestinations } from '../../../data/state.js';
 import { getChildIDs, getID } from '../../../utils/dom.js';
 import { convertFromDateObject, getTodayDateObject, jsDateToKey } from '../../../utils/dates.js';
 import { loadCustomSelect, loadCustomSelectAction } from '../../../ui/custom-select.js';
 import { translate } from '../../../i18n/translation.js';
-import { openViewEmbed } from '../support/embed.js';
-import { getVisibility } from '../../../theme/theme.js';
+import { openDestinationLightbox } from '../support/embed.js';
 import { CUSTOM_SELECTS } from '../../../ui/custom-select.js';
 import { END_DATE } from '../view.js';
 import { START_DATE } from '../view.js';
@@ -23,7 +22,7 @@ var DESTINO_TRANSLATIONS = {};
 // ======= LOADERS =======
 export function loadDestinations() {
 	for (let i = 0; i < DESTINATIONS.length; i++) {
-		P_RESULT[DESTINATIONS[i].destinations.id] = DESTINATIONS[i].destinations;
+		P_RESULT[DESTINATIONS[i].id] = DESTINATIONS[i];
 	}
 
 	if (DESTINATIONS.length % 2 === 1) {
@@ -100,7 +99,7 @@ export function loadDestinationsCustomSelect() {
 		for (const destination of DESTINATIONS) {
 			options.push({
 				value: destination.id,
-				label: destination.destinations.title,
+				label: destination.title || destination.destinations?.title,
 			});
 		}
 
@@ -148,7 +147,7 @@ export function loadDestinationsHTML(destination) {
 	for (let i = 0; i < types.length; i++) {
 		const type = types[i];
 
-		if (type != 'map' && Object.keys(destination.destinations[type]).length === 0) {
+		if (!shouldShowDestinationCategory(destination, type)) {
 			continue;
 		}
 
@@ -179,9 +178,26 @@ export function loadDestinationsHTML(destination) {
 	getID('destinationsBox').innerHTML = text;
 }
 
+/**
+ * Whether a destination category box should render on the view page.
+ * - The `map` box is always shown (it's just a My Maps link box).
+ * - For data categories, prefer the denormalized per-category "has entries"
+ *   booleans cached on the trip doc (destinationRefs[i].categories), falling
+ *   back to deriving them from the category entry counts for legacy trips /
+ *   destination-exclusive mode where only the full document is available.
+ */
+function shouldShowDestinationCategory(destination, type): boolean {
+	if (type === 'map') return true;
+	const categories = destination?.categories ?? destination?.destinations?.categories;
+	if (categories && typeof categories[type] === 'boolean') {
+		return categories[type];
+	}
+	const entries = destination?.destinations?.[type];
+	return !!entries && Object.keys(entries).length > 0;
+}
+
 export function loadAndOpenDestino(code) {
-	const link = `destination?d=${ACTIVE_DESTINATION}&t=${DOCUMENT_ID}&type=${code.toLowerCase()}&visibility=${getVisibility()}`;
-	openViewEmbed(link);
+	openDestinationLightbox(ACTIVE_DESTINATION, code.toLowerCase());
 }
 
 function getDestinationsBoxesIndex(i) {

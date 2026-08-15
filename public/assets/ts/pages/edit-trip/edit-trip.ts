@@ -94,7 +94,10 @@ export async function loadEditTripPage() {
 	// ── Access guard: block unauthenticated users and non-owners ──
 	// Firestore rules also enforce this server-side; this prevents the edit
 	// form from even loading for users without edit permission.
-	if (!(await canAccessEditPage(COLLECTION.TRIPS, DOCUMENT_ID))) {
+	// For existing trips the guard returns the fetched trip doc, which loadTrip()
+	// reuses so trips/{id} is not read twice on page load.
+	const existingTrip = await canAccessEditPage(COLLECTION.TRIPS, DOCUMENT_ID);
+	if (!existingTrip) {
 		return;
 	}
 
@@ -112,7 +115,9 @@ export async function loadEditTripPage() {
 	setDestinations(destSummaries.sort((a: any, b: any) => a.title.localeCompare(b.title)));
 
 	if (DOCUMENT_ID) {
-		await loadTrip(true);
+		// canAccessEditPage only returns an object for existing docs, so this is
+		// the same trip document already fetched for the ownership check.
+		await loadTrip(true, existingTrip as Record<string, any>);
 	} else {
 		NEW_TRIP = true;
 		loadNewTrip();
@@ -153,7 +158,7 @@ function loadUploadSelectors() {
 	loadUploadSelector('logo');
 }
 
-async function loadTrip(stripped = false) {
+async function loadTrip(stripped = false, preloadedTripData?: Record<string, any>) {
 	getID('delete-text').style.display = 'block';
 	startLoadingScreen();
 
@@ -176,10 +181,12 @@ async function loadTrip(stripped = false) {
 			);
 			break;
 		case 'sensitive-only':
-			setState(await getMergedTripObject(await getTravelDocument(stripped)));
+			setState(await getMergedTripObject(await getTravelDocument(stripped, preloadedTripData)));
 			break;
 		default:
-			setState(await fetchSubcollectionsIfNeeded(await getTravelDocument(stripped)));
+			setState(
+				await fetchSubcollectionsIfNeeded(await getTravelDocument(stripped, preloadedTripData)),
+			);
 	}
 
 	await loadTripData();
@@ -260,7 +267,10 @@ export function getDataSelectOptions(j) {
 	return result;
 }
 
-async function getTravelDocument(stripped = false) {
+async function getTravelDocument(stripped = false, preloadedTripData?: Record<string, any>) {
+	// Reuse the trip document already fetched by the access guard
+	// (canAccessEditPage) so trips/{id} isn't read twice on page load.
+	if (preloadedTripData) return preloadedTripData;
 	return stripped ? await get(`trips/${DOCUMENT_ID}`) : await getSingleData('trips');
 }
 

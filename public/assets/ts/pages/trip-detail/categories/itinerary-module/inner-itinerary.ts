@@ -15,6 +15,7 @@ import { displayFullMessage, MESSAGE_PROPERTIES } from '../../../../utils/messag
 import { translate } from '../../../../i18n/translation.js';
 import { loadImageLightbox } from '../../support/embed.js';
 import { getFlightBoxHTML } from '../transportation-module.js';
+import { getDestinationRaw } from '../../../../data/services/destination.service.js';
 
 export var SCHEDULE_OPEN = false;
 export var CURRENT_SCHEDULE_DATE = {
@@ -134,27 +135,82 @@ function reloadModalCalendar(schedule) {
 	}, 300);
 }
 
-export function displayInnerItineraryMessage(index) {
+export async function displayInnerItineraryMessage(index) {
+	const entry = CURRENT_INNER_ITINERARY[index];
+	if (!entry) return;
+
+	// Lazy destination item: the destination doc isn't loaded on page load, so
+	// fetch it on demand with a small loading state, then render the popup.
+	if (entry.lazyDestinationId) {
+		showInnerItineraryLoading(entry);
+		const destData = await getDestinationRaw(entry.lazyDestinationId);
+		if (destData) {
+			const destinationItem = destData[entry.category]?.[entry.itemId];
+			if (destinationItem) {
+				entry.title = getDestinationTitle(destinationItem);
+				entry.content = getDestinationsBoxHTML({
+					j: 1,
+					item: destinationItem,
+					innerItinerary: true,
+					values: getDestinationValues(destData.currency),
+					currency: destData.currency,
+					planned: false,
+					editBtn: false,
+				} as any);
+				entry.media = destinationItem?.media;
+				updateInnerItineraryMessage(entry);
+				return;
+			}
+		}
+		updateInnerItineraryMessage({
+			...entry,
+			title: '',
+			content: `<div class="text-center py-4">${translate('messages.errors.missing_data')}</div>`,
+		});
+		return;
+	}
+
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = CURRENT_INNER_ITINERARY[index].title;
-	properties.content = CURRENT_INNER_ITINERARY[index].content;
+	properties.title = entry.title;
+	properties.content = entry.content;
 	properties.buttons = [];
 	// Content-heavy detail view (flight/hotel/destination boxes + galleries):
 	// auto-scrolls on desktop and fills the screen on mobile.
 	properties.fullscreen = true;
-	properties.containers.main = CURRENT_INNER_ITINERARY[index].container;
+	properties.containers.main = entry.container;
 
 	displayFullMessage(properties);
 
-	switch (CURRENT_INNER_ITINERARY[index].type) {
+	switch (entry.type) {
 		case 'accommodations':
 			loadImageLightbox('label-gallery');
 			break;
 		case 'destinations':
-			if (CURRENT_INNER_ITINERARY[index].media) {
-				loadInnerItineraryMedia(CURRENT_INNER_ITINERARY[index].media);
+			if (entry.media) {
+				loadInnerItineraryMedia(entry.media);
 			}
 	}
+}
+
+/** Small loading placeholder shown while a destination doc is fetched lazily. */
+function showInnerItineraryLoading(entry) {
+	const properties = cloneObject(MESSAGE_PROPERTIES);
+	properties.title = '';
+	properties.content =
+		'<div class="text-center py-4"><div class="spinner-border" role="status"></div></div>';
+	properties.buttons = [];
+	properties.fullscreen = true;
+	properties.containers.main = entry.container;
+	displayFullMessage(properties);
+}
+
+/** Swap the currently-open message's content (used after a lazy fetch resolves). */
+function updateInnerItineraryMessage(entry) {
+	const titleEl = getID('message-title');
+	const descEl = getID('message-description');
+	if (titleEl) titleEl.innerHTML = entry.title;
+	if (descEl) descEl.innerHTML = entry.content;
+	if (entry.media) loadInnerItineraryMedia(entry.media);
 }
 
 function loadInnerItineraryMedia(media) {
@@ -218,7 +274,7 @@ function unloadCalendarTripActive() {
 // Getters
 function getInnerItineraryHTML(item) {
 	const innerItinerary = getInnerItinerary(item);
-	if (innerItinerary?.content) {
+	if (innerItinerary?.content || innerItinerary?.lazyDestinationId) {
 		CURRENT_INNER_ITINERARY.push(innerItinerary);
 		return `<i class="iconify external-link" data-icon="tabler:external-link" data-action="display-inner-itinerary-message" data-index="${CURRENT_INNER_ITINERARY.length - 1}"></i>`;
 	}
@@ -232,6 +288,11 @@ function getInnerItinerary(item, destinations?) {
 		content: '',
 		media: '',
 		container: item?.type === 'destination' ? 'destinations-container' : 'label-container',
+		// Lazy destination item — set when the destination doc must be fetched on
+		// demand (the view only loads destination metadata on page load).
+		lazyDestinationId: '',
+		category: '',
+		itemId: '',
 	};
 	let index = -1;
 	switch (item?.type) {
@@ -266,8 +327,13 @@ function getInnerItinerary(item, destinations?) {
 					destinations = DESTINATIONS?.[index]?.destinations;
 				}
 
+				// The destination doc isn't loaded on page load (metadata-only
+				// view) — mark the popup for a lazy fetch when the user opens it.
 				if (!destinations) {
-					return;
+					innerItinerary.lazyDestinationId = item.location;
+					innerItinerary.category = item.category;
+					innerItinerary.itemId = item.id;
+					return innerItinerary;
 				}
 
 				const destination = destinations[item.category];
@@ -289,22 +355,23 @@ function getInnerItinerary(item, destinations?) {
 				}
 
 				return innerItinerary;
-
-				function getDestinationValues(destinationsCurrency) {
-					const currency = cloneObject(getCurrencies().scale[destinationsCurrency]);
-					const max = translate('destination.price.max', {
-						value: currency['$$$$'],
-					});
-					currency['-'] = translate('destination.price.free');
-					currency['default'] = translate('destination.price.default');
-					currency['$$$$'] = max;
-					return currency;
-				}
 			}
 			break;
 	}
 
 	return innerItinerary;
+}
+
+/** Price-scale map used to render destination entry boxes (shared by sync + lazy paths). */
+function getDestinationValues(destinationsCurrency) {
+	const currency = cloneObject(getCurrencies().scale[destinationsCurrency]);
+	const max = translate('destination.price.max', {
+		value: currency['$$$$'],
+	});
+	currency['-'] = translate('destination.price.free');
+	currency['default'] = translate('destination.price.default');
+	currency['$$$$'] = max;
+	return currency;
 }
 
 export function getScheduleTitle(title, destinations, placeholder = true) {

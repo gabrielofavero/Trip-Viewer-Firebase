@@ -587,8 +587,17 @@ export async function getUserListingSummaries(uid: string): Promise<any[]> {
 /**
  * Get a trip with all subcollections resolved in parallel.
  * Replaces getTripDataWithDestinations for the new subcollection architecture.
+ *
+ * @param loadDestinations When `false` (view.html load), destination documents
+ *   are NOT fetched — the denormalized metadata cached on the trip doc's
+ *   `destinationRefs` (title/image/categories/version) is used instead, and a
+ *   destination doc is only read when a ref lacks that metadata (legacy
+ *   safeguard). When `true` (edit flows), every full destination doc is fetched.
  */
-export async function getTripComplete(tripId: string): Promise<any> {
+export async function getTripComplete(
+	tripId: string,
+	loadDestinations = true,
+): Promise<any> {
 	const tripData = await get(`${COLLECTION.TRIPS}/${tripId}`);
 	if (!tripData) return null;
 
@@ -602,13 +611,7 @@ export async function getTripComplete(tripId: string): Promise<any> {
 		})),
 		getItinerary(tripId).catch(() => []),
 		destinationRefs?.length
-			? Promise.all(
-					destinationRefs.map(async (ref: any) => {
-						const id = ref.id || ref.destinationId;
-						const data = await get(`${COLLECTION.DESTINATIONS}/${id}`, false);
-						return data ? { id, destinations: data } : null;
-					}),
-				).then((results) => results.filter(Boolean))
+			? resolveDestinations(destinationRefs, loadDestinations)
 			: Promise.resolve([]),
 	]);
 
@@ -626,6 +629,32 @@ export async function getTripComplete(tripId: string): Promise<any> {
 		itinerary,
 		destinations,
 	};
+}
+
+/**
+ * Resolve a trip's destination refs into the shape the view consumes
+ * (`{ ...ref, destinations: <full doc | null> }`).
+ * - `loadDestinations = true`  → fetch every full destination document.
+ * - `loadDestinations = false` → use the denormalized metadata cached on the
+ *   trip doc; only fetch a destination doc when its ref lacks that metadata
+ *   (legacy safeguard). Keeps view.html to a single trip-doc read on load.
+ */
+async function resolveDestinations(
+	destinationRefs: any[],
+	loadDestinations: boolean,
+): Promise<any[]> {
+	const results = await Promise.all(
+		destinationRefs.map(async (ref: any) => {
+			const id = ref.id || ref.destinationId;
+			if (!loadDestinations && ref.categories && typeof ref.categories === 'object') {
+				// Metadata present — no destination read needed.
+				return { ...ref, destinations: null };
+			}
+			const data = await get(`${COLLECTION.DESTINATIONS}/${id}`, false);
+			return data ? { ...ref, destinations: data } : null;
+		}),
+	);
+	return results.filter(Boolean);
 }
 
 // Helpers (Not database related)

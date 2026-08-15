@@ -9,8 +9,7 @@ import {
 	loadCurrenciesObject,
 	sortCurrencies,
 } from '../../../models/expense.model.js';
-import { setTabListeners, applyExpenses } from '../expenses.js';
-import { EXPENSES_DATA } from '../expenses.js';
+import { setTabListeners, applyExpenses, EXPENSES_DATA } from '../mount.js';
 
 export var DEFAULT_CURRENCY;
 export var CURRENCY_CONVERSION: Record<string, number> = {};

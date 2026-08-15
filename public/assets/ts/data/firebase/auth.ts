@@ -92,21 +92,23 @@ export async function registerIfUserNotPresent() {
 		return;
 	}
 
+	// Return the user document so callers can reuse it instead of reading
+	// users/{uid} again.
 	if (!userDoc && registrationOpen) {
-		await create(
-			`${COLLECTION.USERS}`,
-			{
-				// Profile fields — read from Firestore first, Auth as fallback
-				name: user.displayName || '',
-				email: user.email || '',
-				photoURL: user.photoURL || '',
-				listings: [],
-				trips: [],
-				destinations: [],
-			},
-			user.uid,
-		);
+		const profile = {
+			// Profile fields — read from Firestore first, Auth as fallback
+			name: user.displayName || '',
+			email: user.email || '',
+			photoURL: user.photoURL || '',
+			listings: [],
+			trips: [],
+			destinations: [],
+		};
+		await create(`${COLLECTION.USERS}`, profile, user.uid);
+		return profile;
 	}
+
+	return userDoc;
 }
 
 export async function getUID() {

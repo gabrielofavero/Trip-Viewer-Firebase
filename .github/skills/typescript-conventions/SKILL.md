@@ -143,7 +143,7 @@ Services wrap Firestore operations with domain logic (fallbacks, data normalizat
 |---|---|
 | `trip.service.ts` | `getTrip()`, `getTripRaw()`, plus re-exports of `get`, `update`, `create`, `deleteDocument`, `COLLECTION`, etc. |
 | `expense.service.ts` | Expense CRUD wrappers |
-| `destination.service.ts` | Destination CRUD wrappers |
+| `destination.service.ts` | Destination CRUD wrappers + metadata builders (`buildDestinationMetadata`, `getDestinationMetadata`) |
 | `auth.service.ts` | Auth state, login/logout |
 
 ---

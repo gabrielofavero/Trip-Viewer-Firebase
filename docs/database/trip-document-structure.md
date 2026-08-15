@@ -117,13 +117,27 @@ External resource URLs, all stored as strings (empty string if not set).
 ```
 
 ### `destinationRefs` — `DestinationRef[]`
-Slim references to destination documents. Each entry contains only the destination document ID.
+Slim references to destination documents. Since **August 2026** (migration 18 + trip save), each entry carries a **denormalized copy** of the destination's lightweight metadata so `view.html` can render the destinations section **without fetching each `destinations/{id}` document on load**. The destination document remains the source of truth; this copy is a cache refreshed on trip save and via migration 18.
 
 ```ts
 interface DestinationRef {
-  id: string;  // Firestore document ID from the "destinations" collection
+  id:         string;   // Firestore document ID from the "destinations" collection
+  title?:     string;   // cached destination title
+  image?:     DestinationImage;      // cached destination hero image ({ background, active })
+  categories?: DestinationCategories;  // cached per-category "has entries" booleans
+  version?:   DestinationVersion;    // cached destination version ({ lastUpdated })
+}
+
+interface DestinationCategories {
+  restaurants: boolean;  // true = category has ≥1 entry → box shown on view.html
+  snacks:      boolean;
+  nightlife:   boolean;
+  tourism:     boolean;
+  shopping:    boolean;
 }
 ```
+
+> **Note:** the `categories` booleans mean **“has entries”** (derived from the destination's category maps) — they are **not** the destination document's editor-side `modules` toggles. `view.html` shows a category box when its boolean is true (see `shouldShowDestinationCategory` in `pages/trip-detail/categories/destination.ts`). Older trip docs may lack these fields until migration 18 is run or the trip is re-saved.
 
 ### `image` — `TripImage`
 

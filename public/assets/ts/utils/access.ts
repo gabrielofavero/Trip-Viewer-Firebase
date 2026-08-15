@@ -17,15 +17,22 @@ import { displayForbidden } from './messages.js';
  *
  * @param docType - Firestore collection name ('trips', 'destinations', 'listings').
  * @param docId   - Document ID being edited. Empty/null = creating a new document.
- * @returns `true` if the page may load, `false` if access was blocked.
+ * @returns The fetched document data when authorized (existing doc), `true` when
+ *          creating a new document, or `false` if access was blocked.
  *
  * When blocked it:
  *  - stops any loading screen,
  *  - shows a clear "Access Denied" notification,
  *  - lets the user go back (index/login for unauthenticated, the document's
  *    view page for non-owners).
+ *
+ * Returning the fetched document lets callers reuse it instead of issuing a
+ * second read for the same path (e.g. edit-trip loads trips/{id} in loadTrip()).
  */
-export async function canAccessEditPage(docType: string, docId: string | null): Promise<boolean> {
+export async function canAccessEditPage(
+	docType: string,
+	docId: string | null,
+): Promise<boolean | Record<string, any>> {
 	const uid = await getUID();
 
 	// 1) Must be authenticated (also covers creating new documents).
@@ -46,6 +53,8 @@ export async function canAccessEditPage(docType: string, docId: string | null): 
 			);
 			return false;
 		}
+		// Authorized — hand back the fetched document so the caller can reuse it.
+		return doc;
 	}
 
 	return true;

@@ -95,7 +95,7 @@ modules          { destinations, transportation, itinerary, gallery, summary, ac
 travelers        { id?: string, name: string }[]   // id may be missing in legacy docs
 links            { maps, attachments, active, drive, pdf, ppt, sheet, vaccine: string }
 gallery          { categories[], descriptions[], images[], titles[] }
-destinationRefs  { id: string }[]        Slim references to destinations collection
+destinationRefs  { id, title?, image?, categories?, version? }[]   Denormalized destination metadata (migration 18 + trip save) — see below
 image            { dark, light, background: string, active: bool }
 ```
 
@@ -104,6 +104,28 @@ image            { dark, light, background: string, active: bool }
 ```ts
 { day: number, month: number, year: number, hour: number, minute: number, second: number }
 ```
+
+### DestinationRef Metadata (denormalized, Aug 2026)
+
+Since migration 18 and trip save, each `destinationRefs[i]` entry may carry a copy of the destination's lightweight metadata so `view.html` renders the destinations section **without fetching the destination documents**:
+
+```ts
+{
+  id: string,
+  title?: string,                       // destination title
+  image?: { background: string, active: boolean },
+  categories?: {                        // per-category "has entries" booleans
+    restaurants: boolean,
+    snacks: boolean,
+    nightlife: boolean,
+    tourism: boolean,
+    shopping: boolean,
+  },
+  version?: { lastUpdated: string },
+}
+```
+
+> **Important:** `categories` means **“has entries”** (derived from the destination's category maps) — **not** the destination document's editor-side `modules` toggles (those are only read by `edit-destination`). `view.html` shows a category box when its boolean is `true` (`shouldShowDestinationCategory` in `pages/trip-detail/categories/destination.ts`). Legacy refs are just `{ id }` — guard with optional chaining.
 
 ### Subcollection: `accommodations/{accId}`
 
@@ -349,3 +371,4 @@ Detailed document structure references in `docs/database/`:
 10. **Destination summaries live under `users/{uid}/destinationSummaries/{destId}`** — not embedded in the user doc. The index page reads these, not the full destination documents.
 11. **Destination entry `images` may be absent** in entries created before August 2026 — guard with optional chaining (`entry.images?.length`). Migration 15 (Phase 3) backfills `images: []` on all destination entries across all categories.
 12. **User profile fields (`name`, `email`, `photoURL`) may be absent** in user documents created before August 2026. The app reads them from Firestore and falls back to the Auth user record when missing (`userData?.name || user.displayName || ''`). Migration 16 backfills them from Auth.
+13. **Trip `destinationRefs` may carry denormalized destination metadata** (`title`, `image`, `categories`, `version`) since Aug 2026 (migration 18 / trip save). The `categories` booleans mean **“has entries”** and drive which boxes render on view.html — they are **not** the destination's editor-side `modules` toggles. Guard with optional chaining (`ref.categories?.restaurants`); legacy refs are just `{ id }`.

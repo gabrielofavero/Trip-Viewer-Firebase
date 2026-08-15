@@ -1,19 +1,13 @@
 import { loadVisibility } from '../../../theme/visibility.js';
-import { loadEmbedVisibility } from '../../../ui/embed.js';
 import { getID } from '../../../utils/dom.js';
 import { setCSSRule } from '../../../theme/stylesheets.js';
 import { getDescriptionValue } from '../../../models/destination.model.js';
 import { THEME_COLOR } from '../../../theme/theme.js';
 import { adjustEditVisibility } from '../edit-destination.js';
-import { unloadMedias, MEDIA_HYPERLINKS } from './media-embed.js';
+import { MEDIA_HYPERLINKS } from './media-embed.js';
 
 export async function loadDestinationVisibility() {
 	loadVisibility();
-	loadEmbedVisibility({
-		closeAction() {
-			unloadMedias(undefined);
-		},
-	});
 	await adjustEditVisibility();
 }
 
