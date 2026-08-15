@@ -20,10 +20,10 @@ A web application for planning, managing, and viewing trips, destinations, expen
 # Install dependencies
 npm install
 
-# One-shot build (copies public/ → dist/, injects HTML partials)
+# One-shot prod build (copies public/ → dist/, injects HTML partials, content-hashes assets)
 npm run build
 
-# Watch mode (rebuilds on file changes)
+# Watch mode (dev mode — rebuilds on file changes with live reload)
 npm run watch
 
 # Clean build output
@@ -32,7 +32,7 @@ npm run clean
 # Serve locally (requires Firebase CLI)
 npm run serve
 
-# Full dev mode (build + serve + live reload on port 3000)
+# Full dev mode (frontend watch + live reload, emulators, auto-open browser)
 npm run dev
 ```
 
@@ -40,22 +40,17 @@ npm run dev
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 174   | 169  | 3         | 2       |
-| 🏆   | Feature     | F000 | 181   | 162  | 17        | 2       |
-| 📈   | Improvement | M000 | 178   | 152  | 22        | 4       |
-| ⚔️   | Epic        | E000 | 51    | 38   | 7         | 6       |
+| 🐞   | Bug         | B000 | 174   | 170  | 4         | 0       |
+| 🏆   | Feature     | F000 | 182   | 165  | 17        | 0       |
+| 📈   | Improvement | M000 | 178   | 153  | 22        | 3       |
+| ⚔️   | Epic        | E000 | 51    | 39   | 7         | 5       |
 
 ## Backlog
 
 ### High Priority
 
-- ⚔️ **E016:** New Front-End: destination.html
-- 🏆 **F180:** Improve view itinerary cards
-
 ### Medium Priority
 
-- 🐞 **B172:** Fix error when switching a destination category
-- 🐞 **B173:** Fix issues with index cards closing and not reopening
 - 📈 **M162:** Minor visual improvements on expenses.html
 - 📈 **M153:** Minor visual improvements on itinerary.html
 - ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
@@ -63,18 +58,15 @@ npm run dev
 
 ### Low Priority
 
-- 🏆 **F063:** Allow adding multiple regions to a destination (edit/trip.html)
-- ⚔️ **E047:** Implement Unit Tests
-- ⚔️ **E019:** Implement Sonarqube
-- ⚔️ **E046:** Implement Playwright
-- 📈 **M163:** Improve live reload functionality
+- ⚔️ **E047:** [DEV] Implement Unit Tests
+- ⚔️ **E019:** [DEV] Implement Sonarqube
+- ⚔️ **E046:** [DEV] Implement Playwright
 - 📈 **M171:** Safeguard unauthenticated access message
 
 ## Done
 
 ### August 2026
 
-- 🐞 **B163:** Fix color and destination image issues
 - 🏆 **F159:** [DEV] Add AI skill for browsing pages
 - 📈 **M161:** [DEV] Improve AI skills detection
 - 🏆 **F155:** Add images for each destination item
@@ -95,7 +87,7 @@ npm run dev
 - 🐞 **B171:** Image dialog not transitioning when user clicks on add image button
 - 📈 **M168:** [DEV] Auto restart if emulator functions failed
 - 🏆 **F176:** Add custom colors on trip cards
-- 📈 **M169:** Improve cache busting
+- 📈 **M169:** [DEV] Improve cache busting
 - 🏆 **F177:** Add app version on footers
 - 📈 **M170:** Improve import/export icons on index
 - ⚔️ **E045:** Add Maps integration into edit page (dev only poc)
@@ -110,10 +102,17 @@ npm run dev
   - *[📈M175] No more need to read destination on view.html*
   - *[📈M176] Normalize visuals: header, cards, buttons, calendar should match*
 - 🐞 **B174:** Issue with transportation duration card on edit trip
+- 🐞 **B173:** Fix issues with index cards closing and not reopening
 - 📈 **M172:** Minor visual improvements on index.html (search, order, image loading)
-- 📈 **M178:** [DEV] reorganize docs
+- 📈 **M178:** [DEV] Reorganize docs
 - 📈 **M177:** Make tab selector on index mobile friendly
-- 🏆 **F181:** New destination page look (cards, hero background, lazy load, search, tab bar)
+- ⚔️ **E016:** New Front-End: destination.html
+  - *[🏆F181] New destination page look (cards, hero background, lazy load, search, tab bar)*
+  - *[🏆F180] Reuse destination dialogs on itinerary view*
+  - *[🐞B163] Fix color and destination image issues*
+  - *[🏆F063] Allow adding multiple regions to a destination*
+- 🏆 **F182:** Add new dialogs into all itinerary items for view
+- 📈 **M163:** [DEV] Improve live reload functionality
 
 ### July 2026
 
@@ -828,3 +827,4 @@ npm run dev
 - 📈 **M119:** Instead of pop-ups, scroll to item (if not destination)
 - 🐞 **B148:** Full itinerary page giving multiple blank pages
 - ⚔️ **E024:** Migrate project to React
+- 🐞 **B172:** Fix error when switching a destination category

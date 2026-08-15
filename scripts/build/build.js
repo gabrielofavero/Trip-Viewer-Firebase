@@ -5,8 +5,12 @@
  * and copies Firebase config files.
  *
  * Usage:
- *   node scripts/build/build.js          — one-shot build
- *   node scripts/build/build.js --watch  — watch mode (rebuilds on changes)
+ *   node scripts/build/build.js               — one-shot build
+ *   node scripts/build/build.js --watch       — watch mode (rebuilds on changes)
+ *   node scripts/build/build.js --mode dev|prod — explicit build mode
+ *
+ * Mode inference (when --mode is omitted):
+ *   --watch or NODE_ENV=development → dev, otherwise → prod.
  */
 
 const fs = require("fs");
@@ -19,6 +23,23 @@ const DIST_DIR = path.join(ROOT, "dist");
 
 const watchMode = process.argv.includes("--watch");
 const noLiveReload = process.argv.includes("--no-livereload");
+
+/**
+ * Resolve the build mode. An explicit `--mode dev|prod` wins; otherwise
+ * `--watch` or `NODE_ENV=development` implies dev, everything else is prod.
+ */
+function resolveBuildMode() {
+	const modeIdx = process.argv.indexOf("--mode");
+	if (modeIdx !== -1) {
+		const value = process.argv[modeIdx + 1];
+		if (value === "dev" || value === "prod") return value;
+		console.error(`[build] Invalid --mode "${value}". Use --mode dev|prod.`);
+		process.exit(1);
+	}
+	return watchMode || process.env.NODE_ENV === "development" ? "dev" : "prod";
+}
+
+const buildMode = resolveBuildMode();
 
 /**
  * Recursively copy a directory (or file).
@@ -42,6 +63,8 @@ function copyRecursive(src, dest) {
 function build() {
 	const start = Date.now();
 
+	console.log(`[build] Mode: ${buildMode}`);
+
 	// 1. Clean dist/
 	fs.rmSync(DIST_DIR, { recursive: true, force: true });
 
@@ -52,7 +75,7 @@ function build() {
 	// 2b. Inject shared HTML partials into dist/ HTML files
 	console.log("[build] Injecting HTML partials...");
 	const { inject } = require("./inject-partials.js");
-	inject({ noLiveReload });
+	inject({ noLiveReload, mode: buildMode });
 
 	// 2c. Compile TypeScript → JavaScript
 	console.log("[build] Compiling TypeScript...");
@@ -100,10 +123,21 @@ function build() {
 
 	// 2e. Content-hash built JS/CSS (deep, dependency-aware) so the immutable
 	// Cache-Control on *.js/*.css is always correct after a deploy.
-	console.log("[build] Hashing assets...");
-	const { hashAssets } = require("./hash-assets.js");
-	const rewrittenRefs = hashAssets(DIST_DIR);
-	console.log(`[build] Hashed assets (${rewrittenRefs} references rewritten).`);
+	// Prod only: in dev the no-store headers make hashing redundant, and
+	// skipping it keeps dev rebuilds fast.
+	if (buildMode === "prod") {
+		console.log("[build] Hashing assets...");
+		const { hashAssets } = require("./hash-assets.js");
+		const rewrittenRefs = hashAssets(DIST_DIR, { mode: buildMode });
+		console.log(
+			`[build] Hashed assets (${rewrittenRefs} references rewritten).`,
+		);
+	} else {
+		console.log(
+			"[build] Hashing skipped (dev) — dev relies on Cache-Control: no-store. " +
+				"Verify it in P5; if absent, enable the ?v= fallback.",
+		);
+	}
 
 	// 2d. Sync package.json version to the version calculated from README.md
 	syncPackageVersion();
@@ -237,9 +271,36 @@ if (watchMode) {
 	let debounceTimer = null;
 	let building = false;
 	let queued = false;
+	let lastSnapshot = null;
+
+	// Polling heartbeat: on some platforms fs.watch can silently stop delivering
+	// events. Snapshot public/ (path → mtime) periodically so changes are still
+	// caught even if the OS watcher goes quiet. This snapshot is also used to
+	// validate fs.watch events (see handleEvent below).
+	const snapshotPublic = () => {
+		const snapshot = new Map();
+		const walk = (dir) => {
+			for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+				const full = path.join(dir, entry.name);
+				if (entry.isDirectory()) {
+					walk(full);
+				} else {
+					try {
+						snapshot.set(full, fs.statSync(full).mtimeMs);
+					} catch {
+						// File vanished mid-scan — ignore.
+					}
+				}
+			}
+		};
+		walk(PUBLIC_DIR);
+		return snapshot;
+	};
 
 	// Debounce + serialize rebuilds: coalesce bursts of change events and never
-	// run build() concurrently with itself.
+	// run build() concurrently with itself. The baseline is refreshed when a
+	// build STARTS so the polling heartbeat can't re-detect the very change that
+	// triggered this build as a "new" one while it runs.
 	const scheduleBuild = (reason) => {
 		clearTimeout(debounceTimer);
 		debounceTimer = setTimeout(() => {
@@ -248,6 +309,7 @@ if (watchMode) {
 				return;
 			}
 			building = true;
+			lastSnapshot = snapshotPublic();
 			try {
 				console.log(`[watch] Change detected: ${reason}`);
 				build();
@@ -263,14 +325,48 @@ if (watchMode) {
 		}, 300);
 	};
 
+	// Initial build BEFORE attaching any watchers: guarantees exactly one
+	// startup build (no watcher/poll event can trigger a duplicate during it).
+	building = true;
+	try {
+		build();
+	} finally {
+		building = false;
+	}
+	lastSnapshot = snapshotPublic();
+
 	// Resilient fs.watch: attach an error handler (a missing handler turns a
 	// watcher 'error' event into an uncaught exception → process crash, the
 	// classic recursive-watch failure on Windows) and recreate the watcher on
 	// error instead of dying.
 	let watcher = null;
 	const createWatcher = () => {
+		// Validate events against the snapshot: only a real mtime change (or a
+		// create/delete) schedules a build. This ignores spurious metadata-only
+		// touches (e.g. git staging, editor/AV scans) that don't alter content.
 		const handleEvent = (eventType, filename) => {
-			if (filename) {
+			if (!filename) return;
+			let full;
+			try {
+				full = path.join(PUBLIC_DIR, filename);
+			} catch {
+				return;
+			}
+			let stat = null;
+			try {
+				stat = fs.statSync(full);
+			} catch {
+				// Deleted or moved — a real change.
+				scheduleBuild(filename);
+				return;
+			}
+			if (!stat.isFile()) {
+				// Directory create/rename — treat as a real change.
+				scheduleBuild(filename);
+				return;
+			}
+			const prev = lastSnapshot ? lastSnapshot.get(full) : undefined;
+			if (prev === undefined || prev !== stat.mtimeMs) {
 				scheduleBuild(filename);
 			}
 		};
@@ -303,31 +399,7 @@ if (watchMode) {
 		}
 	};
 
-	// Polling heartbeat: on some platforms fs.watch can silently stop delivering
-	// events. Snapshot public/ (path → mtime) periodically so changes are still
-	// caught even if the OS watcher goes quiet.
-	const snapshotPublic = () => {
-		const snapshot = new Map();
-		const walk = (dir) => {
-			for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-				const full = path.join(dir, entry.name);
-				if (entry.isDirectory()) {
-					walk(full);
-				} else {
-					try {
-						snapshot.set(full, fs.statSync(full).mtimeMs);
-					} catch {
-						// File vanished mid-scan — ignore.
-					}
-				}
-			}
-		};
-		walk(PUBLIC_DIR);
-		return snapshot;
-	};
-
 	const pollIntervalMs = 2000;
-	let lastSnapshot = snapshotPublic();
 	const poll = () => {
 		try {
 			const current = snapshotPublic();
@@ -349,8 +421,6 @@ if (watchMode) {
 
 	createWatcher();
 	setInterval(poll, pollIntervalMs);
-
-	build();
 } else {
 	build();
 }

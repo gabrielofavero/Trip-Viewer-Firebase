@@ -25,6 +25,10 @@ const fs = require('fs');
 const ROOT = path.resolve(__dirname, '../..');
 const BACKUP_SCRIPT = path.join(ROOT, 'scripts', 'utils', 'backup.js');
 
+// Generates firebase.dev.json (no-store headers) so the dev emulators never
+// serve stale content. Runs before each spawn attempt.
+const { generate: generateFirebaseDev } = require('../build/gen-firebase-dev.js');
+
 // Compiled functions entrypoints the emulator needs to discover its backend.
 // `tsc --watch` writes these incrementally; waiting for them avoids the
 // cold-start race where discovery runs before the build finishes.
@@ -135,6 +139,8 @@ function killEmulatorTree() {
 
 function startEmulator() {
   attempt += 1;
+  // Regenerate the dev config (no-store headers) before each spawn attempt.
+  generateFirebaseDev();
   console.log(
     `\n\u{1F525} Starting Firebase emulators (attempt ${attempt}/${MAX_ATTEMPTS}, with exit-backup)...\n`,
   );
@@ -145,7 +151,12 @@ function startEmulator() {
 
   emulator = spawn(
     'firebase',
-    ['emulators:start', '--import=./.emulator-data', '--export-on-exit=./.emulator-data'],
+    [
+      'emulators:start',
+      '--config=./firebase.dev.json',
+      '--import=./.emulator-data',
+      '--export-on-exit=./.emulator-data',
+    ],
     {
       stdio: ['inherit', 'pipe', 'pipe'],
       shell: true,

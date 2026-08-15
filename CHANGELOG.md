@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.23.0] - 2026-08-08
+
+- 📈 **M169:** [DEV] Improve cache busting
+- 🏆 **F177:** Add app version on footers
+- 📈 **M170:** Improve import/export icons on index
+- ⚔️ **E045:** Add Maps integration into edit page (dev only poc)
+- ⚔️ **E017:** Optimize firebase operations usage
+- ⚔️ **E027:** New Front-End: view.html
+- 🐞 **B174:** Issue with transportation duration card on edit trip
+- 🐞 **B173:** Fix issues with index cards closing and not reopening
+- 📈 **M172:** Minor visual improvements on index.html (search, order, image loading)
+- 📈 **M178:** [DEV] Reorganize docs
+- 📈 **M177:** Make tab selector on index mobile friendly
+- ⚔️ **E016:** New Front-End: destination.html
+- 🏆 **F182:** Add new dialogs into all itinerary items for view
+- 📈 **M163:** [DEV] Improve live reload functionality
+
 ## [2.22.2] - 2026-08-08
 
 - 🐞 **B167:** Edit trip labels on customization not showing
@@ -294,7 +311,3 @@
 - ⚔️ **E022:** Migration functions
 - 📈 M019 (customizable itinerary), M048, M056–M068; 🏆 F050 (TikTok link API), F056 (change detection)
 - 🐞 B042–B045 fixes
-
----
-
-*Changelog generated from Firebase Hosting release history (`trip-viewer-prd`) + git history. 135 releases → 57 logical deployments (2024-06-26 → 2026-06-06). Version numbering starts at 2.0.0; minor = significant deployment, patch = partial deployment.*
