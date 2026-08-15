@@ -22,13 +22,11 @@ import { getID, getErrorFromGetRequestMessage } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
 import { stopLoadingScreen } from '../../utils/loading.js';
 import { loadActiveCategory, ACTIVE_CATEGORY } from './categories.js';
-import { adjustEditVisibility, restoreIfEditing } from './edit-destination.js';
+import { adjustEditVisibility } from './edit-destination.js';
 import { getDestinationCardHTML } from './support/card.js';
-import { onCardClose, onCardOpen } from './support/card-media.js';
 import { filter } from './support/sort-and-filter/filter.js';
 import { sort } from './support/sort-and-filter/sort.js';
 import { loadSortAndFilter } from './support/sort-and-filter/sort-and-filter.js';
-import { adjustDrawer } from './support/sort-and-filter/support/drawer.js';
 import { getTripData, loadPlannedDestination, PLANNED_DESTINATION } from './support/trip.js';
 import { loadDestinationVisibility } from './support/visibility.js';
 import { LazyGrid } from '../../ui/lazy-grid.js';
@@ -175,7 +173,7 @@ function loadMapDestination(link) {
 	}
 	const mid = link.split('mid=')[1].split('&')[0];
 	getContainer().innerHTML =
-		`<iframe class="map-iframe" src="https://www.google.com/maps/d/embed?mid=${mid}&ehbc=2E312F" width="640" height="480"></iframe>`;
+		`<iframe class="map-iframe" src="https://www.google.com/maps/d/embed?mid=${mid}&ehbc=2E312F"></iframe>`;
 }
 
 // Setters
@@ -221,37 +219,6 @@ function setSentinelVisible(visible) {
 
 export function setSearchQuery(query) {
 	GRID?.setQuery(query);
-}
-
-// Actions
-export function processCard(j) {
-	restoreIfEditing(j);
-	adjustDrawer();
-
-	const card = getID(`destinations-card-${j}`);
-	if (!card) return;
-
-	const willOpen = !card.classList.contains('open');
-	card.classList.toggle('open', willOpen);
-
-	if (willOpen) {
-		closeOtherCards(j);
-		onCardOpen(j);
-	} else {
-		onCardClose(j);
-	}
-
-	adjustEditVisibility(j);
-}
-
-function closeOtherCards(j) {
-	for (const card of document.querySelectorAll<HTMLElement>('.dest-card.open')) {
-		const index = Number(card.getAttribute('data-index'));
-		if (Number.isFinite(index) && index !== j) {
-			card.classList.remove('open');
-			onCardClose(index);
-		}
-	}
 }
 
 export function getDataSet(key) {

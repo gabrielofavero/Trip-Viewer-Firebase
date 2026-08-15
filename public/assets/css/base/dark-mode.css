@@ -270,7 +270,7 @@
 	background: linear-gradient(135deg, var(--theme-color), var(--theme-secondary));
 }
 
-[data-theme="dark"] .dest-card-media {
+[data-theme="dark"] .dialog-media {
 	background: rgba(44, 44, 46, 0.7);
 }
 

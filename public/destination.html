@@ -22,17 +22,9 @@
         </div>
 
         <!-- Category tab bar — rendered by JS in P2, hidden until wired -->
-        <div class="edit-tab-bar" id="destination-tab-bar" style="display: none"></div>
+        <div class="category-tabs" id="destination-tab-bar" style="display: none"></div>
 
-        <!-- Search bar — wired to the lazy grid in P2 -->
-        <div class="search-bar" id="destination-search-bar">
-          <i class="iconify search-icon" data-icon="material-symbols:search"></i>
-          <input type="text" id="destination-search-input" class="search-input" data-translate="index.search_placeholder">
-          <button class="search-clear" id="destination-search-clear" style="display: none" aria-label="Clear search">
-            <i class="iconify" data-icon="material-symbols:close"></i>
-          </button>
-        </div>
-
+        <!-- Sort / filter controls -->
         <div class="section-buttons" id="filter-sort-container">
           <button class="filter-sort" id="filter" data-action="open-filter-drawer">
             <i class="iconify" data-icon="tdesign:filter"></i>
@@ -44,15 +36,25 @@
           </button>
         </div>
 
-        <div id="content"></div>
-        <div class="grid-sentinel" id="destinations-grid-sentinel"></div>
-
-        <div class="add-container" style="display: none">
-          <button class="edit-btn" id="add-button" data-action="add-destination">
-              <i class="iconify user-data-icon" data-icon="gridicons:add-outline"></i>
-              <span data-translate="labels.add"></span>
+        <!-- Search bar — wired to the lazy grid in P2 -->
+        <div class="search-bar" id="destination-search-bar">
+          <i class="iconify search-icon" data-icon="material-symbols:search"></i>
+          <input type="text" id="destination-search-input" class="search-input" data-translate="index.search_placeholder">
+          <button class="search-clear" id="destination-search-clear" style="display: none" aria-label="Clear search">
+            <i class="iconify" data-icon="material-symbols:close"></i>
           </button>
         </div>
+
+        <!-- Add destination button (right-aligned, like the index "New trip" button) -->
+        <div class="add-container" style="display: none">
+          <button id="add-button" class="btn btn-primary-theme btn-sm" data-action="add-destination">
+            <i class="iconify" data-icon="gridicons:add-outline"></i>
+            <span data-translate="labels.add"></span>
+          </button>
+        </div>
+
+        <div id="content"></div>
+        <div class="grid-sentinel" id="destinations-grid-sentinel"></div>
 
       </div>
     </section>
@@ -77,6 +79,28 @@
         <button class="close-btn" data-action="close-drawer">✕</button>
       </div>
       <div class="drawer-body" id="drawerContent"></div>
+    </div>
+  </div>
+
+  <!-- Destination Detail Dialog (index-like: click a card → dialog) -->
+  <div id="destination-dialog" class="dialog-overlay" style="display:none">
+    <div class="dialog-card destination-dialog-card">
+      <div class="dialog-media" id="destination-dialog-media"></div>
+      <a class="dialog-close" data-action="close-destination-dialog">
+        <i class="iconify" data-icon="material-symbols:close"></i>
+      </a>
+      <div class="dialog-body">
+        <div class="dialog-header">
+          <div class="dialog-title-row">
+            <h2 class="dialog-title" id="destination-dialog-title"></h2>
+            <button class="dialog-edit-btn" id="destination-dialog-edit" data-action="edit-destination" style="display:none">
+              <i class="iconify" data-icon="tabler:edit"></i>
+            </button>
+          </div>
+          <span class="dialog-score-badge" id="destination-dialog-score" style="display:none"></span>
+        </div>
+        <div id="destination-dialog-content"></div>
+      </div>
     </div>
   </div>
 

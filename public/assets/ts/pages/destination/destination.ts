@@ -14,7 +14,6 @@ export { ACTIVE_CATEGORY } from './categories.js';
 export {
 	CONTENT,
 	applyContent,
-	processCard,
 	getDataSet,
 	getDestinationID,
 	getItemFromJ,
@@ -60,7 +59,7 @@ function loadDestinationTabBar() {
 	tabBar.innerHTML = getDestinationTabsHTML();
 	tabBar.style.display = '';
 
-	for (const tab of Array.from(tabBar.querySelectorAll('.edit-tab'))) {
+	for (const tab of Array.from(tabBar.querySelectorAll('.category-tab'))) {
 		(tab as HTMLElement).addEventListener('click', () => {
 			const value = tab.getAttribute('data-category');
 			if (!value) return;
@@ -77,15 +76,13 @@ function loadDestinationTabBar() {
 		const activeValue = ACTIVE_CATEGORY === 'map' ? 'myMaps' : ACTIVE_CATEGORY;
 		let result = '';
 
-		for (const value in FIRESTORE_DESTINATIONS_DATA) {
-			if (
-				!values.includes(value) ||
-				(value !== 'myMaps' &&
-					FIRESTORE_DESTINATIONS_DATA?.[value] &&
-					Object.keys(FIRESTORE_DESTINATIONS_DATA[value]).length === 0)
-			) {
-				continue;
-			}
+		// Iterate the canonical config order (restaurants → snacks → nightlife →
+		// tourism → shopping → myMaps) instead of the document key order, so the
+		// tab bar always renders in the same category order.
+		for (const value of values) {
+			const data = FIRESTORE_DESTINATIONS_DATA?.[value];
+			if (!data) continue;
+			if (value !== 'myMaps' && Object.keys(data).length === 0) continue;
 
 			const key = destinationsConfig.translation[value].toLowerCase();
 			const label = translate(`destination.${key}.title`);
@@ -93,9 +90,9 @@ function loadDestinationTabBar() {
 			const isActive = value === activeValue;
 
 			result += `
-                <button class="edit-tab${isActive ? ' active' : ''}" data-category="${value}">
+                <button class="category-tab${isActive ? ' active' : ''}" data-category="${value}">
                     <i class="${icon}"></i>
-                    <span>${label}</span>
+                    <span class="tab-label">${label}</span>
                 </button>`;
 		}
 		return result;
@@ -103,7 +100,7 @@ function loadDestinationTabBar() {
 }
 
 function activateDestinationTab(tabBar: HTMLElement, activeTab: HTMLElement) {
-	for (const tab of Array.from(tabBar.querySelectorAll('.edit-tab'))) {
+	for (const tab of Array.from(tabBar.querySelectorAll('.category-tab'))) {
 		tab.classList.toggle('active', tab === activeTab);
 	}
 }

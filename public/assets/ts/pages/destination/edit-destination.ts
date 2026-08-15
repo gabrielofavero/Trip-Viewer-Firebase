@@ -4,7 +4,6 @@ import { getID, getRandomID, normalizeTikTokLink } from '../../utils/dom.js';
 import { DOCUMENT_ID } from '../../data/state.js';
 import { getLanguagePackName, LANGUAGES, translate } from '../../i18n/translation.js';
 import {
-	removeEl,
 	validateInstagramLink,
 	validateLink,
 	validateMapLink,
@@ -19,23 +18,22 @@ import { FIRESTORE_DESTINATIONS_DATA } from '../../data/state.js';
 import {
 	ACTIVE_CATEGORY,
 	CONTENT,
-	getDestinationID,
 	getItem,
-	getItemFromJ,
-	processCard,
 	refreshDestination,
 } from './destination.js';
-import { getEditHTML } from './support/content.js';
-import { getCardBodyHTML, getDestinationCardHTML } from './support/card.js';
-import { onCardClose } from './support/card-media.js';
+import {
+	openDestinationEditor,
+	renderDialogView,
+	closeDestinationDialog,
+	getOpenId,
+	getOpenItem,
+} from './support/dialog.js';
 import {
 	populatePlannedDestinationEditField,
 	refreshTripData,
 	resetActivePlannedDestination,
 	setPlannedDestination,
 } from './support/trip.js';
-
-let ADDED_J;
 
 // Main Functions
 export async function edit(j: number): Promise<void> {
@@ -45,20 +43,17 @@ export async function edit(j: number): Promise<void> {
 		return;
 	}
 
-	const id = getDestinationID(j);
-	const item = FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY]?.[id];
-	const cardBody = getID(`card-body-${j}`);
+	const id = getOpenId();
+	const item = getOpenItem() ?? getItem(id);
 
-	if (!item || !cardBody) {
+	if (!id || !item) {
 		editError();
 		return;
 	}
 
-	onCardClose(j);
-	cardBody.innerHTML = getEditHTML(j);
-
+	openDestinationEditor({ j, id, item });
 	populateEditFields(j, item);
-	setEditListeners(j, item);
+	setEditListeners(j);
 
 	function populateEditFields(j, item) {
 		getID(`edit-name-${j}`).value = item.name || '';
@@ -108,7 +103,6 @@ export async function edit(j: number): Promise<void> {
 }
 
 export async function add(): Promise<void> {
-	(document.querySelector('.add-container') as HTMLElement).style.display = 'none';
 	const canUserEdit = await canEdit();
 	if (!canUserEdit) {
 		editForbidden();
@@ -117,7 +111,7 @@ export async function add(): Promise<void> {
 
 	const ids = CONTENT.map((entry) => entry.id);
 	const id = getRandomID({ pool: ids });
-	// Use the full entry list (not the DOM) so the new card's index never
+	// Use the full entry list (not the DOM) so the new editor index never
 	// collides with a card that lazy-loads later.
 	const j = CONTENT.length + 1;
 	const item = {
@@ -126,24 +120,11 @@ export async function add(): Promise<void> {
 		isNew: true,
 	};
 
-	getID('content').insertAdjacentHTML(
-		'beforeend',
-		getDestinationCardHTML({ j, id, item, closeAction: 'closeAddedDestination' }),
-	);
+	openDestinationEditor({ j, id, item });
 
-	const cardBody = getID(`card-body-${j}`);
-	if (!cardBody) {
-		editError();
-		return;
-	}
-
-	ADDED_J = j;
-	getID(`destinations-card-${j}`).classList.add('open');
-	cardBody.innerHTML = getEditHTML(ADDED_J);
-	getID(`edit-delete-${ADDED_J}`).style.visibility = 'hidden';
-
-	applyDescriptionLanguage(ADDED_J);
-	setAddListeners();
+	getID(`edit-delete-${j}`).style.visibility = 'hidden';
+	applyDescriptionLanguage(j);
+	setAddListeners(j);
 }
 
 // Visibility
@@ -203,10 +184,9 @@ function setFieldListeners(j: number): void {
 	};
 }
 
-function setEditListeners(j, item) {
+function setEditListeners(j) {
 	getID(`close-btn-${j}`).onclick = () => {
-		restoreCardBody(j, item);
-		processCard(j);
+		renderDialogView();
 	};
 
 	getID(`edit-delete-${j}`).onclick = () => {
@@ -220,16 +200,16 @@ function setEditListeners(j, item) {
 	setFieldListeners(j);
 }
 
-function setAddListeners() {
-	getID(`close-btn-${ADDED_J}`).onclick = () => {
-		closeAddedDestination();
+function setAddListeners(j) {
+	getID(`close-btn-${j}`).onclick = () => {
+		closeDestinationDialog();
 	};
 
-	getID(`edit-save-${ADDED_J}`).onclick = () => {
-		saveEdit(ADDED_J, true);
+	getID(`edit-save-${j}`).onclick = () => {
+		saveEdit(j, true);
 	};
 
-	setFieldListeners(ADDED_J);
+	setFieldListeners(j);
 }
 
 // Load Actions
@@ -278,7 +258,7 @@ function applyDescriptionLanguage(j) {
 // Save Action
 async function saveEdit(j, isNew = false) {
 	startLoadingScreen();
-	const id = getDestinationID(j);
+	const id = getOpenId();
 	const originalItem = isNew ? {} : getItem(id);
 	const item = {
 		createdAt: originalItem?.createdAt || new Date().toISOString(),
@@ -321,6 +301,7 @@ async function saveEdit(j, isNew = false) {
 	await refreshDestination();
 
 	stopLoadingScreen();
+	closeDestinationDialog();
 
 	function getValue(type, j) {
 		const selectValue = getID(`edit-${type}-select-${j}`).value;
@@ -330,8 +311,8 @@ async function saveEdit(j, isNew = false) {
 
 // Delete Actions
 function promptDeleteEdit(j) {
-	const id = getDestinationID(j);
-	const name = getItem(id).name;
+	const id = getOpenId();
+	const name = (getOpenItem() ?? getItem(id))?.name;
 
 	const title = translate('destination.delete.title');
 	const content = translate('destination.delete.message', { name });
@@ -350,6 +331,7 @@ export async function deleteEdit(id) {
 
 	await refreshDestination();
 	stopLoadingScreen();
+	closeDestinationDialog();
 }
 
 // Cancel Actions
@@ -365,35 +347,6 @@ function editError(message = 'messages.errors.unknown') {
 
 function editForbidden(message = 'messages.access_denied.message.edit') {
 	abortEdit('messages.access_denied.title', message);
-}
-
-export function closeAddedDestination(index?) {
-	if (!ADDED_J) {
-		return;
-	}
-	removeEl(`destinations-card-${ADDED_J}`);
-	adjustEditVisibility();
-	ADDED_J = null;
-	resetActivePlannedDestination();
-}
-
-function restoreCardBody(j: number, item: Record<string, any>): void {
-	const id = getDestinationID(j);
-	getID(`card-body-${j}`)!.innerHTML = getCardBodyHTML({ j, id, item });
-}
-
-export function restoreIfEditing(j) {
-	if (isEditing(j)) {
-		const item = getItemFromJ(j);
-		if (!item) return;
-		restoreCardBody(j, item);
-	}
-}
-
-// Checkers
-function isEditing(j) {
-	const cardBody = getID(`card-body-${j}`);
-	return cardBody != null && cardBody.querySelector('.edit-title-container') != null;
 }
 
 async function canEdit() {

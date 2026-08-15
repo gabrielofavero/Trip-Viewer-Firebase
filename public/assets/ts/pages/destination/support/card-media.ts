@@ -1,28 +1,41 @@
-// ======= Destination Card Media (P3) =======
-// Renders the card image area:
-//   - 0 images   → category icon + box-color blob (same visual as the view grid)
-//   - 1 image    → static image wrapped in .portfolio-wrap (hover + lightbox)
-//   - ≥2 images  → Swiper carousel (autoplay) with .portfolio-wrap slides
+// ======= Destination Card + Dialog Media =======
+// Two renderers share this module:
+//   - getCardImageHTML: static card image (first image or theme icon) — the
+//     card itself is not interactive beyond opening the dialog.
+//   - getDialogMediaHTML: full media for the detail dialog (single image /
+//     Swiper carousel / theme icon fallback) with lightbox + hover.
 //
-// Media lifecycle hooks `onCardOpen(j)` / `onCardClose(j)` are exported here and
-// invoked by P5 from the card open/close mechanics. They initialize/destroy the
-// Swiper instance and (re)register the per-card GLightbox gallery.
-//
-// Swiper and GLightbox are vendor globals — accessed directly, never imported.
+// Media lifecycle hooks `openDialogMedia(j)` / `closeDialogMedia(j)` are
+// invoked by the dialog open/close mechanics (support/dialog.ts). They
+// initialize/destroy the Swiper instance and register the per-card GLightbox
+// gallery. Swiper and GLightbox are vendor globals — never imported.
 
 import { getDestinations } from '../../../app/config.js';
 import { getID } from '../../../utils/dom.js';
 import { loadImageLightbox } from '../../../ui/lightbox.js';
 import { ACTIVE_CATEGORY } from '../categories.js';
 
-/** Live Swiper instances keyed by card index — destroyed on card close. */
+/** Live Swiper instances keyed by card index — destroyed on dialog close. */
 const SWIPERS: Record<number, any> = {};
 
-export function getCardImageHTML(item, j) {
+/** Card image: first entry image (static background) or category icon+color. */
+export function getCardImageHTML(item) {
 	const images = (Array.isArray(item?.images) ? item.images : []).filter((img) => img?.link);
 
 	if (images.length === 0) {
-		return getCategoryIconBlobHTML();
+		return getCategoryIconHTML();
+	}
+
+	const link = images[0].link || '';
+	return `<div class="dest-card-image" style="background-image: url('${link}')"></div>`;
+}
+
+/** Dialog media: full carousel/single-image/fallback for the detail dialog. */
+export function getDialogMediaHTML(item, j) {
+	const images = (Array.isArray(item?.images) ? item.images : []).filter((img) => img?.link);
+
+	if (images.length === 0) {
+		return getCategoryIconHTML('dialog-media');
 	}
 	if (images.length === 1) {
 		return getSingleImageHTML(images[0], j);
@@ -30,14 +43,14 @@ export function getCardImageHTML(item, j) {
 	return getCarouselHTML(images, j);
 }
 
-// ======= Media lifecycle hooks (called by P5 card open/close) =======
+// ======= Media lifecycle hooks (called by support/dialog.ts) =======
 
-export function onCardOpen(j: number): void {
+export function openDialogMedia(j: number): void {
 	// (Re)register the per-card gallery so clicking any image opens the lightbox
 	// and navigates across that entry's images only (data-gallery per card).
 	loadImageLightbox(`dest-gallery-${j}`);
 
-	const swiperEl = getID(`dest-card-media-${j}-swiper`);
+	const swiperEl = getID(`dest-dialog-media-${j}-swiper`);
 	if (!swiperEl || SWIPERS[j]) return;
 
 	SWIPERS[j] = new Swiper(swiperEl, {
@@ -50,18 +63,18 @@ export function onCardOpen(j: number): void {
 		observer: true,
 		observeParents: true,
 		pagination: {
-			el: `.dest-card-media-${j}-pagination`,
+			el: `.dest-dialog-media-${j}-pagination`,
 			type: 'bullets',
 			clickable: true,
 		},
 		navigation: {
-			nextEl: `.dest-card-media-${j}-next`,
-			prevEl: `.dest-card-media-${j}-prev`,
+			nextEl: `.dest-dialog-media-${j}-next`,
+			prevEl: `.dest-dialog-media-${j}-prev`,
 		},
 	});
 }
 
-export function onCardClose(j: number): void {
+export function closeDialogMedia(j: number): void {
 	const swiper = SWIPERS[j];
 	if (swiper) {
 		swiper.destroy(true, true);
@@ -73,7 +86,7 @@ export function onCardClose(j: number): void {
 
 function getSingleImageHTML(image, j) {
 	return `
-        <div class="dest-card-media" id="dest-card-media-${j}">
+        <div class="dialog-media" id="dest-dialog-media-${j}">
             ${getPortfolioWrapHTML(image, j)}
         </div>`;
 }
@@ -82,12 +95,12 @@ function getCarouselHTML(images, j) {
 	const slides = images.map((image) => getSwiperSlideHTML(image, j)).join('');
 
 	return `
-        <div class="dest-card-media" id="dest-card-media-${j}">
-            <div class="swiper dest-card-media-swiper" id="dest-card-media-${j}-swiper">
+        <div class="dialog-media" id="dest-dialog-media-${j}">
+            <div class="swiper dialog-media-swiper" id="dest-dialog-media-${j}-swiper">
                 <div class="swiper-wrapper">${slides}</div>
-                <div class="swiper-pagination dest-card-media-${j}-pagination"></div>
-                <div class="swiper-button-next dest-card-media-${j}-next"></div>
-                <div class="swiper-button-prev dest-card-media-${j}-prev"></div>
+                <div class="swiper-pagination dest-dialog-media-${j}-pagination"></div>
+                <div class="swiper-button-next dest-dialog-media-${j}-next"></div>
+                <div class="swiper-button-prev dest-dialog-media-${j}-prev"></div>
             </div>
         </div>`;
 }
@@ -105,8 +118,8 @@ function getPortfolioWrapHTML(image, j) {
 	const description = image.description || '';
 
 	return `
-        <div class="portfolio-wrap dest-card-media-frame">
-            <img src="${link}" class="img-fluid dest-card-media-img" alt="${description}">
+        <div class="portfolio-wrap dialog-media-frame">
+            <img src="${link}" class="img-fluid dialog-media-img" alt="${description}">
             <div class="portfolio-info">
                 <div class="portfolio-links">
                     <a href="${link}" data-gallery="dest-gallery-${j}" class="portfolio-lightbox gallery dest-gallery-${j}" title="${description}"><i class="bx bx-zoom-in"></i></a>
@@ -115,21 +128,15 @@ function getPortfolioWrapHTML(image, j) {
         </div>`;
 }
 
-function getCategoryIconBlobHTML() {
+/** Category icon on the theme gradient (same purple as the index cards). */
+function getCategoryIconHTML(extraClass = '') {
 	const config = getDestinations();
 	const type = ACTIVE_CATEGORY === 'myMaps' ? 'map' : ACTIVE_CATEGORY;
 	const icon = config.icons[type] || config.icons['map'] || 'bx bx-map-alt';
-	const ids = config.categories.ids || [];
-	const index = Math.max(0, ids.indexOf(ACTIVE_CATEGORY));
-	const box = config.boxes[index % config.boxes.length];
+	const extra = extraClass ? ` ${extraClass}` : '';
 
 	return `
-        <div class="dest-card-image no-image iconbox-${box.color}">
-            <div class="icon">
-                <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke="none" stroke-width="0" fill="#f5f5f5" d="${box.d}"></path>
-                </svg>
-                <i class="${icon}"></i>
-            </div>
+        <div class="dest-card-image no-image${extra}">
+            <i class="${icon}"></i>
         </div>`;
 }

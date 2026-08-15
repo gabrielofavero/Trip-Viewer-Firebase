@@ -13,7 +13,6 @@
 
 #destination-tab-bar {
 	margin-bottom: 20px;
-	top: calc(60px + 8px);
 }
 
 .grid-sentinel {
@@ -63,46 +62,26 @@ h1::after {
 	left: calc(50% - 20px);
 }
 
-.map-container {
+#content.map-content {
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	min-height: 300px;
+	align-items: stretch;
 	width: 100%;
-	padding: 1rem;
-	box-sizing: border-box;
-}
-
-.map-content {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	min-height: 320px;
 	box-sizing: border-box;
 }
 
 .map-iframe {
 	width: 100%;
-	max-width: 900px;
 	aspect-ratio: 4 / 3;
-	min-height: 200px;
+	min-height: 320px;
 	border: none;
 	border-radius: 12px;
 	box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
-	transition: max-width 0.3s;
-}
-
-@media (max-width: 900px) {
-	.map-iframe {
-		max-width: 640px;
-	}
 }
 
 @media (max-width: 700px) {
 	.map-iframe {
-		max-width: 98vw;
-		min-height: 180px;
+		min-height: 65vh;
 	}
 }
 
@@ -111,9 +90,25 @@ h1::after {
 }
 
 .btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 10px 20px;
+	border-radius: var(--radius-md);
+	font-size: 14px;
+	font-weight: 600;
+	font-family: inherit;
+	border: none;
+	cursor: pointer;
+	transition: all var(--transition-fast);
+	outline: none;
 	text-decoration: none;
-	font-weight: bold;
-	color: #fff;
+	white-space: nowrap;
+}
+
+.btn:active {
+	transform: scale(0.97);
 }
 
 .button-box {
@@ -122,15 +117,27 @@ h1::after {
 	justify-content: flex-end;
 }
 
+.btn-primary-theme,
 .btn-theme {
 	background: var(--theme-color);
 	color: #fff;
+	box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.3);
 }
 
+.btn-primary-theme:hover,
+.btn-primary-theme:focus,
 .btn-theme:hover,
 .btn-theme:focus {
-	background: var(--theme-color-hover);
+	background: var(--theme-secondary);
+	box-shadow: 0 4px 16px rgba(var(--theme-color-rgb), 0.4);
+	transform: translateY(-1px);
 	color: #fff;
+}
+
+.btn-sm {
+	padding: 7px 16px;
+	font-size: 13px;
+	border-radius: var(--radius-sm);
 }
 
 /*--------------------------------------------------------------
@@ -306,18 +313,12 @@ h1::after {
 }
 
 .add-container {
-	background-color: var(--background-color);
-	color: var(--font-color);
-	width: 500px;
-	display: block;
-	margin: auto;
-	margin-bottom: 30px;
-}
-
-@media screen and (max-width: 550px) {
-	.add-container {
-		width: 90%;
-	}
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	width: 100%;
+	min-height: 32px;
+	margin-bottom: 16px;
 }
 
 .rating-no-margin {
@@ -386,7 +387,7 @@ h1::after {
 
 /* DUPLICATE: #preloader already defined in base/preloader.css — kept for backward compat during migration */
 
-/* Filter and Sort pills (view tabs styling inspiration) */
+/* Filter and Sort controls — rounded bar matching the search input radius */
 .section-buttons {
 	display: inline-flex;
 	justify-content: center;
@@ -395,7 +396,7 @@ h1::after {
 	background: rgba(255, 255, 255, 0.5);
 	backdrop-filter: blur(12px);
 	-webkit-backdrop-filter: blur(12px);
-	border-radius: 99px;
+	border-radius: var(--radius-lg);
 	padding: 5px;
 	border: 1px solid var(--border-color);
 }
@@ -410,7 +411,7 @@ h1::after {
 .filter-sort {
 	padding: 0.55em 1.3em;
 	border: none;
-	border-radius: 99px;
+	border-radius: var(--radius-md);
 	cursor: pointer;
 	font-size: 0.9rem;
 	font-family: inherit;
@@ -738,11 +739,6 @@ h1::after {
 	}
 }
 
-.add-container {
-	display: flex;
-	justify-content: flex-end;
-}
-
 /* Toast — shared base in components/toast.css */
 
 /*--------------------------------------------------------------
@@ -800,7 +796,7 @@ h1::after {
 }
 
 .dest-card-image.no-image {
-	background: #fff;
+	background: linear-gradient(135deg, var(--theme-color), var(--theme-secondary));
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -810,86 +806,63 @@ h1::after {
 	display: none;
 }
 
-.dest-card-image.no-image .icon {
-	margin: 0 auto;
-	width: 100px;
-	height: 100px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: relative;
+.dest-card-image.no-image i {
+	font-size: 44px;
+	color: rgba(255, 255, 255, 0.9);
 }
 
-.dest-card-image.no-image .icon i {
-	font-size: 36px;
-	position: relative;
-	z-index: 1;
-}
-
-.dest-card-image.no-image .icon svg {
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
-.dest-card-image.no-image .icon svg path {
-	fill: #f5f5f5;
-}
-
-.iconbox-blue .icon i {
-	color: #47aeff;
-}
-
-.iconbox-orange .icon i {
-	color: #ffa76e;
-}
-
-.iconbox-pink .icon i {
-	color: #e80368;
-}
-
-.iconbox-yellow .icon i {
-	color: #ffbb2c;
-}
-
-.iconbox-red .icon i {
-	color: #ff5828;
-}
-
-.iconbox-green .icon i {
-	color: #37b24d;
-}
-
-.iconbox-teal .icon i {
-	color: #2a9d8f;
-}
-
-/* Score badge — top-right of the image area */
+/* Score badge — circle only (top-right of the card image) */
 .dest-card-score {
 	position: absolute;
 	top: 10px;
 	right: 10px;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
 	display: flex;
 	align-items: center;
-	gap: 4px;
-	padding: 3px 10px;
-	border-radius: 20px;
+	justify-content: center;
 	font-size: 12px;
 	font-weight: 700;
+	color: #1f2937;
 	z-index: 2;
 }
 
 .dest-card-score .iconify {
-	font-size: 16px;
+	font-size: 18px;
 }
 
+/* Card shows the circle only — the text label is rendered in the dialog */
 .dest-card-score-text {
-	color: #1f2937;
+	display: none;
 }
 
 .dest-card-body {
 	padding: 14px;
 	flex: 1 1 auto;
+}
+
+/* Dialog score badge — circle + text, aligned top-right in the dialog header.
+   Example: (5) Top Priority */
+.dialog-score-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	flex-shrink: 0;
+}
+
+.dialog-score-badge .dest-card-score {
+	position: static;
+	width: 30px;
+	height: 30px;
+}
+
+.dialog-score-badge .dest-card-score-text {
+	display: inline-block;
+	color: var(--text-primary);
+	font-size: 13px;
+	font-weight: 700;
+	white-space: nowrap;
 }
 
 .dest-card-title {
@@ -906,47 +879,48 @@ h1::after {
 }
 
 /*--------------------------------------------------------------
-# Destination Card Media (P3)
-# Carousel + lightbox image area. Reuses the shared .portfolio-wrap
-# hover pattern (components/portfolio.css) and Swiper for ≥2 images.
+# Destination Dialog Media (P3)
+# Carousel + lightbox image area inside the detail dialog. Reuses
+# the shared .portfolio-wrap hover pattern (components/portfolio.css)
+# and Swiper for ≥2 images.
 --------------------------------------------------------------*/
-.dest-card-media {
+.dialog-media {
 	width: 100%;
-	height: 160px;
+	height: 220px;
 	position: relative;
 	overflow: hidden;
 	flex-shrink: 0;
 	background: rgba(69, 80, 91, 0.8);
 }
 
-.dest-card-media .portfolio-wrap,
-.dest-card-media-frame {
+.dialog-media .portfolio-wrap,
+.dialog-media-frame {
 	width: 100%;
 	height: 100%;
 }
 
-.dest-card-media-img {
+.dialog-media-img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 	display: block;
 }
 
-.dest-card-media .swiper,
-.dest-card-media .swiper-wrapper,
-.dest-card-media .swiper-slide {
+.dialog-media .swiper,
+.dialog-media .swiper-wrapper,
+.dialog-media .swiper-slide {
 	height: 100%;
 }
 
-.dest-card-media-swiper .swiper-slide .portfolio-wrap {
+.dialog-media-swiper .swiper-slide .portfolio-wrap {
 	display: block;
 }
 
-.dest-card-media .swiper-pagination {
+.dialog-media .swiper-pagination {
 	bottom: 6px !important;
 }
 
-.dest-card-media .swiper-pagination .swiper-pagination-bullet {
+.dialog-media .swiper-pagination .swiper-pagination-bullet {
 	width: 7px;
 	height: 7px;
 	margin: 0 3px;
@@ -954,40 +928,154 @@ h1::after {
 	opacity: 0.9;
 }
 
-.dest-card-media .swiper-pagination .swiper-pagination-bullet-active {
+.dialog-media .swiper-pagination .swiper-pagination-bullet-active {
 	background: var(--theme-color);
 }
 
-.dest-card-media .swiper-button-prev,
-.dest-card-media .swiper-button-next {
+.dialog-media .swiper-button-prev,
+.dialog-media .swiper-button-next {
 	width: 24px;
 	height: 24px;
 	color: #fff;
 	background: rgba(0, 0, 0, 0.35);
 }
 
-.dest-card-media .swiper-button-prev::after,
-.dest-card-media .swiper-button-next::after {
+.dialog-media .swiper-button-prev::after,
+.dialog-media .swiper-button-next::after {
 	font-size: 12px;
 }
 
+/* Category-icon fallback (no images) — same theme gradient as the cards */
+.dialog-media.no-image {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.dialog-media.no-image i {
+	font-size: 64px;
+	color: rgba(255, 255, 255, 0.9);
+}
+
 @media (max-width: 576px) {
-	.dest-card-media,
-	.dest-card-media .swiper {
-		height: 140px;
+	.dialog-media,
+	.dialog-media .swiper {
+		height: 180px;
 	}
 }
 
 /*--------------------------------------------------------------
-# Destination Card Expand/Collapse (P5)
-# Cards are collapsed by default (image + title); clicking a card
-# toggles `.dest-card.open` to reveal the detail region (shared
-# detail body + actions + edit button).
+# Destination Detail Dialog (card → dialog, index-like)
 --------------------------------------------------------------*/
-.dest-card-detail {
-	display: none;
+.destination-dialog-card {
+	max-width: 520px;
 }
 
-.dest-card.open .dest-card-detail {
-	display: block;
+/* Neutral themed close button (same as index detail dialogs) */
+#destination-dialog .dialog-close {
+	color: var(--text-primary);
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
 }
+
+#destination-dialog .dialog-close:hover {
+	color: var(--text-primary);
+	background: var(--bg-tertiary);
+	transform: scale(1.05);
+}
+
+/* Link-button row (website / map / instagram / video) */
+.dest-card-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-top: 14px;
+}
+
+.dest-card-action {
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	border: 1px solid var(--border-color);
+	background: var(--bg-secondary);
+	color: var(--theme-color);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition:
+		background var(--transition-fast),
+		transform var(--transition-fast);
+}
+
+.dest-card-action:hover {
+	background: rgba(var(--theme-color-rgb), 0.12);
+	transform: scale(1.06);
+}
+
+.dest-card-action .iconify {
+	font-size: 18px;
+}
+
+/* Edit button (owner-only) rendered at the end of the dialog body */
+#destination-dialog .edit-container {
+	margin-top: 14px;
+}
+
+/* Index-style outlined buttons for the dialog link row */
+.btn-outline-theme {
+	background: transparent;
+	color: var(--theme-color);
+	border: 1.5px solid var(--theme-color);
+}
+
+.btn-outline-theme:hover {
+	background: rgba(var(--theme-color-rgb), 0.06);
+}
+
+/* The dialog link row wraps naturally (unlike the fixed 2-button index row) */
+#destination-dialog .dialog-actions {
+	flex-wrap: wrap;
+}
+
+#destination-dialog .dialog-action-btn {
+	flex: 0 0 auto;
+	height: 40px;
+	padding: 0 16px;
+}
+
+/* Title row + pencil edit button (right after the name) */
+.dialog-title-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-width: 0;
+}
+
+.dialog-edit-btn {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	border: none;
+	background: transparent;
+	color: var(--text-muted);
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	transition:
+		color var(--transition-fast),
+		background var(--transition-fast);
+}
+
+.dialog-edit-btn:hover {
+	color: var(--theme-color);
+	background: rgba(var(--theme-color-rgb), 0.1);
+}
+
+.dialog-edit-btn .iconify {
+	font-size: 17px;
+}
+

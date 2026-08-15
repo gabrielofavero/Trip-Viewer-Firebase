@@ -1,6 +1,5 @@
 import { getID } from '../../../../utils/dom.js';
 import { CONTENT, getDataSet, ACTIVE_CATEGORY } from '../../destination.js';
-import { closeAddedDestination } from '../../edit-destination.js';
 import { PLANNED_DESTINATION } from '../trip.js';
 import { loadFilterOptions } from './filter.js';
 import { loadSortOptions } from './sort.js';
@@ -92,7 +91,6 @@ export function openFilterSortDrawer({ triggerId, getInnerHTML, clickAction, loa
 	}
 
 	const actions = {
-		beforeOpen: closeAddedDestination,
 		click: clickAction,
 		load: loadAction,
 		close: deactivateFilterSortContainerButtons,

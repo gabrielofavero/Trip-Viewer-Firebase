@@ -109,3 +109,74 @@
 	height: 1.25em;
 	flex-shrink: 0;
 }
+
+/* --- Shared responsive behavior (index + destination category tabs) --- */
+.category-tab i {
+	flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+	.category-tab {
+		font-size: 13px;
+		padding: 10px 14px;
+		gap: 6px;
+	}
+	.category-tab i {
+		font-size: 20px;
+	}
+}
+
+@media (max-width: 520px) {
+	.category-tabs {
+		gap: 2px;
+		padding: 3px;
+	}
+	.category-tab {
+		font-size: 12px;
+		padding: 10px 12px;
+	}
+	.category-tab i {
+		font-size: 18px;
+	}
+}
+
+/* ≤600px: phones — icon-only tabs, active tab expands to reveal its label */
+@media (max-width: 600px) {
+	.category-tabs {
+		justify-content: center;
+		gap: 4px;
+		padding: 4px;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+	}
+	.category-tabs::-webkit-scrollbar {
+		display: none;
+	}
+	.category-tab {
+		flex: 0 0 auto;
+		font-size: 12px;
+		padding: 10px 12px;
+		gap: 0;
+	}
+	.category-tab i {
+		font-size: 22px;
+		flex-shrink: 0;
+	}
+	.category-tab .tab-label {
+		max-width: 0;
+		opacity: 0;
+		overflow: hidden;
+		white-space: nowrap;
+		margin-left: 0;
+		transition:
+			max-width var(--transition-normal) ease,
+			opacity var(--transition-normal) ease,
+			margin-left var(--transition-normal) ease;
+	}
+	.category-tab.active .tab-label {
+		max-width: 140px;
+		opacity: 1;
+		margin-left: 6px;
+	}
+}
