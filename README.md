@@ -42,7 +42,7 @@ npm run dev
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 174   | 169  | 3         | 2       |
 | 🏆   | Feature     | F000 | 180   | 161  | 17        | 2       |
-| 📈   | Improvement | M000 | 176   | 150  | 22        | 4       |
+| 📈   | Improvement | M000 | 178   | 152  | 22        | 4       |
 | ⚔️   | Epic        | E000 | 51    | 38   | 7         | 6       |
 
 ## Backlog
@@ -50,7 +50,7 @@ npm run dev
 ### High Priority
 
 - ⚔️ **E016:** New Front-End: destination.html
-- 🏆 **F181:** improve view itinerary cards
+- 🏆 **F180:** Improve view itinerary cards
 
 ### Medium Priority
 
@@ -111,6 +111,8 @@ npm run dev
   - *[📈M176] Normalize visuals: header, cards, buttons, calendar should match*
 - 🐞 **B174:** Issue with transportation duration card on edit trip
 - 📈 **M172:** Minor visual improvements on index.html (search, order, image loading)
+- 📈 **M178:** [DEV] reorganize docs
+- 📈 **M177:** Make tab selector on index mobile friendly
 
 ### July 2026
 
