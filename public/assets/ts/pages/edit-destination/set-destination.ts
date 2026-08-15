@@ -11,6 +11,7 @@ import { displayError, displayMessage } from '../../utils/messages.js';
 import { translate } from '../../i18n/translation.js';
 import { getDescription } from './categories/description.js';
 import { getDestinationImages } from './categories/image.js';
+import { getRegionPills } from '../../ui/region-select.js';
 import {
 	FIRESTORE_DESTINATIONS_DATA,
 	FIRESTORE_DESTINATIONS_NEW_DATA,
@@ -71,7 +72,7 @@ function buildDestinationCategoryObject(category) {
 		item.description = getDescription(category, j);
 		item.website = getID(`${category}-website-${j}`).value;
 		item.instagram = getID(`${category}-instagram-${j}`).value;
-		item.region = getID(`${category}-region-select-${j}`).value;
+		item.regions = getRegionPills(`${category}-regions-${j}`);
 		item.map = getID(`${category}-map-${j}`).value;
 		item.media = getID(`${category}-media-${j}`).value;
 		item.rating = getID(`${category}-rating-${j}`).value;

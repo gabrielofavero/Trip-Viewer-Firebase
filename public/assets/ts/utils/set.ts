@@ -2,7 +2,7 @@ import { startLoadingScreen, stopLoadingScreen } from './loading.js';
 import { getUID } from '../data/firebase/auth.js';
 import { createBatchOps, SUBCOLLECTION } from '../data/firebase/database.js';
 import { translate } from '../i18n/translation.js';
-import { hasUnsavedChanges, validateRequiredFields } from '../ui/fields.js';
+import { hasStagedChanges, hasUnsavedChanges, validateRequiredFields } from '../ui/fields.js';
 import { cloneObject, getID, getNewDataDocument, getURLParam } from './dom.js';
 import { DOCUMENT_ID, SUCCESSFUL_SAVE, getState, setDocumentId, setSuccessfulSaveFn } from '../data/state.js';
 import {
@@ -107,8 +107,8 @@ export async function setDocument({
 			await build();
 		}
 
-		// 4. Quick guard: no DOM changes at all
-		if (!hasUnsavedChanges()) {
+		// 4. Quick guard: no DOM or JS-staged changes at all
+		if (!hasUnsavedChanges() && !hasStagedChanges()) {
 			throwSetError(`${translate('messages.documents.save.no_new_data')}`);
 			return;
 		}

@@ -162,6 +162,17 @@ export function applyFieldToEntry(
 		return entry;
 	}
 
+	// `region` maps to the entry's `regions` array (migration 19) — append the
+	// fetched region when it isn't already present, never wipe existing ones.
+	if (field === 'region') {
+		const value = newPlace.region;
+		if (typeof value === 'string' && value !== '') {
+			if (!Array.isArray(entry.regions)) entry.regions = [];
+			if (!entry.regions.includes(value)) entry.regions.push(value);
+		}
+		return entry;
+	}
+
 	const value = newPlace[field];
 	if (typeof value === 'string' && value !== '') {
 		entry[field] = value;
@@ -187,6 +198,15 @@ export function isAutoFilled(
 	oldPlaceAPI: PlaceAPI | undefined,
 	field: PlaceFieldKey,
 ): boolean {
+	// `region` is stored as the `regions` array on the entry; the placeAPI
+	// still carries the single-string source value. Treat it as auto-filled
+	// when the entry has exactly that one region.
+	if (field === 'region') {
+		const regions = Array.isArray(entry.regions) ? entry.regions : [];
+		const oldRegion = oldPlaceAPI?.region;
+		if (!oldRegion) return regions.length === 0;
+		return regions.length === 1 && regions[0] === oldRegion;
+	}
 	return entry[field] === oldPlaceAPI?.[field];
 }
 

@@ -32,10 +32,19 @@ export function getCardImageHTML(item) {
 
 /** Dialog media: full carousel/single-image/fallback for the detail dialog. */
 export function getDialogMediaHTML(item, j) {
+	return getDialogMediaHTMLWithFallback(item, j, getCategoryIconHTML('dialog-media'));
+}
+
+/**
+ * Dialog media with a caller-provided no-image fallback. Reused by the
+ * view.html item dialogs so accommodations can fall back to a hotel icon
+ * while destination entries keep the category icon + theme gradient.
+ */
+export function getDialogMediaHTMLWithFallback(item, j, fallbackHTML) {
 	const images = (Array.isArray(item?.images) ? item.images : []).filter((img) => img?.link);
 
 	if (images.length === 0) {
-		return getCategoryIconHTML('dialog-media');
+		return fallbackHTML;
 	}
 	if (images.length === 1) {
 		return getSingleImageHTML(images[0], j);
@@ -48,7 +57,12 @@ export function getDialogMediaHTML(item, j) {
 export function openDialogMedia(j: number): void {
 	// (Re)register the per-card gallery so clicking any image opens the lightbox
 	// and navigates across that entry's images only (data-gallery per card).
-	loadImageLightbox(`dest-gallery-${j}`);
+	// While the lightbox is open, pause the carousel so it doesn't keep
+	// switching underneath the overlay; resume it when the lightbox closes.
+	loadImageLightbox(`dest-gallery-${j}`, {
+		onOpen: () => pauseAutoplay(j),
+		onClose: () => resumeAutoplay(j),
+	});
 
 	const swiperEl = getID(`dest-dialog-media-${j}-swiper`);
 	if (!swiperEl || SWIPERS[j]) return;
@@ -57,8 +71,9 @@ export function openDialogMedia(j: number): void {
 		speed: 600,
 		loop: true,
 		autoplay: {
-			delay: 3500,
+			delay: 5000,
 			disableOnInteraction: false,
+			pauseOnMouseEnter: true,
 		},
 		observer: true,
 		observeParents: true,
@@ -67,11 +82,15 @@ export function openDialogMedia(j: number): void {
 			type: 'bullets',
 			clickable: true,
 		},
-		navigation: {
-			nextEl: `.dest-dialog-media-${j}-next`,
-			prevEl: `.dest-dialog-media-${j}-prev`,
-		},
 	});
+}
+
+function pauseAutoplay(j: number): void {
+	SWIPERS[j]?.autoplay?.stop();
+}
+
+function resumeAutoplay(j: number): void {
+	SWIPERS[j]?.autoplay?.start();
 }
 
 export function closeDialogMedia(j: number): void {
@@ -99,8 +118,6 @@ function getCarouselHTML(images, j) {
             <div class="swiper dialog-media-swiper" id="dest-dialog-media-${j}-swiper">
                 <div class="swiper-wrapper">${slides}</div>
                 <div class="swiper-pagination dest-dialog-media-${j}-pagination"></div>
-                <div class="swiper-button-next dest-dialog-media-${j}-next"></div>
-                <div class="swiper-button-prev dest-dialog-media-${j}-prev"></div>
             </div>
         </div>`;
 }
@@ -118,8 +135,7 @@ function getPortfolioWrapHTML(image, j) {
 	const description = image.description || '';
 
 	return `
-        <div class="portfolio-wrap dialog-media-frame">
-            <img src="${link}" class="img-fluid dialog-media-img" alt="${description}">
+        <div class="portfolio-wrap dialog-media-frame" style="background-image: url('${link}'); background-size: cover; background-position: center;">
             <div class="portfolio-info">
                 <div class="portfolio-links">
                     <a href="${link}" data-gallery="dest-gallery-${j}" class="portfolio-lightbox gallery dest-gallery-${j}" title="${description}"><i class="bx bx-zoom-in"></i></a>

@@ -6,6 +6,11 @@
  * { name, emoji, website, map, instagram, region, price, media, rating,
  *   isNew (bool), description: { en, pt }, createdAt, id }
  */
+import {
+	addKnownValues,
+	buildRegionSelects,
+	renderRegionPills,
+} from '../../ui/region-select.js';
 
 // ─── Helper: find the J of the currently open edit form ───────────────────────
 function importGetEditingJ() {
@@ -68,9 +73,16 @@ function importFillEditFields(j, data, force) {
 		}
 	}
 
-	// region (select + optional custom input)
-	if (force || (data.region !== undefined && data.region !== null && data.region !== '')) {
-		importSetSelectOrInput('region', j, data.region || '');
+	// region(s) — supports both the new `regions` array and the legacy string.
+	const regions = Array.isArray(data.regions)
+		? data.regions
+		: data.region
+			? [data.region]
+			: [];
+	if (force || regions.length > 0) {
+		renderRegionPills(`edit-regions-${j}`, regions);
+		addKnownValues(regions);
+		buildRegionSelects();
 	}
 
 	// price (select + optional custom input)

@@ -23,6 +23,7 @@ import {
 	FIRESTORE_DESTINATIONS_DATA,
 } from '../../../data/state.js';
 import { getID, getURLParam } from '../../../utils/dom.js';
+import { translate } from '../../../i18n/translation.js';
 import { disableScroll, enableScroll } from '../../../theme/visibility.js';
 import { updateProtectedDataFromExternalPin } from './sensitive-reservation.js';
 
@@ -110,6 +111,41 @@ function setElementDisplay(id: string, display: string): void {
 	if (el) el.style.display = display;
 }
 
+/**
+ * Swap the lightbox body to one of the inert <template> regions in view.html.
+ * Keeps the toolbar (X close) alive while fully replacing the shared content
+ * so itinerary and destination never have colliding IDs in the live DOM.
+ */
+function renderLightboxBody(templateId: string): void {
+	const body = getID('lightbox-body');
+	const template = getID(templateId) as HTMLTemplateElement | null;
+	if (!body || !template) return;
+
+	body.innerHTML = '';
+	body.appendChild(template.content.cloneNode(true));
+
+	// The template content is inert, so translatePage() never saw it at boot.
+	// Translate the freshly-cloned body now (destination chrome labels + search
+	// placeholder live here; the itinerary body has no data-translate markup).
+	body.querySelectorAll<HTMLElement>('[data-translate]').forEach((element) => {
+		const key = element.getAttribute('data-translate');
+		if (!key) return;
+		const text = translate(key);
+		if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+			(element as HTMLInputElement).placeholder = text;
+		} else {
+			element.textContent = text;
+		}
+	});
+
+	// The destination body is a full-bleed page hero (no side padding around
+	// it); the itinerary body keeps the padded, plain-document look.
+	const content = getID('lightbox-content');
+	if (content) {
+		content.classList.toggle('destination-mode', templateId === 'destination-content-template');
+	}
+}
+
 export function closeViewLightbox(): void {
 	if (!LIGHTBOX_ACTIVE) return;
 
@@ -126,6 +162,10 @@ export function closeViewLightbox(): void {
 	const drawer = getID('drawer');
 	if (drawer) drawer.classList.remove('open');
 
+	// Clear the injected body so the next lightbox open starts from a blank swap.
+	const body = getID('lightbox-body');
+	if (body) body.innerHTML = '';
+
 	// Restore the host document state clobbered by mountDestination.
 	setDocumentId(SAVED_DOCUMENT_ID);
 	setState(SAVED_STATE);
@@ -135,12 +175,17 @@ export function closeViewLightbox(): void {
 }
 
 export async function openItineraryLightbox(): Promise<void> {
-	const container = getID('content');
-	if (!container) return;
-
 	openLightbox();
-	// Itinerary is a plain scrollable document — hide the destination chrome.
-	setElementDisplay('filter-sort-container', 'none');
+	renderLightboxBody('itinerary-content-template');
+
+	const container = getID('content');
+	if (!container) {
+		closeViewLightbox();
+		return;
+	}
+
+	// Itinerary is a plain scrollable document; the template's #content already
+	// carries the `.content` class so no destination chrome is involved.
 	container.classList.add('content');
 
 	try {
@@ -155,12 +200,16 @@ export async function openItineraryLightbox(): Promise<void> {
 }
 
 export async function openDestinationLightbox(destinationId: string, type?: string): Promise<void> {
-	const container = getID('content');
-	if (!container || !destinationId) return;
+	if (!destinationId) return;
 
 	openLightbox();
-	setElementDisplay('filter-sort-container', '');
-	container.classList.remove('content');
+	renderLightboxBody('destination-content-template');
+
+	const container = getID('content');
+	if (!container) {
+		closeViewLightbox();
+		return;
+	}
 
 	// Register the destination page's data-action handlers (filter/sort drawer,
 	// accordion, links) — the lightbox reuses the destination component.
@@ -175,6 +224,10 @@ export async function openDestinationLightbox(destinationId: string, type?: stri
 
 	try {
 		const { mountDestination } = await import('../../destination/mount.js');
+		const { loadDestinationTabBar, loadDestinationSearch } = await import(
+			'../../destination/support/chrome.js'
+		);
+
 		const dispose = await mountDestination(container, {
 			destinationId,
 			tripId: DOCUMENT_ID,
@@ -187,6 +240,11 @@ export async function openDestinationLightbox(destinationId: string, type?: stri
 		}
 		const title = getID('title');
 		if (title) title.innerText = FIRESTORE_DESTINATIONS_DATA?.title || '';
+
+		// Wire the same chrome as the standalone destination page (category tab
+		// bar + search input) so the lightbox matches destination.html exactly.
+		loadDestinationTabBar();
+		loadDestinationSearch();
 	} catch (error) {
 		console.error('[view-embed] destination mount failed:', error);
 		closeViewLightbox();

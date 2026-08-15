@@ -17,13 +17,13 @@ import {
 	setRequired,
 } from '../../utils/dom.js';
 import {
-	addRemoveChildListenerDS,
-	buildDS,
-	newDynamicSelect,
-	removeSelectorDS,
-	updateValueDS,
-} from '../../ui/dynamic-select.js';
+	buildRegionSelects,
+	getRegionPills,
+	resetRegionSelects,
+	unregisterRegionSelect,
+} from '../../ui/region-select.js';
 import {
+	hasStagedChanges,
 	hasUnsavedChanges,
 	snapshotFormState,
 	validateImageLink,
@@ -119,8 +119,6 @@ const TOMORROW = getTomorrowFormatted();
 
 var SCHEDULE = {};
 
-var REGIONS = [];
-
 export async function loadEditDestinationPage() {
 	loadEditDestinationListeners();
 
@@ -132,7 +130,7 @@ export async function loadEditDestinationPage() {
 	loadVisibilityIndex();
 	initEditTabs();
 	loadEnabled();
-	newDynamicSelect('region');
+	resetRegionSelects();
 
 	if (DOCUMENT_ID) {
 		await loadDestinations();
@@ -172,35 +170,35 @@ function loadEventListeners() {
 		closeAccordions('restaurants');
 		addRestaurants();
 		openLastAccordion('restaurants');
-		buildDS('region');
+		buildRegionSelects();
 	});
 
 	getID('snacks-add').addEventListener('click', () => {
 		closeAccordions('snacks');
 		addSnacks();
 		openLastAccordion('snacks');
-		buildDS('region');
+		buildRegionSelects();
 	});
 
 	getID('nightlife-add').addEventListener('click', () => {
 		closeAccordions('nightlife');
 		addNightlife();
 		openLastAccordion('nightlife');
-		buildDS('region');
+		buildRegionSelects();
 	});
 
 	getID('tourism-add').addEventListener('click', () => {
 		closeAccordions('tourism');
 		addTourism();
 		openLastAccordion('tourism');
-		buildDS('region');
+		buildRegionSelects();
 	});
 
 	getID('shopping-add').addEventListener('click', () => {
 		closeAccordions('shopping');
 		addShopping();
 		openLastAccordion('shopping');
-		buildDS('region');
+		buildRegionSelects();
 	});
 
 	// Image Validation in Customization module
@@ -238,7 +236,7 @@ function loadEventListeners() {
 	});
 
 	window.addEventListener('beforeunload', (event) => {
-		if (hasUnsavedChanges() && !SUCCESSFUL_SAVE) {
+		if ((hasUnsavedChanges() || hasStagedChanges()) && !SUCCESSFUL_SAVE) {
 			event.preventDefault();
 			event.returnValue = translate('messages.exit_confirmation');
 		}
@@ -342,16 +340,12 @@ registerActions({
 });
 
 export function addListenerToRemoveDestination(category, j) {
-	const dynamicSelects = [
-		{
-			type: 'region',
-			selectID: `${category}-region-select-${j}`,
-		},
-	];
-	addRemoveChildListenerDS(category, j, dynamicSelects);
-	getID(`remove-${category}-${j}`).addEventListener('click', () =>
-		removeDestinationImages(category, j),
-	);
+	getID(`remove-${category}-${j}`).addEventListener('click', () => {
+		unregisterRegionSelect(`${category}-region-select-${j}`);
+		removeChildWithValidation(category, j);
+		buildRegionSelects();
+		removeDestinationImages(category, j);
+	});
 }
 
 async function loadDestinations() {
@@ -505,7 +499,7 @@ export function moveDestination(j, category) {
 			website: getID(`${category}-website-${j}`).value,
 			map: getID(`${category}-map-${j}`).value,
 			instagram: getID(`${category}-instagram-${j}`).value,
-			region: getID(`${category}-region-select-${j}`).value,
+			regions: getRegionPills(`${category}-regions-${j}`),
 			price: getID(`${category}-price-${j}`).value,
 			media: getID(`${category}-media-${j}`).value,
 			rating: getID(`${category}-rating-${j}`).value,
@@ -519,9 +513,8 @@ export function moveDestination(j, category) {
 		setDescription(newCategory, newJ, description);
 		removeChildWithValidation(category, j);
 
-		removeSelectorDS('region', `${category}-region-select-${j}`);
-		updateValueDS('region', destination.region, `${newCategory}-region-select-${newJ}`);
-		buildDS('region');
+		unregisterRegionSelect(`${category}-region-select-${j}`);
+		buildRegionSelects();
 
 		updateDescriptionButtonLabel(newCategory, newJ);
 

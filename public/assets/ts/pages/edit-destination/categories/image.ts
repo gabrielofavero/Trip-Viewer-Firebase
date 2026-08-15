@@ -9,7 +9,7 @@
 // as `images: { description, link }[]` on the entry.
 
 import { cloneObject, getChildIDs, getID, getJ } from '../../../utils/dom.js';
-import { validateImageLink } from '../../../ui/fields.js';
+import { markStagedChanges, validateImageLink } from '../../../ui/fields.js';
 import {
 	closeMessage,
 	displayFullMessage,
@@ -245,9 +245,11 @@ function saveDestinationImages(category, j) {
 	}
 
 	DESTINATION_IMAGES[`${category}-${j}`] = result;
+	markStagedChanges();
 	closeMessage();
 }
 
 export function removeDestinationImages(category, j) {
 	DESTINATION_IMAGES[`${category}-${j}`] = [];
+	markStagedChanges();
 }

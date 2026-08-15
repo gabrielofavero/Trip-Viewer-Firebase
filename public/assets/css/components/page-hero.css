@@ -3,7 +3,8 @@
 # Used by: index.html, destination.html
 # Dark-mode background + overlay live in base/dark-mode.css.
 --------------------------------------------------------------*/
-#hero {
+#hero,
+.page-hero {
 	width: 100%;
 	min-height: 100vh;
 	background: url("/assets/img/backgrounds/home-light.jpg") top center no-repeat;
@@ -14,7 +15,8 @@
 	overflow-y: auto;
 }
 
-#hero::before {
+#hero::before,
+.page-hero::before {
 	content: "";
 	position: fixed;
 	inset: 0;
@@ -23,7 +25,8 @@
 	pointer-events: none;
 }
 
-[data-theme="dark"] #hero {
+[data-theme="dark"] #hero,
+[data-theme="dark"] .page-hero {
 	background-attachment: fixed;
 }
 

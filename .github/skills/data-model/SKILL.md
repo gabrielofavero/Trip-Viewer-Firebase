@@ -244,7 +244,7 @@ Empty categories are `{}`.
   map:         string     // Google Maps URL
   placeAPI:    PlaceAPI   // normalized Places API data (added Aug 2026)
   instagram:   string     // Instagram profile URL or ""
-  region:      string     // neighborhood/area (e.g. "Ipanema")
+  regions:     string[]   // one or more neighborhoods/areas (e.g. ["Ipanema", "Botafogo"])
   media:       string     // TikTok/YouTube embed URL or ""
   price:       string     // "$", "$$", "$$$", "$$$$", or free-text
   rating:      string     // "1"–"5", or ""

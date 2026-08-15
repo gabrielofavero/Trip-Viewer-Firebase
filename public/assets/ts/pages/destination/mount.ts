@@ -226,11 +226,15 @@ export function getDataSet(key) {
 	if (!category) return new Set();
 
 	const data = FIRESTORE_DESTINATIONS_DATA?.[category] ?? {};
-	return new Set(
-		Object.values(data)
-			.map((item) => item?.[key])
-			.filter((v) => v !== undefined && v !== null),
-	);
+	const values: unknown[] = [];
+	for (const item of Object.values(data) as any[]) {
+		const value = item?.[key];
+		if (value === undefined || value === null) continue;
+		// `regions` is an array — flatten so each individual region is a member.
+		if (Array.isArray(value)) values.push(...value);
+		else values.push(value);
+	}
+	return new Set(values);
 }
 
 export function getDestinationID(j) {

@@ -4,8 +4,6 @@ import { getDescriptionValue } from '../../../models/destination.model.js';
 import { getPriceValue } from '../../../models/destination.model.js';
 import { getPeriod } from '../categories.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../../../data/state.js';
-import { ACTIVE_CATEGORY } from '../destination.js';
-import { FILTER_SORT_DATA } from './sort-and-filter/sort-and-filter.js';
 import { getDescriptionVisibility } from './visibility.js';
 import { getPriceVisibility } from './visibility.js';
 
@@ -30,15 +28,16 @@ export function getDestinationsAccordionBodyHTML({
 	// The edit button moved to the card shell (support/card-edit.ts, P5) — this
 	// shared detail renderer no longer emits one. `editBtn` is kept in the
 	// signature for backward compatibility with `getDestinationsBoxHTML`.
+	const regions = getRegionsList(item);
 	return `
         <div class="destinations-text">
             <div class="destinations-topic" style="display: ${planned ? 'block' : 'none'}">
                 <i class="iconify color-icon" data-icon="fa-solid:check"></i>
                 ${planned}
             </div>
-            <div class="destinations-topic" style="display: ${item.region ? 'block' : 'none'}">
+            <div class="destinations-topic" style="display: ${regions.length ? 'block' : 'none'}">
                 <i class="iconify color-icon" data-icon="mingcute:location-line"></i>
-                ${item.region || ''}
+                ${getRegionsHTML(regions)}
             </div>
             <div class="destinations-topicos-box" style="display: block">
                 <div class="destinations-topic" style="display: ${getPriceVisibility(item)}">
@@ -108,11 +107,8 @@ export function getEditHTML(j) {
             <div class="edit-double-container">
                 <i class="iconify color-icon edit" data-icon="mingcute:location-line"></i>
                 <div class="edit-column-container">
-                    <select class="edit-input" id="edit-region-select-${j}">
-                        <option value="">${translate('destination.filter.region.none')}</option>
-                        ${getRegionOptionsHTML()}
-                        <option value="custom">${translate('labels.custom')}</option>
-                    </select>
+                    <div class="region-pills" id="edit-regions-${j}"></div>
+                    <select class="edit-input" id="edit-region-select-${j}" style="display: none"></select>
                     <input id="edit-region-input-${j}" style="display: none" class="edit-input" type="text" placeholder="${translate('labels.region')} (${translate('labels.optional')})" />
                 </div>
             </div>
@@ -155,12 +151,30 @@ export function getEditHTML(j) {
         </div>`;
 }
 
-function getRegionOptionsHTML() {
-	let optionsHTML = '';
-	for (const region of FILTER_SORT_DATA[ACTIVE_CATEGORY].region) {
-		optionsHTML += `<option value="${region}">${region}</option>`;
+function getRegionsList(item) {
+	if (Array.isArray(item?.regions)) {
+		return item.regions
+			.map((region: unknown) => (region == null ? '' : String(region).trim()))
+			.filter(Boolean);
 	}
-	return optionsHTML;
+	if (item?.region) return [item.region];
+	return [];
+}
+
+/** Single region → plain text (unchanged); multiple → pill list. */
+function getRegionsHTML(regions: string[]): string {
+	if (regions.length <= 1) return escapeHtml(regions[0] || '');
+	return `<span class="region-pills">${regions
+		.map((region) => `<span class="region-pill">${escapeHtml(region)}</span>`)
+		.join('')}</span>`;
+}
+
+function escapeHtml(value: string): string {
+	return String(value)
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;');
 }
 
 function getValuesOptionsHTML() {

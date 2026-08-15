@@ -40,9 +40,9 @@ npm run dev
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 174   | 170  | 4         | 0       |
+| 🐞   | Bug         | B000 | 175   | 171  | 4         | 0       |
 | 🏆   | Feature     | F000 | 182   | 165  | 17        | 0       |
-| 📈   | Improvement | M000 | 178   | 153  | 22        | 3       |
+| 📈   | Improvement | M000 | 178   | 155  | 22        | 1       |
 | ⚔️   | Epic        | E000 | 51    | 39   | 7         | 5       |
 
 ## Backlog
@@ -51,16 +51,14 @@ npm run dev
 
 ### Medium Priority
 
-- 📈 **M162:** Minor visual improvements on expenses.html
-- 📈 **M153:** Minor visual improvements on itinerary.html
-- ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
-- ⚔️ **E043:** Offline Mode
+- ⚔️ **E043:** Export as static web page (Offline Mode)
 
 ### Low Priority
 
 - ⚔️ **E047:** [DEV] Implement Unit Tests
 - ⚔️ **E019:** [DEV] Implement Sonarqube
 - ⚔️ **E046:** [DEV] Implement Playwright
+- ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
 - 📈 **M171:** Safeguard unauthenticated access message
 
 ## Done
@@ -111,8 +109,10 @@ npm run dev
   - *[🏆F180] Reuse destination dialogs on itinerary view*
   - *[🐞B163] Fix color and destination image issues*
   - *[🏆F063] Allow adding multiple regions to a destination*
-- 🏆 **F182:** Add new dialogs into all itinerary items for view
 - 📈 **M163:** [DEV] Improve live reload functionality
+- 🐞 **B175:** Fix saving issues for trips and destinations
+- 🏆 **F182:** Add new dialogs into all itinerary items for view
+- 📈 **M153:** Minor visual improvements on itinerary.html
 
 ### July 2026
 
@@ -180,6 +180,7 @@ npm run dev
   - *[📈M152] All ids, classes and html comments in EN-US (+ better naming)*
 - 🏆 **F167:** Add dev mode for easy debugging
 - ⚔️ **E044:** New Front-End: edit pages
+- 📈 **M162:** Minor visual improvements on expenses.html
 
 ### May 2026
 

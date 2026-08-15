@@ -16,6 +16,15 @@ import { getRatingClass } from './categories.js';
 import { getRatingIcon } from './categories.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../../data/state.js';
 import {
+	addKnownValues,
+	buildRegionSelects,
+	getRegionPills,
+	registerRegionSelect,
+	renderRegionPills,
+	unregisterRegionSelect,
+} from '../../ui/region-select.js';
+import { FILTER_SORT_DATA } from './support/sort-and-filter/sort-and-filter.js';
+import {
 	ACTIVE_CATEGORY,
 	CONTENT,
 	getItem,
@@ -68,7 +77,10 @@ export async function edit(j: number): Promise<void> {
 		getID(`edit-media-${j}`).value = item.media || '';
 
 		populateScoresField(item.rating, j);
-		populateRegionField(item.region, j);
+		populateRegionField(
+			Array.isArray(item.regions) ? item.regions : item.region ? [item.region] : [],
+			j,
+		);
 		populateValueField(item.price, j);
 		populateDescriptionFields(item.description || {}, j);
 
@@ -77,9 +89,9 @@ export async function edit(j: number): Promise<void> {
 			editScoreLoadAction(rating, j);
 		}
 
-		function populateRegionField(region, j) {
-			const regionSelect = getID(`edit-region-select-${j}`);
-			regionSelect.value = region || '';
+		function populateRegionField(regions, j) {
+			renderRegionPills(`edit-regions-${j}`, regions);
+			addKnownValues(regions);
 		}
 
 		function populateValueField(price, j) {
@@ -161,9 +173,10 @@ function setFieldListeners(j: number): void {
 		validateLink((e.target as HTMLElement).id);
 	};
 
-	getID(`edit-region-select-${j}`)!.onchange = (e: Event) => {
-		editRegionLoadAction((e.target as HTMLSelectElement).value, j);
-	};
+	unregisterRegionSelect(`edit-region-select-${j}`);
+	registerRegionSelect(`edit-region-select-${j}`, `edit-region-input-${j}`);
+	addKnownValues(Array.from(FILTER_SORT_DATA[ACTIVE_CATEGORY]?.region ?? []));
+	buildRegionSelects();
 
 	getID(`edit-price-select-${j}`)!.onchange = (e: Event) => {
 		editValueLoadAction((e.target as HTMLSelectElement).value, j);
@@ -218,17 +231,6 @@ function editScoreLoadAction(value, j) {
 	icon.innerHTML = `<i class="iconify rating-no-margin ${getRatingClass(value)}" data-icon="${getRatingIcon(value)}"></i>`;
 }
 
-function editRegionLoadAction(value, j) {
-	const select = getID(`edit-region-select-${j}`);
-	const input = getID(`edit-region-input-${j}`);
-	if (value == 'custom') {
-		input.style.display = '';
-		select.value = 'custom';
-	} else {
-		input.style.display = 'none';
-	}
-}
-
 function editValueLoadAction(value, j) {
 	const select = getID(`edit-price-select-${j}`);
 	const input = getID(`edit-price-input-${j}`);
@@ -273,7 +275,7 @@ async function saveEdit(j, isNew = false) {
 		name: getID(`edit-name-${j}`).value,
 		rating: getID(`edit-rating-${j}`).value,
 		isNew: isNew ? true : originalItem.isNew,
-		region: getValue('region', j),
+		regions: getRegionPills(`edit-regions-${j}`),
 		price: getValue('price', j),
 		website: getID(`edit-website-${j}`).value,
 	};

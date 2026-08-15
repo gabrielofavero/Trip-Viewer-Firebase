@@ -75,11 +75,15 @@ export function filter(entries = CONTENT) {
 	}
 
 	function shouldFilterByRegions(item) {
-		const value = item.region;
-		if (!value) {
+		const value = Array.isArray(item.regions)
+			? item.regions
+			: item.region
+				? [item.region]
+				: [];
+		if (value.length === 0) {
 			return true;
 		}
-		return value !== preferences.region;
+		return !value.includes(preferences.region);
 	}
 }
 

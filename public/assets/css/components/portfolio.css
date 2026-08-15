@@ -121,3 +121,16 @@
 	bottom: 15px;
 	right: 15px;
 }
+
+/*--------------------------------------------------------------
+# GLightbox caption (shared)
+# Theme-aware caption bar so the lightbox never shows a hard white
+# deadzone around the image — same soft look on view and destination.
+--------------------------------------------------------------*/
+.gslide-description {
+	background: var(--background-color) !important;
+}
+
+.gslide-title {
+	color: var(--font-color) !important;
+}

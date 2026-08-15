@@ -47,6 +47,7 @@ import {
 } from './places-dialog.js';
 import type { PlacesDialogContext } from './places-dialog.js';
 import { getID } from '../utils/dom.js';
+import { getRegionPills } from '../ui/region-select.js';
 
 /** Cross-step data key for the fetched full place details (P8/P9 read it). */
 export const DETAILS_KEY = 'placeDetails';
@@ -238,7 +239,7 @@ function getCurrentEntryValue(context: PlacesDialogContext, field: PlaceFieldKey
 		case 'emoji':
 			return getInputValue(`${cat}-emoji-${j}`);
 		case 'region':
-			return getInputValue(`${cat}-region-${j}`) || getSelectValue(`${cat}-region-select-${j}`);
+			return getRegionPills(`${cat}-regions-${j}`).join(', ');
 		case 'rating':
 			return getInputValue(`${cat}-rating-${j}`);
 		case 'price':

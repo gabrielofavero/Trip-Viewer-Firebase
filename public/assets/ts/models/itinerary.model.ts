@@ -31,23 +31,28 @@ export async function getItineraryContent(type: string): Promise<string> {
 	}
 
 	const content: string[] = [];
-	const title = getTitle(type);
 
-	if (title) {
-		content.push(title);
-	}
+	if (type === 'page') {
+		buildPageContent();
+	} else {
+		const title = getTitle(type);
 
-	for (const itinerary of ITINERARY) {
-		loadItineraryTitle(itinerary.title, type); // was "loadItineararyTitle"
-		for (const timeOfDay of getItinerary().timeOfDay) {
-			const timeOfDayData = itinerary[timeOfDay];
-			if (timeOfDayData.length === 0) continue;
-			loadTimeOfDay(timeOfDay);
-			for (const innerItinerary of timeOfDayData) {
-				loadInnerItinerary(innerItinerary, type);
-			}
-			if (type == 'notes') {
-				content.push('<br>');
+		if (title) {
+			content.push(title);
+		}
+
+		for (const itinerary of ITINERARY) {
+			loadItineraryTitle(itinerary.title, type); // was "loadItineararyTitle"
+			for (const timeOfDay of getItinerary().timeOfDay) {
+				const timeOfDayData = itinerary[timeOfDay];
+				if (timeOfDayData.length === 0) continue;
+				loadTimeOfDay(timeOfDay);
+				for (const innerItinerary of timeOfDayData) {
+					loadInnerItinerary(innerItinerary, type);
+				}
+				if (type == 'notes') {
+					content.push('<br>');
+				}
 			}
 		}
 	}
@@ -70,6 +75,61 @@ export async function getItineraryContent(type: string): Promise<string> {
 			default:
 				return `*${getState().title.toUpperCase()}*`; // was "titulo"
 		}
+	}
+
+	function buildPageContent(): void {
+		for (const itinerary of ITINERARY) {
+			if (!itinerary.title) continue;
+
+			content.push(`<section class="itin-day">`);
+			content.push(`<h2 class="itin-day-title">${itinerary.title}</h2>`);
+
+			for (const timeOfDay of getItinerary().timeOfDay) {
+				const timeOfDayData = itinerary[timeOfDay];
+				if (!timeOfDayData || timeOfDayData.length === 0) continue;
+
+				content.push(`<section class="itin-period">`);
+				content.push(`<h3 class="itin-period-title">${getPeriod(timeOfDay)}</h3>`);
+				content.push(`<ul class="itin-list">`);
+
+				for (const innerItinerary of timeOfDayData) {
+					content.push(loadPageItem(innerItinerary));
+				}
+
+				content.push(`</ul>`);
+				content.push(`</section>`);
+			}
+
+			content.push(`</section>`);
+		}
+
+		function loadPageItem(innerItinerary: any): string {
+			const texts = innerItinerary.subItem?.texts ?? [];
+			const mainText = getPageText(innerItinerary);
+
+			if (texts.length === 0) {
+				return `<li class="itin-item">${mainText}</li>`;
+			}
+
+			const subItems = texts
+				.map((text: any) => `<li class="itin-subitem">${getPageText(text)}</li>`)
+				.join('');
+
+			return `<li class="itin-item">${mainText}<ul class="itin-sublist">${subItems}</ul></li>`;
+		}
+	}
+
+	function getPageText(textObj: any): string {
+		const title = textObj?.title || '';
+		const text = textObj?.content || '';
+
+		if (!title) {
+			return `<span class="itin-text">${text}</span>`;
+		}
+
+		const label = `<span class="itin-label">${title}${text ? ':' : ''}</span>`;
+		const body = text ? ` <span class="itin-text">${text}</span>` : '';
+		return `${label}${body}`;
 	}
 
 	function loadItineraryTitle(value: string, type: string): void {

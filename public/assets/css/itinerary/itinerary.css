@@ -20,20 +20,6 @@
 		font-size: 24px !important;
 	}
 
-	.content h2 {
-		font-size: 16px !important;
-	}
-
-	.content h3 {
-		font-size: 14px !important;
-		margin-top: 1rem !important;
-		margin-bottom: 0.5rem !important;
-	}
-
-	.content li {
-		font-size: 12px !important;
-	}
-
 	.top-bar,
 	footer {
 		display: none !important;
@@ -41,17 +27,92 @@
 
 	.content {
 		width: 100% !important;
+		display: block !important;
+		margin-bottom: 0 !important;
 		padding: 0 !important;
 		background: transparent !important;
+		border: none !important;
 		border-radius: 0 !important;
+		box-shadow: none !important;
+		min-height: 0 !important;
 	}
 
 	.section-title h1 {
 		padding-top: 0 !important;
 	}
 
-	.content li > ul {
-		color: #4b5563 !important;
+	/* Itinerary list — compact, ink-friendly, keeps headings with content */
+	.itin-day {
+		break-inside: avoid;
+		page-break-inside: avoid;
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+		margin-bottom: 1.25rem !important;
+	}
+
+	.itin-day-title,
+	.itin-period-title {
+		break-after: avoid;
+		page-break-after: avoid;
+	}
+
+	.itin-item,
+	.itin-subitem {
+		break-inside: avoid;
+		page-break-inside: avoid;
+	}
+
+	.itin-day-title {
+		font-size: 16px !important;
+		color: #000 !important;
+		padding-bottom: 0.35rem !important;
+		margin-bottom: 0.75rem !important;
+	}
+
+	.itin-day-title::after {
+		background: #000 !important;
+	}
+
+	.itin-period {
+		margin-bottom: 0.6rem !important;
+	}
+
+	.itin-period-title {
+		font-size: 12px !important;
+		color: #333 !important;
+		margin-bottom: 0.3rem !important;
+	}
+
+	.itin-period-title::before {
+		background: #000 !important;
+	}
+
+	.itin-item {
+		padding: 0.4rem 0 !important;
+		font-size: 12px !important;
+		line-height: 1.45 !important;
+	}
+
+	.itin-label,
+	.itin-text {
+		color: #000 !important;
+	}
+
+	.itin-sublist {
+		margin-top: 0.25rem !important;
+	}
+
+	.itin-subitem {
+		padding: 0.25rem 0 0.25rem 0.75rem !important;
+		font-size: 11px !important;
+		color: #333 !important;
+	}
+
+	.itin-subitem .itin-label,
+	.itin-subitem .itin-text {
+		color: #333 !important;
 	}
 }
 
@@ -173,42 +234,129 @@
 
 .content {
 	width: 1000px;
-	background-color: var(--box-color);
-	padding: 3em;
-	border-radius: 16px;
+	max-width: 100%;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	gap: 2rem;
+	align-items: start;
 	min-height: 500px;
-	overflow: visible !important;
+	margin-bottom: 2rem;
 }
 
-.content ul {
-	list-style-position: inside;
-	padding-left: 0;
+/*--------------------------------------------------------------
+# Itinerary list (full itinerary render)
+--------------------------------------------------------------*/
+
+.itin-day {
+	background-color: var(--background-color);
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-sm);
+	padding: 1.5rem;
 }
 
-.content li > ul {
-	list-style-type: circle;
-	color: var(--subtitle);
+.itin-day-title {
+	position: relative;
+	font-size: 1.25rem;
+	font-weight: 700;
+	color: var(--text-primary);
+	padding-bottom: 0.6rem;
+	margin-bottom: 1.25rem;
 }
 
-.content > li {
-	margin-bottom: 0.5rem;
+.itin-day-title::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 40px;
+	height: 3px;
+	border-radius: 2px;
+	background: var(--theme-color);
 }
 
-.content > li:last-child {
+.itin-period {
+	margin-bottom: 0.9rem;
+}
+
+.itin-period:last-child {
 	margin-bottom: 0;
 }
 
-.content li ul > li {
+.itin-period-title {
+	font-size: 0.8125rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--text-muted);
+	margin-bottom: 0.5rem;
+}
+
+.itin-period-title::before {
+	content: "";
+	display: inline-block;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--theme-color);
+	margin-right: 0.5rem;
+	vertical-align: 1px;
+}
+
+.itin-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.itin-item {
+	padding: 0.6rem 0;
+	border-bottom: 1px solid var(--border-color);
+	line-height: 1.6;
+	overflow-wrap: break-word;
+}
+
+.itin-item:last-child {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+.itin-label {
+	font-weight: 700;
+	color: var(--text-primary);
+}
+
+.itin-text {
+	color: var(--text-primary);
+}
+
+.itin-sublist {
+	list-style: none;
+	margin: 0.5rem 0 0;
+	padding: 0;
+}
+
+.itin-subitem {
+	position: relative;
+	padding: 0.3rem 0 0.3rem 0.9rem;
+	border-left: 2px solid var(--border-color);
+	margin-bottom: 0.3rem;
+	color: var(--text-secondary);
+	line-height: 1.5;
+	overflow-wrap: break-word;
+}
+
+.itin-subitem:last-child {
 	margin-bottom: 0;
 }
 
-.content h2:not(:first-of-type) {
-	margin-top: 4rem;
+.itin-subitem .itin-label {
+	font-weight: 600;
+	color: var(--text-secondary);
 }
 
-.content h3 {
-	margin-top: 1.2rem;
-	margin-bottom: 0.5rem;
+.itin-subitem .itin-text {
+	color: var(--text-secondary);
 }
 
 @media (max-width: 1200px) {
@@ -219,7 +367,15 @@
 
 @media (max-width: 600px) {
 	.content {
-		padding: 2em;
+		grid-template-columns: 1fr;
+	}
+
+	.itin-day {
+		padding: 1.25rem;
+	}
+
+	.itin-day-title {
+		font-size: 1.15rem;
 	}
 }
 

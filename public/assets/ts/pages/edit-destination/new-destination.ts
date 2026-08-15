@@ -1,5 +1,5 @@
 import { getID, getNextJ } from '../../utils/dom.js';
-import { addSelectorDS } from '../../ui/dynamic-select.js';
+import { registerRegionSelect } from '../../ui/region-select.js';
 import { translate } from '../../i18n/translation.js';
 import { getNewSvg, GOOGLE_MAPS_ICON } from '../../theme/icons.js';
 import { PERMISSIONS } from '../../data/firebase/storage.js';
@@ -146,6 +146,7 @@ export function addRestaurants() {
   
           <div class="nice-form-group">
             <label>${translate('labels.region')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <div class="region-pills" id="restaurants-regions-${j}"></div>
             <select class="edit-select" id="restaurants-region-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="restaurants-region-${j}" type="text" placeholder="${translate('destination.restaurants.placeholders.region')}" />
           </div>
@@ -204,7 +205,7 @@ export function addRestaurants() {
 	DESTINATION_IMAGES[`${category}-${j}`] = [];
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
-	addSelectorDS('region', `restaurants-region-select-${j}`, `restaurants-region-${j}`);
+	registerRegionSelect(`restaurants-region-select-${j}`, `restaurants-region-${j}`);
 }
 
 export function addSnacks() {
@@ -289,6 +290,7 @@ export function addSnacks() {
   
           <div class="nice-form-group">
             <label>${translate('labels.region')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <div class="region-pills" id="snacks-regions-${j}"></div>
             <select class="edit-select" id="snacks-region-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="snacks-region-${j}" type="text" placeholder="${translate('destination.snacks.placeholders.region')}" />
           </div>
@@ -348,7 +350,7 @@ export function addSnacks() {
 	DESTINATION_IMAGES[`${category}-${j}`] = [];
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
-	addSelectorDS('region', `snacks-region-select-${j}`, `snacks-region-${j}`);
+	registerRegionSelect(`snacks-region-select-${j}`, `snacks-region-${j}`);
 }
 
 export function addNightlife() {
@@ -433,6 +435,7 @@ export function addNightlife() {
   
           <div class="nice-form-group">
             <label>${translate('labels.region')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <div class="region-pills" id="nightlife-regions-${j}"></div>
             <select class="edit-select" id="nightlife-region-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="nightlife-region-${j}" type="text" placeholder="${translate('destination.nightlife.placeholders.region')}" />
           </div>
@@ -491,7 +494,7 @@ export function addNightlife() {
 	DESTINATION_IMAGES[`${category}-${j}`] = [];
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
-	addSelectorDS('region', `nightlife-region-select-${j}`, `nightlife-region-${j}`);
+	registerRegionSelect(`nightlife-region-select-${j}`, `nightlife-region-${j}`);
 }
 
 export function addTourism() {
@@ -576,6 +579,7 @@ export function addTourism() {
   
           <div class="nice-form-group">
             <label>${translate('labels.region')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <div class="region-pills" id="tourism-regions-${j}"></div>
             <select class="edit-select" id="tourism-region-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="tourism-region-${j}" type="text" placeholder="${translate('destination.tourism.placeholders.region')}" />
           </div>
@@ -634,7 +638,7 @@ export function addTourism() {
 	DESTINATION_IMAGES[`${category}-${j}`] = [];
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
-	addSelectorDS('region', `tourism-region-select-${j}`, `tourism-region-${j}`);
+	registerRegionSelect(`tourism-region-select-${j}`, `tourism-region-${j}`);
 }
 
 export function addShopping() {
@@ -721,6 +725,7 @@ export function addShopping() {
   
           <div class="nice-form-group">
             <label>${translate('labels.region')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <div class="region-pills" id="shopping-regions-${j}"></div>
             <select class="edit-select" id="shopping-region-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="shopping-region-${j}" type="text" placeholder="${translate('destination.shopping.placeholders.region')}" />
           </div>
@@ -779,7 +784,7 @@ export function addShopping() {
 	DESTINATION_IMAGES[`${category}-${j}`] = [];
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
-	addSelectorDS('region', `shopping-region-select-${j}`, `shopping-region-${j}`);
+	registerRegionSelect(`shopping-region-select-${j}`, `shopping-region-${j}`);
 }
 
 function addCreatedDate(category, j) {

@@ -1,4 +1,8 @@
-import { buildDS, updateValueDS } from '../../ui/dynamic-select.js';
+import {
+	addKnownValues,
+	buildRegionSelects,
+	renderRegionPills,
+} from '../../ui/region-select.js';
 import { displayError } from '../../utils/messages.js';
 import { getID } from '../../utils/dom.js';
 import { setPageName } from '../../app/main.js';
@@ -25,7 +29,7 @@ export function populateExistingDestinationForm() {
 		loadExistingDestination('nightlife');
 		loadExistingDestination('tourism');
 		loadExistingDestination('shopping');
-		buildDS('region');
+		buildRegionSelects();
 
 		loadMapData();
 		setPageName(`${translate('labels.edit')} ${FIRESTORE_DESTINATIONS_DATA?.title || ''}`);
@@ -148,9 +152,15 @@ export function addDestinationHTML(category, j, item) {
 	getID(`${category}-website-${j}`).value = item.website || '';
 	getID(`${category}-map-${j}`).value = item.map || '';
 	getID(`${category}-instagram-${j}`).value = item.instagram || '';
-	getID(`${category}-region-${j}`).value = item.region || '';
 
-	updateValueDS('region', item.region, `${category}-region-select-${j}`);
+	const regions = Array.isArray(item.regions)
+		? item.regions
+		: item.region
+			? [item.region]
+			: [];
+	renderRegionPills(`${category}-regions-${j}`, regions);
+	addKnownValues(regions);
+
 	loadCurrencyValueAndVisibility(item.price || '', category, j);
 
 	getID(`${category}-media-${j}`).value = item.media || '';

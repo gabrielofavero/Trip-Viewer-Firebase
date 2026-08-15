@@ -48,7 +48,7 @@ export function loadFilterSortingData(titles) {
 		let data;
 		switch (title) {
 			case 'region':
-				data = getDataSet('region');
+				data = getDataSet('regions');
 				data.delete('');
 				break;
 			case 'planned':
@@ -102,7 +102,7 @@ export function openFilterSortDrawer({ triggerId, getInnerHTML, clickAction, loa
 
 // Helpers
 export function shouldDisplayRegions() {
-	const REGIONS = getDataSet('region');
+	const REGIONS = getDataSet('regions');
 	REGIONS.delete('');
 	return REGIONS.size > 1;
 }

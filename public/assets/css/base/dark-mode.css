@@ -178,17 +178,20 @@
 }
 
 /* ===== Hero Section ===== */
-[data-theme="dark"] #hero {
+[data-theme="dark"] #hero,
+[data-theme="dark"] .page-hero {
 	background: url("/assets/img/backgrounds/home-dark.jpg") top center no-repeat;
 	background-size: cover;
 	background-position: 50% 50%;
 }
 
-[data-theme="dark"] #hero::before {
+[data-theme="dark"] #hero::before,
+[data-theme="dark"] .page-hero::before {
 	background: rgba(48, 48, 48, 0.8);
 }
 
-[data-theme="dark"] #hero h1 {
+[data-theme="dark"] #hero h1,
+[data-theme="dark"] .page-hero h1 {
 	color: #f2f2f2;
 }
 
@@ -272,6 +275,20 @@
 
 [data-theme="dark"] .dialog-media {
 	background: rgba(44, 44, 46, 0.7);
+}
+
+/* View item dialogs — transportation company logo neutral background.
+   Custom dark color can be fed via `backgrounds` in transportation.json. */
+[data-theme="dark"] .view-item-transport-media {
+	background: var(--transport-media-bg-dark, var(--bg-secondary));
+}
+
+[data-theme="dark"] .view-item-transport-logo.light {
+	display: none;
+}
+
+[data-theme="dark"] .view-item-transport-logo.dark {
+	display: block;
 }
 
 [data-theme="dark"] .card-header {
@@ -564,12 +581,12 @@
 [data-theme="dark"] .facts .count-box,
 [data-theme="dark"] .about .count-box {
 	background: #303030;
-	box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.35);
+	box-shadow: 0 8px 24px rgba(166, 166, 166, 0.05);
 }
 
 [data-theme="dark"] .facts .count-box:hover,
 [data-theme="dark"] .about .count-box:hover {
-	box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.45);
+	box-shadow: 0 12px 32px rgba(166, 166, 166, 0.08);
 }
 
 [data-theme="dark"] .facts .count-box i,
@@ -810,6 +827,13 @@
 [data-theme="dark"] .gastos-card.container-mode,
 [data-theme="dark"] .expenses-card.container-mode {
 	box-shadow: 0 8px 24px rgba(166, 166, 166, 0.05);
+}
+
+/* Full itinerary day cards — match the expenses-card treatment. */
+[data-theme="dark"] .itin-day {
+	border: 1px solid #414040;
+	background-color: #3b3b3b;
+	box-shadow: 0px 5px 90px 0px rgba(166, 166, 166, 0.05);
 }
 
 [data-theme="dark"] .expenses-subtitle,

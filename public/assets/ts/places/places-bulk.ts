@@ -47,7 +47,7 @@ import {
 import { COLLECTION, createBatchOps } from '../data/services/destination.service.js';
 import { getPlace, PLACES_API_ENABLED } from '../data/services/places-api.service.js';
 import { GMAPS_SCRAPER_ENABLED, scrapePlaces } from '../data/services/gmaps-scraper.service.js';
-import { removeSelectorDS } from '../ui/dynamic-select.js';
+import { unregisterRegionSelect } from '../ui/region-select.js';
 import { removeDestinationImages } from '../pages/edit-destination/categories/image.js';
 import type { PlaceDetails } from '../models/places-api.model.js';
 import type { PlaceAPI, PlaceDescription, PlaceItem } from '../models/schema.js';
@@ -747,8 +747,12 @@ async function applyBulk(report: BulkReport, options: BulkApplyOptions): Promise
 		if (docPath && isExisting) {
 			const updates: Record<string, unknown> = { [`${base}.placeAPI`]: updated.placeAPI };
 			for (const field of fieldsToApply) {
-				updates[field === 'description' ? `${base}.description` : `${base}.${field}`] =
-					field === 'description' ? updated.description : updated[field];
+				const fieldKey = field === 'region' ? 'regions' : field;
+				const fieldValue =
+					field === 'description' ? updated.description : updated[fieldKey];
+				updates[
+					field === 'description' ? `${base}.description` : `${base}.${fieldKey}`
+				] = fieldValue;
 			}
 			batch.update(docPath, updates);
 			hasDbOps = true;
@@ -783,7 +787,7 @@ function removeLinkedEntry(category: string, id: string): void {
 	const j = findJFromID(id, category);
 	if (getID(`${category}-id-${j}`)?.value === id) {
 		removeChildWithValidation(category, j);
-		removeSelectorDS('region', `${category}-region-select-${j}`);
+		unregisterRegionSelect(`${category}-region-select-${j}`);
 		removeDestinationImages(category, j);
 	}
 }

@@ -11,7 +11,7 @@ import {
 	getDateString,
 	getTimeStringFromDate,
 } from '../../../utils/dates.js';
-import { validateImageLink, validateLink } from '../../../ui/fields.js';
+import { markStagedChanges, validateImageLink, validateLink } from '../../../ui/fields.js';
 import { closeAccordions, openLastAccordion } from '../../../ui/accordion.js';
 import { translate } from '../../../i18n/translation.js';
 import { animate } from '../../../theme/animations.js';
@@ -323,11 +323,13 @@ function saveAccommodationImages(j) {
 	}
 
 	ACCOMMODATION_IMAGES[j] = result;
+	markStagedChanges();
 	closeMessage();
 }
 
 export function removeAccommodationImages(j) {
 	ACCOMMODATION_IMAGES[j] = [];
+	markStagedChanges();
 }
 
 async function uploadAndSetAccommodationImages() {

@@ -5,12 +5,16 @@ import { openToast, displayMessage, closeMessage } from '../utils/messages.js';
 import { DOCUMENT_ID, SUCCESSFUL_SAVE, setSuccessfulSaveFn } from '../data/state.js';
 
 let ORIGINAL_STATE = new Map();
+// True when a form module stages changes outside of tracked DOM fields
+// (e.g. image editors that serialize into JS state before save).
+let STAGED_CHANGES = false;
 
 // Detect Changes
 export function snapshotFormState(root = document) {
 	if (!DOCUMENT_ID) return;
 
 	ORIGINAL_STATE.clear();
+	STAGED_CHANGES = false;
 
 	const fields = root.querySelectorAll('input, textarea, select, .input-button');
 
@@ -74,6 +78,15 @@ export function hasUnsavedChanges(root = document) {
 	}
 
 	return false;
+}
+
+// Staged changes made outside of tracked DOM fields (e.g. image editors).
+export function markStagedChanges(): void {
+	STAGED_CHANGES = true;
+}
+
+export function hasStagedChanges(): boolean {
+	return STAGED_CHANGES;
 }
 
 // Required Fields

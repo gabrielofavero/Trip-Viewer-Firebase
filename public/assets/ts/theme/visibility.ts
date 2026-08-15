@@ -58,7 +58,9 @@ export function loadVisibility(colors = getState()?.colors) {
 	loadUserVisibility();
 
 	const button = getID('night-mode');
-	button.style.display = 'block';
+	// Keep the flex centering from .icon-buttons (display:block would push the
+	// icon to the top-left of its circular button).
+	button.style.display = 'flex';
 	button.onclick = function () {
 		switchVisibility();
 	};

@@ -57,7 +57,7 @@ const FIELD_MAP: Record<string, string> = {
 	turismo: 'tourism',
 	nota: 'rating',
 	mapa: 'map',
-	regiao: 'region',
+	regiao: 'regions',
 	novo: 'isNew',
 	criadoEm: 'createdAt',
 	midia: 'media',

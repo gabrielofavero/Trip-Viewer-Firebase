@@ -1,4 +1,5 @@
 import { getColors } from '../app/config.js';
+import { getState } from '../data/state.js';
 import { getID } from '../utils/dom.js';
 import { setCSSVariable } from './stylesheets.js';
 import { CHANGED_SVGS } from './theme.js';
@@ -51,6 +52,31 @@ export function loadThemeColors() {
 	setCSSVariable('theme-color', THEME_COLOR);
 	setCSSVariable('theme-color-hover', THEME_COLOR_HOVER);
 	setCSSVariable('theme-color-secondary', THEME_COLOR_SECONDARY);
+
+	// Keep the RGB triplet in sync so rgba(var(--theme-color-rgb), …) shades
+	// (e.g. the .btn:focus ring) follow the trip color, not the default purple.
+	if (THEME_COLOR) {
+		setCSSVariable('theme-color-rgb', hexToRgb(THEME_COLOR).join(', '));
+		setCSSVariable('theme-secondary', getThemeSecondary());
+	}
+}
+
+/**
+ * Gradient second stop (bottom-right of the 135deg `--theme-color → …`
+ * gradients). The stock purple theme keeps its hand-picked companion; custom
+ * trip colors derive a lighter shade of themselves so the no-image cards,
+ * dialog heroes, etc. stay on-brand instead of fading into the default purple.
+ */
+function getThemeSecondary(): string {
+	const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+	const defaultSecondary = isDark ? '#9b91d4' : '#7172b4';
+	const hasCustomColors = getState()?.colors?.active === true;
+
+	if (!hasCustomColors || !THEME_COLOR) return defaultSecondary;
+
+	// 15% (light) / 20% (dark) toward white mirrors the stock light companion
+	// (#5859a7 → #7172b4) and gives dark mode a similar gentle lift.
+	return getLighterColor(THEME_COLOR, isDark ? 20 : 15);
 }
 
 // Getters
