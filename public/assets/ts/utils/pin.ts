@@ -251,6 +251,9 @@ export function requestPin({ confirmAction, cancelAction, precontent, invalid = 
                               </div>
                               <div id="pin-code" class="pin"></div>`;
 	properties.critical = true;
+	// PIN dialogs must be dismissed via their Confirm / Cancel buttons — never
+	// via the corner X (cancel-icon) or Escape.
+	properties.closeButton = false;
 	properties.containers = getContainersInput();
 	properties.buttons = [];
 

@@ -41,8 +41,8 @@ npm run dev
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 174   | 169  | 3         | 2       |
-| 🏆   | Feature     | F000 | 179   | 161  | 17        | 1       |
-| 📈   | Improvement | M000 | 175   | 149  | 22        | 4       |
+| 🏆   | Feature     | F000 | 180   | 161  | 17        | 2       |
+| 📈   | Improvement | M000 | 176   | 150  | 22        | 4       |
 | ⚔️   | Epic        | E000 | 51    | 38   | 7         | 6       |
 
 ## Backlog
@@ -50,11 +50,14 @@ npm run dev
 ### High Priority
 
 - ⚔️ **E016:** New Front-End: destination.html
+- 🏆 **F181:** improve view itinerary cards
 
 ### Medium Priority
 
-- 📈 **M153:** Minor visual improvements on itinerary.html
+- 🐞 **B172:** Fix error when switching a destination category
+- 🐞 **B173:** Fix issues with index cards closing and not reopening
 - 📈 **M162:** Minor visual improvements on expenses.html
+- 📈 **M153:** Minor visual improvements on itinerary.html
 - ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
 - ⚔️ **E043:** Offline Mode
 
@@ -65,9 +68,7 @@ npm run dev
 - ⚔️ **E019:** Implement Sonarqube
 - ⚔️ **E046:** Implement Playwright
 - 📈 **M163:** Improve live reload functionality
-- 🐞 **B172:** Fix error when switching a destination category
 - 📈 **M171:** Safeguard unauthenticated access message
-- 🐞 **B173:** Fix issues with index cards closing and not reopening
 
 ## Done
 
@@ -107,6 +108,7 @@ npm run dev
   - *[📈M173] Extract expenses/itinerary/destination render logic into shared mount components*
   - *[📈M174] No more iframe/embeds. Use html injection instead*
   - *[📈M175] No more need to read destination on view.html*
+  - *[📈M176] Normalize visuals: header, cards, buttons, calendar should match*
 - 🐞 **B174:** Issue with transportation duration card on edit trip
 - 📈 **M172:** Minor visual improvements on index.html (search, order, image loading)
 

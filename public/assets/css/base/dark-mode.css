@@ -33,6 +33,7 @@
 	--shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
 	--shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
 	--shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.6);
+	--card-border: 1px solid rgba(166, 166, 166, 0.10);
 }
 
 /* ===== General / Typography ===== */
@@ -559,12 +560,19 @@
 [data-theme="dark"] .facts .count-box,
 [data-theme="dark"] .about .count-box {
 	background: #303030;
+	box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .facts .count-box:hover,
+[data-theme="dark"] .about .count-box:hover {
+	box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.45);
 }
 
 [data-theme="dark"] .facts .count-box i,
 [data-theme="dark"] .about .count-box i {
 	background: var(--theme-color);
 	color: #303030;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 [data-theme="dark"] .facts .count-box span,
@@ -596,14 +604,12 @@
 [data-theme="dark"] #calendar {
 	background-color: #303030;
 	color: #e2e2e2;
-	border-color: #414040;
 }
 
 [data-theme="dark"] .hotel-box,
 [data-theme="dark"] .hotel-box-inner {
 	background-color: #303030;
 	color: #e2e2e2;
-	border-color: #414040;
 }
 
 [data-theme="dark"] #accommodations-box {

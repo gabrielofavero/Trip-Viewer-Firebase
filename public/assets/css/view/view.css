@@ -14,6 +14,9 @@
 	transition: all 0.5s;
 	padding: 15px;
 	overflow-y: auto;
+	width: auto;
+	background: transparent;
+	border-right: none;
 }
 
 #header2 {
@@ -304,6 +307,16 @@
 	font-weight: 700;
 	line-height: 56px;
 	color: #4f5051;
+	text-transform: none;
+	padding-bottom: 0;
+	position: static;
+	display: block;
+	width: auto !important;
+}
+
+#hero h1::before,
+#hero h1::after {
+	content: none;
 }
 
 #hero p {
@@ -479,6 +492,16 @@ section {
 	position: relative;
 	text-align: center;
 	background: #fff;
+	border: var(--card-border);
+	border-radius: var(--radius-lg);
+	box-shadow: 0 6px 16px 0 rgba(110, 123, 131, 0.1);
+	transition: transform var(--transition-normal);
+}
+
+.facts .count-box:hover,
+.about .count-box:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 12px 28px 0 rgba(110, 123, 131, 0.16);
 }
 
 .facts .count-box i,
@@ -496,6 +519,7 @@ section {
 	justify-content: center;
 	width: 48px;
 	height: 48px;
+	box-shadow: 0 4px 10px rgba(110, 123, 131, 0.25);
 }
 
 .facts .count-box span,
@@ -650,6 +674,8 @@ section {
 	font-weight: bold;
 	height: 40px;
 	padding: 6px;
+	width: 100%;
+	float: none;
 }
 
 #tabHeader {
@@ -1821,6 +1847,15 @@ section {
 	width: 100%;
 }
 
+/* The standalone expenses page pads `.expenses-container` on wide screens
+   (10% @1300px, 20% @1750px). Inside view.html the content already sits in
+   Bootstrap's `.container`, so keep the base 2rem padding only. */
+#expenses-embed .expenses-container,
+#expenses-embed #conversion {
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
 /* Lightbox chrome */
 .lightbox-toolbar {
 	position: sticky;
@@ -1974,6 +2009,23 @@ section {
 	background: var(--theme-color-hover);
 }
 
+/* Restore view.html button chrome from component stylesheet leakage
+   (expenses.css / itinerary.css / destination.css are loaded globally). */
+.button-box {
+	display: block;
+	text-align: center;
+}
+
+.button-box .btn {
+	font-weight: 400;
+}
+
+.button-box .btn-format:first-child,
+.button-box .btn-format:last-child {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
 #dDescription {
 	margin-bottom: 40px;
 	text-align: center;
@@ -1989,8 +2041,8 @@ section {
 .flight-box {
 	display: flex;
 	flex-direction: column;
-	border: 0.5px solid var(--table-border);
-	border-radius: 8px;
+	border: var(--card-border);
+	border-radius: var(--radius-lg);
 	overflow: hidden;
 	width: 600px;
 	height: auto;
@@ -2165,8 +2217,8 @@ section {
 .hotel-box-inner {
 	display: flex;
 	color: #4f5051;
-	border: 0.5px solid var(--table-border);
-	border-radius: 8px;
+	border: var(--card-border);
+	border-radius: var(--radius-lg);
 	overflow: hidden;
 	width: 600px;
 	margin: 0 auto;
@@ -2250,6 +2302,7 @@ section {
 
 .color-icon {
 	color: var(--theme-color);
+	font-size: inherit;
 }
 
 .hotel-reservation,

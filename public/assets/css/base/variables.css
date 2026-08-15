@@ -28,6 +28,7 @@
 	--shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
 	--shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
 	--shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.18);
+	--card-border: 1px solid rgba(110, 123, 131, 0.15);
 	--radius-sm: 8px;
 	--radius-md: 12px;
 	--radius-lg: 16px;

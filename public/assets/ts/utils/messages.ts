@@ -346,13 +346,15 @@ export function displayError(error, tryAgain = false) {
 	if (!window.location.href.includes('index.html')) {
 		buttons.push({ type: 'home' });
 	}
+	// Error dialogs never show the X close button (and Escape won't dismiss
+	// them) — they carry explicit actions. When no action is available (e.g. a
+	// bare error on the index page), add a dismissible "Understood" button so
+	// the dialog can never get stuck open.
+	properties.closeButton = false;
+	if (buttons.length === 0) {
+		buttons.push({ type: 'close' });
+	}
 	properties.buttons = buttons;
-
-	// Error dialogs carry explicit actions (Try again / Home) — hide the X
-	// close button (and Escape dismissal) so the user must act. Only keep the
-	// X when there's no dismissible button at all (e.g. a bare error on the
-	// index page) so the dialog can never get stuck open.
-	properties.closeButton = buttons.length === 0;
 
 	displayFullMessage(properties);
 }
