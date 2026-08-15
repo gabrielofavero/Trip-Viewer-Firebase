@@ -28,11 +28,11 @@ export function getTransportationObject(protectedReservationCodes = false) {
 		result.data.push({
 			dates: {
 				arrival: formattedDateToDateObject(
-					getID(`arrival-${j}`).value,
+					getID(`transportation-arrival-date-${j}`).value,
 					getID(`arrival-time-${j}`).value,
 				),
 				departure: formattedDateToDateObject(
-					getID(`departure-${j}`).value,
+					getID(`transportation-departure-date-${j}`).value,
 					getID(`departure-time-${j}`).value,
 				),
 			},
@@ -188,10 +188,10 @@ export function applyTransportationTypeVisualization(i?) {
 function loadAutoDuration(i) {
 	const div = getID(`transportation-duration-other-${i}`);
 
-	const startDate = getID(`departure-${i}`).value;
+	const startDate = getID(`transportation-departure-date-${i}`).value;
 	const startTime = getID(`departure-time-${i}`).value;
 
-	const endDate = getID(`arrival-${i}`).value;
+	const endDate = getID(`transportation-arrival-date-${i}`).value;
 	const endTime = getID(`arrival-time-${i}`).value;
 
 	if (startDate != '' && startTime != '' && endDate != '' && endTime != '') {
@@ -233,9 +233,9 @@ export function loadTransportationListeners(j) {
 	getID(`return-${j}`).addEventListener('change', () => updateTransportationTitle(j));
 
 	// Automatic Route Duration Calculation
-	getID(`departure-${j}`).addEventListener('change', () => loadAutoDuration(j));
+	getID(`transportation-departure-date-${j}`).addEventListener('change', () => loadAutoDuration(j));
 	getID(`departure-time-${j}`).addEventListener('change', () => loadAutoDuration(j));
-	getID(`arrival-${j}`).addEventListener('change', () => loadAutoDuration(j));
+	getID(`transportation-arrival-date-${j}`).addEventListener('change', () => loadAutoDuration(j));
 	getID(`arrival-time-${j}`).addEventListener('change', () => loadAutoDuration(j));
 
 	// Link Validation

@@ -13,6 +13,7 @@ import { loadCustomizationImageData, setCurrentLight } from './categories/custom
 import {
 	addTransportation,
 	addAccommodations,
+	getTransportationPicker,
 	loadDestinations,
 	loadItinerarySchedule,
 	addGallery,
@@ -192,13 +193,19 @@ async function loadTransportationData() {
 		const arrival = convertFromDateObject(transport.dates.arrival);
 
 		if (departure) {
-			getID(`departure-${j}`).value = getDateString(departure, 'yyyy-mm-dd');
 			getID(`departure-time-${j}`).value = getTimeStringFromDate(departure);
 		}
 
 		if (arrival) {
-			getID(`arrival-${j}`).value = getDateString(arrival, 'yyyy-mm-dd');
 			getID(`arrival-time-${j}`).value = getTimeStringFromDate(arrival);
+		}
+
+		const picker = getTransportationPicker(j);
+		if (picker && departure && arrival) {
+			picker.setRange(
+				getDateString(departure, 'yyyy-mm-dd'),
+				getDateString(arrival, 'yyyy-mm-dd'),
+			);
 		}
 
 		getID(`transportation-type-${j}`).value = transport.type;
@@ -215,7 +222,7 @@ async function loadTransportationData() {
 		}
 
 		getID(`transportation-id-${j}`).value = transport.id;
-		getID(`transportation-duration-${j}`).value = transport.duration;
+		getID(`transportation-duration-other-${j}`).value = transport.duration;
 		getID(`reservation-transportation-${j}`).value = transport.reservation;
 		getID(`departure-point-${j}`).value = transport.points.origin;
 		getID(`arrival-point-${j}`).value = transport.points.destination;

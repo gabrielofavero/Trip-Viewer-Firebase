@@ -40,7 +40,7 @@ npm run dev
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 173   | 168  | 3         | 2       |
+| 🐞   | Bug         | B000 | 174   | 169  | 3         | 2       |
 | 🏆   | Feature     | F000 | 179   | 161  | 17        | 1       |
 | 📈   | Improvement | M000 | 175   | 148  | 22        | 5       |
 | ⚔️   | Epic        | E000 | 51    | 38   | 7         | 6       |
@@ -108,6 +108,7 @@ npm run dev
   - *[📈M173] Extract expenses/itinerary/destination render logic into shared mount components*
   - *[📈M174] No more iframe/embeds. Use html injection instead*
   - *[📈M175] No more need to read destination on view.html*
+- 🐞 **B174:** Issue with transportation duration card on edit trip
 
 ### July 2026
 

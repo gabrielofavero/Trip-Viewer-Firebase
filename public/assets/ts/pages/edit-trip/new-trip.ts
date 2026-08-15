@@ -70,6 +70,12 @@ function loadBasicFieldsNewTrip() {
 	getID('currency').value = 'BRL';
 }
 
+const TRANSPORTATION_PICKERS = new Map<number, DateRangePicker>();
+
+export function getTransportationPicker(j: number): DateRangePicker | undefined {
+	return TRANSPORTATION_PICKERS.get(j);
+}
+
 export function addTransportation() {
 	const j = getNextJ('transportation-box');
 
@@ -128,8 +134,8 @@ export function addTransportation() {
             <div class="nice-form-group">
               <label>${translate('trip.transportation.duration')}</label>
               <div class="date-range-picker" id="transportation-duration-${j}">
-                <input type="hidden" id="departure-${j}" />
-                <input type="hidden" id="arrival-${j}" />
+                <input type="hidden" id="transportation-departure-date-${j}" />
+                <input type="hidden" id="transportation-arrival-date-${j}" />
               </div>
             </div>
     
@@ -194,13 +200,17 @@ export function addTransportation() {
 	getID(`transportation-id-${j}`).value = getCategoryID('transportation', j);
 	getID(`departure-point-${j}`).value = j == 1 ? '' : getID(`arrival-point-${j - 1}`).value;
 	getID(`arrival-point-${j}`).value = j == 2 ? getID(`departure-point-${j - 1}`).value : '';
-	getID(`departure-${j}`).value =
-		j == 1 ? getID('start').value : j == 2 ? getID('end').value : getID(`arrival-${j - 1}`).value;
-	getID(`arrival-${j}`).value = getID(`departure-${j}`).value;
+	getID(`transportation-departure-date-${j}`).value =
+		j == 1
+			? getID('start').value
+			: j == 2
+				? getID('end').value
+				: getID(`transportation-arrival-date-${j - 1}`).value;
+	getID(`transportation-arrival-date-${j}`).value = getID(`transportation-departure-date-${j}`).value;
 
 	// Initialize date range picker for this transportation
 	const transportDurPicker = getID(`transportation-duration-${j}`);
-	if (transportDurPicker) new DateRangePicker(transportDurPicker);
+	if (transportDurPicker) TRANSPORTATION_PICKERS.set(j, new DateRangePicker(transportDurPicker));
 
 	loadTransportationListeners(j);
 	loadTransportationVisibility(j);
