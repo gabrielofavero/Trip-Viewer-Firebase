@@ -2,46 +2,12 @@ import { getCurrencies } from '../../../app/config.js';
 import { LANGUAGES, translate } from '../../../i18n/translation.js';
 import { getDescriptionValue } from '../../../models/destination.model.js';
 import { getPriceValue } from '../../../models/destination.model.js';
-import { getDestinationTitle } from '../../../utils/dom.js';
-import { getDestinationsBoxHTML } from '../../../utils/dom.js';
-import { getPlanned, getPeriod } from '../categories.js';
-import { getRatingClass } from '../categories.js';
-import { getRatingIcon } from '../categories.js';
+import { getPeriod } from '../categories.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../../../data/state.js';
 import { ACTIVE_CATEGORY } from '../destination.js';
 import { FILTER_SORT_DATA } from './sort-and-filter/sort-and-filter.js';
 import { getDescriptionVisibility } from './visibility.js';
 import { getPriceVisibility } from './visibility.js';
-
-export function getDestinationsHTML({ j, id, item, closeAction = '_processAccordion' }) {
-	const planned = getPlanned(id);
-	const editBtn = true;
-	return `
-    <div class="accordion-group" id='destinations-box-${j}'>
-        <div id="destinations-${j}" class="accordion-item" data-drag-listener="true" data-id="${id}">
-            <h2 class="accordion-header" id="heading-destinations-${j}">
-                <button id="destinations-title-${j}" class="accordion-button flex-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-destinations-${j}" aria-expanded="false" aria-controls="collapse-destinations-${j}" data-action="${closeAction.replace('_', '')}" data-index="${j}">
-                    <span class="title-text" id="destinations-title-text-${j}">${getDestinationTitle(item)}</span>
-                    <div class="icon-container new-box" style="display: ${item.isNew ? 'block' : 'none'}">
-                        <svg class="new" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 11.4 5.3" style="enable-background:new 0 0 11.4 5.3;" xml:space="preserve" height="1em"> <style type="text/css"> .st0 { fill: none; }</style>
-                            <path d="M11.4,4.8l-1.3-2.2l1.3-2.1c0.1-0.2,0-0.4-0.1-0.5c-0.1,0-0.1,0-0.2,0H0.7C0.3,0,0,0.3,0,0.7v4C0,5,0.3,5.3,0.7,5.3h10.4 c0.2,0,0.3-0.1,0.3-0.3C11.4,4.9,11.4,4.9,11.4,4.8 M3.5,3.7H3.1L2,2.3v1.5H1.7V1.7H2l1.1,1.5V1.7h0.4L3.5,3.7z M5.6,2H4.4v0.5h1.1 v0.3H4.4v0.5h1.2v0.3H4.1v-2h1.5L5.6,2z M8.4,3.7H8L7.5,2.2L7,3.7H6.6L5.9,1.7h0.4l0.4,1.5l0.5-1.5h0.4l0.5,1.5l0.4-1.5H9L8.4,3.7z" />
-                            <path class="st0" d="M0-3.3h12v12H0V-3.3z" />
-                        </svg>
-                    </div>
-                    <div class="icon-container" style="display: ${planned ? 'block' : 'none'}">
-                        <i class="iconify planned" data-icon="fa-solid:check"></i>
-                    </div>
-                    <div class="icon-container" style="display: ${item.rating ? 'block' : 'none'}">
-                        <i class="iconify rating ${getRatingClass(item.rating)}" data-icon="${getRatingIcon(item.rating)}"></i>
-                    </div>
-                </button>
-            </h2>
-            <div id="collapse-destinations-${j}" class="accordion-collapse collapse" aria-labelledby="heading-destinations-${j}" data-bs-parent="#destinations-box">
-                ${getDestinationsBoxHTML({ j, id, item, planned, editBtn } as any)}
-            </div>
-        </div>
-    </div>`;
-}
 
 export function getDestinationsAccordionBodyHTML({
 	j,

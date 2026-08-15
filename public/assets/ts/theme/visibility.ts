@@ -176,11 +176,6 @@ export function applyMode({ isDark, loadCss = true, barColor, hoverFn, secondary
 					await import('../pages/trip-detail/support/visibility.js')
 				).loadViewCustomVisibilityRules();
 				break;
-			case 'destination':
-				(
-					await import('../pages/destination/support/visibility.js')
-				).applyAccordionArrowCustomColor();
-				break;
 			case 'expenses':
 				(await import('../pages/expenses/support/data.js')).changeChartsLabelsVisibility();
 				loadCurrenciesTab();

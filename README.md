@@ -41,7 +41,7 @@ npm run dev
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 174   | 169  | 3         | 2       |
-| 🏆   | Feature     | F000 | 180   | 161  | 17        | 2       |
+| 🏆   | Feature     | F000 | 181   | 162  | 17        | 2       |
 | 📈   | Improvement | M000 | 178   | 152  | 22        | 4       |
 | ⚔️   | Epic        | E000 | 51    | 38   | 7         | 6       |
 
@@ -113,6 +113,7 @@ npm run dev
 - 📈 **M172:** Minor visual improvements on index.html (search, order, image loading)
 - 📈 **M178:** [DEV] reorganize docs
 - 📈 **M177:** Make tab selector on index mobile friendly
+- 🏆 **F181:** New destination page look (cards, hero background, lazy load, search, tab bar)
 
 ### July 2026
 

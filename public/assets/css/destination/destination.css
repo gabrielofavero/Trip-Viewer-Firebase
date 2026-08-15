@@ -63,84 +63,6 @@ h1::after {
 	left: calc(50% - 20px);
 }
 
-.destinations-select-container {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.destinations-select {
-	font-size: 24px;
-	padding: 8px;
-	margin: 0;
-	border-radius: 9999px;
-	margin-top: 1em;
-	color: var(--font-color);
-	align-items: center;
-}
-
-.destinations-select .container {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 8px;
-	cursor: pointer;
-}
-
-.destinations-select.opened .chevron {
-	transform: rotate(0deg);
-}
-
-.destinations-select .chevron {
-	transform: rotate(180deg);
-	transition: transform 0.3s ease;
-}
-
-.destinations-select .dropdown {
-	position: absolute;
-	top: 100%;
-	left: 50%;
-	transform: translateX(-50%);
-	background: var(--background-color);
-	border: 1px solid var(--border-color);
-	border-radius: 0.5rem;
-	box-shadow: 0 2px 6px rgba(166, 166, 166, 0.05);
-	z-index: 1000;
-	min-width: 180px;
-}
-
-.destinations-select .dropdown .option {
-	background-color: transparent;
-	transition: background-color 0.15s ease;
-	border-radius: 0.5rem;
-}
-
-.destinations-select .dropdown .option:hover {
-	background-color: var(--theme-color-secondary);
-}
-
-.destinations-select .option {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 0.5rem 1rem;
-	cursor: pointer;
-	font-family: "Open Sans", sans-serif;
-	font-size: 16px;
-	font-weight: normal;
-	color: var(--font-color);
-	text-transform: none;
-	text-align: center;
-}
-
-.destinations-select .option:hover {
-	background: var(--box-color);
-}
-
-.destinations-select .container {
-	position: relative;
-}
-
 .map-container {
 	display: flex;
 	justify-content: center;
@@ -209,77 +131,6 @@ h1::after {
 .btn-theme:focus {
 	background: var(--theme-color-hover);
 	color: #fff;
-}
-
-.card-header {
-	width: 425px;
-	float: left;
-	border-bottom: none;
-	background-color: #f9f9f9;
-}
-
-.embed {
-	margin-top: 16px;
-}
-
-.youtube-embed {
-	width: 100%;
-}
-
-.spotify-embed {
-	width: 100%;
-	height: 400px;
-}
-
-.subtitle {
-	font-weight: bold;
-	font-size: 18px;
-}
-
-.score {
-	color: #404040;
-	width: 73px;
-	float: left;
-	font-weight: bold;
-	font-size: 15px;
-	height: 55px;
-	line-height: 55px;
-	text-align: center;
-	border-left: 1px solid #dadada;
-}
-
-.details {
-	font-size: 15px;
-	font-weight: normal;
-	font-style: italic;
-	color: #595959;
-}
-
-.card-body {
-	background: var(--background-color);
-	color: #595959;
-	border-top: 1px solid #dadada;
-}
-
-@media screen and (max-width: 600px) {
-	.card-header {
-		width: 325px;
-	}
-}
-
-@media screen and (max-width: 450px) {
-	.headerP {
-		white-space: nowrap;
-	}
-
-	.card-header {
-		width: 225px;
-	}
-
-	.btn {
-		padding-left: none;
-		margin-left: -16px;
-	}
 }
 
 /*--------------------------------------------------------------
@@ -454,7 +305,6 @@ h1::after {
 	height: 36px;
 }
 
-.accordion-item,
 .add-container {
 	background-color: var(--background-color);
 	color: var(--font-color);
@@ -465,66 +315,17 @@ h1::after {
 }
 
 @media screen and (max-width: 550px) {
-	.accordion-item,
 	.add-container {
 		width: 90%;
 	}
 }
 
-.accordion-header {
-	background-color: var(--box-color);
-	color: #1f2937;
-	border-radius: 0.75rem;
-}
-
-.accordion-button {
-	background-color: var(--box-color);
-	color: #1f2937;
-}
-
-.accordion-button[aria-expanded="true"] {
-	background-color: var(--box-color);
-	color: #1f2937;
-}
-
-.accordion-button:focus {
-	/* box-shadow: 0 0 0 0.3rem rgba(88, 89, 167, 0.25); */
-	box-shadow: none;
-}
-
-.title-text {
-	flex-grow: 1;
-	font-weight: bold;
-}
-
-.new {
-	fill: var(--theme-color);
-	margin-left: auto;
-	font-size: 20px;
-}
-
-.icon-container {
-	display: flex;
-	align-items: center;
-}
-
-.accordion-button::after {
-	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' class='test' viewBox='0 0 16 16' fill='%235859a7'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
-}
-
-.nota,
-.rating,
-.rating-no-margin,
-.planned {
+.rating-no-margin {
 	font-size: 25px;
 	color: #1f2937;
-	margin-right: 10px;
+	margin-right: 0;
 	border-radius: 50%;
 	padding: 3px;
-}
-
-.rating-no-margin {
-	margin-right: 0;
 }
 
 .link {
@@ -537,13 +338,6 @@ h1::after {
 .link:hover {
 	color: #195b96;
 	text-decoration: none;
-}
-
-.rating-text {
-	color: #4f5051;
-	font-weight: bold;
-	position: relative;
-	top: 1.5px;
 }
 
 .rating-5 {
@@ -570,38 +364,6 @@ h1::after {
 	background-color: #ead1dc;
 }
 
-/* NOTE: .planejado background-color was 'none' (invalid); changed to transparent */
-.planned {
-	background-color: transparent;
-}
-
-.accordion-body {
-	padding: 20px;
-}
-
-.destinations-title {
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 16px;
-	border-bottom: 0.5px solid #d9d9d9;
-}
-
-.ratings-box {
-	display: block;
-	white-space: nowrap;
-	margin-top: 5px;
-	margin-bottom: 20px;
-}
-
-.links-container {
-	display: flex;
-	margin-top: 4.5px;
-}
-
-.links-container .iconify {
-	margin-left: 8px;
-}
-
 .color-icon {
 	font-size: 20px;
 	color: var(--theme-color);
@@ -620,65 +382,6 @@ h1::after {
 .destinations-topic {
 	margin-top: 4px;
 	margin-bottom: 4px;
-}
-
-.data-lineup {
-	font-weight: bold;
-	font-size: 20px;
-	margin-bottom: 10px;
-	color: #4f5051;
-	text-align: center;
-}
-
-.data-box {
-	margin-top: 50px;
-}
-
-.data-box:first-child {
-	margin-top: 0;
-}
-
-.midia-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.instagram-embed {
-	width: 90%;
-	clip-path: inset(57px 18px 166px 71px);
-	margin-top: -50px;
-	margin-bottom: -150px;
-	margin-left: -53px;
-}
-
-.instagram-media {
-	width: 465px !important;
-}
-
-.tiktok-embed-v2 {
-	clip-path: inset(6px 0px 0px 0px);
-	/* cut first 6px from top (white bar) */
-	width: 323.4px;
-	height: 574.92px;
-	overflow: hidden !important;
-}
-
-.tiktok-embed-v2.photo {
-	clip-path: inset(6px 0px 17px 0px);
-	/* cut first 6px from top and last 17px from bottom */
-}
-
-.tiktok-embed-v3 {
-	width: 300px;
-	height: 533px;
-}
-
-@media screen and (max-width: 550px) {
-	.tiktok-embed-v3 {
-		width: 100%;
-		/* height calculated in js function _applyDestinosMediaHeight */
-	}
 }
 
 /* DUPLICATE: #preloader already defined in base/preloader.css — kept for backward compat during migration */
