@@ -1201,3 +1201,90 @@ h1::after {
 	line-clamp: 2;
 	overflow: hidden;
 }
+
+/*--------------------------------------------------------------
+# Destination Card Media (P3)
+# Carousel + lightbox image area. Reuses the shared .portfolio-wrap
+# hover pattern (components/portfolio.css) and Swiper for ≥2 images.
+--------------------------------------------------------------*/
+.dest-card-media {
+	width: 100%;
+	height: 160px;
+	position: relative;
+	overflow: hidden;
+	flex-shrink: 0;
+	background: rgba(69, 80, 91, 0.8);
+}
+
+.dest-card-media .portfolio-wrap,
+.dest-card-media-frame {
+	width: 100%;
+	height: 100%;
+}
+
+.dest-card-media-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.dest-card-media .swiper,
+.dest-card-media .swiper-wrapper,
+.dest-card-media .swiper-slide {
+	height: 100%;
+}
+
+.dest-card-media-swiper .swiper-slide .portfolio-wrap {
+	display: block;
+}
+
+.dest-card-media .swiper-pagination {
+	bottom: 6px !important;
+}
+
+.dest-card-media .swiper-pagination .swiper-pagination-bullet {
+	width: 7px;
+	height: 7px;
+	margin: 0 3px;
+	background: #fff;
+	opacity: 0.9;
+}
+
+.dest-card-media .swiper-pagination .swiper-pagination-bullet-active {
+	background: var(--theme-color);
+}
+
+.dest-card-media .swiper-button-prev,
+.dest-card-media .swiper-button-next {
+	width: 24px;
+	height: 24px;
+	color: #fff;
+	background: rgba(0, 0, 0, 0.35);
+}
+
+.dest-card-media .swiper-button-prev::after,
+.dest-card-media .swiper-button-next::after {
+	font-size: 12px;
+}
+
+@media (max-width: 576px) {
+	.dest-card-media,
+	.dest-card-media .swiper {
+		height: 140px;
+	}
+}
+
+/*--------------------------------------------------------------
+# Destination Card Expand/Collapse (P5)
+# Cards are collapsed by default (image + title); clicking a card
+# toggles `.dest-card.open` to reveal the detail region (shared
+# detail body + actions + edit button).
+--------------------------------------------------------------*/
+.dest-card-detail {
+	display: none;
+}
+
+.dest-card.open .dest-card-detail {
+	display: block;
+}

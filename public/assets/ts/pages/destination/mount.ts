@@ -18,24 +18,19 @@ import {
 	setDocumentId,
 	setFirestoreDestinationsData,
 } from '../../data/state.js';
-import { getID, getJs, getErrorFromGetRequestMessage } from '../../utils/dom.js';
+import { getID, getErrorFromGetRequestMessage } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
 import { stopLoadingScreen } from '../../utils/loading.js';
 import { loadActiveCategory, ACTIVE_CATEGORY } from './categories.js';
 import { adjustEditVisibility, restoreIfEditing } from './edit-destination.js';
 import { getDestinationCardHTML } from './support/card.js';
+import { onCardClose, onCardOpen } from './support/card-media.js';
 import { filter } from './support/sort-and-filter/filter.js';
 import { sort } from './support/sort-and-filter/sort.js';
-import {
-	loadMedia,
-	unloadMedia,
-	unloadMedias,
-	MEDIA_HYPERLINKS,
-} from './support/media-embed.js';
 import { loadSortAndFilter } from './support/sort-and-filter/sort-and-filter.js';
 import { adjustDrawer } from './support/sort-and-filter/support/drawer.js';
 import { getTripData, loadPlannedDestination, PLANNED_DESTINATION } from './support/trip.js';
-import { applyDestinationsMediaHeight, loadDestinationVisibility } from './support/visibility.js';
+import { loadDestinationVisibility } from './support/visibility.js';
 import { LazyGrid } from '../../ui/lazy-grid.js';
 
 export { ACTIVE_CATEGORY };
@@ -127,7 +122,6 @@ export async function mountDestination(
 				getID('destinations-grid-sentinel')?.remove();
 				SENTINEL_CREATED = false;
 			}
-			unloadMedias(undefined);
 			container.innerHTML = '';
 		};
 	}
@@ -141,10 +135,6 @@ export function loadDestinationByType(activeCategory) {
 
 	content.innerHTML = '';
 	CONTENT = [];
-	// Clear MEDIA_HYPERLINKS in-place (imported bindings are read-only)
-	for (const key of Object.keys(MEDIA_HYPERLINKS)) {
-		delete MEDIA_HYPERLINKS[key];
-	}
 
 	if (activeCategory === 'myMaps') {
 		content.classList = 'map-content';
@@ -234,30 +224,32 @@ export function setSearchQuery(query) {
 }
 
 // Actions
-export function processAccordion(j) {
+export function processCard(j) {
 	restoreIfEditing(j);
 	adjustDrawer();
-	toggleMedia(j);
-	unloadMedias(j);
-	closeAccordions(j);
+
+	const card = getID(`destinations-card-${j}`);
+	if (!card) return;
+
+	const willOpen = !card.classList.contains('open');
+	card.classList.toggle('open', willOpen);
+
+	if (willOpen) {
+		closeOtherCards(j);
+		onCardOpen(j);
+	} else {
+		onCardClose(j);
+	}
+
 	adjustEditVisibility(j);
 }
 
-function toggleMedia(j) {
-	const button = getID(`destinations-title-${j}`);
-	const media = `media-${j}`;
-	if (button.classList.contains('collapsed')) {
-		unloadMedia(media);
-	} else {
-		loadMedia(media);
-		applyDestinationsMediaHeight();
-	}
-}
-
-function closeAccordions(exclude) {
-	for (const j of getJs('content')) {
-		if (j !== exclude) {
-			$(`#collapse-destinations-${j}`).collapse('hide');
+function closeOtherCards(j) {
+	for (const card of document.querySelectorAll<HTMLElement>('.dest-card.open')) {
+		const index = Number(card.getAttribute('data-index'));
+		if (Number.isFinite(index) && index !== j) {
+			card.classList.remove('open');
+			onCardClose(index);
 		}
 	}
 }
@@ -275,7 +267,7 @@ export function getDataSet(key) {
 }
 
 export function getDestinationID(j) {
-	const destination = getID(`destinations-${j}`);
+	const destination = getID(`destinations-card-${j}`);
 	return destination.getAttribute('data-id');
 }
 

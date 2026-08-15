@@ -197,14 +197,7 @@ export async function openDestinationLightbox(destinationId: string, type?: stri
 }
 
 // ======= Media Lightbox (kept — gallery / accommodations / inner itinerary) =======
+// Re-exported from the shared ui/lightbox.ts wrapper so the view galleries and
+// the destination card media (P3) share a single GLightbox registration helper.
 
-export function loadImageLightbox(className) {
-	GLightbox({
-		selector: `.${className}`,
-		autofocusVideos: false,
-		touchNavigation: true,
-		touchFollowAxis: true,
-		width: 'auto',
-		height: 'auto',
-	});
-}
+export { loadImageLightbox } from '../../../ui/lightbox.js';

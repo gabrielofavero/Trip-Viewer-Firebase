@@ -13,19 +13,28 @@ import { getCardActionsHTML } from './card-actions.js';
 import { getCardEditHTML } from './card-edit.js';
 import { getCardImageHTML } from './card-media.js';
 
-export function getDestinationCardHTML({ j, id, item }) {
-	const planned = getPlanned(id);
-
+export function getDestinationCardHTML({ j, id, item, closeAction = 'processCard' }) {
 	return `
-        <div class="dest-card destination-card" id="destinations-card-${j}" data-id="${id}" data-index="${j}">
+        <div class="dest-card destination-card" id="destinations-card-${j}" data-id="${id}" data-index="${j}" data-action="${closeAction}">
             ${getCardImageHTML(item, j)}
             ${getScoreBadgeHTML(item)}
             <div class="dest-card-body destination-card-body">
                 <div class="dest-card-title destination-card-title">${getDestinationTitle(item)}</div>
-                ${getDestinationsAccordionBodyHTML({ j, item, planned, editBtn: false, values: undefined as any, currency: undefined as any })}
-                ${getCardActionsHTML(item)}
-                ${getCardEditHTML(item, j)}
+                ${getCardBodyHTML({ j, id, item })}
             </div>
+        </div>`;
+}
+
+/** The swappable detail region (shared detail body + actions + edit button).
+ *  P5 swaps it for the edit form (`edit`) and rebuilds it (`restoreCardBody`). */
+export function getCardBodyHTML({ j, id, item }) {
+	const planned = getPlanned(id);
+
+	return `
+        <div class="dest-card-detail" id="card-body-${j}" data-stop-propagation>
+            ${getDestinationsAccordionBodyHTML({ j, item, planned, editBtn: false, values: undefined as any, currency: undefined as any })}
+            ${getCardActionsHTML(item)}
+            ${getCardEditHTML(item, j)}
         </div>`;
 }
 

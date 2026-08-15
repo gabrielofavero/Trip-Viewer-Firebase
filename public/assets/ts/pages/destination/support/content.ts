@@ -1,19 +1,16 @@
 import { getCurrencies } from '../../../app/config.js';
 import { LANGUAGES, translate } from '../../../i18n/translation.js';
 import { getDescriptionValue } from '../../../models/destination.model.js';
-import { getRatingTranslation } from '../../../models/destination.model.js';
 import { getPriceValue } from '../../../models/destination.model.js';
 import { getDestinationTitle } from '../../../utils/dom.js';
 import { getDestinationsBoxHTML } from '../../../utils/dom.js';
-import { getLinkOnClick, getPlanned, getPeriod } from '../categories.js';
+import { getPlanned, getPeriod } from '../categories.js';
 import { getRatingClass } from '../categories.js';
 import { getRatingIcon } from '../categories.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../../../data/state.js';
 import { ACTIVE_CATEGORY } from '../destination.js';
 import { FILTER_SORT_DATA } from './sort-and-filter/sort-and-filter.js';
 import { getDescriptionVisibility } from './visibility.js';
-import { getDestinationsTitleVisibility } from './visibility.js';
-import { getLinksContainerVisibility } from './visibility.js';
 import { getPriceVisibility } from './visibility.js';
 
 export function getDestinationsHTML({ j, id, item, closeAction = '_processAccordion' }) {
@@ -64,27 +61,10 @@ export function getDestinationsAccordionBodyHTML({
 		currency = FIRESTORE_DESTINATIONS_DATA?.currency || 'BRL';
 	}
 
-	const ediText = editBtn
-		? `<div class="edit-container" id="edit-container-${j}">
-    <button class="edit-btn" id="edit-${j}" data-action="edit-destination" data-index="${j}">
-        <i class="iconify user-data-icon" data-icon="tabler:edit"></i>
-        <span>${translate('labels.edit')}</span>
-    </button>
-</div>`
-		: '';
-
+	// The edit button moved to the card shell (support/card-edit.ts, P5) — this
+	// shared detail renderer no longer emits one. `editBtn` is kept in the
+	// signature for backward compatibility with `getDestinationsBoxHTML`.
 	return `
-        <div class="destinations-title" style="display: ${getDestinationsTitleVisibility(item)}">
-            <div class="ratings-box">
-                <i class="iconify rating-no-margin ${getRatingClass(item.rating)}" data-icon="${getRatingIcon(item.rating)}"></i>
-                <span class="rating-text">${getRatingTranslation(item.rating)}</span>
-            </div>
-            <div class="links-container" style="display: ${getLinksContainerVisibility(item)}">
-                <i class="iconify link" data-icon="f7:map" style="display: ${item.map ? 'block' : 'none'}"${getLinkOnClick(item, 'map')}></i>
-                <i class="iconify link" data-icon="ri:instagram-line" style="display: ${item.instagram ? 'block' : 'none'}"${getLinkOnClick(item, 'instagram')}></i>
-                <i class="iconify link" data-icon="tabler:world" style="display: ${item.website ? 'block' : 'none'}"${getLinkOnClick(item, 'website')}></i>
-            </div>
-        </div>
         <div class="destinations-text">
             <div class="destinations-topic" style="display: ${planned ? 'block' : 'none'}">
                 <i class="iconify color-icon" data-icon="fa-solid:check"></i>
@@ -103,8 +83,6 @@ export function getDestinationsAccordionBodyHTML({
             <div class="destinations-description" style="display: ${getDescriptionVisibility(item)}">
                 ${getDescriptionValue(item)}
             </div>
-            <div id="media-${j}" class="media-container"></div>
-            ${ediText}
         </div>`;
 }
 

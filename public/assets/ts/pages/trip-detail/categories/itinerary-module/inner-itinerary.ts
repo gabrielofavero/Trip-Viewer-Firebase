@@ -9,7 +9,6 @@ import {
 	getDestinationsBoxHTML,
 	getID,
 	getInnerItineraryTitleHTML,
-	getLinkMediaButton,
 } from '../../../../utils/dom.js';
 import { displayFullMessage, MESSAGE_PROPERTIES } from '../../../../utils/messages.js';
 import { translate } from '../../../../i18n/translation.js';
@@ -185,10 +184,6 @@ export async function displayInnerItineraryMessage(index) {
 		case 'accommodations':
 			loadImageLightbox('label-gallery');
 			break;
-		case 'destinations':
-			if (entry.media) {
-				loadInnerItineraryMedia(entry.media);
-			}
 	}
 }
 
@@ -210,11 +205,6 @@ function updateInnerItineraryMessage(entry) {
 	const descEl = getID('message-description');
 	if (titleEl) titleEl.innerHTML = entry.title;
 	if (descEl) descEl.innerHTML = entry.content;
-	if (entry.media) loadInnerItineraryMedia(entry.media);
-}
-
-function loadInnerItineraryMedia(media) {
-	getID('media-1').innerHTML = getLinkMediaButton(media);
 }
 
 export function loadCalendarItem(day, month, year, instant = false) {

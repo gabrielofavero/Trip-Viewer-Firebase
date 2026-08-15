@@ -4,7 +4,6 @@ import { setCSSRule } from '../../../theme/stylesheets.js';
 import { getDescriptionValue } from '../../../models/destination.model.js';
 import { THEME_COLOR } from '../../../theme/theme.js';
 import { adjustEditVisibility } from '../edit-destination.js';
-import { MEDIA_HYPERLINKS } from './media-embed.js';
 
 export async function loadDestinationVisibility() {
 	loadVisibility();
@@ -20,25 +19,6 @@ function adjustButtonsPositionDestinations() {
 
 	closeButton.style.right = first;
 	nightMode.style.right = second;
-}
-
-export function applyDestinationsMediaHeight() {
-	const keys = Object.keys(MEDIA_HYPERLINKS);
-	const firstDiv = getID('destinations-1');
-	if (keys.length > 0 && firstDiv) {
-		const width = firstDiv.offsetWidth - 40; // 20px padding em cada lado
-
-		const heightPortrait = (width * 16) / 9;
-		const heightLandscape = (width * 9) / 16;
-
-		setCSSRule('.youtube-embed', 'height', `${heightLandscape}px`);
-
-		if (getID('content').offsetWidth <= 550) {
-			setCSSRule('.tiktok-embed-v3', 'height', `${heightPortrait}px`);
-		} else {
-			setCSSRule('.tiktok-embed-v3', 'height', `533px`);
-		}
-	}
 }
 
 export function applyAccordionArrowCustomColor() {

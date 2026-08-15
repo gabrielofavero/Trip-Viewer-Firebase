@@ -270,6 +270,10 @@
 	background: linear-gradient(135deg, var(--theme-color), var(--theme-secondary));
 }
 
+[data-theme="dark"] .dest-card-media {
+	background: rgba(44, 44, 46, 0.7);
+}
+
 [data-theme="dark"] .card-header {
 	background-color: var(--box-color);
 }

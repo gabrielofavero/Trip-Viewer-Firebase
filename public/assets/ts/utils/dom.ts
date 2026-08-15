@@ -23,6 +23,7 @@ import {
 	getHotelBoxHTML,
 } from '../pages/trip-detail/categories/accommodation-module.js';
 import { getDestinationsAccordionBodyHTML } from '../pages/destination/support/content.js';
+import { getCardActionsHTML } from '../pages/destination/support/card-actions.js';
 
 export function firstCharToUpperCase(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1);
@@ -526,9 +527,11 @@ export function getDestinationsBoxHTML({
 	planned,
 	editBtn,
 }) {
+	const actions = innerItinerary ? getCardActionsHTML(item) : '';
 	return `
     <div ${innerItinerary ? '' : `class="accordion-body" id="accordion-body-${j}"`}>
         ${getDestinationsAccordionBodyHTML({ j, item, values: values, currency: currency, planned: planned, editBtn })}
+        ${actions}
     </div>`;
 }
 

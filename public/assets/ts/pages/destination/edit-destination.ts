@@ -1,6 +1,6 @@
 import { getCurrencies } from '../../app/config.js';
 import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
-import { getID, getLastUnorderedJ, getRandomID, normalizeTikTokLink } from '../../utils/dom.js';
+import { getID, getRandomID, normalizeTikTokLink } from '../../utils/dom.js';
 import { DOCUMENT_ID } from '../../data/state.js';
 import { getLanguagePackName, LANGUAGES, translate } from '../../i18n/translation.js';
 import {
@@ -13,27 +13,27 @@ import {
 import { closeMessage, displayMessage, displayPrompt } from '../../utils/messages.js';
 import { update } from '../../data/firebase/database.js';
 import { getUID } from '../../data/firebase/auth.js';
-import { getRatingClass, getPlanned } from './categories.js';
+import { getRatingClass } from './categories.js';
 import { getRatingIcon } from './categories.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../../data/state.js';
 import {
 	ACTIVE_CATEGORY,
+	CONTENT,
 	getDestinationID,
 	getItem,
 	getItemFromJ,
-	processAccordion,
+	processCard,
 	refreshDestination,
 } from './destination.js';
-import { getDestinationsAccordionBodyHTML } from './support/content.js';
-import { getDestinationsHTML } from './support/content.js';
 import { getEditHTML } from './support/content.js';
+import { getCardBodyHTML, getDestinationCardHTML } from './support/card.js';
+import { onCardClose } from './support/card-media.js';
 import {
 	populatePlannedDestinationEditField,
 	refreshTripData,
 	resetActivePlannedDestination,
 	setPlannedDestination,
 } from './support/trip.js';
-import { openDestinationsAccordion } from './support/visibility.js';
 
 let ADDED_J;
 
@@ -47,14 +47,15 @@ export async function edit(j: number): Promise<void> {
 
 	const id = getDestinationID(j);
 	const item = FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY]?.[id];
-	const accordionBody = getID(`accordion-body-${j}`);
+	const cardBody = getID(`card-body-${j}`);
 
-	if (!item || !accordionBody) {
+	if (!item || !cardBody) {
 		editError();
 		return;
 	}
 
-	accordionBody.innerHTML = getEditHTML(j);
+	onCardClose(j);
+	cardBody.innerHTML = getEditHTML(j);
 
 	populateEditFields(j, item);
 	setEditListeners(j, item);
@@ -114,35 +115,33 @@ export async function add(): Promise<void> {
 		return;
 	}
 
-	const accordionItems = Array.from(document.querySelectorAll('.accordion-item'));
-	const pool = accordionItems.map((el) => el.getAttribute('data-id')).filter((id) => id !== null);
-
-	const id = getRandomID({ pool });
-	const j = getLastUnorderedJ('content') + 1;
+	const ids = CONTENT.map((entry) => entry.id);
+	const id = getRandomID({ pool: ids });
+	// Use the full entry list (not the DOM) so the new card's index never
+	// collides with a card that lazy-loads later.
+	const j = CONTENT.length + 1;
 	const item = {
 		name: translate('destination.new'),
 		rating: 'default',
 		isNew: true,
 	};
-	const closeAction = '_closeAddedDestination';
-	getID('content').innerHTML += getDestinationsHTML({
-		j,
-		id,
-		item,
-		closeAction,
-	});
 
-	const accordionBody = getID(`accordion-body-${j}`);
-	if (!accordionBody) {
+	getID('content').insertAdjacentHTML(
+		'beforeend',
+		getDestinationCardHTML({ j, id, item, closeAction: 'closeAddedDestination' }),
+	);
+
+	const cardBody = getID(`card-body-${j}`);
+	if (!cardBody) {
 		editError();
 		return;
 	}
 
 	ADDED_J = j;
-	accordionBody.innerHTML = getEditHTML(ADDED_J);
+	getID(`destinations-card-${j}`).classList.add('open');
+	cardBody.innerHTML = getEditHTML(ADDED_J);
 	getID(`edit-delete-${ADDED_J}`).style.visibility = 'hidden';
 
-	openDestinationsAccordion(ADDED_J);
 	applyDescriptionLanguage(ADDED_J);
 	setAddListeners();
 }
@@ -153,7 +152,8 @@ export async function adjustEditVisibility(j?: number): Promise<void> {
 	const display = canUserEdit ? '' : 'none';
 	(document.querySelector('.add-container') as HTMLElement).style.display = display;
 	if (j) {
-		getID(`edit-container-${j}`).style.display = display;
+		const container = getID(`edit-container-${j}`);
+		if (container) container.style.display = display;
 		return;
 	}
 
@@ -205,8 +205,8 @@ function setFieldListeners(j: number): void {
 
 function setEditListeners(j, item) {
 	getID(`close-btn-${j}`).onclick = () => {
-		restoreAccordionBody(j, item);
-		processAccordion(j);
+		restoreCardBody(j, item);
+		processCard(j);
 	};
 
 	getID(`edit-delete-${j}`).onclick = () => {
@@ -371,38 +371,29 @@ export function closeAddedDestination(index?) {
 	if (!ADDED_J) {
 		return;
 	}
-	removeEl(`destinations-box-${ADDED_J}`);
+	removeEl(`destinations-card-${ADDED_J}`);
 	adjustEditVisibility();
 	ADDED_J = null;
 	resetActivePlannedDestination();
 }
 
-function restoreAccordionBody(j: number, item: Record<string, any>): void {
+function restoreCardBody(j: number, item: Record<string, any>): void {
 	const id = getDestinationID(j);
-	const planned = getPlanned(id);
-	const editBtn = true;
-	getID(`accordion-body-${j}`)!.innerHTML = getDestinationsAccordionBodyHTML({
-		j,
-		item,
-		planned,
-		editBtn,
-		values: undefined as any,
-		currency: undefined as any,
-	});
+	getID(`card-body-${j}`)!.innerHTML = getCardBodyHTML({ j, id, item });
 }
 
 export function restoreIfEditing(j) {
 	if (isEditing(j)) {
 		const item = getItemFromJ(j);
 		if (!item) return;
-		restoreAccordionBody(j, item);
+		restoreCardBody(j, item);
 	}
 }
 
 // Checkers
 function isEditing(j) {
-	const accordionBody = getID(`accordion-body-${j}`);
-	return accordionBody.querySelector('.edit-title-container') != undefined;
+	const cardBody = getID(`card-body-${j}`);
+	return cardBody != null && cardBody.querySelector('.edit-title-container') != null;
 }
 
 async function canEdit() {

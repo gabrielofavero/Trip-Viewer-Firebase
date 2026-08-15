@@ -6,9 +6,7 @@ import { getID, getURLParams } from '../../utils/dom.js';
 import { ACTIVE_CATEGORY, updateActiveCategory } from './categories.js';
 import { loadDestinationByType, mountDestination, setSearchQuery } from './mount.js';
 import { loadDestinationListeners } from './support/event-listeners.js';
-import { adjustMediaEmbeds } from './support/media-embed.js';
 import { adjustDrawer } from './support/sort-and-filter/support/drawer.js';
-import { applyDestinationsMediaHeight } from './support/visibility.js';
 
 // Re-exports for the destination page modules that historically import from
 // this file (the shared helpers now live in ./mount.js).
@@ -16,7 +14,7 @@ export { ACTIVE_CATEGORY } from './categories.js';
 export {
 	CONTENT,
 	applyContent,
-	processAccordion,
+	processCard,
 	getDataSet,
 	getDestinationID,
 	getItemFromJ,
@@ -53,10 +51,6 @@ export async function loadDestinationPage() {
 
 	loadDestinationTabBar();
 	loadDestinationSearch();
-	window.addEventListener('resize', () => {
-		applyDestinationsMediaHeight();
-		adjustMediaEmbeds();
-	});
 }
 
 function loadDestinationTabBar() {
