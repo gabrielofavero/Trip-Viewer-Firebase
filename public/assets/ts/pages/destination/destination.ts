@@ -2,10 +2,9 @@ import { getDestinations } from '../../app/config.js';
 import { setPageName } from '../../app/main.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../../data/state.js';
 import { translate } from '../../i18n/translation.js';
-import { loadCloseCustomSelectListeners, loadCustomSelect } from '../../ui/custom-select.js';
 import { getID, getURLParams } from '../../utils/dom.js';
 import { ACTIVE_CATEGORY, updateActiveCategory } from './categories.js';
-import { loadDestinationByType, mountDestination } from './mount.js';
+import { loadDestinationByType, mountDestination, setSearchQuery } from './mount.js';
 import { loadDestinationListeners } from './support/event-listeners.js';
 import { adjustMediaEmbeds } from './support/media-embed.js';
 import { adjustDrawer } from './support/sort-and-filter/support/drawer.js';
@@ -52,28 +51,38 @@ export async function loadDestinationPage() {
 	setPageName(title);
 	getID('title').innerText = title;
 
-	loadDestinationCustomSelect();
+	loadDestinationTabBar();
+	loadDestinationSearch();
 	window.addEventListener('resize', () => {
 		applyDestinationsMediaHeight();
 		adjustMediaEmbeds();
 	});
 }
 
-function loadDestinationCustomSelect() {
-	const customSelect = {
-		id: 'destinations-select',
-		options: getDestinationCustomSelectOptions(),
-		activeOption: ACTIVE_CATEGORY === 'map' ? 'myMaps' : ACTIVE_CATEGORY,
-		action: loadDestinationCustomSelectAction,
-	};
+function loadDestinationTabBar() {
+	const tabBar = getID('destination-tab-bar');
+	if (!tabBar) return;
 
-	loadCustomSelect(customSelect);
-	loadCloseCustomSelectListeners();
+	tabBar.innerHTML = getDestinationTabsHTML();
+	tabBar.style.display = '';
 
-	function getDestinationCustomSelectOptions() {
-		const result = [];
+	for (const tab of Array.from(tabBar.querySelectorAll('.edit-tab'))) {
+		(tab as HTMLElement).addEventListener('click', () => {
+			const value = tab.getAttribute('data-category');
+			if (!value) return;
+			activateDestinationTab(tabBar, tab as HTMLElement);
+			adjustDrawer();
+			updateActiveCategory(value);
+			loadDestinationByType(value);
+		});
+	}
+
+	function getDestinationTabsHTML() {
 		const destinationsConfig = getDestinations();
 		const values = destinationsConfig.categories.ids;
+		const activeValue = ACTIVE_CATEGORY === 'map' ? 'myMaps' : ACTIVE_CATEGORY;
+		let result = '';
+
 		for (const value in FIRESTORE_DESTINATIONS_DATA) {
 			if (
 				!values.includes(value) ||
@@ -86,15 +95,41 @@ function loadDestinationCustomSelect() {
 
 			const key = destinationsConfig.translation[value].toLowerCase();
 			const label = translate(`destination.${key}.title`);
-			result.push({ value, label });
+			const icon = destinationsConfig.icons[value] || destinationsConfig.icons['map'];
+			const isActive = value === activeValue;
+
+			result += `
+                <button class="edit-tab${isActive ? ' active' : ''}" data-category="${value}">
+                    <i class="${icon}"></i>
+                    <span>${label}</span>
+                </button>`;
 		}
 		return result;
 	}
+}
 
-	function loadDestinationCustomSelectAction(value) {
-		adjustDrawer();
-		updateActiveCategory(value);
-		loadDestinationByType(value);
+function activateDestinationTab(tabBar: HTMLElement, activeTab: HTMLElement) {
+	for (const tab of Array.from(tabBar.querySelectorAll('.edit-tab'))) {
+		tab.classList.toggle('active', tab === activeTab);
+	}
+}
+
+function loadDestinationSearch() {
+	const input = getID('destination-search-input') as HTMLInputElement | null;
+	const clear = getID('destination-search-clear');
+	if (!input) return;
+
+	input.addEventListener('input', () => {
+		setSearchQuery(input.value);
+		if (clear) clear.style.display = input.value ? 'flex' : 'none';
+	});
+
+	if (clear) {
+		clear.addEventListener('click', () => {
+			input.value = '';
+			setSearchQuery('');
+			clear.style.display = 'none';
+		});
 	}
 }
 

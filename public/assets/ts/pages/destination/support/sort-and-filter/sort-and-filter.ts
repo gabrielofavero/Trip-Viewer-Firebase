@@ -2,10 +2,8 @@ import { getID } from '../../../../utils/dom.js';
 import { CONTENT, getDataSet, ACTIVE_CATEGORY } from '../../destination.js';
 import { closeAddedDestination } from '../../edit-destination.js';
 import { PLANNED_DESTINATION } from '../trip.js';
-import { filter } from './filter.js';
 import { loadFilterOptions } from './filter.js';
 import { loadSortOptions } from './sort.js';
-import { sort } from './sort.js';
 import { closeDrawer } from './support/drawer.js';
 import { isDrawerOpen } from './support/drawer.js';
 import { openDrawer } from './support/drawer.js';
@@ -25,8 +23,6 @@ export function loadSortAndFilter(force = false) {
 	loadFilterOptions(force);
 	loadSortOptions(force);
 	loadSortAndFilterVisibility();
-	sort();
-	filter();
 }
 
 function loadSortAndFilterVisibility() {

@@ -12,14 +12,14 @@ import {
 import { filterDrawerOptionClickAction } from './support/drawer.js';
 import { filterDrawerOptionLoadAction } from './support/drawer.js';
 import { getFilterDrawerInnerHTML } from './support/drawer.js';
-import { ACTIVE_CATEGORY, applyContent, CONTENT, getItem, isPlanned } from '../../destination.js';
+import { ACTIVE_CATEGORY, CONTENT, isPlanned } from '../../destination.js';
 import { getFilterPreferences } from './support/preferences.js';
 import { getPrices } from './support/price-bucket.js';
 
 export const FILTER_OPTIONS: Record<string, Record<string, Record<string, string>>> = {};
 
 // Main Action
-export function filter(render = false) {
+export function filter(entries = CONTENT) {
 	const preferences = getFilterPreferences();
 	const isPlannedEnabled = shouldDisplayPlanned() && preferences.planned !== 'everything';
 	const isPricesEnabled = shouldDisplayPrices() && preferences.prices !== 'everything';
@@ -29,23 +29,18 @@ export function filter(render = false) {
 		preferences.region !== 'everything' &&
 		FILTER_SORT_DATA[ACTIVE_CATEGORY].region.has(preferences.region);
 
-	for (const content of CONTENT) {
-		const item = getItem(content.id);
+	return entries.filter((entry) => {
+		const item = entry.item;
 		if (
-			(isPlannedEnabled && shouldFilterByPlanned(content.id)) ||
+			(isPlannedEnabled && shouldFilterByPlanned(entry.id)) ||
 			(isPricesEnabled && shouldFilterByPrices(item)) ||
 			(isScoresEnabled && shouldFilterByScores(item)) ||
 			(isRegionsEnabled && shouldFilterByRegions(item))
 		) {
-			content.filtered = true;
-			continue;
+			return false;
 		}
-		content.filtered = false;
-	}
-
-	if (render) {
-		applyContent();
-	}
+		return true;
+	});
 
 	function shouldFilterByPlanned(id) {
 		const planned = isPlanned(id);

@@ -36,7 +36,7 @@ import {
 } from './navigation.js';
 import { isOnDarkMode } from '../../../theme/visibility.js';
 import { getDarkerColor, getLighterColor, hexToRgb } from '../../../theme/colors.js';
-import { LazyGrid } from './lazy-grid.js';
+import { LazyGrid } from '../../../ui/lazy-grid.js';
 
 var INDEX_DATA: Record<string, any> = {};
 var CURRENT_TRIPS: any[] = [];
