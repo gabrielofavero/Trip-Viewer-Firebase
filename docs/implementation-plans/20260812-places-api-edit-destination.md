@@ -47,7 +47,7 @@
 ## 3. Contracts (placeholders — confirm against real Cloudflare routes)
 
 > **✅ Prompt 13 (done):** The **finalized backend contract** now lives in
-> [`docs/ai-analysis/7-places-api-backend-contract.md`](7-places-api-backend-contract.md)
+> [`docs/contracts/20260808-places-api-backend-contract.md`](../contracts/20260808-places-api-backend-contract.md)
 > — exact request/response JSON, `businessStatus` handling, photo reference format,
 > and the auth/uid/lang contract for the Cloudflare worker. The summary below is kept
 > in sync as a quick reference; the contract doc is the source of truth.
@@ -242,10 +242,10 @@ public/assets/ts/
 
 ### Prompt 13 — Backend (Cloudflare) contract doc (documentation only)
 - **Deps:** P1 (finalized types). **Parallel with:** anything after P1.
-- **Files:** this planning doc (§3) + optionally `docs/ai-analysis/` follow-up; no runtime code.
+- **Files:** this planning doc (§3) + optionally `docs/contracts/` follow-up; no runtime code.
 - **Steps:** Finalize the 3 routes' request/response JSON, `businessStatus` handling, photo reference format, and the auth/uid/lang contract so the Cloudflare worker can be implemented to match.
 - **Done when:** a backend dev can implement the worker without asking the frontend team.
-- **✅ Done (2026-08-08):** created `docs/ai-analysis/7-places-api-backend-contract.md` with the finalized contract (§4 data model, §5 field masks, §6 auth/uid/lang, §7 field mapping, §8 businessStatus, §9 photo refs, §10 errors, §11 worker checklist); §3 above now links to it.
+- **✅ Done (2026-08-08):** created `docs/contracts/20260808-places-api-backend-contract.md` with the finalized contract (§4 data model, §5 field masks, §6 auth/uid/lang, §7 field mapping, §8 businessStatus, §9 photo refs, §10 errors, §11 worker checklist); §3 above now links to it.
 
 ---
 

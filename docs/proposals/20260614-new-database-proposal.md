@@ -415,7 +415,7 @@ Do a **1:1 field-name and enum-value translation** across all documents. No stru
 | Con | Detail |
 |-----|--------|
 | 🔴 **Preserves all current inefficiencies** | N+1 destination reads, large user document, unbounded parallel backup reads, sequential protected reads — ALL remain. |
-| 🔴 **Deferred technical debt** | The structural problems identified in `firestore-auth-intensity.md` are punted to a future migration. Each future migration adds complexity and risk. |
+| 🔴 **Deferred technical debt** | The structural problems identified in `../analysis/20260613-firestore-auth-intensity.md` are punted to a future migration. Each future migration adds complexity and risk. |
 | 🔴 **Double migration cost** | If we do Option B later, we pay the translation cost + the redesign cost separately. |
 | 🟡 **User document still unbounded** | The `users/{uid}` document continues to embed all trip/destination/listing summaries inline, growing toward the 1 MiB Firestore limit. |
 | 🟡 **Code churn with no perf gain** | Every file touching Firestore needs updating, but read/write patterns don't improve. |
@@ -437,7 +437,7 @@ Batch writes (max 500 ops/batch) can handle ~250 documents per batch (1 delete +
 
 ### Concept
 
-Redesign the data model from the ground up with **English naming + structural optimizations** that directly address the issues identified in `firestore-auth-intensity.md`. This is a **new schema** — not just a rename.
+Redesign the data model from the ground up with **English naming + structural optimizations** that directly address the issues identified in `../analysis/20260613-firestore-auth-intensity.md`. This is a **new schema** — not just a rename.
 
 ### Core Principles
 

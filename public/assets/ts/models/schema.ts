@@ -4,8 +4,8 @@
 // referencing the old Portuguese field names for traceability.
 //
 // References:
-// - ai/analysis/new-database-proposal.md (Option B — Optimized Redesign)
-// - ai/analysis/firestore-auth-intensity.md
+// - docs/proposals/20260614-new-database-proposal.md (Option B — Optimized Redesign)
+// - docs/analysis/20260613-firestore-auth-intensity.md
 
 // ============================================================
 // Primitives

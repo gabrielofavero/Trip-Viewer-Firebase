@@ -3,7 +3,7 @@
 //   - destination.html (standalone bootstrap → mountDestination)
 //   - view.html destination-detail lightbox (workstream D — dynamic import)
 //
-// Contract (see docs/implementation-plans/iframe-to-components.md):
+// Contract (see docs/implementation-plans/20260812-iframe-to-components.md):
 //   - Never reads URL params, never touches window.parent, never reads/writes
 //     localStorage, never creates page-level iframes.
 //   - Renders into the provided container (clears it first).

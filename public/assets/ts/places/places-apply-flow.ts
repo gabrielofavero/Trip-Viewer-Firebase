@@ -4,7 +4,7 @@
 // or a closed-place decision) — there is NO separate confirmation step. It:
 //
 //   1. Always saves the fetched info into the entry's `placeAPI`
-//      (applyPlaceData persistence rule — see docs/ai-analysis/6-places-api-edit-destination.md §1.3).
+//      (applyPlaceData persistence rule — see docs/implementation-plans/20260812-places-api-edit-destination.md §1.3).
 //   2. Overrides the entry values only for the fields the user checked.
 //   3. Applies the closed-place decision (delete / ignore / add [Closed] label).
 //   4. Replaces `entry.images` with the imported photos (first 3) when chosen.
@@ -18,7 +18,7 @@
 //   - P3 (places-apply): applyPlaceData(), FIELD_KEYS, getClosedLabel()
 //
 // References:
-// - docs/ai-analysis/6-places-api-edit-destination.md (§4, §5 P9)
+// - docs/implementation-plans/20260812-places-api-edit-destination.md (§4, §5 P9)
 // - places/places-dialog.ts (P5 shell: getStepData, closeDialog, …)
 
 import { getLanguagePackName, translate } from '../i18n/translation.js';

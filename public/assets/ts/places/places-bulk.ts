@@ -23,7 +23,7 @@
 // it joins the edit-destination bundle without touching P10's files.
 //
 // References:
-// - docs/ai-analysis/6-places-api-edit-destination.md (§4, §5 P11)
+// - docs/implementation-plans/20260812-places-api-edit-destination.md (§4, §5 P11)
 // - places/places-apply.ts (P3: FIELD_KEYS, buildClosedState, getClosedLabel)
 // - data/services/places-api.service.ts (P1: getPlace + MOCK fixtures)
 

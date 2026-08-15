@@ -6,7 +6,7 @@
 // dialog) and the bulk "Update with Maps" flow.
 //
 // References:
-// - docs/ai-analysis/6-places-api-edit-destination.md (§3)
+// - docs/implementation-plans/20260812-places-api-edit-destination.md (§3)
 // - data/services/places-api.service.ts (fetch wrapper + MOCK fixtures)
 
 /** Google Places "business status" values (subset the app cares about). */

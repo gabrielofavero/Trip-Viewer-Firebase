@@ -3,7 +3,7 @@
 //   - expenses.html (standalone bootstrap calls mountExpenses)
 //   - view.html     (Workstream D renders it inline via dynamic import())
 //
-// Contract (see docs/implementation-plans/iframe-to-components.md, Workstream A):
+// Contract (see docs/implementation-plans/20260812-iframe-to-components.md, Workstream A):
 //   - mountExpenses(container, opts) renders the expenses content into `container`.
 //     `container` must already contain the expenses skeleton (tabs + summary +
 //     preTrip + duringTrip + expensesTravelers) — the render pipeline fills it.

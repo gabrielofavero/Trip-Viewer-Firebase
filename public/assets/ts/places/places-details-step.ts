@@ -7,7 +7,7 @@
 //   - the 'places-details-continue' / 'places-details-retry' click actions via
 //     registerActions() (data-action delegation, see ui/actions.ts).
 //
-// Behavior (docs/ai-analysis/6-places-api-edit-destination.md §5 P7):
+// Behavior (docs/implementation-plans/20260812-places-api-edit-destination.md §5 P7):
 //   - On entering the step, the place id is resolved from the selected search
 //     result (P6 stores `placeDetailsCandidate`) OR from the entry's
 //     pre-existing `placeAPI.id` (Open Question 10 — jump straight to details).
@@ -24,7 +24,7 @@
 //     operational, else 'photos' — P8 registers those step renderers).
 //
 // References:
-// - docs/ai-analysis/6-places-api-edit-destination.md (§4, P7)
+// - docs/implementation-plans/20260812-places-api-edit-destination.md (§4, P7)
 // - places/places-dialog.ts (P5 shell: registerStepRenderer, withDialogLoading)
 // - places/places-apply.ts (P3: FIELD_KEYS, PlaceFieldKey, buildClosedState)
 // - data/services/places-api.service.ts (P1: getPlace + MOCK fixtures)

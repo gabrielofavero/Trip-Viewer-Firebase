@@ -8,7 +8,7 @@
     Reads one Google Maps URL or search query per line from queries.txt and
     writes the results to output/results.json.
 
-    See docs/ai-analysis/9-google-maps-local-scraping-research.md for the
+    See docs/analysis/20260810-google-maps-local-scraping-research.md for the
     research behind this tool.
 
 .PARAMETER Queries

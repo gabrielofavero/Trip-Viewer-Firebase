@@ -2,7 +2,7 @@
 
 > **Status:** P1–P4 done (2026-08-09) — worker complete. Frontend follow-ups (photoUri model/store/preview) next.
 > **Date:** 2026-08-09 (updated: P1 landed + photoUri storage strategy)
-> **Source of truth:** `docs/ai-analysis/7-places-api-backend-contract.md`
+> **Source of truth:** `docs/contracts/20260808-places-api-backend-contract.md`
 > **Goal:** Build the Cloudflare Worker (Option A) that proxies Google Places API (New) for TripViewer, serving local / dev / prd from **one worker codebase**.
 > **Format:** **4 prompts** — each prompt bundles related files so you run ~4 sessions instead of 10.
 

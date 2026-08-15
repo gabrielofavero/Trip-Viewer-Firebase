@@ -4,7 +4,7 @@ Local scraping of Google Maps place data using [`gosom/google-maps-scraper`](htt
 
 This is a **work in progress** — a minimal local setup to evaluate the scraper
 before wiring it into the export pipeline. See
-`docs/ai-analysis/9-google-maps-local-scraping-research.md` for the research and
+`docs/analysis/20260810-google-maps-local-scraping-research.md` for the research and
 decision behind this choice.
 
 ## Requirements

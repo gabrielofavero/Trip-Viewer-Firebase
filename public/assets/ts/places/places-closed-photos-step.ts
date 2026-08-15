@@ -9,7 +9,7 @@
 //     registerActions() (data-action delegation, see ui/actions.ts),
 //   - a 'change' listener scoped to the photos-import checkbox.
 //
-// Flow (docs/ai-analysis/6-places-api-edit-destination.md §5 P8):
+// Flow (docs/implementation-plans/20260812-places-api-edit-destination.md §5 P8):
 //   - 'closed' (reached from P7 when the place is no longer operational):
 //     shows a notice + 3 options:
 //       * Delete item      -> stores closedDecision 'delete'  -> 'done'
@@ -30,7 +30,7 @@
 //     apply/persist them.
 //
 // References:
-// - docs/ai-analysis/6-places-api-edit-destination.md (§4, P8)
+// - docs/implementation-plans/20260812-places-api-edit-destination.md (§4, P8)
 // - places/places-dialog.ts (P5 shell: registerStepRenderer, withDialogLoading)
 // - places/places-details-step.ts (P7 stores the fetched details under 'placeDetails')
 // - data/services/places-api.service.ts (P1: getPlacePhotos + MOCK fixtures)

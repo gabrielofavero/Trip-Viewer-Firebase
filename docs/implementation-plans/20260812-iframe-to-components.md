@@ -4,7 +4,7 @@
 **Date:** 2026-08-12
 **Owner:** TBD
 **Related backlog:** ⚔️ E027 "New Front-End: view.html" — *"no more iframe/embeds. Use html injection instead"*
-**Related docs:** `docs/ai-analysis/3-firestore-auth-intensity.md` (documents the fragile `localStorage` + `postMessage` interop)
+**Related docs:** `docs/analysis/20260613-firestore-auth-intensity.md` (documents the fragile `localStorage` + `postMessage` interop)
 
 ---
 

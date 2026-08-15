@@ -18,7 +18,7 @@
  * `config.placesPhotosApiKey` (both the details call and each media call).
  *
  * Route 4 (byte proxy) is REMOVED — v1 resolves stable keyless CDN `photoUri`s
- * (photoUri strategy; see docs/ai-analysis/8 §Deviation). No PHOTO_URL_SECRET,
+ * (photoUri strategy; see docs/implementation-plans/20260809-places-api-worker-build-prompts.md §Deviation). No PHOTO_URL_SECRET,
  * no HMAC.
  */
 import { apiKeyFor, getMode, isAllowedOrigin, readEnv } from './config.js';

@@ -91,7 +91,7 @@ function parseHost(origin) {
  * to the real key's monthly limit so the worker can stop before charges accrue.
  *
  * Note: `PHOTO_URL_SECRET` was dropped (photoUri strategy — no HMAC/byte proxy
- * in v1; see docs/ai-analysis/8 §Deviation).
+ * in v1; see docs/implementation-plans/20260809-places-api-worker-build-prompts.md §Deviation).
  *
  * @param {Record<string, string|undefined>} env - The worker `env` bindings.
  * @returns {{placesApiKey: string, placesPhotosApiKey: string, allowedUidsJson: string, emulatorHost: string, isMock: boolean, photosEnabled: boolean, budgets: {main: number, photos: number}, quotaDegradeRatio: number}}

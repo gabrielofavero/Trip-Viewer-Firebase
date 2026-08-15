@@ -16,7 +16,7 @@
 // buildable and demoable on its own.
 //
 // References:
-// - docs/ai-analysis/6-places-api-edit-destination.md (§4, P5)
+// - docs/implementation-plans/20260812-places-api-edit-destination.md (§4, P5)
 // - models/places-api.model.ts / data/services/places-api.service.ts (P1)
 
 import { cloneObject, getID } from '../utils/dom.js';

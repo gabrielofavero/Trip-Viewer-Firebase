@@ -13,7 +13,7 @@
 //   - data/services/places-api.service.ts  (search / details / photos routes)
 //   - data/services/gmaps-scraper.service.ts (/scrape route)
 
-/** Places API route names (mirror the worker contract — docs/ai-analysis/7). */
+/** Places API route names (mirror the worker contract — docs/contracts/20260808-places-api-backend-contract.md). */
 export type PlacesApiRoute = 'search' | 'details' | 'photos';
 
 /** A single Places API route call. */

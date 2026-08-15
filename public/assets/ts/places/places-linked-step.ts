@@ -11,7 +11,7 @@
 //     registerActions() (data-action delegation, see ui/actions.ts).
 //
 // References:
-// - docs/ai-analysis/6-places-api-edit-destination.md (§4, P6)
+// - docs/implementation-plans/20260812-places-api-edit-destination.md (§4, P6)
 // - places/places-dialog.ts (P5 shell: registerStepRenderer, goTo)
 // - places/places-details-step.ts (P7: UPDATE_EXISTING_KEY)
 

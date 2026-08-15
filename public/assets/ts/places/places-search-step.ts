@@ -7,7 +7,7 @@
 //     registerActions() (data-action delegation, see ui/actions.ts),
 //   - an Enter-key handler scoped to the search input.
 //
-// Behavior (docs/ai-analysis/6-places-api-edit-destination.md §5 P6):
+// Behavior (docs/implementation-plans/20260812-places-api-edit-destination.md §5 P6):
 //   - Search bar + Search button; NO auto-search — the user presses Search.
 //   - The query is pre-filled with "<entry name> <destination title>" when the
 //     entry already has a name, else blank.
@@ -19,7 +19,7 @@
 //     `placeDetailsCandidate` (cross-step data) and advances to 'details'.
 //
 // References:
-// - docs/ai-analysis/6-places-api-edit-destination.md (§4, P6)
+// - docs/implementation-plans/20260812-places-api-edit-destination.md (§4, P6)
 // - places/places-dialog.ts (P5 shell: registerStepRenderer, withDialogLoading)
 // - data/services/places-api.service.ts (P1: searchPlaces + MOCK fixtures)
 

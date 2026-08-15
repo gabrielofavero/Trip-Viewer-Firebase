@@ -24,7 +24,7 @@
 //
 // References:
 // - scripts/gmaps-scraper/run.ps1 (the one-shot CLI this wraps)
-// - docs/ai-analysis/9-google-maps-local-scraping-research.md
+// - docs/analysis/20260810-google-maps-local-scraping-research.md
 // - worker/src/normalize.js (the PlaceDetails normalization it mirrors)
 
 import http from 'node:http';

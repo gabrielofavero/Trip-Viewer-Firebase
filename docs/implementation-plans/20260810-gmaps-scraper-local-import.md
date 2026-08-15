@@ -1,7 +1,7 @@
 # gmaps-scraper — Local "Import with maps" option (E045)
 
 Date: 2026-08-10
-Status: implemented (local-only). Companion to `9-google-maps-local-scraping-research.md`
+Status: implemented (local-only). Companion to `../analysis/20260810-google-maps-local-scraping-research.md`
 (research behind the scraper choice).
 
 ## What this feature is

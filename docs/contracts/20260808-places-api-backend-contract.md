@@ -1,6 +1,6 @@
 # Places API (New) — Backend (Cloudflare Worker) Contract
 
-> **Status:** Finalized (Prompt 13 of `docs/ai-analysis/6-places-api-edit-destination.md`)
+> **Status:** Finalized (Prompt 13 of `docs/implementation-plans/20260812-places-api-edit-destination.md`)
 > **Date:** 2026-08-08
 > **Scope:** Documentation only — no runtime code in this doc. It is the single source of truth for implementing the Cloudflare worker behind the edit-destination Places API feature.
 > **Frontend counterpart:** `public/assets/ts/data/services/places-api.service.ts` + `public/assets/ts/models/places-api.model.ts` (types below are the live, finalized shapes).

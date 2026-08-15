@@ -91,7 +91,7 @@ import '../../places/places-apply-flow.js';
 //   export async function runBulkUpdate(): Promise<void> — bulk fetch + report
 //   export function countLinkedItems(): number           — linked-item count
 // runBulkUpdate() owns the dialog-scoped loading, the per-linked-item
-// getPlace() fetches, and the report rendering (see docs/ai-analysis/6-places-api-edit-destination.md §5 P11).
+// getPlace() fetches, and the report rendering (see docs/implementation-plans/20260812-places-api-edit-destination.md §5 P11).
 // countBulkEligibleEntries() drives the button visibility (any entry linked by
 // id OR carrying a local scrape link); runBulkLocalUpdate() is the bulk
 // gmaps-scraper path.

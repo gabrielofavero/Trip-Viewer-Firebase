@@ -3,8 +3,8 @@
 A Cloudflare Worker that proxies the **Google Places API (New)** for TripViewer.
 One deployed route serves **local / dev / prd** from a single codebase.
 
-Source of truth: `docs/ai-analysis/7-places-api-backend-contract.md` (contract)
-and `docs/ai-analysis/8-places-api-worker-build-prompts.md` (build plan).
+Source of truth: `docs/contracts/20260808-places-api-backend-contract.md` (contract)
+and `docs/implementation-plans/20260809-places-api-worker-build-prompts.md` (build plan).
 
 ---
 

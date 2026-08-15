@@ -7,14 +7,14 @@
 //
 // Every request sends the Firebase ID token (`Authorization: Bearer <token>`)
 // plus `lang` and `photos`; Cloudflare derives the `uid` from the verified
-// token (see docs/ai-analysis/7-places-api-backend-contract.md §6.1). The
+// token (see docs/contracts/20260808-places-api-backend-contract.md §6.1). The
 // client never sends `uid` — a raw uid is spoofable, the token is not.
 // Every function throws a friendly, translatable Error on failure; callers
 // should surface it via displayError() from utils/messages.ts.
 //
 // References:
-// - docs/ai-analysis/6-places-api-edit-destination.md (§3, P1)
-// - docs/ai-analysis/7-places-api-backend-contract.md (worker contract)
+// - docs/implementation-plans/20260812-places-api-edit-destination.md (§3, P1)
+// - docs/contracts/20260808-places-api-backend-contract.md (worker contract)
 // - models/places-api.model.ts (types + response envelopes)
 
 import { getLanguagePackName, translate } from '../../i18n/translation.js';
@@ -41,7 +41,7 @@ const WORKER_LOCAL_URL = 'http://localhost:8787';
  * deployed host (dev/prd) the buttons never render and every service call
  * throws a friendly error — regardless of the `canUsePlacesAPI` permission.
  * This is a deliberate safety gate (the worker proxies real Google Places
- * calls) — see docs/ai-analysis/7-places-api-backend-contract.md.
+ * calls) — see docs/contracts/20260808-places-api-backend-contract.md.
  */
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
 

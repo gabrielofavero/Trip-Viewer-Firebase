@@ -4,7 +4,7 @@
 // compare logic lives in exactly one place (no duplication).
 //
 // References:
-// - docs/ai-analysis/6-places-api-edit-destination.md (§3, P3)
+// - docs/implementation-plans/20260812-places-api-edit-destination.md (§3, P3)
 // - models/places-api.model.ts (PlaceDetails)
 // - models/new-schema.ts (PlaceItem / PlaceAPI / PlaceDescription)
 
