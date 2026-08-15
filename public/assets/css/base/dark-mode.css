@@ -732,6 +732,34 @@
 	box-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
 }
 
+/* Page chrome (P1) — sort/filter pills + modernized drawer */
+[data-theme="dark"] .section-buttons {
+	background: rgba(44, 44, 46, 0.5);
+	border-color: var(--border-color);
+}
+
+[data-theme="dark"] .filter-sort {
+	color: var(--text-muted);
+}
+
+[data-theme="dark"] .filter-sort:hover {
+	background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .filter-sort.active {
+	background: rgba(var(--theme-color-rgb), 0.2);
+	color: var(--theme-color);
+}
+
+[data-theme="dark"] .drawer {
+	background: rgba(30, 30, 32, 0.92);
+	border-color: var(--border-color);
+}
+
+[data-theme="dark"] .drawer-overlay {
+	background: rgba(0, 0, 0, 0.6);
+}
+
 [data-theme="dark"] .new {
 	fill: var(--theme-color);
 }

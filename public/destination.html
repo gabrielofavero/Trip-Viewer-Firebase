@@ -12,32 +12,53 @@
   <div class="loadable" style="display: none">
       <!-- #include shared/top-bar.html -->
 
-    <div class="section-title">
-      <br><br><br><br>
-      <h1 id="title"></h1>
-      <div class="destinations-select" id="destinations-select"></div>
-      <div id="destinations-subtitle"></div>
-    </div>
+    <!-- ======= Hero (index-like background + frosted content box) ======= -->
+    <section id="hero">
+      <div class="content-box" id="destination-content-box">
 
-    <div class="section-buttons" id="filter-sort-container">
-      <button class="filter-sort" id="filter" data-action="open-filter-drawer">
-        <i class="iconify" data-icon="tdesign:filter"></i>
-        <span data-translate="destination.filter.title"></span>
-      </button>
-      <button class="filter-sort" id="sort" data-action="open-sort-drawer">
-        <i class="iconify" data-icon="ant-design:sort-ascending-outlined"></i>
-        <span data-translate="destination.sort.title"></span>
-      </button>
-    </div>
+        <div class="section-title">
+          <h1 id="title"></h1>
+          <div id="destinations-subtitle"></div>
+        </div>
 
-    <div id="content"></div>
+        <!-- Category selector — legacy custom select, replaced by the tab bar in P2 -->
+        <div class="destinations-select" id="destinations-select"></div>
 
-    <div class="add-container" style="display: none">
-      <button class="edit-btn" id="add-button" data-action="add-destination">
-          <i class="iconify user-data-icon" data-icon="gridicons:add-outline"></i>
-          <span data-translate="labels.add"></span>
-      </button>
-    </div>
+        <!-- Category tab bar — rendered by JS in P2, hidden until wired -->
+        <div class="edit-tab-bar" id="destination-tab-bar" style="display: none"></div>
+
+        <!-- Search bar — wired to the lazy grid in P2 -->
+        <div class="search-bar" id="destination-search-bar">
+          <i class="iconify search-icon" data-icon="material-symbols:search"></i>
+          <input type="text" id="destination-search-input" class="search-input" data-translate="index.search_placeholder">
+          <button class="search-clear" id="destination-search-clear" style="display: none" aria-label="Clear search">
+            <i class="iconify" data-icon="material-symbols:close"></i>
+          </button>
+        </div>
+
+        <div class="section-buttons" id="filter-sort-container">
+          <button class="filter-sort" id="filter" data-action="open-filter-drawer">
+            <i class="iconify" data-icon="tdesign:filter"></i>
+            <span data-translate="destination.filter.title"></span>
+          </button>
+          <button class="filter-sort" id="sort" data-action="open-sort-drawer">
+            <i class="iconify" data-icon="ant-design:sort-ascending-outlined"></i>
+            <span data-translate="destination.sort.title"></span>
+          </button>
+        </div>
+
+        <div id="content"></div>
+        <div class="grid-sentinel" id="destinations-grid-sentinel"></div>
+
+        <div class="add-container" style="display: none">
+          <button class="edit-btn" id="add-button" data-action="add-destination">
+              <i class="iconify user-data-icon" data-icon="gridicons:add-outline"></i>
+              <span data-translate="labels.add"></span>
+          </button>
+        </div>
+
+      </div>
+    </section>
 
     <!-- ======= Footer ======= -->
     <footer id="footer">
@@ -52,7 +73,7 @@
     </footer>
   </div>
 
-  <div class="drawer-overlay" id="overlay" data-action="close-drawer">
+  <div class="drawer-overlay" id="overlay" data-action="close-drawer" style="display: none">
     <div class="drawer" id="drawer" data-stop-propagation>
       <div class="drawer-header">
         <span id="drawerTitle"></span>
