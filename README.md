@@ -42,7 +42,7 @@ npm run dev
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 174   | 169  | 3         | 2       |
 | 🏆   | Feature     | F000 | 179   | 161  | 17        | 1       |
-| 📈   | Improvement | M000 | 175   | 148  | 22        | 5       |
+| 📈   | Improvement | M000 | 175   | 149  | 22        | 4       |
 | ⚔️   | Epic        | E000 | 51    | 38   | 7         | 6       |
 
 ## Backlog
@@ -50,7 +50,6 @@ npm run dev
 ### High Priority
 
 - ⚔️ **E016:** New Front-End: destination.html
-- 📈 **M172:** Minor visual improvements on index.html (search, order, image loading)
 
 ### Medium Priority
 
@@ -109,6 +108,7 @@ npm run dev
   - *[📈M174] No more iframe/embeds. Use html injection instead*
   - *[📈M175] No more need to read destination on view.html*
 - 🐞 **B174:** Issue with transportation duration card on edit trip
+- 📈 **M172:** Minor visual improvements on index.html (search, order, image loading)
 
 ### July 2026
 

@@ -65,6 +65,15 @@
           </button>
         </div>
 
+        <!-- Search Bar -->
+        <div class="search-bar" id="search-bar">
+          <i class="iconify search-icon" data-icon="material-symbols:search"></i>
+          <input type="text" id="search-input" class="search-input" data-translate="index.search_placeholder">
+          <button class="search-clear" id="search-clear" style="display:none" aria-label="Clear search">
+            <i class="iconify" data-icon="material-symbols:close"></i>
+          </button>
+        </div>
+
         <!-- Tab Content: Trips -->
         <div class="tab-content active" id="tab-trips">
           <div class="tab-header">
@@ -74,9 +83,29 @@
               <span data-translate="trip.new"></span>
             </button>
           </div>
-          <div class="trip-grid" id="trip-grid">
-            <!-- Trip cards rendered by JS -->
+
+          <div class="trip-section" id="trip-upcoming-section">
+            <h3 class="trip-section-title">
+              <span data-translate="index.upcoming_trips"></span>
+              <span class="trip-section-count" id="trip-upcoming-count"></span>
+            </h3>
+            <div class="trip-grid" id="trip-upcoming-grid">
+              <!-- Upcoming trip cards rendered by JS -->
+            </div>
+            <div class="grid-sentinel" id="trip-upcoming-sentinel"></div>
           </div>
+
+          <div class="trip-section" id="trip-finished-section">
+            <h3 class="trip-section-title">
+              <span data-translate="index.finished_trips"></span>
+              <span class="trip-section-count" id="trip-finished-count"></span>
+            </h3>
+            <div class="trip-grid" id="trip-finished-grid">
+              <!-- Finished trip cards rendered by JS -->
+            </div>
+            <div class="grid-sentinel" id="trip-finished-sentinel"></div>
+          </div>
+
           <div class="empty-state" id="trips-empty" style="display:none">
             <i class="iconify empty-icon" data-icon="tabler:plane-off"></i>
             <p data-translate="index.no_trips"></p>
@@ -95,6 +124,7 @@
           <div class="dest-grid" id="dest-grid">
             <!-- Destination cards rendered by JS -->
           </div>
+          <div class="grid-sentinel" id="dest-sentinel"></div>
           <div class="empty-state" id="dest-empty" style="display:none">
             <i class="iconify empty-icon" data-icon="material-symbols:location-off"></i>
             <p data-translate="index.no_destinations"></p>
@@ -113,6 +143,7 @@
           <div class="list-grid" id="list-grid">
             <!-- List cards rendered by JS -->
           </div>
+          <div class="grid-sentinel" id="list-sentinel"></div>
           <div class="empty-state" id="lists-empty" style="display:none">
             <i class="iconify empty-icon" data-icon="fluent:list-28-regular"></i>
             <p data-translate="index.no_lists"></p>

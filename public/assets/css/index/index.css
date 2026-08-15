@@ -265,6 +265,59 @@
 }
 
 /*--------------------------------------------------------------
+# Search Bar
+--------------------------------------------------------------*/
+.search-bar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 24px;
+	padding: 0 14px;
+	height: 44px;
+	background: rgba(255, 255, 255, 0.5);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	border-radius: var(--radius-lg);
+	border: 1px solid var(--border-color);
+}
+.search-icon {
+	font-size: 20px;
+	color: var(--text-muted);
+	flex-shrink: 0;
+}
+.search-input {
+	flex: 1;
+	height: 100%;
+	border: none;
+	background: transparent;
+	outline: none;
+	font-size: 14px;
+	font-family: inherit;
+	color: var(--text-primary);
+}
+.search-input::placeholder {
+	color: var(--text-muted);
+}
+.search-clear {
+	display: none;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	border: none;
+	background: var(--bg-tertiary);
+	color: var(--text-secondary);
+	cursor: pointer;
+	font-size: 16px;
+	flex-shrink: 0;
+	transition: background var(--transition-fast);
+}
+.search-clear:hover {
+	background: var(--border-color);
+}
+
+/*--------------------------------------------------------------
 # Tab Content
 --------------------------------------------------------------*/
 .tab-content {
@@ -320,7 +373,33 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	gap: 16px;
-	margin-bottom: 24px;
+	margin-bottom: 12px;
+}
+
+/* Trip Sections (Upcoming / Finished) */
+.trip-section {
+	margin-bottom: 28px;
+}
+.trip-section-title {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	font-size: 15px;
+	font-weight: 700;
+	color: var(--text-primary);
+	margin-bottom: 12px;
+}
+.trip-section-count {
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--text-muted);
+}
+
+/* Infinite-scroll sentinel */
+.grid-sentinel {
+	display: block;
+	width: 100%;
+	height: 1px;
 }
 
 .trip-card,

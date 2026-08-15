@@ -36,6 +36,7 @@ import {
 } from './navigation.js';
 import { isOnDarkMode } from '../../../theme/visibility.js';
 import { getDarkerColor, getLighterColor, hexToRgb } from '../../../theme/colors.js';
+import { LazyGrid } from './lazy-grid.js';
 
 var INDEX_DATA: Record<string, any> = {};
 var CURRENT_TRIPS: any[] = [];
@@ -43,6 +44,12 @@ var PREVIOUS_TRIPS: any[] = [];
 var NEXT_TRIPS: any[] = [];
 var ALL_TRIPS: any[] = []; // Merged for the unified trip view
 var SELECTED_TRIP_ID: string | null = null;
+var TRIP_UPCOMING_GRID: LazyGrid | null = null;
+var TRIP_FINISHED_GRID: LazyGrid | null = null;
+var DEST_GRID: LazyGrid | null = null;
+var LIST_GRID: LazyGrid | null = null;
+var GRIDS_INITIALIZED = false;
+var SEARCH_QUERY = '';
 
 /** Convert an array of { id, ...data } to a Record<string, data> for compatibility with legacy helpers */
 function arrayToRecord<T extends { id: string }>(arr: T[]): Record<string, Omit<T, 'id'>> {
@@ -110,6 +117,7 @@ export async function loadUserIndex() {
 					...PREVIOUS_TRIPS.map((t) => ({ ...t, category: 'past' })),
 				];
 
+				initGrids();
 				loadTripsTab();
 				loadDestinationsTab();
 				loadListsTab();
@@ -152,58 +160,108 @@ function showUnloggedView() {
 /*--------------------------------------------------------------
 # Trips Tab
 --------------------------------------------------------------*/
+function initGrids() {
+	if (GRIDS_INITIALIZED) return;
+	GRIDS_INITIALIZED = true;
+
+	TRIP_UPCOMING_GRID = new LazyGrid(
+		getID('trip-upcoming-grid'),
+		getID('trip-upcoming-sentinel'),
+		buildTripCardHTML,
+	);
+	TRIP_FINISHED_GRID = new LazyGrid(
+		getID('trip-finished-grid'),
+		getID('trip-finished-sentinel'),
+		buildTripCardHTML,
+	);
+	DEST_GRID = new LazyGrid(getID('dest-grid'), getID('dest-sentinel'), buildDestCardHTML);
+	LIST_GRID = new LazyGrid(getID('list-grid'), getID('list-sentinel'), buildListCardHTML);
+}
+
 function loadTripsTab() {
-	const grid = getID('trip-grid');
 	const empty = getID('trips-empty');
 	const count = getID('trips-count');
 
 	if (ALL_TRIPS.length === 0) {
-		grid.innerHTML = '';
+		getID('trip-upcoming-section').style.display = 'none';
+		getID('trip-finished-section').style.display = 'none';
+		TRIP_UPCOMING_GRID?.setItems([]);
+		TRIP_FINISHED_GRID?.setItems([]);
 		empty.style.display = 'block';
 		count.textContent = '';
 		return;
 	}
+
 	empty.style.display = 'none';
-	count.textContent =
-		ALL_TRIPS.length +
-		' ' +
-		(ALL_TRIPS.length === 1 ? translate('trip.document') : translate('trip.document') + 's');
+	count.textContent = tripCountLabel(ALL_TRIPS.length);
 
-	let html = '';
-	for (const trip of ALL_TRIPS) {
-		const bgImage = getTripBackgroundImage(trip);
-		const badgeClass =
-			trip.category === 'current'
-				? 'badge-current'
-				: trip.category === 'next'
-					? 'badge-next'
-					: 'badge-past';
-		const badgeLabel =
-			trip.category === 'current'
-				? translate('index.active')
-				: trip.category === 'next'
-					? translate('index.upcoming')
-					: translate('index.finished');
-		const dateStr = dateObjectToString(trip.start) + ' – ' + dateObjectToString(trip.end);
+	const upcoming = ALL_TRIPS.filter((t) => t.category === 'current' || t.category === 'next');
+	const finished = ALL_TRIPS.filter((t) => t.category === 'past');
 
-		const imageHTML = bgImage
-			? `<div class="trip-card-image" style="background-image: url('${bgImage}')"></div>`
-			: `<div class="trip-card-image no-image"><i class="iconify card-image-icon" data-icon="tabler:plane-departure"></i></div>`;
+	getID('trip-upcoming-section').style.display = upcoming.length > 0 ? '' : 'none';
+	getID('trip-finished-section').style.display = finished.length > 0 ? '' : 'none';
 
-		html += `
-			<div class="trip-card" data-action="open-trip-dialog" data-trip-id="${trip.id}">
-				<span class="trip-card-badge ${badgeClass}">${badgeLabel}</span>
-				${imageHTML}
-				<div class="trip-card-body">
-					<div class="trip-card-title">${trip.title || translate('labels.no_title')}</div>
-					<div class="trip-card-meta">
-						<i class="iconify" data-icon="material-symbols:calendar-month" style="font-size:13px"></i>
-						${dateStr}
-					</div>
+	TRIP_UPCOMING_GRID?.setItems(upcoming);
+	TRIP_FINISHED_GRID?.setItems(finished);
+
+	updateTripSectionCounts();
+}
+
+function tripCountLabel(n: number): string {
+	return n + ' ' + translate('trip.document') + (n === 1 ? '' : 's');
+}
+
+function destCountLabel(n: number): string {
+	return (
+		n + ' ' + (n === 1 ? translate('destination.document') : translate('destination.title'))
+	);
+}
+
+function listCountLabel(n: number): string {
+	return n + ' ' + (n === 1 ? translate('listing.document') : translate('listing.title'));
+}
+
+function updateTripSectionCounts() {
+	getID('trip-upcoming-count').textContent = TRIP_UPCOMING_GRID
+		? String(TRIP_UPCOMING_GRID.getMatchingCount())
+		: '';
+	getID('trip-finished-count').textContent = TRIP_FINISHED_GRID
+		? String(TRIP_FINISHED_GRID.getMatchingCount())
+		: '';
+}
+
+function buildTripCardHTML(trip): string {
+	const bgImage = getTripBackgroundImage(trip);
+	const badgeClass =
+		trip.category === 'current'
+			? 'badge-current'
+			: trip.category === 'next'
+				? 'badge-next'
+				: 'badge-past';
+	const badgeLabel =
+		trip.category === 'current'
+			? translate('index.active')
+			: trip.category === 'next'
+				? translate('index.upcoming')
+				: translate('index.finished');
+	const dateStr = dateObjectToString(trip.start) + ' – ' + dateObjectToString(trip.end);
+
+	const imageHTML = bgImage
+		? `<div class="trip-card-image" style="background-image: url('${bgImage}')"></div>`
+		: `<div class="trip-card-image no-image"><i class="iconify card-image-icon" data-icon="tabler:plane-departure"></i></div>`;
+
+	return `
+		<div class="trip-card" data-action="open-trip-dialog" data-trip-id="${trip.id}">
+			<span class="trip-card-badge ${badgeClass}">${badgeLabel}</span>
+			${imageHTML}
+			<div class="trip-card-body">
+				<div class="trip-card-title">${trip.title || translate('labels.no_title')}</div>
+				<div class="trip-card-meta">
+					<i class="iconify" data-icon="material-symbols:calendar-month" style="font-size:13px"></i>
+					${dateStr}
 				</div>
-			</div>`;
-	}
-	grid.innerHTML = html;
+			</div>
+		</div>`;
 }
 
 function getTripBackgroundImage(trip) {
@@ -373,91 +431,79 @@ function getTripDurationDays(trip: Record<string, any>): number {
 /*--------------------------------------------------------------
 # Destinations Tab
 --------------------------------------------------------------*/
-export function loadDestinationsTab() {
-	const grid = getID('dest-grid');
+function loadDestinationsTab() {
 	const empty = getID('dest-empty');
 	const count = getID('dests-count');
 	const destinations = getOrderedDocumentByUpdateDate(INDEX_DATA.destinations);
 
 	if (destinations.length === 0) {
-		grid.innerHTML = '';
+		DEST_GRID?.setItems([]);
 		empty.style.display = 'block';
 		count.textContent = '';
 		return;
 	}
 	empty.style.display = 'none';
-	count.textContent =
-		destinations.length +
-		' ' +
-		(destinations.length === 1
-			? translate('destination.document')
-			: translate('destination.title'));
+	count.textContent = destCountLabel(destinations.length);
+	DEST_GRID?.setItems(destinations);
+}
 
-	let html = '';
-	for (const dest of destinations) {
-		const dateStr = getLastUpdatedOnText(dest.version?.lastUpdated);
-		const bgImage = dest.image?.active ? dest.image.background || '' : '';
-		const imageHTML = bgImage
-			? `<div class="dest-card-image" style="background-image: url('${bgImage}')"></div>`
-			: `<div class="dest-card-image no-image"><i class="iconify card-image-icon" data-icon="material-symbols:location-on"></i></div>`;
+function buildDestCardHTML(dest): string {
+	const dateStr = getLastUpdatedOnText(dest.version?.lastUpdated);
+	const bgImage = dest.image?.active ? dest.image.background || '' : '';
+	const imageHTML = bgImage
+		? `<div class="dest-card-image" style="background-image: url('${bgImage}')"></div>`
+		: `<div class="dest-card-image no-image"><i class="iconify card-image-icon" data-icon="material-symbols:location-on"></i></div>`;
 
-		html += `
-			<div class="dest-card" data-action="open-dest-dialog" data-dest-id="${dest.id}">
-				${imageHTML}
-				<div class="dest-card-body">
-					<div class="dest-card-title">${dest.title || translate('labels.no_title')}</div>
-					<div class="dest-card-meta">
-						<i class="iconify" data-icon="material-symbols:schedule" style="font-size:13px"></i>
-						${dateStr}
-					</div>
+	return `
+		<div class="dest-card" data-action="open-dest-dialog" data-dest-id="${dest.id}">
+			${imageHTML}
+			<div class="dest-card-body">
+				<div class="dest-card-title">${dest.title || translate('labels.no_title')}</div>
+				<div class="dest-card-meta">
+					<i class="iconify" data-icon="material-symbols:schedule" style="font-size:13px"></i>
+					${dateStr}
 				</div>
-			</div>`;
-	}
-	grid.innerHTML = html;
+			</div>
+		</div>`;
 }
 
 /*--------------------------------------------------------------
 # Lists Tab
 --------------------------------------------------------------*/
-export function loadListsTab() {
-	const grid = getID('list-grid');
+function loadListsTab() {
 	const empty = getID('lists-empty');
 	const count = getID('lists-count');
 	const listings = getOrderedDocumentByUpdateDate(INDEX_DATA.listings);
 
 	if (listings.length === 0) {
-		grid.innerHTML = '';
+		LIST_GRID?.setItems([]);
 		empty.style.display = 'block';
 		count.textContent = '';
 		return;
 	}
 	empty.style.display = 'none';
-	count.textContent =
-		listings.length +
-		' ' +
-		(listings.length === 1 ? translate('listing.document') : translate('listing.title'));
+	count.textContent = listCountLabel(listings.length);
+	LIST_GRID?.setItems(listings);
+}
 
-	let html = '';
-	for (const list of listings) {
-		const dateStr = getLastUpdatedOnText(list.version?.lastUpdated);
-		const bgImage = list.image?.active ? list.image.background || list.image.light || '' : '';
-		const imageHTML = bgImage
-			? `<div class="list-card-image" style="background-image: url('${bgImage}')"></div>`
-			: `<div class="list-card-image no-image"><i class="iconify card-image-icon" data-icon="fluent:list-28-filled"></i></div>`;
+function buildListCardHTML(list): string {
+	const dateStr = getLastUpdatedOnText(list.version?.lastUpdated);
+	const bgImage = list.image?.active ? list.image.background || list.image.light || '' : '';
+	const imageHTML = bgImage
+		? `<div class="list-card-image" style="background-image: url('${bgImage}')"></div>`
+		: `<div class="list-card-image no-image"><i class="iconify card-image-icon" data-icon="fluent:list-28-filled"></i></div>`;
 
-		html += `
-			<div class="list-card" data-action="open-list-dialog" data-list-id="${list.id}">
-				${imageHTML}
-				<div class="list-card-body">
-					<div class="list-card-title">${list.title || translate('labels.no_title')}</div>
-					<div class="list-card-meta">
-						<i class="iconify" data-icon="material-symbols:schedule" style="font-size:13px"></i>
-						${dateStr}
-					</div>
+	return `
+		<div class="list-card" data-action="open-list-dialog" data-list-id="${list.id}">
+			${imageHTML}
+			<div class="list-card-body">
+				<div class="list-card-title">${list.title || translate('labels.no_title')}</div>
+				<div class="list-card-meta">
+					<i class="iconify" data-icon="material-symbols:schedule" style="font-size:13px"></i>
+					${dateStr}
 				</div>
-			</div>`;
-	}
-	grid.innerHTML = html;
+			</div>
+		</div>`;
 }
 
 /*--------------------------------------------------------------
@@ -593,3 +639,58 @@ document.addEventListener('keydown', function (e) {
 		if (getID('list-dialog').style.display === 'flex') closeListDialog();
 	}
 });
+
+/*--------------------------------------------------------------
+# Search & Tab Coordination
+--------------------------------------------------------------*/
+function getActiveTab(): string {
+	const active = document.querySelector('.category-tab.active');
+	return active?.getAttribute('data-tab') || 'trips';
+}
+
+function setSearchBarVisible(visible: boolean) {
+	const bar = getID('search-bar');
+	if (bar) bar.style.display = visible ? 'flex' : 'none';
+}
+
+export function applySearch(query: string) {
+	SEARCH_QUERY = (query || '').trim();
+	const tab = getActiveTab();
+
+	if (tab === 'settings') {
+		setSearchBarVisible(false);
+		return;
+	}
+	setSearchBarVisible(true);
+
+	switch (tab) {
+		case 'trips':
+			TRIP_UPCOMING_GRID?.setQuery(SEARCH_QUERY);
+			TRIP_FINISHED_GRID?.setQuery(SEARCH_QUERY);
+			updateTripSectionCounts();
+			break;
+		case 'destinations':
+			DEST_GRID?.setQuery(SEARCH_QUERY);
+			break;
+		case 'lists':
+			LIST_GRID?.setQuery(SEARCH_QUERY);
+			break;
+	}
+}
+
+export function onSearchInput(value: string) {
+	const clear = getID('search-clear');
+	if (clear) clear.style.display = value ? 'flex' : 'none';
+	applySearch(value);
+}
+
+export function clearSearch() {
+	const input = getID('search-input') as HTMLInputElement | null;
+	if (input) input.value = '';
+	onSearchInput('');
+}
+
+export function onTabChanged() {
+	const input = getID('search-input') as HTMLInputElement | null;
+	applySearch(input?.value || '');
+}

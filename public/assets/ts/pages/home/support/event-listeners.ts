@@ -17,6 +17,9 @@ import {
 	closeDestDialog,
 	openListDialog,
 	closeListDialog,
+	onSearchInput,
+	clearSearch,
+	onTabChanged,
 } from './data.js';
 import { openAttributions } from '../../../utils/attributions.js';
 import {
@@ -47,6 +50,7 @@ export function loadListenersIndex() {
 			if (switchPanel(current, content)) {
 				tabs.forEach((t) => t.classList.remove('active'));
 				this.classList.add('active');
+				onTabChanged();
 			}
 		});
 	});
@@ -59,6 +63,7 @@ export function loadListenersIndex() {
 			tabs.forEach((t) => t.classList.remove('active'));
 			const settingsTab = document.querySelector('.category-tab[data-tab="settings"]');
 			if (settingsTab) settingsTab.classList.add('active');
+			onTabChanged();
 		}
 	});
 
@@ -71,6 +76,14 @@ export function loadListenersIndex() {
 	});
 	getID('new-list-btn').addEventListener('click', function () {
 		newListing();
+	});
+
+	// Search
+	getID('search-input').addEventListener('input', function (event) {
+		onSearchInput((event.target as HTMLInputElement).value);
+	});
+	getID('search-clear').addEventListener('click', function () {
+		clearSearch();
 	});
 
 	// Delete account
