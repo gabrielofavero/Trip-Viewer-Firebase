@@ -17,6 +17,7 @@ import {
 } from '../i18n/translation.js';
 import { initActions } from '../ui/actions.js';
 import { initDev } from '../utils/dev.js';
+import { isStaticMode, loadStaticData } from '../static-mode/static-mode.js';
 
 const APP = {
 	projectId: null,
@@ -25,6 +26,9 @@ const APP = {
 
 export async function main(pageLoaders: Record<string, () => void> = {}) {
 	try {
+		if (isStaticMode()) {
+			await loadStaticData();
+		}
 		await loadAllConfigs(getLanguagePackName());
 		translatePage();
 		initializeApp();
@@ -70,25 +74,18 @@ function loadPage(pageLoaders: Record<string, () => void> = {}) {
 }
 
 export function getHTMLpage() {
-	let result = window.location.pathname.replace('.html', '');
-	switch (result) {
-		case '/':
-			return 'index';
-		case '/view':
-			return 'view';
-		case '/destination':
-			return 'destination';
-		case '/expenses':
-			return 'expenses';
-		case '/edit/listing':
-			return 'edit-listing';
-		case '/edit/destination':
-			return 'edit-destination';
-		case '/edit/trip':
-			return 'edit-trip';
-		default:
-			return result.slice(1);
+	const pathname = window.location.pathname.split('?')[0].split('#')[0];
+	// A static export can live under any folder (e.g. /tmp/export/view.html),
+	// so derive the page name from the filename, not the root-absolute path.
+	// All of these must resolve the same: /view.html, /tmp/export/view.html,
+	// /destination, / (→ index), /edit/trip.html (→ 'edit-trip').
+	const clean = pathname.replace(/\.html$/i, '').replace(/\/+$/, '');
+	const segments = clean.split('/').filter(Boolean);
+	const name = segments[segments.length - 1] || 'index';
+	if (segments.includes('edit') && name !== 'index') {
+		return `edit-${name}`;
 	}
+	return name;
 }
 
 export function getPageURL() {
@@ -112,7 +109,11 @@ function initializeApp() {
 	// Dev mode — must run before anything that depends on the dev global
 	initDev();
 
-	APP.projectId = firebase.app().options.projectId;
+	if (isStaticMode()) {
+		APP.projectId = 'static-export';
+	} else {
+		APP.projectId = firebase.app().options.projectId;
+	}
 	const versions = getVersions();
 	APP.version = versions?.projects?.[APP.projectId]?.version?.system || 'Unknown';
 

@@ -25,12 +25,40 @@ This workspace has **12 domain-specific agent skills** in `.github/skills/`. The
 | `backup-restore` | Account backup/restore, document export/import |
 | `backlog-management` | README task IDs, readme.py script |
 | `git-workflow` | Branch strategy, commit conventions, sync/deploy flow |
+| `ntfy-notifications` | **ALWAYS** — see "**Notifications (do not skip)**" section below. Send an ntfy.sh notification (topic `DeepSeek`) via `scripts/dev/ntfy.mjs` when a task/milestone finishes, on long work, or before prompting the user |
 
 **Rules for using these skills:**
 1. **Before answering any question that touches one of these domains, you MUST read the matching `SKILL.md` first** — never answer from general knowledge.
 2. The file-scoped skills (e.g. `typescript-conventions`, `css-ui-patterns`, `i18n-system`, `build-pipeline`, `migration-system`, `firebase-emulators`, `backup-restore`, `backlog-management`, `git-workflow`) are auto-loaded via their `applyTo` globs when you touch matching files — do not skip them.
 3. The task-scoped skills (`browser-navigation`, `query-firestore`, `data-model`) have no `applyTo`; load them based on the task description match. For `browser-navigation`, read it only when the task requires URL building, emulator sign-in, waiting for Firestore-backed content, or `Loading Error` triage — for a trivial re-check of an already-loaded/verified page, skip it and just re-read the page.
 4. **Browser / Playwright requires explicit approval.** Do NOT open the integrated browser, navigate pages, click/type, take screenshots, or drive the app with Playwright unless the user has explicitly approved browser validation for the current task. When a task could be checked in the browser but the user hasn't approved it, **ask first** — don't assume. Prefer non-browser verification (`npm run build`, `query-firestore`, reading code) unless approval is given.
+5. **`ntfy-notifications` is always-on.** Read `.github/skills/ntfy-notifications/SKILL.md` at the start of every task and follow it. See **Notifications (do not skip)** below — before ending ANY turn where you completed work, reached a milestone, hit an error, or need the user's input, you MUST have sent a notification. This applies even to the "which validation level?" question.
+
+## Notifications (do not skip)
+
+Send an ntfy.sh notification on topic `DeepSeek` via the helper below **before ending any turn** that (a) completes requested work, (b) finishes a meaningful step of a multi-step task, (c) hits an error needing the user, or (d) prompts the user with a question/approval/validation request.
+
+```bash
+# One command for everything (title = short + action-oriented, NO literal emoji)
+node scripts/dev/ntfy.mjs "<Title>" "<one-line body>" [--tag <emoji>] [--priority <low|default|high|urgent>] [--click <url>]
+```
+
+| Situation | Command |
+|---|---|
+| Task done | `node scripts/dev/ntfy.mjs "TripViewer: Done" "<what was done>" --tag white_check_mark --priority default` |
+| Step of multi-step task | `node scripts/dev/ntfy.mjs "TripViewer: Step 3 of 8 done" "<what this step did + what's next>" --tag chart_with_upwards_trend --priority default` |
+| Still working (long task) | `node scripts/dev/ntfy.mjs "TripViewer: Still working..." "<in progress + what's left>" --tag hourglass_flowing_sand --priority low` |
+| Prompting user | `node scripts/dev/ntfy.mjs "TripViewer: Need your input" "<the exact question>" --tag question --priority high` |
+| Error / blocker | `node scripts/dev/ntfy.mjs "TripViewer: Needs attention" "<what failed / what's needed>" --tag warning --priority urgent` |
+
+**Mandatory triggers (check before ending each turn):**
+- Finished the task → send **Task done** (even if you already sent a milestone ping).
+- Completed a meaningful step in a 3+ step task → send **Step**.
+- Long-running work (> ~5 min expected, or any single long build/test/export) → send **Still working** at the start and after each milestone; if it finishes fast, skip heartbeats and just send **Done**.
+- About to ask a question, request approval, or wait for validation → send **Prompting user**.
+- Something failed and needs the user → send **Error / blocker**.
+
+If the helper ever fails (e.g. no network), fall back to `curl.exe -H "Title: ..." -H "Tags: ..." -H "Priority: ..." -d "<body>" ntfy.sh/DeepSeek`.
 
 ## Key Files & Locations
 

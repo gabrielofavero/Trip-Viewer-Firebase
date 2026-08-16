@@ -3,6 +3,7 @@ import { getHTMLpage } from '../../app/main.js';
 import { getID } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
 import { create, get, getSystemData, COLLECTION } from './database.js';
+import { isStaticMode, staticConfig } from '../../static-mode/static-mode.js';
 
 export let USER_DATA;
 export let UID;
@@ -112,6 +113,9 @@ export async function registerIfUserNotPresent() {
 }
 
 export async function getUID() {
+	if (isStaticMode()) {
+		return staticConfig().ownerUid;
+	}
 	if (UID) {
 		return UID;
 	}
@@ -136,6 +140,9 @@ export async function getFirebaseIdToken(user = null) {
 }
 
 export async function getUser() {
+	if (isStaticMode()) {
+		return undefined;
+	}
 	return new Promise((resolve, reject) => {
 		const auth = firebase.auth();
 		const unsubscribe = auth.onAuthStateChanged(

@@ -81,8 +81,16 @@ public/assets/ts/
 │   ├── backup.ts
 │   ├── restore.ts
 │   ├── export-documents.ts
+│   ├── document-bundle.ts  ← Shared per-document gather logic (JSON export + static export)
 │   ├── import-documents.ts
 │   └── normalize.ts
+├── static-mode/          ← Static-export runtime seam (no-Firebase page boot)
+│   └── static-mode.ts    ← isStaticMode(), staticConfig(), loadStaticData(),
+│                           getStaticDoc(), getStaticCollection(), installFirebaseStub()
+├── static-export/        ← "Export as Static Web Page" feature (Settings)
+│   ├── export-static.ts  ← Dialog flow (warning → type → doc → PIN → mode → title/icon)
+│   ├── data-gather.ts    ← buildStaticData() → data.json bundle (paths map)
+│   └── build-zip.ts      ← buildStaticExport() → manifest fetch + HTML transform + ZIP
 └── vendor.d.ts           ← Type declarations for global vendor scripts
 ```
 

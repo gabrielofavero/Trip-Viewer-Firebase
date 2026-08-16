@@ -12,14 +12,21 @@
 //   import { getColors } from '../../app/config.js';
 //   const colors = getColors();
 
+import { isStaticMode } from '../static-mode/static-mode.js';
+
 const _cache = {};
 
 // ======= Async Loaders (used at startup) =======
 
 async function loadJSON(path) {
 	if (_cache[path]) return _cache[path];
-	const response = await fetch(path);
-	if (!response.ok) throw new Error(`Failed to load ${path}: ${response.status}`);
+	// A static export can be served from any subfolder (the bundle ships
+	// assets/ alongside view.html), so root-absolute asset paths must resolve
+	// relative to the page. Keep the canonical path as the cache key so the
+	// sync getters (getColors, ...) keep working unchanged.
+	const fetchPath = isStaticMode() && path.startsWith('/') ? path.slice(1) : path;
+	const response = await fetch(fetchPath);
+	if (!response.ok) throw new Error(`Failed to load ${fetchPath}: ${response.status}`);
 	const data = await response.json();
 	_cache[path] = data;
 	return data;

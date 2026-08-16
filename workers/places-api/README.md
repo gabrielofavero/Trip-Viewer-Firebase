@@ -55,7 +55,7 @@ Your app (JSON data, already cleaned up)
 1. **Install the tools.**
 
    ```bash
-   cd worker
+   cd workers/places-api
    npm install
    ```
 
@@ -251,11 +251,11 @@ for photos. There is **no** byte proxy and **no** HMAC signing in v1
 ## Setup
 
 ```bash
-cd worker
+cd workers/places-api
 npm install
 ```
 
-- Copy `public/assets/json/currencies.json` → `worker/src/data/currencies.json`
+- Copy `public/assets/json/currencies.json` → `workers/places-api/src/data/currencies.json`
   if it is missing (price resolution reads its `scaleNumeric` bands).
 - Create `.dev.vars` from `.dev.vars.example` and fill in your secrets
   (`.dev.vars` is gitignored — never commit it).
@@ -295,7 +295,7 @@ With the Firebase emulators running (Firestore `:8085`, Auth `:9099`, etc.):
 npm run dev            # or: npx firebase emulators:start
 
 # terminal 2 — this worker
-cd worker
+cd workers/places-api
 npm run dev            # → wrangler dev on http://localhost:8787
 ```
 
@@ -314,7 +314,7 @@ in-process by miniflare.
 ## Deploy
 
 ```bash
-cd worker
+cd workers/places-api
 npm run deploy         # → wrangler deploy
 ```
 
@@ -340,7 +340,7 @@ by the deployed worker (it only affects `wrangler dev`).
 Google Maps Platform exposes **no API to read remaining quota**, so the worker
 **self-accounts**: it counts every Google call it makes (the worker is the only
 caller — the frontend never talks to Google directly) and compares against a
-monthly budget **per key** (`worker/src/quota.js`).
+monthly budget **per key** (`workers/places-api/src/quota.js`).
 
 Two buckets (one per key — user decision 2026-08-09):
 
@@ -474,7 +474,7 @@ without touching callers.
 
 ## Smoke test
 
-Run the worker (`cd worker && npm run dev`) and the Firebase Auth emulator,
+Run the worker (`cd workers/places-api && npm run dev`) and the Firebase Auth emulator,
 then:
 
 ```bash

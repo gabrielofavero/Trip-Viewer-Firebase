@@ -451,6 +451,78 @@
 	border-radius: 6px;
 }
 
+/* Static Export Dialog */
+.export-static-field {
+	margin-bottom: 14px;
+}
+
+.export-static-field label {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 0.9rem;
+	font-weight: 600;
+}
+
+.export-static-input {
+	width: 100%;
+	padding: 8px 10px;
+	font-size: 0.95rem;
+	border: 1px solid var(--border-color, #ddd);
+	border-radius: 6px;
+	background: transparent;
+	color: inherit;
+	box-sizing: border-box;
+}
+
+.export-static-input:focus {
+	outline: none;
+	border-color: var(--theme-color);
+	box-shadow: 0 0 0 2px var(--theme-color);
+}
+
+/* File inputs (app icon) reuse the edit-page "upload-box" look:
+   dashed border + theme-colored file-selector button. */
+.export-static-input[type="file"] {
+	display: block;
+	width: 100%;
+	padding: 8px 10px;
+	font-size: 0.95rem;
+	border: 1.5px dashed var(--border-color, #ddd);
+	border-radius: var(--radius-md, 12px);
+	background: rgba(0, 0, 0, 0.025);
+	color: inherit;
+	cursor: pointer;
+	box-sizing: border-box;
+}
+
+.export-static-input[type="file"]:focus {
+	border-color: var(--theme-color);
+	box-shadow: 0 0 0 2px var(--theme-color);
+}
+
+.export-static-input[type="file"]::file-selector-button,
+.export-static-input[type="file"]::-webkit-file-upload-button {
+	background: var(--theme-color);
+	border: 0;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	padding: 0.5rem;
+	border-radius: var(--radius-sm, 8px);
+	color: #fff;
+	margin-right: 1rem;
+	outline: none;
+	font-family: inherit;
+	cursor: pointer;
+}
+
+.export-static-hint {
+	display: block;
+	margin-top: 4px;
+	font-size: 0.8rem;
+	color: var(--text-secondary, #666);
+}
+
 /* Import Conflict Table */
 .import-conflict-desc {
 	margin: 0 0 14px 0;

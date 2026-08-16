@@ -1,5 +1,6 @@
 import { getID } from '../utils/dom.js';
 import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
+import { cancelAnimateOut } from '../utils/messages.js';
 
 // ============================================================
 // Progress Loading — reusable full-screen loading with a bar.
@@ -59,10 +60,32 @@ function getProgressContainer(): HTMLElement | null {
  * (the default spinner is hidden, the bar + message are shown).
  */
 export function startProgressLoading(options: ProgressLoadingOptions = {}): void {
+	const preloader = getID('preloader');
+	if (!preloader) return;
+
+	// Replace whatever is currently in the overlay (e.g. a dialog that a prior
+	// closeMessage() is still animating out) with the progress view. Cancel the
+	// pending close first so its completion can't wipe this overlay afterwards.
+	if ((preloader as any)._closeMsgTimeout) {
+		clearTimeout((preloader as any)._closeMsgTimeout);
+		delete (preloader as any)._closeMsgTimeout;
+	}
+	cancelAnimateOut(preloader.firstElementChild as HTMLElement | null);
+	preloader.innerHTML = '';
+
+	// A dialog closed right before this (closeMessage() → startProgressLoading())
+	// leaves its translucent dark background + backdrop blur inline on #preloader
+	// because the pending close cleanup never ran. Reset both so the progress
+	// overlay sits on the clean solid preloader background (var(--bg-primary)),
+	// not on top of the blurred dialog backdrop.
+	preloader.style.background = '';
+	preloader.style.backdropFilter = '';
+	(preloader.style as any).webkitBackdropFilter = '';
+
 	const container = getProgressContainer();
 	if (!container) return;
 
-	getID('preloader')?.classList.add('progress-mode');
+	preloader.classList.add('progress-mode');
 	container.classList.add('active');
 
 	updateProgressLoading(options);

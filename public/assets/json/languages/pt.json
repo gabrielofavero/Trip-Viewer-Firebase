@@ -3,9 +3,8 @@
 		"settings": "Ajustes",
 		"backup": {
 			"title": "Exportar Conta",
-			"prompt": "Você gostaria de fazer backup dos dados sensíveis de viagens? Será necessário inserir o PIN de acesso para cada viagem protegida",
-			"security_warning": "⚠️ Os arquivos exportados contêm seus dados em texto simples, incluindo informações protegidas (códigos de reserva, links) se os PINs forem fornecidos. Qualquer pessoa com acesso ao arquivo pode ler esses dados. Armazene os arquivos exportados com segurança e exclua-os quando não forem mais necessários.",
-			"pin_instruction": "Insira os PINs de acesso para as viagens abaixo. Se deixar algum em branco, os dados protegidos dessa viagem não serão incluídos no backup.",
+			"prompt": "Você gostaria de fazer backup também dos dados sensíveis de viagens?",
+			"security_warning": "⚠️ Os arquivos exportados contêm seus dados em texto simples, incluindo informações protegidas (códigos de reserva, links). Qualquer pessoa com acesso ao arquivo pode ler esses dados. Armazene os arquivos exportados com segurança e exclua-os quando não forem mais necessários.",
 			"success": "Backup realizado com sucesso",
 			"partial": {
 				"title": "Backup parcialmente concluído",
@@ -58,14 +57,40 @@
 		"export_documents": {
 			"title": "Exportar Documento(s)",
 			"select_hint": "Selecione os documentos para exportar",
-			"security_warning": "⚠️ Os arquivos exportados contêm seus dados em texto simples, incluindo informações protegidas (códigos de reserva, links) se os PINs forem fornecidos. Qualquer pessoa com acesso ao arquivo pode ler esses dados. Armazene os arquivos exportados com segurança e exclua-os quando não forem mais necessários.",
+			"security_warning": "⚠️ Os arquivos exportados contêm seus dados em texto simples, incluindo informações protegidas (códigos de reserva, links). Qualquer pessoa com acesso ao arquivo pode ler esses dados. Armazene os arquivos exportados com segurança e exclua-os quando não forem mais necessários.",
 			"no_documents": "Nenhum documento disponível para exportar nesta categoria.",
 			"none_selected": "Nenhum documento selecionado para exportar.",
 			"export_button": "Exportar Selecionados",
-			"pin_instruction": "Insira os PINs de acesso para as viagens abaixo. Se deixar algum em branco, apenas os dados não protegidos serão exportados para essa viagem.",
 			"success": "{{count}} documento(s) exportado(s) com sucesso!",
 			"partial_success": "{{exported}} documento(s) exportado(s) com sucesso ({{failed}} falhou).",
 			"failed": "Falha ao exportar documentos."
+		},
+		"export_static": {
+			"title": "Exportar como Página Web Estática",
+			"warning": "⚠️ O pacote exportado contém os dados do seu documento em texto simples, incluindo informações protegidas (códigos de reserva, links). Qualquer pessoa com acesso aos arquivos pode ler esses dados. Armazene os arquivos exportados com segurança e exclua-os quando não forem mais necessários.",
+			"select_type": "Escolha o que exportar",
+			"select_document": "Selecione um documento",
+			"select_mode": "Selecione o modo de fidelidade",
+			"mode_light": "Leve",
+			"mode_complete": "Completo",
+			"mode_light_hint": "Pacote menor. As imagens permanecem como links externos (precisa de rede para a mídia).",
+			"mode_complete_hint": "Totalmente offline. Todas as imagens mapeadas são baixadas no pacote.",
+			"app_title": "Título do app",
+			"app_icon": "Ícone do app",
+			"build": "Criar Exportação",
+			"building": "Criando exportação estática…",
+			"success": "Exportação estática concluída com sucesso!",
+			"partial_success": "Exportação estática concluída, mas {{failed}} arquivo(s) não puderam ser baixados.",
+			"failed": "Falha na exportação estática.",
+			"none_selected": "Nenhum documento selecionado para exportar.",
+			"no_documents": "Nenhum documento disponível para exportar nesta categoria.",
+			"loading": {
+				"gathering": "Coletando dados do documento",
+				"assets": "Baixando recursos do app",
+				"images": "Baixando imagens ({{current}} de {{total}})",
+				"building": "Criando pacote ZIP",
+				"finishing": "Finalizando"
+			}
 		},
 		"delete": {
 			"title": "Excluir conta",

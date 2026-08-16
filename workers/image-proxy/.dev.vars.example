@@ -1,0 +1,8 @@
+# Local-only config for `wrangler dev`.
+# Copy this file to `.dev.vars` and NEVER commit `.dev.vars`.
+#
+# The image proxy needs no secrets. It only verifies the caller's Firebase ID
+# token. In `local` mode (`wrangler dev`) it verifies against the Firebase
+# Auth emulator (host from wrangler.toml [vars] FIREBASE_AUTH_EMULATOR_HOST),
+# so no token/key is needed here — this file exists for parity with
+# workers/places-api and for any future secrets.

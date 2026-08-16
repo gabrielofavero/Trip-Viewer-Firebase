@@ -1,5 +1,5 @@
 import { startLoadingScreen, stopLoadingScreen } from '../../../utils/loading.js';
-import { getState } from '../../../data/state.js';
+import { getState, DOCUMENT_ID } from '../../../data/state.js';
 import { getErrorFromGetRequestMessage, getID } from '../../../utils/dom.js';
 import { closeMessage, displayError } from '../../../utils/messages.js';
 import { get, haveErrorFromGetRequest } from '../../../data/firebase/database.js';
@@ -213,7 +213,9 @@ export async function protectedDataConfirmAction(afterAction?: string | ((data: 
 	}
 
 	const type = getType();
-	const path = `${type}/protected/${PIN}/${getURLParam(type[0])}`;
+	// Fall back to the resolved document id (static-export bundle meta) so the
+	// protected-document path still works on hosts that strip the query.
+	const path = `${type}/protected/${PIN}/${getURLParam(type[0]) || DOCUMENT_ID}`;
 	console.log('[Sensitive] get() path:', path, '| PIN:', PIN);
 	const firestoreData = await get(path);
 	console.log(
@@ -263,7 +265,7 @@ export function requestDocumentPin({
 
 export async function updateProtectedDataFromExternalPin(pin: string): Promise<void> {
 	const type = getType();
-	const path = `${type}/protected/${pin}/${getURLParam(type[0])}`;
+	const path = `${type}/protected/${pin}/${getURLParam(type[0]) || DOCUMENT_ID}`;
 	const firestoreData = await get(path);
 
 	if (!firestoreData || haveErrorFromGetRequest()) {

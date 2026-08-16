@@ -283,7 +283,7 @@ Three environments, all served by **one worker codebase and one deployed route**
 
 > The frontend only checks `response.ok` and throws a friendly translatable error (`translate('placesApi.errors.network')`); it does **not** parse the error body. The envelope exists so the worker is debuggable and consistent.
 
-> **Quota / budget protection** (worker/src/quota.js): the worker self-accounts
+> **Quota / budget protection** (workers/places-api/src/quota.js): the worker self-accounts
 > monthly calls per key because Google exposes no usage API. When a budget is
 > ≥ 90% spent it returns **`200` with `"limited": true`** (routes 1/2 degrade
 > `photos=true → false` onto the free main key; route 3 returns `{ photos: [],

@@ -15,10 +15,21 @@ TripViewer uses the Firebase Emulator Suite for local development. All emulators
 ```bash
 npm run dev              # Full dev: emulators + watch + auto-open browser
 npm run dev:livereload   # Same but with live reload enabled
+npm run dev:dev          # REAL data (no emulators): firebase use dev + serve real project
+npm run dev:prd          # REAL data (no emulators): firebase use prd + serve real project
 npm run backup           # Export emulator state: firebase emulators:export ./.emulator-data
 npm run kill-ports       # Force-kill processes on all emulator ports
 npm run functions        # Build + start only Functions emulator
 ```
+
+> **Real data (no emulators):** `npm run dev:dev` / `npm run dev:prd` skip the
+> emulator stack entirely. They run `firebase use dev|prd`, build the frontend
+> with `--use-emulator false` (so `/__/firebase/init.js` and
+> `firebase-config.js` don't connect to emulators), and serve `dist/` via
+> `firebase serve` — the app then reads/writes the **real** `trip-viewer-dev` /
+> `trip-viewer-prd` project. Remember they permanently switch the active
+> `firebase use` project; run `firebase use dev` (or `npm run dev:dev`) again
+> before going back to the emulator stack.
 
 ---
 

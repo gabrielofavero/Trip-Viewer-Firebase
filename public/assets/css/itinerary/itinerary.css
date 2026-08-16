@@ -46,8 +46,10 @@
 		display: none !important;
 	}
 
-	/* Itinerary table — compact; mirrors the on-screen look (colored header,
-	   zebra rows, grid) and the <thead> repeats on every printed page. */
+	/* Itinerary table — stacked "list" on paper. Each row becomes a bordered
+	   block and each cell shows its column header (data-label) above its
+	   content, so vertical views read top-to-bottom and tall cells are never
+	   clipped. */
 	.itin-table-wrap {
 		border: 1px solid #000 !important;
 		border-radius: 0 !important;
@@ -56,26 +58,43 @@
 		overflow: visible !important;
 	}
 
+	.itin-table,
+	.itin-table tbody,
+	.itin-table tr,
+	.itin-table th,
+	.itin-table td {
+		display: block !important;
+		width: 100% !important;
+		box-sizing: border-box !important;
+	}
+
 	.itin-table {
 		min-width: 0 !important;
 	}
 
 	.itin-table thead {
-		display: table-header-group;
+		display: none !important;
 	}
 
-	.itin-table th,
-	.itin-table td {
-		border-right: 1px solid #bbb !important;
+	.itin-table tbody tr {
+		margin: 0 0 0.75rem !important;
+		border: 1px solid #000 !important;
+		overflow: hidden !important;
+		break-inside: avoid;
+		page-break-inside: avoid;
+	}
+
+	.itin-table tbody tr:last-child {
+		margin-bottom: 0 !important;
+	}
+
+	.itin-table tbody th,
+	.itin-table tbody td {
+		border: 0 !important;
 		border-bottom: 1px solid #bbb !important;
 		padding: 0.45rem 0.5rem !important;
 		color: #000 !important;
 		background: #fff !important;
-	}
-
-	.itin-table th:last-child,
-	.itin-table td:last-child {
-		border-right: none !important;
 	}
 
 	.itin-table tbody tr:last-child th,
@@ -83,35 +102,35 @@
 		border-bottom: none !important;
 	}
 
-	.itin-table thead th {
-		background: var(--theme-color) !important;
-		color: #fff !important;
-		border-bottom: 1px solid #000 !important;
-		font-size: 11px !important;
-		padding: 0.45rem 0.5rem !important;
-		break-after: avoid;
-		page-break-after: avoid;
-	}
-
 	.itin-table tbody th.itin-col-day {
-		background: #f2f3f5 !important;
-		color: #000 !important;
-		font-size: 11px !important;
-	}
-
-	/* Zebra rows — mirror the screen. */
-	.itin-table tbody tr:nth-child(even) td {
-		background: #f2f3f5 !important;
-	}
-
-	/* Neutralize the mobile sticky day column on paper. */
-	.itin-table .itin-col-day {
 		position: static !important;
 		box-shadow: none !important;
+		background: #000 !important;
+		color: #fff !important;
+	}
+
+	/* Column header shown above each cell's content on paper. */
+	.itin-table tbody th.itin-col-day::before,
+	.itin-table td.itin-cell::before {
+		content: attr(data-label) !important;
+		display: block !important;
+		margin-bottom: 0.2rem !important;
+		font-size: 9px !important;
+		font-weight: 700 !important;
+		text-transform: uppercase !important;
+		letter-spacing: 0.08em !important;
+	}
+
+	.itin-table tbody th.itin-col-day::before {
+		color: rgba(255, 255, 255, 0.75) !important;
+	}
+
+	.itin-table td.itin-cell::before {
+		color: #000 !important;
 	}
 
 	/* Rows may split between items so tall days are never clipped on paper;
-	   each item (and the repeated header) stays intact. */
+	   each item (and the day block) stays intact. */
 	.itin-item,
 	.itin-subitem {
 		break-inside: avoid;
@@ -425,23 +444,95 @@
 	}
 }
 
-/* Mobile: let the 5-column table scroll horizontally with the day column
-   pinned so the trip day stays visible while scanning the periods. */
+/* Mobile: convert the 5-column table into a stacked "card list". Each row
+   becomes a bordered block and every cell shows its column header (via
+   data-label) above its content, so the itinerary reads top-to-bottom
+   without horizontal scrolling. */
 @media (max-width: 768px) {
-	.itin-table {
-		min-width: 640px;
-	}
-
 	.itin-table-wrap {
-		overflow-x: auto;
-		-webkit-overflow-scrolling: touch;
+		overflow: visible;
+		border: 0;
+		box-shadow: none;
+		background: transparent;
 	}
 
-	.itin-table .itin-col-day {
-		position: sticky;
-		left: 0;
-		z-index: 1;
-		box-shadow: 1px 0 0 var(--border-color);
+	.itin-table,
+	.itin-table tbody,
+	.itin-table tr,
+	.itin-table th,
+	.itin-table td {
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.itin-table {
+		min-width: 0;
+	}
+
+	.itin-table thead {
+		display: none;
+	}
+
+	.itin-table tbody tr {
+		margin-bottom: 1rem;
+		border: 1px solid var(--border-color);
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow-sm);
+		background: var(--background-color);
+		overflow: hidden;
+	}
+
+	.itin-table tbody tr:last-child {
+		margin-bottom: 0;
+	}
+
+	.itin-table tbody th,
+	.itin-table tbody td {
+		border: 0;
+		border-bottom: 1px solid var(--border-color);
+		padding: 0.75rem 1rem;
+		background: transparent;
+	}
+
+	.itin-table tbody tr:last-child th,
+	.itin-table tbody tr:last-child td {
+		border-bottom: 0;
+	}
+
+	/* Neutralize the zebra striping of the desktop table inside the cards. */
+	.itin-table tbody tr:nth-child(even) td {
+		background: transparent;
+	}
+
+	.itin-table tbody th.itin-col-day {
+		position: static;
+		box-shadow: none;
+		/* Override the desktop 22% day-column width so the day header spans
+		   the full card. */
+		width: 100%;
+		background: var(--theme-color);
+		color: #fff;
+	}
+
+	/* Column header shown above each cell's content. */
+	.itin-table tbody th.itin-col-day::before,
+	.itin-table td.itin-cell::before {
+		content: attr(data-label);
+		display: block;
+		margin-bottom: 0.25rem;
+		font-size: 0.65rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+
+	.itin-table tbody th.itin-col-day::before {
+		color: rgba(255, 255, 255, 0.75);
+	}
+
+	.itin-table td.itin-cell::before {
+		color: var(--theme-color);
 	}
 }
 

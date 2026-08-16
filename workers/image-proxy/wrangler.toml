@@ -1,0 +1,23 @@
+# TripViewer Image Proxy worker — Cloudflare configuration.
+#
+# Serves the static-export complete-mode image downloads: the browser sends
+# ONE POST with every image URL it needs, and this worker fetches them
+# server-side (no CORS) and returns them all in a single JSON response.
+#
+# name MUST stay in sync with the frontend constant IMAGE_PROXY_DEPLOYED_URL
+# in public/assets/ts/static-export/build-zip.ts
+# (https://trip-viewer-image-proxy.gabriel-o-favero.workers.dev).
+
+name = "trip-viewer-image-proxy"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+
+[vars]
+# Used only by the LOCAL worker (`wrangler dev`) to verify Firebase Auth
+# emulator tokens. The deployed worker ignores this and verifies against
+# Google's public keys via the token `aud`/`iss` claims (same as places-api).
+FIREBASE_AUTH_EMULATOR_HOST = "127.0.0.1:9099"
+
+# Secrets — none required. The worker only needs to verify the caller's
+# Firebase ID token (which identifies the logged-in owner); the image URLs are
+# provided by the caller, so there is nothing secret to configure here.

@@ -7,6 +7,7 @@ import { ACTIVE_DESTINATIONS } from '../../pages/edit-trip/categories/destinatio
 import { getURLParam } from '../../utils/dom.js';
 import { DOCUMENT_ID, ERROR_FROM_GET_REQUEST, setErrorFromGetRequest } from '../state.js';
 import { incrementReads, incrementWrites } from './counter.js';
+import { isStaticMode, getStaticDoc, getStaticCollection } from '../../static-mode/static-mode.js';
 
 // ============================================================
 // Collection & Subcollection Name Constants
@@ -63,6 +64,9 @@ export function buildDatabaseObject(success, message = '', data = {}) {
 
 // Generic Methods
 export async function get(path, treatError = true, hideWarn = false) {
+	if (isStaticMode()) {
+		return getStaticDoc(path);
+	}
 	try {
 		const docRef = firebase.firestore().doc(path);
 		const snapshot = await docRef.get();
@@ -289,11 +293,12 @@ export function createBatchOps() {
 	};
 }
 
-export async function getSingleData(type) {
+export async function getSingleData(type, idOverride?: string) {
 	let data;
 	try {
 		const param = URL_PARAM_MAP[type] || type[0];
-		data = await get(`${type}/${getURLParam(param)}`);
+		const id = idOverride || getURLParam(param);
+		data = await get(`${type}/${id}`);
 		if (!data) {
 			displayError(
 				`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}`,
@@ -523,6 +528,10 @@ export async function getDestination(id, containerID?) {
 
 /** Get all accommodations for a trip from trips/{tripId}/accommodations */
 export async function getAccommodations(tripId: string): Promise<any[]> {
+	if (isStaticMode()) {
+		const map = getStaticCollection(`${COLLECTION.TRIPS}/${tripId}/${SUBCOLLECTION.ACCOMMODATIONS}`);
+		return map ? Object.values(map) : [];
+	}
 	const snapshot = await firebase
 		.firestore()
 		.collection(`${COLLECTION.TRIPS}/${tripId}/${SUBCOLLECTION.ACCOMMODATIONS}`)
@@ -532,6 +541,21 @@ export async function getAccommodations(tripId: string): Promise<any[]> {
 
 /** Get all transportation legs + settings for a trip from trips/{tripId}/transportation */
 export async function getTransportation(tripId: string): Promise<{ legs: any[]; settings: any }> {
+	if (isStaticMode()) {
+		const map = getStaticCollection(`${COLLECTION.TRIPS}/${tripId}/${SUBCOLLECTION.TRANSPORTATION}`);
+		const legs: any[] = [];
+		let settings: any = { viewMode: 'simple' };
+		if (map) {
+			Object.entries(map).forEach(([key, value]: [string, any]) => {
+				if (key === '_settings') {
+					settings = value;
+				} else {
+					legs.push(value);
+				}
+			});
+		}
+		return { legs, settings };
+	}
 	const colRef = firebase
 		.firestore()
 		.collection(`${COLLECTION.TRIPS}/${tripId}/${SUBCOLLECTION.TRANSPORTATION}`);
@@ -550,6 +574,10 @@ export async function getTransportation(tripId: string): Promise<{ legs: any[]; 
 
 /** Get all itinerary days for a trip from trips/{tripId}/itinerary */
 export async function getItinerary(tripId: string): Promise<any[]> {
+	if (isStaticMode()) {
+		const map = getStaticCollection(`${COLLECTION.TRIPS}/${tripId}/${SUBCOLLECTION.ITINERARY}`);
+		return map ? Object.values(map) : [];
+	}
 	const snapshot = await firebase
 		.firestore()
 		.collection(`${COLLECTION.TRIPS}/${tripId}/${SUBCOLLECTION.ITINERARY}`)
@@ -559,6 +587,7 @@ export async function getItinerary(tripId: string): Promise<any[]> {
 
 /** Get trip summaries for a user from users/{uid}/tripSummaries */
 export async function getUserTripSummaries(uid: string): Promise<any[]> {
+	if (isStaticMode()) return [];
 	const snapshot = await firebase
 		.firestore()
 		.collection(`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.TRIP_SUMMARIES}`)
@@ -568,6 +597,7 @@ export async function getUserTripSummaries(uid: string): Promise<any[]> {
 
 /** Get destination summaries for a user from users/{uid}/destinationSummaries */
 export async function getUserDestinationSummaries(uid: string): Promise<any[]> {
+	if (isStaticMode()) return [];
 	const snapshot = await firebase
 		.firestore()
 		.collection(`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.DESTINATION_SUMMARIES}`)
@@ -577,6 +607,7 @@ export async function getUserDestinationSummaries(uid: string): Promise<any[]> {
 
 /** Get listing summaries for a user from users/{uid}/listingSummaries */
 export async function getUserListingSummaries(uid: string): Promise<any[]> {
+	if (isStaticMode()) return [];
 	const snapshot = await firebase
 		.firestore()
 		.collection(`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.LISTING_SUMMARIES}`)

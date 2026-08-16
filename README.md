@@ -34,6 +34,10 @@ npm run serve
 
 # Full dev mode (frontend watch + live reload, emulators, auto-open browser)
 npm run dev
+
+# Real-data dev (NO emulators — reads/writes the real Firebase project)
+npm run dev:dev    # firebase use dev first (trip-viewer-dev)
+npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 ```
 
 # Tasks
@@ -41,17 +45,15 @@ npm run dev
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 175   | 171  | 4         | 0       |
-| 🏆   | Feature     | F000 | 182   | 165  | 17        | 0       |
-| 📈   | Improvement | M000 | 178   | 155  | 22        | 1       |
-| ⚔️   | Epic        | E000 | 51    | 39   | 7         | 5       |
+| 🏆   | Feature     | F000 | 187   | 170  | 17        | 0       |
+| 📈   | Improvement | M000 | 181   | 158  | 22        | 1       |
+| ⚔️   | Epic        | E000 | 51    | 40   | 7         | 4       |
 
 ## Backlog
 
 ### High Priority
 
 ### Medium Priority
-
-- ⚔️ **E043:** Export as static web page (Offline Mode)
 
 ### Low Priority
 
@@ -113,6 +115,15 @@ npm run dev
 - 🐞 **B175:** Fix saving issues for trips and destinations
 - 🏆 **F182:** Add new dialogs into all itinerary items for view
 - 📈 **M153:** Minor visual improvements on itinerary.html
+- ⚔️ **E043:** Export as static web page (Offline Mode)
+  - *[🏆F183] Static-mode runtime seam (render from local data.json, no Firebase SDK)*
+  - *[📈M179] Build-time asset graph + static-export manifest*
+  - *[🏆F184] Static export Settings dialog (type, doc, PIN, mode, title/icon)*
+  - *[🏆F185] Export ZIP builder (HTML transform + manifest fetch + download)*
+  - *[🏆F186] PWA customization (app title + icon in the export)*
+  - *[📈M180] Self-hosted icons & web fonts (drop dead gapi)*
+- 🏆 **F187:** [DEV] Add support for AI mobile push notification (ntfy)
+- 📈 **M181:** Remove PIN typing need on index.html
 
 ### July 2026
 
