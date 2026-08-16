@@ -34,7 +34,9 @@ var expensesMounted = false;
 /** Shared opts for the inline expenses mount (view.html). */
 function getExpensesOpts(pin?: string) {
 	return {
-		tripId: getURLParam('t'),
+		// Fall back to the resolved document id (static-export bundle meta) so
+		// the expenses section still loads on hosts that strip the query.
+		tripId: getURLParam('t') || DOCUMENT_ID,
 		pin: pin || getState().pin || 'no-pin',
 		embedMode: true,
 		onPinResolved: (resolved: string) => {
@@ -83,7 +85,8 @@ export function initViewEmbed(): void {
 		closeBtn.addEventListener('click', closeViewLightbox);
 	}
 
-	// Lightbox toolbar actions — only shown for the full itinerary.
+	// Lightbox toolbar actions — print/export are itinerary-only; the
+	// night-mode toggle is shared with the destination detail.
 	getID('lightbox-print-btn')?.addEventListener('click', () => print());
 	getID('lightbox-export-btn')?.addEventListener('click', async () => {
 		const { exportItinerary } = await import('../../itinerary/mount.js');
@@ -101,14 +104,29 @@ export function initViewEmbed(): void {
 	});
 }
 
-function setItineraryToolbarActions(show: boolean): void {
-	const display = show ? '' : 'none';
+/**
+ * Toggle which lightbox toolbar actions are visible. The destination detail
+ * shows only the night-mode toggle (no print/export); the full itinerary
+ * shows all three. All buttons share the `.lightbox-close` styling.
+ */
+function setToolbarActions(options: { print: boolean; export: boolean; night: boolean }): void {
 	const printBtn = getID('lightbox-print-btn');
-	if (printBtn) printBtn.style.display = display;
+	if (printBtn) printBtn.style.display = options.print ? '' : 'none';
 	const exportBtn = getID('lightbox-export-btn');
-	if (exportBtn) exportBtn.style.display = display;
+	if (exportBtn) exportBtn.style.display = options.export ? '' : 'none';
 	const nightBtn = getID('lightbox-nightmode-btn');
-	if (nightBtn) nightBtn.style.display = display;
+	if (nightBtn) nightBtn.style.display = options.night ? '' : 'none';
+}
+
+/** Hide the lightbox night-mode toggle when the trip locks to a single theme
+ *  (same rule as the page top-bar's night-mode button). */
+function applyNightModeVisibility(): void {
+	const nightBtn = getID('lightbox-nightmode-btn');
+	if (!nightBtn) return;
+	const visibility = getState().visibility;
+	if (visibility && (visibility.light === false || visibility.dark === false)) {
+		nightBtn.style.display = 'none';
+	}
 }
 
 function updateLightboxNightModeIcon(): void {
@@ -187,8 +205,9 @@ export function closeViewLightbox(): void {
 	if (!LIGHTBOX_ACTIVE) return;
 
 	document.body.classList.remove('lightbox-open');
-	setItineraryToolbarActions(false);
+	setToolbarActions({ print: false, export: false, night: false });
 	getID('lightbox').style.display = 'none';
+	setToolbarActions({ print: false, export: false, night: false });
 	setElementDisplay('night-mode', '');
 	setElementDisplay('menu', '');
 	setElementDisplay('navbar', '');
@@ -216,16 +235,9 @@ export function closeViewLightbox(): void {
 export async function openItineraryLightbox(): Promise<void> {
 	openLightbox();
 	renderLightboxBody('itinerary-content-template');
-	setItineraryToolbarActions(true);
+	setToolbarActions({ print: true, export: true, night: true });
 	updateLightboxNightModeIcon();
-
-	// Hide the toggle when the trip locks visibility to a single theme (same
-	// rule as the page top-bar's night-mode button).
-	const visibility = getState().visibility;
-	const nightBtn = getID('lightbox-nightmode-btn');
-	if (nightBtn && visibility && (visibility.light === false || visibility.dark === false)) {
-		nightBtn.style.display = 'none';
-	}
+	applyNightModeVisibility();
 
 	const container = getID('content');
 	if (!container) {
@@ -253,7 +265,11 @@ export async function openDestinationLightbox(destinationId: string, type?: stri
 
 	openLightbox();
 	renderLightboxBody('destination-content-template');
-	setItineraryToolbarActions(false);
+	// Destination detail has no print/export, but keep the dark-mode toggle
+	// side by side with the close button (same toolbar the itinerary uses).
+	setToolbarActions({ print: false, export: false, night: true });
+	updateLightboxNightModeIcon();
+	applyNightModeVisibility();
 
 	const container = getID('content');
 	if (!container) {

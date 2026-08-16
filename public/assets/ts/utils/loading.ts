@@ -1,6 +1,6 @@
 import { getID } from './dom.js';
 import { disableScroll, enableScroll } from '../theme/visibility.js';
-import { MESSAGE_MODAL_OPEN, closeMessage, displayError } from './messages.js';
+import { MESSAGE_MODAL_OPEN, cancelAnimateOut, closeMessage, displayError } from './messages.js';
 import { translate } from '../i18n/translation.js';
 
 var LOADING_TIMER;
@@ -20,6 +20,10 @@ export function startLoadingScreen({ useTimer = false, adjustLoadables = true } 
 			clearTimeout((preloader as any)._closeMsgTimeout);
 			delete (preloader as any)._closeMsgTimeout;
 		}
+		// Also cancel the outgoing dialog's leave-animation completion so a
+		// closeMessage() → startLoadingScreen() transition can't wipe the
+		// re-shown preloader a moment later (mirrors displayFullMessage).
+		cancelAnimateOut(preloader.firstElementChild as HTMLElement | null);
 		if (adjustLoadables) {
 			document.querySelectorAll('.loadable').forEach((el) => {
 				(el as HTMLElement).style.display = '';

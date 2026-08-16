@@ -3,9 +3,8 @@
 		"settings": "Settings",
 		"backup": {
 			"title": "Export Account",
-			"prompt": "Would you like to back up sensitive trip data? You will need to enter the access PIN for each protected trip",
-			"security_warning": "⚠️ Exported files contain your trip data in plain text, including any protected information (reservation codes, booking links) if PINs are provided. Anyone with access to the file can read this data. Store exported files securely and delete them when no longer needed.",
-			"pin_instruction": "Enter the access PINs for the trips below. If you leave any blank, the protected data for that trip will not be backed up.",
+			"prompt": "Would you like to back up sensitive trip data as well?",
+			"security_warning": "⚠️ Exported files contain your trip data in plain text, including any protected information (reservation codes, booking links). Anyone with access to the file can read this data. Store exported files securely and delete them when no longer needed.",
 			"success": "The account backup was completed successfully",
 			"partial": {
 				"title": "Backup partially completed",
@@ -58,14 +57,40 @@
 		"export_documents": {
 			"title": "Export Document(s)",
 			"select_hint": "Select documents to export",
-			"security_warning": "⚠️ Exported files contain your document data in plain text, including any protected information (reservation codes, booking links) if PINs are provided. Anyone with access to the file can read this data. Store exported files securely and delete them when no longer needed.",
+			"security_warning": "⚠️ Exported files contain your document data in plain text, including any protected information (reservation codes, booking links). Anyone with access to the file can read this data. Store exported files securely and delete them when no longer needed.",
 			"no_documents": "No documents available to export for this category.",
 			"none_selected": "No documents selected for export.",
 			"export_button": "Export Selected",
-			"pin_instruction": "Enter the access PINs for the trips below. If you leave any blank, only unprotected data will be exported for that trip.",
 			"success": "{{count}} document(s) exported successfully!",
 			"partial_success": "{{exported}} document(s) exported successfully ({{failed}} failed).",
 			"failed": "Failed to export documents."
+		},
+		"export_static": {
+			"title": "Export as Static Web Page",
+			"warning": "⚠️ The exported package contains your document data in plain text, including any protected information (reservation codes, booking links). Anyone with access to the files can read this data. Store the exported files securely and delete them when no longer needed.",
+			"select_type": "Choose what to export",
+			"select_document": "Select a document",
+			"select_mode": "Select fidelity mode",
+			"mode_light": "Light",
+			"mode_complete": "Complete",
+			"mode_light_hint": "Smaller package. Images stay as external links (needs network for media).",
+			"mode_complete_hint": "Fully offline. All mapped images are downloaded into the package.",
+			"app_title": "App title",
+			"app_icon": "App icon",
+			"build": "Build Export",
+			"building": "Building static export…",
+			"success": "Static export completed successfully!",
+			"partial_success": "Static export completed, but {{failed}} file(s) could not be downloaded.",
+			"failed": "Static export failed.",
+			"none_selected": "No document selected for export.",
+			"no_documents": "No documents available to export for this category.",
+			"loading": {
+				"gathering": "Gathering document data",
+				"assets": "Downloading app assets",
+				"images": "Downloading images ({{current}} of {{total}})",
+				"building": "Building ZIP package",
+				"finishing": "Finishing up"
+			}
 		},
 		"delete": {
 			"title": "Delete account",

@@ -4,11 +4,10 @@ import {
 	closeMessage,
 	displayFullMessage,
 	displayPrompt,
-	getContainersInput,
 	openToast,
 	MESSAGE_PROPERTIES,
 } from '../utils/messages.js';
-import { cloneObject, getID, getTranslatedDocumentLabel } from '../utils/dom.js';
+import { cloneObject, getTranslatedDocumentLabel } from '../utils/dom.js';
 import { getTimestamp } from '../utils/dates.js';
 import { get } from '../data/firebase/database.js';
 import {
@@ -17,6 +16,7 @@ import {
 	getUserListingSummaries,
 } from '../data/firebase/database.js';
 import { getUID } from '../data/firebase/auth.js';
+import { resolveTripPin } from './document-bundle.js';
 
 const MISSING_ACCOUNT_DATA = { jobs: [], protected: [], failed: [] };
 
@@ -49,7 +49,9 @@ export async function backupOnClickAction() {
 	displayPrompt({
 		title,
 		content,
-		yesAction: displayPinRequestBackup,
+		// The PIN is resolved automatically from the owner-readable
+		// `protected/{tripId}` lookup doc — no PIN entry dialog.
+		yesAction: () => backupAccountData(true),
 		noAction: () => backupAccountData(false),
 	});
 }
@@ -81,7 +83,7 @@ async function prepareMissingData() {
 	}
 
 	prepareMainData();
-	prepareAdditionalData();
+	await prepareAdditionalData();
 
 	MISSING_ACCOUNT_DATA.jobs = jobs;
 	MISSING_ACCOUNT_DATA.protected = protectedJobs;
@@ -96,7 +98,7 @@ async function prepareMissingData() {
 		}
 	}
 
-	function prepareAdditionalData() {
+	async function prepareAdditionalData() {
 		const trips = BACKUP_SUMMARIES.trips;
 		for (const documentID in trips) {
 			const trip = trips[documentID];
@@ -115,7 +117,10 @@ async function prepareMissingData() {
 					}
 					if (trip?.modules?.accommodations === true || trip?.modules?.transportation === true)
 						innerJobs.push(getJobObject(trip.title, documentID, 'trips', 'protected'));
-					protectedJobs.push(getProtectedJobObject(trip.title, documentID, innerJobs));
+					// The owner can read the `protected/{id}` lookup doc, so the PIN
+					// is resolved automatically instead of prompting the user.
+					const pin = await resolveTripPin(documentID);
+					protectedJobs.push(getProtectedJobObject(trip.title, documentID, innerJobs, pin));
 			}
 		}
 	}
@@ -129,48 +134,7 @@ function getProtectedJobObject(title, documentID, jobs, pin = '') {
 	return { title, documentID, jobs, pin };
 }
 
-export function displayPinRequestBackup() {
-	stopLoadingScreen();
-	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = translate('trip.basic_information.pin.title');
-	properties.containers = getContainersInput();
-	properties.fullscreen = true;
-	properties.content = getContent();
-	properties.buttons = [
-		{ type: 'cancel' },
-		{ type: 'confirm', action: () => backupAccountData(true) },
-	];
-
-	displayFullMessage(properties);
-
-	function getContent() {
-		const rows: string[] = [];
-		for (const protectedJob of MISSING_ACCOUNT_DATA.protected) {
-			rows.push(`
-				<tr>
-					<td class="pin-backup-label">${protectedJob.title}</td>
-					<td class="pin-backup-input-cell">
-						<input id="${protectedJob.documentID}" type="password" inputmode="numeric" maxlength="4" autocomplete="one-time-code" pattern="[0-9]*" placeholder="0000" class="pin-backup-input" />
-					</td>
-				</tr>
-			`);
-		}
-		return `
-			<p class="pin-backup-instruction">${translate('account.backup.pin_instruction')}</p>
-			<div class="pin-backup-scroll">
-				<table class="pin-backup-table">
-					${rows.join('')}
-				</table>
-			</div>
-		`;
-	}
-}
-
 export async function backupAccountData(useSensitiveData = false) {
-	if (useSensitiveData) {
-		getProtectedJobPins();
-	}
-
 	closeMessage();
 	startLoadingScreen();
 	const accountData = await getAccountData(useSensitiveData);
@@ -195,30 +159,6 @@ export async function backupAccountData(useSensitiveData = false) {
 		displayPartialBackupWarning();
 	} else {
 		openToast(translate('account.backup.success'));
-	}
-}
-
-function getProtectedJobPins() {
-	const inputs = getID('message-description').querySelectorAll('input');
-	const ids = Array.from(inputs).map((input) => input.id);
-
-	for (const protectedJob of MISSING_ACCOUNT_DATA.protected) {
-		const index = ids.indexOf(protectedJob.documentID);
-		if (index === -1) {
-			continue;
-		}
-
-		const pin = inputs[index].value.trim();
-		if (!isNaN(Number(pin)) && pin.length === 4) {
-			protectedJob.pin = pin;
-		} else if (pin === '') {
-			console.warn('Skipping. No PIN provided for trip:', protectedJob.title);
-		} else {
-			console.warn('Invalid PIN for trip:', protectedJob.title);
-			for (const job of protectedJob.jobs) {
-				newBackupFail(job, 'not_found');
-			}
-		}
 	}
 }
 

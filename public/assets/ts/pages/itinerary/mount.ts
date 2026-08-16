@@ -19,7 +19,12 @@ import {
 	registerActions,
 } from '../../utils/messages.js';
 import { getItineraryContent } from '../../models/itinerary.model.js';
-import { get, haveErrorFromGetRequest, COLLECTION } from '../../data/firebase/database.js';
+import {
+	get,
+	getTripComplete,
+	haveErrorFromGetRequest,
+	COLLECTION,
+} from '../../data/firebase/database.js';
 import { requestPin, requestInvalidPin } from '../../utils/pin.js';
 
 export interface FullItineraryOptions {
@@ -57,7 +62,11 @@ export async function mountFullItinerary(
 	if (opts.data) {
 		setState(opts.data);
 	} else {
-		setState(await get(`${COLLECTION.TRIPS}/${opts.tripId}`));
+		// Hydrate the trip with its subcollections (itinerary, transportation,
+		// accommodations) — the itinerary model reads those from state.
+		const tripData = await getTripComplete(opts.tripId, false);
+		normalizeTransportation(tripData);
+		setState(tripData);
 	}
 
 	if (!getState()) {
@@ -113,6 +122,37 @@ async function loadItinerary(container: HTMLElement) {
 	// Print/export buttons live in the page top-bar; wire them when present.
 	getID('print')?.addEventListener('click', () => print());
 	getID('export')?.addEventListener('click', () => exportItinerary());
+}
+
+/**
+ * Normalize transportation from the subcollection format ({ legs, settings })
+ * to the module-expected format ({ viewMode, data }), mirroring view.ts.
+ */
+function normalizeTransportation(tripData: any): void {
+	if (!tripData?.transportation) return;
+	const rawViewMode: string =
+		tripData.transportation.settings?.viewMode ||
+		tripData.transportation.viewMode ||
+		'simple';
+	const rawData: any[] = tripData.transportation.legs || tripData.transportation.data || [];
+	tripData.transportation = {
+		viewMode: normalizeTransportViewMode(rawViewMode),
+		data: rawData,
+	};
+}
+
+/** Normalize Firestore viewMode values to the hyphenated module format. */
+function normalizeTransportViewMode(raw: string): string {
+	switch (raw) {
+		case 'simple':
+			return 'simple-view';
+		case 'leg':
+			return 'leg-view';
+		case 'people':
+			return 'people-view';
+		default:
+			return raw || 'simple-view';
+	}
 }
 
 // ======= PIN gate =======

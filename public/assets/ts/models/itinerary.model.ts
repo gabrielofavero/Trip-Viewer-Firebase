@@ -97,12 +97,14 @@ export async function getItineraryContent(type: string): Promise<string> {
 
 		for (const itinerary of days) {
 			content.push(`<tr>`);
-			content.push(`<th class="itin-col-day" scope="row">${itinerary.title}</th>`);
+			content.push(
+				`<th class="itin-col-day" scope="row" data-label="${translate('labels.days')}">${itinerary.title}</th>`,
+			);
 
 			for (const timeOfDay of getItinerary().timeOfDay) {
 				const timeOfDayData = itinerary[timeOfDay] || [];
 
-				content.push(`<td class="itin-cell">`);
+				content.push(`<td class="itin-cell" data-label="${getPeriod(timeOfDay)}">`);
 				if (timeOfDayData.length === 0) {
 					content.push(`<span class="itin-empty" aria-hidden="true"></span>`);
 				} else {
@@ -309,6 +311,11 @@ export async function getItineraryData(): Promise<any[]> {
 		return innerItineraries;
 
 		async function getSubItem(item: any): Promise<any> {
+			if (!item) {
+				// Schedule entries may lack an item (e.g. placeholder/free days).
+				return { card: undefined, texts: [] };
+			}
+
 			let destinations: any;
 			if (item.type == 'destination') {
 				// was "tipo" == "destinos"
@@ -321,6 +328,9 @@ export async function getItineraryData(): Promise<any[]> {
 
 		async function getInnerItineraryAssociatedTexts(item: any): Promise<any[]> {
 			const texts: any[] = [];
+			if (!item) {
+				return texts;
+			}
 
 			switch (
 				item.type // was "tipo"

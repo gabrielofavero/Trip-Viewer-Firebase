@@ -8,6 +8,7 @@
  *   node scripts/build/build.js               — one-shot build
  *   node scripts/build/build.js --watch       — watch mode (rebuilds on changes)
  *   node scripts/build/build.js --mode dev|prod — explicit build mode
+ *   node scripts/build/build.js --use-emulator true|false — emulator vs real data (default true)
  *
  * Mode inference (when --mode is omitted):
  *   --watch or NODE_ENV=development → dev, otherwise → prod.
@@ -24,6 +25,27 @@ const DIST_DIR = path.join(ROOT, "dist");
 
 const watchMode = process.argv.includes("--watch");
 const noLiveReload = process.argv.includes("--no-livereload");
+
+/**
+ * Resolve the emulator flag. `--use-emulator true|false` controls whether the
+ * built frontend connects to the local emulators on localhost. An explicit
+ * value wins; otherwise it defaults to `true` (the `npm run dev` emulator
+ * flow). Pass `false` for dev:prd / dev:dev, which serve real Firebase data.
+ */
+function resolveUseEmulator() {
+	const flagIdx = process.argv.indexOf("--use-emulator");
+	if (flagIdx !== -1) {
+		const value = process.argv[flagIdx + 1];
+		if (value === "true" || value === "false") return value;
+		console.error(
+			`[build] Invalid --use-emulator "${value}". Use --use-emulator true|false.`,
+		);
+		process.exit(1);
+	}
+	return "true";
+}
+
+const useEmulator = resolveUseEmulator();
 
 /**
  * Resolve the build mode. An explicit `--mode dev|prod` wins; otherwise
@@ -77,6 +99,15 @@ function build() {
 		retryDelay: 100,
 	});
 
+	// 1b. Ensure the self-hosted web fonts exist in public/ (idempotent — skips
+	// the network when they are up to date). Runs before the copy step so any
+	// freshly generated woff2 files and fonts.css reach dist/.
+	console.log("[build] Ensuring self-hosted fonts...");
+	execSync(`"${process.execPath}" "${path.join(__dirname, "vendor-fonts.js")}"`, {
+		cwd: ROOT,
+		stdio: "inherit",
+	});
+
 	// 2. Copy all of public/ to dist/
 	console.log("[build] Copying public/ → dist/ ...");
 	copyRecursive(PUBLIC_DIR, DIST_DIR);
@@ -84,7 +115,7 @@ function build() {
 	// 2b. Inject shared HTML partials into dist/ HTML files
 	console.log("[build] Injecting HTML partials...");
 	const { inject } = require("./inject-partials.js");
-	inject({ noLiveReload, mode: buildMode });
+	inject({ noLiveReload, mode: buildMode, useEmulator });
 
 	// 2c. Compile TypeScript → JavaScript
 	console.log("[build] Compiling TypeScript...");
@@ -117,7 +148,12 @@ function build() {
 	}
 
 	if (fs.existsSync(firebaseConfig)) {
-		fs.copyFileSync(firebaseConfig, path.join(DIST_DIR, "firebase-config.js"));
+		// Substitute the build-time USE_EMULATOR flag into the copied config so
+		// its localhost emulator block matches the `--use-emulator` value.
+		const configContent = fs
+			.readFileSync(firebaseConfig, "utf8")
+			.replace(/\{\{USE_EMULATOR\}\}/g, useEmulator);
+		fs.writeFileSync(path.join(DIST_DIR, "firebase-config.js"), configContent);
 	} else {
 		console.warn(
 			"[build] WARNING: firebase-config.js not found at project root.",
@@ -129,6 +165,16 @@ function build() {
 	} else {
 		console.warn("[build] WARNING: index.js not found at project root.");
 	}
+
+	// 2d0. Generate the self-hosted Iconify bundle (scans public/ for icon
+	// names, resolves them via the Iconify API with an on-disk cache, and
+	// writes dist/assets/json/iconify-icons.json). Runs before hash-assets so
+	// the file is present (and, being in EXCLUDED_FILES, keeps its stable name).
+	console.log("[build] Generating self-hosted Iconify bundle...");
+	execSync(`"${process.execPath}" "${path.join(__dirname, "gen-iconify-bundle.js")}"`, {
+		cwd: ROOT,
+		stdio: "inherit",
+	});
 
 	// 2e. Content-hash built JS/CSS (deep, dependency-aware) so the immutable
 	// Cache-Control on *.js/*.css is always correct after a deploy.
@@ -147,6 +193,13 @@ function build() {
 				"Verify it in P5; if absent, enable the ?v= fallback.",
 		);
 	}
+
+	// 2f. Generate the static-export manifest. Runs after hash-assets in prod
+	// and after TS compile in dev, so it always sees the final dist/ asset
+	// graph (final hashed filenames in prod, unhashed in dev).
+	console.log("[build] Generating static-export manifest...");
+	const { generateStaticExportManifest } = require("./gen-static-export-manifest.js");
+	generateStaticExportManifest(DIST_DIR, { mode: buildMode });
 
 	// 2d. Sync package.json version to the version calculated from README.md
 	syncPackageVersion();

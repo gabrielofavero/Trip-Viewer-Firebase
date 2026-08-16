@@ -310,7 +310,13 @@ function normalizeItemType(type) {
 export function getScheduleTitle(title, destinations, placeholder = true) {
 	if (!title || typeof title === 'string') {
 		const placeholderValue = placeholder ? translate('trip.itinerary.title') : '';
-		return title || placeholderValue;
+		// Legacy day docs store the day title either as a plain custom string
+		// OR as the raw destination ID (e.g. "eWj79W36wxxyhuvccevW"). Resolve
+		// destination-ID titles against the day's destinationIds, which already
+		// carry the denormalized { id, title }, so we never fetch the
+		// destination document just to display its name. Custom strings that
+		// don't match a destination ID are returned as-is.
+		return resolveScheduleDestinationTitle(title, destinations) || title || placeholderValue;
 	}
 
 	if (!title.value) {
@@ -326,6 +332,18 @@ export function getScheduleTitle(title, destinations, placeholder = true) {
 	}
 
 	return title.value;
+}
+
+/**
+ * Resolve a legacy raw destination-ID title against the day's `destinationIds`
+ * (entries are { id, title } or legacy { destinationId, title }). Returns the
+ * destination display title, or '' when `value` is not a destination reference
+ * (i.e. a custom string title).
+ */
+function resolveScheduleDestinationTitle(value, destinations = []) {
+	if (!value || destinations.length === 0) return '';
+	const destination = destinations.find((d) => d?.id === value || d?.destinationId === value);
+	return destination?.title || '';
 }
 
 // Setters

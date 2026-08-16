@@ -11,6 +11,7 @@ declare var Chart: any;
 declare var GLightbox: any;
 declare var instgrm: any;
 declare var Isotope: any;
+declare var JSZip: any;
 declare var Swiper: any;
 declare var Typed: any;
 declare var Waypoint: any;

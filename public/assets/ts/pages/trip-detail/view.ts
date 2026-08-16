@@ -27,6 +27,7 @@ import {
 	haveErrorFromGetRequest,
 	COLLECTION,
 } from '../../data/firebase/database.js';
+import { getStaticMeta, isStaticMode } from '../../static-mode/static-mode.js';
 import {
 	isOnDarkMode,
 	loadVisibility,
@@ -114,6 +115,24 @@ export async function loadViewPage() {
 	const urlParams = getURLParams();
 	TYPE = urlParams['l'] ? 'listings' : urlParams['d'] ? 'destinations' : 'trips';
 	setDocumentId(urlParams['l'] || urlParams['d'] || urlParams['t']);
+
+	// Static export: the bundle holds exactly one document, so derive the
+	// document identity from the bundle meta rather than the URL query (some
+	// static hosts strip it via clean-URL redirects). Without this the page
+	// would fetch a null document and crash on `firestoreData.pin`.
+	if (isStaticMode()) {
+		const meta = getStaticMeta();
+		if (meta?.type && meta.sourceId) {
+			TYPE =
+				meta.type === 'destination'
+					? 'destinations'
+					: meta.type === 'listing'
+						? 'listings'
+						: 'trips';
+			setDocumentId(meta.sourceId);
+		}
+	}
+
 	populateDevPage();
 
 	window.addEventListener('scroll', () => {
@@ -130,17 +149,26 @@ export async function loadViewPage() {
 	let firestoreData;
 
 	if (TYPE === COLLECTION.TRIPS) {
-		const tripId = getURLParam('t');
+		// Use the resolved document id (URL param, or the static-export bundle
+		// meta when the query is absent) so the trip still loads on hosts that
+		// strip the query string.
+		const tripId = getURLParam('t') || DOCUMENT_ID;
 		// Metadata-only: destination docs are NOT fetched on load (the trip doc's
 		// destinationRefs carry title/image/categories/version). Full destination
 		// docs are fetched lazily on demand (e.g. itinerary destination popups).
 		firestoreData = await getTripComplete(tripId, false);
 	} else {
-		firestoreData = await getSingleData(TYPE);
+		firestoreData = await getSingleData(TYPE, DOCUMENT_ID);
 	}
 
 	if (haveErrorFromGetRequest()) {
 		displayError(getErrorFromGetRequestMessage(), true);
+		stopLoadingScreen();
+		return;
+	}
+
+	if (!firestoreData) {
+		displayError(translate('messages.errors.missing_data'), true);
 		stopLoadingScreen();
 		return;
 	}
@@ -335,6 +363,12 @@ function loadModules() {
 
 	function loadSharingModule() {
 		const share = getID('share');
+		// A static export is a standalone page — the share button would share a
+		// local URL recipients can't open, so it stays hidden.
+		if (isStaticMode()) {
+			if (share) share.style.display = 'none';
+			return;
+		}
 		if (navigator.share && window.location.hostname != 'localhost') {
 			share.addEventListener('click', () => {
 				shareTrip();

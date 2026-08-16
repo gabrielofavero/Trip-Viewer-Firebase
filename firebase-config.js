@@ -72,9 +72,17 @@ function _getOrInitApp() {
 
 const app = _getOrInitApp();
 
-// Connect to local emulators when running on localhost
+// Connect to local emulators when running on localhost.
+// Build-time flag: `{{USE_EMULATOR}}` is substituted by the build script
+// (`--use-emulator true|false`). Default (true) keeps `npm run dev`'s
+// emulator flow; "false" (dev:prd / dev:dev) keeps the real Firebase
+// connection even on localhost so the app reads/writes the real project.
+const _USE_EMULATOR = '{{USE_EMULATOR}}' !== 'false';
+
 const _isLocalhost =
-	window?.location?.hostname === 'localhost' || window?.location?.hostname === '127.0.0.1';
+	_USE_EMULATOR &&
+	(window?.location?.hostname === 'localhost' ||
+		window?.location?.hostname === '127.0.0.1');
 
 if (_isLocalhost) {
 	try {

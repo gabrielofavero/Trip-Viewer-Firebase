@@ -1,5 +1,6 @@
 import { getPageURL, setPageName } from '../../app/main.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../../data/state.js';
+import { getStaticMeta, isStaticMode } from '../../static-mode/static-mode.js';
 import { translate } from '../../i18n/translation.js';
 import { getID, getURLParams } from '../../utils/dom.js';
 import { openToast } from '../../utils/messages.js';
@@ -29,10 +30,22 @@ export async function loadDestinationPage() {
 
 	const urlParams = getURLParams();
 	const tripId = urlParams['t'] || urlParams['v'];
+	let destinationId = urlParams['d'];
+
+	// Static export: the bundle holds exactly one document, so derive the
+	// destination id from the bundle meta rather than the URL query (some
+	// static hosts strip it via clean-URL redirects).
+	if (isStaticMode()) {
+		const meta = getStaticMeta();
+		if (meta?.type === 'destination' && meta.sourceId) {
+			destinationId = meta.sourceId;
+		}
+	}
+
 	// Abort early when the read failed (e.g. access denied for unauthenticated
 	// users) — the proper message was already shown by mountDestination.
 	const dispose = await mountDestination(getID('content'), {
-		destinationId: urlParams['d'],
+		destinationId,
 		tripId,
 		type: urlParams['type'],
 	});
@@ -62,6 +75,15 @@ export async function loadDestinationPage() {
 function loadHeaderButtons(tripId?: string) {
 	const closeButton = getID('closeButton');
 	const share = getID('share');
+
+	// Static export: standalone page — no back button (already removed from the
+	// HTML by the transform) and the share button must stay hidden (it would
+	// share a local URL recipients can't open).
+	if (isStaticMode()) {
+		if (closeButton) closeButton.style.display = 'none';
+		if (share) share.style.display = 'none';
+		return;
+	}
 
 	if (tripId) {
 		if (closeButton) {

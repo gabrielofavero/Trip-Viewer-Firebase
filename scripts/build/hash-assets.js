@@ -63,7 +63,21 @@ const VENDOR_PREFIX = 'assets/vendor/';
 
 // Root config files copied into dist/ but never referenced by the app;
 // hashing them would rename them out from under Firebase's deploy `ignore`.
-const EXCLUDED_FILES = new Set(['firebase.json', 'firebase.dev.json']);
+// Also excludes the static-export manifest and the P1-D self-host set, which
+// must keep stable (unhashed) names so the static-export transform can
+// reference them by fixed relative path (see the static-export plan).
+const EXCLUDED_FILES = new Set([
+	'firebase.json',
+	'firebase.dev.json',
+	'static-export-manifest.json',
+	'assets/json/iconify-icons.json',
+	'assets/css/fonts.css',
+]);
+
+// Directory-level exclusions: anything under these prefixes keeps its stable
+// name. `assets/fonts/**` holds the self-hosted web fonts (P1-D) and the
+// existing Chelos font — fonts are self-hosted and never fingerprinted.
+const EXCLUDED_PREFIXES = ['assets/fonts/'];
 
 // Extensions that may be the target of a local asset reference.
 const LOCAL_REF_RE = /\.(?:js|css|png|jpe?g|webp|svg|gif|ico|woff2?|ttf|otf|json)$/i;
@@ -92,6 +106,7 @@ function toRel(root, abs) {
 function isExcluded(rel) {
 	return (
 		EXCLUDED_FILES.has(rel) ||
+		EXCLUDED_PREFIXES.some((p) => rel === p.slice(0, -1) || rel.startsWith(p)) ||
 		rel === VENDOR_PREFIX.slice(0, -1) ||
 		rel.startsWith(VENDOR_PREFIX)
 	);

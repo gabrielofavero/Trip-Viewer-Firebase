@@ -15,7 +15,7 @@
 // (place.descriptions) while `place.description` stays the requested language.
 // The scraper output is normalized here into the same PlaceDetails shape the
 // app already consumes (see public/assets/ts/models/places-api.model.ts +
-// worker/src/normalize.js), so the frontend only has to fetch + adapt, never
+// workers/places-api/src/normalize.js), so the frontend only has to fetch + adapt, never
 // parse raw scraper JSON.
 //
 // The server is CORS-open to localhost so the app served on :5000 can call it
@@ -25,7 +25,7 @@
 // References:
 // - scripts/gmaps-scraper/run.ps1 (the one-shot CLI this wraps)
 // - docs/analysis/20260810-google-maps-local-scraping-research.md
-// - worker/src/normalize.js (the PlaceDetails normalization it mirrors)
+// - workers/places-api/src/normalize.js (the PlaceDetails normalization it mirrors)
 
 import http from 'node:http';
 import { spawn } from 'node:child_process';

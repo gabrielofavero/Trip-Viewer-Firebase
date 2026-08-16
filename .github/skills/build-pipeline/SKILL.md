@@ -16,9 +16,26 @@ The TripViewer build system is a **custom Node.js pipeline** (no Webpack, Vite, 
 npm run build              # One-shot build (prod mode; blocks on TS errors)
 npm run watch              # Watch mode (dev mode; rebuilds on change, errors non-blocking)
 npm run dev                # Full dev: watch (livereload) + emulators + auto-open browser
+npm run dev:dev            # Real data (no emulators): firebase use dev + serve real project
+npm run dev:prd            # Real data (no emulators): firebase use prd + serve real project
 node scripts/build/build.js --mode dev|prod  # Explicit build mode
 node scripts/build/build.js --watch --no-livereload  # Watch without live reload
+node scripts/build/build.js --use-emulator true|false  # Emulator vs real Firebase (default true)
 ```
+
+## Emulator vs Real Data (`--use-emulator true|false`)
+
+Controls how the built frontend connects on localhost:
+
+- **`true`** (default): the reserved `/__/firebase/init.js` is served with
+  `?useEmulator=true` and `firebase-config.js`'s localhost block connects
+  Auth/Firestore to the local emulators — used by `npm run dev`.
+- **`false`**: `init.js?useEmulator=false` and the localhost emulator block is
+  skipped, so the app reads/writes the **real** Firebase project for the active
+  `firebase use` alias — used by `npm run dev:dev` / `npm run dev:prd`.
+
+The flag is substituted at build time into `scripts-vendor.html`
+(`{{USE_EMULATOR}}`) and into the copied `dist/firebase-config.js`.
 
 ## Build Mode (`--mode dev|prod`)
 
@@ -46,10 +63,38 @@ Mode is inferred from `--watch` / `NODE_ENV=development`, or set explicitly with
 4. COMPILE TS     esbuild: dist/assets/ts/**/*.ts → .js (ESM, ES2020 target)
    REMOVE TS      Delete .ts source files from dist/
 5. COPY CONFIG    firebase.json, firebase-config.js, index.js → dist/
+5a. SELF-HOST     vendor-fonts.js + gen-iconify-bundle.js (before hashing —
+                  the files keep stable unhashed names)
 5b. HASH ASSETS   (prod only) content-hash .js/.css/img/fonts/.json + rewrite refs
+5c. EXPORT MANIFEST gen-static-export-manifest.js → dist/static-export-manifest.json
 6. LIVE RELOAD    Write dist/reload timestamp file
 7. TYPE-CHECK     tsc --noEmit
 ```
+
+### Step 5a: Self-hosted fonts & icons
+
+- `vendor-fonts.js` — downloads the woff2 files for the four web-font families
+  (Open Sans / Raleway / Inter / Poppins, the weights listed in `head.html`)
+  into `public/assets/fonts/` and generates `public/assets/css/fonts.css` with
+  matching `@font-face` rules. Files are committed; the script is a no-op when
+  they're already up to date.
+- `gen-iconify-bundle.js` — scans `public/` for every `data-icon` name (HTML +
+  TS literals + `icons.json` + `transportation.json`), resolves each via the
+  Iconify API (cached in `tmp/iconify-cache.json`), and writes
+  `dist/assets/json/iconify-icons.json` (grouped by prefix). **Fails the build
+  on any unresolved icon name.**
+- Both run **before** `hash-assets.js`; their outputs keep **stable (unhashed)
+  names** so the static-export transform can reference them by fixed relative
+  path (see `hash-assets.js` `EXCLUDED_FILES`).
+
+### Step 5c: Static-export manifest
+
+`gen-static-export-manifest.js` emits `dist/static-export-manifest.json` — per
+entry (`view.html`, `destination.html`), the transitive closure of local files
+needed to render standalone without Firebase (imports, `fetch()`, CSS
+`@import`/`url()`, vendor, self-host set). Regenerated every build; the export
+builder (`public/assets/ts/static-export/build-zip.ts`) fetches it at export
+time. See `.github/skills/static-export` for the full contract.
 
 ### Step 3: HTML Partial Injection (`inject-partials.js`)
 
@@ -191,6 +236,11 @@ scripts/
 │   ├── inject-partials.js    ← HTML include processor
 │   ├── hash-assets.js        ← Content-hashing (prod only)
 │   ├── gen-firebase-dev.js   ← Generates firebase.dev.json (no-store headers)
+│   ├── asset-graph.js        ← Reference parsers for the static-export manifest
+│   │                           (duplicates hash-assets.js parsing — don't refactor to share)
+│   ├── gen-static-export-manifest.js ← Emits dist/static-export-manifest.json
+│   ├── gen-iconify-bundle.js ← Self-hosted Iconify bundle (dist/assets/json/iconify-icons.json)
+│   ├── vendor-fonts.js       ← Self-hosted web fonts + assets/css/fonts.css
 │   ├── deploy.py             ← Python deploy script
 │   └── setup.ps1             ← PowerShell setup
 ├── dev/

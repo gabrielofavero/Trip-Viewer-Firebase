@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.23.0] - 2026-08-08
+## [2.23.0]
 
 - 📈 **M169:** [DEV] Improve cache busting
 - 🏆 **F177:** Add app version on footers
@@ -16,6 +16,9 @@
 - ⚔️ **E016:** New Front-End: destination.html
 - 🏆 **F182:** Add new dialogs into all itinerary items for view
 - 📈 **M163:** [DEV] Improve live reload functionality
+- ⚔️ **E043:** Export as static web page (Offline Mode)
+- 🏆 **F187:** [DEV] Add support for AI mobile push notification (ntfy)
+- 📈 **M181:** Remove PIN typing need on index.html
 
 ## [2.22.2] - 2026-08-08
 

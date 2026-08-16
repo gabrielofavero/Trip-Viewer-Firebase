@@ -31,7 +31,7 @@ import { trackPlacesApiCall } from './places-counter.js';
 
 /** Deployed Cloudflare worker route (dev + prd share this one URL). */
 const WORKER_DEPLOYED_URL = 'https://trip-viewer-places-api.gabriel-o-favero.workers.dev';
-/** Local worker via `wrangler dev` (worker/README.md → Run locally). */
+/** Local worker via `wrangler dev` (workers/places-api/README.md → Run locally). */
 const WORKER_LOCAL_URL = 'http://localhost:8787';
 
 /**

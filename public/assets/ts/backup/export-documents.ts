@@ -1,12 +1,11 @@
 import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
 import { translate } from '../i18n/translation.js';
 import {
-	closeMessage,
 	displayFullMessage,
 	openToast,
 	MESSAGE_PROPERTIES,
 } from '../utils/messages.js';
-import { cloneObject, getID } from '../utils/dom.js';
+import { cloneObject } from '../utils/dom.js';
 import { getTimestamp } from '../utils/dates.js';
 import { getUID } from '../data/firebase/auth.js';
 import {
@@ -14,12 +13,12 @@ import {
 	getUserDestinationSummaries,
 	getUserListingSummaries,
 } from '../data/firebase/database.js';
+import { buildExportDocument } from './document-bundle.js';
+import type { DocType } from './document-bundle.js';
 
 // ============================================================
 // Export Document Types
 // ============================================================
-
-type DocType = 'trip' | 'destination' | 'listing';
 
 interface DocSummary {
 	id: string;
@@ -39,45 +38,6 @@ const TYPE_OPTIONS: TypeInfo[] = [
 	{ type: 'destination', labelKey: 'destination.document', icon: 'material-symbols:location-on' },
 	{ type: 'listing', labelKey: 'listing.document', icon: 'fluent:list-28-filled' },
 ];
-
-// ============================================================
-// State for PIN-protected export
-// ============================================================
-
-interface ProtectedEntry {
-	title: string;
-	documentID: string;
-	pin: string;
-}
-
-let pendingProtectedTrips: ProtectedEntry[] = [];
-
-// ============================================================
-// Firestore Helpers
-// ============================================================
-
-async function getCollectionDocs(collectionPath: string): Promise<Record<string, any>> {
-	try {
-		const snap = await firebase.firestore().collection(collectionPath).get();
-		const result: Record<string, any> = {};
-		snap.forEach((doc) => {
-			result[doc.id] = doc.data();
-		});
-		return result;
-	} catch {
-		return {};
-	}
-}
-
-async function getDocument(docPath: string): Promise<Record<string, any> | null> {
-	try {
-		const snap = await firebase.firestore().doc(docPath).get();
-		if (snap.exists) return snap.data();
-		return null;
-	} catch {
-		return null;
-	}
-}
 
 // ============================================================
 // Main Entry Point
@@ -201,7 +161,7 @@ function buildCheckboxList(summaries: DocSummary[], docType: DocType): string {
 }
 
 // ============================================================
-// Export Execution (with PIN flow for trips)
+// Export Execution
 // ============================================================
 
 async function handleExportSelected(summaries: DocSummary[]) {
@@ -216,93 +176,9 @@ async function handleExportSelected(summaries: DocSummary[]) {
 		return;
 	}
 
-	// For trips: check if any selected trip has PIN protection
-	if (currentExportType === 'trip') {
-		pendingProtectedTrips = [];
-		for (const tripId of selectedIds) {
-			const summary = summaries.find((s) => s.id === tripId);
-			if (summary && summary.pin && summary.pin !== 'no-pin') {
-				pendingProtectedTrips.push({
-					title: summary.title || tripId,
-					documentID: tripId,
-					pin: '',
-				});
-			}
-		}
-
-		if (pendingProtectedTrips.length > 0) {
-			showPinRequestDialog(selectedIds);
-			return;
-		}
-	}
-
-	// No protected trips (or not trip type) — export directly
+	// Protected-data PINs are auto-resolved from the owner-readable
+	// `protected/{tripId}` lookup doc during export — no PIN prompt.
 	await executeExport(selectedIds);
-}
-
-// ============================================================
-// PIN Request Dialog (like backup's displayPinRequestBackup)
-// ============================================================
-
-function showPinRequestDialog(selectedIds: string[]) {
-	closeMessage();
-
-	// Cancel any pending closeMessage timeout so it doesn't wipe the new dialog
-	const preloader = getID('preloader');
-	if (preloader && (preloader as any)._closeMsgTimeout) {
-		clearTimeout((preloader as any)._closeMsgTimeout);
-		delete (preloader as any)._closeMsgTimeout;
-	}
-
-	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = translate('trip.basic_information.pin.title');
-	properties.content = buildPinContent();
-	properties.fullscreen = true;
-	properties.buttons = [
-		{ type: 'cancel' },
-		{ type: 'confirm', label: translate('account.export_documents.export_button'), action: () => collectPinsAndExport(selectedIds) },
-	];
-
-	displayFullMessage(properties);
-
-	function buildPinContent(): string {
-		const rows = pendingProtectedTrips.map((p) => `
-			<tr>
-				<td class="pin-backup-label">${escapeHTML(p.title)}</td>
-				<td class="pin-backup-input-cell">
-					<input id="${p.documentID}" type="password" inputmode="numeric" maxlength="4" autocomplete="one-time-code" pattern="[0-9]*" placeholder="0000" class="pin-backup-input" />
-				</td>
-			</tr>
-		`).join('');
-
-		return `
-			<p class="pin-backup-instruction">${translate('account.export_documents.pin_instruction')}</p>
-			<div class="pin-backup-scroll">
-				<table class="pin-backup-table">
-					${rows}
-				</table>
-			</div>
-		`;
-	}
-}
-
-function collectPinsAndExport(selectedIds: string[]) {
-	const inputs = getID('message-description').querySelectorAll('input');
-	const ids = Array.from(inputs).map((input) => input.id);
-
-	for (const entry of pendingProtectedTrips) {
-		const index = ids.indexOf(entry.documentID);
-		if (index === -1) continue;
-
-		const pin = inputs[index].value.trim();
-		if (!isNaN(Number(pin)) && pin.length === 4) {
-			entry.pin = pin;
-		}
-		// If no PIN or invalid, leave pin empty — export without protected data
-	}
-
-	closeMessage();
-	executeExport(selectedIds);
 }
 
 // ============================================================
@@ -312,19 +188,14 @@ function collectPinsAndExport(selectedIds: string[]) {
 async function executeExport(selectedIds: string[]) {
 	startLoadingScreen();
 
-	// Build a map of tripId → pin for quick lookup
-	const pinMap: Record<string, string> = {};
-	for (const entry of pendingProtectedTrips) {
-		if (entry.pin) pinMap[entry.documentID] = entry.pin;
-	}
-
 	let exported = 0;
 	let failed = 0;
 
 	for (const docId of selectedIds) {
 		try {
-			const pin = pinMap[docId] || '';
-			const doc = await buildExportDocument(docId, currentExportType, pin);
+			// Protected-data PINs are auto-resolved inside buildExportDocument from
+			// the owner-readable `protected/{tripId}` lookup doc — no prompt.
+			const doc = await buildExportDocument(docId, currentExportType);
 			if (doc) {
 				downloadExportDocument(docId, doc, currentExportType);
 				exported++;
@@ -337,7 +208,6 @@ async function executeExport(selectedIds: string[]) {
 		}
 	}
 
-	pendingProtectedTrips = [];
 	stopLoadingScreen();
 
 	if (exported > 0) {
@@ -348,180 +218,6 @@ async function executeExport(selectedIds: string[]) {
 	} else {
 		openToast(translate('account.export_documents.failed'));
 	}
-}
-
-// ============================================================
-// Build Export Document (by type)
-// ============================================================
-
-/**
- * Build a single export document.
- *
- * Trip format:
- *   { _meta: { type, exportedAt, version, sourceId }, trip, accommodations?, transportation?, itinerary?, expenses?, destinations?, protected? }
- *
- * Destination format:
- *   { _meta: { type, exportedAt, version, sourceId }, destination }
- *
- * Listing format:
- *   { _meta: { type, exportedAt, version, sourceId }, listing, destinations? }
- */
-async function buildExportDocument(
-	docId: string,
-	docType: DocType,
-	pin: string = '',
-): Promise<Record<string, any> | null> {
-	switch (docType) {
-		case 'trip':
-			return buildTripExport(docId, pin);
-		case 'destination':
-			return buildDestinationExport(docId);
-		case 'listing':
-			return buildListingExport(docId);
-		default:
-			return null;
-	}
-}
-
-async function buildTripExport(tripId: string, pin: string = ''): Promise<Record<string, any> | null> {
-	const tripData = await getDocument(`trips/${tripId}`);
-	if (!tripData) {
-		console.warn(`[export-documents] Trip not found: ${tripId}`);
-		return null;
-	}
-
-	const [accommodations, transportation, itinerary, expensesData] = await Promise.all([
-		getCollectionDocs(`trips/${tripId}/accommodations`),
-		getCollectionDocs(`trips/${tripId}/transportation`),
-		getCollectionDocs(`trips/${tripId}/itinerary`),
-		getDocument(`expenses/${tripId}`),
-	]);
-
-	const destinations = await fetchReferencedDestinations(tripData);
-
-	const doc: Record<string, any> = {
-		_meta: {
-			type: 'trip',
-			exportedAt: new Date().toISOString(),
-			version: '1.0',
-			sourceId: tripId,
-		},
-		trip: tripData,
-	};
-
-	if (Object.keys(accommodations).length > 0) doc.accommodations = accommodations;
-	if (Object.keys(transportation).length > 0) doc.transportation = transportation;
-	if (Object.keys(itinerary).length > 0) doc.itinerary = itinerary;
-	if (expensesData) doc.expenses = expensesData;
-	if (Object.keys(destinations).length > 0) doc.destinations = destinations;
-
-	// Fetch protected data if PIN is provided
-	if (pin) {
-		const protectedData = await fetchProtectedData(tripId, pin, tripData);
-		if (protectedData) doc.protected = protectedData;
-	}
-
-	return doc;
-}
-
-async function buildDestinationExport(destId: string): Promise<Record<string, any> | null> {
-	const destData = await getDocument(`destinations/${destId}`);
-	if (!destData) {
-		console.warn(`[export-documents] Destination not found: ${destId}`);
-		return null;
-	}
-
-	return {
-		_meta: {
-			type: 'destination',
-			exportedAt: new Date().toISOString(),
-			version: '1.0',
-			sourceId: destId,
-		},
-		destination: destData,
-	};
-}
-
-async function buildListingExport(listingId: string): Promise<Record<string, any> | null> {
-	const listingData = await getDocument(`listings/${listingId}`);
-	if (!listingData) {
-		console.warn(`[export-documents] Listing not found: ${listingId}`);
-		return null;
-	}
-
-	const destinations = await fetchReferencedDestinations(listingData);
-
-	const doc: Record<string, any> = {
-		_meta: {
-			type: 'listing',
-			exportedAt: new Date().toISOString(),
-			version: '1.0',
-			sourceId: listingId,
-		},
-		listing: listingData,
-	};
-
-	if (Object.keys(destinations).length > 0) doc.destinations = destinations;
-
-	return doc;
-}
-
-// ============================================================
-// Protected Data
-// ============================================================
-
-/**
- * Fetch protected data for a trip using its PIN.
- * Reads:
- *   - trips/protected/{pin}/{tripId}  → reservation codes for accommodations & transportation
- *   - expenses/protected/{pin}/{tripId} → protected expenses (if expenses module is enabled)
- */
-async function fetchProtectedData(
-	tripId: string,
-	pin: string,
-	tripData: Record<string, any>,
-): Promise<Record<string, any> | null> {
-	const protectedTripPath = `trips/protected/${pin}/${tripId}`;
-	const protectedExpensesPath = `expenses/protected/${pin}/${tripId}`;
-
-	const fetches: Promise<any>[] = [getDocument(protectedTripPath)];
-
-	if (tripData?.modules?.expenses === true) {
-		fetches.push(getDocument(protectedExpensesPath));
-	}
-
-	const [protectedTrip, protectedExpenses] = await Promise.all(fetches);
-
-	if (!protectedTrip && !protectedExpenses) return null;
-
-	const result: Record<string, any> = { pin };
-
-	if (protectedTrip) result.trip = protectedTrip;
-	if (protectedExpenses) result.expenses = protectedExpenses;
-
-	return result;
-}
-
-// ============================================================
-// Referenced Destinations
-// ============================================================
-
-async function fetchReferencedDestinations(
-	parentDoc: Record<string, any>,
-): Promise<Record<string, any>> {
-	const refs = parentDoc.destinationRefs || parentDoc.destinations;
-	if (!refs || !Array.isArray(refs) || refs.length === 0) return {};
-
-	const result: Record<string, any> = {};
-	const fetches = refs.map(async (ref: any) => {
-		const destId = ref.id || ref.destinationId;
-		if (!destId) return;
-		const data = await getDocument(`destinations/${destId}`);
-		if (data) result[destId] = data;
-	});
-
-	await Promise.allSettled(fetches);
-	return result;
 }
 
 // ============================================================

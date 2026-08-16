@@ -17,6 +17,7 @@ public/assets/ts/backup/
 ├── backup.ts              ← Full account export (all user data → JSON file)
 ├── restore.ts             ← Full account import (JSON file → Firestore)
 ├── export-documents.ts    ← Per-document export (select individual trips/destinations/listings)
+├── document-bundle.ts     ← Shared per-document gather logic (used by JSON export AND static export)
 ├── import-documents.ts    ← Per-document import (JSON files → Firestore, with conflict detection)
 └── normalize.ts           ← Legacy (Portuguese) JSON → English normalization
 ```
@@ -32,10 +33,12 @@ Triggered from the Settings panel. Flow:
 ```
 1. prepareMissingData()
    └─ Fetches trip/destination/listing summaries from user subcollections
+   └─ For PIN-protected trips, resolves each PIN from the owner-readable
+      `protected/{tripId}` lookup doc (`resolveTripPin`) — no user input
 
 2. Check: any PIN-protected trips?
    ├─ YES → Prompt user: "Backup sensitive data too?"
-   │         ├─ Yes → displayPinRequestBackup() → collect PINs via modal
+   │         ├─ Yes → backupAccountData(includeProtected=true)   (PINs already resolved)
    │         └─ No  → backupAccountData(includeProtected=false)
    └─ NO  → backupAccountData(includeProtected=false)
 
@@ -97,7 +100,8 @@ Export individual documents (trips, destinations, listings) rather than the full
 ### Features:
 - **Multi-select** UI — pick which documents to export
 - **Category filter** — trips, destinations, or listings
-- **PIN handling** — if exporting trips with protected data, prompts for PINs
+- **PIN handling** — protected-data PINs are auto-resolved from the owner-readable
+  `protected/{tripId}` lookup doc; no prompt
 - **Security warning** — warns that exported files contain plain-text sensitive data
 
 ### Output format (single document):
@@ -113,6 +117,35 @@ Export individual documents (trips, destinations, listings) rather than the full
     }
 }
 ```
+
+---
+
+## Shared Document Bundle (`document-bundle.ts`)
+
+The pure gather logic for a **single document** lives in `document-bundle.ts` so
+it can be shared by two consumers without duplicating code:
+
+| Consumer | Module | Uses `buildExportDocument()` to... |
+|---|---|---|
+| JSON export | `backup/export-documents.ts` | produce the per-document JSON download (byte-for-byte compatible output) |
+| Static web export | `static-export/data-gather.ts` | build the `data.json` local bundle (`paths` map) for the offline ZIP |
+
+Key exports:
+- `getCollectionDocs(collectionPath)` → `{ id: doc, ... }` map
+- `getDocument(docPath)` → doc or `null`
+- `fetchReferencedDestinations(tripData)` → referenced/full destination docs
+- `resolveTripPin(tripId)` → the PIN from the owner-readable `protected/{tripId}` lookup doc
+- `fetchProtectedData(...)` → PIN-protected subcollection data
+- `buildExportDocument(docId, docType, pin)` → the `{ _meta, trip/destination/listing,
+  accommodations?, transportation?, itinerary?, expenses?, destinations?, protected? }` shape
+
+> **Contract:** when modifying `document-bundle.ts`, the JSON export output must
+> stay **byte-for-byte compatible** (same `_meta`, same fields, same order) —
+> both consumers rely on the same shape.
+
+> **PIN auto-resolve:** `buildTripExport` resolves a protected trip's PIN from the
+> owner-readable `protected/{tripId}` lookup doc when the caller passes no pin, so
+> owner-driven exports (backup/JSON/static) never prompt for it.
 
 ---
 
@@ -154,11 +187,17 @@ Detects Portuguese field names (pre-migration format) and translates them to Eng
 
 When a trip uses `pin: "sensitive-only"`:
 
-1. **Backup:** User is prompted to enter the PIN. If provided, the protected subcollection data is fetched and included. If skipped, sensitive fields remain empty strings.
+1. **Backup:** No PIN entry is required. The current user is the trip owner (or an
+   admin), so the app reads the `protected/{tripId}` lookup document
+   (`resolveTripPin()` in `document-bundle.ts`) to resolve each trip's PIN
+   automatically, then fetches the protected subcollection data.
 
-2. **Restore:** Protected data is written to `trips/protected/{pin}/{tripId}` and `expenses/protected/{pin}/{tripId}`. The `protected/{tripId}` lookup document is also created.
+2. **Restore:** Protected data is written to `trips/protected/{pin}/{tripId}` and
+   `expenses/protected/{pin}/{tripId}`. The `protected/{tripId}` lookup document is
+   also created.
 
-3. **Security warning:** Both backup and export show a warning that exported files contain plain-text sensitive data.
+3. **Security warning:** Backup and export show a warning that exported files contain
+   plain-text sensitive data.
 
 ---
 
@@ -199,7 +238,7 @@ reader.readAsText(file);
 
 ## Error Handling
 
-- **Partial backup:** If some protected data can't be fetched (wrong PIN), the backup completes with a warning listing skipped items
+- **Partial backup:** If some protected data can't be fetched (e.g. missing lookup doc), the backup completes with a warning listing skipped items
 - **Restore validation:** Invalid files are rejected before any writes occur
 - **Network errors:** Caught and displayed via `displayError()`
 - **Legacy format:** Automatically normalized — no user intervention needed

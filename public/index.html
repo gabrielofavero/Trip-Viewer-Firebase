@@ -179,6 +179,10 @@
                   <i class="iconify" data-icon="heroicons:document-arrow-up-16-solid"></i>
                   <span data-translate="account.export_documents.title"></span>
                 </button>
+                <button class="btn btn-secondary-theme settings-action-btn" data-action="export-static">
+                  <i class="iconify" data-icon="heroicons:globe-alt-16-solid"></i>
+                  <span data-translate="account.export_static.title"></span>
+                </button>
                 <button class="btn btn-secondary-theme settings-action-btn" data-action="restore-account">
                   <i class="iconify" data-icon="mdi:account-arrow-down"></i>
                   <span data-translate="account.restore.title"></span>
@@ -355,6 +359,9 @@
       <i class="iconify" data-icon="material-symbols:close"></i>
     </span>
   </div>
+
+  <!-- JSZip (index only — used by the static-export flow; never leaks into exports) -->
+  <script src="assets/vendor/jszip/jszip.min.js"></script>
 
   <!-- #include shared/scripts-vendor.html -->
   <!-- #include shared/scripts-core.html -->

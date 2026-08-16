@@ -3,6 +3,7 @@ import { stopLoadingScreen, stopLoadingTimer } from './loading.js';
 import { translate } from '../i18n/translation.js';
 import { disableScroll, getVisibility } from '../theme/visibility.js';
 import { getHTMLpage } from '../app/main.js';
+import { isStaticMode } from '../static-mode/static-mode.js';
 
 export let MESSAGE_MODAL_OPEN = false;
 // Tracks whether the currently-open message modal can be dismissed via the X
@@ -190,7 +191,7 @@ function _animateOut(
 }
 
 /** Cancel a pending `_animateOut` on `element` (e.g. reopening it mid-close). */
-function cancelAnimateOut(element: HTMLElement | null) {
+export function cancelAnimateOut(element: HTMLElement | null) {
 	if (element && (element as any)._animOutCancel) {
 		(element as any)._animOutCancel();
 		(element as any)._animOutCancel = null;
@@ -307,6 +308,18 @@ export function displayFullMessage(properties = cloneObject(MESSAGE_PROPERTIES))
 		textDiv.appendChild(buttonBox);
 	}
 
+	// Abort any pending close left over from a prior closeMessage() that is
+	// immediately followed by this displayFullMessage() (e.g. multi-step
+	// dialogs like the static-export PIN step). closeMessage() schedules
+	// timers that wipe the preloader after the leave animation; showing a new
+	// dialog in the same tick would otherwise let the stale close wipe the
+	// newly-shown dialog a moment later (with no console error).
+	if ((preloader as any)._closeMsgTimeout) {
+		clearTimeout((preloader as any)._closeMsgTimeout);
+		delete (preloader as any)._closeMsgTimeout;
+	}
+	cancelAnimateOut(preloader.firstElementChild as HTMLElement | null);
+
 	// Adiciona ao Container
 	container.appendChild(textDiv);
 	preloader.innerHTML = '';
@@ -343,7 +356,9 @@ export function displayError(error, tryAgain = false, blocking = true) {
 	properties.localizacao = false; // Disabled. No point in showing to the user.
 
 	const buttons = tryAgain ? [{ type: 'try-again' }] : [];
-	if (!window.location.href.includes('index.html')) {
+	// Static exports have no index.html home page, so never offer the Home
+	// button there (it would navigate to a non-existent page).
+	if (!isStaticMode() && !window.location.href.includes('index.html')) {
 		buttons.push({ type: 'home' });
 	}
 	// Blocking errors (the default) never show the X close button (and Escape
@@ -355,7 +370,10 @@ export function displayError(error, tryAgain = false, blocking = true) {
 	// the index page), add a dismissible "Understood" button so the dialog can
 	// never get stuck open.
 	properties.closeButton = !blocking;
-	if (buttons.length === 0) {
+	// Static exports have no Home page to escape to, so a blocking error
+	// (no X close button) intentionally stays put — adding an "Understood"
+	// button would let the user bypass it. Non-blocking errors keep the X.
+	if (buttons.length === 0 && !isStaticMode()) {
 		buttons.push({ type: 'close' });
 	}
 	properties.buttons = buttons;
@@ -413,6 +431,11 @@ export function closeMessage() {
 			if (preloader) {
 				preloader.innerHTML = '';
 				preloader.style.background = '';
+				// Also clear the dialog's backdrop blur so it can't linger on
+				// the preloader after the dialog is gone (e.g. when the next
+				// loading screen / dialog reuses the same overlay).
+				preloader.style.backdropFilter = '';
+				(preloader.style as any).webkitBackdropFilter = '';
 				preloader.style.display = 'none';
 				preloader.style.opacity = '';
 			}
@@ -694,7 +717,8 @@ export function displaySaveSuccess({
 	properties.closeButton = false;
 	properties.buttons = [
 		{ type: 'edit', action: { type, docId } },
-		{ type: 'home' },
+		// Static exports have no index.html home page — omit the Home button.
+		...(isStaticMode() ? [] : [{ type: 'home' }]),
 		{ type: 'view', action: { type, docId } },
 	];
 	displayFullMessage(properties);

@@ -19,7 +19,7 @@ This doc breaks the worker into **4 ordered, mostly-parallel prompts**. Each pro
 ## 1. Target structure
 
 ```
-worker/
+workers/places-api/
 ├── package.json                 # P1  wrangler (dev) + firebase-auth-cloudflare-workers
 ├── wrangler.toml                # P1  name, main, compatibility_date, [vars], secrets docs
 ├── README.md                    # P4  setup, secrets, run, deploy, smoke test
@@ -65,7 +65,7 @@ graph LR
 
 ### P1 — Scaffold, config, data files  ✅ DONE (2026-08-09)
 
-**Files created:** `worker/package.json`, `worker/wrangler.toml`, `worker/.gitignore`, `worker/.dev.vars.example`, `worker/src/config.js`, `worker/src/data/emoji-map.json`, `worker/src/data/price-level-map.json`, `worker/src/data/currencies.json`.
+**Files created:** `workers/places-api/package.json`, `workers/places-api/wrangler.toml`, `workers/places-api/.gitignore`, `workers/places-api/.dev.vars.example`, `workers/places-api/src/config.js`, `workers/places-api/src/data/emoji-map.json`, `workers/places-api/src/data/price-level-map.json`, `workers/places-api/src/data/currencies.json`.
 
 **Notes / deviations from the original prompt:**
 - `package.json` (type module): dep `firebase-auth-cloudflare-workers@2.0.6`, devDep `wrangler@^3`, scripts `dev`/`deploy`.
@@ -81,17 +81,17 @@ graph LR
 
 ### P2 — Request gates: auth + permissions + rate-limit + errors  ✅ DONE (2026-08-09)
 
-**Files created:** `worker/src/auth.js`, `worker/src/permissions.js`, `worker/src/rate-limit.js`, `worker/src/errors.js`.
+**Files created:** `workers/places-api/src/auth.js`, `workers/places-api/src/permissions.js`, `workers/places-api/src/rate-limit.js`, `workers/places-api/src/errors.js`.
 
 **Notes / deviations from the original prompt:**
 - **`Auth.getOrInitialize()` is a GLOBAL singleton** in `firebase-auth-cloudflare-workers@2.0.6` — `Auth.instance` binds to the FIRST project id, so the second call for `trip-viewer-prd` returns the dev-bound instance (confirmed in source `dist/main/index.js`; a prd token then fails with `Expected "trip-viewer-dev"`). `auth.js` therefore constructs `new Auth(projectId, keyStore)` per project (lazy `Map`), preserving the intended dev/prd `aud`/`iss` separation.
 - `errors.js` also defines `PermissionError` (403), `BadRequestError` (400), `NotFoundError` (404) and `UpstreamError` (429/502/503) alongside `ApiError`/`AuthError`, because P3's `places.js` depends on `NotFoundError`/`UpstreamError`.
 - `permissions.js` fallback starter allowlist = the local dev admin UID (`eySHdjIyK0MNAgiPU77xE0d1CTjp`); override via `ALLOWED_UIDS_JSON`.
-- `npm install` was run in `worker/` (adds `package-lock.json` + gitignored `node_modules`).
+- `npm install` was run in `workers/places-api/` (adds `package-lock.json` + gitignored `node_modules`).
 
 **Acceptance:** ✅ all passed — 24 checks: errors envelope (§10.1 exact shape) + status mapping; rate-limit 61st-in-window → false + `reset()` clears + per-uid isolation; permissions env-list → fallback → null; `verifyBearer` parse/reject; `verifyToken` empty → `AuthError('missing')`, garbage → `AuthError('invalid/expired')`, and a **real Auth emulator JWT** (user created on 127.0.0.1:9099) returning `{ uid, aud: 'trip-viewer-dev' }` in `local` mode (a synthetic prd-audience emulator token also verifies against `trip-viewer-prd`).
 
-**Files:** `worker/src/auth.js`, `worker/src/permissions.js`, `worker/src/rate-limit.js`, `worker/src/errors.js`
+**Files:** `workers/places-api/src/auth.js`, `workers/places-api/src/permissions.js`, `workers/places-api/src/rate-limit.js`, `workers/places-api/src/errors.js`
 
 **Prompt text:**
 > Implement the four request-gate modules for the Places worker (all independent; build them in one session).
@@ -126,7 +126,7 @@ graph LR
 
 ### P3 — Places data logic: normalize + places + photo-url
 
-**Files:** `worker/src/normalize.js`, `worker/src/places.js`, `worker/src/photo-url.js`
+**Files:** `workers/places-api/src/normalize.js`, `workers/places-api/src/places.js`, `workers/places-api/src/photo-url.js`
 
 **Prompt text:**
 > Implement the Places API data modules (all independent; build them in one session).
@@ -160,18 +160,18 @@ graph LR
 
 ### P4 — Entry (router + wiring) + README + smoke test  ✅ DONE (2026-08-09)
 
-**Files created:** `worker/src/index.js`, `worker/README.md`.
+**Files created:** `workers/places-api/src/index.js`, `workers/places-api/README.md`.
 
 **Notes / deviations from the original prompt:**
 - `index.js` implements the exact P4 spec: CORS/preflight (`OPTIONS` → 204 + `Access-Control-Allow-Origin: <origin>` / `Vary: Origin` / methods / headers; allowlisted origins only, else 403); origin/mode via `getMode`; auth chain `verifyBearer → verifyToken → { uid, aud } → isUidAllowed → rateLimiter.check` (401 → 403 → 429); `config = readEnv(env)` resolved once per request, key picked via `apiKeyFor(config, photos)` — routes 1/2 use the `photos` query param, route 3 always uses `config.placesPhotosApiKey`.
 - Routes 1/2/3 exactly as specced; route 4 (byte proxy) is NOT present — no `PHOTO_URL_SECRET`, no HMAC (photoUri strategy). Also: `405` for non-GET, `404 places/not-found` for unknown routes, `400 places/missing-q` (missing `q`), `400 places/invalid-lang` (en/pt only, default en), `photos` invalid → false. Every thrown error → `jsonResponse(toStatus(err), toEnvelope(err))`; CORS headers applied to every response including errors.
 - `README.md`: what it does, env strategy (mode from Origin + token `aud`, never a client `env` flag), setup (`npm i`, `currencies.json` copy, `.dev.vars` from example), run (`npm run dev` + emulators), deploy (`wrangler deploy` + `wrangler secret put` — **no `PHOTO_URL_SECRET`**), two-step grant (Firestore `canUsePlacesAPI` doc **and** `ALLOWED_UIDS_JSON`), all deviations, and a curl smoke-test section (search/details/photos + 401/403/429 cases).
 - Smoke test ran end-to-end: gates first in mock mode, then the live happy path with real keys in `.dev.vars` (emulator user UID in `ALLOWED_UIDS_JSON`).
-- Tooling notes: `wrangler` is a local devDependency (not on PATH) → use `cd worker && npm run dev`. wrangler@3 warns the `2026-08-01` compat date falls back to `2025-07-18` (warning only; upgrade to wrangler@4 to silence). Biome does NOT scope `worker/` (biome.json `includes` = `public/**` + `functions/src/**` + root `*.ts`/`*.js`).
+- Tooling notes: `wrangler` is a local devDependency (not on PATH) → use `cd workers/places-api && npm run dev`. wrangler@3 warns the `2026-08-01` compat date falls back to `2025-07-18` (warning only; upgrade to wrangler@4 to silence). Biome does NOT scope `worker/` (biome.json `includes` = `public/**` + `functions/src/**` + root `*.ts`/`*.js`).
 
-**Acceptance:** ✅ all passed — with the Auth emulator (:9099) + `wrangler dev` (:8787): CORS `OPTIONS` local origin → 204 with correct CORS headers (bad origin → 403); missing/no Origin → 403; bad origin + token → 403; no token → 401 `places/unauthorized`; garbage token → 401; missing `q` → 400 `places/missing-q`; invalid `lang` → 400 `places/invalid-lang`; unknown route → 404; `POST` → 405; rate limit → 429 `places/rate-limit` after 60/window/uid; every error carries CORS headers + the §10.1 envelope. Live (real keys): search → ≤5 normalized results (id/name/string rating/`$`–`$$$$`/emoji/photos refs); details → normalized place (pt + en description); photos route → exactly 3 keyless `lh3.googleusercontent.com` `photoUri`s, each loading as an image (HEAD 200 image/png·jpeg) with no auth/key. `node --check worker/src/*.js` clean.
+**Acceptance:** ✅ all passed — with the Auth emulator (:9099) + `wrangler dev` (:8787): CORS `OPTIONS` local origin → 204 with correct CORS headers (bad origin → 403); missing/no Origin → 403; bad origin + token → 403; no token → 401 `places/unauthorized`; garbage token → 401; missing `q` → 400 `places/missing-q`; invalid `lang` → 400 `places/invalid-lang`; unknown route → 404; `POST` → 405; rate limit → 429 `places/rate-limit` after 60/window/uid; every error carries CORS headers + the §10.1 envelope. Live (real keys): search → ≤5 normalized results (id/name/string rating/`$`–`$$$$`/emoji/photos refs); details → normalized place (pt + en description); photos route → exactly 3 keyless `lh3.googleusercontent.com` `photoUri`s, each loading as an image (HEAD 200 image/png·jpeg) with no auth/key. `node --check workers/places-api/src/*.js` clean.
 
-**Files:** `worker/src/index.js`, `worker/README.md`
+**Files:** `workers/places-api/src/index.js`, `workers/places-api/README.md`
 
 **Prompt text:**
 > Implement the worker entry that composes P1–P3, then write the README.
@@ -246,7 +246,7 @@ Search (`X-Goog-FieldMask` on `POST places:searchText`): same list prefixed with
 2. ~~Batch 2 in parallel: P2 (request gates) and P3 (places data logic — photoUri version).~~ ✅ **Done (2026-08-09)**
 3. ~~P4 (entry + README — no route 4).~~ ✅ **Done (2026-08-09)**
 
-Each prompt can be handed to an agent verbatim. After each prompt, run `node --check worker/src/*.js` (syntax) and, once P4 lands, `wrangler dev` for an end-to-end smoke test. If any single prompt is too large for one session, split it per-file (files are listed separately) — the rest of the plan is unaffected.
+Each prompt can be handed to an agent verbatim. After each prompt, run `node --check workers/places-api/src/*.js` (syntax) and, once P4 lands, `wrangler dev` for an end-to-end smoke test. If any single prompt is too large for one session, split it per-file (files are listed separately) — the rest of the plan is unaffected.
 
 ### Follow-ups (outside this worker build)
 - **Frontend:** `PlacePhoto` model `{ name, url }` → `{ name, photoUri }` in `places-api.model.ts` + mock; `places-apply.ts` stores `photoUri`s onto the Firestore `placeAPI` doc (new `photos` field → new DB migration); edit-destination dialog previews via `<img src="photoUri">` (keyless). End-user destination view renders stored `photoUri`s with no worker call.
