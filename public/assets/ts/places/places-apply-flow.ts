@@ -24,7 +24,12 @@
 import { getLanguagePackName, translate } from '../i18n/translation.js';
 import { getID, getOrCreateCategoryID, removeChildWithValidation } from '../utils/dom.js';
 import { displayError, openToast } from '../utils/messages.js';
-import { buildDS, removeSelectorDS, updateValueDS } from '../ui/dynamic-select.js';
+import {
+	addKnownValues,
+	buildRegionSelects,
+	renderRegionPills,
+	unregisterRegionSelect,
+} from '../ui/region-select.js';
 import { FIRESTORE_DESTINATIONS_DATA, FIRESTORE_DESTINATIONS_NEW_DATA } from '../data/state.js';
 import {
 	setDescription,
@@ -83,7 +88,7 @@ export function applyAndClose(): void {
 	const importedPhotos = getStepData<PlaceImage[]>(IMPORTED_PHOTOS_KEY) ?? [];
 
 	if (!details) {
-		displayError(new Error(translate('placesApi.apply.error')));
+		displayError(new Error(translate('placesApi.apply.error')), false, false);
 		return;
 	}
 
@@ -157,7 +162,7 @@ export function applyAndClose(): void {
 	} catch (error) {
 		console.error('[places-apply] Failed to apply place info', error);
 		hideDialogLoading();
-		displayError(error instanceof Error ? error : new Error(translate('placesApi.apply.error')));
+		displayError(error instanceof Error ? error : new Error(translate('placesApi.apply.error')), false, false);
 	}
 }
 
@@ -173,7 +178,7 @@ export function applyAndClose(): void {
 function deleteItem(category: string, j: number, id: string): void {
 	// Remove the accordion item + its dynamic selectors + staged images.
 	removeChildWithValidation(category, j);
-	removeSelectorDS('region', `${category}-region-select-${j}`);
+	unregisterRegionSelect(`${category}-region-select-${j}`);
 	removeDestinationImages(category, j);
 
 	// Remove from in-memory data.
@@ -250,8 +255,8 @@ export function updateFormEntry(
 				setInputValue(`${category}-map-${j}`, entry.map);
 				break;
 			case 'region':
-				setInputValue(`${category}-region-${j}`, entry.region);
-				updateValueDS('region', entry.region, `${category}-region-select-${j}`);
+				renderRegionPills(`${category}-regions-${j}`, entry.regions);
+				addKnownValues(entry.regions);
 				regionApplied = true;
 				break;
 			case 'rating':
@@ -268,7 +273,7 @@ export function updateFormEntry(
 	// Rebuild the region dynamic-selects so a newly-applied region option is
 	// available across all categories (same pattern as loading a destination).
 	if (regionApplied) {
-		buildDS('region');
+		buildRegionSelects();
 	}
 
 	// Photos replace the entry's staged images (first 3 imported).

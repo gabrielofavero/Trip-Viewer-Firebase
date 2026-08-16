@@ -8,7 +8,6 @@ import '../../theme/stylesheets.js';
 import '../../theme/icons.js';
 import '../../data/services/auth.service.js';
 import './support/visibility.js';
-import './support/media-embed.js';
 import './support/content.js';
 import './support/sort-and-filter/support/price-bucket.js';
 import './support/sort-and-filter/support/preferences.js';

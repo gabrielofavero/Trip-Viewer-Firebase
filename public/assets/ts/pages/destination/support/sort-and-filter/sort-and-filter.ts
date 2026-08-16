@@ -1,11 +1,8 @@
 import { getID } from '../../../../utils/dom.js';
 import { CONTENT, getDataSet, ACTIVE_CATEGORY } from '../../destination.js';
-import { closeAddedDestination } from '../../edit-destination.js';
 import { PLANNED_DESTINATION } from '../trip.js';
-import { filter } from './filter.js';
 import { loadFilterOptions } from './filter.js';
 import { loadSortOptions } from './sort.js';
-import { sort } from './sort.js';
 import { closeDrawer } from './support/drawer.js';
 import { isDrawerOpen } from './support/drawer.js';
 import { openDrawer } from './support/drawer.js';
@@ -25,8 +22,6 @@ export function loadSortAndFilter(force = false) {
 	loadFilterOptions(force);
 	loadSortOptions(force);
 	loadSortAndFilterVisibility();
-	sort();
-	filter();
 }
 
 function loadSortAndFilterVisibility() {
@@ -53,7 +48,7 @@ export function loadFilterSortingData(titles) {
 		let data;
 		switch (title) {
 			case 'region':
-				data = getDataSet('region');
+				data = getDataSet('regions');
 				data.delete('');
 				break;
 			case 'planned':
@@ -96,7 +91,6 @@ export function openFilterSortDrawer({ triggerId, getInnerHTML, clickAction, loa
 	}
 
 	const actions = {
-		beforeOpen: closeAddedDestination,
 		click: clickAction,
 		load: loadAction,
 		close: deactivateFilterSortContainerButtons,
@@ -108,7 +102,7 @@ export function openFilterSortDrawer({ triggerId, getInnerHTML, clickAction, loa
 
 // Helpers
 export function shouldDisplayRegions() {
-	const REGIONS = getDataSet('region');
+	const REGIONS = getDataSet('regions');
 	REGIONS.delete('');
 	return REGIONS.size > 1;
 }

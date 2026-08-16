@@ -192,6 +192,12 @@
 			}
 		}
 	},
+	"backgrounds": {
+		"car": {},
+		"bus": {},
+		"flight": {},
+		"bullet_train": {}
+	},
 	"websites": {
 		"car": {
 			"99": "https://99app.com/",

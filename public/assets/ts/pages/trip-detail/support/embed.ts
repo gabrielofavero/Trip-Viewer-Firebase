@@ -23,7 +23,8 @@ import {
 	FIRESTORE_DESTINATIONS_DATA,
 } from '../../../data/state.js';
 import { getID, getURLParam } from '../../../utils/dom.js';
-import { disableScroll, enableScroll } from '../../../theme/visibility.js';
+import { translate } from '../../../i18n/translation.js';
+import { disableScroll, enableScroll, isOnDarkMode, switchVisibility } from '../../../theme/visibility.js';
 import { updateProtectedDataFromExternalPin } from './sensitive-reservation.js';
 
 // ======= Expenses (inline section) =======
@@ -81,11 +82,47 @@ export function initViewEmbed(): void {
 	if (closeBtn) {
 		closeBtn.addEventListener('click', closeViewLightbox);
 	}
+
+	// Lightbox toolbar actions — only shown for the full itinerary.
+	getID('lightbox-print-btn')?.addEventListener('click', () => print());
+	getID('lightbox-export-btn')?.addEventListener('click', async () => {
+		const { exportItinerary } = await import('../../itinerary/mount.js');
+		exportItinerary();
+	});
+	getID('lightbox-nightmode-btn')?.addEventListener('click', () => {
+		switchVisibility();
+		updateLightboxNightModeIcon();
+	});
+
 	document.addEventListener('keydown', (e) => {
 		if (e.key === 'Escape' && LIGHTBOX_ACTIVE) {
 			closeViewLightbox();
 		}
 	});
+}
+
+function setItineraryToolbarActions(show: boolean): void {
+	const display = show ? '' : 'none';
+	const printBtn = getID('lightbox-print-btn');
+	if (printBtn) printBtn.style.display = display;
+	const exportBtn = getID('lightbox-export-btn');
+	if (exportBtn) exportBtn.style.display = display;
+	const nightBtn = getID('lightbox-nightmode-btn');
+	if (nightBtn) nightBtn.style.display = display;
+}
+
+function updateLightboxNightModeIcon(): void {
+	const btn = getID('lightbox-nightmode-btn');
+	const icon = btn?.querySelector('i');
+	if (!btn || !icon) return;
+
+	const dark = isOnDarkMode();
+	icon.classList.toggle('bx-moon', !dark);
+	icon.classList.toggle('bx-sun', dark);
+
+	const label = dark ? translate('labels.light_mode') : translate('labels.dark_mode');
+	btn.title = label;
+	btn.setAttribute('aria-label', label);
 }
 
 function openLightbox(): void {
@@ -102,6 +139,7 @@ function openLightbox(): void {
 	setElementDisplay('menu', 'none');
 	setElementDisplay('navbar', 'none');
 	disableScroll();
+	document.body.classList.add('lightbox-open');
 	LIGHTBOX_ACTIVE = true;
 }
 
@@ -110,9 +148,46 @@ function setElementDisplay(id: string, display: string): void {
 	if (el) el.style.display = display;
 }
 
+/**
+ * Swap the lightbox body to one of the inert <template> regions in view.html.
+ * Keeps the toolbar (X close) alive while fully replacing the shared content
+ * so itinerary and destination never have colliding IDs in the live DOM.
+ */
+function renderLightboxBody(templateId: string): void {
+	const body = getID('lightbox-body');
+	const template = getID(templateId) as HTMLTemplateElement | null;
+	if (!body || !template) return;
+
+	body.innerHTML = '';
+	body.appendChild(template.content.cloneNode(true));
+
+	// The template content is inert, so translatePage() never saw it at boot.
+	// Translate the freshly-cloned body now (destination chrome labels + search
+	// placeholder live here; the itinerary body has no data-translate markup).
+	body.querySelectorAll<HTMLElement>('[data-translate]').forEach((element) => {
+		const key = element.getAttribute('data-translate');
+		if (!key) return;
+		const text = translate(key);
+		if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+			(element as HTMLInputElement).placeholder = text;
+		} else {
+			element.textContent = text;
+		}
+	});
+
+	// The destination body is a full-bleed page hero (no side padding around
+	// it); the itinerary body keeps the padded, plain-document look.
+	const content = getID('lightbox-content');
+	if (content) {
+		content.classList.toggle('destination-mode', templateId === 'destination-content-template');
+	}
+}
+
 export function closeViewLightbox(): void {
 	if (!LIGHTBOX_ACTIVE) return;
 
+	document.body.classList.remove('lightbox-open');
+	setItineraryToolbarActions(false);
 	getID('lightbox').style.display = 'none';
 	setElementDisplay('night-mode', '');
 	setElementDisplay('menu', '');
@@ -126,6 +201,10 @@ export function closeViewLightbox(): void {
 	const drawer = getID('drawer');
 	if (drawer) drawer.classList.remove('open');
 
+	// Clear the injected body so the next lightbox open starts from a blank swap.
+	const body = getID('lightbox-body');
+	if (body) body.innerHTML = '';
+
 	// Restore the host document state clobbered by mountDestination.
 	setDocumentId(SAVED_DOCUMENT_ID);
 	setState(SAVED_STATE);
@@ -135,12 +214,27 @@ export function closeViewLightbox(): void {
 }
 
 export async function openItineraryLightbox(): Promise<void> {
-	const container = getID('content');
-	if (!container) return;
-
 	openLightbox();
-	// Itinerary is a plain scrollable document — hide the destination chrome.
-	setElementDisplay('filter-sort-container', 'none');
+	renderLightboxBody('itinerary-content-template');
+	setItineraryToolbarActions(true);
+	updateLightboxNightModeIcon();
+
+	// Hide the toggle when the trip locks visibility to a single theme (same
+	// rule as the page top-bar's night-mode button).
+	const visibility = getState().visibility;
+	const nightBtn = getID('lightbox-nightmode-btn');
+	if (nightBtn && visibility && (visibility.light === false || visibility.dark === false)) {
+		nightBtn.style.display = 'none';
+	}
+
+	const container = getID('content');
+	if (!container) {
+		closeViewLightbox();
+		return;
+	}
+
+	// Itinerary is a plain scrollable document; the template's #content already
+	// carries the `.content` class so no destination chrome is involved.
 	container.classList.add('content');
 
 	try {
@@ -155,12 +249,17 @@ export async function openItineraryLightbox(): Promise<void> {
 }
 
 export async function openDestinationLightbox(destinationId: string, type?: string): Promise<void> {
-	const container = getID('content');
-	if (!container || !destinationId) return;
+	if (!destinationId) return;
 
 	openLightbox();
-	setElementDisplay('filter-sort-container', '');
-	container.classList.remove('content');
+	renderLightboxBody('destination-content-template');
+	setItineraryToolbarActions(false);
+
+	const container = getID('content');
+	if (!container) {
+		closeViewLightbox();
+		return;
+	}
 
 	// Register the destination page's data-action handlers (filter/sort drawer,
 	// accordion, links) — the lightbox reuses the destination component.
@@ -175,6 +274,10 @@ export async function openDestinationLightbox(destinationId: string, type?: stri
 
 	try {
 		const { mountDestination } = await import('../../destination/mount.js');
+		const { loadDestinationTabBar, loadDestinationSearch } = await import(
+			'../../destination/support/chrome.js'
+		);
+
 		const dispose = await mountDestination(container, {
 			destinationId,
 			tripId: DOCUMENT_ID,
@@ -187,6 +290,11 @@ export async function openDestinationLightbox(destinationId: string, type?: stri
 		}
 		const title = getID('title');
 		if (title) title.innerText = FIRESTORE_DESTINATIONS_DATA?.title || '';
+
+		// Wire the same chrome as the standalone destination page (category tab
+		// bar + search input) so the lightbox matches destination.html exactly.
+		loadDestinationTabBar();
+		loadDestinationSearch();
 	} catch (error) {
 		console.error('[view-embed] destination mount failed:', error);
 		closeViewLightbox();
@@ -197,14 +305,7 @@ export async function openDestinationLightbox(destinationId: string, type?: stri
 }
 
 // ======= Media Lightbox (kept — gallery / accommodations / inner itinerary) =======
+// Re-exported from the shared ui/lightbox.ts wrapper so the view galleries and
+// the destination card media (P3) share a single GLightbox registration helper.
 
-export function loadImageLightbox(className) {
-	GLightbox({
-		selector: `.${className}`,
-		autofocusVideos: false,
-		touchNavigation: true,
-		touchFollowAxis: true,
-		width: 'auto',
-		height: 'auto',
-	});
-}
+export { loadImageLightbox } from '../../../ui/lightbox.js';

@@ -1,9 +1,9 @@
 // ======= Lazy / Infinite-Scroll Card Grid =======
 //
-// Renders a card grid one batch at a time, appending the next batch as the
-// user scrolls near the sentinel element placed right after the grid.
-// Each instance owns its item list + search query, so every grid can be
-// filtered independently (search by title).
+// Shared lazy card grid (index + destination). Renders a card grid one batch
+// at a time, appending the next batch as the user scrolls near the sentinel
+// element placed right after the grid. Each instance owns its item list +
+// search query, so every grid can be filtered independently.
 
 export class LazyGrid {
 	private items: any[] = [];
@@ -16,6 +16,7 @@ export class LazyGrid {
 		private readonly sentinel: HTMLElement,
 		private readonly renderItem: (item: any) => string,
 		private readonly batchSize = 8,
+		private readonly getSearchText: (item: any) => string = (item) => item?.title || '',
 	) {
 		this.observer = new IntersectionObserver(
 			(entries) => {
@@ -46,11 +47,15 @@ export class LazyGrid {
 		return this.filtered().length;
 	}
 
+	disconnect() {
+		this.observer.disconnect();
+	}
+
 	private filtered(): any[] {
 		if (!this.query) return this.items;
 		return this.items.filter((item) => {
-			const title = String(item?.title || '').toLowerCase();
-			return title.includes(this.query);
+			const text = String(this.getSearchText(item) || '').toLowerCase();
+			return text.includes(this.query);
 		});
 	}
 

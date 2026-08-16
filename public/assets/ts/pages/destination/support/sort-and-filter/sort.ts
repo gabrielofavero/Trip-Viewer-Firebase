@@ -1,6 +1,6 @@
 import { normalizePriceBucket } from '../../../../models/destination.model.js';
 import { translate } from '../../../../i18n/translation.js';
-import { CONTENT, applyContent, getItem, isPlanned, ACTIVE_CATEGORY } from '../../destination.js';
+import { CONTENT, isPlanned, ACTIVE_CATEGORY } from '../../destination.js';
 import { getSortDrawerInnerHTML } from './support/drawer.js';
 import { sortDrawerOptionClickAction } from './support/drawer.js';
 import { sortDrawerOptionLoadAction } from './support/drawer.js';
@@ -14,12 +14,12 @@ import { getSortPreferences } from './support/preferences.js';
 export const SORT_OPTIONS: Record<string, Record<string, Record<string, string>>> = {};
 
 // Main Action
-export function sort(render = false) {
+export function sort(entries = CONTENT) {
 	const { type, value } = getSortPreferences() || {};
 
-	CONTENT.sort((a, b) => {
-		const A = getItem(a.id) || {};
-		const B = getItem(b.id) || {};
+	return [...entries].sort((a, b) => {
+		const A = a.item || {};
+		const B = b.item || {};
 
 		const r =
 			type === 'planned' ? comparePlanned(a.id, b.id, A, B, value) : compare(A, B, type, value);
@@ -27,8 +27,6 @@ export function sort(render = false) {
 		if (r !== 0) return r;
 		return nameOf(A).localeCompare(nameOf(B));
 	});
-
-	if (render) applyContent();
 
 	// ---- Comparators ----
 

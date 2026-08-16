@@ -8,6 +8,7 @@ import { openAttributions } from '../../../utils/attributions.js';
 import { closeToast } from '../../../utils/messages.js';
 import { loadAndOpenDestino } from '../categories/destination.js';
 import { copyToClipboard } from '../categories/transportation-module.js';
+import { closeViewItemDialog, initViewItemDialogs } from './item-dialogs.js';
 
 export function loadViewListeners() {
 	registerActions({
@@ -32,5 +33,8 @@ export function loadViewListeners() {
 			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) displayInnerItineraryMessage(index);
 		},
+		'close-view-item-dialog': () => closeViewItemDialog(),
 	});
+
+	initViewItemDialogs();
 }

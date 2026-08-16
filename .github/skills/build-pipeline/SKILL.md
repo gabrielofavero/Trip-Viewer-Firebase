@@ -13,11 +13,27 @@ The TripViewer build system is a **custom Node.js pipeline** (no Webpack, Vite, 
 ## Quick Reference
 
 ```bash
-npm run build              # One-shot build (blocks on TS errors)
-npm run watch              # Watch mode (rebuilds on change, errors non-blocking)
-npm run dev                # Full dev: watch + emulators + auto-open browser
+npm run build              # One-shot build (prod mode; blocks on TS errors)
+npm run watch              # Watch mode (dev mode; rebuilds on change, errors non-blocking)
+npm run dev                # Full dev: watch (livereload) + emulators + auto-open browser
+node scripts/build/build.js --mode dev|prod  # Explicit build mode
 node scripts/build/build.js --watch --no-livereload  # Watch without live reload
 ```
+
+## Build Mode (`--mode dev|prod`)
+
+The build has an explicit `dev`/`prod` seam:
+
+- **`prod`** (default for `npm run build`): runs `hash-assets.js` — content-hashes
+  `.js`/`.css`/images/fonts/`.json`, rewrites every reference, and renames the
+  files so the `immutable` cache headers are always correct.
+- **`dev`** (default when `--watch` or `NODE_ENV=development`): **skips** hashing.
+  The dev config (`firebase.dev.json`) serves everything with `Cache-Control:
+  no-store`, so hashing is redundant and dev rebuilds are faster. Livereload is
+  always on in dev.
+
+Mode is inferred from `--watch` / `NODE_ENV=development`, or set explicitly with
+`--mode dev|prod`.
 
 ---
 
@@ -30,6 +46,7 @@ node scripts/build/build.js --watch --no-livereload  # Watch without live reload
 4. COMPILE TS     esbuild: dist/assets/ts/**/*.ts → .js (ESM, ES2020 target)
    REMOVE TS      Delete .ts source files from dist/
 5. COPY CONFIG    firebase.json, firebase-config.js, index.js → dist/
+5b. HASH ASSETS   (prod only) content-hash .js/.css/img/fonts/.json + rewrite refs
 6. LIVE RELOAD    Write dist/reload timestamp file
 7. TYPE-CHECK     tsc --noEmit
 ```
@@ -81,11 +98,14 @@ It replaces:
 node scripts/build/build.js --watch
 ```
 
-- Uses `fs.watch` with `recursive: true` on `public/`
+- Uses `fs.watch` with `recursive: true` on `public/` + a 2s polling heartbeat (fs.watch can silently go quiet on Windows)
 - **300ms debounce** — waits for burst of changes to settle before rebuild
+- **Content-hash gating** — a rebuild only fires when a file's bytes actually change (size diff, or SHA-1 diff when mtime moves). mtime-only touches (AV scan, git checkout, editor watcher, Windows directory events) are ignored, so no spurious livereload refreshes.
+- `fs.watch` events only trigger a full content scan; the scan itself decides what changed
 - Falls back to non-recursive watch on platforms that don't support it
 - Type-check errors are non-blocking (page already reloaded by then)
 - Live reload signal written to `dist/reload` after compilation, before type-check
+- `build()` retries `rmSync(dist)` (maxRetries 10) — the hosting emulator can hold dist/ files open on Windows (ENOTEMPTY/EBUSY)
 
 ---
 
@@ -94,10 +114,16 @@ node scripts/build/build.js --watch
 ```
 concurrently:
   ├── npm run watch:functions    (tsc --watch in functions/)
-  ├── npm run watch              (frontend build watch)
+  ├── npm run watch              (frontend build watch, livereload)
   ├── firebase emulators:start   (auth:9099, firestore:8085, hosting:5000, functions:5001)
   └── node scripts/utils/open-on-ready.js  (opens browser when ready)
 ```
+
+The emulators are launched by `scripts/dev/start-emulator.js`, which first
+regenerates `firebase.dev.json` (a copy of `firebase.json` with a single
+`Cache-Control: no-store` header on `**/*`) and passes
+`--config=./firebase.dev.json`. Dev edits show instantly: `no-store` means
+nothing is cached, and livereload refreshes the page on every rebuild.
 
 ---
 
@@ -108,6 +134,7 @@ concurrently:
 | `tsconfig.json` | TypeScript config: `strict: false`, `noEmit: true`, `moduleResolution: "bundler"`, `isolatedModules: true`, includes `public/assets/ts/**/*.ts` |
 | `biome.json` | Formatter/linter: tab width 2, single quotes, semicolons, trailing commas, 100 char width |
 | `firebase.json` | Hosting from `dist/`, SPA rewrite `** → /index.html`, cache headers, 301 redirects |
+| `firebase.dev.json` | Generated copy of `firebase.json` with a single `no-store` header (dev only; regenerated on emulator start) |
 | `firebase-config.js` | Firebase config, auto-detects DEV/PRD/TCC by hostname |
 | `functions/tsconfig.json` | Separate TS config for Cloud Functions |
 
@@ -146,8 +173,12 @@ Located in `public/shared/`:
 
 ### Live reload not working
 - Check that `dist/reload` file is being written (timestamp changes on each build)
-- The livereload script polls every 500ms
+- The livereload script polls every 800ms
 - Use `--no-livereload` to disable if causing issues
+
+### Live reload fires without any edits (spurious refresh)
+- Fixed by content-hash gating in watch mode — only real byte changes rebuild.
+- If it still happens, a second `npm run dev` / `npm run watch` may be running: two watchers each write `dist/reload`, causing duplicate refreshes. Kill the duplicate watcher.
 
 ---
 
@@ -156,8 +187,10 @@ Located in `public/shared/`:
 ```
 scripts/
 ├── build/
-│   ├── build.js              ← Main build orchestrator
+│   ├── build.js              ← Main build orchestrator (--mode dev|prod)
 │   ├── inject-partials.js    ← HTML include processor
+│   ├── hash-assets.js        ← Content-hashing (prod only)
+│   ├── gen-firebase-dev.js   ← Generates firebase.dev.json (no-store headers)
 │   ├── deploy.py             ← Python deploy script
 │   └── setup.ps1             ← PowerShell setup
 ├── dev/

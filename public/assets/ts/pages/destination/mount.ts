@@ -18,24 +18,18 @@ import {
 	setDocumentId,
 	setFirestoreDestinationsData,
 } from '../../data/state.js';
-import { getID, getJs, getErrorFromGetRequestMessage } from '../../utils/dom.js';
+import { getID, getErrorFromGetRequestMessage } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
 import { stopLoadingScreen } from '../../utils/loading.js';
 import { loadActiveCategory, ACTIVE_CATEGORY } from './categories.js';
-import { adjustEditVisibility, restoreIfEditing } from './edit-destination.js';
-import { getDestinationsHTML } from './support/content.js';
-import {
-	adjustInstagramMedia,
-	loadEmbed,
-	loadMedia,
-	unloadMedia,
-	unloadMedias,
-	MEDIA_HYPERLINKS,
-} from './support/media-embed.js';
+import { adjustEditVisibility } from './edit-destination.js';
+import { getDestinationCardHTML } from './support/card.js';
+import { filter } from './support/sort-and-filter/filter.js';
+import { sort } from './support/sort-and-filter/sort.js';
 import { loadSortAndFilter } from './support/sort-and-filter/sort-and-filter.js';
-import { adjustDrawer } from './support/sort-and-filter/support/drawer.js';
 import { getTripData, loadPlannedDestination, PLANNED_DESTINATION } from './support/trip.js';
-import { applyDestinationsMediaHeight, loadDestinationVisibility } from './support/visibility.js';
+import { loadDestinationVisibility } from './support/visibility.js';
+import { LazyGrid } from '../../ui/lazy-grid.js';
 
 export { ACTIVE_CATEGORY };
 export var CONTENT = [];
@@ -55,6 +49,12 @@ export interface MountDestinationOptions {
 
 /** The container currently being rendered into. Defaults to #content on the standalone page. */
 let CONTAINER: HTMLElement | null = null;
+
+/** Shared lazy card grid bound to the container + sentinel. */
+let GRID: LazyGrid | null = null;
+
+/** True when the sentinel was created dynamically (view.html lightbox path). */
+let SENTINEL_CREATED = false;
 
 function getContainer(): HTMLElement {
 	return CONTAINER || getID('content');
@@ -114,7 +114,12 @@ export async function mountDestination(
 	) {
 		loadDestinationByType(ACTIVE_CATEGORY);
 		return () => {
-			unloadMedias(undefined);
+			GRID?.disconnect();
+			GRID = null;
+			if (SENTINEL_CREATED) {
+				getID('destinations-grid-sentinel')?.remove();
+				SENTINEL_CREATED = false;
+			}
 			container.innerHTML = '';
 		};
 	}
@@ -128,10 +133,6 @@ export function loadDestinationByType(activeCategory) {
 
 	content.innerHTML = '';
 	CONTENT = [];
-	// Clear MEDIA_HYPERLINKS in-place (imported bindings are read-only)
-	for (const key of Object.keys(MEDIA_HYPERLINKS)) {
-		delete MEDIA_HYPERLINKS[key];
-	}
 
 	if (activeCategory === 'myMaps') {
 		content.classList = 'map-content';
@@ -139,27 +140,28 @@ export function loadDestinationByType(activeCategory) {
 		if (filterSortContainer) filterSortContainer.style.display = 'none';
 		const addContainer = document.querySelector('.add-container') as HTMLElement | null;
 		if (addContainer) addContainer.style.display = 'none';
+		setSearchBarVisible(false);
+		setSentinelVisible(false);
 		return;
-	} else {
-		content.classList = '';
-		if (filterSortContainer) filterSortContainer.style.display = '';
 	}
+
+	content.classList = '';
+	if (filterSortContainer) filterSortContainer.style.display = '';
+	setSearchBarVisible(true);
+	setSentinelVisible(true);
 
 	const destination = FIRESTORE_DESTINATIONS_DATA?.[activeCategory];
 	if (!destination) return;
+
 	const keys = Object.keys(destination);
-	for (let j = 1; j <= keys.length; j++) {
-		const id = keys[j - 1];
-		const item = destination[id];
-		const innerHTML = getDestinationsHTML({ j, id, item });
-		loadEmbed(item?.media, j);
-		CONTENT.push({ id, innerHTML });
-	}
+	CONTENT = keys.map((id, index) => ({
+		id,
+		item: destination[id],
+		j: index + 1,
+	}));
 
 	loadSortAndFilter();
 	applyContent();
-	applyDestinationsMediaHeight();
-	adjustInstagramMedia();
 	adjustEditVisibility();
 	stopLoadingScreen();
 }
@@ -171,48 +173,52 @@ function loadMapDestination(link) {
 	}
 	const mid = link.split('mid=')[1].split('&')[0];
 	getContainer().innerHTML =
-		`<iframe class="map-iframe" src="https://www.google.com/maps/d/embed?mid=${mid}&ehbc=2E312F" width="640" height="480"></iframe>`;
+		`<iframe class="map-iframe" src="https://www.google.com/maps/d/embed?mid=${mid}&ehbc=2E312F"></iframe>`;
 }
 
 // Setters
 export function applyContent() {
-	const div = getContainer();
-	div.innerHTML = '';
-	for (const content of CONTENT) {
-		if (content.filtered) {
-			continue;
-		}
-		div.innerHTML += content.innerHTML;
-	}
+	const ordered = sort(CONTENT);
+	const filtered = filter(ordered);
+	getGrid()?.setItems(filtered);
+	return filtered;
 }
 
-// Actions
-export function processAccordion(j) {
-	restoreIfEditing(j);
-	adjustDrawer();
-	toggleMedia(j);
-	unloadMedias(j);
-	closeAccordions(j);
-	adjustEditVisibility(j);
+function getGrid(): LazyGrid | null {
+	if (GRID) return GRID;
+
+	const content = getContainer();
+	let sentinel = getID('destinations-grid-sentinel') as HTMLElement | null;
+	if (!sentinel) {
+		sentinel = document.createElement('div');
+		sentinel.id = 'destinations-grid-sentinel';
+		sentinel.className = 'grid-sentinel';
+		content.insertAdjacentElement('afterend', sentinel);
+		SENTINEL_CREATED = true;
+	}
+
+	GRID = new LazyGrid(
+		content,
+		sentinel,
+		(entry) => getDestinationCardHTML({ id: entry.id, item: entry.item, j: entry.j }),
+		8,
+		(entry) => entry.item?.name || '',
+	);
+	return GRID;
 }
 
-function toggleMedia(j) {
-	const button = getID(`destinations-title-${j}`);
-	const media = `media-${j}`;
-	if (button.classList.contains('collapsed')) {
-		unloadMedia(media);
-	} else {
-		loadMedia(media);
-		applyDestinationsMediaHeight();
-	}
+function setSearchBarVisible(visible) {
+	const bar = getID('destination-search-bar');
+	if (bar) bar.style.display = visible ? '' : 'none';
 }
 
-function closeAccordions(exclude) {
-	for (const j of getJs('content')) {
-		if (j !== exclude) {
-			$(`#collapse-destinations-${j}`).collapse('hide');
-		}
-	}
+function setSentinelVisible(visible) {
+	const sentinel = getID('destinations-grid-sentinel');
+	if (sentinel) sentinel.style.display = visible ? '' : 'none';
+}
+
+export function setSearchQuery(query) {
+	GRID?.setQuery(query);
 }
 
 export function getDataSet(key) {
@@ -220,15 +226,19 @@ export function getDataSet(key) {
 	if (!category) return new Set();
 
 	const data = FIRESTORE_DESTINATIONS_DATA?.[category] ?? {};
-	return new Set(
-		Object.values(data)
-			.map((item) => item?.[key])
-			.filter((v) => v !== undefined && v !== null),
-	);
+	const values: unknown[] = [];
+	for (const item of Object.values(data) as any[]) {
+		const value = item?.[key];
+		if (value === undefined || value === null) continue;
+		// `regions` is an array — flatten so each individual region is a member.
+		if (Array.isArray(value)) values.push(...value);
+		else values.push(value);
+	}
+	return new Set(values);
 }
 
 export function getDestinationID(j) {
-	const destination = getID(`destinations-${j}`);
+	const destination = getID(`destinations-card-${j}`);
 	return destination.getAttribute('data-id');
 }
 

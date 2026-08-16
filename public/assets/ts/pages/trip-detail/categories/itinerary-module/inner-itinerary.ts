@@ -1,21 +1,13 @@
-import { getItinerary, getCurrencies } from '../../../../app/config.js';
+import { getItinerary } from '../../../../app/config.js';
 import { getState, TRAVELERS, DESTINATIONS } from '../../../../data/state.js';
 import { convertFromDateObject, getDateTitle } from '../../../../utils/dates.js';
-import {
-	cloneObject,
-	getAccommodationsHTML,
-	getAndDestinationTitle,
-	getDestinationTitle,
-	getDestinationsBoxHTML,
-	getID,
-	getInnerItineraryTitleHTML,
-	getLinkMediaButton,
-} from '../../../../utils/dom.js';
-import { displayFullMessage, MESSAGE_PROPERTIES } from '../../../../utils/messages.js';
+import { getAndDestinationTitle, getID, getInnerItineraryTitleHTML } from '../../../../utils/dom.js';
 import { translate } from '../../../../i18n/translation.js';
-import { loadImageLightbox } from '../../support/embed.js';
-import { getFlightBoxHTML } from '../transportation-module.js';
-import { getDestinationRaw } from '../../../../data/services/destination.service.js';
+import {
+	openDestinationItemDialog,
+	openAccommodationDialog,
+	openTransportationDialog,
+} from '../../support/item-dialogs.js';
 
 export var SCHEDULE_OPEN = false;
 export var CURRENT_SCHEDULE_DATE = {
@@ -139,82 +131,17 @@ export async function displayInnerItineraryMessage(index) {
 	const entry = CURRENT_INNER_ITINERARY[index];
 	if (!entry) return;
 
-	// Lazy destination item: the destination doc isn't loaded on page load, so
-	// fetch it on demand with a small loading state, then render the popup.
-	if (entry.lazyDestinationId) {
-		showInnerItineraryLoading(entry);
-		const destData = await getDestinationRaw(entry.lazyDestinationId);
-		if (destData) {
-			const destinationItem = destData[entry.category]?.[entry.itemId];
-			if (destinationItem) {
-				entry.title = getDestinationTitle(destinationItem);
-				entry.content = getDestinationsBoxHTML({
-					j: 1,
-					item: destinationItem,
-					innerItinerary: true,
-					values: getDestinationValues(destData.currency),
-					currency: destData.currency,
-					planned: false,
-					editBtn: false,
-				} as any);
-				entry.media = destinationItem?.media;
-				updateInnerItineraryMessage(entry);
-				return;
-			}
-		}
-		updateInnerItineraryMessage({
-			...entry,
-			title: '',
-			content: `<div class="text-center py-4">${translate('messages.errors.missing_data')}</div>`,
-		});
-		return;
-	}
-
-	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = entry.title;
-	properties.content = entry.content;
-	properties.buttons = [];
-	// Content-heavy detail view (flight/hotel/destination boxes + galleries):
-	// auto-scrolls on desktop and fills the screen on mobile.
-	properties.fullscreen = true;
-	properties.containers.main = entry.container;
-
-	displayFullMessage(properties);
-
 	switch (entry.type) {
-		case 'accommodations':
-			loadImageLightbox('label-gallery');
+		case 'destination':
+			await openDestinationItemDialog(entry);
 			break;
-		case 'destinations':
-			if (entry.media) {
-				loadInnerItineraryMedia(entry.media);
-			}
+		case 'accommodation':
+			await openAccommodationDialog(entry);
+			break;
+		case 'transportation':
+			openTransportationDialog(entry);
+			break;
 	}
-}
-
-/** Small loading placeholder shown while a destination doc is fetched lazily. */
-function showInnerItineraryLoading(entry) {
-	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = '';
-	properties.content =
-		'<div class="text-center py-4"><div class="spinner-border" role="status"></div></div>';
-	properties.buttons = [];
-	properties.fullscreen = true;
-	properties.containers.main = entry.container;
-	displayFullMessage(properties);
-}
-
-/** Swap the currently-open message's content (used after a lazy fetch resolves). */
-function updateInnerItineraryMessage(entry) {
-	const titleEl = getID('message-title');
-	const descEl = getID('message-description');
-	if (titleEl) titleEl.innerHTML = entry.title;
-	if (descEl) descEl.innerHTML = entry.content;
-	if (entry.media) loadInnerItineraryMedia(entry.media);
-}
-
-function loadInnerItineraryMedia(media) {
-	getID('media-1').innerHTML = getLinkMediaButton(media);
 }
 
 export function loadCalendarItem(day, month, year, instant = false) {
@@ -272,30 +199,35 @@ function unloadCalendarTripActive() {
 }
 
 // Getters
-function getInnerItineraryHTML(item) {
-	const innerItinerary = getInnerItinerary(item);
-	if (innerItinerary?.content || innerItinerary?.lazyDestinationId) {
+function getInnerItineraryHTML(periodItem) {
+	const innerItinerary = getInnerItinerary(periodItem.item, undefined, periodItem.travelers);
+	if (innerItinerary?.item || innerItinerary?.lazyDestinationId) {
 		CURRENT_INNER_ITINERARY.push(innerItinerary);
 		return `<i class="iconify external-link" data-icon="tabler:external-link" data-action="display-inner-itinerary-message" data-index="${CURRENT_INNER_ITINERARY.length - 1}"></i>`;
 	}
 	return '';
 }
 
-function getInnerItinerary(item, destinations?) {
+function getInnerItinerary(item, destinations?, travelers?) {
 	const innerItinerary = {
-		type: item?.type,
+		type: normalizeItemType(item?.type),
+		// Raw item data passed to the card dialog (destination entry, accommodation
+		// or transportation leg).
+		item: null,
 		title: '',
-		content: '',
-		media: '',
-		container: item?.type === 'destination' ? 'destinations-container' : 'label-container',
+		// Travelers associated with this itinerary entry (drives the accommodation
+		// "person pill" in the card dialog).
+		travelers: travelers || [],
 		// Lazy destination item — set when the destination doc must be fetched on
 		// demand (the view only loads destination metadata on page load).
 		lazyDestinationId: '',
 		category: '',
 		itemId: '',
+		destinationId: '',
+		currency: '',
 	};
 	let index = -1;
-	switch (item?.type) {
+	switch (innerItinerary.type) {
 		case 'transportation':
 			if (getState().modules.transportation === true && item.id) {
 				index = getState()
@@ -303,8 +235,8 @@ function getInnerItinerary(item, destinations?) {
 					.indexOf(item.id);
 				if (index >= 0) {
 					const transport = getState().transportation.data[index];
-					innerItinerary.title = `${transport.points.origin} → ${transport.points.destination}`;
-					innerItinerary.content = getFlightBoxHTML(index + 1, 'inner-itinerary', true);
+					innerItinerary.item = transport;
+					innerItinerary.title = `${transport.points?.origin || ''} → ${transport.points?.destination || ''}`;
 				}
 			}
 			break;
@@ -314,8 +246,7 @@ function getInnerItinerary(item, destinations?) {
 					.accommodations.map((accommodation) => accommodation.id)
 					.indexOf(item.id);
 				if (index >= 0) {
-					innerItinerary.title = '';
-					innerItinerary.content = getAccommodationsHTML(index, true);
+					innerItinerary.item = getState().accommodations[index];
 				}
 			}
 			break;
@@ -327,12 +258,14 @@ function getInnerItinerary(item, destinations?) {
 					destinations = DESTINATIONS?.[index]?.destinations;
 				}
 
+				innerItinerary.category = item.category;
+				innerItinerary.itemId = item.id;
+				innerItinerary.destinationId = item.location;
+
 				// The destination doc isn't loaded on page load (metadata-only
-				// view) — mark the popup for a lazy fetch when the user opens it.
+				// view) — mark the item for a lazy fetch when the user opens it.
 				if (!destinations) {
 					innerItinerary.lazyDestinationId = item.location;
-					innerItinerary.category = item.category;
-					innerItinerary.itemId = item.id;
 					return innerItinerary;
 				}
 
@@ -340,17 +273,8 @@ function getInnerItinerary(item, destinations?) {
 				if (destination && Object.keys(destination).length) {
 					const destinationItem = destination[item.id];
 					if (destinationItem) {
-						innerItinerary.title = getDestinationTitle(destinationItem);
-						innerItinerary.content = getDestinationsBoxHTML({
-							j: 1,
-							item: destinationItem,
-							innerItinerary: true,
-							values: getDestinationValues(destinations.currency),
-							currency: destinations.currency,
-							planned: false,
-							editBtn: false,
-						} as any);
-						innerItinerary.media = destinationItem?.media;
+						innerItinerary.item = destinationItem;
+						innerItinerary.currency = destinations.currency || '';
 					}
 				}
 
@@ -362,16 +286,25 @@ function getInnerItinerary(item, destinations?) {
 	return innerItinerary;
 }
 
-/** Price-scale map used to render destination entry boxes (shared by sync + lazy paths). */
-function getDestinationValues(destinationsCurrency) {
-	const currency = cloneObject(getCurrencies().scale[destinationsCurrency]);
-	const max = translate('destination.price.max', {
-		value: currency['$$$$'],
-	});
-	currency['-'] = translate('destination.price.free');
-	currency['default'] = translate('destination.price.default');
-	currency['$$$$'] = max;
-	return currency;
+/**
+ * Accommodation/destination itinerary items are stored with plural types
+ * ('accommodations' / 'destinations') by the trip editor, but some legacy
+ * docs use the singular forms. Canonicalize both to the singular used by the
+ * dialog dispatcher.
+ */
+function normalizeItemType(type) {
+	switch (type) {
+		case 'transportation':
+			return 'transportation';
+		case 'accommodation':
+		case 'accommodations':
+			return 'accommodation';
+		case 'destination':
+		case 'destinations':
+			return 'destination';
+		default:
+			return type;
+	}
 }
 
 export function getScheduleTitle(title, destinations, placeholder = true) {
@@ -403,7 +336,7 @@ function setModalCalendarInnerHTML(div, period) {
 			div.innerHTML += `<div>
                                 <i class="bi bi-chevron-right color-icon"></i>
                                 ${getInnerItineraryTitleHTML(period[i], 'label-item')}
-                                ${getInnerItineraryHTML(period[i].item)}
+                                ${getInnerItineraryHTML(period[i])}
                               </div>`;
 		}
 	}

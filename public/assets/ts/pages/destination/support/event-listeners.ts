@@ -3,8 +3,8 @@ import { registerActions as registerMessageActions } from '../../../utils/messag
 import { openFilterDrawer } from './sort-and-filter/filter.js';
 import { openSortDrawer } from './sort-and-filter/sort.js';
 import { closeDrawer } from './sort-and-filter/support/drawer.js';
-import { add, edit, closeAddedDestination, deleteEdit } from '../edit-destination.js';
-import { processAccordion } from '../destination.js';
+import { add, edit, deleteEdit } from '../edit-destination.js';
+import { openDestinationDialog, closeDestinationDialog } from './dialog.js';
 import { openAttributions } from '../../../utils/attributions.js';
 import { closeToast } from '../../../utils/messages.js';
 
@@ -20,14 +20,11 @@ export function loadDestinationListeners() {
 			const url = target.getAttribute('data-url');
 			if (url) window.open(url, '_blank');
 		},
-		processAccordion: (target) => {
+		'open-destination-dialog': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
-			if (!isNaN(index)) processAccordion(index);
+			if (!isNaN(index)) openDestinationDialog(index);
 		},
-		closeAddedDestination: (target) => {
-			const index = parseInt(target.getAttribute('data-index'));
-			if (!isNaN(index)) closeAddedDestination(index);
-		},
+		'close-destination-dialog': () => closeDestinationDialog(),
 		'edit-destination': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) edit(index);

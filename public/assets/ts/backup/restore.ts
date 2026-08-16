@@ -44,7 +44,7 @@ export function restoreOnFileSelectionAction(event) {
 			restoreAccountData(jsonData);
 		} catch (err) {
 			stopProgressLoading();
-			displayError(translate('messages.documents.get.error'));
+			displayError(translate('messages.documents.get.error'), false, false);
 			console.error(err);
 		}
 	};

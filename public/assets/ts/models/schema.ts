@@ -472,8 +472,12 @@ export interface PlaceItem {
 	/** was "mapa" */
 	map: string;
 	website: string;
-	/** was "regiao" */
-	region: string;
+	/**
+	 * was "regiao" (string) — one or more neighborhoods/areas within the
+	 * destination (e.g. ["Ipanema", "Botafogo"]). Migration 19 converted the
+	 * legacy single `region` string into this array.
+	 */
+	regions: string[];
 	instagram: string;
 	/** was "novo" */
 	isNew: boolean;

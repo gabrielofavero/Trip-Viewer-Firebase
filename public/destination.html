@@ -12,32 +12,14 @@
   <div class="loadable" style="display: none">
       <!-- #include shared/top-bar.html -->
 
-    <div class="section-title">
-      <br><br><br><br>
-      <h1 id="title"></h1>
-      <div class="destinations-select" id="destinations-select"></div>
-      <div id="destinations-subtitle"></div>
-    </div>
+    <!-- ======= Hero (index-like background + frosted content box) ======= -->
+    <section id="hero">
+      <div class="content-box" id="destination-content-box">
 
-    <div class="section-buttons" id="filter-sort-container">
-      <button class="filter-sort" id="filter" data-action="open-filter-drawer">
-        <i class="iconify" data-icon="tdesign:filter"></i>
-        <span data-translate="destination.filter.title"></span>
-      </button>
-      <button class="filter-sort" id="sort" data-action="open-sort-drawer">
-        <i class="iconify" data-icon="ant-design:sort-ascending-outlined"></i>
-        <span data-translate="destination.sort.title"></span>
-      </button>
-    </div>
+        <!-- #include shared/destination-content.html -->
 
-    <div id="content"></div>
-
-    <div class="add-container" style="display: none">
-      <button class="edit-btn" id="add-button" data-action="add-destination">
-          <i class="iconify user-data-icon" data-icon="gridicons:add-outline"></i>
-          <span data-translate="labels.add"></span>
-      </button>
-    </div>
+      </div>
+    </section>
 
     <!-- ======= Footer ======= -->
     <footer id="footer">
@@ -52,13 +34,35 @@
     </footer>
   </div>
 
-  <div class="drawer-overlay" id="overlay" data-action="close-drawer">
+  <div class="drawer-overlay" id="overlay" data-action="close-drawer" style="display: none">
     <div class="drawer" id="drawer" data-stop-propagation>
       <div class="drawer-header">
         <span id="drawerTitle"></span>
         <button class="close-btn" data-action="close-drawer">✕</button>
       </div>
       <div class="drawer-body" id="drawerContent"></div>
+    </div>
+  </div>
+
+  <!-- Destination Detail Dialog (index-like: click a card → dialog) -->
+  <div id="destination-dialog" class="dialog-overlay" style="display:none">
+    <div class="dialog-card destination-dialog-card">
+      <div class="dialog-media" id="destination-dialog-media"></div>
+      <a class="dialog-close" data-action="close-destination-dialog">
+        <i class="iconify" data-icon="material-symbols:close"></i>
+      </a>
+      <div class="dialog-body">
+        <div class="dialog-header">
+          <div class="dialog-title-row">
+            <h2 class="dialog-title" id="destination-dialog-title"></h2>
+            <button class="dialog-edit-btn" id="destination-dialog-edit" data-action="edit-destination" style="display:none">
+              <i class="iconify" data-icon="tabler:edit"></i>
+            </button>
+          </div>
+          <span class="dialog-score-badge" id="destination-dialog-score" style="display:none"></span>
+        </div>
+        <div id="destination-dialog-content"></div>
+      </div>
     </div>
   </div>
 
@@ -72,8 +76,6 @@
   </div>
 
   <!-- #include shared/scripts-vendor.html -->
-  <script async src="https://www.tiktok.com/embed.js"></script>
-  <script async src="//www.instagram.com/embed.js"></script>
   <!-- #include shared/scripts-core.html -->
 
   <!-- #include shared/nav-helper.html -->

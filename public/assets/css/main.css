@@ -12,7 +12,13 @@
 @import "components/accordion.css";
 @import "components/modal.css";
 @import "components/custom-select.css";
+@import "components/dialog.css";
 @import "components/toast.css";
 @import "components/sensitive-box.css";
 @import "components/swiper-overrides.css";
 @import "components/progress-loading.css";
+@import "components/page-hero.css";
+@import "components/frosted-tabs.css";
+@import "components/search-bar.css";
+@import "components/portfolio.css";
+@import "components/region-pills.css";

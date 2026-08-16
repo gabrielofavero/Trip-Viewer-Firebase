@@ -110,8 +110,7 @@ async function loadItinerary(container: HTMLElement) {
 
 	container.innerHTML = await getItineraryContent('page');
 
-	// Print/export buttons live in the page top-bar; wire them when present
-	// (defensive — the desktop icons were removed from itinerary.html).
+	// Print/export buttons live in the page top-bar; wire them when present.
 	getID('print')?.addEventListener('click', () => print());
 	getID('export')?.addEventListener('click', () => exportItinerary());
 }
@@ -178,7 +177,7 @@ async function loadProtectedItinerary(container: HTMLElement, mandatory = false)
 			requestPinItineraryInvalido(mandatory);
 		} else {
 			console.error(error);
-			displayError(translate('messages.errors.unknown'));
+			displayError(translate('messages.errors.unknown'), false, false);
 		}
 		stopLoadingScreen();
 	}

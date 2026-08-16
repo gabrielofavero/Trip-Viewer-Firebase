@@ -359,68 +359,11 @@
 }
 
 /*--------------------------------------------------------------
-# Edit Tab Bar — Horizontal Category Navigation
-# Sticky below top-bar, scrollable on mobile
+# Edit Tab Bar
+# Base .edit-tab-bar / .edit-tab styles moved to components/frosted-tabs.css
+# (imported globally via main.css). Edit-specific responsive overrides
+# (fixed-on-mobile, icon-only tabs) remain below in this file.
 --------------------------------------------------------------*/
-.edit-tab-bar {
-	display: flex;
-	justify-content: center;
-	gap: 4px;
-	margin-bottom: 3em;
-	background: rgba(255, 255, 255, 0.5);
-	backdrop-filter: blur(12px);
-	-webkit-backdrop-filter: blur(12px);
-	border-radius: var(--radius-lg);
-	padding: 4px;
-	border: 1px solid var(--border-color);
-	position: sticky;
-	top: 2em;
-	z-index: 10;
-	overflow-x: auto;
-	-webkit-overflow-scrolling: touch;
-	scrollbar-width: none;
-}
-
-.edit-tab-bar::-webkit-scrollbar {
-	display: none;
-}
-
-.edit-tab {
-	flex: 0 0 auto;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 6px;
-	padding: 10px 14px;
-	border-radius: var(--radius-md);
-	font-size: 13px;
-	font-weight: 600;
-	font-family: inherit;
-	border: none;
-	background: transparent;
-	color: var(--text-muted);
-	cursor: pointer;
-	transition: all var(--transition-normal);
-	white-space: nowrap;
-}
-
-.edit-tab:hover {
-	color: var(--text-primary);
-	background: rgba(0, 0, 0, 0.03);
-}
-
-.edit-tab.active {
-	background: rgba(var(--theme-color-rgb), 0.1);
-	color: var(--theme-color);
-	box-shadow: var(--shadow-sm);
-	font-weight: 700;
-}
-
-.edit-tab svg {
-	width: 1.25em;
-	height: 1.25em;
-	flex-shrink: 0;
-}
 
 /*--------------------------------------------------------------
 # Section Cards — Frosted Glass (matches index.html cards)

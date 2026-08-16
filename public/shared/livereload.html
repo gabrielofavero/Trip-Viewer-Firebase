@@ -8,9 +8,17 @@
   var last = null;
   setInterval(function () {
     fetch('/reload', { cache: 'no-store' })
-      .then(function (r) { return r.text(); })
+      .then(function (r) {
+        if (!r.ok) throw new Error('not ready');
+        return r.text();
+      })
       .then(function (ts) {
-        if (last && last !== ts) location.reload();
+        // /reload holds a millisecond timestamp (digits only). During a
+        // rebuild dist/ is wiped first, so /reload can briefly return the
+        // hosting 404 ("Cannot GET /reload") or the SPA rewrite (HTML) —
+        // neither is a timestamp, and reloading then lands on a blank page.
+        if (!/^\d+$/.test(ts)) return;
+        if (last !== null && last !== ts) location.reload();
         last = ts;
       })
       .catch(function () { /* server not ready yet */ });

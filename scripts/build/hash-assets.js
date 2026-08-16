@@ -1,7 +1,8 @@
 /**
  * scripts/build/hash-assets.js
  *
- * Content-hashes every local .js/.css file in dist/ so that the immutable
+ * Content-hashes every local asset (.js/.css, images, fonts, .json) in dist/
+ * so that the immutable
  * Cache-Control (max-age=31536000, immutable) applied to *.js/*.css in
  * firebase.json is always correct after a deploy.
  *
@@ -17,10 +18,12 @@
  *   - Rewrites references:
  *       HTML: <link href="*.css"> / <script src="*.js"> (local paths only)
  *       JS:   import / export ... from "...", side-effect import "...",
- *             dynamic import("...") specifiers (relative or /assets/...)
- *       CSS:  @import "*.css"
+ *             dynamic import("...") specifiers (relative or /assets/...),
+ *             and literal asset paths (e.g. fetch("/assets/json/..."))
+ *       CSS:  @import "*.css", url(...) references to images/fonts
+ *       JSON: asset-path string values (root-relative)
  *   - Non-local references (https://, //, data:, /__/firebase/*, ...) are left
- *     untouched, as are images/fonts (they are not immutable-cached).
+ *     untouched. assets/vendor/** is never hashed (stable vendor URLs).
  *
  * Unchanged content keeps the same name, so browser caches stay valid; changed
  * content (directly or via deps) gets a fresh name and is re-downloaded.
@@ -34,7 +37,39 @@ const fs = require('fs');
 const path = require('path');
 
 const HASH_LEN = 10;
-const ASSET_EXTS = new Set(['.js', '.css']);
+const ASSET_EXTS = new Set([
+	'.js',
+	'.css',
+	'.png',
+	'.jpg',
+	'.jpeg',
+	'.webp',
+	'.svg',
+	'.gif',
+	'.ico',
+	'.woff',
+	'.woff2',
+	'.ttf',
+	'.otf',
+	'.json',
+]);
+
+// Text assets are parsed for dependency/reference rewriting; binary assets
+// (png/jpg/webp/gif/ico/woff/woff2/ttf/otf) are hashed as raw buffers.
+const TEXT_EXTS = new Set(['.js', '.css', '.json', '.svg']);
+
+// Vendor files never change; keep their URLs stable and skip hashing.
+const VENDOR_PREFIX = 'assets/vendor/';
+
+// Root config files copied into dist/ but never referenced by the app;
+// hashing them would rename them out from under Firebase's deploy `ignore`.
+const EXCLUDED_FILES = new Set(['firebase.json', 'firebase.dev.json']);
+
+// Extensions that may be the target of a local asset reference.
+const LOCAL_REF_RE = /\.(?:js|css|png|jpe?g|webp|svg|gif|ico|woff2?|ttf|otf|json)$/i;
+
+// CSS url(...) with quoted or unquoted payloads.
+const URL_RE = /url\(\s*(?:"([^"]+)"|'([^']+)'|([^)"'\s]+))\s*\)/gi;
 
 /** Recursively collect files under `root` with the given extensions. */
 function collectFiles(root, exts) {
@@ -54,6 +89,14 @@ function toRel(root, abs) {
 	return path.relative(root, abs).split(path.sep).join('/');
 }
 
+function isExcluded(rel) {
+	return (
+		EXCLUDED_FILES.has(rel) ||
+		rel === VENDOR_PREFIX.slice(0, -1) ||
+		rel.startsWith(VENDOR_PREFIX)
+	);
+}
+
 function sha1(text) {
 	return crypto.createHash('sha1').update(text, 'utf8').digest('hex');
 }
@@ -70,7 +113,7 @@ function isLocalSpec(spec) {
 		!spec.startsWith('mailto:') &&
 		!spec.startsWith('/__/') &&
 		!spec.startsWith('#') &&
-		/\.(js|css)$/i.test(spec.split('?')[0])
+		LOCAL_REF_RE.test(spec.split('?')[0])
 	);
 }
 
@@ -83,8 +126,9 @@ function hashAssets(distDir) {
 	const root = path.resolve(distDir);
 	if (!fs.existsSync(root)) return 0;
 
-	const absFiles = collectFiles(root, ASSET_EXTS);
-	const relFiles = absFiles.map((f) => toRel(root, f));
+	const relFiles = collectFiles(root, ASSET_EXTS)
+		.map((f) => toRel(root, f))
+		.filter((rel) => !isExcluded(rel));
 	const fileSet = new Set(relFiles);
 
 	// Resolve a specifier (relative to baseDirRel, or /assets/...) to a
@@ -98,8 +142,10 @@ function hashAssets(distDir) {
 		return fileSet.has(joined) ? joined : null;
 	};
 
-	// Direct local dependencies of a JS module / CSS file.
+	// Direct local dependencies of a JS module / CSS file / JSON config.
 	const extractDeps = (rel) => {
+		const ext = path.extname(rel).toLowerCase();
+		if (!TEXT_EXTS.has(ext)) return [];
 		const abs = path.join(root, rel.split('/').join(path.sep));
 		const content = fs.readFileSync(abs, 'utf8');
 		const baseDirRel = path.posix.dirname(rel) === '.' ? '' : path.posix.dirname(rel);
@@ -108,7 +154,11 @@ function hashAssets(distDir) {
 			const d = resolveToRel(spec, baseDirRel);
 			if (d) deps.add(d);
 		};
-		if (path.extname(rel).toLowerCase() === '.js') {
+		const addRoot = (spec) => {
+			const d = resolveToRel(spec, '');
+			if (d) deps.add(d);
+		};
+		if (ext === '.js') {
 			content.replace(/\b(import|export)\b([^;]*?)\bfrom\s*["']([^"']+)["']/g, (_m, _k, _mid, s) => {
 				add(s);
 				return _m;
@@ -121,9 +171,18 @@ function hashAssets(distDir) {
 				add(s);
 				return _m;
 			});
-		} else {
+		} else if (ext === '.css') {
 			content.replace(/@import\s*["']([^"']+)["']/g, (_m, s) => {
 				add(s);
+				return _m;
+			});
+			content.replace(URL_RE, (_m, dq, sq, bare) => {
+				add(dq !== undefined ? dq : sq !== undefined ? sq : bare);
+				return _m;
+			});
+		} else if (ext === '.json') {
+			content.replace(/"([^"\n]+)"/g, (_m, val) => {
+				if (isLocalSpec(val)) addRoot(val);
 				return _m;
 			});
 		}
@@ -131,25 +190,29 @@ function hashAssets(distDir) {
 	};
 
 	// Deep hash: folds transitive dependency hashes into each file's own hash.
+	const ownHash = (rel) => {
+		const abs = path.join(root, rel.split('/').join(path.sep));
+		const buf = fs.readFileSync(abs);
+		if (TEXT_EXTS.has(path.extname(rel).toLowerCase())) return sha1(buf.toString('utf8'));
+		return crypto.createHash('sha1').update(buf).digest('hex');
+	};
+
 	const memo = new Map();
 	const deepHash = (rel, visiting) => {
 		if (memo.has(rel)) return memo.get(rel);
 		if (visiting.has(rel)) {
 			// Cycle guard: fall back to the file's own content hash.
-			const abs = path.join(root, rel.split('/').join(path.sep));
-			const h = sha1(fs.readFileSync(abs, 'utf8')).slice(0, HASH_LEN);
+			const h = ownHash(rel).slice(0, HASH_LEN);
 			memo.set(rel, h);
 			return h;
 		}
 		visiting.add(rel);
-		const abs = path.join(root, rel.split('/').join(path.sep));
-		const content = fs.readFileSync(abs, 'utf8');
 		const depPart = extractDeps(rel)
 			.map((d) => `${d}:${deepHash(d, visiting)}`)
 			.sort()
 			.join('\u0000');
 		visiting.delete(rel);
-		const h = sha1(content + '\u0000' + depPart).slice(0, HASH_LEN);
+		const h = sha1(ownHash(rel) + '\u0000' + depPart).slice(0, HASH_LEN);
 		memo.set(rel, h);
 		return h;
 	};
@@ -202,9 +265,12 @@ function hashAssets(distDir) {
 		if (changed) fs.writeFileSync(abs, html);
 	}
 
-	// 2) JS: import/export ... from "..." , side-effect import "..." , import("...")
+	// 2) JS: import/export ... from "..." , side-effect import "..." , import("..."),
+	//    plus literal asset-path strings (fetch targets, cache keys, image URLs).
 	for (const abs of collectFiles(root, new Set(['.js']))) {
-		const base = baseDirOf(toRel(root, abs));
+		const rel = toRel(root, abs);
+		if (isExcluded(rel)) continue;
+		const base = baseDirOf(rel);
 		let js = fs.readFileSync(abs, 'utf8');
 		let changed = false;
 
@@ -230,12 +296,24 @@ function hashAssets(distDir) {
 			return `import("${n}")`;
 		});
 
+		// Any remaining quoted string that resolves to a hashed asset
+		// (e.g. loadJSON("/assets/json/colors.json"), _cache[...] keys).
+		js = js.replace(/["']([^"'\n]+)["']/g, (m, spec) => {
+			const n = rewriteRef(spec, base);
+			if (!n) return m;
+			changed = true;
+			rewritten++;
+			return m[0] + n + m[0];
+		});
+
 		if (changed) fs.writeFileSync(abs, js);
 	}
 
-	// 3) CSS: @import "*.css"
+	// 3) CSS: @import "*.css" and url(...) references to images/fonts.
 	for (const abs of collectFiles(root, new Set(['.css']))) {
-		const base = baseDirOf(toRel(root, abs));
+		const rel = toRel(root, abs);
+		if (isExcluded(rel)) continue;
+		const base = baseDirOf(rel);
 		let css = fs.readFileSync(abs, 'utf8');
 		let changed = false;
 		css = css.replace(/@import\s*["']([^"']+)["']/g, (m, spec) => {
@@ -245,7 +323,32 @@ function hashAssets(distDir) {
 			rewritten++;
 			return `@import "${n}"`;
 		});
+		css = css.replace(URL_RE, (m, dq, sq, bare) => {
+			const spec = dq !== undefined ? dq : sq !== undefined ? sq : bare;
+			const n = rewriteRef(spec, base);
+			if (!n) return m;
+			changed = true;
+			rewritten++;
+			return `url("${n}")`;
+		});
 		if (changed) fs.writeFileSync(abs, css);
+	}
+
+	// 3.5) JSON: rewrite asset-path string values (root-relative).
+	for (const abs of collectFiles(root, new Set(['.json']))) {
+		const rel = toRel(root, abs);
+		if (isExcluded(rel)) continue;
+		let json = fs.readFileSync(abs, 'utf8');
+		let changed = false;
+		json = json.replace(/"([^"\n]+)"/g, (m, val) => {
+			if (!isLocalSpec(val)) return m;
+			const n = rewriteRef(val, '');
+			if (!n) return m;
+			changed = true;
+			rewritten++;
+			return `"${n}"`;
+		});
+		if (changed) fs.writeFileSync(abs, json);
 	}
 
 	// 4) Rename files to their hashed names.

@@ -357,48 +357,50 @@
       <div id="lightbox" class="lightbox">
         <div id="lightbox-content" class="lightbox-content">
           <div class="lightbox-toolbar">
+            <button type="button" id="lightbox-nightmode-btn" class="lightbox-close" style="display: none" aria-label="Toggle dark mode" title="Toggle dark mode">
+              <i class="bx bx-moon"></i>
+            </button>
+            <button type="button" id="lightbox-print-btn" class="lightbox-close" style="display: none" aria-label="Print" title="Print">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            </button>
+            <button type="button" id="lightbox-export-btn" class="lightbox-close" style="display: none" aria-label="Export" title="Export">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            </button>
             <button id="lightbox-close" class="lightbox-close" aria-label="Close">✕</button>
           </div>
 
-          <!-- Shared title area (full itinerary + destination detail) -->
-          <div class="section-title">
-            <h1 id="title"></h1>
-            <div id="destinations-subtitle"></div>
-          </div>
+          <!-- Swap target: openItineraryLightbox / openDestinationLightbox inject
+               one of the templates below here. Keeping them as inert <template>
+               markup means neither set of IDs collides while the other is open. -->
+          <div id="lightbox-body"></div>
 
-          <!-- Destination chrome (sort & filter) -->
-          <div class="section-buttons" id="filter-sort-container">
-            <button class="filter-sort" id="filter" data-action="open-filter-drawer">
-              <i class="iconify" data-icon="tdesign:filter"></i>
-              <span data-translate="destination.filter.title"></span>
-            </button>
-            <button class="filter-sort" id="sort" data-action="open-sort-drawer">
-              <i class="iconify" data-icon="ant-design:sort-ascending-outlined"></i>
-              <span data-translate="destination.sort.title"></span>
-            </button>
-          </div>
-
-          <!-- Render target: mountFullItinerary / mountDestination render here.
-               id="content" matches what the destination component expects. -->
-          <div id="content" class="content"></div>
-
-          <div class="add-container" style="display: none">
-            <button class="edit-btn" id="add-button" data-action="add-destination">
-              <i class="iconify user-data-icon" data-icon="gridicons:add-outline"></i>
-              <span data-translate="labels.add"></span>
-            </button>
-          </div>
-
-          <!-- Destination sort/filter drawer -->
-          <div class="drawer-overlay" id="overlay" data-action="close-drawer">
-            <div class="drawer" id="drawer" data-stop-propagation>
-              <div class="drawer-header">
-                <span id="drawerTitle"></span>
-                <button class="close-btn" data-action="close-drawer">✕</button>
-              </div>
-              <div class="drawer-body" id="drawerContent"></div>
+          <!-- Full itinerary body (plain document, mirrors itinerary.html) -->
+          <template id="itinerary-content-template">
+            <div class="section-title">
+              <h1 id="title"></h1>
             </div>
-          </div>
+            <div id="content" class="content"></div>
+          </template>
+
+          <!-- Destination detail body (mirrors destination.html hero content box) -->
+          <template id="destination-content-template">
+            <section class="page-hero">
+              <div class="content-box" id="destination-content-box">
+                <!-- #include shared/destination-content.html -->
+              </div>
+            </section>
+
+            <!-- Destination sort/filter drawer -->
+            <div class="drawer-overlay" id="overlay" data-action="close-drawer">
+              <div class="drawer" id="drawer" data-stop-propagation>
+                <div class="drawer-header">
+                  <span id="drawerTitle"></span>
+                  <button class="close-btn" data-action="close-drawer">✕</button>
+                </div>
+                <div class="drawer-body" id="drawerContent"></div>
+              </div>
+            </div>
+          </template>
         </div>
       </div>
 

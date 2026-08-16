@@ -8,7 +8,11 @@
  *   isNew (bool), description: { en, pt }, createdAt, id
  * }
  */
-import { buildDS, updateValueDS } from '../../ui/dynamic-select.js';
+import {
+	addKnownValues,
+	buildRegionSelects,
+	renderRegionPills,
+} from '../../ui/region-select.js';
 import { getJs, getLastJ } from '../../utils/dom.js';
 import { closeAccordions, openLastAccordion } from '../../ui/accordion.js';
 import { addSnacks } from './new-destination.js';
@@ -54,10 +58,16 @@ function importFillDestination(category, j, data, force) {
 		}
 	}
 
-	// region (uses dynamic select + input)
-	if (force || (data.region !== undefined && data.region !== null && data.region !== '')) {
-		updateValueDS('region', data.region || '', `${category}-region-select-${j}`);
-		buildDS('region');
+	// region(s) — supports both the new `regions` array and the legacy string.
+	const regions = Array.isArray(data.regions)
+		? data.regions
+		: data.region
+			? [data.region]
+			: [];
+	if (force || regions.length > 0) {
+		renderRegionPills(`${category}-regions-${j}`, regions);
+		addKnownValues(regions);
+		buildRegionSelects();
 	}
 
 	// price (uses loadCurrencyValueAndVisibility)
@@ -113,7 +123,7 @@ function importNewDestination(type, data, force = false) {
 	addFn();
 	const j = importGetLastJ(type);
 	openLastAccordion(type);
-	buildDS('region');
+	buildRegionSelects();
 
 	importFillDestination(type, j, data, force);
 	console.log(`✅ Imported new "${type}" at index ${j}: ${data.name || '(unnamed)'}`);

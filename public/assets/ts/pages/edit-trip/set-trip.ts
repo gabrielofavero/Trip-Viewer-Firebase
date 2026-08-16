@@ -311,15 +311,18 @@ function writeTripSubcollections(ops: any) {
 
 	// ── Itinerary ───────────────────────────────────────────
 	const originalItinerary = originalState?.itinerary || [];
-	const itineraryDiff = computeArrayDiff(originalItinerary, FIRESTORE_ITINERARY_NEW_DATA);
+	// Form-built days don't carry an `id` — assign a stable date-based ID first
+	// so computeArrayDiff can match existing subcollection docs instead of
+	// queueing a set AND a delete for the same document.
+	const newItinerary = FIRESTORE_ITINERARY_NEW_DATA.map((day, index) => ({
+		...day,
+		id: day.id || buildDayId(day, index),
+	}));
+	const itineraryDiff = computeArrayDiff(originalItinerary, newItinerary);
 	for (const day of itineraryDiff.toSet) {
-		let dayId = day.id;
-		if (!dayId) {
-			// New day without ID — assign one
-			const index = FIRESTORE_ITINERARY_NEW_DATA.indexOf(day);
-			dayId = buildDayId(day, index);
-		}
-		ops.set(`trips/${tripId}/itinerary/${dayId}`, day);
+		const dayId = day.id;
+		const { id: _removed, ...dayData } = day;
+		ops.set(`trips/${tripId}/itinerary/${dayId}`, dayData);
 	}
 	for (const id of itineraryDiff.toDelete) {
 		ops.delete(`trips/${tripId}/itinerary/${id}`);

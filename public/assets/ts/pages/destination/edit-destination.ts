@@ -1,10 +1,9 @@
 import { getCurrencies } from '../../app/config.js';
 import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
-import { getID, getLastUnorderedJ, getRandomID, normalizeTikTokLink } from '../../utils/dom.js';
+import { getID, getRandomID, normalizeTikTokLink } from '../../utils/dom.js';
 import { DOCUMENT_ID } from '../../data/state.js';
 import { getLanguagePackName, LANGUAGES, translate } from '../../i18n/translation.js';
 import {
-	removeEl,
 	validateInstagramLink,
 	validateLink,
 	validateMapLink,
@@ -13,29 +12,37 @@ import {
 import { closeMessage, displayMessage, displayPrompt } from '../../utils/messages.js';
 import { update } from '../../data/firebase/database.js';
 import { getUID } from '../../data/firebase/auth.js';
-import { getRatingClass, getPlanned } from './categories.js';
+import { getRatingClass } from './categories.js';
 import { getRatingIcon } from './categories.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../../data/state.js';
 import {
+	addKnownValues,
+	buildRegionSelects,
+	getRegionPills,
+	registerRegionSelect,
+	renderRegionPills,
+	unregisterRegionSelect,
+} from '../../ui/region-select.js';
+import { FILTER_SORT_DATA } from './support/sort-and-filter/sort-and-filter.js';
+import {
 	ACTIVE_CATEGORY,
-	getDestinationID,
+	CONTENT,
 	getItem,
-	getItemFromJ,
-	processAccordion,
 	refreshDestination,
 } from './destination.js';
-import { getDestinationsAccordionBodyHTML } from './support/content.js';
-import { getDestinationsHTML } from './support/content.js';
-import { getEditHTML } from './support/content.js';
+import {
+	openDestinationEditor,
+	renderDialogView,
+	closeDestinationDialog,
+	getOpenId,
+	getOpenItem,
+} from './support/dialog.js';
 import {
 	populatePlannedDestinationEditField,
 	refreshTripData,
 	resetActivePlannedDestination,
 	setPlannedDestination,
 } from './support/trip.js';
-import { openDestinationsAccordion } from './support/visibility.js';
-
-let ADDED_J;
 
 // Main Functions
 export async function edit(j: number): Promise<void> {
@@ -45,19 +52,17 @@ export async function edit(j: number): Promise<void> {
 		return;
 	}
 
-	const id = getDestinationID(j);
-	const item = FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY]?.[id];
-	const accordionBody = getID(`accordion-body-${j}`);
+	const id = getOpenId();
+	const item = getOpenItem() ?? getItem(id);
 
-	if (!item || !accordionBody) {
+	if (!id || !item) {
 		editError();
 		return;
 	}
 
-	accordionBody.innerHTML = getEditHTML(j);
-
+	openDestinationEditor({ j, id, item });
 	populateEditFields(j, item);
-	setEditListeners(j, item);
+	setEditListeners(j);
 
 	function populateEditFields(j, item) {
 		getID(`edit-name-${j}`).value = item.name || '';
@@ -72,7 +77,10 @@ export async function edit(j: number): Promise<void> {
 		getID(`edit-media-${j}`).value = item.media || '';
 
 		populateScoresField(item.rating, j);
-		populateRegionField(item.region, j);
+		populateRegionField(
+			Array.isArray(item.regions) ? item.regions : item.region ? [item.region] : [],
+			j,
+		);
 		populateValueField(item.price, j);
 		populateDescriptionFields(item.description || {}, j);
 
@@ -81,9 +89,9 @@ export async function edit(j: number): Promise<void> {
 			editScoreLoadAction(rating, j);
 		}
 
-		function populateRegionField(region, j) {
-			const regionSelect = getID(`edit-region-select-${j}`);
-			regionSelect.value = region || '';
+		function populateRegionField(regions, j) {
+			renderRegionPills(`edit-regions-${j}`, regions);
+			addKnownValues(regions);
 		}
 
 		function populateValueField(price, j) {
@@ -107,44 +115,28 @@ export async function edit(j: number): Promise<void> {
 }
 
 export async function add(): Promise<void> {
-	(document.querySelector('.add-container') as HTMLElement).style.display = 'none';
 	const canUserEdit = await canEdit();
 	if (!canUserEdit) {
 		editForbidden();
 		return;
 	}
 
-	const accordionItems = Array.from(document.querySelectorAll('.accordion-item'));
-	const pool = accordionItems.map((el) => el.getAttribute('data-id')).filter((id) => id !== null);
-
-	const id = getRandomID({ pool });
-	const j = getLastUnorderedJ('content') + 1;
+	const ids = CONTENT.map((entry) => entry.id);
+	const id = getRandomID({ pool: ids });
+	// Use the full entry list (not the DOM) so the new editor index never
+	// collides with a card that lazy-loads later.
+	const j = CONTENT.length + 1;
 	const item = {
 		name: translate('destination.new'),
 		rating: 'default',
 		isNew: true,
 	};
-	const closeAction = '_closeAddedDestination';
-	getID('content').innerHTML += getDestinationsHTML({
-		j,
-		id,
-		item,
-		closeAction,
-	});
 
-	const accordionBody = getID(`accordion-body-${j}`);
-	if (!accordionBody) {
-		editError();
-		return;
-	}
+	openDestinationEditor({ j, id, item });
 
-	ADDED_J = j;
-	accordionBody.innerHTML = getEditHTML(ADDED_J);
-	getID(`edit-delete-${ADDED_J}`).style.visibility = 'hidden';
-
-	openDestinationsAccordion(ADDED_J);
-	applyDescriptionLanguage(ADDED_J);
-	setAddListeners();
+	getID(`edit-delete-${j}`).style.visibility = 'hidden';
+	applyDescriptionLanguage(j);
+	setAddListeners(j);
 }
 
 // Visibility
@@ -153,7 +145,8 @@ export async function adjustEditVisibility(j?: number): Promise<void> {
 	const display = canUserEdit ? '' : 'none';
 	(document.querySelector('.add-container') as HTMLElement).style.display = display;
 	if (j) {
-		getID(`edit-container-${j}`).style.display = display;
+		const container = getID(`edit-container-${j}`);
+		if (container) container.style.display = display;
 		return;
 	}
 
@@ -180,9 +173,10 @@ function setFieldListeners(j: number): void {
 		validateLink((e.target as HTMLElement).id);
 	};
 
-	getID(`edit-region-select-${j}`)!.onchange = (e: Event) => {
-		editRegionLoadAction((e.target as HTMLSelectElement).value, j);
-	};
+	unregisterRegionSelect(`edit-region-select-${j}`);
+	registerRegionSelect(`edit-region-select-${j}`, `edit-region-input-${j}`);
+	addKnownValues(Array.from(FILTER_SORT_DATA[ACTIVE_CATEGORY]?.region ?? []));
+	buildRegionSelects();
 
 	getID(`edit-price-select-${j}`)!.onchange = (e: Event) => {
 		editValueLoadAction((e.target as HTMLSelectElement).value, j);
@@ -203,10 +197,9 @@ function setFieldListeners(j: number): void {
 	};
 }
 
-function setEditListeners(j, item) {
+function setEditListeners(j) {
 	getID(`close-btn-${j}`).onclick = () => {
-		restoreAccordionBody(j, item);
-		processAccordion(j);
+		renderDialogView();
 	};
 
 	getID(`edit-delete-${j}`).onclick = () => {
@@ -220,33 +213,22 @@ function setEditListeners(j, item) {
 	setFieldListeners(j);
 }
 
-function setAddListeners() {
-	getID(`close-btn-${ADDED_J}`).onclick = () => {
-		closeAddedDestination();
+function setAddListeners(j) {
+	getID(`close-btn-${j}`).onclick = () => {
+		closeDestinationDialog();
 	};
 
-	getID(`edit-save-${ADDED_J}`).onclick = () => {
-		saveEdit(ADDED_J, true);
+	getID(`edit-save-${j}`).onclick = () => {
+		saveEdit(j, true);
 	};
 
-	setFieldListeners(ADDED_J);
+	setFieldListeners(j);
 }
 
 // Load Actions
 function editScoreLoadAction(value, j) {
 	const icon = getID(`edit-rating-icon-${j}`);
 	icon.innerHTML = `<i class="iconify rating-no-margin ${getRatingClass(value)}" data-icon="${getRatingIcon(value)}"></i>`;
-}
-
-function editRegionLoadAction(value, j) {
-	const select = getID(`edit-region-select-${j}`);
-	const input = getID(`edit-region-input-${j}`);
-	if (value == 'custom') {
-		input.style.display = '';
-		select.value = 'custom';
-	} else {
-		input.style.display = 'none';
-	}
 }
 
 function editValueLoadAction(value, j) {
@@ -278,7 +260,7 @@ function applyDescriptionLanguage(j) {
 // Save Action
 async function saveEdit(j, isNew = false) {
 	startLoadingScreen();
-	const id = getDestinationID(j);
+	const id = getOpenId();
 	const originalItem = isNew ? {} : getItem(id);
 	const item = {
 		createdAt: originalItem?.createdAt || new Date().toISOString(),
@@ -293,7 +275,7 @@ async function saveEdit(j, isNew = false) {
 		name: getID(`edit-name-${j}`).value,
 		rating: getID(`edit-rating-${j}`).value,
 		isNew: isNew ? true : originalItem.isNew,
-		region: getValue('region', j),
+		regions: getRegionPills(`edit-regions-${j}`),
 		price: getValue('price', j),
 		website: getID(`edit-website-${j}`).value,
 	};
@@ -321,6 +303,7 @@ async function saveEdit(j, isNew = false) {
 	await refreshDestination();
 
 	stopLoadingScreen();
+	closeDestinationDialog();
 
 	function getValue(type, j) {
 		const selectValue = getID(`edit-${type}-select-${j}`).value;
@@ -330,8 +313,8 @@ async function saveEdit(j, isNew = false) {
 
 // Delete Actions
 function promptDeleteEdit(j) {
-	const id = getDestinationID(j);
-	const name = getItem(id).name;
+	const id = getOpenId();
+	const name = (getOpenItem() ?? getItem(id))?.name;
 
 	const title = translate('destination.delete.title');
 	const content = translate('destination.delete.message', { name });
@@ -350,6 +333,7 @@ export async function deleteEdit(id) {
 
 	await refreshDestination();
 	stopLoadingScreen();
+	closeDestinationDialog();
 }
 
 // Cancel Actions
@@ -365,44 +349,6 @@ function editError(message = 'messages.errors.unknown') {
 
 function editForbidden(message = 'messages.access_denied.message.edit') {
 	abortEdit('messages.access_denied.title', message);
-}
-
-export function closeAddedDestination(index?) {
-	if (!ADDED_J) {
-		return;
-	}
-	removeEl(`destinations-box-${ADDED_J}`);
-	adjustEditVisibility();
-	ADDED_J = null;
-	resetActivePlannedDestination();
-}
-
-function restoreAccordionBody(j: number, item: Record<string, any>): void {
-	const id = getDestinationID(j);
-	const planned = getPlanned(id);
-	const editBtn = true;
-	getID(`accordion-body-${j}`)!.innerHTML = getDestinationsAccordionBodyHTML({
-		j,
-		item,
-		planned,
-		editBtn,
-		values: undefined as any,
-		currency: undefined as any,
-	});
-}
-
-export function restoreIfEditing(j) {
-	if (isEditing(j)) {
-		const item = getItemFromJ(j);
-		if (!item) return;
-		restoreAccordionBody(j, item);
-	}
-}
-
-// Checkers
-function isEditing(j) {
-	const accordionBody = getID(`accordion-body-${j}`);
-	return accordionBody.querySelector('.edit-title-container') != undefined;
 }
 
 async function canEdit() {

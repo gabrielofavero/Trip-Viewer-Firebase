@@ -47,7 +47,7 @@ import {
 import { COLLECTION, createBatchOps } from '../data/services/destination.service.js';
 import { getPlace, PLACES_API_ENABLED } from '../data/services/places-api.service.js';
 import { GMAPS_SCRAPER_ENABLED, scrapePlaces } from '../data/services/gmaps-scraper.service.js';
-import { removeSelectorDS } from '../ui/dynamic-select.js';
+import { unregisterRegionSelect } from '../ui/region-select.js';
 import { removeDestinationImages } from '../pages/edit-destination/categories/image.js';
 import type { PlaceDetails } from '../models/places-api.model.js';
 import type { PlaceAPI, PlaceDescription, PlaceItem } from '../models/schema.js';
@@ -245,7 +245,7 @@ export async function runBulkPlacesUpdate(): Promise<void> {
 	// (data-action="places-bulk-run" / message action) too, even though
 	// getPlace() already throws on deployed hosts.
 	if (PLACES_API_ENABLED !== true) {
-		displayError(new Error(translate('placesApi.errors.localOnly')));
+		displayError(new Error(translate('placesApi.errors.localOnly')), false, false);
 		return;
 	}
 	const entries = collectLinkedEntries();
@@ -278,12 +278,12 @@ export { runBulkPlacesUpdate as runBulkUpdate };
 export async function runBulkLocalUpdate(): Promise<void> {
 	// HARD CHECK — local-only (the scraper route only exists on the dev machine).
 	if (PLACES_API_ENABLED !== true || GMAPS_SCRAPER_ENABLED !== true) {
-		displayError(new Error(translate('placesApi.errors.localOnly')));
+		displayError(new Error(translate('placesApi.errors.localOnly')), false, false);
 		return;
 	}
 	const entries = collectLocalScrapeEntries();
 	if (entries.length === 0) {
-		displayError(new Error(translate('placesApi.bulk.local.none')));
+		displayError(new Error(translate('placesApi.bulk.local.none')), false, false);
 		return;
 	}
 	// Sequential (concurrency 1): each entry is one local docker run, and
@@ -747,8 +747,12 @@ async function applyBulk(report: BulkReport, options: BulkApplyOptions): Promise
 		if (docPath && isExisting) {
 			const updates: Record<string, unknown> = { [`${base}.placeAPI`]: updated.placeAPI };
 			for (const field of fieldsToApply) {
-				updates[field === 'description' ? `${base}.description` : `${base}.${field}`] =
-					field === 'description' ? updated.description : updated[field];
+				const fieldKey = field === 'region' ? 'regions' : field;
+				const fieldValue =
+					field === 'description' ? updated.description : updated[fieldKey];
+				updates[
+					field === 'description' ? `${base}.description` : `${base}.${fieldKey}`
+				] = fieldValue;
 			}
 			batch.update(docPath, updates);
 			hasDbOps = true;
@@ -783,7 +787,7 @@ function removeLinkedEntry(category: string, id: string): void {
 	const j = findJFromID(id, category);
 	if (getID(`${category}-id-${j}`)?.value === id) {
 		removeChildWithValidation(category, j);
-		removeSelectorDS('region', `${category}-region-select-${j}`);
+		unregisterRegionSelect(`${category}-region-select-${j}`);
 		removeDestinationImages(category, j);
 	}
 }

@@ -487,7 +487,8 @@ section {
 .facts .count-box,
 .about .count-box {
 	padding: 30px 30px 25px 30px;
-	margin-top: 30px;
+	margin: 30px auto 0 auto;
+	max-width: 240px;
 	width: 100%;
 	position: relative;
 	text-align: center;
@@ -664,6 +665,8 @@ section {
 	background-color: #fff;
 	border: 0.5px solid var(--table-border);
 	margin-bottom: 0px;
+	width: 100%;
+	table-layout: fixed;
 }
 
 #calendarTitle {
@@ -899,123 +902,8 @@ section {
 	margin-right: 0;
 }
 
-.portfolio-wrap {
-	transition: 0.3s;
-	position: relative;
-	overflow: hidden;
-	z-index: 1;
-	background: rgba(69, 80, 91, 0.8);
-}
-
-.portfolio-wrap::before {
-	content: "";
-	background: rgba(255, 255, 255, 0.7);
-	position: absolute;
-	left: 30px;
-	right: 30px;
-	top: 30px;
-	bottom: 30px;
-	transition: all ease-in-out 0.3s;
-	z-index: 2;
-	opacity: 0;
-}
-
-.portfolio-wrap .portfolio-info {
-	opacity: 0;
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	text-align: center;
-	z-index: 3;
-	transition: all ease-in-out 0.3s;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
-
-.portfolio-wrap .portfolio-info::before {
-	display: block;
-	content: "";
-	width: 48px;
-	height: 48px;
-	position: absolute;
-	top: 35px;
-	left: 35px;
-	border-top: 3px solid #d7dce1;
-	border-left: 3px solid #d7dce1;
-	transition: all 0.5s ease 0s;
-	z-index: 9994;
-}
-
-.portfolio-wrap .portfolio-info::after {
-	display: block;
-	content: "";
-	width: 48px;
-	height: 48px;
-	position: absolute;
-	bottom: 35px;
-	right: 35px;
-	border-bottom: 3px solid #d7dce1;
-	border-right: 3px solid #d7dce1;
-	transition: all 0.5s ease 0s;
-	z-index: 9994;
-}
-
-.portfolio-wrap .portfolio-info h4 {
-	font-size: 20px;
-	color: #4f5051;
-	font-weight: 600;
-}
-
-.portfolio-wrap .portfolio-info p {
-	color: #4f5051;
-	font-size: 14px;
-	text-transform: uppercase;
-	padding: 0;
-	margin: 0;
-}
-
-.portfolio-wrap .portfolio-links {
-	text-align: center;
-	z-index: 4;
-}
-
-.portfolio-wrap .portfolio-links a {
-	color: #4f5051;
-	margin: 0 2px;
-	font-size: 28px;
-	display: inline-block;
-	transition: 0.3s;
-}
-
-.portfolio-wrap .portfolio-links a:hover {
-	color: var(--theme-color);
-}
-
-.portfolio-wrap:hover::before {
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	opacity: 1;
-}
-
-.portfolio-wrap:hover .portfolio-info {
-	opacity: 1;
-}
-
-.portfolio-wrap:hover .portfolio-info::before {
-	top: 15px;
-	left: 15px;
-}
-
-.portfolio-wrap:hover .portfolio-info::after {
-	bottom: 15px;
-	right: 15px;
-}
+/* .portfolio-wrap hover + lightbox pattern moved to components/portfolio.css
+   (shared with the destination card media). */
 
 /*--------------------------------------------------------------
 # Portfolio Details
@@ -1831,6 +1719,13 @@ section {
 	overflow-y: hidden;
 }
 
+/* Lock the page behind the lightbox so only the lightbox content scrolls
+   (the loading screen re-enables body scroll after mount, which otherwise
+   leaves the trip page scrolling underneath → double scrollbar). */
+body.lightbox-open {
+	overflow: hidden !important;
+}
+
 .lightbox-content {
 	position: absolute;
 	top: 0;
@@ -1858,17 +1753,18 @@ section {
 
 /* Lightbox chrome */
 .lightbox-toolbar {
-	position: sticky;
-	top: 0;
-	z-index: 5;
 	display: flex;
 	justify-content: flex-end;
+	gap: 8px;
 	background: var(--background-color, #fff);
 	padding: 8px 0;
 	margin-bottom: 8px;
 }
 
 .lightbox-close {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	width: 40px;
 	height: 40px;
 	border: none;
@@ -1885,6 +1781,80 @@ section {
 	background: var(--box-color-hover, #ecebeb);
 }
 
+.lightbox-close i {
+	font-size: 20px;
+	line-height: 1;
+}
+
+/* Printing from the inline lightbox (full itinerary): hide the trip page and
+   let the lightbox content flow normally so the itinerary table paginates
+   with its repeating <thead>. */
+@media print {
+	body.lightbox-open .loadable > *:not(#main),
+	body.lightbox-open #main > *:not(#lightbox),
+	body.lightbox-open footer,
+	body.lightbox-open #preloader,
+	body.lightbox-open #toast {
+		display: none !important;
+	}
+
+	body.lightbox-open #lightbox {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		overflow: visible !important;
+		background: #fff !important;
+	}
+
+	body.lightbox-open .lightbox-content {
+		position: static !important;
+		height: auto !important;
+		overflow: visible !important;
+		padding: 0 !important;
+		background: #fff !important;
+	}
+
+	body.lightbox-open .lightbox-toolbar {
+		display: none !important;
+	}
+}
+
+/* Destination lightbox reuses the full-bleed page hero from destination.html,
+   so drop the document padding and let the hero run edge-to-edge while the
+   close button floats over it. */
+.lightbox-content.destination-mode {
+	padding: 0;
+}
+
+.lightbox-content.destination-mode .lightbox-toolbar {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	padding: 12px 20px;
+	background: transparent;
+	/* The toolbar is in normal flow, which would otherwise push the hero down
+	   and leave a plain-white strip above it. Pull the hero up so it starts at
+	   the very top, behind the floating X. */
+	margin-bottom: -64px;
+	pointer-events: none;
+}
+
+.lightbox-content.destination-mode .lightbox-close {
+	pointer-events: auto;
+}
+
+/* The hero's `background-attachment: fixed` and its fixed white overlay both
+   anchor to the viewport, which detaches them from the lightbox's scrollable
+   container and leaves plain-white gaps. Re-anchor both to the hero so the
+   frosted photo fills the box edge-to-edge. */
+.lightbox-content.destination-mode .page-hero {
+	background-attachment: scroll;
+}
+
+.lightbox-content.destination-mode .page-hero::before {
+	position: absolute;
+}
+
 /* The destination component renders into #content; keep it full-width.
    (Itinerary keeps its own `.content` styling from itinerary.css.) */
 #lightbox #content {
@@ -1895,6 +1865,12 @@ section {
    top-bar that doesn't exist inside the lightbox). */
 #lightbox .section-title h1 {
 	padding-top: 0;
+}
+
+/* The standalone content-box reserves 60px for the fixed top-bar; the
+   lightbox has none, so collapse that spacer to a small breathing gap. */
+.lightbox-content.destination-mode #destination-content-box {
+	padding-top: 24px;
 }
 
 /*--------------------------------------------------------------
@@ -2664,13 +2640,8 @@ input[type="radio"] {
 	}
 }
 
-.gslide-description {
-	background: var(--background-color) !important;
-}
-
-.gslide-title {
-	color: var(--font-color) !important;
-}
+/* GLightbox caption overrides moved to components/portfolio.css (shared with
+   the destination page so both pages render the lightbox identically). */
 
 /* Language Selector */
 
@@ -2783,3 +2754,99 @@ input[type="radio"] {
 }
 
 /* Blocked Reservation Container — shared base in components/sensitive-box.css */
+
+/*--------------------------------------------------------------
+# View Item Dialogs (itinerary card dialogs)
+# Reuses components/dialog.css + destination/destination.css for the
+# overlay, card, media carousel and destination detail body. Only the
+# view-specific pieces live here.
+--------------------------------------------------------------*/
+.view-item-dialog-card {
+	max-width: 520px;
+}
+
+/* Neutral themed close button (same as the destination detail dialog) */
+#view-item-dialog .dialog-close {
+	color: var(--text-primary);
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
+}
+
+#view-item-dialog .dialog-close:hover {
+	color: var(--text-primary);
+	background: var(--bg-tertiary);
+	transform: scale(1.05);
+}
+
+/* Transportation company logo area — neutral, theme-aware background.
+   Custom colors can be fed per company via the `backgrounds` section in
+   transportation.json (`--transport-media-bg-light` / `-dark`). */
+.view-item-transport-media {
+	width: 100%;
+	height: 220px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	background: var(--transport-media-bg-light, var(--bg-secondary));
+}
+
+.view-item-transport-logo {
+	max-width: 60%;
+	max-height: 60%;
+	object-fit: contain;
+}
+
+.view-item-transport-logo.light {
+	display: block;
+}
+
+.view-item-transport-logo.dark {
+	display: none;
+}
+
+.view-item-transport-title {
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--text-primary);
+	text-align: center;
+}
+
+/* Reservation badge shown top-right in the item dialog header, next to the
+   title (same position as the destination score badge). */
+.dialog-reservation-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	border-radius: 20px;
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--text-primary);
+	background: var(--bg-tertiary);
+	border: 1px solid var(--border-color);
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+.dialog-reservation-badge .reservation-icon {
+	font-size: 16px;
+	color: var(--theme-color);
+}
+
+.dialog-reservation-badge .reservation-code {
+	color: var(--text-primary);
+	text-decoration: none;
+}
+
+.dialog-reservation-badge .copy-icon {
+	margin-left: 2px;
+	height: 16px;
+	width: 16px;
+}
+
+@media (max-width: 576px) {
+	.view-item-transport-media {
+		height: 180px;
+	}
+}

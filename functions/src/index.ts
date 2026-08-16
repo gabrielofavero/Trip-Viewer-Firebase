@@ -35,3 +35,9 @@ export const migratePlacesApi = migratePlacesApiModule.migrate;
 import * as migrateTripDestinationMetadataModule from './migrations/18-migrate-trip-destination-metadata';
 export const migrateTripDestinationMetadata =
 	migrateTripDestinationMetadataModule.migrate;
+
+// Migration 19: Destination entry region → regions — converts the legacy
+// single-string `region` field on every destination entry into a `regions`
+// array. Usage: ?dryRun=true for preview.
+import * as migrateDestinationRegionsModule from './migrations/19-migrate-destination-regions';
+export const migrateDestinationRegions = migrateDestinationRegionsModule.migrate;

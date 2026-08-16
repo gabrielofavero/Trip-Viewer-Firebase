@@ -20,20 +20,6 @@
 		font-size: 24px !important;
 	}
 
-	.content h2 {
-		font-size: 16px !important;
-	}
-
-	.content h3 {
-		font-size: 14px !important;
-		margin-top: 1rem !important;
-		margin-bottom: 0.5rem !important;
-	}
-
-	.content li {
-		font-size: 12px !important;
-	}
-
 	.top-bar,
 	footer {
 		display: none !important;
@@ -41,17 +27,128 @@
 
 	.content {
 		width: 100% !important;
+		display: block !important;
+		margin-bottom: 0 !important;
 		padding: 0 !important;
 		background: transparent !important;
+		border: none !important;
 		border-radius: 0 !important;
+		box-shadow: none !important;
+		min-height: 0 !important;
 	}
 
 	.section-title h1 {
 		padding-top: 0 !important;
 	}
 
-	.content li > ul {
-		color: #4b5563 !important;
+	.section-title h1::before,
+	.section-title h1::after {
+		display: none !important;
+	}
+
+	/* Itinerary table — compact; mirrors the on-screen look (colored header,
+	   zebra rows, grid) and the <thead> repeats on every printed page. */
+	.itin-table-wrap {
+		border: 1px solid #000 !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		background: #fff !important;
+		overflow: visible !important;
+	}
+
+	.itin-table {
+		min-width: 0 !important;
+	}
+
+	.itin-table thead {
+		display: table-header-group;
+	}
+
+	.itin-table th,
+	.itin-table td {
+		border-right: 1px solid #bbb !important;
+		border-bottom: 1px solid #bbb !important;
+		padding: 0.45rem 0.5rem !important;
+		color: #000 !important;
+		background: #fff !important;
+	}
+
+	.itin-table th:last-child,
+	.itin-table td:last-child {
+		border-right: none !important;
+	}
+
+	.itin-table tbody tr:last-child th,
+	.itin-table tbody tr:last-child td {
+		border-bottom: none !important;
+	}
+
+	.itin-table thead th {
+		background: var(--theme-color) !important;
+		color: #fff !important;
+		border-bottom: 1px solid #000 !important;
+		font-size: 11px !important;
+		padding: 0.45rem 0.5rem !important;
+		break-after: avoid;
+		page-break-after: avoid;
+	}
+
+	.itin-table tbody th.itin-col-day {
+		background: #f2f3f5 !important;
+		color: #000 !important;
+		font-size: 11px !important;
+	}
+
+	/* Zebra rows — mirror the screen. */
+	.itin-table tbody tr:nth-child(even) td {
+		background: #f2f3f5 !important;
+	}
+
+	/* Neutralize the mobile sticky day column on paper. */
+	.itin-table .itin-col-day {
+		position: static !important;
+		box-shadow: none !important;
+	}
+
+	/* Rows may split between items so tall days are never clipped on paper;
+	   each item (and the repeated header) stays intact. */
+	.itin-item,
+	.itin-subitem {
+		break-inside: avoid;
+		page-break-inside: avoid;
+		orphans: 2;
+		widows: 2;
+	}
+
+	.itin-item {
+		padding: 0.4rem 0 !important;
+		font-size: 12px !important;
+		line-height: 1.45 !important;
+		border-bottom: 1px solid #e0e0e0 !important;
+	}
+
+	.itin-item:last-child {
+		border-bottom: none !important;
+	}
+
+	.itin-label,
+	.itin-text {
+		color: #000 !important;
+	}
+
+	.itin-sublist {
+		margin-top: 0.25rem !important;
+	}
+
+	.itin-subitem {
+		padding: 0.25rem 0 0.25rem 0.75rem !important;
+		font-size: 11px !important;
+		color: #333 !important;
+	}
+
+	.itin-subitem .itin-label,
+	.itin-subitem .itin-text {
+		color: #333 !important;
 	}
 }
 
@@ -172,43 +269,143 @@
 }
 
 .content {
-	width: 1000px;
-	background-color: var(--box-color);
-	padding: 3em;
-	border-radius: 16px;
+	width: 1400px;
+	max-width: 100%;
+	display: block;
 	min-height: 500px;
-	overflow: visible !important;
+	margin-bottom: 2rem;
 }
 
-.content ul {
-	list-style-position: inside;
-	padding-left: 0;
+/* The destination page's `#content` grid rule (destination.css) leaks onto
+   view.html because destination.css is loaded globally there. The itinerary
+   `#content` carries the `.content` class, so scope an override here to win
+   on specificity and let the table span the full lightbox width. */
+#content.content {
+	display: block;
 }
 
-.content li > ul {
-	list-style-type: circle;
-	color: var(--subtitle);
+/*--------------------------------------------------------------
+# Itinerary table (full itinerary render)
+--------------------------------------------------------------*/
+
+.itin-table-wrap {
+	background-color: var(--background-color);
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-sm);
+	overflow-x: auto;
 }
 
-.content > li {
-	margin-bottom: 0.5rem;
+.itin-table {
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed;
 }
 
-.content > li:last-child {
+.itin-table th,
+.itin-table td {
+	vertical-align: top;
+	text-align: left;
+	padding: 0.9rem 1rem;
+	border-right: 1px solid var(--border-color);
+	border-bottom: 1px solid var(--border-color);
+	overflow-wrap: break-word;
+}
+
+.itin-table th:last-child,
+.itin-table td:last-child {
+	border-right: none;
+}
+
+.itin-table tbody tr:last-child th,
+.itin-table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.itin-table .itin-col-day {
+	width: 22%;
+}
+
+.itin-table thead th {
+	background: var(--theme-color);
+	color: #fff;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	padding: 0.75rem 1rem;
+}
+
+.itin-table tbody th.itin-col-day {
+	background: var(--bg-secondary);
+	color: var(--text-primary);
+	font-size: 0.95rem;
+	font-weight: 700;
+}
+
+.itin-table tbody tr:nth-child(even) td {
+	background: var(--bg-secondary);
+}
+
+.itin-empty {
+	display: block;
+	min-height: 1em;
+}
+
+.itin-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.itin-item {
+	padding: 0.6rem 0;
+	border-bottom: 1px solid var(--border-color);
+	line-height: 1.6;
+	overflow-wrap: break-word;
+}
+
+.itin-item:last-child {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+.itin-label {
+	font-weight: 700;
+	color: var(--text-primary);
+}
+
+.itin-text {
+	color: var(--text-primary);
+}
+
+.itin-sublist {
+	list-style: none;
+	margin: 0.5rem 0 0;
+	padding: 0;
+}
+
+.itin-subitem {
+	position: relative;
+	padding: 0.3rem 0 0.3rem 0.9rem;
+	border-left: 2px solid var(--border-color);
+	margin-bottom: 0.3rem;
+	color: var(--text-secondary);
+	line-height: 1.5;
+	overflow-wrap: break-word;
+}
+
+.itin-subitem:last-child {
 	margin-bottom: 0;
 }
 
-.content li ul > li {
-	margin-bottom: 0;
+.itin-subitem .itin-label {
+	font-weight: 600;
+	color: var(--text-secondary);
 }
 
-.content h2:not(:first-of-type) {
-	margin-top: 4rem;
-}
-
-.content h3 {
-	margin-top: 1.2rem;
-	margin-bottom: 0.5rem;
+.itin-subitem .itin-text {
+	color: var(--text-secondary);
 }
 
 @media (max-width: 1200px) {
@@ -218,8 +415,33 @@
 }
 
 @media (max-width: 600px) {
-	.content {
-		padding: 2em;
+	.itin-table th,
+	.itin-table td {
+		padding: 0.6rem 0.5rem;
+	}
+
+	.itin-table thead th {
+		font-size: 0.7rem;
+	}
+}
+
+/* Mobile: let the 5-column table scroll horizontally with the day column
+   pinned so the trip day stays visible while scanning the periods. */
+@media (max-width: 768px) {
+	.itin-table {
+		min-width: 640px;
+	}
+
+	.itin-table-wrap {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.itin-table .itin-col-day {
+		position: sticky;
+		left: 0;
+		z-index: 1;
+		box-shadow: 1px 0 0 var(--border-color);
 	}
 }
 

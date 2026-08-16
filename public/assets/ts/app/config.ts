@@ -53,14 +53,17 @@ export async function loadVersions() {
 	return loadJSON('/assets/json/version.json');
 }
 
+// Static language-pack paths (not template literals) so the build-time asset
+// hasher can rewrite them to their fingerprinted immutable URLs. Keep in sync
+// with LANGUAGES in public/assets/ts/i18n/translation.ts.
+const LANGUAGE_PACK_PATHS = {
+	en: '/assets/json/languages/en.json',
+	pt: '/assets/json/languages/pt.json',
+};
+
 export async function loadLanguage(packName: string) {
-	const path = `/assets/json/languages/${packName}.json`;
-	// Always fetch language fresh (no cache) since it can change
-	const response = await fetch(path);
-	if (!response.ok) throw new Error(`Failed to load ${path}: ${response.status}`);
-	const data = await response.json();
-	_cache[path] = data;
-	return data;
+	// Fall back to English for unknown packs (mirrors getLanguagePackName()).
+	return loadJSON(LANGUAGE_PACK_PATHS[packName] || LANGUAGE_PACK_PATHS.en);
 }
 
 /**

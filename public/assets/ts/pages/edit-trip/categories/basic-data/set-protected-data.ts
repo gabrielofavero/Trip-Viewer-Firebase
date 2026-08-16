@@ -167,8 +167,6 @@ function setProtectedDataWithPIN(ops) {
 					`expenses/protected/${PIN.current}/${DOCUMENT_ID}`,
 					FIRESTORE_EXPENSES_PROTECTED_NEW_DATA,
 				);
-				// Also update the unprotected copy if it exists (sync)
-				ops.update(`expenses/${DOCUMENT_ID}`, FIRESTORE_EXPENSES_NEW_DATA);
 			} else {
 				ops.set(`expenses/${DOCUMENT_ID}`, FIRESTORE_EXPENSES_NEW_DATA);
 				ops.set(
@@ -196,10 +194,12 @@ function setProtectedDataWithPIN(ops) {
 			}
 		}
 
-		// Only update PIN metadata if the PIN object itself changed
+		// Update the PIN lookup doc only when a new PIN object was actually
+		// produced (it can't differ in the same-PIN path, so skip empty writes).
+		// Use set (merge) so a missing lookup doc can't fail the batch.
 		const newPinObj = getNewPinObject();
-		if (!deepEqual(newPinObj, { hash: PIN.current, type: FIRESTORE_NEW_DATA.pin })) {
-			ops.update(`protected/${DOCUMENT_ID}`, newPinObj);
+		if (newPinObj && Object.keys(newPinObj).length > 0) {
+			ops.set(`protected/${DOCUMENT_ID}`, newPinObj);
 		}
 	}
 }

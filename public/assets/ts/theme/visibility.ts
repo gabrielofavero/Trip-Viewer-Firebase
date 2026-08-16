@@ -58,7 +58,9 @@ export function loadVisibility(colors = getState()?.colors) {
 	loadUserVisibility();
 
 	const button = getID('night-mode');
-	button.style.display = 'block';
+	// Keep the flex centering from .icon-buttons (display:block would push the
+	// icon to the top-left of its circular button).
+	button.style.display = 'flex';
 	button.onclick = function () {
 		switchVisibility();
 	};
@@ -175,11 +177,6 @@ export function applyMode({ isDark, loadCss = true, barColor, hoverFn, secondary
 				(
 					await import('../pages/trip-detail/support/visibility.js')
 				).loadViewCustomVisibilityRules();
-				break;
-			case 'destination':
-				(
-					await import('../pages/destination/support/visibility.js')
-				).applyAccordionArrowCustomColor();
 				break;
 			case 'expenses':
 				(await import('../pages/expenses/support/data.js')).changeChartsLabelsVisibility();

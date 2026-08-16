@@ -46,8 +46,9 @@ curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase2?cleanup=tr
 | **16** | **`migrateUserProfile`** | **Backfill user profile fields (`name`, `email`, `photoURL`) from Auth into every `users/{uid}` document** |
 | **17** | **`migratePlacesApi`** | **Places API prep: grant `canUsePlacesAPI` to body-provided UIDs + add `placeAPI` object to every destination entry** |
 | **18** | **`migrateTripDestinationMetadata`** | **Backfill trips: enrich `destinationRefs[i]` with denormalized destination metadata (`title`, `image`, `categories` “has entries” booleans, `version`)** |
+| **19** | **`migrateDestinationRegions`** | **Destination entry region → regions: convert the legacy single `region` string into a `regions` array** |
 
-Migrations 1–12 are **legacy** (already applied in production). Migrations 13–15 are the **consolidation phases**; migrations 16–18 are the post-consolidation backfills (profile fields, Places API prep, then trip destination metadata). They are exported from `functions/src/index.ts` as `migratePhase1`, `migratePhase2`, `migratePhase3`, `migrateUserProfile`, `migratePlacesApi`, and `migrateTripDestinationMetadata`.
+Migrations 1–12 are **legacy** (already applied in production). Migrations 13–15 are the **consolidation phases**; migrations 16–19 are the post-consolidation backfills (profile fields, Places API prep, trip destination metadata, then destination regions). They are exported from `functions/src/index.ts` as `migratePhase1`, `migratePhase2`, `migratePhase3`, `migrateUserProfile`, `migratePlacesApi`, `migrateTripDestinationMetadata`, and `migrateDestinationRegions`.
 
 ---
 
@@ -273,6 +274,28 @@ Backfills every `trips/{id}.destinationRefs[i]` entry with a denormalized copy o
 ```bash
 curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateTripDestinationMetadata?dryRun=true"
 curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateTripDestinationMetadata"
+```
+
+---
+
+## Migration 19: Destination region → regions (`migrateDestinationRegions`)
+
+**File:** `functions/src/migrations/19-migrate-destination-regions.ts`
+
+Converts the legacy single-string `region` field on every destination entry into a `regions` array (one or more neighborhoods/areas), enabling multi-region support on destination items.
+
+### Operations:
+1. Scans all `destinations` documents.
+2. For each category (`restaurants`, `snacks`, `nightlife`, `tourism`, `shopping`) and entry:
+   - `region: "Ipanema"` → `regions: ["Ipanema"]`
+   - `region: ""` (or missing) → `regions: []`
+3. **Idempotency check:** entries already carrying a `regions` array are skipped; a stale legacy `region` string is removed when present.
+4. Deletes the legacy `region` field via `FieldValue.delete()`.
+
+### Run it:
+```bash
+curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateDestinationRegions?dryRun=true"
+curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateDestinationRegions"
 ```
 
 ---

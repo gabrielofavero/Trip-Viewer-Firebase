@@ -1,9 +1,9 @@
 import { getID } from '../../../../../utils/dom.js';
 import { translate } from '../../../../../i18n/translation.js';
-import { FILTER_OPTIONS, filter } from '../filter.js';
-import { SORT_OPTIONS, sort } from '../sort.js';
+import { FILTER_OPTIONS } from '../filter.js';
+import { SORT_OPTIONS } from '../sort.js';
 import { FILTER_SORT_KEYS_ORDER } from '../sort-and-filter.js';
-import { ACTIVE_CATEGORY } from '../../../destination.js';
+import { ACTIVE_CATEGORY, applyContent } from '../../../destination.js';
 import { getFilterPreferences, setFilterPreference } from './preferences.js';
 import { getSortPreferences, setSortPreference } from './preferences.js';
 
@@ -153,13 +153,13 @@ export function sortDrawerOptionLoadAction() {
 export function filterDrawerOptionClickAction(e) {
 	const container = e.currentTarget.closest('.drawer-container');
 	handleDrawerOptionClick(e, container, setFilterPreference);
-	filter(true);
+	applyContent();
 }
 
 export function sortDrawerOptionClickAction(e) {
 	const container = getID('drawerContent');
 	handleDrawerOptionClick(e, container, setSortPreference);
-	sort(true);
+	applyContent();
 }
 
 // Helpers

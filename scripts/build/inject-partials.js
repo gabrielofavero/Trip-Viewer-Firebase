@@ -113,7 +113,7 @@ const TOP_BAR_ICONS = {
 		backIcon: '<i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>',
 		nightModeClasses: "",
 		extraIcons:
-			'        <i id="share" style="display: none;" onclick="_share()" class="bx bx-share-alt icon-buttons"></i>',
+			'        <i id="share" style="display: none;" class="bx bx-share-alt icon-buttons"></i>',
 	},
 	"expenses.html": {
 		backIcon: '<i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>',
@@ -228,6 +228,7 @@ function inject(options = {}) {
 		"shared/top-bar.html": readPartial("top-bar.html"),
 		"shared/nav-helper.html": readPartial("nav-helper.html"),
 		"shared/expenses-content.html": readPartial("expenses-content.html"),
+		"shared/destination-content.html": readPartial("destination-content.html"),
 	};
 
 	// LiveReload is included by default; pass { noLiveReload: true } to skip it

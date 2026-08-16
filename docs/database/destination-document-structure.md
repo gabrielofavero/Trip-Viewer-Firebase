@@ -86,7 +86,7 @@ interface DestinationEntry {
   map:         string;   // Google Maps URL
   placeAPI:    PlaceAPI;  // normalized Places API data (see below)
   instagram:   string;   // Instagram profile URL, or empty string
-  region:      string;   // neighborhood/area within the destination (e.g. "Ipanema", "Botafogo")
+  regions:     string[]; // one or more neighborhoods/areas within the destination (e.g. ["Ipanema", "Botafogo"])
   media:       string;   // TikTok or YouTube embed URL, or empty string
   price:       string;   // price indicator: "$", "$$", "$$$", "$$$$", or free-text
   rating:      string;   // numeric rating as string: "1"–"5", or empty string
@@ -95,6 +95,8 @@ interface DestinationEntry {
 ```
 
 > **Note:** The `placeAPI` field may be absent in entries created before August 2026. Always guard with `typeof entry.placeAPI?.id === 'string'` or optional chaining. Migration 17 backfills missing `placeAPI` with an empty template.
+>
+> **Note:** `regions` was added in August 2026 (Migration 19). Entries created before then stored a single `region` string; Migration 19 converts it to a one-element `regions` array and removes the legacy `region` field.
 
 ### `PlaceAPI` — Places API Data
 
@@ -199,7 +201,7 @@ At minimum, `pt` is always present. English (`en`) is set when the user provides
         "id": ""
       },
       "instagram": "",
-      "region": "Cachambi",
+      "regions": ["Cachambi"],
       "media": "https://www.tiktok.com/@erikagentille/video/7258423588607495429",
       "price": "$$$",
       "rating": "4",
@@ -239,7 +241,7 @@ At minimum, `pt` is always present. English (`en`) is set when the user provides
         "id": ""
       },
       "instagram": "https://www.instagram.com/kebabshop.br/",
-      "region": "Leblon",
+      "regions": ["Leblon"],
       "media": "https://www.tiktok.com/@caroolnigro/video/7330085048646946053",
       "price": "$",
       "rating": "3",

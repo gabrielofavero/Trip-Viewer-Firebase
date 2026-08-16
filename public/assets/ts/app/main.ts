@@ -153,12 +153,12 @@ export function setPageName(pageName?) {
 // Global error handlers - catches all unhandled errors
 window.addEventListener('unhandledrejection', function (event) {
 	console.error('Unhandled promise rejection:', event.reason);
-	displayError(event.reason?.message || event.reason || translate('messages.errors.unknown'));
+	displayError(event.reason?.message || event.reason || translate('messages.errors.unknown'), false, false);
 	event.preventDefault(); // Prevent default browser error handling
 });
 
 window.addEventListener('error', function (event) {
 	console.error('Global error:', event.error || event.message);
-	displayError(event.error?.message || event.message || translate('messages.errors.unknown'));
+	displayError(event.error?.message || event.message || translate('messages.errors.unknown'), false, false);
 	event.preventDefault(); // Prevent default browser error handling
 });

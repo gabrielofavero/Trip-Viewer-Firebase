@@ -1,15 +1,11 @@
-import { getDestinations } from '../../app/config.js';
-import { setPageName } from '../../app/main.js';
+import { getPageURL, setPageName } from '../../app/main.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../../data/state.js';
 import { translate } from '../../i18n/translation.js';
-import { loadCloseCustomSelectListeners, loadCustomSelect } from '../../ui/custom-select.js';
 import { getID, getURLParams } from '../../utils/dom.js';
-import { ACTIVE_CATEGORY, updateActiveCategory } from './categories.js';
-import { loadDestinationByType, mountDestination } from './mount.js';
+import { openToast } from '../../utils/messages.js';
+import { mountDestination } from './mount.js';
 import { loadDestinationListeners } from './support/event-listeners.js';
-import { adjustMediaEmbeds } from './support/media-embed.js';
-import { adjustDrawer } from './support/sort-and-filter/support/drawer.js';
-import { applyDestinationsMediaHeight } from './support/visibility.js';
+import { loadDestinationTabBar, loadDestinationSearch } from './support/chrome.js';
 
 // Re-exports for the destination page modules that historically import from
 // this file (the shared helpers now live in ./mount.js).
@@ -17,7 +13,6 @@ export { ACTIVE_CATEGORY } from './categories.js';
 export {
 	CONTENT,
 	applyContent,
-	processAccordion,
 	getDataSet,
 	getDestinationID,
 	getItemFromJ,
@@ -33,11 +28,12 @@ export async function loadDestinationPage() {
 	loadDestinationListeners();
 
 	const urlParams = getURLParams();
+	const tripId = urlParams['t'] || urlParams['v'];
 	// Abort early when the read failed (e.g. access denied for unauthenticated
 	// users) — the proper message was already shown by mountDestination.
 	const dispose = await mountDestination(getID('content'), {
 		destinationId: urlParams['d'],
-		tripId: urlParams['t'] || urlParams['v'],
+		tripId,
 		type: urlParams['type'],
 	});
 	if (!dispose) {
@@ -52,49 +48,58 @@ export async function loadDestinationPage() {
 	setPageName(title);
 	getID('title').innerText = title;
 
-	loadDestinationCustomSelect();
-	window.addEventListener('resize', () => {
-		applyDestinationsMediaHeight();
-		adjustMediaEmbeds();
-	});
+	loadHeaderButtons(tripId);
+	loadDestinationTabBar();
+	loadDestinationSearch();
 }
 
-function loadDestinationCustomSelect() {
-	const customSelect = {
-		id: 'destinations-select',
-		options: getDestinationCustomSelectOptions(),
-		activeOption: ACTIVE_CATEGORY === 'map' ? 'myMaps' : ACTIVE_CATEGORY,
-		action: loadDestinationCustomSelectAction,
-	};
+/**
+ * Toggle the top-bar navigation icons based on how the page was opened:
+ *   - Linked to a trip (?t=… / ?v=…): show the back button (returns to the
+ *     trip detail page) and keep the share button hidden.
+ *   - Standalone (no trip): hide the back button and surface the share button.
+ */
+function loadHeaderButtons(tripId?: string) {
+	const closeButton = getID('closeButton');
+	const share = getID('share');
 
-	loadCustomSelect(customSelect);
-	loadCloseCustomSelectListeners();
-
-	function getDestinationCustomSelectOptions() {
-		const result = [];
-		const destinationsConfig = getDestinations();
-		const values = destinationsConfig.categories.ids;
-		for (const value in FIRESTORE_DESTINATIONS_DATA) {
-			if (
-				!values.includes(value) ||
-				(value !== 'myMaps' &&
-					FIRESTORE_DESTINATIONS_DATA?.[value] &&
-					Object.keys(FIRESTORE_DESTINATIONS_DATA[value]).length === 0)
-			) {
-				continue;
-			}
-
-			const key = destinationsConfig.translation[value].toLowerCase();
-			const label = translate(`destination.${key}.title`);
-			result.push({ value, label });
+	if (tripId) {
+		if (closeButton) {
+			closeButton.style.display = '';
+			closeButton.onclick = () => {
+				window.location.href = `view.html?t=${tripId}`;
+			};
 		}
-		return result;
+		if (share) {
+			share.style.display = 'none';
+		}
+		return;
 	}
 
-	function loadDestinationCustomSelectAction(value) {
-		adjustDrawer();
-		updateActiveCategory(value);
-		loadDestinationByType(value);
+	if (closeButton) {
+		closeButton.style.display = 'none';
+	}
+	if (share) {
+		share.style.display = '';
+		share.onclick = shareDestination;
+	}
+}
+
+function shareDestination() {
+	const title = FIRESTORE_DESTINATIONS_DATA?.title || document.title;
+	const text = translate('destination.share', { name: title });
+	const url = getPageURL();
+
+	if (navigator.share) {
+		navigator.share({ title, text, url }).catch(() => {});
+		return;
+	}
+
+	if (navigator.clipboard?.writeText) {
+		navigator.clipboard
+			.writeText(url)
+			.then(() => openToast(translate('messages.text_copied')))
+			.catch(() => {});
 	}
 }
 
