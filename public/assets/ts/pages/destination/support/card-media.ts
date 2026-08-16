@@ -38,7 +38,7 @@ export function getDialogMediaHTML(item, j) {
 /**
  * Dialog media with a caller-provided no-image fallback. Reused by the
  * view.html item dialogs so accommodations can fall back to a hotel icon
- * while destination entries keep the category icon + theme gradient.
+ * while destination entries keep the category icon on a neutral placeholder.
  */
 export function getDialogMediaHTMLWithFallback(item, j, fallbackHTML) {
 	const images = (Array.isArray(item?.images) ? item.images : []).filter((img) => img?.link);
@@ -96,6 +96,14 @@ function resumeAutoplay(j: number): void {
 export function closeDialogMedia(j: number): void {
 	const swiper = SWIPERS[j];
 	if (swiper) {
+		// Stop autoplay before destroying: Swiper 7's destroy() deletes
+		// `swiper.params`, and a still-pending autoplay timeout then throws
+		// ("can't access property autoplay, e.params is undefined").
+		try {
+			swiper.autoplay?.stop();
+		} catch {
+			// noop — autoplay may not be initialized on this instance
+		}
 		swiper.destroy(true, true);
 		delete SWIPERS[j];
 	}
@@ -144,7 +152,7 @@ function getPortfolioWrapHTML(image, j) {
         </div>`;
 }
 
-/** Category icon on the theme gradient (same purple as the index cards). */
+/** Category icon on the neutral no-image placeholder background. */
 function getCategoryIconHTML(extraClass = '') {
 	const config = getDestinations();
 	const type = ACTIVE_CATEGORY === 'myMaps' ? 'map' : ACTIVE_CATEGORY;

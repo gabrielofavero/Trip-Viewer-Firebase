@@ -15,6 +15,8 @@
 	--bg-primary: #1c1c1e;
 	--bg-secondary: #2c2c2e;
 	--bg-tertiary: #3a3a3c;
+	--no-image-bg: #3a3a3c;
+	--no-image-bg-alt: #323234;
 	--text-primary: #f2f2f2;
 	--text-secondary: #c7c6c6;
 	--text-muted: #8e8e93;
@@ -264,13 +266,6 @@
 [data-theme="dark"] .dest-card:hover,
 [data-theme="dark"] .list-card:hover {
 	border-color: rgba(var(--theme-color-rgb), 0.5);
-}
-
-[data-theme="dark"] .trip-card-image.no-image,
-[data-theme="dark"] .dest-card-image.no-image,
-[data-theme="dark"] .list-card-image.no-image,
-[data-theme="dark"] .dialog-image.no-image {
-	background: linear-gradient(135deg, var(--theme-color), var(--theme-secondary));
 }
 
 [data-theme="dark"] .dialog-media {
@@ -622,6 +617,7 @@
 [data-theme="dark"] .hotel-box,
 [data-theme="dark"] .flight-box,
 [data-theme="dark"] .itinerary-box,
+[data-theme="dark"] #itinerary-box,
 [data-theme="dark"] #calendar {
 	background-color: #303030;
 	color: #e2e2e2;
@@ -697,6 +693,35 @@
 
 [data-theme="dark"] .calendarDisabled {
 	color: #595959;
+}
+
+/* Day itinerary box (#itinerary-box) — inner content */
+[data-theme="dark"] #itinerary-title .title,
+[data-theme="dark"] #itinerary-close,
+[data-theme="dark"] .itinerary-item,
+[data-theme="dark"] .itinerary .resume-title,
+[data-theme="dark"] .resume .resume-title {
+	color: #e2e2e2;
+}
+
+[data-theme="dark"] .itinerary .resume-item h4,
+[data-theme="dark"] .resume .resume-item h4 {
+	color: #e2e2e2;
+}
+
+[data-theme="dark"] .itinerary .resume-item h5,
+[data-theme="dark"] .resume .resume-item h5 {
+	background: #3b3b3b;
+}
+
+[data-theme="dark"] .itinerary .resume-item::before,
+[data-theme="dark"] .resume .resume-item::before {
+	background: #303030;
+	border-color: #3b3b3b;
+}
+
+[data-theme="dark"] #itinerary-box .external-link {
+	color: #92caff;
 }
 
 /* Destination icon-boxes (inside #destinationsBox) */
@@ -829,8 +854,8 @@
 	box-shadow: 0 8px 24px rgba(166, 166, 166, 0.05);
 }
 
-/* Full itinerary day cards — match the expenses-card treatment. */
-[data-theme="dark"] .itin-day {
+/* Full itinerary table — match the expenses-card treatment. */
+[data-theme="dark"] .itin-table-wrap {
 	border: 1px solid #414040;
 	background-color: #3b3b3b;
 	box-shadow: 0px 5px 90px 0px rgba(166, 166, 166, 0.05);

@@ -50,14 +50,14 @@ let activeMediaJ: number | null = null;
 
 /** Wire overlay click + Escape close. Called once from view.ts. */
 export function initViewItemDialogs(): void {
-	document.addEventListener('click', function (e: MouseEvent) {
+	document.addEventListener('click', (e: MouseEvent) => {
 		const target = e.target as HTMLElement;
 		if (target.classList.contains('dialog-overlay') && target.id === 'view-item-dialog') {
 			closeViewItemDialog();
 		}
 	});
 
-	document.addEventListener('keydown', function (e) {
+	document.addEventListener('keydown', (e) => {
 		const dialog = getID('view-item-dialog');
 		if (e.key === 'Escape' && dialog && dialog.style.display === 'flex') {
 			closeViewItemDialog();
@@ -165,6 +165,7 @@ export async function openAccommodationDialog(entry): Promise<void> {
 		mediaHTML: getDialogMediaHTMLWithFallback(acc, j, getAccommodationFallbackMediaHTML()),
 		title: getAccommodationTitle(acc),
 		scoreHTML: '',
+		badgeHTML: getAccommodationReservationBadgeHTML(acc),
 		contentHTML: getAccommodationBodyHTML(acc),
 		mediaJ: j,
 	});
@@ -184,6 +185,8 @@ export function openTransportationDialog(entry): void {
 		mediaHTML: getTransportationMediaHTML(transport, company),
 		title: getTransportationTitle(transport, company),
 		scoreHTML: '',
+		badgeHTML: getTransportationReservationBadgeHTML(transport, company),
+		personPillsHTML: getPersonPillsHTML(transport),
 		contentHTML: getTransportationBodyHTML(transport, company),
 		mediaJ: null,
 	});
@@ -221,11 +224,13 @@ function ensureDialog(): HTMLElement {
             <i class="iconify" data-icon="material-symbols:close"></i>
           </a>
           <div class="dialog-body">
+            <div id="view-item-dialog-person" style="display:none"></div>
             <div class="dialog-header">
               <div class="dialog-title-row">
                 <h2 class="dialog-title" id="view-item-dialog-title"></h2>
               </div>
               <span class="dialog-score-badge" id="view-item-dialog-score" style="display:none"></span>
+              <div id="view-item-dialog-badge" style="display:none"></div>
             </div>
             <div id="view-item-dialog-content"></div>
           </div>
@@ -234,8 +239,15 @@ function ensureDialog(): HTMLElement {
 	return dialog;
 }
 
-function showViewItemDialog({ mediaHTML, title, scoreHTML, contentHTML, mediaJ }): void {
+function showViewItemDialog({ mediaHTML, title, scoreHTML, badgeHTML = '', personPillsHTML = '', contentHTML, mediaJ }): void {
 	const dialog = ensureDialog();
+
+	// Close any media (carousel Swiper) bound to the previous dialog before
+	// replacing it — otherwise its autoplay timer keeps running against a
+	// detached DOM and Swiper throws when it can no longer read its params.
+	if (activeMediaJ != null && closeMedia) {
+		closeMedia(activeMediaJ);
+	}
 
 	const mediaEl = getID('view-item-dialog-media');
 	mediaEl.innerHTML = mediaHTML || '';
@@ -252,6 +264,24 @@ function showViewItemDialog({ mediaHTML, title, scoreHTML, contentHTML, mediaJ }
 		scoreEl.innerHTML = '';
 	}
 
+	const badgeEl = getID('view-item-dialog-badge');
+	if (badgeHTML) {
+		badgeEl.style.display = 'inline-flex';
+		badgeEl.innerHTML = badgeHTML;
+	} else {
+		badgeEl.style.display = 'none';
+		badgeEl.innerHTML = '';
+	}
+
+	const personEl = getID('view-item-dialog-person');
+	if (personPillsHTML) {
+		personEl.style.display = '';
+		personEl.innerHTML = personPillsHTML;
+	} else {
+		personEl.style.display = 'none';
+		personEl.innerHTML = '';
+	}
+
 	getID('view-item-dialog-content').innerHTML = contentHTML || '';
 
 	animateDialogOpen(dialog, 'flex');
@@ -265,8 +295,8 @@ function showViewItemDialog({ mediaHTML, title, scoreHTML, contentHTML, mediaJ }
 	}
 
 	// Sensitive reservation boxes are registered once at boot; re-scan when a
-	// dialog introduces new ones (accommodation / transportation dialogs).
-	if (getState().pin === 'sensitive-only' && getID('view-item-dialog-content')?.querySelector('.sensitive-box')) {
+	// dialog introduces new ones (the reservation header badge).
+	if (getState().pin === 'sensitive-only' && dialog.querySelector('.sensitive-box')) {
 		loadSensitiveReservations();
 	}
 }
@@ -274,7 +304,7 @@ function showViewItemDialog({ mediaHTML, title, scoreHTML, contentHTML, mediaJ }
 // ======= Destination helpers =======
 
 function getPriceScale(currency) {
-	return getCurrencies().scale[currency] || getCurrencies().scale['BRL'];
+	return getCurrencies().scale[currency] || getCurrencies().scale.BRL;
 }
 
 function getDestinationFallbackMediaHTML(category) {
@@ -322,7 +352,7 @@ function getDestinationTitle(item) {
  */
 function getPlannedLabel(category, itemId) {
 	const itinerary = getState().itinerary || [];
-	const matches: { date: any; period: string }[] = [];
+	const matches: { date: { day: number; month: number; year: number }; period: string }[] = [];
 
 	for (const day of itinerary) {
 		for (const period of PERIODS) {
@@ -388,8 +418,13 @@ function getAccommodationBodyHTML(acc) {
 		rows.push(getTopicHTML('mingcute:location-line', acc.address));
 	}
 
-	const reservation = getAccommodationReservationHTML(acc);
-	if (reservation) rows.push(reservation);
+	if (acc.breakfast) {
+		rows.push(getTopicHTML('mdi:coffee', translate('trip.accommodation.breakfast')));
+	}
+
+	if (acc.description) {
+		rows.push(getTopicHTML('mdi:information-outline', acc.description));
+	}
 
 	const checkIn = getAccommodationDate(acc.dates?.checkIn);
 	const checkOut = getAccommodationDate(acc.dates?.checkOut);
@@ -400,36 +435,30 @@ function getAccommodationBodyHTML(acc) {
 		rows.push(getTopicHTML('mdi:chevron-right', `${translate('trip.accommodation.checkout')}: ${checkOut}`));
 	}
 
-	if (acc.breakfast) {
-		rows.push(getTopicHTML('mdi:coffee', translate('trip.accommodation.breakfast')));
-	}
-
 	return `
         <div class="destinations-text">
             ${rows.join('')}
-            <div class="destinations-description" style="display: ${acc.description ? 'block' : 'none'}">
-                ${acc.description || ''}
-            </div>
         </div>`;
 }
 
-function getAccommodationReservationHTML(acc) {
-	if (getState().pin === 'sensitive-only') {
-		return getTopicHTML(
-			'mdi:file-document-outline',
-			getSensitiveReservationHTML('accommodations', acc.id),
-			true,
-		);
-	}
-
+function getAccommodationReservationBadgeHTML(acc) {
 	let reservation = acc.reservation || '';
 	if (!reservation) return '';
 
-	if (reservation.charAt(0) === '#') {
-		return getTopicHTML('mdi:file-document-outline', `${translate('labels.reservation.title')} ${reservation}`);
+	// PIN-protected reservations render as their own badge (the sensitive box
+	// with the reveal eye); regular codes render as the reservation badge.
+	if (getState().pin === 'sensitive-only') {
+		return getSensitiveReservationHTML('accommodations', acc.id);
 	}
 
-	return getTopicHTML('mdi:file-document-outline', `${translate('labels.reservation.title')} #${reservation}`);
+	reservation = reservation.charAt(0) === '#' ? reservation.slice(1) : reservation;
+	const copy = `<i class="iconify copy-icon" data-icon="mdi:content-copy" data-action="copy-to-clipboard" data-text="${reservation}"></i>`;
+
+	return `
+        <span class="dialog-reservation-badge">
+            <i class="iconify reservation-icon" data-icon="mdi:file-document-outline"></i>
+            <span class="reservation-code">#${reservation}</span>${copy}
+        </span>`;
 }
 
 function getAccommodationDate(dateObject) {
@@ -460,8 +489,10 @@ function getCompanyInfo(transport) {
 }
 
 function getTransportationTitle(transport, company) {
-	if (company.title) return company.title;
-	return `${transport.points?.origin || ''} → ${transport.points?.destination || ''}`;
+	const origin = transport.points?.origin || '';
+	const destination = transport.points?.destination || '';
+	if (origin || destination) return `${origin} → ${destination}`;
+	return company.title || '';
 }
 
 /**
@@ -497,45 +528,31 @@ function getTransportationMediaHTML(transport, company) {
 function getTransportationBodyHTML(transport, company) {
 	const rows: string[] = [];
 
-	const origin = transport.points?.origin || '';
-	const destination = transport.points?.destination || '';
-	if (origin || destination) {
-		rows.push(getTopicHTML('mingcute:rocket-fill', `${origin} → ${destination}`));
-	}
-
-	const departure = transport.dates?.departure ? convertFromDateObject(transport.dates.departure) : null;
-	const arrival = transport.dates?.arrival ? convertFromDateObject(transport.dates.arrival) : null;
-	if (departure || arrival) {
-		const departureText = departure
-			? `${getDateString(departure)} ${getTimeStringFromDate(departure)}`
-			: '';
-		const arrivalText = arrival ? `${getDateString(arrival)} ${getTimeStringFromDate(arrival)}` : '';
-		rows.push(getTopicHTML('mdi:calendar', [departureText, arrivalText].filter(Boolean).join(' → ')));
+	// Company replaces the old "type" row: same type icon, company label.
+	if (company.title) {
+		rows.push(getTopicHTML(getTransportTypeIcon(transport.type), company.title));
 	}
 
 	if (transport.duration) {
 		rows.push(getTopicHTML('mdi:clock-outline', jsTimeToVisualTime(transport.duration)));
 	}
 
-	if (transport.person) {
-		rows.push(getTopicHTML('mdi:account', transport.person));
+	const departure = transport.dates?.departure ? convertFromDateObject(transport.dates.departure) : null;
+	const arrival = transport.dates?.arrival ? convertFromDateObject(transport.dates.arrival) : null;
+	if (departure) {
+		const departureText = `${getDateString(departure)} ${getTimeStringFromDate(departure)}`;
+		rows.push(
+			getTopicHTML('mdi:chevron-right', `${translate('trip.transportation.departure')}: ${departureText}`),
+		);
 	}
-
-	const typeTitle = getTransportTypeTitle(transport.type);
-	if (typeTitle) {
-		rows.push(getTopicHTML(getTransportTypeIcon(transport.type), typeTitle));
+	if (arrival) {
+		const arrivalText = `${getDateString(arrival)} ${getTimeStringFromDate(arrival)}`;
+		rows.push(
+			getTopicHTML('mdi:chevron-right', `${translate('trip.transportation.arrival')}: ${arrivalText}`),
+		);
 	}
-
-	const reservation = getTransportationReservationHTML(transport, company);
-	if (reservation) rows.push(reservation);
 
 	return `<div class="destinations-text">${rows.join('')}</div>`;
-}
-
-function getTransportTypeTitle(type) {
-	const config = getTransportations();
-	const titleKey = config?.titles?.[type];
-	return titleKey ? translate(titleKey) : '';
 }
 
 function getTransportTypeIcon(type) {
@@ -543,28 +560,52 @@ function getTransportTypeIcon(type) {
 	return config?.icons?.[type] || config?.icons?.other || 'mingcute:rocket-fill';
 }
 
-function getTransportationReservationHTML(transport, company) {
-	if (getState().pin === 'sensitive-only') {
-		return getTopicHTML(
-			'mdi:file-document-outline',
-			getSensitiveReservationHTML('transportation', transport.id),
-			true,
-		);
-	}
+function getPersonPillsHTML(transport) {
+	const names = String(transport.person || '')
+		.split(',')
+		.map((name) => name.trim())
+		.filter(Boolean);
+	return getPersonPillsFromNames(names);
+}
 
+function getPersonPillsFromNames(names) {
+	if (names.length === 0) return '';
+	const pills = names.map((name) => `<span class="module-pill">${escapeHtml(name)}</span>`).join('');
+	return `<div class="dialog-modules">${pills}</div>`;
+}
+
+function escapeHtml(value) {
+	return String(value)
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;');
+}
+
+function getTransportationReservationBadgeHTML(transport, company) {
 	let reservation = transport.reservation || '';
 	if (!reservation) return '';
+
+	// PIN-protected reservations render as their own badge (the sensitive box
+	// with the reveal eye); regular codes render as the reservation badge.
+	if (getState().pin === 'sensitive-only') {
+		return getSensitiveReservationHTML('transportation', transport.id);
+	}
 
 	let link = company.website || '';
 	if (transport.link) link = transport.link;
 
 	reservation = reservation.charAt(0) === '#' ? reservation.slice(1) : reservation;
 	const code = link
-		? `<a class="flight-code" href="${link}" target="_blank">#${reservation}</a>`
-		: `<span class="flight-code">#${reservation}</span>`;
+		? `<a class="reservation-code" href="${link}" target="_blank">#${reservation}</a>`
+		: `<span class="reservation-code">#${reservation}</span>`;
 	const copy = `<i class="iconify copy-icon" data-icon="mdi:content-copy" data-action="copy-to-clipboard" data-text="${reservation}"></i>`;
 
-	return getTopicHTML('mdi:file-document-outline', `${code} ${copy}`, true);
+	return `
+        <span class="dialog-reservation-badge">
+            <i class="iconify reservation-icon" data-icon="mdi:file-document-outline"></i>
+            ${code}${copy}
+        </span>`;
 }
 
 // ======= Shared markup helper =======

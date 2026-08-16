@@ -199,8 +199,8 @@ function unloadCalendarTripActive() {
 }
 
 // Getters
-function getInnerItineraryHTML(item) {
-	const innerItinerary = getInnerItinerary(item);
+function getInnerItineraryHTML(periodItem) {
+	const innerItinerary = getInnerItinerary(periodItem.item, undefined, periodItem.travelers);
 	if (innerItinerary?.item || innerItinerary?.lazyDestinationId) {
 		CURRENT_INNER_ITINERARY.push(innerItinerary);
 		return `<i class="iconify external-link" data-icon="tabler:external-link" data-action="display-inner-itinerary-message" data-index="${CURRENT_INNER_ITINERARY.length - 1}"></i>`;
@@ -208,13 +208,16 @@ function getInnerItineraryHTML(item) {
 	return '';
 }
 
-function getInnerItinerary(item, destinations?) {
+function getInnerItinerary(item, destinations?, travelers?) {
 	const innerItinerary = {
 		type: normalizeItemType(item?.type),
 		// Raw item data passed to the card dialog (destination entry, accommodation
 		// or transportation leg).
 		item: null,
 		title: '',
+		// Travelers associated with this itinerary entry (drives the accommodation
+		// "person pill" in the card dialog).
+		travelers: travelers || [],
 		// Lazy destination item — set when the destination doc must be fetched on
 		// demand (the view only loads destination metadata on page load).
 		lazyDestinationId: '',
@@ -333,7 +336,7 @@ function setModalCalendarInnerHTML(div, period) {
 			div.innerHTML += `<div>
                                 <i class="bi bi-chevron-right color-icon"></i>
                                 ${getInnerItineraryTitleHTML(period[i], 'label-item')}
-                                ${getInnerItineraryHTML(period[i].item)}
+                                ${getInnerItineraryHTML(period[i])}
                               </div>`;
 		}
 	}

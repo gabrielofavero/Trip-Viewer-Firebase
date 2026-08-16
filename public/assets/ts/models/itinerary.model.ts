@@ -78,30 +78,49 @@ export async function getItineraryContent(type: string): Promise<string> {
 	}
 
 	function buildPageContent(): void {
-		for (const itinerary of ITINERARY) {
-			if (!itinerary.title) continue;
+		const days = ITINERARY.filter((itinerary) => itinerary.title);
+		if (days.length === 0) return;
 
-			content.push(`<section class="itin-day">`);
-			content.push(`<h2 class="itin-day-title">${itinerary.title}</h2>`);
+		content.push(`<div class="itin-table-wrap">`);
+		content.push(`<table class="itin-table">`);
+		content.push(`<thead>`);
+		content.push(`<tr>`);
+		content.push(`<th class="itin-col-day" scope="col">${translate('labels.days')}</th>`);
+
+		for (const timeOfDay of getItinerary().timeOfDay) {
+			content.push(`<th scope="col">${getPeriod(timeOfDay)}</th>`);
+		}
+
+		content.push(`</tr>`);
+		content.push(`</thead>`);
+		content.push(`<tbody>`);
+
+		for (const itinerary of days) {
+			content.push(`<tr>`);
+			content.push(`<th class="itin-col-day" scope="row">${itinerary.title}</th>`);
 
 			for (const timeOfDay of getItinerary().timeOfDay) {
-				const timeOfDayData = itinerary[timeOfDay];
-				if (!timeOfDayData || timeOfDayData.length === 0) continue;
+				const timeOfDayData = itinerary[timeOfDay] || [];
 
-				content.push(`<section class="itin-period">`);
-				content.push(`<h3 class="itin-period-title">${getPeriod(timeOfDay)}</h3>`);
-				content.push(`<ul class="itin-list">`);
-
-				for (const innerItinerary of timeOfDayData) {
-					content.push(loadPageItem(innerItinerary));
+				content.push(`<td class="itin-cell">`);
+				if (timeOfDayData.length === 0) {
+					content.push(`<span class="itin-empty" aria-hidden="true"></span>`);
+				} else {
+					content.push(`<ul class="itin-list">`);
+					for (const innerItinerary of timeOfDayData) {
+						content.push(loadPageItem(innerItinerary));
+					}
+					content.push(`</ul>`);
 				}
-
-				content.push(`</ul>`);
-				content.push(`</section>`);
+				content.push(`</td>`);
 			}
 
-			content.push(`</section>`);
+			content.push(`</tr>`);
 		}
+
+		content.push(`</tbody>`);
+		content.push(`</table>`);
+		content.push(`</div>`);
 
 		function loadPageItem(innerItinerary: any): string {
 			const texts = innerItinerary.subItem?.texts ?? [];

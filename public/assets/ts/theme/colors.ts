@@ -64,8 +64,8 @@ export function loadThemeColors() {
 /**
  * Gradient second stop (bottom-right of the 135deg `--theme-color → …`
  * gradients). The stock purple theme keeps its hand-picked companion; custom
- * trip colors derive a lighter shade of themselves so the no-image cards,
- * dialog heroes, etc. stay on-brand instead of fading into the default purple.
+ * trip colors derive a lighter shade of themselves so theme-colored accents
+ * stay on-brand instead of fading into the default purple.
  */
 function getThemeSecondary(): string {
 	const isDark = document.documentElement.getAttribute('data-theme') === 'dark';

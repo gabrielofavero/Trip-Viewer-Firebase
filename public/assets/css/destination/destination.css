@@ -796,7 +796,7 @@ h1::after {
 }
 
 .dest-card-image.no-image {
-	background: linear-gradient(135deg, var(--theme-color), var(--theme-secondary));
+	background: linear-gradient(135deg, var(--no-image-bg), var(--no-image-bg-alt));
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -808,7 +808,7 @@ h1::after {
 
 .dest-card-image.no-image i {
 	font-size: 44px;
-	color: rgba(255, 255, 255, 0.9);
+	color: var(--text-muted);
 }
 
 /* Score badge — circle only (top-right of the card image) */
@@ -925,7 +925,7 @@ h1::after {
 	background: var(--theme-color);
 }
 
-/* Category-icon fallback (no images) — same theme gradient as the cards */
+/* Category-icon fallback (no images) — neutral placeholder, same gradient as the cards */
 .dialog-media.no-image {
 	display: flex;
 	align-items: center;
@@ -934,7 +934,7 @@ h1::after {
 
 .dialog-media.no-image i {
 	font-size: 64px;
-	color: rgba(255, 255, 255, 0.9);
+	color: var(--text-muted);
 }
 
 @media (max-width: 576px) {

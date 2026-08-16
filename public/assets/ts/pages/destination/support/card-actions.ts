@@ -57,7 +57,8 @@ export function getDialogActionsHTML(item) {
 	}
 
 	if (buttons.length === 0) return '';
-	return `<div class="dialog-actions">${buttons.join('')}</div>`;
+	const compact = buttons.length >= 4 ? ' dialog-actions-icons' : '';
+	return `<div class="dialog-actions dialog-actions-links${compact}">${buttons.join('')}</div>`;
 }
 
 function getDialogLinkButton(icon, label, url) {
@@ -76,13 +77,16 @@ function getDialogMediaButton(media) {
 
 	if (media.includes('youtube') || media.includes('youtu.be')) {
 		icon = 'mdi:youtube';
+		label = 'YouTube';
 	} else if (media.includes('tiktok')) {
 		icon = 'ic:baseline-tiktok';
+		label = 'TikTok';
 	} else if (media.includes('spotify')) {
 		icon = 'mdi:spotify';
 		label = playlist;
 	} else if (media.includes('instagram')) {
 		icon = 'mdi:instagram';
+		label = 'Instagram';
 	}
 
 	return getDialogLinkButton(icon, label, media);

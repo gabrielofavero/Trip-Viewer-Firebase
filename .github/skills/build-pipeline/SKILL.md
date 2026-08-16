@@ -98,11 +98,14 @@ It replaces:
 node scripts/build/build.js --watch
 ```
 
-- Uses `fs.watch` with `recursive: true` on `public/`
+- Uses `fs.watch` with `recursive: true` on `public/` + a 2s polling heartbeat (fs.watch can silently go quiet on Windows)
 - **300ms debounce** — waits for burst of changes to settle before rebuild
+- **Content-hash gating** — a rebuild only fires when a file's bytes actually change (size diff, or SHA-1 diff when mtime moves). mtime-only touches (AV scan, git checkout, editor watcher, Windows directory events) are ignored, so no spurious livereload refreshes.
+- `fs.watch` events only trigger a full content scan; the scan itself decides what changed
 - Falls back to non-recursive watch on platforms that don't support it
 - Type-check errors are non-blocking (page already reloaded by then)
 - Live reload signal written to `dist/reload` after compilation, before type-check
+- `build()` retries `rmSync(dist)` (maxRetries 10) — the hosting emulator can hold dist/ files open on Windows (ENOTEMPTY/EBUSY)
 
 ---
 
@@ -170,8 +173,12 @@ Located in `public/shared/`:
 
 ### Live reload not working
 - Check that `dist/reload` file is being written (timestamp changes on each build)
-- The livereload script polls every 500ms
+- The livereload script polls every 800ms
 - Use `--no-livereload` to disable if causing issues
+
+### Live reload fires without any edits (spurious refresh)
+- Fixed by content-hash gating in watch mode — only real byte changes rebuild.
+- If it still happens, a second `npm run dev` / `npm run watch` may be running: two watchers each write `dist/reload`, causing duplicate refreshes. Kill the duplicate watcher.
 
 ---
 

@@ -24,7 +24,7 @@ import {
 } from '../../../data/state.js';
 import { getID, getURLParam } from '../../../utils/dom.js';
 import { translate } from '../../../i18n/translation.js';
-import { disableScroll, enableScroll } from '../../../theme/visibility.js';
+import { disableScroll, enableScroll, isOnDarkMode, switchVisibility } from '../../../theme/visibility.js';
 import { updateProtectedDataFromExternalPin } from './sensitive-reservation.js';
 
 // ======= Expenses (inline section) =======
@@ -82,11 +82,47 @@ export function initViewEmbed(): void {
 	if (closeBtn) {
 		closeBtn.addEventListener('click', closeViewLightbox);
 	}
+
+	// Lightbox toolbar actions — only shown for the full itinerary.
+	getID('lightbox-print-btn')?.addEventListener('click', () => print());
+	getID('lightbox-export-btn')?.addEventListener('click', async () => {
+		const { exportItinerary } = await import('../../itinerary/mount.js');
+		exportItinerary();
+	});
+	getID('lightbox-nightmode-btn')?.addEventListener('click', () => {
+		switchVisibility();
+		updateLightboxNightModeIcon();
+	});
+
 	document.addEventListener('keydown', (e) => {
 		if (e.key === 'Escape' && LIGHTBOX_ACTIVE) {
 			closeViewLightbox();
 		}
 	});
+}
+
+function setItineraryToolbarActions(show: boolean): void {
+	const display = show ? '' : 'none';
+	const printBtn = getID('lightbox-print-btn');
+	if (printBtn) printBtn.style.display = display;
+	const exportBtn = getID('lightbox-export-btn');
+	if (exportBtn) exportBtn.style.display = display;
+	const nightBtn = getID('lightbox-nightmode-btn');
+	if (nightBtn) nightBtn.style.display = display;
+}
+
+function updateLightboxNightModeIcon(): void {
+	const btn = getID('lightbox-nightmode-btn');
+	const icon = btn?.querySelector('i');
+	if (!btn || !icon) return;
+
+	const dark = isOnDarkMode();
+	icon.classList.toggle('bx-moon', !dark);
+	icon.classList.toggle('bx-sun', dark);
+
+	const label = dark ? translate('labels.light_mode') : translate('labels.dark_mode');
+	btn.title = label;
+	btn.setAttribute('aria-label', label);
 }
 
 function openLightbox(): void {
@@ -103,6 +139,7 @@ function openLightbox(): void {
 	setElementDisplay('menu', 'none');
 	setElementDisplay('navbar', 'none');
 	disableScroll();
+	document.body.classList.add('lightbox-open');
 	LIGHTBOX_ACTIVE = true;
 }
 
@@ -149,6 +186,8 @@ function renderLightboxBody(templateId: string): void {
 export function closeViewLightbox(): void {
 	if (!LIGHTBOX_ACTIVE) return;
 
+	document.body.classList.remove('lightbox-open');
+	setItineraryToolbarActions(false);
 	getID('lightbox').style.display = 'none';
 	setElementDisplay('night-mode', '');
 	setElementDisplay('menu', '');
@@ -177,6 +216,16 @@ export function closeViewLightbox(): void {
 export async function openItineraryLightbox(): Promise<void> {
 	openLightbox();
 	renderLightboxBody('itinerary-content-template');
+	setItineraryToolbarActions(true);
+	updateLightboxNightModeIcon();
+
+	// Hide the toggle when the trip locks visibility to a single theme (same
+	// rule as the page top-bar's night-mode button).
+	const visibility = getState().visibility;
+	const nightBtn = getID('lightbox-nightmode-btn');
+	if (nightBtn && visibility && (visibility.light === false || visibility.dark === false)) {
+		nightBtn.style.display = 'none';
+	}
 
 	const container = getID('content');
 	if (!container) {
@@ -204,6 +253,7 @@ export async function openDestinationLightbox(destinationId: string, type?: stri
 
 	openLightbox();
 	renderLightboxBody('destination-content-template');
+	setItineraryToolbarActions(false);
 
 	const container = getID('content');
 	if (!container) {

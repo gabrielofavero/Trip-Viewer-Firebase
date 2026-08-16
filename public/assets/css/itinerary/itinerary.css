@@ -41,58 +41,94 @@
 		padding-top: 0 !important;
 	}
 
-	/* Itinerary list — compact, ink-friendly, keeps headings with content */
-	.itin-day {
-		break-inside: avoid;
-		page-break-inside: avoid;
-		border: none !important;
-		border-radius: 0 !important;
-		box-shadow: none !important;
-		padding: 0 !important;
-		margin-bottom: 1.25rem !important;
+	.section-title h1::before,
+	.section-title h1::after {
+		display: none !important;
 	}
 
-	.itin-day-title,
-	.itin-period-title {
+	/* Itinerary table — compact; mirrors the on-screen look (colored header,
+	   zebra rows, grid) and the <thead> repeats on every printed page. */
+	.itin-table-wrap {
+		border: 1px solid #000 !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		background: #fff !important;
+		overflow: visible !important;
+	}
+
+	.itin-table {
+		min-width: 0 !important;
+	}
+
+	.itin-table thead {
+		display: table-header-group;
+	}
+
+	.itin-table th,
+	.itin-table td {
+		border-right: 1px solid #bbb !important;
+		border-bottom: 1px solid #bbb !important;
+		padding: 0.45rem 0.5rem !important;
+		color: #000 !important;
+		background: #fff !important;
+	}
+
+	.itin-table th:last-child,
+	.itin-table td:last-child {
+		border-right: none !important;
+	}
+
+	.itin-table tbody tr:last-child th,
+	.itin-table tbody tr:last-child td {
+		border-bottom: none !important;
+	}
+
+	.itin-table thead th {
+		background: var(--theme-color) !important;
+		color: #fff !important;
+		border-bottom: 1px solid #000 !important;
+		font-size: 11px !important;
+		padding: 0.45rem 0.5rem !important;
 		break-after: avoid;
 		page-break-after: avoid;
 	}
 
+	.itin-table tbody th.itin-col-day {
+		background: #f2f3f5 !important;
+		color: #000 !important;
+		font-size: 11px !important;
+	}
+
+	/* Zebra rows — mirror the screen. */
+	.itin-table tbody tr:nth-child(even) td {
+		background: #f2f3f5 !important;
+	}
+
+	/* Neutralize the mobile sticky day column on paper. */
+	.itin-table .itin-col-day {
+		position: static !important;
+		box-shadow: none !important;
+	}
+
+	/* Rows may split between items so tall days are never clipped on paper;
+	   each item (and the repeated header) stays intact. */
 	.itin-item,
 	.itin-subitem {
 		break-inside: avoid;
 		page-break-inside: avoid;
-	}
-
-	.itin-day-title {
-		font-size: 16px !important;
-		color: #000 !important;
-		padding-bottom: 0.35rem !important;
-		margin-bottom: 0.75rem !important;
-	}
-
-	.itin-day-title::after {
-		background: #000 !important;
-	}
-
-	.itin-period {
-		margin-bottom: 0.6rem !important;
-	}
-
-	.itin-period-title {
-		font-size: 12px !important;
-		color: #333 !important;
-		margin-bottom: 0.3rem !important;
-	}
-
-	.itin-period-title::before {
-		background: #000 !important;
+		orphans: 2;
+		widows: 2;
 	}
 
 	.itin-item {
 		padding: 0.4rem 0 !important;
 		font-size: 12px !important;
 		line-height: 1.45 !important;
+		border-bottom: 1px solid #e0e0e0 !important;
+	}
+
+	.itin-item:last-child {
+		border-bottom: none !important;
 	}
 
 	.itin-label,
@@ -233,74 +269,87 @@
 }
 
 .content {
-	width: 1000px;
+	width: 1400px;
 	max-width: 100%;
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-	gap: 2rem;
-	align-items: start;
+	display: block;
 	min-height: 500px;
 	margin-bottom: 2rem;
 }
 
+/* The destination page's `#content` grid rule (destination.css) leaks onto
+   view.html because destination.css is loaded globally there. The itinerary
+   `#content` carries the `.content` class, so scope an override here to win
+   on specificity and let the table span the full lightbox width. */
+#content.content {
+	display: block;
+}
+
 /*--------------------------------------------------------------
-# Itinerary list (full itinerary render)
+# Itinerary table (full itinerary render)
 --------------------------------------------------------------*/
 
-.itin-day {
+.itin-table-wrap {
 	background-color: var(--background-color);
 	border: 1px solid var(--border-color);
 	border-radius: var(--radius-lg);
 	box-shadow: var(--shadow-sm);
-	padding: 1.5rem;
+	overflow-x: auto;
 }
 
-.itin-day-title {
-	position: relative;
-	font-size: 1.25rem;
-	font-weight: 700;
-	color: var(--text-primary);
-	padding-bottom: 0.6rem;
-	margin-bottom: 1.25rem;
+.itin-table {
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed;
 }
 
-.itin-day-title::after {
-	content: "";
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	width: 40px;
-	height: 3px;
-	border-radius: 2px;
+.itin-table th,
+.itin-table td {
+	vertical-align: top;
+	text-align: left;
+	padding: 0.9rem 1rem;
+	border-right: 1px solid var(--border-color);
+	border-bottom: 1px solid var(--border-color);
+	overflow-wrap: break-word;
+}
+
+.itin-table th:last-child,
+.itin-table td:last-child {
+	border-right: none;
+}
+
+.itin-table tbody tr:last-child th,
+.itin-table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.itin-table .itin-col-day {
+	width: 22%;
+}
+
+.itin-table thead th {
 	background: var(--theme-color);
-}
-
-.itin-period {
-	margin-bottom: 0.9rem;
-}
-
-.itin-period:last-child {
-	margin-bottom: 0;
-}
-
-.itin-period-title {
+	color: #fff;
 	font-size: 0.8125rem;
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
-	color: var(--text-muted);
-	margin-bottom: 0.5rem;
+	padding: 0.75rem 1rem;
 }
 
-.itin-period-title::before {
-	content: "";
-	display: inline-block;
-	width: 7px;
-	height: 7px;
-	border-radius: 50%;
-	background: var(--theme-color);
-	margin-right: 0.5rem;
-	vertical-align: 1px;
+.itin-table tbody th.itin-col-day {
+	background: var(--bg-secondary);
+	color: var(--text-primary);
+	font-size: 0.95rem;
+	font-weight: 700;
+}
+
+.itin-table tbody tr:nth-child(even) td {
+	background: var(--bg-secondary);
+}
+
+.itin-empty {
+	display: block;
+	min-height: 1em;
 }
 
 .itin-list {
@@ -366,16 +415,33 @@
 }
 
 @media (max-width: 600px) {
-	.content {
-		grid-template-columns: 1fr;
+	.itin-table th,
+	.itin-table td {
+		padding: 0.6rem 0.5rem;
 	}
 
-	.itin-day {
-		padding: 1.25rem;
+	.itin-table thead th {
+		font-size: 0.7rem;
+	}
+}
+
+/* Mobile: let the 5-column table scroll horizontally with the day column
+   pinned so the trip day stays visible while scanning the periods. */
+@media (max-width: 768px) {
+	.itin-table {
+		min-width: 640px;
 	}
 
-	.itin-day-title {
-		font-size: 1.15rem;
+	.itin-table-wrap {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.itin-table .itin-col-day {
+		position: sticky;
+		left: 0;
+		z-index: 1;
+		box-shadow: 1px 0 0 var(--border-color);
 	}
 }
 

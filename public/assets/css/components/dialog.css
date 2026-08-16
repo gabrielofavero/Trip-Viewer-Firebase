@@ -69,7 +69,7 @@ body.dialog-open {
 	background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
 }
 .dialog-image.no-image {
-	background: linear-gradient(135deg, var(--theme-color), var(--theme-secondary));
+	background: linear-gradient(135deg, var(--no-image-bg), var(--no-image-bg-alt));
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -79,7 +79,7 @@ body.dialog-open {
 }
 .dialog-image .dialog-image-icon {
 	font-size: 56px;
-	color: rgba(255, 255, 255, 0.5);
+	color: var(--text-muted);
 }
 .dialog-close {
 	position: absolute;
@@ -158,9 +158,9 @@ body.dialog-open {
 	margin-bottom: 18px;
 }
 .module-pill {
-	padding: 4px 10px;
+	padding: 6px 12px;
 	border-radius: 20px;
-	font-size: 11px;
+	font-size: 13px;
 	font-weight: 500;
 	background: var(--bg-tertiary);
 	color: var(--text-secondary);
@@ -175,4 +175,14 @@ body.dialog-open {
 .dialog-action-btn {
 	flex: 1;
 	height: 42px;
+}
+
+/* Link buttons drop their text labels when crowded or on small screens */
+.dialog-actions-links.dialog-actions-icons .dialog-action-btn span {
+	display: none;
+}
+@media (max-width: 576px) {
+	.dialog-actions-links .dialog-action-btn span {
+		display: none;
+	}
 }

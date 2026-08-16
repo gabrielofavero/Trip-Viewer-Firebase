@@ -665,6 +665,8 @@ section {
 	background-color: #fff;
 	border: 0.5px solid var(--table-border);
 	margin-bottom: 0px;
+	width: 100%;
+	table-layout: fixed;
 }
 
 #calendarTitle {
@@ -1717,6 +1719,13 @@ section {
 	overflow-y: hidden;
 }
 
+/* Lock the page behind the lightbox so only the lightbox content scrolls
+   (the loading screen re-enables body scroll after mount, which otherwise
+   leaves the trip page scrolling underneath → double scrollbar). */
+body.lightbox-open {
+	overflow: hidden !important;
+}
+
 .lightbox-content {
 	position: absolute;
 	top: 0;
@@ -1744,17 +1753,18 @@ section {
 
 /* Lightbox chrome */
 .lightbox-toolbar {
-	position: sticky;
-	top: 0;
-	z-index: 5;
 	display: flex;
 	justify-content: flex-end;
+	gap: 8px;
 	background: var(--background-color, #fff);
 	padding: 8px 0;
 	margin-bottom: 8px;
 }
 
 .lightbox-close {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	width: 40px;
 	height: 40px;
 	border: none;
@@ -1771,6 +1781,44 @@ section {
 	background: var(--box-color-hover, #ecebeb);
 }
 
+.lightbox-close i {
+	font-size: 20px;
+	line-height: 1;
+}
+
+/* Printing from the inline lightbox (full itinerary): hide the trip page and
+   let the lightbox content flow normally so the itinerary table paginates
+   with its repeating <thead>. */
+@media print {
+	body.lightbox-open .loadable > *:not(#main),
+	body.lightbox-open #main > *:not(#lightbox),
+	body.lightbox-open footer,
+	body.lightbox-open #preloader,
+	body.lightbox-open #toast {
+		display: none !important;
+	}
+
+	body.lightbox-open #lightbox {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		overflow: visible !important;
+		background: #fff !important;
+	}
+
+	body.lightbox-open .lightbox-content {
+		position: static !important;
+		height: auto !important;
+		overflow: visible !important;
+		padding: 0 !important;
+		background: #fff !important;
+	}
+
+	body.lightbox-open .lightbox-toolbar {
+		display: none !important;
+	}
+}
+
 /* Destination lightbox reuses the full-bleed page hero from destination.html,
    so drop the document padding and let the hero run edge-to-edge while the
    close button floats over it. */
@@ -1779,8 +1827,32 @@ section {
 }
 
 .lightbox-content.destination-mode .lightbox-toolbar {
+	position: sticky;
+	top: 0;
+	z-index: 10;
 	padding: 12px 20px;
 	background: transparent;
+	/* The toolbar is in normal flow, which would otherwise push the hero down
+	   and leave a plain-white strip above it. Pull the hero up so it starts at
+	   the very top, behind the floating X. */
+	margin-bottom: -64px;
+	pointer-events: none;
+}
+
+.lightbox-content.destination-mode .lightbox-close {
+	pointer-events: auto;
+}
+
+/* The hero's `background-attachment: fixed` and its fixed white overlay both
+   anchor to the viewport, which detaches them from the lightbox's scrollable
+   container and leaves plain-white gaps. Re-anchor both to the hero so the
+   frosted photo fills the box edge-to-edge. */
+.lightbox-content.destination-mode .page-hero {
+	background-attachment: scroll;
+}
+
+.lightbox-content.destination-mode .page-hero::before {
+	position: absolute;
 }
 
 /* The destination component renders into #content; keep it full-width.
@@ -1793,6 +1865,12 @@ section {
    top-bar that doesn't exist inside the lightbox). */
 #lightbox .section-title h1 {
 	padding-top: 0;
+}
+
+/* The standalone content-box reserves 60px for the fixed top-bar; the
+   lightbox has none, so collapse that spacer to a small breathing gap. */
+.lightbox-content.destination-mode #destination-content-box {
+	padding-top: 24px;
 }
 
 /*--------------------------------------------------------------
@@ -2714,8 +2792,8 @@ input[type="radio"] {
 }
 
 .view-item-transport-logo {
-	max-width: 100%;
-	max-height: 100%;
+	max-width: 60%;
+	max-height: 60%;
 	object-fit: contain;
 }
 
@@ -2732,6 +2810,39 @@ input[type="radio"] {
 	font-weight: 700;
 	color: var(--text-primary);
 	text-align: center;
+}
+
+/* Reservation badge shown top-right in the item dialog header, next to the
+   title (same position as the destination score badge). */
+.dialog-reservation-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	border-radius: 20px;
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--text-primary);
+	background: var(--bg-tertiary);
+	border: 1px solid var(--border-color);
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+.dialog-reservation-badge .reservation-icon {
+	font-size: 16px;
+	color: var(--theme-color);
+}
+
+.dialog-reservation-badge .reservation-code {
+	color: var(--text-primary);
+	text-decoration: none;
+}
+
+.dialog-reservation-badge .copy-icon {
+	margin-left: 2px;
+	height: 16px;
+	width: 16px;
 }
 
 @media (max-width: 576px) {
