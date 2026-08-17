@@ -20,24 +20,3 @@ admin.initializeApp();
 // Dev: initialize a fresh local Firestore emulator database
 import * as initLocalDbModule from './dev/init-local-db';
 export const initLocalDb = initLocalDbModule.initLocalDb;
-
-// Migration 17: Places API prep — grants the canUsePlacesAPI permission
-// to UIDs passed in the request body and adds a `placeAPI` object to
-// destination entries. Usage: ?dryRun=true for preview; POST {"uids": [...]} to grant.
-import * as migratePlacesApiModule from './migrations/17-migrate-places-api';
-export const migratePlacesApi = migratePlacesApiModule.migrate;
-
-// Migration 18: Trip destination metadata backfill — enriches each
-// trips/{id}.destinationRefs[i] with denormalized destination metadata
-// (title, image, per-category "has entries" booleans, version) so view.html
-// can render the destinations section without fetching the destination docs.
-// Usage: ?dryRun=true for preview.
-import * as migrateTripDestinationMetadataModule from './migrations/18-migrate-trip-destination-metadata';
-export const migrateTripDestinationMetadata =
-	migrateTripDestinationMetadataModule.migrate;
-
-// Migration 19: Destination entry region → regions — converts the legacy
-// single-string `region` field on every destination entry into a `regions`
-// array. Usage: ?dryRun=true for preview.
-import * as migrateDestinationRegionsModule from './migrations/19-migrate-destination-regions';
-export const migrateDestinationRegions = migrateDestinationRegionsModule.migrate;

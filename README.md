@@ -46,7 +46,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 175   | 171  | 4         | 0       |
 | 🏆   | Feature     | F000 | 187   | 170  | 17        | 0       |
-| 📈   | Improvement | M000 | 181   | 158  | 22        | 1       |
+| 📈   | Improvement | M000 | 184   | 158  | 22        | 4       |
 | ⚔️   | Epic        | E000 | 51    | 40   | 7         | 4       |
 
 ## Backlog
@@ -57,6 +57,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 ### Low Priority
 
+- 📈 **M182:** [DEV] Kill dev env
+- 📈 **M183:** [DEV] Auto run migration scripts after deployment
+- 📈 **M184:** [DEV] Remove double deployment
 - ⚔️ **E047:** [DEV] Implement Unit Tests
 - ⚔️ **E019:** [DEV] Implement Sonarqube
 - ⚔️ **E046:** [DEV] Implement Playwright

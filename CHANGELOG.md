@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.23.0]
+## [2.23.0] - 2026-08-16
 
 - 📈 **M169:** [DEV] Improve cache busting
 - 🏆 **F177:** Add app version on footers
