@@ -108,7 +108,6 @@ export async function loadEditTripPage() {
 	loadEnabled();
 	loadDraggablesWithAccordions(['transportation', 'accommodations']);
 	newDynamicSelect('gallery-category');
-	newDynamicSelect('transportation-person');
 
 	setUserData(await getUserData());
 	const destSummaries = await getUserDestinationSummaries(await getUID());

@@ -33,10 +33,7 @@ import { getDestinationsAccordionBodyHTML } from '../../../pages/destination/sup
 import { getDialogActionsHTML } from '../../../pages/destination/support/card-actions.js';
 import { getRatingTranslation } from '../../../models/destination.model.js';
 import { getDestinationRaw } from '../../../data/services/destination.service.js';
-import {
-	getSensitiveReservationHTML,
-	loadSensitiveReservations,
-} from './sensitive-reservation.js';
+import { getSensitiveReservationHTML, loadSensitiveReservations } from './sensitive-reservation.js';
 
 /** Media index offset so view dialogs never collide with destination card indices. */
 const VIEW_ITEM_MEDIA_J = 9000;
@@ -239,7 +236,15 @@ function ensureDialog(): HTMLElement {
 	return dialog;
 }
 
-function showViewItemDialog({ mediaHTML, title, scoreHTML, badgeHTML = '', personPillsHTML = '', contentHTML, mediaJ }): void {
+function showViewItemDialog({
+	mediaHTML,
+	title,
+	scoreHTML,
+	badgeHTML = '',
+	personPillsHTML = '',
+	contentHTML,
+	mediaJ,
+}): void {
 	const dialog = ensureDialog();
 
 	// Close any media (carousel Swiper) bound to the previous dialog before
@@ -429,10 +434,14 @@ function getAccommodationBodyHTML(acc) {
 	const checkIn = getAccommodationDate(acc.dates?.checkIn);
 	const checkOut = getAccommodationDate(acc.dates?.checkOut);
 	if (checkIn) {
-		rows.push(getTopicHTML('mdi:chevron-right', `${translate('trip.accommodation.checkin')}: ${checkIn}`));
+		rows.push(
+			getTopicHTML('mdi:chevron-right', `${translate('trip.accommodation.checkin')}: ${checkIn}`),
+		);
 	}
 	if (checkOut) {
-		rows.push(getTopicHTML('mdi:chevron-right', `${translate('trip.accommodation.checkout')}: ${checkOut}`));
+		rows.push(
+			getTopicHTML('mdi:chevron-right', `${translate('trip.accommodation.checkout')}: ${checkOut}`),
+		);
 	}
 
 	return `
@@ -537,18 +546,26 @@ function getTransportationBodyHTML(transport, company) {
 		rows.push(getTopicHTML('mdi:clock-outline', jsTimeToVisualTime(transport.duration)));
 	}
 
-	const departure = transport.dates?.departure ? convertFromDateObject(transport.dates.departure) : null;
+	const departure = transport.dates?.departure
+		? convertFromDateObject(transport.dates.departure)
+		: null;
 	const arrival = transport.dates?.arrival ? convertFromDateObject(transport.dates.arrival) : null;
 	if (departure) {
 		const departureText = `${getDateString(departure)} ${getTimeStringFromDate(departure)}`;
 		rows.push(
-			getTopicHTML('mdi:chevron-right', `${translate('trip.transportation.departure')}: ${departureText}`),
+			getTopicHTML(
+				'mdi:chevron-right',
+				`${translate('trip.transportation.departure')}: ${departureText}`,
+			),
 		);
 	}
 	if (arrival) {
 		const arrivalText = `${getDateString(arrival)} ${getTimeStringFromDate(arrival)}`;
 		rows.push(
-			getTopicHTML('mdi:chevron-right', `${translate('trip.transportation.arrival')}: ${arrivalText}`),
+			getTopicHTML(
+				'mdi:chevron-right',
+				`${translate('trip.transportation.arrival')}: ${arrivalText}`,
+			),
 		);
 	}
 
@@ -561,16 +578,23 @@ function getTransportTypeIcon(type) {
 }
 
 function getPersonPillsHTML(transport) {
+	const travelers = getState().travelers || [];
 	const names = String(transport.person || '')
 		.split(',')
-		.map((name) => name.trim())
-		.filter(Boolean);
+		.map((value) => value.trim())
+		.filter(Boolean)
+		.map((value) => {
+			const traveler = travelers.find((t) => t.id === value);
+			return traveler ? traveler.name : value;
+		});
 	return getPersonPillsFromNames(names);
 }
 
 function getPersonPillsFromNames(names) {
 	if (names.length === 0) return '';
-	const pills = names.map((name) => `<span class="module-pill">${escapeHtml(name)}</span>`).join('');
+	const pills = names
+		.map((name) => `<span class="module-pill">${escapeHtml(name)}</span>`)
+		.join('');
 	return `<div class="dialog-modules">${pills}</div>`;
 }
 
@@ -618,6 +642,6 @@ function getTopicHTML(icon, content, rawContent = false) {
 	return `
         <div class="destinations-topic" style="display: block">
             <i class="iconify color-icon" data-icon="${icon}"></i>
-            ${rawContent ? content : (content || '')}
+            ${rawContent ? content : content || ''}
         </div>`;
 }

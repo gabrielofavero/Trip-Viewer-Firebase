@@ -26,6 +26,7 @@ import {
 } from './categories/accommodation.js';
 import { addRemoveTransportationListener } from './support/event-listeners.js';
 import { DateRangePicker } from '../../ui/date-range-picker.js';
+import { getTravelerOptionsHTML } from './categories/travelers.js';
 import {
 	getDestinationsItemCheckbox,
 	getActiveDestinationsSelectVisibility,
@@ -116,9 +117,11 @@ export function addTransportation() {
             </fieldset>
 
             <div class="nice-form-group" id="people-box-${j}">
-              <label>${translate('labels.person')}</label>
-              <select ${getID('people-view').checked ? 'required' : ''} class="edit-select" id="transportation-person-select-${j}" style="display: none;"></select>
-              <input class="nice-form-group" id="transportation-person-${j}" type="text" placeholder="${translate('labels.person')}" />
+              <label>${translate('labels.traveler')}</label>
+              <select ${getID('people-view').checked ? 'required' : ''} class="edit-select" id="transportation-person-select-${j}">
+                <option value="">${translate('labels.select')}</option>
+                ${getTravelerOptionsHTML()}
+              </select>
             </div>
 
             <div class="nice-form-group">
@@ -206,7 +209,9 @@ export function addTransportation() {
 			: j == 2
 				? getID('end').value
 				: getID(`transportation-arrival-date-${j - 1}`).value;
-	getID(`transportation-arrival-date-${j}`).value = getID(`transportation-departure-date-${j}`).value;
+	getID(`transportation-arrival-date-${j}`).value = getID(
+		`transportation-departure-date-${j}`,
+	).value;
 
 	// Initialize date range picker for this transportation
 	const transportDurPicker = getID(`transportation-duration-${j}`);
@@ -216,12 +221,6 @@ export function addTransportation() {
 	loadTransportationVisibility(j);
 	applyTransportationTypeVisualization(j);
 	addRemoveTransportationListener(j);
-	addSelectorDS(
-		'transportation-person',
-		`transportation-person-select-${j}`,
-		`transportation-person-${j}`,
-		() => updateTransportationTitle(j),
-	);
 
 	function getTypeOptions() {
 		let result = '';

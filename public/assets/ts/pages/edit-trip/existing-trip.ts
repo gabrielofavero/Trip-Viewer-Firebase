@@ -22,6 +22,7 @@ import {
 	loadTransportationVisibility,
 	updateTransportationTitle,
 	applyTransportationTypeVisualization,
+	buildTransportationPersonSelect,
 } from './categories/transportation.js';
 import {
 	ACCOMMODATION_IMAGES,
@@ -170,10 +171,13 @@ async function loadTransportationData() {
 	// Map back to the radio button IDs used in the HTML.
 	const rawViewMode = getState().transportation.viewMode || 'simple-view';
 	const viewModeId =
-		rawViewMode === 'simple' ? 'simple-view' :
-		rawViewMode === 'leg' ? 'leg-view' :
-		rawViewMode === 'people' ? 'people-view' :
-		rawViewMode;
+		rawViewMode === 'simple'
+			? 'simple-view'
+			: rawViewMode === 'leg'
+				? 'leg-view'
+				: rawViewMode === 'people'
+					? 'people-view'
+					: rawViewMode;
 	getID(viewModeId).checked = true;
 
 	for (let j = 1; j <= getState().transportation.data.length; j++) {
@@ -184,9 +188,7 @@ async function loadTransportationData() {
 
 		const person = transport.person;
 		if (person) {
-			getID(`transportation-person-${j}`).value = person;
-			updateValueDS('transportation-person', person, `transportation-person-select-${j}`);
-			buildDS('transportation-person');
+			buildTransportationPersonSelect(`transportation-person-select-${j}`, person);
 		}
 
 		const departure = convertFromDateObject(transport.dates.departure);
@@ -202,10 +204,7 @@ async function loadTransportationData() {
 
 		const picker = getTransportationPicker(j);
 		if (picker && departure && arrival) {
-			picker.setRange(
-				getDateString(departure, 'yyyy-mm-dd'),
-				getDateString(arrival, 'yyyy-mm-dd'),
-			);
+			picker.setRange(getDateString(departure, 'yyyy-mm-dd'), getDateString(arrival, 'yyyy-mm-dd'));
 		}
 
 		getID(`transportation-type-${j}`).value = transport.type;

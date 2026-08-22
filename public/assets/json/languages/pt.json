@@ -176,7 +176,7 @@
 			"return": "Retorno",
 			"simple_view": "Visualização simplificada",
 			"leg_view": "Agrupar por trajeto",
-			"people_view": "Agrupar por pessoas",
+			"people_view": "Agrupar por viajante",
 			"time_window": "Horário",
 			"departure_location": {
 				"title": "Local de partida",
@@ -753,6 +753,7 @@
 		"days": "Dias",
 		"people": "Pessoas",
 		"person": "Pessoa",
+		"traveler": "Viajante",
 		"highlights": "Destaques",
 		"overview": "Resumo",
 		"view": "Ver",

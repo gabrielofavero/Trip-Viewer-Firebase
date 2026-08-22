@@ -179,7 +179,7 @@
 			"arrival_time": "Arrival time",
 			"simple_view": "Simplified view",
 			"leg_view": "Group by leg",
-			"people_view": "Group by people",
+			"people_view": "Group by traveler",
 			"time_window": "Time window",
 			"departure_location": {
 				"title": "Departure location",
@@ -756,6 +756,7 @@
 		"days": "Days",
 		"people": "People",
 		"person": "Person",
+		"traveler": "Traveler",
 		"highlights": "Highlights",
 		"overview": "Overview",
 		"view": "View",

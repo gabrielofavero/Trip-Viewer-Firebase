@@ -21,6 +21,16 @@ var ACTIVE_TRANSPORTATION;
 var ACTIVE_TRANSPORTATIONS = [];
 var ACTIVE_TRANSPORTATION_TITLES = [];
 
+/**
+ * Resolve a traveler id (stored in transport.person) to its display name.
+ * Falls back to the raw value so legacy free-text/name entries still render.
+ */
+function getTravelerName(id: string): string {
+	const travelers = getState().travelers || [];
+	const traveler = travelers.find((t) => t.id === id);
+	return traveler ? traveler.name : id;
+}
+
 /** Maps Portuguese data keys to English HTML element suffixes (from cleanup refactoring) */
 function mapTransportationKey(key: string): string {
 	const map: Record<string, string> = {
@@ -54,7 +64,12 @@ function getSwiperData() {
 		),
 	];
 	ACTIVE_TRANSPORTATION_TITLES = [
-		...new Set(getState().transportation.data.map((item) => item[key])),
+		...new Set(
+			getState().transportation.data.map((item) => {
+				const raw = item[key];
+				return viewMode === 'people-view' ? getTravelerName(raw) : raw;
+			}),
+		),
 	];
 	ACTIVE_TRANSPORTATION = viewMode === 'people-view' ? ACTIVE_TRANSPORTATIONS[0] : 'departure';
 

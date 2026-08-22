@@ -11,7 +11,8 @@ import { formattedDateToDateObject, getTimeBetweenDates } from '../../../utils/d
 import { translate } from '../../../i18n/translation.js';
 import { validateLink } from '../../../ui/fields.js';
 import { closeAccordions, openLastAccordion } from '../../../ui/accordion.js';
-import { buildDS } from '../../../ui/dynamic-select.js';
+import { TRAVELERS } from '../../../data/state.js';
+import { getTravelerOptionsHTML } from './travelers.js';
 import { addTransportation } from '../new-trip.js';
 
 export function getTransportationObject(protectedReservationCodes = false) {
@@ -102,14 +103,43 @@ function getTransportationType(i) {
 }
 
 function getPerson(i) {
-	const select = getID(`transportation-person-select-${i}`).value;
-	const input = getID(`transportation-person-${i}`).value;
+	const id = getID(`transportation-person-select-${i}`).value;
+	const traveler = TRAVELERS.find((t) => t.id === id);
+	return traveler ? traveler.name : id;
+}
 
-	if (select === 'other' || select === 'select') {
-		return input;
+/**
+ * Populate a transportation leg "group by traveler" select from the trip's
+ * travelers (values are traveler IDs, labels are names). Backward compatible:
+ * when currentValue isn't a known traveler ID (legacy free-text/name values),
+ * it is preserved as an extra option so nothing is lost on save.
+ */
+export function buildTransportationPersonSelect(selectID, currentValue = '') {
+	const select = getID(selectID);
+	if (!select) return;
+
+	let options = `<option value="">${translate('labels.select')}</option>`;
+	options += getTravelerOptionsHTML();
+
+	const knownIds = TRAVELERS.map((t) => t.id);
+	if (currentValue && !knownIds.includes(currentValue)) {
+		options += `<option value="${currentValue}">${currentValue}</option>`;
 	}
 
-	return select;
+	select.innerHTML = options;
+	if (currentValue) {
+		select.value = currentValue;
+	}
+}
+
+/** Rebuild every transportation leg person select, keeping current values. */
+export function refreshTransportationPersonSelects() {
+	for (const child of getChildIDs('transportation-box')) {
+		const select = getID(`transportation-person-select-${getJ(child)}`);
+		if (select) {
+			buildTransportationPersonSelect(select.id, select.value);
+		}
+	}
 }
 
 export function loadTransportationVisibility(j) {
@@ -248,5 +278,4 @@ export function transportationAddListenerAction() {
 	closeAccordions('transportation');
 	addTransportation();
 	openLastAccordion('transportation');
-	buildDS('transportation-person');
 }

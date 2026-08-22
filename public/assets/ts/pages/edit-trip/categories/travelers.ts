@@ -16,6 +16,7 @@ import {
 } from '../../../models/traveler.model.js';
 import { loadItineraryData } from '../existing-trip.js';
 import { TRAVELERS, DOCUMENT_ID, setTravelersFn } from '../../../data/state.js';
+import { refreshTransportationPersonSelects } from './transportation.js';
 
 export function setTravelers(val) {
 	setTravelersFn(val);
@@ -108,6 +109,7 @@ export function saveTravelersInfo() {
 	setTravelersFn(travelers);
 	closeMessage();
 	updateTravelersButtonLabel();
+	refreshTransportationPersonSelects();
 	if (DOCUMENT_ID) {
 		loadItineraryData();
 	}
@@ -266,6 +268,23 @@ export function getTravelersSelectOptionsHTML() {
 		}
 	}
 	return TRAVELER_SELECT_OPTIONS;
+}
+
+/**
+ * Fresh traveler options (never cached) — used by the transportation leg
+ * "group by traveler" select so options always reflect the current travelers,
+ * even after the traveler list is edited mid-session. Values are traveler IDs;
+ * labels are traveler names.
+ */
+export function getTravelerOptionsHTML(): string {
+	let result = '';
+	for (const traveler of TRAVELERS) {
+		if (!traveler.name) {
+			continue;
+		}
+		result += `<option value="${traveler.id}">${traveler.name}</option>`;
+	}
+	return result;
 }
 
 export function getTravelerName(id) {

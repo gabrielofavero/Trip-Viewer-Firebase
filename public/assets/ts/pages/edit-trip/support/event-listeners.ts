@@ -188,13 +188,7 @@ function endListenerAction() {
 }
 
 export function addRemoveTransportationListener(j) {
-	const dynamicSelects = [
-		{
-			type: 'transportation-person',
-			selectID: `transportation-person-select-${j}`,
-		},
-	];
-	addRemoveChildListenerDS('transportation', j, dynamicSelects);
+	addRemoveChildListenerDS('transportation', j);
 }
 
 export function addRemoveGalleryListener(j) {
