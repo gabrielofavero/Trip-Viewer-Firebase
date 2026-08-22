@@ -47,13 +47,15 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 | 🐞   | Bug         | B000 | 175   | 171  | 4         | 0       |
 | 🏆   | Feature     | F000 | 187   | 170  | 17        | 0       |
 | 📈   | Improvement | M000 | 184   | 158  | 22        | 4       |
-| ⚔️   | Epic        | E000 | 51    | 40   | 7         | 4       |
+| ⚔️   | Epic        | E000 | 51    | 40   | 6         | 5       |
 
 ## Backlog
 
 ### High Priority
 
 ### Medium Priority
+
+- ⚔️ **E014:** Implementation: Shopping List + Expenses linked with traveler
 
 ### Low Priority
 
@@ -812,8 +814,6 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🏆 **F046:** Create reordering options for destinations
   - *On edit and trip pages*
   - *Order by rating and by name (↑↓)*
-- ⚔️ **E014:** Implementation: Wishlist
-  - *Find a template online and apply (credit the source)*
 - 📈 **M104:** All external links should open via window.open
 - 📈 **M087:** Destination loads everything immediately
 - 🏆 **F070:** Add to calendar component

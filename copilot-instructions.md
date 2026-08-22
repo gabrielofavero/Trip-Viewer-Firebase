@@ -9,7 +9,7 @@ This is **TripViewer** — a vanilla TypeScript/JavaScript single-page applicati
 
 ## Skills
 
-This workspace has **12 domain-specific agent skills** in `.github/skills/`. These are registered skills that Copilot discovers automatically — you do NOT need the user to invoke them with `/`. Load them proactively:
+This workspace has **14 domain-specific agent skills** in `.github/skills/`. These are registered skills that Copilot discovers automatically — you do NOT need the user to invoke them with `/`. Load them proactively:
 
 | Skill | When to Read |
 |---|---|
@@ -23,6 +23,7 @@ This workspace has **12 domain-specific agent skills** in `.github/skills/`. The
 | `typescript-conventions` | Module organization, page routing, service layer, coding conventions |
 | `i18n-system` | Translations, language switching, JSON language packs |
 | `backup-restore` | Account backup/restore, document export/import |
+| `static-export` | Offline/static web export, export manifests, self-hosted assets, and image-proxy integration |
 | `backlog-management` | README task IDs, readme.py script |
 | `git-workflow` | Branch strategy, commit conventions, sync/deploy flow |
 | `ntfy-notifications` | **ALWAYS** — see "**Notifications (do not skip)**" section below. Send an ntfy.sh notification (topic `DeepSeek`) via `scripts/dev/ntfy.mjs` when a task/milestone finishes, on long work, or before prompting the user |

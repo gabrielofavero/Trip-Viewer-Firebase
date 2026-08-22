@@ -76,11 +76,12 @@ emulator; dev/prd verify against Google's public keys via the token's
 ```bash
 cd workers/image-proxy
 npm install
-npm run dev        # wrangler dev --port 8788
+npm run dev        # wrangler dev --port 8789
 ```
 
 `npm run dev` at the repo root starts this worker automatically (alongside
-`workers/places-api`). Port **8788** is reserved for it (8787 = places-api).
+`workers/places-api`). Port **8789** is reserved for it (8787 = places-api;
+8788 belongs to the gmaps-scraper server).
 
 ## Deploy
 
@@ -102,7 +103,7 @@ for local token verification only.
 
 ```bash
 # local (auth against the emulator):
-curl -s -X POST http://localhost:8788/ \
+curl -s -X POST http://localhost:8789/ \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <emulator id token>" \
   -d '{"urls":["https://images.trvl-media.com/…jpg?w=10"]}' | head -c 300

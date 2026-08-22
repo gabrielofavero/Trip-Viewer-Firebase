@@ -14,7 +14,7 @@ const net = require('net');
 const { execSync } = require('child_process');
 
 // Must match the port list in the `kill-ports` npm script.
-const PORTS = [8085, 9099, 5000, 5001, 4000, 8787, 8788];
+const PORTS = [8085, 9099, 5000, 5001, 4000, 8787, 8788, 8789, 9230, 9231];
 
 function isPortBusy(port) {
   return new Promise((resolve) => {

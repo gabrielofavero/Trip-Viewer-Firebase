@@ -229,7 +229,7 @@ async function addManifestFiles(
 const IMAGE_PROXY_DEPLOYED_URL =
 	'https://trip-viewer-image-proxy.gabriel-o-favero.workers.dev';
 /** Local image-proxy via `wrangler dev` (workers/image-proxy/README.md). */
-const IMAGE_PROXY_LOCAL_URL = 'http://localhost:8788';
+const IMAGE_PROXY_LOCAL_URL = 'http://localhost:8789';
 
 /** Hostnames that count as a LOCAL development environment (same set as places-api). */
 const IMAGE_PROXY_LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
