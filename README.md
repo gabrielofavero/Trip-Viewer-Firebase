@@ -45,9 +45,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 175   | 171  | 4         | 0       |
-| 🏆   | Feature     | F000 | 187   | 170  | 17        | 0       |
+| 🏆   | Feature     | F000 | 187   | 170  | 16        | 1       |
 | 📈   | Improvement | M000 | 184   | 158  | 22        | 4       |
-| ⚔️   | Epic        | E000 | 51    | 40   | 6         | 5       |
+| ⚔️   | Epic        | E000 | 51    | 41   | 5         | 5       |
 
 ## Backlog
 
@@ -55,6 +55,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 ### Medium Priority
 
+- 🏆 **F071:** Multi-person expenses
 - ⚔️ **E014:** Implementation: Shopping List + Expenses linked with traveler
 
 ### Low Priority
@@ -783,10 +784,10 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
   - 🏆 **F090:** *Account Import/Export: Interface*
 - 📈 **M086:** Improved error pop-up
 - 📈 **M154:** Reduce firestore calls on index
+- ⚔️ **E028:** Places API Text Search
 
 ### Discarded
 
-- ⚔️ **E028:** Places API Text Search
 - 🐞 **B031:** Fix gallery image from twitter opening with wrong proportions in GLightbox
 - 📈 **M072:** Improve automatic date adjustment in edit trips
 - 📈 **M076:** Automate PRD to DEV data restore (weekly) + Manual Function
@@ -803,7 +804,6 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M097:** Itinerary automations (edit/trip.html)
 - 🏆 **F069:** Tab for selecting destinations within the page
 - 🏆 **F065:** Show if accommodation was prepaid or not
-- 🏆 **F071:** Multi-person expenses
 - ⚔️ **E021:** Implementation: Lineup in view.html
   - *Instead of being in Destinations, it's a new category*
   - *Displays list of artists as a festival lineup (Example: RiR site)*
