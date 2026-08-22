@@ -15,6 +15,7 @@ import { getTravelerName } from './travelers.js';
 import { getTravelersSelectOptionsHTML } from './travelers.js';
 import { FIRESTORE_EXPENSES_DATA } from '../edit-trip.js';
 import { getSharingObject } from '../set-trip.js';
+import { getCurrencies } from '../../../app/config.js';
 
 var INNER_EXPENSES = {
 	preTrip: [],
@@ -80,7 +81,21 @@ function pushExpense(type, data) {
 
 function loadExpensesHTML() {
 	for (const category in INNER_EXPENSES) {
-		getID(category).innerHTML = '';
+		const container = getID(category);
+		if (!container) continue;
+		container.innerHTML = '';
+
+		// Category total (pre-trip / during-trip) — shown when there is content.
+		const allExpenses = INNER_EXPENSES[category].flatMap((t) => t.expenses);
+		if (allExpenses.length > 0) {
+			const totalDiv = document.createElement('div');
+			totalDiv.className = 'expenses-category-total';
+			totalDiv.innerHTML = `${translate('labels.total')}: <span class="highlight">${formatTripCurrency(
+				sumExpenses(allExpenses),
+			)}</span>`;
+			container.appendChild(totalDiv);
+		}
+
 		for (const innerExpense of INNER_EXPENSES[category]) {
 			buildInnerExpense(category, innerExpense);
 		}
@@ -94,7 +109,10 @@ function loadExpensesHTML() {
 		div.id = id;
 
 		const label = document.createElement('label');
-		label.innerText = translate(innerExpense.type, {}, false);
+		const subtotal = sumExpenses(innerExpense.expenses);
+		label.innerHTML = `${translate(innerExpense.type, {}, false)}<span class="expense-type-subtotal">${formatTripCurrency(
+			subtotal,
+		)}</span>`;
 		div.appendChild(label);
 
 		for (let i = 0; i < innerExpense.expenses.length; i++) {
@@ -103,10 +121,16 @@ function loadExpensesHTML() {
 			container.className = 'input-button-container';
 
 			const button = document.createElement('button');
-			button.className = 'btn input-button draggable';
-			button.innerHTML = expense.person
-				? `<span class="highlight">${getTravelerName(expense.person)}:</span> ${expense.name}`
-				: expense.name;
+			button.className = 'btn input-button draggable expense-item-button';
+			const travelerLabel = expense.person
+				? `<span class="highlight">${getTravelerName(expense.person)}:</span> `
+				: '';
+			button.innerHTML = `<span class="expense-item-main">${travelerLabel}${escapeHtml(
+				expense.name,
+			)}</span><span class="expense-item-price">${formatTripCurrency(
+				Number(expense.price) || 0,
+				expense.currency,
+			)}</span>`;
 			button.onclick = () => openInnerExpense(category, innerExpense.type, i);
 			container.appendChild(button);
 
@@ -121,6 +145,63 @@ function loadExpensesHTML() {
 		getID(category).appendChild(div);
 		initializeSortableForGroup(id, { onEnd: afterDragInnerExpense });
 	}
+}
+
+// ======= Edit-page helpers =======
+
+function sumExpenses(expenses): number {
+	return expenses.reduce((sum, e) => sum + (Number(e.price) || 0), 0);
+}
+
+/** Format an amount using the trip's currency (or the expense's own currency). */
+function formatTripCurrency(amount: number, currency?: string): string {
+	const cur = currency || getID('currency')?.value || 'BRL';
+	const symbols = getCurrencies()?.symbols || {};
+	const symbol = symbols[cur] || cur;
+	const formatted = new Intl.NumberFormat('pt-BR', {
+		style: 'decimal',
+		minimumFractionDigits: 2,
+		maximumFractionDigits: 2,
+	}).format(amount);
+	return `${symbol} ${formatted}`;
+}
+
+function escapeHtml(str: string): string {
+	return String(str ?? '')
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;');
+}
+
+function getExpensePeopleCheckboxesHTML(selected: string[] = []): string {
+	return TRAVELERS.filter((t) => t.name)
+		.map((traveler, index) => {
+			const checked = selected.includes(traveler.id) ? 'checked' : '';
+			return `<div class="nice-form-group expense-people-item">
+					<input type="checkbox" id="expense-people-${index}" value="${traveler.id}" ${checked} />
+					<label for="expense-people-${index}" class="checkbox-label">${escapeHtml(
+						traveler.name,
+					)}</label>
+				</div>`;
+		})
+		.join('');
+}
+
+function setExpensePeople(selected: string[]) {
+	const container = getID('expense-people-checkboxes');
+	if (!container) return;
+	container.innerHTML = getExpensePeopleCheckboxesHTML(selected || []);
+}
+
+function getCheckedExpensePeople(): string[] {
+	const container = getID('expense-people-checkboxes');
+	if (!container) return [];
+	const result = [];
+	for (const checkbox of container.querySelectorAll<HTMLInputElement>('input[type="checkbox"]')) {
+		if (checkbox.checked) result.push(checkbox.value);
+	}
+	return result;
 }
 
 export function openInnerExpense(category, type = '', index = -1) {
@@ -150,10 +231,14 @@ export function openInnerExpense(category, type = '', index = -1) {
 		getID('expense-person').value = expense.person || '';
 		getID('expense-currency').value = expense.currency;
 		getID('expense-price').value = expense.price;
+		getID('expense-link').value = expense.link || '';
+		setExpensePeople(expense.people || []);
 		applyExpenseInnerType(expense.type);
 	} else {
 		getID('expense-delete').style.display = 'none';
 		getID('expense-currency').value = getID('currency').value;
+		getID('expense-link').value = '';
+		setExpensePeople([]);
 		if (LAST_INNER_EXPENSE_TYPE) {
 			applyExpenseInnerType(LAST_INNER_EXPENSE_TYPE);
 		}
@@ -209,6 +294,7 @@ function getInnerExpenseContent(category, type, index) {
                         <option value="labels.people">${translate('labels.people')}</option>
                         <option value="trip.transportation.type.car">${translate('trip.transportation.type.car')}</option>
                         <option value="trip.transportation.title">${translate('trip.transportation.title')}</option>
+                        <option value="trip.expenses.shopping">${translate('trip.expenses.shopping')}</option>
                         <option value="labels.other">${translate('labels.other')}</option>
                         <option value="custom">${translate('labels.custom')}</option>
                     </select>
@@ -220,6 +306,10 @@ function getInnerExpenseContent(category, type, index) {
                         <option value="">${translate('labels.non_specified')}</option>
                         ${getTravelersSelectOptionsHTML()}
                     </select>
+                </div>
+                <div class="nice-form-group" id="expense-people-group" style="display:${TRAVELERS.length === 0 ? 'none' : ''}">
+                    <label>${translate('trip.expenses.split_with')}</label>
+                    <div id="expense-people-checkboxes" class="expense-people-list">${getExpensePeopleCheckboxesHTML()}</div>
                 </div>
                 <div class="nice-form-group">
                     <label>${translate('currency.title')}</label>
@@ -254,6 +344,10 @@ function getInnerExpenseContent(category, type, index) {
                     <label>${translate('labels.cost')}</label>
                     <input required class="input-full" id="expense-price" type="number" placeholder="0.00" step="0.01">
                 </div>
+                <div class="nice-form-group">
+                    <label>${translate('trip.expenses.link')}</label>
+                    <input id="expense-link" class="input-full" type="url" placeholder="https://..." />
+                </div>
                 <div class="button-box-right" id="expense-delete" style="margin-top: 8px; margin-bottom: 8px;">
                         <button data-action="delete-inner-expense" data-category="${category}" data-type="${type}" data-index="${index}" class="btn btn-basic btn-format">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -273,8 +367,10 @@ export function saveInnerExpense(category, type, index = -1) {
 				? getFieldValueOrNotify('expense-type-input')
 				: getID('expense-type-select').value,
 		person: getID('expense-person').value || '',
+		people: getCheckedExpensePeople(),
 		currency: getFieldValueOrNotify('expense-currency'),
 		price: price ? parseFloat(parseFloat(price).toFixed(2)) : null,
+		link: getID('expense-link')?.value?.trim() || '',
 	};
 
 	if (!newExpense.name || !newExpense.type || !newExpense.currency || !newExpense.price) return;

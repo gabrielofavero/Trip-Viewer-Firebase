@@ -19,6 +19,61 @@ import {
 // ======= Global state (shared across modules) =======
 export var EXPENSES_CONVERTED: Record<string, any> = {};
 
+// Active single-person view filter ('' = unified "all" view). Set by mount.ts.
+var ACTIVE_EXPENSE_PERSON = '';
+
+export function setActiveExpensePerson(personId: string): void {
+	ACTIVE_EXPENSE_PERSON = personId || '';
+}
+
+export function getActiveExpensePerson(): string {
+	return ACTIVE_EXPENSE_PERSON;
+}
+
+// ======= Expense Splitting & Single-Person Filter =======
+
+function round2(value: number): number {
+	return Math.round(value * 100) / 100;
+}
+
+/** Traveler IDs an expense is split among (falls back to the payer). */
+export function getExpensePeople(expense: any): string[] {
+	if (Array.isArray(expense?.people) && expense.people.length > 0) {
+		return expense.people;
+	}
+	return expense?.person ? [expense.person] : [];
+}
+
+/** Equal share multiplier for an expense (1 when not split). */
+export function getExpenseShare(expense: any): number {
+	const people = getExpensePeople(expense);
+	return people.length > 1 ? 1 / people.length : 1;
+}
+
+/** Whether an expense involves the given traveler (payer or split member). */
+export function isExpenseForPerson(expense: any, personId: string): boolean {
+	return getExpensePeople(expense).includes(personId);
+}
+
+/**
+ * The expense list used for rendering. In the unified view it returns the raw
+ * list; when a single person is selected it returns only that person's
+ * expenses with the price reduced to their equal share.
+ */
+export function getEffectiveExpensesList(type: string): any[] {
+	const expenses = EXPENSES_DATA?.[type] || [];
+	if (!ACTIVE_EXPENSE_PERSON) {
+		return expenses;
+	}
+	return expenses
+		.filter((expense: any) => isExpenseForPerson(expense, ACTIVE_EXPENSE_PERSON))
+		.map((expense: any) => {
+			const share = getExpenseShare(expense);
+			const price = share === 1 ? expense.price : round2((Number(expense.price) || 0) * share);
+			return { ...expense, price };
+		});
+}
+
 // ======= Currency Filtering & Sorting =======
 
 export function filterCurrencies(arr: string[]): string[] {
@@ -97,21 +152,23 @@ export function formatCurrency(currencyFloat: number, includeSymbol = false): st
 // ======= Currency Loading =======
 
 export function loadCurrenciesObject(): void {
-	if (EXPENSES_DATA.preTrip.length > 0 || EXPENSES_DATA.duringTrip.length > 0) {
+	const preTrip = EXPENSES_DATA?.preTrip;
+	const duringTrip = EXPENSES_DATA?.duringTrip;
+	if (preTrip?.length > 0 || duringTrip?.length > 0) {
 		// was "gastosPrevios" / "gastosDurante"
 		let previousCurrencies: string[] = [];
 		let duringCurrencies: string[] = [];
 
-		if (EXPENSES_DATA.preTrip.length > 0) {
+		if (preTrip?.length > 0) {
 			previousCurrencies = filterCurrencies(
-				EXPENSES_DATA.preTrip.map((expense: any) => expense.currency), // was "moeda"
+				preTrip.map((expense: any) => expense.currency), // was "moeda"
 			);
 			CURRENCIES.preTrip = previousCurrencies;
 		}
 
-		if (EXPENSES_DATA.duringTrip.length > 0) {
+		if (duringTrip?.length > 0) {
 			duringCurrencies = filterCurrencies(
-				EXPENSES_DATA.duringTrip.map((expense: any) => expense.currency), // was "moeda"
+				duringTrip.map((expense: any) => expense.currency), // was "moeda"
 			);
 			CURRENCIES.duringTrip = duringCurrencies;
 		}
@@ -152,6 +209,33 @@ export function processConvertedTravelerExpenses(): void {
 		const summaryMap = new Map(); // was "resumoMap"
 		let totalSummary = 0;
 
+		const addToTraveler = (person: string, amount: number, name: string): void => {
+			let entry = travelerMap.get(person);
+			if (!entry) {
+				entry = { name: person, total: 0, items: [] }; // was "nome", "itens"
+				entry._byType = new Map(); // was "_byTipo"
+				travelerMap.set(person, entry);
+			}
+
+			let typeItem = entry._byType.get(name); // was "tipoItem"
+			if (!typeItem) {
+				typeItem = { name: name, person: person, amount: 0 }; // was "nome", "pessoa", "valor"
+				entry._byType.set(name, typeItem);
+				entry.items.push(typeItem); // was "itens"
+			}
+
+			typeItem.amount += amount; // was "valor"
+			entry.total += amount;
+			totalSummary += amount;
+
+			let summaryEntry = summaryMap.get(person); // was "resumoEntry"
+			if (!summaryEntry) {
+				summaryEntry = { name: person, amount: 0 }; // was "nome", "valor"
+				summaryMap.set(person, summaryEntry);
+			}
+			summaryEntry.amount += amount; // was "valor"
+		};
+
 		for (const type in types) {
 			const group = EXPENSES_CONVERTED?.[currency]?.[type]; // was "grupo"
 			if (!group?.items) continue; // was "itens"
@@ -162,39 +246,34 @@ export function processConvertedTravelerExpenses(): void {
 
 				for (const item of expense.items) {
 					// was "itens"
-					const person = item.person // was "pessoa"
-						? EXPENSES_DATA.travelers[item.person] // was "pessoas"
-						: 'labels.non_specified';
-
 					const amount = Number(item.amount) || 0; // was "valor"
 					const name = types[type];
 
-					let entry = travelerMap.get(person);
-					if (!entry) {
-						entry = { name: person, total: 0, items: [] }; // was "nome", "itens"
-						entry._byType = new Map(); // was "_byTipo"
-						travelerMap.set(person, entry);
+					if (ACTIVE_EXPENSE_PERSON) {
+						// Single-person view: the amount is already this person's share.
+						const person =
+							EXPENSES_DATA?.travelers?.[ACTIVE_EXPENSE_PERSON] || ACTIVE_EXPENSE_PERSON;
+						addToTraveler(person, amount, name);
+						continue;
 					}
 
-					let typeItem = entry._byType.get(name); // was "tipoItem"
-					if (!typeItem) {
-						typeItem = { name: name, person: person, amount: 0 }; // was "nome", "pessoa", "valor"
-						entry._byType.set(name, typeItem);
-						entry.items.push(typeItem); // was "itens"
+					const people =
+						Array.isArray(item.people) && item.people.length > 0
+							? item.people
+							: item.person
+								? [item.person]
+								: [];
+
+					if (people.length === 0) {
+						addToTraveler('labels.non_specified', amount, name);
+						continue;
 					}
 
-					typeItem.amount += amount; // was "valor"
-					entry.total += amount;
-
-					totalSummary += amount;
-
-					let summaryEntry = summaryMap.get(person); // was "resumoEntry"
-					if (!summaryEntry) {
-						summaryEntry = { name: person, amount: 0 }; // was "nome", "valor"
-						summaryMap.set(person, summaryEntry);
+					const share = people.length > 1 ? 1 / people.length : 1;
+					for (const personId of people) {
+						const person = EXPENSES_DATA?.travelers?.[personId] || personId;
+						addToTraveler(person, round2(amount * share), name);
 					}
-
-					summaryEntry.amount += amount; // was "valor"
 				}
 			}
 		}
@@ -252,6 +331,8 @@ export function calculateConvertedExpenses(
 		const expenseName = expense.name; // was "nome"
 		const expenseType = expense.type; // was "tipo"
 		const expensePerson = expense.person; // was "pessoa"
+		const expensePeople = Array.isArray(expense.people) ? expense.people : [];
+		const expenseLink = expense.link || '';
 
 		const itemNames = items.map((item: any) => item.name); // was "itemNomes", "itens", "nome"
 		const itemIndex = itemNames.indexOf(expenseType);
@@ -260,6 +341,8 @@ export function calculateConvertedExpenses(
 			items[itemIndex].items.push({
 				name: expenseName,
 				person: expensePerson,
+				people: expensePeople,
+				link: expenseLink,
 				amount,
 			}); // was "itens", "nome", "pessoa", "valor"
 		} else {
@@ -272,6 +355,8 @@ export function calculateConvertedExpenses(
 					{
 						name: expenseName, // was "nome"
 						person: expensePerson, // was "pessoa"
+						people: expensePeople,
+						link: expenseLink,
 						amount, // was "valor"
 					},
 				],
@@ -279,7 +364,7 @@ export function calculateConvertedExpenses(
 		}
 	}
 
-	const expenses = EXPENSES_DATA[type]; // was "gastos"
+	const expenses = getEffectiveExpensesList(type); // was "gastos" (filtered by active person)
 	const summary = {
 		// was "resumo"
 		total: 0,

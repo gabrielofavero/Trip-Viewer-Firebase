@@ -1321,11 +1321,80 @@
 }
 
 .expenses-item > label {
-	display: block;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
 	font-weight: 600;
 	font-size: 0.8125rem;
 	color: var(--text-primary);
 	margin-bottom: 8px;
+}
+
+.expenses-category-total {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	font-weight: 700;
+	font-size: 0.9375rem;
+	color: var(--text-primary);
+	padding: 10px 12px;
+	margin-bottom: 12px;
+	border: 1px solid var(--border-color);
+	border-radius: 8px;
+	background-color: var(--box-color);
+}
+
+.expense-type-subtotal {
+	margin-left: auto;
+	font-weight: 600;
+	font-size: 0.8125rem;
+	color: var(--subtitle);
+}
+
+.expense-item-button {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	width: 100%;
+	text-align: left;
+}
+
+.expense-item-main {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.expense-item-price {
+	margin-left: auto;
+	flex-shrink: 0;
+	font-weight: 600;
+	color: var(--subtitle);
+}
+
+.expense-people-list {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin-top: 4px;
+}
+
+.expense-people-item {
+	margin-top: 0;
+}
+
+.expense-people-item label {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-bottom: 0;
+}
+
+.expense-people-item input[type="checkbox"] {
+	margin: 0;
 }
 
 /*--------------------------------------------------------------

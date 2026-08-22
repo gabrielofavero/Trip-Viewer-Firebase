@@ -45,18 +45,15 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 175   | 171  | 4         | 0       |
-| 🏆   | Feature     | F000 | 188   | 171  | 16        | 1       |
+| 🏆   | Feature     | F000 | 188   | 172  | 16        | 0       |
 | 📈   | Improvement | M000 | 184   | 158  | 22        | 4       |
-| ⚔️   | Epic        | E000 | 51    | 41   | 5         | 5       |
+| ⚔️   | Epic        | E000 | 51    | 42   | 5         | 4       |
 
 ## Backlog
 
 ### High Priority
 
 ### Medium Priority
-
-- 🏆 **F071:** Multi-person expenses
-- ⚔️ **E014:** Implementation: Shopping List + Expenses linked with traveler
 
 ### Low Priority
 
@@ -130,7 +127,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
   - *[📈M180] Self-hosted icons & web fonts (drop dead gapi)*
 - 🏆 **F187:** [DEV] Add support for AI mobile push notification (ntfy)
 - 📈 **M181:** Remove PIN typing need on index.html
-- 🏆 **F188:** Group transportation by traveler (select from trip travelers instead of free text)
+- ⚔️ **E014:** Implementation: Shopping List
+  - *[🏆F188] Group transportation by traveler (select from trip travelers instead of free text)*
+  - *[🏆F071] Multi-person expenses*
 
 ### July 2026
 

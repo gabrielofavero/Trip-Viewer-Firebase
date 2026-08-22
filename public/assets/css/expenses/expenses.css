@@ -449,3 +449,56 @@ section {
 .highlight {
 	font-weight: bold;
 }
+
+/*--------------------------------------------------------------
+# Auto-scroll (content taller than the viewport)
+--------------------------------------------------------------*/
+.expenses-container {
+	max-height: 75vh;
+	overflow-y: auto;
+	overflow-x: hidden;
+	scroll-behavior: smooth;
+}
+
+/*--------------------------------------------------------------
+# Traveler view selector ("View by": All / single traveler)
+--------------------------------------------------------------*/
+.expense-view-selector {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	margin: 8px 0 20px;
+	padding: 0 2rem;
+}
+
+.expense-view-selector label {
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: var(--subtitle);
+}
+
+.expense-view-selector select {
+	max-width: 260px;
+}
+
+/*--------------------------------------------------------------
+# Clickable expense links
+--------------------------------------------------------------*/
+.expense-link {
+	color: var(--theme-color);
+	text-decoration: none;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	max-width: 100%;
+}
+
+.expense-link:hover {
+	text-decoration: underline;
+}
+
+.expense-link .iconify {
+	font-size: 1rem;
+	flex-shrink: 0;
+}

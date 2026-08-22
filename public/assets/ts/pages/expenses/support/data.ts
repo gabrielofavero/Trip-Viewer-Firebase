@@ -12,6 +12,17 @@ import { EXPENSES_DATA } from '../mount.js';
 
 var EXPENSES_CHARTS = {};
 
+function escapeHtml(value: string): string {
+	return String(value ?? '')
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;');
+}
+
+function escapeAttr(value: string): string {
+	return escapeHtml(value).replace(/"/g, '&quot;');
+}
+
 // Tabelas
 export function setTable(id, items, total) {
 	if (!items || items.length === 0) {
@@ -39,12 +50,24 @@ export function setTable(id, items, total) {
 
 	function tr(item) {
 		const title = translate(item.name, {}, false);
-		const person = item.person ? EXPENSES_DATA?.people?.[item.person] : undefined;
+		const people =
+			Array.isArray(item.people) && item.people.length > 0
+				? item.people
+				: item.person
+					? [item.person]
+					: [];
+		const names = people.map((id) => EXPENSES_DATA?.travelers?.[id] || id).filter(Boolean);
+		const label = names.length
+			? `<span class="highlight">${names.map(escapeHtml).join(', ')}:</span> ${title}`
+			: title;
+
 		const tr = document.createElement('tr');
 
 		const td1 = document.createElement('td');
 		td1.className = `table-texto-left`;
-		td1.innerHTML = person ? `<span class="highlight">${person}:</span> ${title}` : title;
+		td1.innerHTML = item.link
+			? `<a class="expense-link" href="${escapeAttr(item.link)}" target="_blank" rel="noopener noreferrer"><i class="iconify" data-icon="mdi:link-variant"></i>${label}</a>`
+			: label;
 		tr.appendChild(td1);
 
 		const td2 = document.createElement('td');

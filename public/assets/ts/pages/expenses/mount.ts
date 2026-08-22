@@ -13,11 +13,7 @@
 
 import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { getID } from '../../utils/dom.js';
-import {
-	closeMessage,
-	displayError,
-	displayForbidden,
-} from '../../utils/messages.js';
+import { closeMessage, displayError, displayForbidden } from '../../utils/messages.js';
 import { translate } from '../../i18n/translation.js';
 import { loadCurrencies } from '../../app/config.js';
 import {
@@ -29,8 +25,10 @@ import {
 } from './support/currency.js';
 import {
 	EXPENSES_CONVERTED,
+	getActiveExpensePerson,
 	getConversionText,
 	loadConvertedExpenses,
+	setActiveExpensePerson,
 } from '../../models/expense.model.js';
 import { fade } from '../../theme/animations.js';
 import { requestPin, requestInvalidPin } from '../../utils/pin.js';
@@ -220,6 +218,8 @@ async function loadExpenses(
 }
 
 export function applyExpenses() {
+	loadTravelerViewSelector();
+
 	const hasPreTrip = EXPENSES_DATA.preTrip?.length > 0;
 	const hasDuringTrip = EXPENSES_DATA.duringTrip?.length > 0;
 
@@ -278,9 +278,14 @@ export function applyExpenses() {
 	}
 
 	function hasTravelerExpenses() {
-		const hasPersonDuring = EXPENSES_DATA.duringTrip?.some((i: any) => i.person);
-		const hasPersonPre = EXPENSES_DATA.preTrip?.some((i: any) => i.person);
-		return EXPENSES_DATA.travelers && (hasPersonDuring || hasPersonPre);
+		// Consider both the payer (`person`) and split members (`people`): an
+		// expense can be tied to travelers via `people` alone (no payer chosen).
+		const referencesAny = (list: any[]) =>
+			list?.some((i: any) => i?.person || (Array.isArray(i?.people) && i.people.length > 0));
+		return (
+			EXPENSES_DATA.travelers &&
+			(referencesAny(EXPENSES_DATA.duringTrip) || referencesAny(EXPENSES_DATA.preTrip))
+		);
 	}
 }
 
@@ -301,11 +306,95 @@ export function setTabListeners() {
 	});
 }
 
+// ======= Traveler View Selector =======
+
+/**
+ * Traveler IDs referenced by any expense (payer `person` or split `people`).
+ */
+function collectExpenseTravelerIds(): Set<string> {
+	const set = new Set<string>();
+	for (const type of ['preTrip', 'duringTrip']) {
+		for (const expense of EXPENSES_DATA?.[type] || []) {
+			if (expense?.person) set.add(expense.person);
+			for (const id of expense?.people || []) set.add(id);
+		}
+	}
+	return set;
+}
+
+function hasSplitExpenses(): boolean {
+	for (const type of ['preTrip', 'duringTrip']) {
+		for (const expense of EXPENSES_DATA?.[type] || []) {
+			if (Array.isArray(expense?.people) && expense.people.length > 1) return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * Any expense with no payer (`person`) and no split members (`people`). These
+ * belong to nobody, so a per-person view would exclude them — which makes the
+ * "All vs single traveler" toggle meaningful even with a single traveler.
+ */
+function hasUnregisteredExpenses(): boolean {
+	for (const type of ['preTrip', 'duringTrip']) {
+		for (const expense of EXPENSES_DATA?.[type] || []) {
+			const hasPerson = !!expense?.person;
+			const hasPeople = Array.isArray(expense?.people) && expense.people.length > 0;
+			if (!hasPerson && !hasPeople) return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * Renders the "View by" traveler selector (All / per traveler) and wires it
+ * to recompute the converted data + re-render the whole page.
+ */
+function loadTravelerViewSelector() {
+	const container = getID('traveler-view');
+	const select = getID('expense-view-traveler');
+	if (!container || !select) return;
+
+	const usedIds = collectExpenseTravelerIds();
+	// Show the toggle when there is at least one traveler referenced AND a
+	// per-person view would actually differ from the "All" view: multiple
+	// travelers, split expenses, or unregistered expenses to exclude.
+	if (
+		usedIds.size === 0 ||
+		(usedIds.size < 2 && !hasSplitExpenses() && !hasUnregisteredExpenses())
+	) {
+		container.style.display = 'none';
+		return;
+	}
+
+	container.style.display = '';
+	const travelers = EXPENSES_DATA?.travelers || {};
+	const current = getActiveExpensePerson();
+
+	let options = `<option value="">${translate('labels.all')}</option>`;
+	for (const id of usedIds) {
+		const name = travelers[id] || id;
+		options += `<option value="${id}" ${id === current ? 'selected' : ''}>${name}</option>`;
+	}
+	select.innerHTML = options;
+
+	select.onchange = () => {
+		setActiveExpensePerson(select.value);
+		loadConvertedExpenses();
+		applyExpenses();
+		setTabListeners();
+		const conversion = getID('conversion');
+		if (conversion) conversion.innerText = getConversionText();
+	};
+}
+
 // ======= State Reset (idempotent re-mount) =======
 
 function resetExpensesState() {
 	EXPENSES_DATA = undefined;
 	ACTIVE_EXPENSE_TAB = 'summary';
+	setActiveExpensePerson('');
 	CURRENCIES.summary = [];
 	CURRENCIES.preTrip = [];
 	CURRENCIES.duringTrip = [];
@@ -328,7 +417,12 @@ function resetExpensesState() {
 		if (el) el.style.display = display;
 	};
 	restore('tab-expenses', 'none');
-	for (const id of ['radio-summary', 'radio-preTrip', 'radio-duringTrip', 'radio-expensesTravelers']) {
+	for (const id of [
+		'radio-summary',
+		'radio-preTrip',
+		'radio-duringTrip',
+		'radio-expensesTravelers',
+	]) {
 		restore(id, 'none');
 	}
 	restore('summary', '');
@@ -339,6 +433,7 @@ function resetExpensesState() {
 	restore('summary-duringTrip', 'none');
 	restore('summary-expensesTravelers', 'none');
 	restore('tab-currencies', 'none');
+	restore('traveler-view', 'none');
 	restore('conversion', '');
 }
 
