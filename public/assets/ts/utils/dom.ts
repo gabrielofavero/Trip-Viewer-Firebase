@@ -702,7 +702,11 @@ export function getCurrentTrips(data: Record<string, any>) {
 			const end = convertFromDateObject(v.end);
 			return start <= today && today <= end;
 		})
-		.map(([id, v]: [string, any]) => ({ id, ...v }));
+		.map(([id, v]: [string, any]) => ({ id, ...v }))
+		.sort(
+			(a: any, b: any) =>
+				convertFromDateObject(a.start).getTime() - convertFromDateObject(b.start).getTime(),
+		);
 }
 
 export function getPreviousTrips(data: Record<string, any>) {
@@ -723,7 +727,7 @@ export function getNextTrips(data: Record<string, any>) {
 		.map(([id, v]: [string, any]) => ({ id, ...v }))
 		.sort(
 			(a: any, b: any) =>
-				convertFromDateObject(b.start).getTime() - convertFromDateObject(a.start).getTime(),
+				convertFromDateObject(a.start).getTime() - convertFromDateObject(b.start).getTime(),
 		);
 }
 
