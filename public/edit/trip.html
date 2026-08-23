@@ -176,75 +176,34 @@
             <div class="nice-form-group customization-box" id="background-box">
               <label><span data-translate="labels.wallpaper"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <button type="button" id="import-wallpaper-from-destination" class="btn input-button"
-                data-action="open-wallpaper-destination-import" style="display: none;">
-                <span data-translate="labels.customization.images.import_from_destination"></span>
+              <button type="button" class="image-picker-card" id="wallpaper-picker-card"
+                data-action="open-image-picker" data-type="background">
+                <span class="image-picker-thumb" id="wallpaper-picker-thumb"></span>
+                <span class="image-picker-label" id="wallpaper-picker-label"></span>
               </button>
-              <input id="upload-background" class="image-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
-              <p id="upload-background-size-message" class="message-text"> <i class='red'>*</i> <span
-                  data-translate="labels.image.upload_limit"></span></p>
             </div>
 
-            <div class="nice-form-group">
-              <input id="link-background" class="image-input" type="url" data-translate="labels.image.placeholder"
-                value="" class="icon-right">
-            </div>
-
-            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-background">
-              <div class="modern-radio-group">
-                <div class="nice-form-group">
-                  <input type="radio" name="type-background" id="enable-link-background" checked>
-                  <label for="enable-link-background" data-translate="labels.image.link"></label>
-                </div>
-
-                <div class="nice-form-group">
-                  <input type="radio" name="type-background" id="enable-upload-background">
-                  <label for="enable-upload-background"><span data-translate="labels.image.upload"></span><span
-                      class="optional"> (<span data-translate="labels.image.upload_limit"></span>)</span></label>
-                </div>
-              </div>
-            </fieldset>
-
-            <div class="nice-form-group customization-box">
-              <label><span data-translate="labels.customization.images.logo_light"></span> <span class="optional">(<span
+            <div class="nice-form-group customization-box" id="logo-box">
+              <label><span data-translate="labels.logo"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="upload-logo-light" type="file" accept=".png" />
-              <p id="upload-logo-light-size-message" class="message-text"> <i class='red'>*</i> <span
-                  data-translate="labels.image.upload_limit"></span></p>
-            </div>
-
-            <div class="nice-form-group">
-              <input id="link-logo-light" class="image-input" type="url" data-translate="labels.image.placeholder"
-                value="" class="icon-right">
-            </div>
-
-            <div class="nice-form-group customization-box">
-              <label><span data-translate="labels.customization.images.logo_dark"></span> <span class="optional">(<span
-                    data-translate="labels.optional"></span>)</span></label>
-              <input id="upload-logo-dark" class="image-uploadbox" type="file" accept=".png" />
-              <p id="upload-logo-dark-size-message" class="message-text"> <i class='red'>*</i> <span
-                  data-translate="labels.image.upload_limit"></span></p>
-            </div>
-
-            <div class="nice-form-group">
-              <input id="link-logo-dark" class="image-input" type="url" data-translate="labels.image.placeholder"
-                value="" class="icon-right">
-            </div>
-
-            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-logo">
-              <div class="modern-radio-group">
-                <div class="nice-form-group">
-                  <input type="radio" name="type-logo" id="enable-link-logo" checked>
-                  <label for="enable-link-logo" data-translate="labels.image.link"></label>
-                </div>
-
-                <div class="nice-form-group">
-                  <input type="radio" name="type-logo" id="enable-upload-logo">
-                  <label for="enable-upload-logo"><span data-translate="labels.image.upload"></span><span
-                      class="optional"> (<span data-translate="labels.image.upload_limit"></span>)</span></label>
-                </div>
+              <div class="image-picker-logos">
+                <button type="button" class="image-picker-card logo-light" id="logo-light-picker-card"
+                  data-action="open-image-picker" data-type="logo-light">
+                  <span class="image-picker-thumb" id="logo-light-picker-thumb"></span>
+                  <span class="image-picker-label" id="logo-light-picker-label"></span>
+                </button>
+                <button type="button" class="image-picker-card logo-dark" id="logo-dark-picker-card"
+                  data-action="open-image-picker" data-type="logo-dark">
+                  <span class="image-picker-thumb" id="logo-dark-picker-thumb"></span>
+                  <span class="image-picker-label" id="logo-dark-picker-label"></span>
+                </button>
               </div>
-            </fieldset>
+            </div>
+
+            <!-- Hidden value inputs — set by the image picker dialog, read on save -->
+            <input type="hidden" id="link-background" value="" />
+            <input type="hidden" id="link-logo-light" value="" />
+            <input type="hidden" id="link-logo-dark" value="" />
           </div>
 
           <div class="nice-form-group">

@@ -45,7 +45,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 176   | 172  | 4         | 0       |
-| 🏆   | Feature     | F000 | 188   | 172  | 16        | 0       |
+| 🏆   | Feature     | F000 | 189   | 173  | 16        | 0       |
 | 📈   | Improvement | M000 | 185   | 159  | 22        | 4       |
 | ⚔️   | Epic        | E000 | 51    | 42   | 5         | 4       |
 

@@ -18,11 +18,14 @@ import { openAttributions } from '../../../utils/attributions.js';
 import { openPlacesDialog } from '../../../places/places-dialog.js';
 import { closeToast } from '../../../utils/messages.js';
 import { closeModal } from '../../../theme/visibility.js';
+import { openImagePicker } from '../../../ui/image-picker.js';
 
 export function loadEditDestinationListeners() {
 	registerActions({
-		'delete-destination': () => deleteDestination(),
-		'open-attributions': () => openAttributions(),
+		'delete-destination': () => deleteDestination(),		'open-image-picker': (target) => {
+			const type = target.getAttribute('data-type');
+			if (type) openImagePicker(type);
+		},		'open-attributions': () => openAttributions(),
 		'close-modal': (target) => {
 			const modalId = target.getAttribute('data-modal') || 'delete-modal';
 			closeModal(modalId);

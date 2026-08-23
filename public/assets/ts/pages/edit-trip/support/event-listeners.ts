@@ -7,10 +7,7 @@ import { addRemoveChildListenerDS } from '../../../ui/dynamic-select.js';
 import { registerActions } from '../../../ui/actions.js';
 import { registerActions as registerMessageActions } from '../../../utils/messages.js';
 import { openTravelersInfo, saveTravelersInfo } from '../categories/travelers.js';
-import {
-	openWallpaperDestinationImport,
-	refreshWallpaperDestinationOption,
-} from '../categories/wallpaper-import.js';
+import { openImagePicker, refreshImagePickers } from '../categories/wallpaper-import.js';
 import {
 	requestPinEditExpenses,
 	reconfirmPin,
@@ -55,7 +52,10 @@ export function loadEventListeners() {
 		reconfirmPin,
 		validatePin,
 		'open-travelers-info': () => openTravelersInfo(),
-		'open-wallpaper-destination-import': () => openWallpaperDestinationImport(),
+		'open-image-picker': (target) => {
+			const type = target.getAttribute('data-type');
+			if (type) openImagePicker(type);
+		},
 		'request-pin-expenses': () => requestPinEditExpenses(),
 		'delete-trip': () => deleteTrip(),
 		'open-inner-expense': (target) => {
@@ -155,9 +155,9 @@ export function loadEventListeners() {
 	// Barra de pesquisa em destinations
 	getID('destinations-search').addEventListener('input', () => searchDestinationsListenerAction());
 
-	// Wallpaper import button visibility (destinations may already be linked
-	// on load for existing trips; the destination-changed event handles edits).
-	refreshWallpaperDestinationOption();
+	// Render the wallpaper/logo picker cards (values are set for existing
+	// trips; the destination-changed event handles mid-edit changes).
+	refreshImagePickers();
 
 	window.addEventListener('beforeunload', (event) => {
 		if (hasUnsavedChanges() && !SUCCESSFUL_SAVE) {

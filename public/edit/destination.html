@@ -119,30 +119,15 @@
             <div class="nice-form-group customization-box" id="background-box">
               <label><span data-translate="labels.wallpaper"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="upload-background" class="image-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
-              <p id="upload-background-size-message" class="message-text"> <i class='red'>*</i> <span
-                  data-translate="labels.image.upload_limit"></span></p>
+              <button type="button" class="image-picker-card" id="wallpaper-picker-card"
+                data-action="open-image-picker" data-type="background">
+                <span class="image-picker-thumb" id="wallpaper-picker-thumb"></span>
+                <span class="image-picker-label" id="wallpaper-picker-label"></span>
+              </button>
             </div>
 
-            <div class="nice-form-group">
-              <input id="link-background" class="image-input" type="url" data-translate="labels.image.placeholder"
-                value="" class="icon-right">
-            </div>
-
-            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-background">
-              <div class="modern-radio-group">
-                <div class="nice-form-group">
-                  <input type="radio" name="type-background" id="enable-link-background" checked>
-                  <label for="enable-link-background" data-translate="labels.image.link"></label>
-                </div>
-
-                <div class="nice-form-group">
-                  <input type="radio" name="type-background" id="enable-upload-background">
-                  <label for="enable-upload-background"><span data-translate="labels.image.upload"></span><span
-                      class="optional"> (<span data-translate="labels.image.upload_limit"></span>)</span></label>
-                </div>
-              </div>
-            </fieldset>
+            <!-- Hidden value input — set by the image picker dialog, read on save -->
+            <input type="hidden" id="link-background" value="" />
           </div>
 
           <div id="delete-text" style="display: none;">

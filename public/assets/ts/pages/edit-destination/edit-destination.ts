@@ -67,6 +67,7 @@ import {
 } from '../../data/state.js';
 import { MESSAGE_PROPERTIES } from '../../utils/messages.js';
 import { initEditTabs } from '../../ui/edit-tabs.js';
+import { refreshImagePickers } from '../../ui/image-picker.js';
 // Places API dialog shell (P5). Imported here so it's part of the edit page
 // bundle; `populateDevPage` exposes it for console testing until P4 wires the
 // real accordion button.
@@ -139,6 +140,9 @@ export async function loadEditDestinationPage() {
 	loadImageSelector('background');
 
 	loadEventListeners();
+
+	// Render the wallpaper picker card (value is set while loading the doc).
+	refreshImagePickers();
 	stopLoadingScreen();
 	snapshotFormState();
 	$('body').css('overflow', 'auto');

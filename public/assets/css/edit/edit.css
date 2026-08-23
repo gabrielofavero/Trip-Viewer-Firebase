@@ -1805,9 +1805,117 @@
 	text-overflow: ellipsis;
 }
 
+/* Active destination card in the picker dialog (selection, not yet applied) */
+.wallpaper-import-card.selected {
+	border-color: rgba(var(--theme-color-rgb), 0.6);
+	box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.35);
+}
+
+.wallpaper-import-card.selected .wallpaper-import-name {
+	color: var(--theme-color);
+}
+
 .wallpaper-import-empty {
 	padding: 16px 0;
 	color: var(--text-muted);
+}
+
+/* Disabled confirm button (nothing selected yet) */
+.btn:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+/*--------------------------------------------------------------
+# Image Picker Cards (Wallpaper + Logos)
+--------------------------------------------------------------*/
+.image-picker-mode {
+	margin-bottom: 12px;
+}
+
+.image-picker-card {
+	display: block;
+	width: 100%;
+	max-width: 360px;
+	padding: 0;
+	margin: 0;
+	text-align: left;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md);
+	overflow: hidden;
+	cursor: pointer;
+	background: var(--bg-secondary);
+	transition:
+		border-color var(--transition-fast),
+		transform var(--transition-fast),
+		box-shadow var(--transition-fast);
+}
+
+.image-picker-card:hover {
+	border-color: rgba(var(--theme-color-rgb), 0.5);
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-md);
+}
+
+.image-picker-thumb {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 120px;
+	background-size: cover;
+	background-position: center;
+	background-color: var(--bg-tertiary);
+	color: var(--text-muted);
+}
+
+.image-picker-thumb.placeholder {
+	background-image: none !important;
+}
+
+.image-picker-icon {
+	font-size: 40px;
+}
+
+.image-picker-label {
+	display: block;
+	padding: 8px 10px;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/* Theme-aware caption color — adapts automatically in dark mode. */
+	color: var(--text-secondary);
+}
+
+/* Dark mode: keep the picker label clearly readable on the dark card. */
+[data-theme="dark"] .image-picker-label {
+	color: var(--text-primary);
+}
+
+.image-picker-logos {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	max-width: 360px;
+}
+
+/* Logo cards: contain the image and show it on contrasting backgrounds */
+.image-picker-card.logo-light .image-picker-thumb {
+	background-color: #ffffff;
+}
+
+.image-picker-card.logo-dark .image-picker-thumb {
+	background-color: #1a1a2e;
+}
+
+.image-picker-card.logo-light .image-picker-thumb,
+.image-picker-card.logo-dark .image-picker-thumb {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 /*--------------------------------------------------------------
