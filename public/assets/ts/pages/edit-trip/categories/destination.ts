@@ -34,7 +34,10 @@ export async function getDestinationsArray() {
 export async function loadActiveDestinations(firstBoot = true) {
 	ACTIVE_DESTINATIONS = [];
 	const destinationsEnabled = getID('destinations-enabled');
-	if (destinationsEnabled && !destinationsEnabled.checked) return;
+	if (destinationsEnabled && !destinationsEnabled.checked) {
+		notifyActiveDestinationsChanged();
+		return;
+	}
 
 	let result = [];
 	const container = getID('destinations-checkboxes');
@@ -48,6 +51,12 @@ export async function loadActiveDestinations(firstBoot = true) {
 	}
 
 	ACTIVE_DESTINATIONS = result;
+	notifyActiveDestinationsChanged();
+}
+
+/** Lets other modules (e.g. wallpaper import) react to link changes. */
+function notifyActiveDestinationsChanged() {
+	document.dispatchEvent(new CustomEvent('trip:activeDestinationsChanged'));
 }
 
 export async function updateActiveDestinationsHTMLs() {

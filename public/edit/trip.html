@@ -117,11 +117,11 @@
             <label data-translate="trip.basic_information.security.title"></label>
             <div class="modern-radio-group">
               <div class="nice-form-group">
-                <input type="radio" name="proteger-viagem" id="pin-disabled" />
+                <input type="radio" name="proteger-viagem" id="pin-disabled" checked />
                 <label for="pin-disabled" data-translate="trip.basic_information.security.disabled"></label>
               </div>
               <div class="nice-form-group">
-                <input type="radio" name="proteger-viagem" id="pin-sensitive-only" checked />
+                <input type="radio" name="proteger-viagem" id="pin-sensitive-only" />
                 <label for="pin-sensitive-only"
                   data-translate="trip.basic_information.security.sensitive_only"></label>
               </div>
@@ -176,6 +176,10 @@
             <div class="nice-form-group customization-box" id="background-box">
               <label><span data-translate="labels.wallpaper"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
+              <button type="button" id="import-wallpaper-from-destination" class="btn input-button"
+                data-action="open-wallpaper-destination-import" style="display: none;">
+                <span data-translate="labels.customization.images.import_from_destination"></span>
+              </button>
               <input id="upload-background" class="image-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
               <p id="upload-background-size-message" class="message-text"> <i class='red'>*</i> <span
                   data-translate="labels.image.upload_limit"></span></p>

@@ -20,6 +20,7 @@ import './categories/itinerary-module/inner-itinerary/inner-itinerary.js';
 import './categories/itinerary-module/inner-itinerary/text-replacement.js';
 import './categories/travelers.js';
 import './categories/gallery.js';
+import './categories/wallpaper-import.js';
 import './new-trip.js';
 import './existing-trip.js';
 import './set-trip.js';

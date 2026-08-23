@@ -257,7 +257,8 @@
 			"info": "Informações dos viajantes",
 			"quantity": "Quantidade de viajantes",
 			"unique": "Os nomes dos viajantes devem ser únicos",
-			"add": "Adicionar viajantes"
+			"add": "Adicionar viajantes",
+			"add_traveler": "Adicionar viajante"
 		}
 	},
 	"destination": {
@@ -270,6 +271,13 @@
 		"share": "Venha visualizar o destino \"{{name}}\" criado no TripViewer",
 		"all_used": "Não é possível adicionar novos destinos. Todos os destinos cadastrados nessa conta já foram utilizados",
 		"nothing": "Sem destinos cadastrados",
+		"unlink": {
+			"title": "Desvincular destino?",
+			"message": "Este destino está vinculado a outros conteúdos da viagem. Desvincular removerá esses vínculos:",
+			"itinerary": "{{count}} item(ns) do roteiro mostrarão apenas o título",
+			"wallpaper": "O papel de parede será mantido, mas tratado como imagem personalizada",
+			"confirm": "Desvincular"
+		},
 		"basic_information": "Adicione aqui as principais informações do seu destino",
 		"undefined": "Destino não definido",
 		"recent": "Adicionado recentemente",
@@ -780,6 +788,10 @@
 				"title": "Imagens Personalizadas",
 				"subtitle": "Adicione um papel de parede e um logotipo",
 				"background_subtitle": "Adicione uma imagem de fundo",
+				"import_from_destination": "Importar do destino",
+				"import_loading": "Carregando destinos...",
+				"no_destination_image": "Nenhum destino vinculado possui imagem",
+				"imported_from": "Papel de parede importado de {{name}}",
 				"logo_light": "Logotipo: Tema Claro",
 				"logo_dark": "Logotipo: Tema Escuro"
 			},

@@ -398,6 +398,52 @@ export function deleteInnerItinerary(j, k, period) {
 	}
 }
 
+/**
+ * Number of inner itinerary entries linked to the given destination
+ * (item.type === 'destinations' && item.location === destinationId).
+ */
+export function countItineraryDestinationLinks(destinationId: string): number {
+	let count = 0;
+	for (const key of Object.keys(INNER_ITINERARY)) {
+		const day = INNER_ITINERARY[key];
+		if (!day) continue;
+		for (const period of Object.keys(day)) {
+			const entries = day[period];
+			if (!Array.isArray(entries)) continue;
+			for (const entry of entries) {
+				if (entry?.item?.type === 'destinations' && entry.item.location === destinationId) {
+					count++;
+				}
+			}
+		}
+	}
+	return count;
+}
+
+/**
+ * Drops the destination reference from every inner itinerary entry linked to
+ * the given destination, leaving each entry as a plain title (its schedule
+ * text is kept). Returns the number of entries that were unlinked.
+ */
+export function unlinkItineraryDestinationLinks(destinationId: string): number {
+	let count = 0;
+	for (const key of Object.keys(INNER_ITINERARY)) {
+		const day = INNER_ITINERARY[key];
+		if (!day) continue;
+		for (const period of Object.keys(day)) {
+			const entries = day[period];
+			if (!Array.isArray(entries)) continue;
+			for (const entry of entries) {
+				if (entry?.item?.type === 'destinations' && entry.item.location === destinationId) {
+					entry.item = { type: '', id: '', location: '', category: '' };
+					count++;
+				}
+			}
+		}
+	}
+	return count;
+}
+
 // Listeners
 async function loadInnerItineraryListeners(j) {
 	const itemTransportation = getID(`inner-itinerary-item-transportation`);

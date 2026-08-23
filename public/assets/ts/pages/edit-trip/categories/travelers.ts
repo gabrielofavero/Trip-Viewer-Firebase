@@ -1,7 +1,7 @@
 // ======= Travelers =======
 // Traveler functions moved to models/traveler.model.js — imported here for backward compat
 
-import { cloneObject, getID, getReadableArray } from '../../../utils/dom.js';
+import { cloneObject, getID, getReadableArray, getRandomID } from '../../../utils/dom.js';
 import { translate } from '../../../i18n/translation.js';
 import {
 	closeMessage,
@@ -41,64 +41,138 @@ export function openTravelersInfo() {
 	];
 
 	displayFullMessage(properties);
-	getID('travelersCount').addEventListener('change', function () {
-		getID('travelers-names-container').innerHTML = getTravelersNameContent();
-	});
+	loadTravelersModalListeners();
 }
 
+/**
+ * Traveler modal — dynamic list UX.
+ * One row per traveler (name input + remove button) plus an explicit
+ * "Add traveler" button. Replaces the old "number of travelers" spinner,
+ * which wiped entered names every time the count changed.
+ */
 function getTravelersInfoContent() {
+	const rows = TRAVELERS.length
+		? TRAVELERS.map((traveler, i) => getTravelerRowHTML(i, traveler)).join('')
+		: getTravelerRowHTML(0);
+
 	return `
-    <div class="nice-form-group">
-        <label>${translate('trip.travelers.quantity')}</label>
-        <input required class="flex-input" id="travelersCount" type="number" placeholder="0" min="1" max="10" value="${TRAVELERS.length || 1}" />
+    <div class="travelers-list" id="travelers-list">
+        ${rows}
     </div>
-    <div id="travelers-names-container">
-        ${getTravelersNameContent()}
-    </div>
+    <button type="button" class="btn input-button travelers-add" id="add-traveler">
+        <span>+ ${translate('trip.travelers.add_traveler')}</span>
+    </button>
     <div class="nice-form-group" id="travelers-names-unique" style="display: none">
         <span class="red">${translate('trip.travelers.unique')}</span>
     </div>
-
     `;
 }
 
-function getTravelersNameContent() {
-	const properties = [];
+function getTravelerRowHTML(index: number, traveler?: { id?: string; name?: string }) {
 	const nameLabel = translate('labels.name');
-	const travelersCount = getID('travelersCount');
-	const quantity = travelersCount ? parseInt(travelersCount.value) || 1 : TRAVELERS.length || 1;
-
-	for (let j = 1; j <= quantity; j++) {
-		const traveler = TRAVELERS[j - 1];
-		const id = getID(`traveler-id-${j}`)?.value || traveler?.id || getNewTravelerID();
-		const name = getID(`traveler-name-${j}`)?.value || traveler?.name || '';
-
-		properties.push(`
-            <div class="nice-form-group">
-                <label>${nameLabel} ${j}</label>
-                <input id="traveler-id-${j}" type="text" value="${id}" style="display: none" disabled>
-                <input id="traveler-name-${j}" type="text" maxlength="10" placeholder="${nameLabel}" ${name ? `value="${name}"` : ''}>
+	const id = traveler?.id || getNewTravelerID();
+	const name = traveler?.name || '';
+	return `
+        <div class="travelers-row" data-index="${index}">
+            <div class="nice-form-group travelers-name-group">
+                <label class="travelers-row-label">${nameLabel} ${index + 1}</label>
+                <input type="hidden" class="travelers-id-input" id="traveler-id-${index}" value="${id}" />
+                <input class="travelers-name-input" id="traveler-name-${index}" type="text" maxlength="10"
+                    placeholder="${nameLabel}" ${name ? `value="${name}"` : ''} />
             </div>
-        `);
-	}
+            <button type="button" class="travelers-remove" data-index="${index}"
+                aria-label="${translate('labels.delete')}" title="${translate('labels.delete')}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor" fill-rule="evenodd"
+                        d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+    `;
+}
 
-	return properties.join('');
+function loadTravelersModalListeners() {
+	const list = getID('travelers-list');
+	if (!list) return;
+
+	getID('add-traveler').addEventListener('click', addTravelerRow);
+
+	// Event delegation so remove buttons work on every row, including new ones.
+	list.addEventListener('click', (event) => {
+		const button = (event.target as Element).closest<HTMLElement>('.travelers-remove');
+		if (!button) return;
+		button.closest<HTMLElement>('.travelers-row')?.remove();
+		reindexTravelersRows();
+		hideTravelersUniqueWarning();
+	});
+}
+
+function addTravelerRow() {
+	const list = getID('travelers-list');
+	if (!list) return;
+	const index = list.children.length;
+	list.insertAdjacentHTML('beforeend', getTravelerRowHTML(index, { id: getNewTravelerIDForModal(list) }));
+	hideTravelersUniqueWarning();
+	getID(`traveler-name-${index}`)?.focus();
+}
+
+/**
+ * Generates a traveler ID unique against both the saved travelers and the rows
+ * already present in the open modal (avoids collisions when several rows are
+ * added in a single session).
+ */
+function getNewTravelerIDForModal(list: HTMLElement): string {
+	const usedIDs = [
+		...TRAVELERS.map((t) => t.id),
+		...Array.from(list.querySelectorAll<HTMLInputElement>('.travelers-id-input')).map((input) => input.value),
+	];
+	return getRandomID({ pool: usedIDs });
+}
+
+/** Renumbers row labels / input ids after a row is removed. */
+function reindexTravelersRows() {
+	const list = getID('travelers-list');
+	if (!list) return;
+	const nameLabel = translate('labels.name');
+	Array.from(list.children).forEach((row, i) => {
+		const rowEl = row as HTMLElement;
+		rowEl.dataset.index = String(i);
+		const idInput = rowEl.querySelector<HTMLInputElement>('.travelers-id-input');
+		const nameInput = rowEl.querySelector<HTMLInputElement>('.travelers-name-input');
+		if (idInput) idInput.id = `traveler-id-${i}`;
+		if (nameInput) nameInput.id = `traveler-name-${i}`;
+		const label = rowEl.querySelector('.travelers-row-label');
+		if (label) label.textContent = `${nameLabel} ${i + 1}`;
+		const removeBtn = rowEl.querySelector<HTMLElement>('.travelers-remove');
+		if (removeBtn) removeBtn.dataset.index = String(i);
+	});
+}
+
+function hideTravelersUniqueWarning() {
+	const warning = getID('travelers-names-unique');
+	if (warning) warning.style.display = 'none';
 }
 
 export function saveTravelersInfo() {
-	let j = 1;
+	const list = getID('travelers-list');
+	if (!list) return;
+
 	const travelers = [];
-	while (getID(`traveler-name-${j}`)) {
+	for (const row of list.querySelectorAll<HTMLElement>('.travelers-row')) {
+		const name = row.querySelector<HTMLInputElement>('.travelers-name-input')?.value.trim() || '';
+		if (!name) {
+			continue; // Skip empty rows
+		}
 		travelers.push({
-			id: getID(`traveler-id-${j}`).value,
-			name: getID(`traveler-name-${j}`).value.trim(),
+			id: row.querySelector<HTMLInputElement>('.travelers-id-input')?.value || getNewTravelerID(),
+			name,
 		});
-		j++;
 	}
 
 	const names = travelers.map((t) => t.name);
 	const hasRepetitions = names.some((name, index) => {
-		return names.indexOf(name) !== index && name !== '';
+		return names.indexOf(name) !== index;
 	});
 
 	if (hasRepetitions) {

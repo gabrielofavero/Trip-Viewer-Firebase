@@ -8,6 +8,10 @@ import { registerActions } from '../../../ui/actions.js';
 import { registerActions as registerMessageActions } from '../../../utils/messages.js';
 import { openTravelersInfo, saveTravelersInfo } from '../categories/travelers.js';
 import {
+	openWallpaperDestinationImport,
+	refreshWallpaperDestinationOption,
+} from '../categories/wallpaper-import.js';
+import {
 	requestPinEditExpenses,
 	reconfirmPin,
 	validatePin,
@@ -51,6 +55,7 @@ export function loadEventListeners() {
 		reconfirmPin,
 		validatePin,
 		'open-travelers-info': () => openTravelersInfo(),
+		'open-wallpaper-destination-import': () => openWallpaperDestinationImport(),
 		'request-pin-expenses': () => requestPinEditExpenses(),
 		'delete-trip': () => deleteTrip(),
 		'open-inner-expense': (target) => {
@@ -149,6 +154,10 @@ export function loadEventListeners() {
 
 	// Barra de pesquisa em destinations
 	getID('destinations-search').addEventListener('input', () => searchDestinationsListenerAction());
+
+	// Wallpaper import button visibility (destinations may already be linked
+	// on load for existing trips; the destination-changed event handles edits).
+	refreshWallpaperDestinationOption();
 
 	window.addEventListener('beforeunload', (event) => {
 		if (hasUnsavedChanges() && !SUCCESSFUL_SAVE) {

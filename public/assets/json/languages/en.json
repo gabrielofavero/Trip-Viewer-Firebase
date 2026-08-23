@@ -260,7 +260,8 @@
 			"info": "Travelers information",
 			"quantity": "Number of travelers",
 			"unique": "Traveler names must be unique",
-			"add": "Add travelers"
+			"add": "Add travelers",
+			"add_traveler": "Add traveler"
 		}
 	},
 	"destination": {
@@ -273,6 +274,13 @@
 		"share": "Check out the destination \"{{name}}\" created on TripViewer",
 		"all_used": "Cannot add new destinations. All destinations registered in this account have already been used",
 		"nothing": "No destinations registred",
+		"unlink": {
+			"title": "Unlink destination?",
+			"message": "This destination is linked to other trip content. Unlinking will remove those links:",
+			"itinerary": "{{count}} itinerary item(s) will show only their title",
+			"wallpaper": "The wallpaper will be kept, but treated as a custom image",
+			"confirm": "Unlink"
+		},
 		"basic_information": "Add the main information about your destination here",
 		"undefined": "Undefined destination",
 		"recent": "Recently added",
@@ -783,6 +791,10 @@
 				"title": "Custom images",
 				"subtitle": "Add a wallpaper and a logo",
 				"background_subtitle": "Add a background image",
+				"import_from_destination": "Import from destination",
+				"import_loading": "Loading destinations...",
+				"no_destination_image": "No linked destination has an image",
+				"imported_from": "Wallpaper imported from {{name}}",
 				"logo_light": "Logo: Light mode",
 				"logo_dark": "Logo: Dark mode"
 			},

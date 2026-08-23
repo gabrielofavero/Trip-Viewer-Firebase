@@ -132,6 +132,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
   - *[🏆F071] Multi-person expenses*
 - 🐞 **B176:** Order upcoming trips on index from closest to furthest from now
 - 📈 **M185:** [DEV] Make emulator exit backup opt-in (not automatic on npm run dev exit)
+- 🏆 **F189:** Import destination images from edit trip + link improvements
 
 ### July 2026
 

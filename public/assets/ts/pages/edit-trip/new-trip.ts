@@ -1,5 +1,5 @@
 import { getTransportations } from '../../app/config.js';
-import { getCategoryID, getChildIDs, getID, getJ, getNextJ } from '../../utils/dom.js';
+import { cloneObject, getCategoryID, getChildIDs, getID, getJ, getNextJ } from '../../utils/dom.js';
 import { addSelectorDS } from '../../ui/dynamic-select.js';
 import {
 	formattedDateToDate,
@@ -12,6 +12,7 @@ import {
 import { addRemoveChildListener, registerVisibilityExport } from '../../theme/visibility.js';
 import { loadImageSelector } from '../../data/firebase/storage.js';
 import { translate } from '../../i18n/translation.js';
+import { closeMessage, displayFullMessage, MESSAGE_PROPERTIES } from '../../utils/messages.js';
 import { DESTINATIONS } from '../../data/state.js';
 import {
 	loadTransportationListeners,
@@ -27,6 +28,7 @@ import {
 import { addRemoveTransportationListener } from './support/event-listeners.js';
 import { DateRangePicker } from '../../ui/date-range-picker.js';
 import { getTravelerOptionsHTML } from './categories/travelers.js';
+import { switchPinLabel, switchPinVisibility } from './categories/basic-data/protected-data.js';
 import {
 	getDestinationsItemCheckbox,
 	getActiveDestinationsSelectVisibility,
@@ -41,6 +43,14 @@ import {
 	updateItineraryTitle,
 	reloadItinerary,
 } from './categories/itinerary-module/itinerary-module.js';
+import {
+	countItineraryDestinationLinks,
+	unlinkItineraryDestinationLinks,
+} from './categories/itinerary-module/inner-itinerary/inner-itinerary.js';
+import {
+	getWallpaperSourceDestination,
+	handleWallpaperSourceUnlink,
+} from './categories/wallpaper-import.js';
 import {
 	updateActiveDestinationsHTMLs,
 	reorganizeDestinationsCheckbox,
@@ -69,6 +79,11 @@ function loadBasicFieldsNewTrip() {
 	getID('end').value = TOMORROW;
 
 	getID('currency').value = 'BRL';
+
+	// New trips default to "no protection" — reflect that in the PIN section
+	// visibility and button label (see #pin-disabled in trip.html).
+	switchPinVisibility();
+	switchPinLabel();
 }
 
 const TRANSPORTATION_PICKERS = new Map<number, DateRangePicker>();
@@ -355,20 +370,96 @@ export function loadDestinations() {
 		container.innerHTML += getDestinationsItemCard(destination.id, destination.title);
 	}
 
-	// Card click: toggle selected, move to top of selected group
+	// Card click: toggle selected, move to top of selected group.
+	// Unselecting a destination linked to itinerary items or used as the
+	// wallpaper prompts the user before those links are removed.
 	for (const card of container.querySelectorAll('.destination-card')) {
-		card.addEventListener('click', () => {
-			card.classList.toggle('selected');
-			// Move clicked card to top of selected group
-			if (card.classList.contains('selected')) {
-				container.prepend(card);
-			}
-			reorganizeDestinationsCheckbox();
-			updateActiveDestinationsHTMLs();
-		});
+		card.addEventListener('click', () => handleDestinationCardClick(card, container));
 	}
 
 	getID('destinations-enabled')?.addEventListener('change', () => updateActiveDestinationsHTMLs());
+}
+
+/**
+ * Card click for the trip-level destination picker. Unselecting a destination
+ * that is linked to itinerary items or used as the wallpaper asks the user for
+ * confirmation before removing those links.
+ */
+async function handleDestinationCardClick(card: Element, container: HTMLElement) {
+	const destinationId = card.getAttribute('data-destination-id') || '';
+	const wasSelected = card.classList.contains('selected');
+
+	if (wasSelected && destinationId) {
+		const linkInfo = getDestinationLinkInfo(destinationId);
+		if (linkInfo.itineraryCount > 0 || linkInfo.isWallpaper) {
+			const confirmed = await confirmDestinationUnlink(linkInfo);
+			if (!confirmed) return; // keep the destination selected
+		}
+		unlinkDestinationReferences(destinationId, linkInfo);
+	}
+
+	card.classList.toggle('selected');
+	if (card.classList.contains('selected')) {
+		container.prepend(card);
+	}
+	reorganizeDestinationsCheckbox();
+	updateActiveDestinationsHTMLs();
+}
+
+function getDestinationLinkInfo(destinationId: string) {
+	return {
+		itineraryCount: countItineraryDestinationLinks(destinationId),
+		isWallpaper: getWallpaperSourceDestination() === destinationId,
+	};
+}
+
+function unlinkDestinationReferences(destinationId: string, linkInfo) {
+	if (linkInfo.itineraryCount > 0) {
+		unlinkItineraryDestinationLinks(destinationId);
+		reloadItinerary(); // refresh itinerary DOM after clearing references
+	}
+	if (linkInfo.isWallpaper) {
+		handleWallpaperSourceUnlink(destinationId);
+	}
+}
+
+function confirmDestinationUnlink(linkInfo): Promise<boolean> {
+	return new Promise((resolve) => {
+		const properties = cloneObject(MESSAGE_PROPERTIES);
+		properties.title = translate('destination.unlink.title');
+		properties.content = getDestinationUnlinkContent(linkInfo);
+		properties.buttons = [
+			{
+				type: 'cancel',
+				action: () => {
+					closeMessage();
+					resolve(false);
+				},
+			},
+			{
+				type: 'confirm',
+				action: () => {
+					closeMessage();
+					resolve(true);
+				},
+				label: 'destination.unlink.confirm',
+			},
+		];
+		displayFullMessage(properties);
+	});
+}
+
+function getDestinationUnlinkContent(linkInfo) {
+	const items = [];
+	if (linkInfo.itineraryCount > 0) {
+		items.push(
+			`<li>${translate('destination.unlink.itinerary', { count: linkInfo.itineraryCount })}</li>`,
+		);
+	}
+	if (linkInfo.isWallpaper) {
+		items.push(`<li>${translate('destination.unlink.wallpaper')}</li>`);
+	}
+	return `<p>${translate('destination.unlink.message')}</p><ul>${items.join('')}</ul>`;
 }
 
 export function loadItinerarySchedule() {
