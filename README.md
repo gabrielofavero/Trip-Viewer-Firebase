@@ -46,7 +46,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 176   | 172  | 4         | 0       |
 | 🏆   | Feature     | F000 | 188   | 172  | 16        | 0       |
-| 📈   | Improvement | M000 | 184   | 158  | 22        | 4       |
+| 📈   | Improvement | M000 | 185   | 159  | 22        | 4       |
 | ⚔️   | Epic        | E000 | 51    | 42   | 5         | 4       |
 
 ## Backlog
@@ -131,6 +131,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
   - *[🏆F188] Group transportation by traveler (select from trip travelers instead of free text)*
   - *[🏆F071] Multi-person expenses*
 - 🐞 **B176:** Order upcoming trips on index from closest to furthest from now
+- 📈 **M185:** [DEV] Make emulator exit backup opt-in (not automatic on npm run dev exit)
 
 ### July 2026
 

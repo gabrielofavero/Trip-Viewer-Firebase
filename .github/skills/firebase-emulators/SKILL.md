@@ -14,6 +14,7 @@ TripViewer uses the Firebase Emulator Suite for local development. All emulators
 
 ```bash
 npm run dev              # Full dev: emulators + watch + auto-open browser
+npm run dev:backup       # Same as dev, but also saves a rotating backup on exit (opt-in)
 npm run dev:livereload   # Same but with live reload enabled
 npm run dev:dev          # REAL data (no emulators): firebase use dev + serve real project
 npm run dev:prd          # REAL data (no emulators): firebase use prd + serve real project
@@ -134,6 +135,13 @@ firebase emulators:start --import=./.emulator-data
 
 ### Auto-persist (dev mode)
 `npm run dev` already uses `--import` and `--export-on-exit` flags, so data survives between dev sessions.
+
+### Rotating exit backup (opt-in)
+Leaving `npm run dev` does **not** create a rotating backup by default. The snapshot of
+`.emulator-data/` into `.emulator-data-backups/` only runs when opted in: use
+`npm run dev:backup` (or pass `--backup-on-exit` to `scripts/dev/start-emulator.js`, or
+set `DEV_BACKUP_ON_EXIT=1`). `--export-on-exit` still runs every time so the emulator
+data itself stays persisted — only the snapshot copy is opt-in.
 
 ---
 

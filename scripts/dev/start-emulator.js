@@ -1,9 +1,16 @@
 /**
- * Wraps "firebase emulators:start" so a rotating backup is created on exit.
+ * Wraps "firebase emulators:start" so a rotating backup can be created on exit.
  *
  * This is a drop-in replacement for the emulator command in the dev scripts.
  * It spawns the emulator with --import and --export-on-exit, forwards signals,
- * and runs the backup rotation script when the emulator shuts down.
+ * and — when opted in — runs the backup rotation script on shutdown.
+ *
+ * Exit backup is OPT-IN (default OFF), so leaving `npm run dev` is fast and
+ * leaves no extra snapshots behind. Enable it with `--backup-on-exit` or
+ * DEV_BACKUP_ON_EXIT=1 (e.g. via `npm run dev:backup`). Note the rotating
+ * backup (a snapshot of .emulator-data/ into .emulator-data-backups/) is
+ * separate from `--export-on-exit`, which keeps the emulator data itself
+ * persisted for the next `--import` and always runs.
  *
  * Reliability extras (for the intermittent "Cannot determine backend
  * specification. Timeout after 10000" error):
@@ -15,7 +22,7 @@
  *   not recover on its own, up to MAX_ATTEMPTS times.
  *
  * Usage (replaces direct emulator invocation):
- *   node scripts/dev/start-emulator.js
+ *   node scripts/dev/start-emulator.js [--backup-on-exit]
  */
 
 const { spawn, execSync } = require('child_process');
@@ -54,12 +61,21 @@ const FAILURE_PATTERN =
   /Failed to load function definition from source|Cannot determine backend specification/i;
 const SUCCESS_PATTERN = /Loaded functions definitions from source/i;
 
+// Exit rotating backup is OPT-IN. Default OFF so `npm run dev` exits quickly
+// without creating snapshots; enable with --backup-on-exit or
+// DEV_BACKUP_ON_EXIT=1 (see `npm run dev:backup`).
+const BACKUP_ON_EXIT =
+  process.argv.includes('--backup-on-exit') ||
+  process.env.DEV_BACKUP_ON_EXIT === '1' ||
+  process.env.DEV_BACKUP_ON_EXIT === 'true';
+
 let emulator = null;
 let attempt = 0;
 let backupRun = false;
 let userStopped = false;
 
 function runBackup() {
+  if (!BACKUP_ON_EXIT) return; // backups are opt-in
   if (backupRun) return;
   backupRun = true;
 
@@ -142,7 +158,11 @@ function startEmulator() {
   // Regenerate the dev config (no-store headers) before each spawn attempt.
   generateFirebaseDev();
   console.log(
-    `\n\u{1F525} Starting Firebase emulators (attempt ${attempt}/${MAX_ATTEMPTS}, with exit-backup)...\n`,
+    `\n\u{1F525} Starting Firebase emulators (attempt ${attempt}/${MAX_ATTEMPTS}, ${
+      BACKUP_ON_EXIT
+        ? 'exit-backup ON'
+        : 'exit-backup OFF (opt-in: --backup-on-exit or npm run dev:backup)'
+    })...\n`,
   );
 
   let buffer = '';
@@ -247,7 +267,7 @@ function startEmulator() {
 });
 
 // If the wrapper itself crashes or is killed before the emulator exits,
-// still try to run a backup (best-effort).
+// still try to run a backup (best-effort) — but only when opted in.
 process.on('exit', () => {
   // Only if the emulator already exited (backupRun would be true already).
   // If the wrapper process is killed directly, the emulator child may
