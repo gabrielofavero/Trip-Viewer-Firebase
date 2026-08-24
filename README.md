@@ -44,7 +44,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 178   | 174  | 4         | 0       |
-| 🏆   | Feature     | F000 | 190   | 174  | 16        | 0       |
+| 🏆   | Feature     | F000 | 191   | 175  | 16        | 0       |
 | 📈   | Improvement | M000 | 189   | 166  | 22        | 1       |
 | ⚔️   | Epic        | E000 | 51    | 42   | 7         | 2       |
 
@@ -137,6 +137,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M188:** [DEV] Add mandatory end-of-task backlog check to readme skill
 - 📈 **M189:** [DEV] initLocalDb skips seeding when the database already has data
 - 🏆 **F190:** Use LocalStorage logic for detecting new versions (cache refreshing)
+- 🏆 **F191:** Expenses: exclusive shopping-bag icon for the Shopping type + copy list to iOS Notes (native checkboxes)
 
 ### July 2026
 

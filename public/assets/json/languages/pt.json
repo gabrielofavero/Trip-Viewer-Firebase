@@ -611,6 +611,7 @@
 	"messages": {
 		"text_copied": "Texto copiado para a área de transferência",
 		"itinerary_copied": "Programação copiada! Cole no WhatsApp ou em um app de notas para manter a formatação",
+		"expenses_copied": "Lista copiada! Cole no WhatsApp ou em um app de notas para manter os checkboxes",
 		"no_data": "Sem dados cadastrados 😔",
 		"share": "Venha visualizar meus dados criados no TripViewer",
 		"exit_confirmation": "Você tem certeza que deseja sair? Todas as alterações não salvas serão perdidas",
@@ -721,6 +722,7 @@
 			"password": "Senha"
 		},
 		"export": "Exportar",
+		"copy_list": "Copiar lista",
 		"print": "Imprimir",
 		"adapted": "Adaptado",
 		"intro": "Isso é ",

@@ -1,6 +1,7 @@
 import { getIcons } from '../../app/config.js';
 import { getID } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
+import { openToast } from '../../utils/messages.js';
 import { setChart, setTable } from './support/data.js';
 import { formatCurrency, EXPENSES_CONVERTED } from '../../models/expense.model.js';
 import { CURRENT_CURRENCY } from './support/currency.js';
@@ -88,10 +89,26 @@ function setTableCategoria(type) {
 		recibo.id = `${id}-recibo`;
 		recibo.className = 'expenses-card expenses-receipt';
 
+		const titleRow = document.createElement('div');
+		titleRow.className = 'expenses-title-row';
+
 		const h2 = document.createElement('h2');
 		h2.className = 'expenses-title';
 		h2.innerHTML = getTitleWithIcon(item.name, type);
-		recibo.appendChild(h2);
+		titleRow.appendChild(h2);
+
+		const copyBtn = document.createElement('button');
+		copyBtn.type = 'button';
+		copyBtn.className = 'expenses-copy';
+		copyBtn.title = translate('labels.copy_list');
+		copyBtn.setAttribute('aria-label', translate('labels.copy_list'));
+		copyBtn.innerHTML = `<i class="iconify" data-icon="mdi:content-copy"></i>`;
+		copyBtn.addEventListener('click', () =>
+			copyExpensesToClipboard(translate(item.name, {}, false), item.items),
+		);
+		titleRow.appendChild(copyBtn);
+
+		recibo.appendChild(titleRow);
 
 		const tableEl = document.createElement('table');
 		tableEl.className = 'card-full-size';
@@ -115,5 +132,67 @@ function unsetTableCategoria(type) {
 function getTitleWithIcon(titlePath, backupIconPath?) {
 	const title = translate(titlePath, {}, false);
 	const icons = getIcons();
-	return `<i class="iconify" data-icon="${icons[titlePath] || icons[backupIconPath] || icons['trip.expenses.title']}"></i> ${title}`;
+	const icon =
+		icons[titlePath] ||
+		getExpenseTypeIcon(titlePath) ||
+		icons[backupIconPath] ||
+		icons['trip.expenses.title'];
+	return `<i class="iconify" data-icon="${icon}"></i> ${title}`;
+}
+
+/**
+ * Resolves a dedicated icon for free-text expense "type" values (e.g. the
+ * "Shopping" type users can pick in edit trip). Returns undefined when the
+ * type isn't a known alias, so the normal fallback chain applies.
+ */
+function getExpenseTypeIcon(name: string): string | undefined {
+	const normalized = String(name ?? '').trim().toLowerCase();
+	const shoppingAliases = new Set(['shopping', 'compras', 'lojas', 'compra', 'shoppings']);
+	if (shoppingAliases.has(normalized)) {
+		return getIcons()['trip.expenses.shopping'];
+	}
+	return undefined;
+}
+
+/**
+ * Copies a category receipt to the clipboard in an iOS Notes-friendly format:
+ * the category name as an <h2> heading, then each item as a native checkbox
+ * (hyperlinked when the expense has a link). Writes both text/html (so iOS
+ * Notes pastes it as a checklist) and text/plain (ballot-box fallback).
+ */
+async function copyExpensesToClipboard(title: string, items: any[]): Promise<void> {
+	const htmlItems = (items || [])
+		.map((item) => {
+			const name = escapeHTML(translate(item.name, {}, false));
+			const text = item.link ? `<a href="${escapeHTML(item.link)}">${name}</a>` : name;
+			return `<div><input type="checkbox"> ${text}</div>`;
+		})
+		.join('');
+
+	const html = `<h2>${escapeHTML(title)}</h2>${htmlItems}`;
+
+	const plainTextItems = (items || [])
+		.map((item) => `\u2610 ${translate(item.name, {}, false)}`)
+		.join('\n');
+	const plainText = `${title}\n${plainTextItems}`;
+
+	try {
+		await navigator.clipboard.write([
+			new ClipboardItem({
+				'text/html': new Blob([html], { type: 'text/html' }),
+				'text/plain': new Blob([plainText], { type: 'text/plain' }),
+			}),
+		]);
+		openToast(translate('messages.expenses_copied'));
+	} catch (error) {
+		console.error('Failed to copy expenses list:', error);
+	}
+}
+
+function escapeHTML(value: string): string {
+	return String(value ?? '')
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;');
 }

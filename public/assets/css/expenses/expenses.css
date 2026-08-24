@@ -283,6 +283,43 @@ section {
 	font-weight: 500;
 }
 
+.expenses-title-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+	margin-bottom: 1rem;
+}
+
+.expenses-title-row .expenses-title {
+	margin-bottom: 0;
+}
+
+.expenses-copy {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 2rem;
+	height: 2rem;
+	padding: 0;
+	border: none;
+	border-radius: 0.375rem;
+	background: transparent;
+	color: var(--text-muted);
+	cursor: pointer;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.expenses-copy:hover {
+	background: var(--box-color-hover);
+	color: var(--theme-color);
+}
+
+.expenses-copy .iconify {
+	font-size: 1.25rem;
+}
+
 .expenses-subtitle,
 .total {
 	font-weight: bold;

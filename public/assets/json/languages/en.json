@@ -614,6 +614,7 @@
 	"messages": {
 		"text_copied": "Text copied to clipboard",
 		"itinerary_copied": "Itinerary copied! Paste it into WhatsApp or a notes app to keep the formatting",
+		"expenses_copied": "List copied! Paste it into WhatsApp or a notes app to keep the checkboxes",
 		"no_data": "No data found 😔",
 		"share": "Check out what I've created on TripViewer",
 		"exit_confirmation": "Are you sure you want to exit? You may lose unsaved changes",
@@ -724,6 +725,7 @@
 			"password": "Password"
 		},
 		"export": "Export",
+		"copy_list": "Copy list",
 		"print": "Print",
 		"adapted": "Adapted",
 		"intro": "This is",

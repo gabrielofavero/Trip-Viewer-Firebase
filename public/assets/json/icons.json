@@ -16,6 +16,7 @@
 	"trip.expenses.overview": "mdi:graph-line",
 	"trip.expenses.personal": "gravity-ui:person",
 	"trip.expenses.pre_trip": "mdi:graph-line",
+	"trip.expenses.shopping": "bxs:shopping-bag",
 	"trip.expenses.title": "mdi:dollar",
 	"trip.transportation.title": "mingcute:rocket-line",
 	"trip.transportation.type.bus": "lucide:bus",
