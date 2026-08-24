@@ -615,6 +615,10 @@
 		"share": "Venha visualizar meus dados criados no TripViewer",
 		"exit_confirmation": "Você tem certeza que deseja sair? Todas as alterações não salvas serão perdidas",
 		"select_one": "Selecione pelo menos um item",
+		"app_update": {
+			"title": "Nova versão disponível",
+			"message": "Uma nova versão do TripViewer (v{{version}}) está disponível. Atualize para carregar a versão mais recente."
+		},
 		"protected": {
 			"pin": "Para visualizar os dados dessa viagem, insira o PIN de acesso",
 			"prompt": "Esta viagem contém dados protegidos, como códigos de reserva. Deseja inserir o PIN para visualizá-los?"
@@ -737,6 +741,7 @@
 		"other": "Outro(a)",
 		"optional": "Opcional",
 		"cancel": "Cancelar",
+		"refresh": "Atualizar",
 		"save": "Salvar",
 		"delete": "Excluir",
 		"understood": "Entendi",

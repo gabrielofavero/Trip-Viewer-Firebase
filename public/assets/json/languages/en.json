@@ -618,6 +618,10 @@
 		"share": "Check out what I've created on TripViewer",
 		"exit_confirmation": "Are you sure you want to exit? You may lose unsaved changes",
 		"select_one": "Please select at least one item",
+		"app_update": {
+			"title": "New version available",
+			"message": "A new version of TripViewer (v{{version}}) is available. Refresh to load the latest update."
+		},
 		"protected": {
 			"pin": "To access this document, please enter the access PIN set for it",
 			"prompt": "This trip contains protected data, such as reservation codes. Would you like to enter the PIN to view them?"
@@ -744,6 +748,7 @@
 		"delete": "Delete",
 		"understood": "Understood",
 		"confirm": "Confirm",
+		"refresh": "Refresh",
 		"enabled": "Enabled",
 		"disabled": "Disabled",
 		"add": "Add",

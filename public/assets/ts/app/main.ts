@@ -18,6 +18,7 @@ import {
 import { initActions } from '../ui/actions.js';
 import { initDev } from '../utils/dev.js';
 import { isStaticMode, loadStaticData } from '../static-mode/static-mode.js';
+import { checkForAppUpdate } from '../app/version-check.js';
 
 const APP = {
 	projectId: null,
@@ -33,6 +34,9 @@ export async function main(pageLoaders: Record<string, () => void> = {}) {
 		translatePage();
 		initializeApp();
 		populateFooterVersion();
+		// Detect a newly deployed version (LocalStorage-compared) and, on a
+		// mismatch, prompt to refresh so the user loads the latest build.
+		checkForAppUpdate(APP.version);
 		loadLangSelectorSelect();
 		loadPage(pageLoaders);
 	} catch (error) {

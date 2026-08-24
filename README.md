@@ -44,7 +44,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 178   | 174  | 4         | 0       |
-| 🏆   | Feature     | F000 | 189   | 173  | 16        | 0       |
+| 🏆   | Feature     | F000 | 190   | 174  | 16        | 0       |
 | 📈   | Improvement | M000 | 189   | 166  | 22        | 1       |
 | ⚔️   | Epic        | E000 | 51    | 42   | 7         | 2       |
 
@@ -56,7 +56,6 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 ### Low Priority
 
-- 🏆 **F190:** Use LocalStorage logic for detecting new versions (cache refreshing)
 - ⚔️ **E047:** [DEV] Implement Unit Tests
 - ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
 - 📈 **M171:** Safeguard unauthenticated access message
@@ -137,6 +136,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M182:** [DEV] Kill dev env
 - 📈 **M188:** [DEV] Add mandatory end-of-task backlog check to readme skill
 - 📈 **M189:** [DEV] initLocalDb skips seeding when the database already has data
+- 🏆 **F190:** Use LocalStorage logic for detecting new versions (cache refreshing)
 
 ### July 2026
 
