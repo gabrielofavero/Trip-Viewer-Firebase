@@ -45,7 +45,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 178   | 174  | 4         | 0       |
 | 🏆   | Feature     | F000 | 191   | 175  | 16        | 0       |
-| 📈   | Improvement | M000 | 189   | 166  | 22        | 1       |
+| 📈   | Improvement | M000 | 190   | 167  | 22        | 1       |
 | ⚔️   | Epic        | E000 | 51    | 42   | 7         | 2       |
 
 ## Backlog
@@ -138,6 +138,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M189:** [DEV] initLocalDb skips seeding when the database already has data
 - 🏆 **F190:** Use LocalStorage logic for detecting new versions (cache refreshing)
 - 🏆 **F191:** Expenses: exclusive shopping-bag icon for the Shopping type + copy list to iOS Notes (native checkboxes)
+- 📈 **M190:** Expand wallpaper import to trip gallery, accommodation and destination place images
 
 ### July 2026
 

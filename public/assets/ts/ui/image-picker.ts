@@ -1,10 +1,11 @@
 // ======= Image Picker (Wallpaper + Logos) — shared UI =======
 // Card-based pickers for the wallpaper and logos used by the edit-trip and
-// edit-destination pages. Clicking a card opens a dialog that can use a custom
-// link/upload, plus an optional "From destination" tab supplied by a provider
-// registered by the trip page (a destination document has nothing to import,
-// so that page only shows the custom option). When no provider is registered,
-// only the custom option is shown.
+// edit-destination pages. Clicking a card opens a dialog with a "Trip" tab
+// (images already inside the trip, grouped by source) plus a custom
+// link/upload tab. The Trip tab is supplied by a provider registered by the
+// trip page — a destination document has nothing to import, so that page only
+// shows the custom option. When no provider is registered, only the custom
+// option is shown.
 
 import { cloneObject, getID } from '../utils/dom.js';
 import { translate } from '../i18n/translation.js';
@@ -19,22 +20,50 @@ import { IMAGE_UPLOAD_ENABLED, PERMISSIONS, uploadImage } from '../data/firebase
 import { DOCUMENT_ID } from '../data/state.js';
 import { getHTMLpage } from '../app/main.js';
 
-export interface DestinationImageOption {
+/** A single selectable image inside the "Trip" tab. */
+export interface TripImageOption {
+	/** Unique id within the loaded options (also used to restore a selection). */
 	id: string;
+	/** Short caption shown under the thumbnail. */
 	title: string;
+	/** Image URL. */
 	image: string;
+	/** Human source label (used on the wallpaper card + confirmation toast). */
+	sourceLabel: string;
+}
+
+/** A sub-block inside a group: one accommodation or one destination. */
+export interface TripImageSubgroup {
+	title: string;
+	options: TripImageOption[];
 }
 
 /**
- * Optional destination-import capability, registered by the trip page. When
+ * A top-level "Trip" tab section. A group either carries its options directly
+ * (e.g. Gallery) or splits them into per-source subgroups (accommodations,
+ * destinations) so the several images of the same thing stay together.
+ */
+export interface TripImageGroup {
+	key: string;
+	/** Translated group title shown as the section header. */
+	title: string;
+	/** Flat options (used when `subgroups` is empty). */
+	options?: TripImageOption[];
+	/** Per-source subgroups (used when present). */
+	subgroups?: TripImageSubgroup[];
+}
+
+/**
+ * Optional trip-import capability, registered by the edit-trip page. When
  * absent (e.g. edit-destination), the dialog only offers the custom option.
  */
-export interface ImagePickerDestinationProvider {
+export interface ImagePickerTripProvider {
 	isAvailable(): boolean;
-	loadOptions(): Promise<DestinationImageOption[]>;
-	applyOption(option: DestinationImageOption): void;
+	loadOptions(): Promise<TripImageGroup[]>;
+	applyOption(option: TripImageOption): void;
 	getWallpaperSourceLabel(): string | null;
-	getCurrentDestinationId(): string | null;
+	/** Option id the current wallpaper was imported from (null = custom). */
+	getWallpaperSourceId(): string | null;
 	onWallpaperCustomApplied(): void;
 }
 
@@ -56,21 +85,19 @@ const IMAGE_TYPE_TITLE: Record<string, string> = {
 let CURRENT_IMAGE_PICKER_TYPE: string | null = null;
 
 /** Active tab in the open dialog. */
-let CURRENT_PICKER_MODE: 'destination' | 'custom' = 'custom';
+let CURRENT_PICKER_MODE: 'trip' | 'custom' = 'custom';
 
-/** Destination currently selected (active) in the destination tab. */
-let SELECTED_DESTINATION_ID: string | null = null;
+/** Option currently selected (active) in the trip tab. */
+let SELECTED_OPTION_ID: string | null = null;
 
-/** Destination options loaded for the open dialog. */
-let LOADED_DESTINATION_OPTIONS: DestinationImageOption[] = [];
+/** Trip groups loaded for the open dialog. */
+let LOADED_TRIP_OPTIONS: TripImageGroup[] = [];
 
-let DESTINATION_PROVIDER: ImagePickerDestinationProvider | null = null;
+let TRIP_PROVIDER: ImagePickerTripProvider | null = null;
 
-/** Register (or clear) the optional destination-import provider. */
-export function setImagePickerDestinationProvider(
-	provider: ImagePickerDestinationProvider | null,
-) {
-	DESTINATION_PROVIDER = provider;
+/** Register (or clear) the optional trip-import provider. */
+export function setImagePickerTripProvider(provider: ImagePickerTripProvider | null) {
+	TRIP_PROVIDER = provider;
 }
 
 /** Theme exclusivity used by the picker cards ('dynamic' = both modes). */
@@ -113,7 +140,7 @@ function refreshBackgroundCard() {
 	if (!thumb || !label) return;
 
 	const link = getID('link-background')?.value || '';
-	const sourceLabel = DESTINATION_PROVIDER?.getWallpaperSourceLabel() || '';
+	const sourceLabel = TRIP_PROVIDER?.getWallpaperSourceLabel() || '';
 
 	let labelText: string;
 	if (!link) {
@@ -203,26 +230,24 @@ export function openImagePicker(type: string) {
 	if (!inputID || !getID(inputID)) return; // only pages that host the picker
 
 	CURRENT_IMAGE_PICKER_TYPE = type;
-	const canImportDestination =
-		type === 'background' && !!(DESTINATION_PROVIDER && DESTINATION_PROVIDER.isAvailable());
+	const canImportTrip =
+		type === 'background' && !!(TRIP_PROVIDER && TRIP_PROVIDER.isAvailable());
 	const currentValue = (getID(inputID) as HTMLInputElement).value || '';
 	const uploadAvailable = canUploadImages();
 
-	// Auto-select the tab matching the current choice: the destination the
+	// Auto-select the tab matching the current choice: the trip image the
 	// wallpaper was imported from, or custom (covers empty and link/upload).
-	const currentDestinationId = canImportDestination
-		? DESTINATION_PROVIDER?.getCurrentDestinationId() || null
-		: null;
-	CURRENT_PICKER_MODE = currentDestinationId ? 'destination' : 'custom';
-	SELECTED_DESTINATION_ID = currentDestinationId;
-	LOADED_DESTINATION_OPTIONS = [];
+	const currentSourceId = canImportTrip ? TRIP_PROVIDER?.getWallpaperSourceId() || null : null;
+	CURRENT_PICKER_MODE = currentSourceId ? 'trip' : 'custom';
+	SELECTED_OPTION_ID = currentSourceId;
+	LOADED_TRIP_OPTIONS = [];
 
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	properties.title = translate(IMAGE_TYPE_TITLE[type] || 'labels.wallpaper');
 	properties.containers = getContainersInput();
 	properties.fullscreen = true;
 	properties.content = getImagePickerContent({
-		canImportDestination,
+		canImportTrip,
 		initialMode: CURRENT_PICKER_MODE,
 		currentValue,
 		uploadAvailable,
@@ -239,24 +264,24 @@ export function openImagePicker(type: string) {
 	];
 
 	displayFullMessage(properties);
-	loadImagePickerListeners({ canImportDestination });
+	loadImagePickerListeners({ canImportTrip });
 }
 
-function getImagePickerContent({ canImportDestination, initialMode, currentValue, uploadAvailable }) {
+function getImagePickerContent({ canImportTrip, initialMode, currentValue, uploadAvailable }) {
 	const safeValue = String(currentValue).replace(/"/g, '&quot;');
-	const useDestination = canImportDestination && initialMode === 'destination';
-	const destChecked = useDestination ? 'checked' : '';
-	const customChecked = useDestination ? '' : 'checked';
-	const destPanelDisplay = useDestination ? 'block' : 'none';
-	const customPanelDisplay = useDestination ? 'none' : 'block';
+	const useTrip = canImportTrip && initialMode === 'trip';
+	const tripChecked = useTrip ? 'checked' : '';
+	const customChecked = useTrip ? '' : 'checked';
+	const tripPanelDisplay = useTrip ? 'block' : 'none';
+	const customPanelDisplay = useTrip ? 'none' : 'block';
 
 	return `
 		<div class="image-picker-dialog">
-			${canImportDestination ? `
+			${canImportTrip ? `
 				<div class="modern-radio-group image-picker-mode">
 					<div class="nice-form-group">
-						<input type="radio" name="image-picker-mode" id="image-picker-mode-destination" ${destChecked}>
-						<label for="image-picker-mode-destination">${translate('labels.customization.images.import_from_destination')}</label>
+						<input type="radio" name="image-picker-mode" id="image-picker-mode-trip" ${tripChecked}>
+						<label for="image-picker-mode-trip">${translate('labels.customization.images.import_from_trip')}</label>
 					</div>
 					<div class="nice-form-group">
 						<input type="radio" name="image-picker-mode" id="image-picker-mode-custom" ${customChecked}>
@@ -264,12 +289,12 @@ function getImagePickerContent({ canImportDestination, initialMode, currentValue
 					</div>
 				</div>
 			` : ''}
-			<div id="image-picker-destination-panel" style="display: ${destPanelDisplay}">
+			<div id="image-picker-trip-panel" style="display: ${tripPanelDisplay}">
 				<div class="wallpaper-import-loading" id="image-picker-loading">
 					<div class="wallpaper-import-spinner"></div>
 					<span>${translate('labels.customization.images.import_loading')}</span>
 				</div>
-				<div class="wallpaper-import-list" id="image-picker-destination-list" style="display: none;"></div>
+				<div class="wallpaper-import-scroll" id="image-picker-trip-list" style="display: none;"></div>
 			</div>
 			<div id="image-picker-custom-panel" style="display: ${customPanelDisplay}">
 				<div class="nice-form-group">
@@ -288,13 +313,13 @@ function getImagePickerContent({ canImportDestination, initialMode, currentValue
 	`;
 }
 
-function loadImagePickerListeners({ canImportDestination }) {
-	if (canImportDestination) {
-		const destMode = getID('image-picker-mode-destination');
+function loadImagePickerListeners({ canImportTrip }) {
+	if (canImportTrip) {
+		const tripMode = getID('image-picker-mode-trip');
 		const customMode = getID('image-picker-mode-custom');
-		destMode?.addEventListener('change', () => switchImagePickerMode('destination'));
+		tripMode?.addEventListener('change', () => switchImagePickerMode('trip'));
 		customMode?.addEventListener('change', () => switchImagePickerMode('custom'));
-		void loadDestinationOptions();
+		void loadTripOptions();
 	}
 
 	// Custom panel: the confirm stays disabled until a link is provided or a
@@ -307,12 +332,12 @@ function loadImagePickerListeners({ canImportDestination }) {
 	updateConfirmState();
 }
 
-function switchImagePickerMode(mode: 'destination' | 'custom') {
+function switchImagePickerMode(mode: 'trip' | 'custom') {
 	CURRENT_PICKER_MODE = mode;
-	const destPanel = getID('image-picker-destination-panel');
+	const tripPanel = getID('image-picker-trip-panel');
 	const customPanel = getID('image-picker-custom-panel');
-	if (destPanel) destPanel.style.display = mode === 'destination' ? 'block' : 'none';
-	if (customPanel) customPanel.style.display = mode === 'destination' ? 'none' : 'block';
+	if (tripPanel) tripPanel.style.display = mode === 'trip' ? 'block' : 'none';
+	if (customPanel) customPanel.style.display = mode === 'trip' ? 'none' : 'block';
 	updateConfirmState();
 }
 
@@ -322,8 +347,8 @@ function updateConfirmState() {
 	if (!confirm) return;
 
 	let enabled = false;
-	if (CURRENT_PICKER_MODE === 'destination') {
-		enabled = !!SELECTED_DESTINATION_ID;
+	if (CURRENT_PICKER_MODE === 'trip') {
+		enabled = !!SELECTED_OPTION_ID;
 	} else {
 		const linkValue = getID('image-picker-link')?.value?.trim() || '';
 		const fileChosen = !!(getID('image-picker-upload') as HTMLInputElement | null)?.files?.length;
@@ -332,67 +357,122 @@ function updateConfirmState() {
 	confirm.disabled = !enabled;
 }
 
-/** Lazily load the destination options through the registered provider. */
-async function loadDestinationOptions() {
-	const list = getID('image-picker-destination-list');
+/** Lazily load the trip image groups through the registered provider. */
+async function loadTripOptions() {
+	const list = getID('image-picker-trip-list');
 	const loading = getID('image-picker-loading');
-	if (!list || !loading || !DESTINATION_PROVIDER) return;
+	if (!list || !loading || !TRIP_PROVIDER) return;
 
-	const options = await DESTINATION_PROVIDER.loadOptions();
-	LOADED_DESTINATION_OPTIONS = options;
+	const groups = await TRIP_PROVIDER.loadOptions();
+	LOADED_TRIP_OPTIONS = groups;
 
 	loading.style.display = 'none';
-	list.style.display = 'grid';
+	list.style.display = 'block';
 
-	if (options.length === 0) {
+	const total = groups.reduce((sum, group) => sum + countGroupImages(group), 0);
+	if (total === 0) {
 		list.innerHTML = `<div class="wallpaper-import-empty">${translate(
-			'labels.customization.images.no_destination_image',
+			'labels.customization.images.no_trip_images',
 		)}</div>`;
 		updateConfirmState();
 		return;
 	}
 
-	list.innerHTML = options
+	list.innerHTML = renderTripGroups(groups);
+
+	// Selecting only marks the card active; the user confirms afterwards.
+	list.addEventListener('click', (event) => {
+		const card = (event.target as Element).closest<HTMLElement>('.wallpaper-import-card');
+		if (!card) return;
+		const id = card.getAttribute('data-option-id') || '';
+		if (!hasOption(id)) return;
+		SELECTED_OPTION_ID = id;
+		list.querySelectorAll('.wallpaper-import-card').forEach((c) => {
+			c.classList.toggle('selected', c.getAttribute('data-option-id') === id);
+		});
+		updateConfirmState();
+	});
+
+	// Reflect the pre-selected (current wallpaper source) option.
+	updateConfirmState();
+}
+
+/** Total number of images inside a group (flat options + all subgroups). */
+function countGroupImages(group: TripImageGroup): number {
+	if (group.subgroups?.length) {
+		return group.subgroups.reduce((sum, sub) => sum + sub.options.length, 0);
+	}
+	return group.options?.length || 0;
+}
+
+function hasOption(id: string): boolean {
+	return !!findOption(id);
+}
+
+function findOption(id: string | null): TripImageOption | null {
+	if (!id) return null;
+	for (const group of LOADED_TRIP_OPTIONS) {
+		for (const sub of group.subgroups || []) {
+			const found = sub.options.find((option) => option.id === id);
+			if (found) return found;
+		}
+		const found = (group.options || []).find((option) => option.id === id);
+		if (found) return found;
+	}
+	return null;
+}
+
+/** Render the groups as a scrollable, grouped list of selectable cards. */
+function renderTripGroups(groups: TripImageGroup[]): string {
+	return groups
+		.map((group) => {
+			const subgroups = (group.subgroups || []).filter((sub) => sub.options.length > 0);
+			const header = `
+				<h4 class="wallpaper-import-group-title">
+					${group.title}
+					<span class="wallpaper-import-group-count">${countGroupImages(group)}</span>
+				</h4>`;
+			const body = subgroups.length
+				? subgroups
+						.map(
+							(sub) => `
+							<div class="wallpaper-import-subgroup">
+								<h5 class="wallpaper-import-subgroup-title">${sub.title}</h5>
+								<div class="wallpaper-import-group-grid">${renderCards(sub.options)}</div>
+							</div>`,
+						)
+						.join('')
+				: `<div class="wallpaper-import-group-grid">${renderCards(group.options || [])}</div>`;
+			return `<section class="wallpaper-import-group" data-group="${group.key}">${header}${body}</section>`;
+		})
+		.join('');
+}
+
+function renderCards(options: TripImageOption[]): string {
+	return options
 		.map(
 			(option) => `
-			<button type="button" class="wallpaper-import-card${option.id === SELECTED_DESTINATION_ID ? ' selected' : ''}" data-destination-id="${option.id}">
+			<button type="button" class="wallpaper-import-card${option.id === SELECTED_OPTION_ID ? ' selected' : ''}" data-option-id="${option.id}">
 				<div class="wallpaper-import-thumb" style="background-image: url('${option.image}')"></div>
 				<div class="wallpaper-import-name">${option.title}</div>
 			</button>`,
 		)
 		.join('');
-
-	list.addEventListener('click', (event) => {
-		const card = (event.target as Element).closest<HTMLElement>('.wallpaper-import-card');
-		if (!card) return;
-		const id = card.getAttribute('data-destination-id') || '';
-		if (!options.some((o) => o.id === id)) return;
-
-		// Selecting only marks the card active; the user confirms afterwards.
-		SELECTED_DESTINATION_ID = id;
-		list.querySelectorAll('.wallpaper-import-card').forEach((c) => {
-			c.classList.toggle('selected', c.getAttribute('data-destination-id') === id);
-		});
-		updateConfirmState();
-	});
-
-	// Reflect the pre-selected (current wallpaper source) destination.
-	updateConfirmState();
 }
 
-/** Confirm: apply the active tab's selection (destination or custom). */
+/** Confirm: apply the active tab's selection (trip or custom). */
 function applyFromDialog() {
-	if (CURRENT_PICKER_MODE === 'destination') {
-		applySelectedDestination();
+	if (CURRENT_PICKER_MODE === 'trip') {
+		applySelectedOption();
 	} else {
 		void applyCustomFromDialog();
 	}
 }
 
-function applySelectedDestination() {
-	const option = LOADED_DESTINATION_OPTIONS.find((o) => o.id === SELECTED_DESTINATION_ID);
-	if (!option || !DESTINATION_PROVIDER) return;
-	DESTINATION_PROVIDER.applyOption(option);
+function applySelectedOption() {
+	const option = findOption(SELECTED_OPTION_ID);
+	if (!option || !TRIP_PROVIDER) return;
+	TRIP_PROVIDER.applyOption(option);
 	closeMessage();
 	refreshImagePickers();
 }
@@ -430,8 +510,8 @@ async function applyCustomFromDialog() {
 	linkInput.value = finalLink;
 
 	if (type === 'background') {
-		// A new custom image replaces any destination-imported wallpaper.
-		if (finalLink !== oldValue) DESTINATION_PROVIDER?.onWallpaperCustomApplied();
+		// A new custom image replaces any trip-imported wallpaper.
+		if (finalLink !== oldValue) TRIP_PROVIDER?.onWallpaperCustomApplied();
 		if (finalLink) activateImagesModule();
 	}
 

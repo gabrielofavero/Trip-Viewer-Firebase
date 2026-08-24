@@ -1849,7 +1849,64 @@
 	}
 }
 
-.wallpaper-import-list {
+.wallpaper-import-scroll {
+	display: block;
+	max-height: min(58vh, 520px);
+	overflow-y: auto;
+	padding-right: 6px;
+	scrollbar-gutter: stable;
+}
+
+.wallpaper-import-group {
+	margin-bottom: 18px;
+}
+
+.wallpaper-import-group:last-child {
+	margin-bottom: 0;
+}
+
+.wallpaper-import-group-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 10px;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--text-muted);
+}
+
+.wallpaper-import-group-count {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 20px;
+	height: 20px;
+	padding: 0 6px;
+	border-radius: 999px;
+	font-size: 0.6875rem;
+	font-weight: 700;
+	background: var(--bg-tertiary);
+	color: var(--text-secondary);
+}
+
+.wallpaper-import-subgroup {
+	margin-bottom: 14px;
+}
+
+.wallpaper-import-subgroup:last-child {
+	margin-bottom: 0;
+}
+
+.wallpaper-import-subgroup-title {
+	margin: 0 0 8px;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--text-secondary);
+}
+
+.wallpaper-import-group-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 	gap: 12px;
