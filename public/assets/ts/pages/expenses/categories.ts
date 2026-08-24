@@ -97,16 +97,19 @@ function setTableCategoria(type) {
 		h2.innerHTML = getTitleWithIcon(item.name, type);
 		titleRow.appendChild(h2);
 
-		const copyBtn = document.createElement('button');
-		copyBtn.type = 'button';
-		copyBtn.className = 'expenses-copy';
-		copyBtn.title = translate('labels.copy_list');
-		copyBtn.setAttribute('aria-label', translate('labels.copy_list'));
-		copyBtn.innerHTML = `<i class="iconify" data-icon="mdi:content-copy"></i>`;
-		copyBtn.addEventListener('click', () =>
-			copyExpensesToClipboard(translate(item.name, {}, false), item.items),
-		);
-		titleRow.appendChild(copyBtn);
+		// Only the Shopping type gets the copy-to-iOS-Notes button.
+		if (isShoppingType(item.name)) {
+			const copyBtn = document.createElement('button');
+			copyBtn.type = 'button';
+			copyBtn.className = 'expenses-copy';
+			copyBtn.title = translate('labels.copy_list');
+			copyBtn.setAttribute('aria-label', translate('labels.copy_list'));
+			copyBtn.innerHTML = `<i class="iconify" data-icon="mdi:content-copy"></i>`;
+			copyBtn.addEventListener('click', () =>
+				copyExpensesToClipboard(translate(item.name, {}, false), item.items),
+			);
+			titleRow.appendChild(copyBtn);
+		}
 
 		recibo.appendChild(titleRow);
 
@@ -140,15 +143,22 @@ function getTitleWithIcon(titlePath, backupIconPath?) {
 	return `<i class="iconify" data-icon="${icon}"></i> ${title}`;
 }
 
+const SHOPPING_ALIASES = new Set(['shopping', 'compras', 'lojas', 'compra', 'shoppings']);
+
+/** Whether an expense type refers to the Shopping category (translation key or free text). */
+function isShoppingType(name: string): boolean {
+	const normalized = String(name ?? '').trim().toLowerCase();
+	return normalized === 'trip.expenses.shopping' || SHOPPING_ALIASES.has(normalized);
+}
+
 /**
- * Resolves a dedicated icon for free-text expense "type" values (e.g. the
- * "Shopping" type users can pick in edit trip). Returns undefined when the
- * type isn't a known alias, so the normal fallback chain applies.
+ * Resolves a dedicated icon for expense "type" values that aren't translation
+ * keys already mapped in icons.json (e.g. the free-text "Shopping" type).
+ * Returns undefined when the type isn't a known alias, so the normal fallback
+ * chain applies.
  */
 function getExpenseTypeIcon(name: string): string | undefined {
-	const normalized = String(name ?? '').trim().toLowerCase();
-	const shoppingAliases = new Set(['shopping', 'compras', 'lojas', 'compra', 'shoppings']);
-	if (shoppingAliases.has(normalized)) {
+	if (isShoppingType(name)) {
 		return getIcons()['trip.expenses.shopping'];
 	}
 	return undefined;

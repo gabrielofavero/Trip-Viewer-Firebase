@@ -5,6 +5,7 @@
 	"labels.entrertainment": "tabler:microphone-2",
 	"labels.gifts": "mdi:gift-outline",
 	"labels.non_specified": "gravity-ui:person-xmark",
+	"labels.other": "mdi:dots-horizontal",
 	"labels.people": "gravity-ui:person",
 	"trip.accommodation.title": "material-symbols:hotel-outline",
 	"trip.destination.food.title": "uil:food",
