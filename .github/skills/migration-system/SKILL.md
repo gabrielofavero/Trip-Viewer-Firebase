@@ -16,12 +16,19 @@ TripViewer uses **Firebase Functions as migration runners**. Each migration is a
 
 ```bash
 # Run a migration on the emulator
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase1?dryRun=true"
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase2"
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase3?dryRun=true"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migratePhase1?dryRun=true"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migratePhase2"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migratePhase3?dryRun=true"
 
 # Phase 2 with cleanup (deletes old Portuguese collections)
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase2?cleanup=true"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migratePhase2?cleanup=true"
+```
+
+```bash
+# Automated runner — runs selected migrations against a LIVE project's real
+# Firestore via the local Functions emulator (no Cloud Function deploy, so no
+# extensions / Blaze billing prompt). See "On Production" below.
+npm run migrations -- --project dev
 ```
 
 ---
@@ -217,8 +224,8 @@ Backfills every `users/{uid}` document with the profile fields `name`, `email` a
 
 ### Run it:
 ```bash
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateUserProfile?dryRun=true"
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateUserProfile"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migrateUserProfile?dryRun=true"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migrateUserProfile"
 ```
 
 ---
@@ -237,20 +244,20 @@ Prepares the database for the Places API integration (epic E045) with two indepe
 ### Run it:
 ```bash
 # Dry run first (placeAPI backfill only — no UIDs)
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePlacesApi?dryRun=true"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migratePlacesApi?dryRun=true"
 
 # Apply + pre-grant the permission to specific UIDs
-curl -X POST "http://localhost:5001/trip-viewer-dev/us-central1/migratePlacesApi" \
+curl -X POST "http://localhost:5001/trip-viewer-prd/us-central1/migratePlacesApi" \
   -H "Content-Type: application/json" \
   -d '{"uids": ["eySHdjIyK0MNAgiPU77xE0d1CTjp"]}'
 
 # Comma-separated string also works
-curl -X POST "http://localhost:5001/trip-viewer-dev/us-central1/migratePlacesApi" \
+curl -X POST "http://localhost:5001/trip-viewer-prd/us-central1/migratePlacesApi" \
   -H "Content-Type: application/json" \
   -d '{"uids": "uid1,uid2"}'
 
 # Single-user grant: permission + add the user (admin/admin.admins + users/{uid})
-curl -X POST "http://localhost:5001/trip-viewer-dev/us-central1/migratePlacesApi" \
+curl -X POST "http://localhost:5001/trip-viewer-prd/us-central1/migratePlacesApi" \
   -H "Content-Type: application/json" \
   -d '{"uid": "gVrXZ68LVac9Ot02slN6zqD3sP3X"}'
 ```
@@ -277,8 +284,8 @@ Backfills every `trips/{id}.destinationRefs[i]` entry with a denormalized copy o
 
 ### Run it:
 ```bash
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateTripDestinationMetadata?dryRun=true"
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateTripDestinationMetadata"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migrateTripDestinationMetadata?dryRun=true"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migrateTripDestinationMetadata"
 ```
 
 ---
@@ -299,8 +306,8 @@ Converts the legacy single-string `region` field on every destination entry into
 
 ### Run it:
 ```bash
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateDestinationRegions?dryRun=true"
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateDestinationRegions"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migrateDestinationRegions?dryRun=true"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migrateDestinationRegions"
 ```
 
 ---
@@ -314,38 +321,66 @@ curl "http://localhost:5001/trip-viewer-dev/us-central1/migrateDestinationRegion
 3. Run migration:
 ```bash
 # Dry run first
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase1?dryRun=true"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migratePhase1?dryRun=true"
 
 # Apply
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase1"
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase2"
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase3"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migratePhase1"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migratePhase2"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migratePhase3"
 
 # Phase 2 with cleanup
-curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase2?cleanup=true"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migratePhase2?cleanup=true"
 ```
 
 (The examples above are legacy 13–15 migrations. Registered migrations 18+ follow the same pattern, e.g. `migrateExpenseFields`.)
 
-### On Production — Post-Deploy Automated Flow
+### On Production — Post-Deploy Automated Flow (local emulator, no function deploy)
 
-The deploy script (`scripts/build/deploy.py`) now runs migrations for you:
+Deploying Cloud Functions to production requires the Blaze plan (this project has
+Firebase Extensions), so TripViewer **never deploys migration functions**. Instead
+migrations run through the **local Functions emulator against the project's REAL
+Firestore** — the same mechanism as the old manual `npm run functions` + Postman
+flow, fully automated.
 
-1. `npm run deploy` → pick dev / prd / both, label the version, deploy (single `firebase deploy --json`).
+`npm run deploy` (`scripts/build/deploy.py`) flow:
+
+1. Deploy hosting + Firestore rules only (`firebase deploy --only hosting,firestore:rules`).
 2. After each project deploys, the script asks **"Run migrations on <project>? [y/N]"**.
-3. If you accept, it **deploys only the runnable migration functions** (`migrateTripDestinationMetadata`, `migrateDestinationRegions`, `migrateExpenseFields` — never `initLocalDb`), then lists the **pending** migrations for that environment.
-4. Select one or more (comma-separated numbers or IDs; `r` = re-run completed; `0` = skip). For each selected migration you are prompted for its declared inputs (query `params` / `body` fields from `scripts/build/migrations-config.json`) — e.g. `dryRun` — with an `i` = ignore option.
-5. Each migration is invoked over HTTPS (`POST https://us-central1-<project>.cloudfunctions.net/<function>`), its JSON report is printed, and a **successful non-dry-run** run is marked `completed` for that environment in `scripts/build/migrations-state.json` — so it is **not offered automatically on the next deploy** (re-run stays available via the `r` option).
+3. If you accept, it delegates to `scripts/build/run-migrations.py --project <project>`,
+   which lists the **pending** migrations for that environment.
+4. Select one or more (comma-separated numbers or IDs; `r` = re-run completed;
+   `0` = skip). For each selected migration you are prompted for its declared
+   inputs (query `params` / `body` fields from `scripts/build/migrations-config.json`)
+   — e.g. `dryRun` — with an `i` = ignore option.
+5. The runner (`scripts/build/run-migrations.py`):
+   - Generates a **temporary `functions/src/index.ts`** exposing ONLY the selected
+     migrations (never `initLocalDb`), backs up the original, and builds `functions/`.
+   - Starts the Functions emulator alone
+     (`firebase emulators:start --only functions --project <project>`). No Firestore
+     emulator is started, so the admin SDK connects to the **real** project Firestore.
+   - Invokes each migration over
+     `POST http://localhost:5001/<project>/us-central1/<function>` and prints the
+     JSON report.
+   - A **successful non-dry-run** run is marked `completed` for that environment in
+     `scripts/build/migrations-state.json` — so it is **not offered automatically on
+     the next deploy** (re-run stays available via the `r` option).
+   - **Restores the original `functions/src/index.ts`** (revert everything) and shuts
+     the emulator down — even on error.
+
+Standalone (equivalent to the old manual flow, no deploy needed):
+```bash
+npm run migrations -- --project dev               # interactive selection
+npm run migrations -- --project dev --ids 18,19   # non-interactive (skip menu)
+```
 
 Config/state files:
 - `scripts/build/migrations-config.json` — which migrations are auto-runnable, their function names/labels, and the `params`/`body` inputs to prompt for.
 - `scripts/build/migrations-state.json` — per-environment `completed` map (`{ "<id>": { "at": "<iso>" } }`).
 
-Manual alternative (emulator-style, works too): deploy functions, then call the production URL:
-```bash
-firebase deploy --only functions:migrateTripDestinationMetadata,functions:migrateDestinationRegions,functions:migrateExpenseFields --project <project>
-curl -X POST "https://us-central1-<project>.cloudfunctions.net/migrateExpenseFields?dryRun=true"
-```
+> **Note:** migrations run through the emulator against the live project, so they
+> execute with your local Firebase CLI credentials — no functions are deployed and
+> no billing prompt appears. The Functions port (5001) must be free: stop `npm run dev`
+> first or run `npm run kill-ports`.
 
 ---
 

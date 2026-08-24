@@ -133,14 +133,14 @@ function populateFooterVersion() {
 }
 
 export function setPageName(pageName?) {
-	const isDev = APP.projectId === 'trip-viewer-dev';
 	const host = location.hostname;
 	const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
-	const tag = isLocal ? (isDev ? '[LOCAL DEV]' : '[LOCAL PRD]') : isDev ? '[DEV]' : '';
+	// [DEV] when running locally with emulators, [PRD] when running locally with
+	// real Firebase services; no tag when deployed to a real environment.
+	const isEmulator = isLocal && window.__TRIPVIEWER_EMULATOR__ === true;
+	const tag = isLocal ? (isEmulator ? '[DEV]' : '[PRD]') : '';
 	const cleanTitle = document.title
-		.replace(/\[LOCAL (DEV|PRD)\]\s*/g, '')
-		.replace(/\[DEV\]\s*/g, '')
-		.replace(/\[PRD\]\s*/g, '')
+		.replace(/\[(LOCAL )?(DEV|PRD)\]\s*/g, '')
 		.trim();
 
 	const resolvedPageName = pageName ?? cleanTitle;

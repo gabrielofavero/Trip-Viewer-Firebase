@@ -77,8 +77,7 @@ Sub-collections may exist under documents in these collections (e.g., `trips/{tr
 - **Firestore emulator:** `localhost:8085`
 - **Auth emulator:** `localhost:9099`
 - **Functions emulator:** `localhost:5001`
-- **Default project:** `trip-viewer-dev`
-- **Other projects:** `trip-viewer-prd`, `trip-viewer-tcc` (from `.firebaserc`)
+- **Project:** `trip-viewer-prd` (single project — dev/tcc retired)
 
 The tool uses `firebase-admin` from `functions/node_modules/firebase-admin` and sets `FIRESTORE_EMULATOR_HOST` automatically.
 

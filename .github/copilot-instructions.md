@@ -6,7 +6,7 @@ All project-specific skills are located in `.github/skills/` and must be discove
 
 | Skill | Use when |
 |---|---|
-| `backlog-management` | Updating or interpreting `README.md` tasks, IDs, counts, versions, or `readme.py` |
+| `backlog-management` | MANDATORY end-of-task check: after every completed request, find/create its ticket in the backlog and move it to `Done`. Also covers updating or interpreting `README.md` tasks, IDs, counts, versions, or `readme.py` |
 | `backup-restore` | Working on account/document backup or restore flows |
 | `browser-navigation` | Building app URLs, browser/emulator sign-in, load-state diagnosis, or browser validation |
 | `build-pipeline` | Building, watching, diagnosing build issues, or editing build configuration |

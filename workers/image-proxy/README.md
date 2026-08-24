@@ -58,8 +58,7 @@ base64-encoding MBs is CPU.
 ### CORS
 
 Allowlisted origins only: `localhost` / `127.0.0.1` (any port) for local dev,
-plus `trip-viewer-dev.firebaseapp.com` / `trip-viewer-prd.firebaseapp.com`.
-Any other Origin → 403.
+plus `trip-viewer-prd.firebaseapp.com`. Any other Origin → 403.
 
 ### Auth
 

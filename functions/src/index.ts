@@ -3,42 +3,21 @@ import * as admin from 'firebase-admin';
 admin.initializeApp();
 
 // ============================================================
-// Consolidated English Migration (replaces migrations 13–22)
+// This index normally exposes only dev helpers (initLocalDb).
 //
-// Phase 1: Translate all field names/values (Pt → En) and
-//          restructure data (summaries → subcollections,
-//          accommodations/transportation/itinerary → subcollections).
-//          Runs on Portuguese-named collections.
-//          Usage: ?dryRun=true for preview
+// Runnable data migrations (scripts/build/migrations-config.json) are NOT
+// exported here. They are served temporarily by the local Functions emulator
+// when you run them against a live project:
 //
-// Phase 2: Rename collections (Pt → En), fix itinerary tipo
-//          values, fix destination categories.
-//          Optional cleanup of old collections via ?cleanup=true.
-//          Usage: ?dryRun=true for preview, ?cleanup=true to delete old data
+//   npm run migrations -- --project <dev|prd>
+//
+//   or automatically after `npm run deploy` — scripts/build/run-migrations.py
+//   generates a temporary index exposing only the selected migrations, builds,
+//   runs the Functions emulator against the project's real Firestore, then
+//   restores this file (revert everything). initLocalDb is never included in
+//   that temporary index.
 // ============================================================
 
 // Dev: initialize a fresh local Firestore emulator database
 import * as initLocalDbModule from './dev/init-local-db';
 export const initLocalDb = initLocalDbModule.initLocalDb;
-
-// ============================================================
-// Migrations
-// ============================================================
-
-// Migration 18: Backfill trips — denormalize destination metadata
-// into destinationRefs (title, image, categories booleans, version).
-// Usage: ?dryRun=true for preview
-import * as migrateTripDestinationMetadataModule from './migrations/18-migrate-trip-destination-metadata';
-export const migrateTripDestinationMetadata = migrateTripDestinationMetadataModule.migrate;
-
-// Migration 19: Convert legacy destination entry `region` string into
-// a `regions` array (multi-region support).
-// Usage: ?dryRun=true for preview
-import * as migrateDestinationRegionsModule from './migrations/19-migrate-destination-regions';
-export const migrateDestinationRegions = migrateDestinationRegionsModule.migrate;
-
-// Migration 20: Add multi-person expense fields (link + people) to
-// every expense entry in preTrip / duringTrip (public + protected).
-// Usage: ?dryRun=true for preview
-import * as migrateExpenseFieldsModule from './migrations/20-migrate-expense-fields';
-export const migrateExpenseFields = migrateExpenseFieldsModule.migrate;

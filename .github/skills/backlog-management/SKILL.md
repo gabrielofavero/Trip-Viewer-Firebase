@@ -1,12 +1,37 @@
 ---
 name: backlog-management
-description: 'Use for anything involving the README.md task backlog: navigate its sections, add or move tasks (Done = newest month first, tasks old→new down each month), interpret task IDs and emoji types, calculate counts/version/next IDs, or run `npm run readme` (scripts/utils/readme.py).'
-applyTo: 'README.md; scripts/utils/readme.py'
+description: 'Use for anything involving the README.md task backlog — including the MANDATORY end-of-task check: after every completed request, find its ticket in the backlog (or create one) and move it to Done. Also covers: navigating sections, adding/moving tasks (Done = newest month first, tasks old→new down each month), task IDs and emoji types, counts/version/next IDs, and `npm run readme` (scripts/utils/readme.py).'
+applyTo: '*'
 ---
 
 # Backlog & Task Management
 
 TripViewer tracks all work in `README.md` using a structured task system with IDs, emoji types, and sections. A Python script (`scripts/utils/readme.py`) auto-updates task counts and checks for inconsistencies.
+
+---
+
+## End-of-Task Backlog Check (MANDATORY)
+
+**Run this at the end of every completed request** — not only backlog-focused work. The README is the single source of truth for all project work, so any task you complete must end up in `## Done` before you end your turn.
+
+### Workflow
+
+1. **Search the backlog** for a ticket matching what you just completed.
+   - Check `## Backlog` (all priority blocks) **and** epic sub-tasks.
+   - Match on description, type, and keywords — wording need not be exact.
+2. **Ticket found → move it to Done:**
+   - Cut it from `## Backlog` and **append it to the bottom** of the current month's list under `## Done` (old on top, new at the bottom).
+   - If the month section doesn't exist yet, create `### <Month Year>` at the **top** of `## Done` first.
+   - Keep the same ID — never renumber or duplicate it.
+   - Epic sub-task? Remove the indented bullet from under its parent epic; once an epic has no sub-tasks left, move the epic itself to Done too (keep it in Backlog until all sub-tasks are done — see *When an epic is completed*).
+3. **No ticket found → create one straight into Done:**
+   - Assess the type: 🐞 **Bug** (defect/fix), 🏆 **Feature** (new capability), 📈 **Improvement** (polish/refactor/DEV tooling), ⚔️ **Epic** (large multi-part initiative).
+   - Pick the **next available ID** for that type (see *Task ID Selection Rules*; fill any gaps reported by `npm run readme`).
+   - Format exactly like existing entries: `- 🐞 **B177:** Description of what was done`
+   - **Append it to the bottom** of the current month's list under `## Done`.
+4. **Run `npm run readme`** to refresh the summary table and check consistency.
+
+> Skip only when no work was completed (e.g. a pure read-only answer or a question answered without making any changes). If in doubt, do the check.
 
 ---
 

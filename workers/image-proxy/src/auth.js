@@ -3,9 +3,8 @@
  *
  * Same approach as workers/places-api/src/auth.js: uses
  * `firebase-auth-cloudflare-workers` (zero-deps, Web-Standard-API only). One
- * `Auth` is created per project (`trip-viewer-dev`, `trip-viewer-prd`);
- * `verifyIdToken` checks the `aud`/`iss` claims, so a dev token verifies only
- * against dev and a prd token only against prd.
+ * `Auth` is created per project in `PROJECTS` (single project:
+ * `trip-viewer-prd`); `verifyIdToken` checks the `aud`/`iss` claims.
  *
  * ⚠️ `Auth.getOrInitialize()` is a GLOBAL singleton in
  * `firebase-auth-cloudflare-workers@2.0.6` — construct `new Auth(projectId,

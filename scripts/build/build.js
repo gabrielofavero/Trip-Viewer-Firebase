@@ -30,7 +30,7 @@ const noLiveReload = process.argv.includes("--no-livereload");
  * Resolve the emulator flag. `--use-emulator true|false` controls whether the
  * built frontend connects to the local emulators on localhost. An explicit
  * value wins; otherwise it defaults to `true` (the `npm run dev` emulator
- * flow). Pass `false` for dev:prd / dev:dev, which serve real Firebase data.
+ * flow). Pass `false` for dev:prd, which serve real Firebase data.
  */
 function resolveUseEmulator() {
 	const flagIdx = process.argv.indexOf("--use-emulator");

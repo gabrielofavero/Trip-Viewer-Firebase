@@ -3,16 +3,12 @@
  *
  * Uses `firebase-auth-cloudflare-workers` (zero-deps, Web-Standard-API only).
  * No service account is needed for ID-token verification. One `Auth` is created
- * per project (`trip-viewer-dev`, `trip-viewer-prd`); `verifyIdToken` checks the
- * `aud`/`iss` claims, so a dev token verifies only against dev and a prd token
- * only against prd — the intended dev/prd separation (backend contract §6.1).
+ * per project in `PROJECTS` (single project: `trip-viewer-prd`); `verifyIdToken`
+ * checks the `aud`/`iss` claims (backend contract §6.1).
  *
- * ⚠️ Deviation from the build plan: `Auth.getOrInitialize()` is a GLOBAL
- * singleton in `firebase-auth-cloudflare-workers@2.0.6` — `Auth.instance` is
- * bound to the FIRST project id passed, so a second call for `trip-viewer-prd`
- * returns the same dev-bound instance (verified against the source). To get one
- * verifier per project we construct `new Auth(projectId, keyStore)` directly,
- * bypassing the singleton.
+ * ⚠️ `Auth.getOrInitialize()` is a GLOBAL singleton in
+ * `firebase-auth-cloudflare-workers@2.0.6` — construct `new Auth(projectId,
+ * keyStore)` directly to get one verifier per project, bypassing the singleton.
  *
  * In `local` mode we pass an `EmulatorEnv` so verification accepts the Firebase
  * Auth emulator's unsigned tokens; otherwise verification runs against Google's

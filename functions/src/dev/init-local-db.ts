@@ -8,10 +8,39 @@ import { FieldValue } from 'firebase-admin/firestore';
  * Initializes a fresh local Firestore emulator database with the minimum
  * structure needed for the Trip Viewer app to function.
  *
+ * Guard: if the database already contains data (e.g. restored from an
+ * emulator export, or seeded by migrations), the function does nothing and
+ * returns `skipped: true` instead of overwriting anything.
+ *
  * Usage (local emulator):
  *   POST http://localhost:5001/.../initLocalDb  { "uid": "your-auth-uid" }
  *   GET  http://localhost:5001/.../initLocalDb?uid=your-auth-uid
  */
+
+/**
+ * Returns true only when the Firestore database is completely empty — i.e. no
+ * documents exist in any of the app's top-level collections. Used as a guard
+ * so initLocalDb never seeds/overwrites a database that already has data.
+ */
+async function isDatabaseEmpty(db: FirebaseFirestore.Firestore): Promise<boolean> {
+	const collections = [
+		'admin',
+		'config',
+		'users',
+		'trips',
+		'destinations',
+		'listings',
+		'expenses',
+		'protected',
+	];
+	const results = await Promise.all(
+		collections.map(async (name) => {
+			const snapshot = await db.collection(name).limit(1).get();
+			return snapshot.empty;
+		}),
+	);
+	return results.every((empty) => empty);
+}
 
 export const initLocalDb = functions.https.onRequest(async (req, res) => {
 	const uid: string = req.body?.uid || (req.query?.uid as string);
@@ -22,6 +51,21 @@ export const initLocalDb = functions.https.onRequest(async (req, res) => {
 	}
 
 	try {
+		const db = admin.firestore();
+
+		// ---------------------------------------------------------------
+		// Guard: never touch a database that already has data
+		// ---------------------------------------------------------------
+		if (!(await isDatabaseEmpty(db))) {
+			console.log('initLocalDb skipped: database already contains data.');
+			res.status(200).json({
+				success: true,
+				skipped: true,
+				message: 'Database already contains data. Initialization skipped.',
+			});
+			return;
+		}
+
 		// ---------------------------------------------------------------
 		// Fetch auth user for name, email & photo
 		// ---------------------------------------------------------------
@@ -43,7 +87,6 @@ export const initLocalDb = functions.https.onRequest(async (req, res) => {
 		// ---------------------------------------------------------------
 		// Build all writes in a single batch
 		// ---------------------------------------------------------------
-		const db = admin.firestore();
 		const batch = db.batch();
 
 		// --- admin collection ---

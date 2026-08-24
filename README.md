@@ -36,7 +36,6 @@ npm run serve
 npm run dev
 
 # Real-data dev (NO emulators — reads/writes the real Firebase project)
-npm run dev:dev    # firebase use dev first (trip-viewer-dev)
 npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 ```
 
@@ -46,8 +45,8 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 178   | 174  | 4         | 0       |
 | 🏆   | Feature     | F000 | 189   | 173  | 16        | 0       |
-| 📈   | Improvement | M000 | 186   | 160  | 22        | 4       |
-| ⚔️   | Epic        | E000 | 51    | 42   | 5         | 4       |
+| 📈   | Improvement | M000 | 189   | 166  | 22        | 1       |
+| ⚔️   | Epic        | E000 | 51    | 42   | 7         | 2       |
 
 ## Backlog
 
@@ -57,7 +56,6 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 ### Low Priority
 
-- 📈 **M182:** [DEV] Kill dev env
 - ⚔️ **E047:** [DEV] Implement Unit Tests
 - ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
 - 📈 **M171:** Safeguard unauthenticated access message
@@ -134,6 +132,10 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M186:** Improve expenses visualization and protected data
 - 📈 **M183:** [DEV] Auto run migration scripts after deployment
 - 📈 **M184:** [DEV] Remove double deployment
+- 📈 **M187:** [DEV] Run post-deploy migrations via local functions emulator (no prod function deploy / no billing prompt)
+- 📈 **M182:** [DEV] Kill dev env
+- 📈 **M188:** [DEV] Add mandatory end-of-task backlog check to readme skill
+- 📈 **M189:** [DEV] initLocalDb skips seeding when the database already has data
 
 ### July 2026
 
@@ -581,7 +583,6 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - ⚔️ **E013:** Project Migration
   - *Create dev and prd environments*
   - *Create develop branch*
-  - *Deprecate trip-viewer-tcc (redirect to prd)*
   - *Create custom domain for prd*
 
 ### May 2024

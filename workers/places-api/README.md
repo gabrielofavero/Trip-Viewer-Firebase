@@ -235,15 +235,12 @@ for photos. There is **no** byte proxy and **no** HMAC signing in v1
 
 1. **Origin header** → `getMode()` in `src/config.js`:
    - `localhost` / `127.0.0.1` → `local`
-   - `trip-viewer-dev.firebaseapp.com` → `dev`
    - `trip-viewer-prd.firebaseapp.com` → `prd`
    - anything else / missing → **403**
-2. **Token `aud` claim** → `verifyToken()` verifies against every project
-   (`trip-viewer-dev`, `trip-viewer-prd`); `firebase-auth-cloudflare-workers`
-   checks `aud`/`iss`, so a dev token only verifies against dev and a prd token
-   only against prd.
+2. **Token `aud` claim** → `verifyToken()` verifies against the single project
+   (`trip-viewer-prd`); `firebase-auth-cloudflare-workers` checks `aud`/`iss`.
 3. `local` mode verifies against the **Firebase Auth emulator**
-   (`FIREBASE_AUTH_EMULATOR_HOST`, default `127.0.0.1:9099`); dev/prd verify
+   (`FIREBASE_AUTH_EMULATOR_HOST`, default `127.0.0.1:9099`); prd verifies
    against Google's public JWK set (cached in-memory; no service account).
 
 ---

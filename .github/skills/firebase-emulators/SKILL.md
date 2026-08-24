@@ -16,21 +16,20 @@ TripViewer uses the Firebase Emulator Suite for local development. All emulators
 npm run dev              # Full dev: emulators + watch + auto-open browser
 npm run dev:backup       # Same as dev, but also saves a rotating backup on exit (opt-in)
 npm run dev:livereload   # Same but with live reload enabled
-npm run dev:dev          # REAL data (no emulators): firebase use dev + serve real project
 npm run dev:prd          # REAL data (no emulators): firebase use prd + serve real project
 npm run backup           # Export emulator state: firebase emulators:export ./.emulator-data
 npm run kill-ports       # Force-kill processes on all emulator ports
 npm run functions        # Build + start only Functions emulator
 ```
 
-> **Real data (no emulators):** `npm run dev:dev` / `npm run dev:prd` skip the
-> emulator stack entirely. They run `firebase use dev|prd`, build the frontend
-> with `--use-emulator false` (so `/__/firebase/init.js` and
-> `firebase-config.js` don't connect to emulators), and serve `dist/` via
-> `firebase serve` — the app then reads/writes the **real** `trip-viewer-dev` /
-> `trip-viewer-prd` project. Remember they permanently switch the active
-> `firebase use` project; run `firebase use dev` (or `npm run dev:dev`) again
-> before going back to the emulator stack.
+> **Real data (no emulators):** `npm run dev:prd` skips the emulator stack
+> entirely. It runs `firebase use prd`, builds the frontend with
+> `--use-emulator false` (so `/__/firebase/init.js` and `firebase-config.js`
+> don't connect to emulators), and serves `dist/` via `firebase serve` — the app
+> then reads/writes the **real** `trip-viewer-prd` project (tab shows `[PRD]`).
+> Remember it permanently switches the active `firebase use` project; run
+> `firebase use prd` (or `npm run dev:prd`) again before going back to the
+> emulator stack (tab shows `[DEV]`).
 
 ---
 
@@ -83,12 +82,12 @@ The `initLocalDb` Cloud Function creates the minimum structure needed:
 
 ```bash
 # Via curl
-curl -X POST http://localhost:5001/trip-viewer-dev/us-central1/initLocalDb \
+curl -X POST http://localhost:5001/trip-viewer-prd/us-central1/initLocalDb \
   -H "Content-Type: application/json" \
   -d '{"uid": "eySHdjIyK0MNAgiPU77xE0d1CTjp"}'
 
 # Or via browser
-open http://localhost:5001/trip-viewer-dev/us-central1/initLocalDb?uid=eySHdjIyK0MNAgiPU77xE0d1CTjp
+open http://localhost:5001/trip-viewer-prd/us-central1/initLocalDb?uid=eySHdjIyK0MNAgiPU77xE0d1CTjp
 ```
 
 What it creates:
@@ -105,6 +104,12 @@ What it creates:
 | `destinations/_placeholder` | Placeholder (so collection appears in UI) |
 | `listings/_placeholder` | Placeholder |
 | `protected/_placeholder` | Placeholder |
+
+> **Guard:** `initLocalDb` only seeds an **empty** database. If any top-level
+> collection (`admin`, `config`, `users`, `trips`, `destinations`, `listings`,
+> `expenses`, `protected`) already has documents — e.g. the DB was restored
+> from an emulator export or seeded by migrations — it does nothing and returns
+> `200 { success: true, skipped: true }` instead of overwriting data.
 
 > **Note:** `initLocalDb` requires the Auth emulator to have the user created first. Create a user in the Emulator UI (Auth tab) or via the app's registration flow.
 
@@ -199,8 +204,9 @@ This force-kills processes on ports 8085, 9099, 5000, 5001, 4000.
 From `.firebaserc`:
 | Alias | Project ID |
 |---|---|
-| `dev` | `trip-viewer-dev` |
 | `prd` | `trip-viewer-prd` |
-| `tcc` | `trip-viewer-tcc` |
 
-The emulators use `singleProjectMode: true`, so all emulators share one project. The `firebase-config.js` auto-detects the environment by hostname when deployed, but locally defaults to `trip-viewer-dev`.
+The emulators use `singleProjectMode: true` on the single `trip-viewer-prd`
+project. `firebase-config.js` always uses the PRD config; the
+`{{USE_EMULATOR}}` build flag decides whether localhost connects to the
+emulators (tab shows `[DEV]`) or to the real project (tab shows `[PRD]`).

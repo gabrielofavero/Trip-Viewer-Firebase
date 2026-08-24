@@ -258,7 +258,7 @@ function inject(options = {}) {
 			ENTRY_POINT: page.entry,
 			HOME_HREF: homeHref,
 			// "true" (default) → localhost connects to the emulators (npm run dev);
-			// "false" → real Firebase connection (dev:prd / dev:dev).
+			// "false" → real Firebase connection (dev:prd).
 			USE_EMULATOR: options.useEmulator === "false" ? "false" : "true",
 			...topBarIcons,
 		};

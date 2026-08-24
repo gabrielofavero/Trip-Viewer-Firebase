@@ -16,7 +16,6 @@ The TripViewer build system is a **custom Node.js pipeline** (no Webpack, Vite, 
 npm run build              # One-shot build (prod mode; blocks on TS errors)
 npm run watch              # Watch mode (dev mode; rebuilds on change, errors non-blocking)
 npm run dev                # Full dev: watch (livereload) + emulators + auto-open browser
-npm run dev:dev            # Real data (no emulators): firebase use dev + serve real project
 npm run dev:prd            # Real data (no emulators): firebase use prd + serve real project
 node scripts/build/build.js --mode dev|prod  # Explicit build mode
 node scripts/build/build.js --watch --no-livereload  # Watch without live reload
@@ -32,7 +31,7 @@ Controls how the built frontend connects on localhost:
   Auth/Firestore to the local emulators — used by `npm run dev`.
 - **`false`**: `init.js?useEmulator=false` and the localhost emulator block is
   skipped, so the app reads/writes the **real** Firebase project for the active
-  `firebase use` alias — used by `npm run dev:dev` / `npm run dev:prd`.
+  `firebase use` alias — used by `npm run dev:prd`.
 
 The flag is substituted at build time into `scripts-vendor.html`
 (`{{USE_EMULATOR}}`) and into the copied `dist/firebase-config.js`.

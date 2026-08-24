@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.24.0]
+## [2.24.0] - 2026-08-23
 
 - ⚔️ **E014:** Implementation: Shopping List
   - *[🏆F188] Group transportation by traveler (select from trip travelers instead of free text)*
@@ -13,6 +13,7 @@
 - 📈 **M186:** Improve expenses visualization and protected data
 - 📈 **M183:** [DEV] Auto run migration scripts after deployment
 - 📈 **M184:** [DEV] Remove double deployment
+- 📈 **M187:** [DEV] Run migrations via local functions emulator after deploy (no billing prompt)
 
 ## [2.23.0] - 2026-08-16
 

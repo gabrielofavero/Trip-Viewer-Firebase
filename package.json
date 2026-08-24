@@ -13,7 +13,6 @@
     "dev": "node scripts/dev/ensure-ports-free.js && concurrently -n fn-watch,front-watch,emulators,open,worker,img-proxy,gmaps -c yellow,blue,green,magenta,cyan,white,yellow \"npm --prefix functions run build:watch\" \"npm run watch\" \"node scripts/dev/start-emulator.js\" \"node scripts/utils/open-on-ready.js\" \"npm --prefix workers/places-api run dev\" \"npm --prefix workers/image-proxy run dev\" \"npm run gmaps:server\"",
     "dev:backup": "cross-env DEV_BACKUP_ON_EXIT=1 npm run dev",
     "dev:prd": "node scripts/dev/ensure-ports-free.js && firebase use prd && concurrently -n front-watch,live-serve,open -c blue,green,magenta \"node scripts/build/build.js --watch --use-emulator false\" \"firebase serve --only hosting --port 5000\" \"node scripts/utils/open-on-ready.js\"",
-    "dev:dev": "node scripts/dev/ensure-ports-free.js && firebase use dev && concurrently -n front-watch,live-serve,open -c blue,green,magenta \"node scripts/build/build.js --watch --use-emulator false\" \"firebase serve --only hosting --port 5000\" \"node scripts/utils/open-on-ready.js\"",
     "watch:fast": "node scripts/build/build.js --watch --no-livereload",
     "typecheck": "tsc --noEmit",
     "readme": "python scripts/utils/readme.py",
@@ -23,7 +22,8 @@
     "sync": "python scripts/utils/sync.py",
     "deploy": "python scripts/build/deploy.py",
     "backup": "node scripts/utils/backup.js",
-    "functions": "npm --prefix functions run build && firebase emulators:start --only functions"
+    "functions": "npm --prefix functions run build && firebase emulators:start --only functions",
+    "migrations": "python scripts/build/run-migrations.py"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.11",

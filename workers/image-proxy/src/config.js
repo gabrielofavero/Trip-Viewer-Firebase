@@ -9,11 +9,11 @@
  */
 
 /**
- * Firebase projects the worker verifies ID tokens against.
- * A dev token only verifies against `trip-viewer-dev`; a prd token only against
- * `trip-viewer-prd` (aud/iss checked by `firebase-auth-cloudflare-workers`).
+ * Firebase project the worker verifies ID tokens against (single project:
+ * `trip-viewer-prd`). The Firebase ID token's `aud` claim picks the project
+ * during verification (see auth.js).
  */
-export const PROJECTS = ['trip-viewer-dev', 'trip-viewer-prd'];
+export const PROJECTS = ['trip-viewer-prd'];
 
 /**
  * Map an Origin header to the worker mode.
@@ -23,7 +23,6 @@ export const PROJECTS = ['trip-viewer-dev', 'trip-viewer-prd'];
 export function getMode(origin) {
 	const host = parseHost(origin);
 	if (host === 'localhost' || host === '127.0.0.1') return 'local';
-	if (host === 'trip-viewer-dev.firebaseapp.com') return 'dev';
 	if (host === 'trip-viewer-prd.firebaseapp.com') return 'prd';
 	return null;
 }

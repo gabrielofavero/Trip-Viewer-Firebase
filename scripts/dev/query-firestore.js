@@ -20,7 +20,7 @@
  *   --where <field,op,val>   Filter (requires --collection). op: ==, !=, <, <=, >, >=, array-contains, in, not-in, array-contains-any
  *   --limit <n>              Max documents to return (default: 50)
  *   --json                   Output raw JSON (default: pretty-printed)
- *   --project <id>           Firebase project ID (default: trip-viewer-dev)
+ *   --project <id>           Firebase project ID (default: trip-viewer-prd)
  *   --host <host:port>       Firestore emulator host (default: localhost:8085)
  *   --help                   Show this help
  */
@@ -52,7 +52,7 @@ function parseArgs(rawArgs) {
 		where: [],
 		limit: 50,
 		json: false,
-		project: 'trip-viewer-dev',
+		project: 'trip-viewer-prd',
 		host: 'localhost:8085',
 		help: false,
 	};

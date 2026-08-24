@@ -107,11 +107,9 @@ npm run readme              # Update task counts + version
 ## Environment & Configuration
 
 ### `.firebaserc`
-Three Firebase project aliases:
+Single Firebase project alias:
 ```
-dev → trip-viewer-dev
 prd → trip-viewer-prd
-tcc → trip-viewer-tcc
 ```
 
 ### `.gitignore`
