@@ -56,6 +56,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 ### Low Priority
 
+- 🏆 **F190:** Use LocalStorage logic for detecting new versions (cache refreshing)
 - ⚔️ **E047:** [DEV] Implement Unit Tests
 - ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
 - 📈 **M171:** Safeguard unauthenticated access message
