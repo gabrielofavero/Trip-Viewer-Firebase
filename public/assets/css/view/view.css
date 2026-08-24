@@ -25,6 +25,10 @@
 
 .header-text {
 	width: 400px;
+	margin-top: 14px;
+	/* Match the hero title (#header1) so subtitle + countdown read as one
+	   heading group. */
+	color: #4f5051;
 }
 
 #itinerary-today {
@@ -302,10 +306,10 @@
 }
 
 #hero h1 {
-	margin: 0;
-	font-size: 64px;
+	margin: 0 0 26px 0;
+	font-size: 52px;
 	font-weight: 700;
-	line-height: 56px;
+	line-height: 1.15;
 	color: #4f5051;
 	text-transform: none;
 	padding-bottom: 0;
@@ -355,7 +359,7 @@
 
 	#hero h1 {
 		font-size: 38px;
-		line-height: 36px;
+		line-height: 1.15;
 	}
 
 	#hero p {

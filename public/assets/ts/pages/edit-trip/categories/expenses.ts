@@ -143,7 +143,13 @@ function loadExpensesHTML() {
 		}
 
 		getID(category).appendChild(div);
-		initializeSortableForGroup(id, { onEnd: afterDragInnerExpense });
+		// All expense categories share one Sortable group so items can be dragged
+		// between them; afterDragInnerExpense resolves the real category/type from
+		// the dragged element's data-group on drop.
+		initializeSortableForGroup(id, {
+			onEnd: afterDragInnerExpense,
+			sortGroup: 'trip-expenses',
+		});
 	}
 }
 
@@ -244,6 +250,10 @@ export function openInnerExpense(category, type = '', index = -1) {
 		}
 	}
 
+	// Build the compact currency picker (short code when closed, full label in the
+	// dropdown) from the current #expense-currency value.
+	initExpenseCurrencySelect();
+
 	getID('expense-type-select').addEventListener('change', (e) => {
 		getID('expense-type-input').style.display =
 			(e.target as HTMLSelectElement).value === 'custom' ? 'block' : 'none';
@@ -311,38 +321,18 @@ function getInnerExpenseContent(category, type, index) {
                     <label>${translate('trip.expenses.split_with')}</label>
                     <div id="expense-people-checkboxes" class="expense-people-list">${getExpensePeopleCheckboxesHTML()}</div>
                 </div>
-                <div class="nice-form-group">
-                    <label>${translate('currency.title')}</label>
-                        <select id="expense-currency" class="edit-select" name="currency">
-                        <option value="BRL">${translate('currency.type.BRL')}</option>
-                        <option value="USD">${translate('currency.type.USD')}</option>
-                        <option value="EUR">${translate('currency.type.EUR')}</option>
-                        <option value="GBP">${translate('currency.type.GBP')}</option>
-                        <option value="JPY">${translate('currency.type.JPY')}</option>
-                        <option value="INR">${translate('currency.type.INR')}</option>
-                        <option value="RUB">${translate('currency.type.RUB')}</option>
-                        <option value="CAD">${translate('currency.type.CAD')}</option>
-                        <option value="AUD">${translate('currency.type.AUD')}</option>
-                        <option value="CHF">${translate('currency.type.CHF')}</option>
-                        <option value="SEK">${translate('currency.type.SEK')}</option>
-                        <option value="NOK">${translate('currency.type.NOK')}</option>
-                        <option value="DKK">${translate('currency.type.DKK')}</option>
-                        <option value="NZD">${translate('currency.type.NZD')}</option>
-                        <option value="MXN">${translate('currency.type.MXN')}</option>
-                        <option value="ZAR">${translate('currency.type.ZAR')}</option>
-                        <option value="KRW">${translate('currency.type.KRW')}</option>
-                        <option value="SGD">${translate('currency.type.SGD')}</option>
-                        <option value="HKD">${translate('currency.type.HKD')}</option>
-                        <option value="ILS">${translate('currency.type.ILS')}</option>
-                        <option value="PLN">${translate('currency.type.PLN')}</option>
-                        <option value="HUF">${translate('currency.type.HUF')}</option>
-                        <option value="TWD">${translate('currency.type.TWD')}</option>
-                        <option value="THB">${translate('currency.type.THB')}</option>
-                    </select>
-                </div>
-                <div class="nice-form-group">
-                    <label>${translate('labels.cost')}</label>
-                    <input required class="input-full" id="expense-price" type="number" placeholder="0.00" step="0.01">
+                <div class="side-by-side-box-fixed expense-currency-row">
+                    <div class="nice-form-group side-by-side-fixed">
+                        <label>${translate('labels.cost')}</label>
+                        <input required class="input-full" id="expense-price" type="number" placeholder="0.00" step="0.01">
+                    </div>
+                    <div class="nice-form-group side-by-side-fixed">
+                        <label>${translate('currency.title')}</label>
+                        <select id="expense-currency" class="edit-select" name="currency" style="display: none">
+                            ${getCurrencyOptionsHTML()}
+                        </select>
+                        <div class="expense-currency-select" id="expense-currency-select"></div>
+                    </div>
                 </div>
                 <div class="nice-form-group">
                     <label>${translate('trip.expenses.link')}</label>
@@ -356,6 +346,159 @@ function getInnerExpenseContent(category, type, index) {
                         </button>
                     </div>
             </div>`;
+}
+
+// ======= Compact currency picker =======
+// Shows the short currency code (BRL, USD…) on the closed control so it never
+// clips inside the side-by-side layout, but lists the full translated label in
+// the open dropdown. The real value lives in the hidden native
+// <select id="expense-currency"> so save/open logic is unchanged.
+
+function getCurrencyOptions() {
+	return [
+		{ value: 'BRL', label: translate('currency.type.BRL') },
+		{ value: 'USD', label: translate('currency.type.USD') },
+		{ value: 'EUR', label: translate('currency.type.EUR') },
+		{ value: 'GBP', label: translate('currency.type.GBP') },
+		{ value: 'JPY', label: translate('currency.type.JPY') },
+		{ value: 'INR', label: translate('currency.type.INR') },
+		{ value: 'RUB', label: translate('currency.type.RUB') },
+		{ value: 'CAD', label: translate('currency.type.CAD') },
+		{ value: 'AUD', label: translate('currency.type.AUD') },
+		{ value: 'CHF', label: translate('currency.type.CHF') },
+		{ value: 'SEK', label: translate('currency.type.SEK') },
+		{ value: 'NOK', label: translate('currency.type.NOK') },
+		{ value: 'DKK', label: translate('currency.type.DKK') },
+		{ value: 'NZD', label: translate('currency.type.NZD') },
+		{ value: 'MXN', label: translate('currency.type.MXN') },
+		{ value: 'ZAR', label: translate('currency.type.ZAR') },
+		{ value: 'KRW', label: translate('currency.type.KRW') },
+		{ value: 'SGD', label: translate('currency.type.SGD') },
+		{ value: 'HKD', label: translate('currency.type.HKD') },
+		{ value: 'ILS', label: translate('currency.type.ILS') },
+		{ value: 'PLN', label: translate('currency.type.PLN') },
+		{ value: 'HUF', label: translate('currency.type.HUF') },
+		{ value: 'TWD', label: translate('currency.type.TWD') },
+		{ value: 'THB', label: translate('currency.type.THB') },
+	];
+}
+
+function getCurrencyOptionsHTML() {
+	return getCurrencyOptions()
+		.map((option) => `<option value="${option.value}">${option.label}</option>`)
+		.join('');
+}
+
+let EXPENSE_CURRENCY_OUTSIDE_HANDLER = null;
+let EXPENSE_CURRENCY_FLOATING_DROPDOWN = null;
+
+function initExpenseCurrencySelect() {
+	// Remove a floating dropdown left behind by a previous dialog instance.
+	if (EXPENSE_CURRENCY_FLOATING_DROPDOWN) {
+		EXPENSE_CURRENCY_FLOATING_DROPDOWN.remove();
+		EXPENSE_CURRENCY_FLOATING_DROPDOWN = null;
+	}
+
+	const select = getID('expense-currency');
+	const container = getID('expense-currency-select');
+	if (!select || !container) return;
+
+	const current = select.value || 'BRL';
+	const options = getCurrencyOptions();
+
+	container.innerHTML = `
+		<button type="button" class="expense-currency-trigger" id="expense-currency-trigger" aria-haspopup="listbox" aria-expanded="false">
+			<span class="expense-currency-value">${escapeHtml(current)}</span>
+			<svg class="expense-currency-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+				<path fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M17.5 14.5L12 9l-5.5 5.5"></path>
+			</svg>
+		</button>
+		<div class="expense-currency-dropdown" id="expense-currency-dropdown" style="display: none" role="listbox">
+			${options
+				.map(
+					(option) =>
+						`<div class="expense-currency-option${option.value === current ? ' active' : ''}" role="option" data-value="${option.value}">${option.label}</div>`,
+				)
+				.join('')}
+		</div>
+	`;
+
+	const trigger = getID('expense-currency-trigger');
+	const dropdown = getID('expense-currency-dropdown');
+	const valueSpan = container.querySelector('.expense-currency-value') as HTMLElement | null;
+
+	function closeDropdown() {
+		if (dropdown.style.display !== 'block') return;
+		dropdown.remove();
+		if (EXPENSE_CURRENCY_FLOATING_DROPDOWN === dropdown) {
+			EXPENSE_CURRENCY_FLOATING_DROPDOWN = null;
+		}
+		dropdown.style.display = 'none';
+		container.classList.remove('opened');
+		trigger.setAttribute('aria-expanded', 'false');
+	}
+
+	function openDropdown() {
+		const rect = trigger.getBoundingClientRect();
+
+		// Render above everything (escape the dialog's scroll/overflow containers).
+		dropdown.style.position = 'fixed';
+		dropdown.style.left = `${rect.left}px`;
+		dropdown.style.width = `${rect.width}px`;
+		dropdown.style.zIndex = '99999';
+		dropdown.style.display = 'block';
+		document.body.appendChild(dropdown);
+		EXPENSE_CURRENCY_FLOATING_DROPDOWN = dropdown;
+
+		// Open downward when there's room; otherwise flip above the trigger.
+		const spaceBelow = window.innerHeight - rect.bottom - 4;
+		const height = dropdown.offsetHeight;
+		if (spaceBelow < height) {
+			dropdown.style.top = `${Math.max(4, rect.top - height - 4)}px`;
+		} else {
+			dropdown.style.top = `${rect.bottom + 4}px`;
+		}
+
+		container.classList.add('opened');
+		trigger.setAttribute('aria-expanded', 'true');
+	}
+
+	trigger.addEventListener('click', (e) => {
+		e.stopPropagation();
+		if (dropdown.style.display === 'block') {
+			closeDropdown();
+		} else {
+			openDropdown();
+		}
+	});
+
+	for (const option of container.querySelectorAll('.expense-currency-option')) {
+		option.addEventListener('click', (e) => {
+			e.stopPropagation();
+			const value = option.getAttribute('data-value');
+			select.value = value;
+			if (valueSpan) valueSpan.innerText = value;
+			for (const opt of dropdown.querySelectorAll('.expense-currency-option')) {
+				opt.classList.toggle('active', opt === option);
+			}
+			closeDropdown();
+		});
+	}
+
+	if (EXPENSE_CURRENCY_OUTSIDE_HANDLER) {
+		document.removeEventListener('click', EXPENSE_CURRENCY_OUTSIDE_HANDLER);
+	}
+	EXPENSE_CURRENCY_OUTSIDE_HANDLER = (e) => {
+		if (!(e.target instanceof Element)) return;
+		if (
+			e.target.closest('.expense-currency-trigger') ||
+			e.target.closest('.expense-currency-dropdown')
+		) {
+			return;
+		}
+		closeDropdown();
+	};
+	document.addEventListener('click', EXPENSE_CURRENCY_OUTSIDE_HANDLER);
 }
 
 export function saveInnerExpense(category, type, index = -1) {
@@ -429,33 +572,58 @@ export function deleteInnerExpense(category, type, index) {
 }
 
 function afterDragInnerExpense(evt) {
-	const id = evt.from.getAttribute('data-group');
-	const split = id.split('-');
+	const from = parseExpenseGroup(evt.from.getAttribute('data-group'));
+	const to = parseExpenseGroup(evt.to.getAttribute('data-group'));
 
-	const category = split[0];
-	const from = evt.oldIndex - 1;
-	const to = evt.newIndex - 1;
+	// Sortable indices include the group's <label> as item 0, so subtract 1 to get
+	// the expense position within the subgroup.
+	const fromIndex = evt.oldIndex - 1;
+	const toIndex = evt.newIndex - 1;
 
-	const groups = INNER_EXPENSES[category];
-	if (!groups) return;
+	// Same category + type → simple reorder inside the subgroup.
+	if (from.category === to.category && from.type === to.type) {
+		const subgroup = INNER_EXPENSES[from.category]?.find((entry) => entry.type === from.type);
+		if (!subgroup) return;
 
-	const type = split.slice(1).join('-');
+		const expenses = [...subgroup.expenses];
+		const [moved] = expenses.splice(fromIndex, 1);
+		expenses.splice(toIndex, 0, moved);
 
-	// locate subgroup + index
-	const subgroupIndex = groups.findIndex((entry) => entry && entry.type === type);
+		INNER_EXPENSES[from.category] = INNER_EXPENSES[from.category].map((entry) =>
+			entry.type === from.type ? { ...entry, expenses } : entry,
+		);
+	} else {
+		// Cross-category (and possibly cross-section) move.
+		const fromSubgroup = INNER_EXPENSES[from.category]?.find(
+			(entry) => entry.type === from.type,
+		);
+		if (!fromSubgroup) return;
 
-	if (subgroupIndex === -1) return;
+		const [moved] = fromSubgroup.expenses.splice(fromIndex, 1);
 
-	const subgroup = groups[subgroupIndex];
-	const expenses = [...subgroup.expenses];
+		let toSubgroup = INNER_EXPENSES[to.category]?.find((entry) => entry.type === to.type);
+		if (toSubgroup) {
+			toSubgroup.expenses.splice(toIndex, 0, moved);
+		} else {
+			INNER_EXPENSES[to.category].push({ type: to.type, expenses: [moved] });
+		}
 
-	const [moved] = expenses.splice(from, 1);
-	expenses.splice(to, 0, moved);
-
-	INNER_EXPENSES[category][subgroupIndex] = {
-		...subgroup,
-		expenses,
-	};
+		// Drop the source subgroup if the move emptied it.
+		if (fromSubgroup.expenses.length === 0) {
+			INNER_EXPENSES[from.category] = INNER_EXPENSES[from.category].filter(
+				(entry) => entry !== fromSubgroup,
+			);
+		}
+	}
 
 	loadExpensesHTML();
+}
+
+/**
+ * Splits a group id like "duringTrip-trip.expenses.shopping" into its parts.
+ * The category is always the first segment; the type is everything after it.
+ */
+function parseExpenseGroup(id) {
+	const split = id.split('-');
+	return { category: split[0], type: split.slice(1).join('-') };
 }

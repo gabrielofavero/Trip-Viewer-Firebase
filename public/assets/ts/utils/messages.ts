@@ -635,7 +635,7 @@ export function getEditButton(action?: { type: string; docId: string }) {
 	icon.setAttribute('data-icon', 'material-symbols:edit');
 
 	button.appendChild(icon);
-	button.innerHTML += ` ${translate('labels.edit')}`;
+	button.innerHTML += ` ${translate('labels.reedit')}`;
 
 	return button;
 }
@@ -893,6 +893,16 @@ export function handleMessageKeydown(e) {
 	if (e.key === 'Enter') {
 		const confirm = getID('message-confirm');
 		if (confirm) {
+			// PIN dialogs: never let Enter dismiss the dialog while the PIN is
+			// incomplete (fewer than 4 digits) — only a fully-entered PIN
+			// submits (the confirm button is the intended way to validate).
+			const pinCode = getID('pin-code') as HTMLElement | null;
+			// Read via textContent (not innerText): the .pin element is
+			// display:none, and innerText is rendering-dependent.
+			if (pinCode && !/^\d{4}$/.test((pinCode.textContent || '').trim())) {
+				e.preventDefault();
+				return;
+			}
 			e.preventDefault();
 			confirm.click();
 		}

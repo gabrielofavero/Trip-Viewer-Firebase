@@ -15,7 +15,7 @@ All project-specific skills are located in `.github/skills/` and must be discove
 | `firebase-emulators` | Managing, seeding, inspecting, exporting, or importing Firebase emulators |
 | `git-workflow` | Performing Git operations or creating commit messages |
 | `i18n-system` | Editing translations, language packs, language switching, or translation resolution |
-| `migration-system` | Creating, running, or debugging Firestore migrations |
+| `migration-system` | Creating, running, or debugging Firestore migrations — new migrations (18+) must be registered in `scripts/build/migrations-config.json` |
 | `ntfy-notifications` | Every task; send the required ntfy notification before ending a completed, blocked, or input-seeking turn |
 | `query-firestore` | Reading current local Firestore emulator data |
 | `static-export` | Working on offline/static web export, manifests, bundled assets, or image-proxy integration |

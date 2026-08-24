@@ -6,6 +6,10 @@ export function initializeSortableForGroup(groupName, properties?) {
 	function initializeSortable(groupName) {
 		const containers = document.querySelectorAll(`.draggable-area[data-group="${groupName}"]`);
 		const handleSelector = properties?.handleSelector || '.drag-icon';
+		// `sortGroup` lets several distinct data-group containers share a single
+		// Sortable group so items can be dragged between them (e.g. across expense
+		// categories). Defaults to the container's own data-group.
+		const sortGroup = properties?.sortGroup || groupName;
 		const onStartFunc = properties?.onStart;
 		const onEndFunc = properties?.onEnd;
 
@@ -14,7 +18,7 @@ export function initializeSortableForGroup(groupName, properties?) {
 			if (!el.sortableInstance) {
 				el.sortableInstance = new Sortable(el, {
 					handle: handleSelector,
-					group: groupName,
+					group: sortGroup,
 					animation: 150,
 					onStart: function (evt) {
 						if (onStartFunc) {

@@ -502,3 +502,52 @@ section {
 	font-size: 1rem;
 	flex-shrink: 0;
 }
+
+/*--------------------------------------------------------------
+# Locked state (sensitive-only trips, view.html embed)
+# The expenses section of a sensitive-only trip stays public but the
+# expenses themselves are PIN-protected. Until the user unlocks them,
+# a lock card replaces the (empty) skeleton content.
+--------------------------------------------------------------*/
+#expenses-embed.expenses-locked > *:not(.expenses-lock-card),
+#expenses-content.expenses-locked > *:not(.expenses-lock-card) {
+	display: none;
+}
+
+.expenses-lock-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	padding: 42px 24px;
+	margin: 8px auto;
+	max-width: 480px;
+	background: var(--box-color, #f1f1f1);
+	border: 1px dashed var(--border-color, #d7d7d7);
+	border-radius: 16px;
+	box-shadow: var(--shadow-md);
+	text-align: center;
+}
+
+.expenses-lock-icon {
+	font-size: 44px;
+	line-height: 1;
+	color: var(--theme-color);
+}
+
+.expenses-lock-title {
+	margin: 0;
+	font-size: 18px;
+	font-weight: 600;
+	color: var(--text-primary, #4f5051);
+}
+
+.expenses-lock-text {
+	margin: 0;
+	font-size: 14px;
+	color: var(--text-muted, #6a737c);
+}
+
+.expenses-unlock-btn {
+	margin-top: 8px;
+}

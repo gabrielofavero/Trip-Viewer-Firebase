@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.24.0]
+
+- ⚔️ **E014:** Implementation: Shopping List
+  - *[🏆F188] Group transportation by traveler (select from trip travelers instead of free text)*
+  - *[🏆F071] Multi-person expenses*
+- 🐞 **B176:** Order upcoming trips on index from closest to furthest from now
+- 📈 **M185:** [DEV] Make emulator exit backup opt-in (not automatic on npm run dev exit)
+- 🏆 **F189:** Import destination images from edit trip + link improvements
+- 🐞 **B177:** [DEV] Fix backup and on ready dev env issues
+- 🐞 **B178:** Fix pin dialog issues
+- 📈 **M186:** Improve expenses visualization and protected data
+- 📈 **M183:** [DEV] Auto run migration scripts after deployment
+- 📈 **M184:** [DEV] Remove double deployment
+
 ## [2.23.0] - 2026-08-16
 
 - 📈 **M169:** [DEV] Improve cache busting

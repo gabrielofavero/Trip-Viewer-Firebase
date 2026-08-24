@@ -50,6 +50,7 @@ import {
 import { openExpensesEmbed, initViewEmbed } from './support/embed.js';
 import {
 	loadSensitiveReservations,
+	setProtectedFlowMode,
 	requestDocumentPin,
 	protectedDataConfirmAction,
 } from './support/sensitive-reservation.js';
@@ -565,6 +566,7 @@ function loadDocumentData() {
 	refreshCategorias();
 
 	if (getState().pin == 'sensitive-only') {
+		setProtectedFlowMode('sensitive-only');
 		loadSensitiveReservations();
 	}
 
@@ -585,5 +587,12 @@ function loadProtectedData(firestoreData, rawFirestoreData?: any) {
 	loadHeaderImageAndLogo(firestoreData);
 	loadVisibility(firestoreData.colors);
 	populateDevPage(rawFirestoreData);
-	requestDocumentPin();
+	// All-data trips are fully gated behind the PIN, so cancelling any PIN
+	// dialog can't leave the user on a usable page — go back home instead.
+	setProtectedFlowMode('all-data');
+	requestDocumentPin({
+		cancelAction: () => {
+			window.location.href = 'index.html';
+		},
+	});
 }

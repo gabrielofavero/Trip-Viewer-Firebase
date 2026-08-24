@@ -44,9 +44,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 176   | 172  | 4         | 0       |
+| 🐞   | Bug         | B000 | 178   | 174  | 4         | 0       |
 | 🏆   | Feature     | F000 | 189   | 173  | 16        | 0       |
-| 📈   | Improvement | M000 | 185   | 159  | 22        | 4       |
+| 📈   | Improvement | M000 | 186   | 160  | 22        | 4       |
 | ⚔️   | Epic        | E000 | 51    | 42   | 5         | 4       |
 
 ## Backlog
@@ -58,11 +58,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 ### Low Priority
 
 - 📈 **M182:** [DEV] Kill dev env
-- 📈 **M183:** [DEV] Auto run migration scripts after deployment
-- 📈 **M184:** [DEV] Remove double deployment
 - ⚔️ **E047:** [DEV] Implement Unit Tests
-- ⚔️ **E019:** [DEV] Implement Sonarqube
-- ⚔️ **E046:** [DEV] Implement Playwright
 - ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
 - 📈 **M171:** Safeguard unauthenticated access message
 
@@ -133,6 +129,11 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B176:** Order upcoming trips on index from closest to furthest from now
 - 📈 **M185:** [DEV] Make emulator exit backup opt-in (not automatic on npm run dev exit)
 - 🏆 **F189:** Import destination images from edit trip + link improvements
+- 🐞 **B177:** [DEV] Fix backup and on ready dev env issues
+- 🐞 **B178:** Fix pin dialog issues
+- 📈 **M186:** Improve expenses visualization and protected data
+- 📈 **M183:** [DEV] Auto run migration scripts after deployment
+- 📈 **M184:** [DEV] Remove double deployment
 
 ### July 2026
 
@@ -846,3 +847,5 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B148:** Full itinerary page giving multiple blank pages
 - ⚔️ **E024:** Migrate project to React
 - 🐞 **B172:** Fix error when switching a destination category
+- ⚔️ **E019:** [DEV] Implement Sonarqube
+- ⚔️ **E046:** [DEV] Implement Playwright

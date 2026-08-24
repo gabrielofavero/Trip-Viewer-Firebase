@@ -1,12 +1,14 @@
 ---
 name: migration-system
-description: 'Use when you need to create, run, debug, or understand Firestore data migrations. Covers the three-phase migration architecture, idempotent pattern, BatchManager, how to invoke migrations via HTTP, the dryRun/cleanup parameters, and guidance for creating new migrations following the established conventions.'
-applyTo: 'functions/src/migrations/**; functions/src/index.ts'
+description: 'Use when you need to create, run, debug, or understand Firestore data migrations. Covers the three-phase migration architecture, idempotent pattern, BatchManager, how to invoke migrations via HTTP, the dryRun/cleanup parameters, and guidance for creating new migrations following the established conventions. ALWAYS register runnable migrations (18+) in scripts/build/migrations-config.json.'
+applyTo: 'functions/src/migrations/**; functions/src/index.ts; scripts/build/migrations-config.json'
 ---
 
 # Migration System
 
 TripViewer uses **Firebase Functions as migration runners**. Each migration is an HTTP-triggered Cloud Function that transforms Firestore data. Migrations are **idempotent** (safe to re-run) and support **dry-run preview** mode.
+
+> **⚠️ Whenever you create or run a migration, remember to update `scripts/build/migrations-config.json`.** All migrations numbered 18+ must be registered there (`runnable[]`) so the deploy script can offer them post-deploy. Do not finish a migration task without touching the config.
 
 ---
 
@@ -47,8 +49,11 @@ curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase2?cleanup=tr
 | **17** | **`migratePlacesApi`** | **Places API prep: grant `canUsePlacesAPI` to body-provided UIDs + add `placeAPI` object to every destination entry** |
 | **18** | **`migrateTripDestinationMetadata`** | **Backfill trips: enrich `destinationRefs[i]` with denormalized destination metadata (`title`, `image`, `categories` “has entries” booleans, `version`)** |
 | **19** | **`migrateDestinationRegions`** | **Destination entry region → regions: convert the legacy single `region` string into a `regions` array** |
+| **20** | **`migrateExpenseFields`** | **Expense multi-person fields: add `link` + `people` to every expense entry in preTrip/duringTrip (public + protected)** |
 
-Migrations 1–12 are **legacy** (already applied in production). Migrations 13–15 are the **consolidation phases**; migrations 16–19 are the post-consolidation backfills (profile fields, Places API prep, trip destination metadata, then destination regions). They are exported from `functions/src/index.ts` as `migratePhase1`, `migratePhase2`, `migratePhase3`, `migrateUserProfile`, `migratePlacesApi`, `migrateTripDestinationMetadata`, and `migrateDestinationRegions`.
+**Migrations 1–17 are legacy / manual-only** — already applied in production (1–12) or kept for reference (13–17). They are NOT registered in the current `functions/src/index.ts`, so the deploy script cannot offer them.
+
+**Migrations 18+ are registered in `scripts/build/migrations-config.json`** — the **auto-runnable** set that the deploy script (`scripts/build/deploy.py`) offers after every deployment (see "Post-Deploy Automated Flow" below). Every migration numbered 18 or higher must be registered there.
 
 ---
 
@@ -320,13 +325,27 @@ curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase3"
 curl "http://localhost:5001/trip-viewer-dev/us-central1/migratePhase2?cleanup=true"
 ```
 
-### On Production
+(The examples above are legacy 13–15 migrations. Registered migrations 18+ follow the same pattern, e.g. `migrateExpenseFields`.)
 
-Deploy functions first:
+### On Production — Post-Deploy Automated Flow
+
+The deploy script (`scripts/build/deploy.py`) now runs migrations for you:
+
+1. `npm run deploy` → pick dev / prd / both, label the version, deploy (single `firebase deploy --json`).
+2. After each project deploys, the script asks **"Run migrations on <project>? [y/N]"**.
+3. If you accept, it **deploys only the runnable migration functions** (`migrateTripDestinationMetadata`, `migrateDestinationRegions`, `migrateExpenseFields` — never `initLocalDb`), then lists the **pending** migrations for that environment.
+4. Select one or more (comma-separated numbers or IDs; `r` = re-run completed; `0` = skip). For each selected migration you are prompted for its declared inputs (query `params` / `body` fields from `scripts/build/migrations-config.json`) — e.g. `dryRun` — with an `i` = ignore option.
+5. Each migration is invoked over HTTPS (`POST https://us-central1-<project>.cloudfunctions.net/<function>`), its JSON report is printed, and a **successful non-dry-run** run is marked `completed` for that environment in `scripts/build/migrations-state.json` — so it is **not offered automatically on the next deploy** (re-run stays available via the `r` option).
+
+Config/state files:
+- `scripts/build/migrations-config.json` — which migrations are auto-runnable, their function names/labels, and the `params`/`body` inputs to prompt for.
+- `scripts/build/migrations-state.json` — per-environment `completed` map (`{ "<id>": { "at": "<iso>" } }`).
+
+Manual alternative (emulator-style, works too): deploy functions, then call the production URL:
 ```bash
-firebase deploy --only functions:migratePhase1,functions:migratePhase2,functions:migratePhase3
+firebase deploy --only functions:migrateTripDestinationMetadata,functions:migrateDestinationRegions,functions:migrateExpenseFields --project <project>
+curl -X POST "https://us-central1-<project>.cloudfunctions.net/migrateExpenseFields?dryRun=true"
 ```
-Then call the production URL (same pattern, different project).
 
 ---
 
@@ -336,7 +355,7 @@ Then call the production URL (same pattern, different project).
 ```
 functions/src/migrations/{NN}-migrate-{short-description}.ts
 ```
-Use the next available number (currently up to 18).
+Use the next available number (currently up to 20).
 
 ### Template
 
@@ -381,9 +400,23 @@ export const migrateNewFeature = functions.https.onRequest(async (req, res) => {
 
 ### Register in index.ts
 ```typescript
-import * as newMigration from './migrations/16-migrate-new-feature';
+import * as newMigration from './migrations/21-migrate-new-feature';
 export const migrateNewFeature = newMigration.migrateNewFeature;
 ```
+
+### Register in scripts/build/migrations-config.json (required for 18+)
+
+**Every migration numbered 18+ must also be added to `scripts/build/migrations-config.json`**
+(`runnable[]`) — this is what makes it auto-runnable by the deploy script. Add its
+`id`, `function`, `label`, and the `params`/`body` inputs to prompt for (e.g. `dryRun`),
+then the deploy flow offers it post-deploy and tracks per-env completion in
+`scripts/build/migrations-state.json`.
+
+**Checklist for a new migration:**
+- [ ] create `functions/src/migrations/{NN}-migrate-{...}.ts`
+- [ ] export the function from `functions/src/index.ts`
+- [ ] register it in `scripts/build/migrations-config.json` (`runnable[]`)
+- [ ] build / type-check, then test on the emulator first
 
 ### Best practices
 - Always support `?dryRun=true` (log/report what would change, never commit)
@@ -398,8 +431,8 @@ export const migrateNewFeature = newMigration.migrateNewFeature;
 
 ---
 
-## Legacy Migrations (1–12)
+## Legacy / Manual-Only Migrations (1–17)
 
-These are individual migrations that were applied incrementally before the consolidation. They are **not exported** from the current `index.ts` and are kept for reference only. The three-phase consolidation (13–15) supersedes them.
+Migrations **1–12** were applied incrementally before the consolidation; **13–17** are the consolidation phases and early backfills. None of 1–17 are exported from the current `functions/src/index.ts` and none are registered in `scripts/build/migrations-config.json`, so they are **manual-only** and kept for reference only.
 
-If you need to reference their logic, the files are in `functions/src/migrations/01–12-*.ts`.
+If you need to reference their logic, the files are in `functions/src/migrations/01–17-*.ts`.

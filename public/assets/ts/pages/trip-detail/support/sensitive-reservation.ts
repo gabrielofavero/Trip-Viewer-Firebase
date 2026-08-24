@@ -28,6 +28,25 @@ export let PIN: string | null = null;
 const MASKED = '***';
 const MEASURE = document.createElement('span');
 
+// Tracks whether the current protected-data flow is an all-data trip (fully
+// gated behind the PIN). During the all-data load flow the trip state is not
+// set yet, so `getState().pin` isn't a reliable signal here. All-data trips
+// send the user home when they cancel any PIN dialog; sensitive-only trips
+// keep the page public and just dismiss the dialog.
+let isAllDataFlow = false;
+
+export function setProtectedFlowMode(mode: 'all-data' | 'sensitive-only'): void {
+	isAllDataFlow = mode === 'all-data';
+}
+
+function getProtectedCancelAction(): string | (() => void) {
+	return isAllDataFlow
+		? () => {
+				window.location.href = 'index.html';
+			}
+		: closeMessage;
+}
+
 export function loadSensitiveReservations(): void {
 	const boxes = document.querySelectorAll<HTMLElement>('.sensitive-box');
 	MEASURE.style.position = 'absolute';
@@ -208,7 +227,7 @@ export async function protectedDataConfirmAction(afterAction?: string | ((data: 
 	const invalido = true;
 
 	if (!PIN) {
-		requestDocumentPin({ invalido });
+		requestDocumentPin({ invalido, cancelAction: getProtectedCancelAction() });
 		return;
 	}
 
@@ -226,7 +245,7 @@ export async function protectedDataConfirmAction(afterAction?: string | ((data: 
 	);
 
 	if (!haveErrorFromGetRequest() && !firestoreData) {
-		requestDocumentPin({ invalido });
+		requestDocumentPin({ invalido, cancelAction: getProtectedCancelAction() });
 		return;
 	}
 
@@ -249,15 +268,17 @@ export async function protectedDataConfirmAction(afterAction?: string | ((data: 
 export function requestDocumentPin({
 	invalido = false,
 	confirmAction = `protectedDataConfirmAction()`,
+	cancelAction = `closeMessage()`,
 }: {
 	invalido?: boolean;
 	confirmAction?: string;
+	cancelAction?: string | (() => void);
 } = {}): void {
 	const precontent = translate('messages.protected.pin');
 	stopLoadingScreen();
 	requestPin({
 		confirmAction,
-		cancelAction: `closeMessage()`,
+		cancelAction,
 		precontent,
 		invalid: invalido,
 	});

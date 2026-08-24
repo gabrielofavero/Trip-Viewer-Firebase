@@ -166,6 +166,9 @@
 			"link": "Link",
 			"split_with": "Dividir com",
 			"view_by": "Ver por",
+			"locked_title": "Gastos protegidos",
+			"locked_text": "Os gastos desta viagem são protegidos por um PIN de acesso. Insira-o para visualizá-los.",
+			"unlock": "Desbloquear gastos",
 			"min": {
 				"pre_trip": "Pré-Viagem",
 				"during_trip": "Durante"
@@ -779,6 +782,7 @@
 		"wallpaper": "Papel de Parede",
 		"logo": "Logotipo",
 		"edit": "Editar",
+		"reedit": "Re-editar",
 		"basic_information": "Dados básicos",
 		"visibility": "Visibilidade",
 		"public": "Público",

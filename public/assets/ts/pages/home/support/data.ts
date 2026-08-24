@@ -357,22 +357,23 @@ export function openTripDialog(tripId) {
 	// Last updated
 	getID('trip-dialog-updated').textContent = getLastUpdatedOnText(trip.version?.lastUpdated);
 
-	// Modules
+	// Modules — pill order mirrors the view page sections: overview → expenses →
+	// transportation → accommodations → itinerary → destinations → gallery.
 	const modulesDiv = getID('trip-dialog-modules');
 	const moduleNames = {
-		destinations: translate('destination.title'),
-		accommodations: translate('trip.accommodation.title'),
-		transportation: translate('trip.transportation.title'),
-		itinerary: translate('trip.itinerary.title'),
-		expenses: translate('trip.expenses.title'),
-		gallery: translate('trip.gallery.title'),
 		summary: translate('labels.overview'),
+		expenses: translate('trip.expenses.title'),
+		transportation: translate('trip.transportation.title'),
+		accommodations: translate('trip.accommodation.title'),
+		itinerary: translate('trip.itinerary.title'),
+		destinations: translate('destination.title'),
+		gallery: translate('trip.gallery.title'),
 	};
 	let modulesHTML = '';
 	if (trip.modules) {
-		for (const [key, active] of Object.entries(trip.modules)) {
-			if (active && moduleNames[key]) {
-				modulesHTML += `<span class="module-pill">${moduleNames[key]}</span>`;
+		for (const [key, label] of Object.entries(moduleNames)) {
+			if (trip.modules[key] && label) {
+				modulesHTML += `<span class="module-pill">${label}</span>`;
 			}
 		}
 	}

@@ -93,8 +93,8 @@
 [data-theme="dark"] #preloader:before,
 [data-theme="dark"] .preloader:before {
 	border: 6px solid var(--theme-color);
-	border-top-color: var(--bg-primary);
-	border-bottom-color: var(--bg-primary);
+	border-top-color: transparent;
+	border-bottom-color: transparent;
 }
 
 /* ===== Top Bar ===== */
@@ -576,12 +576,12 @@
 [data-theme="dark"] .facts .count-box,
 [data-theme="dark"] .about .count-box {
 	background: #303030;
-	box-shadow: 0 8px 24px rgba(166, 166, 166, 0.05);
+	box-shadow: 0 3px 8px rgba(166, 166, 166, 0.03);
 }
 
 [data-theme="dark"] .facts .count-box:hover,
 [data-theme="dark"] .about .count-box:hover {
-	box-shadow: 0 12px 32px rgba(166, 166, 166, 0.08);
+	box-shadow: 0 5px 14px rgba(166, 166, 166, 0.04);
 }
 
 [data-theme="dark"] .facts .count-box i,
@@ -667,6 +667,11 @@
 /*--------------------------------------------------------------
 # Page: View
 --------------------------------------------------------------*/
+[data-theme="dark"] .header-text,
+[data-theme="dark"] #countdown {
+	color: var(--font-color);
+}
+
 [data-theme="dark"] #programacao-hoje,
 [data-theme="dark"] #itinerary-today {
 	background-color: rgba(255, 255, 255, 0.05);
@@ -852,6 +857,10 @@
 [data-theme="dark"] .gastos-card.container-mode,
 [data-theme="dark"] .expenses-card.container-mode {
 	box-shadow: 0 8px 24px rgba(166, 166, 166, 0.05);
+}
+
+[data-theme="dark"] .expenses-lock-card {
+	box-shadow: 0 4px 12px rgba(166, 166, 166, 0.05);
 }
 
 /* Full itinerary table — match the expenses-card treatment. */

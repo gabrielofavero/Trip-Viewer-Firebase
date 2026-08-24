@@ -19,7 +19,9 @@ Utility scripts for the Trip Viewer Firebase project.
 |--------|-------------|
 | `build.js` | Copies `public/` → `dist/`, injects HTML partials, copies Firebase config. `--watch` for watch mode; `--use-emulator true|false` controls emulator vs real Firebase connection (default true). |
 | `inject-partials.js` | Called by `build.js`. Replaces `<!-- #include ... -->` directives with shared partial content. |
-| `deploy.py` | Firebase deployment with build-based cache busting. Prompts for target project (dev / prd / both), labels the release version from `CHANGELOG.md` (use last / bump minor / bump patch), stamps the changelog entry, increments build number, applies cache-busting params, deploys, restores HTML files. |
+| `deploy.py` | Firebase deployment with build-based cache busting. Prompts for target project (dev / prd / both), labels the release version from `CHANGELOG.md` (use last / bump minor / bump patch), stamps the changelog entry, increments build number, writes the final `version.json` to `dist/` before a **single** `firebase deploy --json` (hosting version ID parsed from the result — no double deploy), persists the version state, then offers to run pending data migrations on each deployed environment. |
+| `migrations-config.json` | Post-deploy migration definitions consumed by `deploy.py`: which migrations are auto-runnable (18/19/20 only — everything else is manual-only), their Cloud Function names, labels, and the query `params` / `body` inputs to prompt for (each with an ignore option). |
+| `migrations-state.json` | Per-environment record of which runnable migrations have already been applied, so they stop being offered automatically on the next deploy (re-run via the `r` option). |
 | `setup.ps1` | One-time environment setup. Checks Node.js/Python, runs `npm install`, installs `pre-commit` hooks. |
 
 ### `lint/` — Code Quality

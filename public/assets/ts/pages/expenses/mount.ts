@@ -65,6 +65,12 @@ var ACTIVE_EXPENSE_TAB = 'summary';
 // scroll-lock so the page doesn't flicker while the section loads inline.
 var EMBED_MODE = false;
 
+// True while a PIN-gate confirm is in flight. A user-entered PIN that matches
+// no protected document means the PIN was wrong (show the invalid dialog); a
+// host-resolved PIN mount instead treats a missing document as an inactive /
+// empty module and just hides the loading state.
+var PIN_FROM_GATE = false;
+
 function showLoading() {
 	if (!EMBED_MODE) startLoadingScreen();
 }
@@ -89,6 +95,14 @@ export async function mountExpenses(
 	// clean state instead, so a re-mount still renders fresh.
 	resetExpensesState();
 
+	// Clear any locked state left over from a previous mount (e.g. when the
+	// view page re-mounts expenses with a resolved PIN).
+	container.classList.remove('expenses-locked');
+	container.querySelectorAll('.expenses-lock-card').forEach((el) => el.remove());
+
+	// A fresh mount is host-driven (mode or resolved pin), not a PIN-gate confirm.
+	PIN_FROM_GATE = false;
+
 	if (!opts.tripId) {
 		displayForbidden(
 			`${translate('messages.documents.get.error')}. ${translate(
@@ -110,8 +124,16 @@ export async function mountExpenses(
 		// Host already knows the resolved pin → read the protected document directly.
 		await loadExpenses(container, opts, opts.pin);
 	} else if (opts.pin) {
-		// Host flagged the trip as protected ('sensitive-only'/'all-data') → ask for the pin.
-		requestPinExpenses(container, opts);
+		if (opts.embedMode && opts.pin === 'sensitive-only') {
+			// Sensitive-only trip embedded in view.html: the rest of the page is
+			// public, so do NOT gate the page with a PIN on load. Instead render a
+			// locked state in the expenses section that the user can expand to
+			// reveal (triggers an internal PIN request on demand).
+			renderLockedExpenses(container, opts);
+		} else {
+			// Standalone expenses.html, or an all-data embed → ask for the pin.
+			requestPinExpenses(container, opts);
+		}
 	} else {
 		// Standalone bootstrap: no host state. Attempt the public read first and
 		// fall back to the PIN gate when the document is missing/forbidden.
@@ -129,6 +151,7 @@ function requestPinExpenses(container: HTMLElement, opts: MountExpensesOptions):
 	requestPin({
 		confirmAction: () => {
 			const pin = getID('pin-code')?.innerText || '';
+			PIN_FROM_GATE = true;
 			loadExpenses(container, opts, pin);
 		},
 		cancelAction: () => exitExpenses(opts),
@@ -141,6 +164,7 @@ function requestPinExpensesInvalid(container: HTMLElement, opts: MountExpensesOp
 	requestInvalidPin({
 		confirmAction: () => {
 			const pin = getID('pin-code')?.innerText || '';
+			PIN_FROM_GATE = true;
 			loadExpenses(container, opts, pin);
 		},
 		cancelAction: () => exitExpenses(opts),
@@ -149,10 +173,40 @@ function requestPinExpensesInvalid(container: HTMLElement, opts: MountExpensesOp
 }
 
 function exitExpenses(opts: MountExpensesOptions): void {
-	if (opts.tripId) {
-		window.location.href = `view.html?t=${opts.tripId}`;
+	if (opts.embedMode) {
+		// Embedded in view.html (sensitive-only): cancelling the PIN just
+		// dismisses the dialog — the rest of the trip stays visible.
+		closeMessage();
 	} else {
+		// Standalone expenses.html: cancelling the PIN gate goes back home.
 		window.location.href = 'index.html';
+	}
+}
+
+/**
+ * Sensitive-only trips keep the rest of the page public, so the expenses
+ * section renders a locked card instead of gating the page on load. Clicking
+ * the unlock button triggers an internal PIN request; cancelling just dismisses
+ * the dialog (the trip stays visible without the expenses unlocked).
+ */
+function renderLockedExpenses(container: HTMLElement, opts: MountExpensesOptions): void {
+	container.classList.add('expenses-locked');
+
+	const card = document.createElement('div');
+	card.className = 'expenses-lock-card';
+	card.innerHTML = `
+		<span class="expenses-lock-icon bx bx-lock-alt" aria-hidden="true"></span>
+		<p class="expenses-lock-title">${translate('trip.expenses.locked_title')}</p>
+		<p class="expenses-lock-text">${translate('trip.expenses.locked_text')}</p>
+		<button type="button" class="btn btn-theme btn-format expenses-unlock-btn">${translate('trip.expenses.unlock')}</button>
+	`;
+	container.appendChild(card);
+
+	const unlockBtn = card.querySelector<HTMLButtonElement>('.expenses-unlock-btn');
+	if (unlockBtn) {
+		unlockBtn.addEventListener('click', () => {
+			requestPinExpenses(container, opts);
+		});
 	}
 }
 
@@ -170,6 +224,11 @@ async function loadExpenses(
 		const data = await get(path, false);
 
 		if (data) {
+			// If this mount started in the locked state (sensitive-only embed),
+			// the PIN was just resolved in the same mount — remove the lock card
+			// so the real skeleton content shows.
+			container.classList.remove('expenses-locked');
+			container.querySelectorAll('.expenses-lock-card').forEach((el) => el.remove());
 			EXPENSES_DATA = data;
 			await loadCurrencies();
 			await loadExpenseCurrencies();
@@ -198,6 +257,12 @@ async function loadExpenses(
 		if (!opts.pin) {
 			// Standalone: a missing public document usually means a protected trip.
 			requestPinExpenses(container, opts);
+			return;
+		}
+		if (pin && PIN_FROM_GATE) {
+			// A user-entered PIN matched no protected document → wrong pin. Keep
+			// the dialog open showing the invalid message instead of dismissing it.
+			requestPinExpensesInvalid(container, opts);
 			return;
 		}
 		// Host supplied a resolved pin but no data → module inactive/empty.

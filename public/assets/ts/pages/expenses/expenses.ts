@@ -8,7 +8,7 @@
 
 import { getLocalColors } from '../../theme/colors.js';
 import { loadVisibility } from '../../theme/visibility.js';
-import { getID, getURLParam, getURLParams } from '../../utils/dom.js';
+import { getID, getURLParams } from '../../utils/dom.js';
 import { displayForbidden, registerActions } from '../../utils/messages.js';
 import { translate } from '../../i18n/translation.js';
 import { loadExpensesListeners } from './support/event-listeners.js';
@@ -61,10 +61,6 @@ export async function loadExpensesPage() {
 }
 
 function exitExpenses() {
-	const documentID = getURLParam('e');
-	if (documentID) {
-		window.location.href = `view.html?t=${documentID}`;
-	} else {
-		window.location.href = 'index.html';
-	}
+	// Cancelling the PIN gate on the standalone expenses page goes home.
+	window.location.href = 'index.html';
 }

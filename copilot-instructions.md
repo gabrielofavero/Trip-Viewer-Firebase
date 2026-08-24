@@ -18,7 +18,7 @@ This workspace has **14 domain-specific agent skills** in `.github/skills/`. The
 | `data-model` | Understanding Firestore schemas, PIN-protected storage, security rules |
 | `build-pipeline` | Building, watching, debugging the build process |
 | `firebase-emulators` | Starting/stopping emulators, seeding data |
-| `migration-system` | Running/creating Firestore data migrations |
+| `migration-system` | Running/creating Firestore data migrations — new migrations (18+) must be registered in `scripts/build/migrations-config.json` |
 | `css-ui-patterns` | CSS architecture, dark mode, component styles |
 | `typescript-conventions` | Module organization, page routing, service layer, coding conventions |
 | `i18n-system` | Translations, language switching, JSON language packs |

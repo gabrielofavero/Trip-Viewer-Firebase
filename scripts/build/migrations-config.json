@@ -1,0 +1,48 @@
+{
+  "$comment": "Migrations the deploy script can run automatically after a deployment (scripts/build/deploy.py). Only migrations listed in `runnable` are offered; any other migration is manual-only. `params` are query-string params, `body` are JSON request-body fields. Each declared input is prompted for at run time with an option to ignore/omit it. Mark a migration as completed per environment in scripts/build/migrations-state.json so it stops being offered automatically on the next deploy.",
+  "region": "us-central1",
+  "runnable": [
+    {
+      "id": 18,
+      "function": "migrateTripDestinationMetadata",
+      "label": "Trip destination metadata backfill (enrich destinationRefs)",
+      "params": [
+        {
+          "name": "dryRun",
+          "type": "bool",
+          "label": "Dry run (preview changes, write nothing)",
+          "default": false
+        }
+      ],
+      "body": []
+    },
+    {
+      "id": 19,
+      "function": "migrateDestinationRegions",
+      "label": "Destination entry region → regions array",
+      "params": [
+        {
+          "name": "dryRun",
+          "type": "bool",
+          "label": "Dry run (preview changes, write nothing)",
+          "default": false
+        }
+      ],
+      "body": []
+    },
+    {
+      "id": 20,
+      "function": "migrateExpenseFields",
+      "label": "Expense link + people fields backfill",
+      "params": [
+        {
+          "name": "dryRun",
+          "type": "bool",
+          "label": "Dry run (preview changes, write nothing)",
+          "default": false
+        }
+      ],
+      "body": []
+    }
+  ]
+}

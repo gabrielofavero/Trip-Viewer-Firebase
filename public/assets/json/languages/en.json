@@ -166,6 +166,9 @@
 			"link": "Link",
 			"split_with": "Split with",
 			"view_by": "View by",
+			"locked_title": "Expenses are protected",
+			"locked_text": "This trip's expenses are protected by an access PIN. Enter it to view them.",
+			"unlock": "Unlock expenses",
 			"min": {
 				"pre_trip": "Pre-trip",
 				"during_trip": "During Trip"
@@ -782,6 +785,7 @@
 		"wallpaper": "Wallpaper",
 		"logo": "Logo",
 		"edit": "Edit",
+		"reedit": "Re-edit",
 		"basic_information": "Basic Information",
 		"visibility": "Visibility",
 		"public": "Public",
