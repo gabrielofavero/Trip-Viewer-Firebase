@@ -54,6 +54,7 @@ export function getAccommodationArray(protectedReservationCodes = false) {
 			images: getAccommodationImages(j),
 			reservation: protectedReservationCodes ? '' : getID(`reservation-accommodations-${j}`).value,
 			link: protectedReservationCodes ? '' : getID(`reservation-accommodations-link-${j}`).value,
+			paymentStatus: getID(`accommodations-payment-status-${j}`).value,
 			name: getID(`accommodations-name-${j}`).value,
 		});
 	}

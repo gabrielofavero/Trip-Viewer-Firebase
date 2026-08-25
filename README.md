@@ -44,7 +44,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 178   | 174  | 4         | 0       |
-| 🏆   | Feature     | F000 | 191   | 175  | 16        | 0       |
+| 🏆   | Feature     | F000 | 191   | 176  | 15        | 0       |
 | 📈   | Improvement | M000 | 190   | 167  | 22        | 1       |
 | ⚔️   | Epic        | E000 | 51    | 42   | 7         | 2       |
 
@@ -139,6 +139,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🏆 **F190:** Use LocalStorage logic for detecting new versions (cache refreshing)
 - 🏆 **F191:** Expenses: exclusive shopping-bag icon for the Shopping type + copy list to iOS Notes (native checkboxes)
 - 📈 **M190:** Expand wallpaper import to trip gallery, accommodation and destination place images
+- 🏆 **F065:** Show if accommodation was prepaid or not
 
 ### July 2026
 
@@ -811,7 +812,6 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M096:** Mobile and webview adjustments
 - 📈 **M097:** Itinerary automations (edit/trip.html)
 - 🏆 **F069:** Tab for selecting destinations within the page
-- 🏆 **F065:** Show if accommodation was prepaid or not
 - ⚔️ **E021:** Implementation: Lineup in view.html
   - *Instead of being in Destinations, it's a new category*
   - *Displays list of artists as a festival lineup (Example: RiR site)*

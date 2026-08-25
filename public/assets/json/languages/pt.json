@@ -225,7 +225,13 @@
 			"breakfast": "Café da manhã",
 			"name_placeholder": "Hotel, Pousada, Airbnb, etc",
 			"address_placeholder": "Rua Exemplo, 123",
-			"description_placeholder": "Quarto duplo, vista para o mar"
+			"description_placeholder": "Quarto duplo, vista para o mar",
+			"payment_status": "Status de pagamento",
+			"payment_status_options": {
+				"none": "Não mostrar",
+				"prepaid": "Pago antecipadamente",
+				"pay_on_site": "Pagar no local"
+			}
 		},
 		"itinerary": {
 			"title": "Programação",

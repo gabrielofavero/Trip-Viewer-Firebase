@@ -42,6 +42,7 @@ function getAccommodationsHTML(i, innerItinerary = false) {
 		address: original.address,
 		images: original.images,
 		link: original.link,
+		paymentStatus: original.paymentStatus,
 		name: original.name,
 	};
 
@@ -109,6 +110,7 @@ export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
                 <i class="bx bxs-file color-icon"></i>
                 ${getAccommodationReservationHTML(hospedagem)} 
               </div>
+                ${getAccommodationPaymentStatusHTML(hospedagem)}
                 <div class="hotel-description" style="display: ${hospedagem.description ? 'block' : 'none'}">
                   <i class="bx bxs-hotel color-icon"></i> 
                   ${hospedagem.description}
@@ -145,6 +147,27 @@ function getAccommodationReservationHTML(hospedagem) {
 	}
 
 	return `${translate('labels.reservation.title')} #${hospedagem.reservation}`;
+}
+
+/**
+ * Payment status indicator (F065). Returns '' when the status is unset
+ * (or "don't show") — legacy docs without the field render nothing.
+ */
+function getAccommodationPaymentStatusHTML(hospedagem) {
+	const status = hospedagem.paymentStatus;
+	if (status === 'prepaid') {
+		return `<div class="hotel-payment-status prepaid">
+                <i class="bx bxs-check-circle color-icon"></i>
+                ${translate('trip.accommodation.payment_status_options.prepaid')}
+              </div>`;
+	}
+	if (status === 'pay_on_site') {
+		return `<div class="hotel-payment-status pay-on-site">
+                <i class="bx bxs-wallet-alt color-icon"></i>
+                ${translate('trip.accommodation.payment_status_options.pay_on_site')}
+              </div>`;
+	}
+	return '';
 }
 
 function buildHospedagensSwiper(swiperData) {

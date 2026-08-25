@@ -228,7 +228,13 @@
 			"breakfast": "Breakfast",
 			"name_placeholder": "Hotel, Inn, Airbnb, etc.",
 			"address_placeholder": "Example Street, 123",
-			"description_placeholder": "Double room, sea view"
+			"description_placeholder": "Double room, sea view",
+			"payment_status": "Payment status",
+			"payment_status_options": {
+				"none": "Don't show",
+				"prepaid": "Prepaid",
+				"pay_on_site": "Pay on destination"
+			}
 		},
 		"itinerary": {
 			"title": "Itinerary",

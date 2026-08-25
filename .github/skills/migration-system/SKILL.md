@@ -57,6 +57,7 @@ npm run migrations -- --project dev
 | **18** | **`migrateTripDestinationMetadata`** | **Backfill trips: enrich `destinationRefs[i]` with denormalized destination metadata (`title`, `image`, `categories` “has entries” booleans, `version`)** |
 | **19** | **`migrateDestinationRegions`** | **Destination entry region → regions: convert the legacy single `region` string into a `regions` array** |
 | **20** | **`migrateExpenseFields`** | **Expense multi-person fields: add `link` + `people` to every expense entry in preTrip/duringTrip (public + protected)** |
+| **21** | **`migrateAccommodationPaymentStatus`** | **Accommodation payment status (F065): add `paymentStatus: ""` to every accommodation sub-document (`trips/{id}/accommodations/{accId}`)** |
 
 **Migrations 1–17 are legacy / manual-only** — already applied in production (1–12) or kept for reference (13–17). They are NOT registered in the current `functions/src/index.ts`, so the deploy script cannot offer them.
 
@@ -308,6 +309,27 @@ Converts the legacy single-string `region` field on every destination entry into
 ```bash
 curl "http://localhost:5001/trip-viewer-prd/us-central1/migrateDestinationRegions?dryRun=true"
 curl "http://localhost:5001/trip-viewer-prd/us-central1/migrateDestinationRegions"
+```
+
+---
+
+## Migration 21: Accommodation payment status (`migrateAccommodationPaymentStatus`)
+
+**File:** `functions/src/migrations/21-migrate-accommodation-payment-status.ts`
+
+Adds the `paymentStatus` field to every accommodation sub-document so the UI can show whether the stay was prepaid (feature F065).
+
+### Operations:
+1. Scans all `trips` documents; for each, lists the `accommodations` subcollection.
+2. Adds `paymentStatus: ""` (don't show) to every accommodation document that lacks it.
+3. **Idempotency check:** documents already carrying a string `paymentStatus` are skipped.
+
+> **Note:** the field is optional — the app treats a missing field as "don't show" (back-compat), so this migration only normalizes existing data. Values: `""` (don't show, default) | `"prepaid"` | `"pay_on_site"`.
+
+### Run it:
+```bash
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migrateAccommodationPaymentStatus?dryRun=true"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migrateAccommodationPaymentStatus"
 ```
 
 ---

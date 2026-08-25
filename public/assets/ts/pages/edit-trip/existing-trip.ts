@@ -251,6 +251,7 @@ function loadAccommodationData() {
 			accommodation.name || getID(`accommodations-title-${j}`).innerText;
 		getID(`accommodations-address-${j}`).value = accommodation.address;
 		getID(`accommodations-description-${j}`).value = accommodation.description;
+		getID(`accommodations-payment-status-${j}`).value = accommodation.paymentStatus || '';
 		getID(`reservation-accommodations-${j}`).value = accommodation.reservation || '';
 		getID(`reservation-accommodations-link-${j}`).value = accommodation.link;
 

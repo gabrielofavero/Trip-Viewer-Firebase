@@ -629,6 +629,17 @@
 	color: #e2e2e2;
 }
 
+/* Payment status indicator — lighter variants for dark mode (F065) */
+[data-theme="dark"] .hotel-payment-status.prepaid,
+[data-theme="dark"] .hotel-payment-status.prepaid .color-icon {
+	color: #81c784;
+}
+
+[data-theme="dark"] .hotel-payment-status.pay-on-site,
+[data-theme="dark"] .hotel-payment-status.pay-on-site .color-icon {
+	color: #ffb74d;
+}
+
 [data-theme="dark"] #accommodations-box {
 	background-color: transparent;
 }

@@ -311,6 +311,15 @@ export function addAccommodations() {
             </div>
 
             <div class="nice-form-group">
+              <label>${translate('trip.accommodation.payment_status')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <select id="accommodations-payment-status-${j}">
+                <option value="">${translate('trip.accommodation.payment_status_options.none')}</option>
+                <option value="prepaid">${translate('trip.accommodation.payment_status_options.prepaid')}</option>
+                <option value="pay_on_site">${translate('trip.accommodation.payment_status_options.pay_on_site')}</option>
+              </select>
+            </div>
+
+            <div class="nice-form-group">
               <label>${translate('labels.reservation.code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="reservation-accommodations-${j}" type="text" placeholder="ABC123" />
             </div>

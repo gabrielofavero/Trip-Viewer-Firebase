@@ -260,6 +260,12 @@ export interface Accommodation {
 	reservation: string;
 	/** empty in public, filled in protected */
 	link: string;
+	/**
+	 * Payment status display (F065). '' = don't show (default / back-compat),
+	 * 'prepaid' = already paid, 'pay_on_site' = pay at the destination.
+	 * Optional — legacy docs may lack it entirely.
+	 */
+	paymentStatus?: '' | 'prepaid' | 'pay_on_site';
 }
 
 /** was "datas" */
