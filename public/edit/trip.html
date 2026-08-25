@@ -2,235 +2,56 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
-
-  <title>TripViewer</title>
-  <meta content="Your Travel Planner" name="description">
-  <meta property="og:description" content="Your Travel Planner">
-  <meta content="" name="keywords">
-
-  <!-- Apple Data -->
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="TripViewer" />
-  <meta name="theme-color" content="#fff">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-  <link rel="manifest" href="../site.webmanifest">
-  <link rel="mask-icon" href="../safari-pinned-tab.svg" color="#5bbad5">
-  <link rel="shortcut icon" href="../favicon.ico">
-  <meta name="msapplication-TileColor" content="#e4ebdb">
-  <meta name="msapplication-config" content="../browserconfig.xml">
-  <meta name="theme-color" content="#ffffff">
-
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
-  <link data-main href="../assets/css/editar/editar.css" rel="stylesheet">
+  <!-- #include shared/head.html -->
+  <link href="../assets/css/main.css" rel="stylesheet">
+  <link data-main href="../assets/css/edit/edit.css" rel="stylesheet">
 
 </head>
 
 <body>
   <!-- ======= Hero ======= -->
   <section id="hero" class="loadable" style="display: none">
-    <div class="top-bar" id="top-bar">
-      <a href="../index.html" class="logo-link">
-        <div class="logo-box">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-light">
-            <g style="isolation: isolate;">
-              <g id="Capa_1" data-name="Capa 1">
-                <g>
-                  <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                    style="fill: none; stroke: #00b6ea; stroke-miterlimit: 10; stroke-width: 8px;" />
-                  <path id="light-color-1"
-                    d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
-                    style="fill: #5859a7; stroke-width: 0px;" />
-                  <path
-                    d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <path id="light-color-2"
-                    d="m3.57,12.2h72.54c1.97,0,3.57,1.6,3.57,3.57v28.62c0,1.97-1.6,3.58-3.58,3.58H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
-                    style="fill: #5859a7; stroke-width: 0px;" />
-                  <path
-                    d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #00b6ea; stroke-width: 0px;" />
-                </g>
-              </g>
-            </g>
-          </svg>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-dark" style="display:none">
-            <g style="isolation: isolate;">
-              <g id="Capa_1" data-name="Capa 1">
-                <g>
-                  <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                    style="fill: none; stroke: #00b6ea; stroke-miterlimit: 10; stroke-width: 8px;" />
-                  <path id="dark-color-1"
-                    d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
-                    style="fill: #7f75b6; stroke-width: 0px;" />
-                  <path
-                    d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <path id="dark-color-2"
-                    d="m3.57,12.2h72.54c1.97,0,3.58,1.6,3.58,3.58v28.62c0,1.97-1.6,3.57-3.57,3.57H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
-                    style="fill: #7f75b6; stroke-width: 0px;" />
-                  <path
-                    d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #00b6ea; stroke-width: 0px;" />
-                </g>
-              </g>
-            </g>
-          </svg>
-          <div id="trip-viewer-text">TripViewer</div>
-        </div>
-      </a>
-      <div class="icons-box" id="icons-box">
-        <div class="lang-selector">
-          <button class="lang-button">EN</button>
-          <div class="lang-options">
-            <button data-lang="en">EN</button>
-            <button data-lang="pt">PT</button>
-          </div>
-        </div>
-        <i onclick="window.location = '../index.html'" id="back" class="bx bx-arrow-back icon-buttons"></i>
-        <i id="night-mode" class="bx bx-moon icon-buttons"></i>
+      <!-- #include shared/top-bar.html -->
+
+    <div class="edit-page">
+      <div class="edit-tab-bar" id="edit-tab-bar">
+        <button class="edit-tab active" data-tab="basic-information">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          <span data-translate="labels.basic_information"></span>
+        </button>
+        <button class="edit-tab" data-tab="customization">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+          <span data-translate="labels.customization.title"></span>
+        </button>
+        <button class="edit-tab" data-tab="expenses">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M11.025 21v-2.15q-1.325-.3-2.287-1.15t-1.413-2.4l1.85-.75q.375 1.2 1.113 1.825t1.937.625q1.025 0 1.738-.462t.712-1.438q0-.875-.55-1.387t-2.55-1.163q-2.15-.675-2.95-1.612t-.8-2.288q0-1.625 1.05-2.525t2.15-1.025V3h2v2.1q1.25.2 2.063.913t1.187 1.737l-1.85.8q-.3-.8-.85-1.2t-1.5-.4q-1.1 0-1.675.488T9.825 8.65q0 .825.75 1.3t2.6 1q1.725.5 2.613 1.588t.887 2.512q0 1.775-1.05 2.7t-2.6 1.15V21z"/></svg>
+          <span data-translate="trip.expenses.title"></span>
+        </button>
+        <button class="edit-tab" data-tab="transportation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3-5a9 9 0 0 0 6-8a3 3 0 0 0-3-3a9 9 0 0 0-8 6a6 6 0 0 0-5 3"/><path d="M7 14a6 6 0 0 0-3 6a6 6 0 0 0 6-3m4-8a1 1 0 1 0 2 0a1 1 0 1 0-2 0"/></g></svg>
+          <span data-translate="trip.transportation.title"></span>
+        </button>
+        <button class="edit-tab" data-tab="accommodations">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3s1.34 3 3 3m0-4c.55 0 1 .45 1 1s-.45 1-1 1s-1-.45-1-1s.45-1 1-1m12-3h-8v8H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4m2 8h-8V9h6c1.1 0 2 .9 2 2Z"/></svg>
+          <span data-translate="trip.accommodation.title"></span>
+        </button>
+        <button class="edit-tab" data-tab="destinations">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path fill="currentColor" d="m12.596 11.596l-3.535 3.536a1.5 1.5 0 0 1-2.122 0l-3.535-3.536a6.5 6.5 0 1 1 9.192-9.193a6.5 6.5 0 0 1 0 9.193Zm-1.06-8.132v-.001a5 5 0 1 0-7.072 7.072L8 14.07l3.536-3.534a5 5 0 0 0 0-7.072ZM8 9a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 9Z"/></svg>
+          <span data-translate="destination.title"></span>
+        </button>
+        <button class="edit-tab" data-tab="itinerary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span data-translate="trip.itinerary.title"></span>
+        </button>
+        <button class="edit-tab" data-tab="gallery">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M11.024 11.536L10 10l-2 3h9l-3.5-5z"/><circle cx="9.503" cy="7.497" r="1.503" fill="currentColor"/><path fill="currentColor" d="M19 2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.806 5 19s.55-.988 1.012-1H21V4c0-1.103-.897-2-2-2m0 14H5V5c0-.806.55-.988 1-1h13z"/></svg>
+          <span data-translate="trip.gallery.title"></span>
+        </button>
       </div>
 
-    </div>
-    <div class="demo-page">
-      <div class="demo-page-navigation">
-        <nav>
-          <ul>
-            <li>
-              <a href="#dados-basicos">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="feather feather-tool">
-                  <path
-                    d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-                </svg>
-                <span data-translate="labels.basic_information"></span></a>
-            </li>
-            <li>
-              <a href="#customizacao">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="feather feather-sliders">
-                  <line x1="4" y1="21" x2="4" y2="14" />
-                  <line x1="4" y1="10" x2="4" y2="3" />
-                  <line x1="12" y1="21" x2="12" y2="12" />
-                  <line x1="12" y1="8" x2="12" y2="3" />
-                  <line x1="20" y1="21" x2="20" y2="16" />
-                  <line x1="20" y1="12" x2="20" y2="3" />
-                  <line x1="1" y1="14" x2="7" y2="14" />
-                  <line x1="9" y1="8" x2="15" y2="8" />
-                  <line x1="17" y1="16" x2="23" y2="16" />
-                </svg>
-                <span data-translate="labels.customization.title"></span></a>
-            </li>
-
-            <li>
-              <a href="#gastos">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M11.025 21v-2.15q-1.325-.3-2.287-1.15t-1.413-2.4l1.85-.75q.375 1.2 1.113 1.825t1.937.625q1.025 0 1.738-.462t.712-1.438q0-.875-.55-1.387t-2.55-1.163q-2.15-.675-2.95-1.612t-.8-2.288q0-1.625 1.05-2.525t2.15-1.025V3h2v2.1q1.25.2 2.063.913t1.187 1.737l-1.85.8q-.3-.8-.85-1.2t-1.5-.4q-1.1 0-1.675.488T9.825 8.65q0 .825.75 1.3t2.6 1q1.725.5 2.613 1.588t.887 2.512q0 1.775-1.05 2.7t-2.6 1.15V21z" />
-                </svg>
-                <span data-translate="trip.expenses.title"></span></a>
-            </li>
-
-            <li>
-              <a href="#meios-de-transporte">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                    <path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3-5a9 9 0 0 0 6-8a3 3 0 0 0-3-3a9 9 0 0 0-8 6a6 6 0 0 0-5 3">
-                    </path>
-                    <path d="M7 14a6 6 0 0 0-3 6a6 6 0 0 0 6-3m4-8a1 1 0 1 0 2 0a1 1 0 1 0-2 0"></path>
-                  </g>
-                </svg>
-                <span data-translate="trip.transportation.title"></span></a>
-            </li>
-
-            <li>
-              <a href="#hospedagens">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3s1.34 3 3 3m0-4c.55 0 1 .45 1 1s-.45 1-1 1s-1-.45-1-1s.45-1 1-1m12-3h-8v8H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4m2 8h-8V9h6c1.1 0 2 .9 2 2Z">
-                  </path>
-                </svg>
-                <span data-translate="trip.accommodation.title"></span></a>
-            </li>
-
-            <li>
-              <a href="#destinos">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
-                  <path fill="currentColor"
-                    d="m12.596 11.596l-3.535 3.536a1.5 1.5 0 0 1-2.122 0l-3.535-3.536a6.5 6.5 0 1 1 9.192-9.193a6.5 6.5 0 0 1 0 9.193Zm-1.06-8.132v-.001a5 5 0 1 0-7.072 7.072L8 14.07l3.536-3.534a5 5 0 0 0 0-7.072ZM8 9a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 9Z">
-                  </path>
-                </svg>
-                <span data-translate="destination.title"></span></a>
-            </li>
-
-            <li>
-              <a href="#programacao">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="feather feather-calendar">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                  <line x1="16" y1="2" x2="16" y2="6" />
-                  <line x1="8" y1="2" x2="8" y2="6" />
-                  <line x1="3" y1="10" x2="21" y2="10" />
-                </svg>
-                <span data-translate="trip.itinerary.title"></span></a>
-            </li>
-
-            <li>
-              <a href="#galeria">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor" d="M11.024 11.536L10 10l-2 3h9l-3.5-5z"></path>
-                  <circle cx="9.503" cy="7.497" r="1.503" fill="currentColor"></circle>
-                  <path fill="currentColor"
-                    d="M19 2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.806 5 19s.55-.988 1.012-1H21V4c0-1.103-.897-2-2-2m0 14H5V5c0-.806.55-.988 1-1h13z">
-                  </path>
-                </svg>
-                <span data-translate="trip.gallery.title"></span></a>
-            </li>
-
-            <li>
-              <a href="#double-buttons">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z">
-                  </path>
-                </svg>
-                <span data-translate="labels.save"></span></a>
-            </li>
-
-          </ul>
-        </nav>
-      </div>
-
-      <main class="demo-page-content">
-        <section>
-          <div class="href-target" id="dados-basicos"></div>
+      <main class="edit-page-content">
+        <section data-category="basic-information">
+          <div class="href-target" id="basic-information"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -245,12 +66,12 @@
 
           <div class="nice-form-group">
             <label data-translate="labels.title"></label>
-            <input required id="titulo" type="text" data-translate="trip.basic_information.title_placeholder" />
+            <input required id="title" type="text" data-translate="trip.basic_information.title_placeholder" />
           </div>
 
           <div class="nice-form-group">
             <label data-translate="currency.title"></label>
-            <select id="moeda" class="editar-select" name="currency">
+            <select id="currency" class="edit-select" name="currency">
               <option value="BRL" data-translate="currency.type.BRL"></option>
               <option value="USD" data-translate="currency.type.USD"></option>
               <option value="EUR" data-translate="currency.type.EUR"></option>
@@ -278,53 +99,51 @@
             </select>
           </div>
 
-          <div class="side-by-side-box">
-            <div class="nice-form-group side-by-side">
-              <label data-translate="labels.start"></label>
-              <input class="flex-input" id="inicio" type="date" value="2023-01-22" />
-            </div>
-
-            <div class="nice-form-group side-by-side">
-              <label data-translate="labels.end"></label>
-              <input class="flex-input" id="fim" type="date" value="2023-01-22" />
+          <div class="nice-form-group">
+            <label data-translate="labels.duration"></label>
+            <div class="date-range-picker" id="trip-date-range">
+              <input type="hidden" id="start" value="2023-01-22" />
+              <input type="hidden" id="end" value="2023-01-22" />
             </div>
           </div>
 
           <div class="nice-form-group">
             <label data-translate="trip.travelers.title"></label>
-            <button id="travelers-info" class="btn input-botao travelers-input" onclick="_openTravelersInfo()"
+            <button id="travelers-info" class="btn input-button travelers-input" data-action="open-travelers-info"
               data-translate="trip.travelers.add"></button>
           </div>
 
           <fieldset class="nice-form-group">
             <label data-translate="trip.basic_information.security.title"></label>
-            <div class="nice-form-group">
-              <input type="radio" name="proteger-viagem" id="pin-disabled" />
-              <label for="pin-disabled" data-translate="trip.basic_information.security.disabled"></label>
-            </div>
-            <div class="nice-form-group">
-              <input type="radio" name="proteger-viagem" id="pin-sensitive-only" checked />
-              <label for="pin-sensitive-only"
-                data-translate="trip.basic_information.security.sensitive_only"></span></label>
-            </div>
-            <div class="nice-form-group">
-              <input type="radio" name="proteger-viagem" id="pin-all-data" />
-              <label for="pin-all-data" data-translate="trip.basic_information.security.all_data"></span></label>
+            <div class="modern-radio-group">
+              <div class="nice-form-group">
+                <input type="radio" name="proteger-viagem" id="pin-disabled" checked />
+                <label for="pin-disabled" data-translate="trip.basic_information.security.disabled"></label>
+              </div>
+              <div class="nice-form-group">
+                <input type="radio" name="proteger-viagem" id="pin-sensitive-only" />
+                <label for="pin-sensitive-only"
+                  data-translate="trip.basic_information.security.sensitive_only"></label>
+              </div>
+              <div class="nice-form-group">
+                <input type="radio" name="proteger-viagem" id="pin-all-data" />
+                <label for="pin-all-data" data-translate="trip.basic_information.security.all_data"></label>
+              </div>
             </div>
             <div class="nice-form-group" id="pin-container" style="margin-top: 16px">
-              <button id="request-pin" class="btn input-botao" onclick="_requestPinEditarGastos()"
+              <button id="request-pin" class="btn input-button" data-action="request-pin-expenses"
                 data-translate="trip.basic_information.pin.new"></button>
             </div>
           </fieldset>
 
           <div id="delete-text" style="display: none; margin-top:1em">
-            <a href="#" onclick="_deleteViagem()" data-translate="trip.delete.title"></a>
+            <a href="#" data-action="delete-trip" data-translate="trip.delete.title"></a>
           </div>
 
         </section>
 
-        <section>
-          <div class="href-target" id="customizacao"></div>
+        <section data-category="customization">
+          <div class="href-target" id="customization"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -345,173 +164,167 @@
 
 
           <div class="nice-form-group">
-            <input id="habilitado-imagens" type="checkbox" id="check-4" class="switch" />
+            <input id="images-enabled" type="checkbox" id="check-4" class="switch" />
             <label for="check-4">
               <span data-translate="labels.customization.images.title"></span>
               <small data-translate="labels.customization.images.subtitle"></small>
             </label>
           </div>
 
-          <div class="transparent-background" id="habilitado-imagens-content">
+          <div class="transparent-background" id="images-enabled-content">
 
             <div class="nice-form-group customization-box" id="background-box">
-              <label><span data-translate="labels.wallpaper"></span> <span class="opcional">(<span
+              <label><span data-translate="labels.wallpaper"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="upload-background" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
-              <p id="upload-background-size-message" class="message-text"> <i class='red'>*</i> <span
-                  data-translate="labels.image.upload_limit"></span></p>
+              <button type="button" class="image-picker-card" id="wallpaper-picker-card"
+                data-action="open-image-picker" data-type="background">
+                <span class="image-picker-thumb" id="wallpaper-picker-thumb"></span>
+                <span class="image-picker-label" id="wallpaper-picker-label"></span>
+              </button>
             </div>
 
-            <div class="nice-form-group">
-              <input id="link-background" class="imagem-input" type="url" data-translate="labels.image.placeholder"
-                value="" class="icon-right">
-            </div>
-
-            <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-background">
-              <div class="nice-form-group">
-                <input type="radio" name="type-background" id="enable-link-background" checked>
-                <label for="enable-link-background" data-translate="labels.image.link"></label>
-              </div>
-
-              <div class="nice-form-group">
-                <input type="radio" name="type-background" id="enable-upload-background">
-                <label for="enable-upload-background"><span data-translate="labels.image.upload"></span><span
-                    class="opcional"> (<span data-translate="labels.image.upload_limit"></span>)</span></label>
-              </div>
-            </fieldset>
-
-            <div class="nice-form-group customization-box">
-              <label><span data-translate="labels.customization.images.logo_light"></span> <span class="opcional">(<span
+            <div class="nice-form-group customization-box" id="logo-box">
+              <label><span data-translate="labels.logo"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="upload-logo-light" type="file" accept=".png" />
-              <p id="upload-logo-light-size-message" class="message-text"> <i class='red'>*</i> <span
-                  data-translate="labels.image.upload_limit"></span></p>
-            </div>
-
-            <div class="nice-form-group">
-              <input id="link-logo-light" class="imagem-input" type="url" data-translate="labels.image.placeholder"
-                value="" class="icon-right">
-            </div>
-
-            <div class="nice-form-group customization-box">
-              <label><span data-translate="labels.customization.images.logo_dark"></span> <span class="opcional">(<span
-                    data-translate="labels.optional"></span>)</span></label>
-              <input id="upload-logo-dark" class="imagem-uploadbox" type="file" accept=".png" />
-              <p id="upload-logo-dark-size-message" class="message-text"> <i class='red'>*</i> <span
-                  data-translate="labels.image.upload_limit"></span></p>
-            </div>
-
-            <div class="nice-form-group">
-              <input id="link-logo-dark" class="imagem-input" type="url" data-translate="labels.image.placeholder"
-                value="" class="icon-right">
-            </div>
-
-            <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-logo">
-              <div class="nice-form-group">
-                <input type="radio" name="type-logo" id="enable-link-logo" checked>
-                <label for="enable-link-logo" data-translate="labels.image.link"></label>
+              <div class="image-picker-logos">
+                <button type="button" class="image-picker-card logo-light" id="logo-light-picker-card"
+                  data-action="open-image-picker" data-type="logo-light">
+                  <span class="image-picker-thumb" id="logo-light-picker-thumb"></span>
+                  <span class="image-picker-label" id="logo-light-picker-label"></span>
+                </button>
+                <button type="button" class="image-picker-card logo-dark" id="logo-dark-picker-card"
+                  data-action="open-image-picker" data-type="logo-dark">
+                  <span class="image-picker-thumb" id="logo-dark-picker-thumb"></span>
+                  <span class="image-picker-label" id="logo-dark-picker-label"></span>
+                </button>
               </div>
+            </div>
 
-              <div class="nice-form-group">
-                <input type="radio" name="type-logo" id="enable-upload-logo">
-                <label for="enable-upload-logo"><span data-translate="labels.image.upload"></span> <span
-                    class="opcional">(<span data-translate="labels.image.upload_limit"></span>)</span></label>
+            <!-- Hidden value inputs — set by the image picker dialog, read on save -->
+            <input type="hidden" id="link-background" value="" />
+            <input type="hidden" id="link-logo-light" value="" />
+            <input type="hidden" id="link-logo-dark" value="" />
+          </div>
+
+          <div class="nice-form-group">
+            <input id="theme-enabled" type="checkbox" class="switch" />
+            <label for="check-4">
+              <span data-translate="labels.customization.theme.title"></span>
+              <small data-translate="labels.customization.theme.subtitle"></small>
+            </label>
+          </div>
+
+          <div class="transparent-background" id="theme-enabled-content">
+
+            <fieldset class="nice-form-group" id="theme-mode-group">
+              <div class="modern-radio-group">
+                <div class="nice-form-group">
+                  <input type="radio" name="theme-mode" id="theme-mode-dynamic" checked>
+                  <label for="theme-mode-dynamic" data-translate="labels.customization.theme.dynamic"></label>
+                </div>
+
+                <div class="nice-form-group">
+                  <input type="radio" name="theme-mode" id="theme-mode-light">
+                  <label for="theme-mode-light" data-translate="labels.customization.theme.light_only"></label>
+                </div>
+
+                <div class="nice-form-group">
+                  <input type="radio" name="theme-mode" id="theme-mode-dark">
+                  <label for="theme-mode-dark" data-translate="labels.customization.theme.dark_only"></label>
+                </div>
               </div>
             </fieldset>
           </div>
 
           <div class="nice-form-group">
-            <input id="habilitado-cores" type="checkbox" id="check-4" class="switch" />
+            <input id="colors-enabled" type="checkbox" id="check-4" class="switch" />
             <label for="check-4">
               <span data-translate="labels.customization.colors.title"></span>
               <small data-translate="trip.customization.colors"></small>
             </label>
           </div>
 
-          <div class="transparent-background-color" id="habilitado-cores-content">
+          <div class="transparent-background-color" id="colors-enabled-content">
 
-            <fieldset class="nice-form-group">
-              <div class="nice-form-group">
-                <input type="radio" id="dark-and-light" name="display-mode" checked />
-                <label for="dark-and-light" data-translate="labels.customization.colors.themes.light_and_dark"></label>
+            <div id="color-preset-section">
+              <div class="color-preset-carousel">
+                <button class="color-preset-arrow color-preset-prev" aria-label="Previous">&lsaquo;</button>
+                <div class="color-preset-grid" id="color-presets">
+                  <!-- Populated dynamically from colors.json options + custom swatch -->
+                </div>
+                <button class="color-preset-arrow color-preset-next" aria-label="Next">&rsaquo;</button>
               </div>
+            </div>
 
-              <div class="nice-form-group">
-                <input type="radio" id="light-exclusive" name="display-mode" />
-                <label for="light-exclusive" data-translate="labels.customization.colors.themes.light"></label>
-              </div>
-
-              <div class="nice-form-group">
-                <input type="radio" id="dark-exclusive" name="display-mode" />
-                <label for="dark-exclusive" data-translate="labels.customization.colors.themes.dark"></label>
-              </div>
-            </fieldset>
-
-            <div class="side-by-side-color-box" id="cores">
-              <div class="nice-form-group side-by-side-fixed" id="tema-claro">
+            <div class="side-by-side-color-box" id="color-pickers" style="display: none;">
+              <div class="nice-form-group side-by-side-fixed" id="light-theme">
                 <label data-translate="labels.light_mode"></label>
-                <input id="claro" type="color" value="#5859a7" />
+                <div class="color-picker-box">
+                  <input id="light-color" type="color" value="#5859a7" />
+                </div>
               </div>
 
-              <div class="nice-form-group side-by-side-fixed" id="tema-escuro">
+              <div class="nice-form-group side-by-side-fixed" id="dark-theme">
                 <label data-translate="labels.dark_mode"></label>
-                <input id="escuro" type="color" value="#7f75b6" />
+                <div class="color-picker-box">
+                  <input id="dark-color" type="color" value="#7f75b6" />
+                </div>
               </div>
             </div>
           </div>
 
           <div class="nice-form-group">
-            <input id="habilitado-links" style="margin-top: 0px;" type="checkbox" id="check-4" class="switch" />
+            <input id="links-enabled" style="margin-top: 0px;" type="checkbox" id="check-4" class="switch" />
             <label for="check-4">
               <span data-translate="labels.customization.links.title"></span>
               <small data-translate="trip.customization.links"></small>
             </label>
           </div>
 
-          <div class="transparent-background" id="habilitado-links-content">
+          <div class="transparent-background" id="links-enabled-content">
             <div class="nice-form-group" style="margin-top: 10px;">
-              <label><span data-translate="labels.customization.links.attachment"></span> <span class="opcional">(<span
+              <label><span data-translate="labels.customization.links.attachment"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="link-attachments" type="url" placeholder="https://drive.google.com/drive" value=""
+              <input id="link-attachments" type="url" data-translate="labels.url_placeholder" value=""
                 class="icon-right">
             </div>
 
             <div class="nice-form-group">
               <label><span data-translate="labels.customization.links.google_drive"></span> <span
-                  class="opcional">(<span data-translate="labels.optional"></span>)</span></label>
-              <input id="link-drive" type="url" placeholder="https://drive.google.com/drive" value=""
+                  class="optional">(<span data-translate="labels.optional"></span>)</span></label>
+              <input id="link-drive" type="url" data-translate="labels.url_placeholder" value=""
                 class="icon-right">
             </div>
 
             <div class="nice-form-group">
-              <label><span data-translate="labels.customization.links.map"></span> <span class="opcional">(<span
+              <label><span data-translate="labels.customization.links.map"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="link-maps" type="url" placeholder="https://www.google.com/maps/" value="" class="icon-right">
+              <input id="link-maps" type="url" data-translate="labels.map_url_placeholder" value="" class="icon-right">
             </div>
 
             <div class="nice-form-group">
-              <label><span data-translate="labels.customization.links.pdf"></span> <span class="opcional">(<span
+              <label><span data-translate="labels.customization.links.pdf"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="link-pdf" type="url" placeholder="https://drive.google.com/drive" value="" class="icon-right">
+              <input id="link-pdf" type="url" data-translate="labels.url_placeholder" value="" class="icon-right">
             </div>
 
             <div class="nice-form-group">
               <label><span data-translate="labels.customization.links.presentation"></span> <span
-                  class="opcional">(<span data-translate="labels.optional"></span>)</span></label>
-              <input id="link-ppt" type="url" placeholder="https://drive.google.com/drive" value="" class="icon-right">
+                  class="optional">(<span data-translate="labels.optional"></span>)</span></label>
+              <input id="link-ppt" type="url" data-translate="labels.url_placeholder" value="" class="icon-right">
             </div>
 
             <div class="nice-form-group">
-              <label><span data-translate="labels.customization.links.sheet"></span> <span class="opcional">(<span
+              <label><span data-translate="labels.customization.links.sheet"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="link-sheet" type="url" placeholder="https://drive.google.com/drive" value=""
+              <input id="link-sheet" type="url" data-translate="labels.url_placeholder" value=""
                 class="icon-right">
             </div>
 
             <div class="nice-form-group">
-              <label><span data-translate="labels.customization.links.vaccination"></span> <span class="opcional">(<span
+              <label><span data-translate="labels.customization.links.vaccination"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="link-vacina" type="url" placeholder="https://drive.google.com/drive" value=""
+              <input id="link-vaccine" type="url" data-translate="labels.url_placeholder" value=""
                 class="icon-right">
             </div>
 
@@ -519,8 +332,8 @@
 
         </section>
 
-        <section>
-          <div class="href-target" id="gastos"></div>
+        <section data-category="expenses">
+          <div class="href-target" id="expenses-section"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor"
@@ -531,26 +344,26 @@
           <p data-translate="trip.expenses.subtitle"></p>
 
           <div class="nice-form-group">
-            <input id="habilitado-gastos" type="checkbox" class="switch" />
-            <label for="habilitado-gastos" data-translate="labels.enabled"></label>
+            <input id="expenses-enabled" type="checkbox" class="switch" />
+            <label for="expenses-enabled" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-gastos-content">
-            <div class="item-box accordion gastos-box" id="gastos-box">
-              <div id="programacao-gastosPrevios" class="accordion-item accordion-programacao">
-                <h2 class="accordion-header" id="heading-programacao-gastosPrevios">
-                  <button id="programacao-title-gastosPrevios" class="accordion-button collapsed" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#collapse-programacao-gastosPrevios" aria-expanded="false"
-                    aria-controls="collapse-programacao-gastosPrevios" data-translate="trip.expenses.pre_trip"></button>
+          <div id="expenses-enabled-content">
+            <div class="item-box accordion expenses-box" id="expenses-box">
+              <div id="itinerary-preTrip" class="accordion-item accordion-itinerary">
+                <h2 class="accordion-header" id="heading-itinerary-preTrip">
+                  <button id="itinerary-title-preTrip" class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapse-itinerary-preTrip" aria-expanded="false"
+                    aria-controls="collapse-itinerary-preTrip" data-translate="trip.expenses.pre_trip"></button>
                 </h2>
-                <div id="collapse-programacao-gastosPrevios" class="accordion-collapse collapse"
-                  aria-labelledby="heading-programacao-gastosPrevios" data-bs-parent="#gastos-box" style="">
+                <div id="collapse-itinerary-preTrip" class="accordion-collapse collapse"
+                  aria-labelledby="heading-itinerary-preTrip" data-bs-parent="#expenses-box" style="">
                   <div class="accordion-body">
-                    <div id="gastosPrevios"></div>
-                    <div class="button-box-right" id="gasto-adicionar-box-gastosPrevios"
-                      style="display: block; margin-top: 24px">
-                      <button id="programacao-adicionar-gastosPrevios" class="btn btn-theme"
-                        onclick="_openInnerGasto('gastosPrevios')">
+                    <div id="preTrip"></div>
+                    <div class="button-box-right" id="expense-add-box-preTrip"
+                      style="margin-top: 24px">
+                      <button id="itinerary-add-preTrip" class="btn btn-theme"
+                        data-action="open-inner-expense" data-category="preTrip">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                           <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                             <path
@@ -568,21 +381,21 @@
                 </div>
               </div>
 
-              <div id="programacao-gastosDurante" class="accordion-item accordion-programacao">
-                <h2 class="accordion-header" id="heading-programacao-gastosDurante">
-                  <button id="programacao-title-gastosDurante" class="accordion-button collapsed" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#collapse-programacao-gastosDurante" aria-expanded="false"
-                    aria-controls="collapse-programacao-gastosDurante"
+              <div id="itinerary-duringTrip" class="accordion-item accordion-itinerary">
+                <h2 class="accordion-header" id="heading-itinerary-duringTrip">
+                  <button id="itinerary-title-duringTrip" class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapse-itinerary-duringTrip" aria-expanded="false"
+                    aria-controls="collapse-itinerary-duringTrip"
                     data-translate="trip.expenses.during_trip"></button>
                 </h2>
-                <div id="collapse-programacao-gastosDurante" class="accordion-collapse collapse"
-                  aria-labelledby="heading-programacao-gastosDurante" data-bs-parent="#gastos-box" style="">
+                <div id="collapse-itinerary-duringTrip" class="accordion-collapse collapse"
+                  aria-labelledby="heading-itinerary-duringTrip" data-bs-parent="#expenses-box" style="">
                   <div class="accordion-body">
-                    <div id="gastosDurante"></div>
-                    <div class="button-box-right" id="gasto-adicionar-box-gastosDurante"
-                      style="display: block; margin-top: 24px">
-                      <button id="programacao-adicionar-gastosDurante" class="btn btn-theme"
-                        onclick="_openInnerGasto('gastosDurante')">
+                    <div id="duringTrip"></div>
+                    <div class="button-box-right" id="expense-add-box-duringTrip"
+                      style="margin-top: 24px">
+                      <button id="itinerary-add-duringTrip" class="btn btn-theme"
+                        data-action="open-inner-expense" data-category="duringTrip">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                           <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                             <path
@@ -604,8 +417,8 @@
 
         </section>
 
-        <section>
-          <div class="href-target" id="meios-de-transporte"></div>
+        <section data-category="transportation">
+          <div class="href-target" id="transportation-modes"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -620,31 +433,33 @@
           </p>
 
           <div class="nice-form-group">
-            <input id="habilitado-transporte" type="checkbox" class="switch" />
-            <label for="habilitado-transporte" data-translate="labels.enabled"></label>
+            <input id="transportation-enabled" type="checkbox" class="switch" />
+            <label for="transportation-enabled" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-transporte-content">
+          <div id="transportation-enabled-content">
             <fieldset class="nice-form-group">
-              <div class="nice-form-group">
-                <input type="radio" name="condensar-transportes" id="simple-view" checked />
-                <label for="simple-view" data-translate="trip.transportation.simple_view"></label>
-              </div>
-              <div class="nice-form-group">
-                <input type="radio" name="condensar-transportes" id="leg-view" />
-                <label for="leg-view" data-translate="trip.transportation.leg_view"></label>
-              </div>
-              <div class="nice-form-group">
-                <input type="radio" name="condensar-transportes" id="people-view" />
-                <label for="people-view" data-translate="trip.transportation.people_view"></label>
+              <div class="modern-radio-group">
+                <div class="nice-form-group">
+                  <input type="radio" name="condense-transports" id="simple-view" checked />
+                  <label for="simple-view" data-translate="trip.transportation.simple_view"></label>
+                </div>
+                <div class="nice-form-group">
+                  <input type="radio" name="condense-transports" id="leg-view" />
+                  <label for="leg-view" data-translate="trip.transportation.leg_view"></label>
+                </div>
+                <div class="nice-form-group">
+                  <input type="radio" name="condense-transports" id="people-view" />
+                  <label for="people-view" data-translate="trip.transportation.people_view"></label>
+                </div>
               </div>
             </fieldset>
-            <div class="item-box accordion transporte-box draggable-area" data-group="transporte" id="transporte-box">
+            <div class="item-box accordion transportation-box draggable-area" data-group="transportation" id="transportation-box">
             </div>
           </div>
 
-          <div class="button-box-formatted" id="transporte-adicionar-box">
-            <button id="transporte-adicionar" class="btn btn-theme" onclick="">
+          <div class="button-box-formatted" id="transportation-add-box">
+            <button id="transportation-add" class="btn btn-theme">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path
@@ -660,8 +475,8 @@
 
         </section>
 
-        <section>
-          <div class="href-target" id="hospedagens"></div>
+        <section data-category="accommodations">
+          <div class="href-target" id="accommodations"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor"
@@ -673,17 +488,17 @@
           <p data-translate="trip.accommodation.subtitle"></p>
 
           <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-hospedagens" class="switch" />
-            <label for="habilitado-hospedagens" data-translate="labels.enabled"></label>
+            <input type="checkbox" id="accommodations-enabled" class="switch" />
+            <label for="accommodations-enabled" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-hospedagens-content">
-            <div class="item-box accordion hospedagens-box draggable-area" data-group="hospedagens"
-              id="hospedagens-box">
+          <div id="accommodations-enabled-content">
+            <div class="item-box accordion accommodations-box draggable-area" data-group="accommodations"
+              id="accommodations-box">
             </div>
           </div>
-          <div class="button-box-formatted" id="hospedagens-adicionar-box">
-            <button id="hospedagens-adicionar" class="btn btn-theme">
+          <div class="button-box-formatted" id="accommodations-add-box">
+            <button id="accommodation-add" class="btn btn-theme">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path
@@ -698,8 +513,8 @@
           </div>
         </section>
 
-        <section>
-          <div class="href-target" id="destinos"></div>
+        <section data-category="destinations">
+          <div class="href-target" id="destinations"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
               <path fill="currentColor"
@@ -711,28 +526,28 @@
           <p data-translate="destination.subtitle"></p>
 
           <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-destinos" class="switch" />
-            <label for="habilitado-destinos" data-translate="labels.enabled"></label>
+            <input type="checkbox" id="destinations-enabled" class="switch" />
+            <label for="destinations-enabled" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-destinos-content">
-            <div class="nice-form-group" id="sem-destinos">
+          <div id="destinations-enabled-content">
+            <div class="nice-form-group" id="no-destinations">
               <input type="text" readonly data-translate="destination.nothing" />
             </div>
-            <div id="com-destinos" style="display: none">
+            <div id="has-destinations" style="display: none">
               <div class="nice-form-group">
-                <input type="search" id="destinos-search" data-translate="labels.search" value="">
+                <input type="search" id="destinations-search" data-translate="labels.search" value="">
               </div>
-              <fieldset class="nice-form-group destinos-checkboxes" id="destinos-checkboxes" style="min-height: 150px">
-              </fieldset>
+              <div class="destinations-cards" id="destinations-checkboxes">
+              </div>
             </div>
-            <div id="todos-destinos-utilizados" class="message-text"> <i class='red'>*</i> <span
+            <div id="all-destinations-used" class="message-text"> <i class='red'>*</i> <span
                 data-translate="destination.all_used"></span></div>
           </div>
         </section>
 
-        <section>
-          <div class="href-target" id="programacao"></div>
+        <section data-category="itinerary">
+          <div class="href-target" id="itinerary-section"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -747,19 +562,19 @@
           <p data-translate="trip.itinerary.subtitle"></p>
 
           <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-programacao" class="switch" />
-            <label for="habilitado-programacao" data-translate="labels.enabled"></label>
+            <input type="checkbox" id="itinerary-enabled" class="switch" />
+            <label for="itinerary-enabled" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-programacao-content">
-            <div class="item-box accordion programacao-box" id="programacao-box">
+          <div id="itinerary-enabled-content">
+            <div class="item-box accordion itinerary-box" id="itinerary-box">
             </div>
           </div>
 
         </section>
 
-        <section>
-          <div class="href-target" id="galeria"></div>
+        <section data-category="gallery">
+          <div class="href-target" id="gallery-section"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" d="M11.024 11.536L10 10l-2 3h9l-3.5-5z"></path>
@@ -773,17 +588,17 @@
           <p data-translate="trip.gallery.subtitle"></p>
 
           <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-galeria" class="switch" />
-            <label for="habilitado-galeria" data-translate="labels.enabled"></label>
+            <input type="checkbox" id="gallery-enabled" class="switch" />
+            <label for="gallery-enabled" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-galeria-content">
-            <div class="item-box accordion galeria-box" id="galeria-box">
+          <div id="gallery-enabled-content">
+            <div class="item-box accordion gallery-box" id="gallery-box">
             </div>
           </div>
 
-          <div class="button-box-formatted" id="galeria-adicionar-box">
-            <button id="galeria-adicionar" class="btn btn-theme">
+          <div class="button-box-formatted" id="gallery-add-box">
+            <button id="gallery-add" class="btn btn-theme">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path
@@ -798,17 +613,18 @@
           </div>
         </section>
 
-        <section id="double-button-section">
+        <section data-category="double-buttons" id="double-button-section">
           <div class="href-target" id="double-buttons"></div>
           <div class="button-box">
-            <button id="cancelar" class="btn btn-secondary" type="button">
+            <button id="cancel-btn" class="btn btn-secondary" type="button">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <path fill="currentColor"
                   d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
                 </path>
               </svg>
               <span data-translate="labels.cancel"></span>
-              <button id="salvar" class="btn btn-theme" type="submit">
+            </button>
+            <button id="save-btn" class="btn btn-theme" type="submit">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                   <path fill="currentColor"
                     d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z">
@@ -820,126 +636,29 @@
         </section>
 
         <section id="footer">
-          <span data-translate="labels.developed_by"></span> <a
-            href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="atribuicoes"
-            onclick="_openAtribuicoes()"><i class="iconify" data-icon="ri:information-line"></i>
+          <span class="tripviewer-version"></span> <span data-translate="labels.developed_by"></span> <a
+            href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="attributions"
+            data-action="open-attributions"><i class="iconify" data-icon="ri:information-line"></i>
             <span data-translate="labels.credits"></span></span>
         </section>
       </main>
     </div>
   </section>
 
-  <!-- ======= Support: Modal ======= -->
-  <div id="modal" class="modal loadable" style="display: none">
-    <div class="modal-content">
-      <div class="modal-text">
-        <p id="modal-inner-text"></p>
-      </div>
-
-      <div class="button-box">
-        <button id="re-editar" class="btn btn-basic btn-format" type="button" onclick="_closeModal('delete-modal')">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-            <path fill="currentColor"
-              d="M3 17.46v3.04c0 .28.22.5.5.5h3.04c.13 0 .26-.05.35-.15L17.81 9.94l-3.75-3.75L3.15 17.1c-.1.1-.15.22-.15.36M20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z">
-            </path>
-          </svg>
-          <span data-translate="labels.edit"></span>
-        </button><button id="home" class="btn btn-secondary btn-format" type="submit">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M6 10v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9M6 10l6-6l6 6M6 10l-2 2m14-2l2 2m-10 1h4v4h-4v-4z"></path>
-          </svg>
-          <span data-translate="labels.home"></span>
-        </button>
-        </button><button id="visualizar" class="btn btn-theme btn-format" type="submit">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-            <path fill="currentColor"
-              d="M2.984 8.625v.003a.5.5 0 0 1-.612.355c-.431-.114-.355-.611-.355-.611l.018-.062s.026-.084.047-.145a6.7 6.7 0 0 1 1.117-1.982C4.096 5.089 5.605 4 8 4s3.904 1.089 4.802 2.183a6.7 6.7 0 0 1 1.117 1.982a4.077 4.077 0 0 1 .06.187l.003.013v.004l.001.002a.5.5 0 0 1-.966.258l-.001-.004l-.008-.025a4.872 4.872 0 0 0-.2-.52a5.696 5.696 0 0 0-.78-1.263C11.286 5.912 10.044 5 8 5c-2.044 0-3.285.912-4.028 1.817a5.7 5.7 0 0 0-.945 1.674a3.018 3.018 0 0 0-.035.109zM8 7a2.5 2.5 0 1 0 0 5a2.5 2.5 0 0 0 0-5M6.5 9.5a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0">
-            </path>
-          </svg>
-          <span data-translate="labels.view"></span>
-        </button>
-      </div>
-
-    </div>
-  </div>
-
   <!-- ======= Support: Preloader ======= -->
   <div id="preloader"></div>
   <div id="toast" style="display: none">
     <span id="toast-text"></span>
-    <span class="toast-close" onclick="_closeToast()">
+    <span class="toast-close" data-action="close-toast">
       <i class="iconify" data-icon="material-symbols:close"></i>
     </span>
   </div>
 
-  <!-- Firebase -->
-  <script data-main src="../../index.js" type=text/JSX"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-app-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-auth-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-firestore-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-functions-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-storage-compat.js"></script>
-  <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
-  <!-- Vendor JS Files -->
-  <script src="../assets/vendor/aos/aos.js"></script>
-  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="../assets/vendor/php-email-form/validate.js"></script>
-  <script src="../assets/vendor/typed.js/typed.min.js"></script>
-  <script src="../assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
-  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <!-- #include shared/scripts-vendor.html -->
   <script src="../assets/vendor/sortable/sortable.min.js"></script>
+  <!-- #include shared/scripts-core.html -->
 
-  <script src="https://apis.google.com/js/api.js"></script>
-
-  <!-- Main JS Files -->
-  <script data-main src="../assets/js/main/translation.js"></script>
-  <script data-main src="../assets/js/main/main.js"></script>
-  <script data-main src="../assets/js/suporte/estilos/animacoes.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/dados.js"></script>
-  <script data-main src="../assets/js/suporte/firebase/database.js"></script>
-  <script data-main src="../assets/js/suporte/firebase/user.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/datas.js"></script>
-  <script data-main src="../assets/js/suporte/firebase/storage.js"></script>
-  <script data-main src="../assets/js/suporte/estilos/stylesheets.js"></script>
-  <script data-main src="../assets/js/suporte/estilos/cores.js"></script>
-  <script data-main src="../assets/js/suporte/estilos/visibilidade.js"></script>
-  <script data-main src="../assets/js/paginas/index/suporte/visibilidade.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/dispositivos.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/mensagens.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/carregamento.js"></script>
-  <script data-main src="../assets/js/suporte/html/fields.js"></script>
-  <script data-main src="../assets/js/suporte/html/accordion.js"></script>
-  <script data-main src="../assets/js/suporte/componentes/sortable.js"></script>
-  <script data-main src="../assets/js/suporte/componentes/dynamic-select.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/categorias/customizacao.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/pin.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/categorias/dados-basicos/protected-data.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/categorias/dados-basicos/set-protected-data.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/categorias/gastos.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/categorias/transporte.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/categorias/hospedagem.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/categorias/destinos.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/categorias/programacao/programacao.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/categorias/programacao/inner-programacao/content.js"></script>
-  <script data-main
-    src="../assets/js/paginas/editar-viagem/categorias/programacao/inner-programacao/inner-programacao.js"></script>
-  <script data-main
-    src="../assets/js/paginas/editar-viagem/categorias/programacao/inner-programacao/text-replacement.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/categorias/travelers.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/categorias/galeria.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/nova-viagem.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/viagem-existente.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/set.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/set-viagem.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/suporte/event-listeners.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/editar-viagem.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/atribuicoes.js"></script>
-
+  <!-- #include shared/nav-helper.html -->
 </body>
 
 </html>

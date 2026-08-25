@@ -1,9 +1,10 @@
 {
 	"account": {
-		"settings": "Account settings",
+		"settings": "Settings",
 		"backup": {
-			"title": "Backup account",
-			"prompt": "Would you like to back up sensitive trip data? You will need to enter the access PIN for each protected trip",
+			"title": "Export Account",
+			"prompt": "Would you like to back up sensitive trip data as well?",
+			"security_warning": "⚠️ Exported files contain your trip data in plain text, including any protected information (reservation codes, booking links). Anyone with access to the file can read this data. Store exported files securely and delete them when no longer needed.",
 			"success": "The account backup was completed successfully",
 			"partial": {
 				"title": "Backup partially completed",
@@ -16,12 +17,80 @@
 			}
 		},
 		"restore": {
-			"title": "Restore account",
+			"title": "Import Account",
 			"error_title": "Account restoration failed",
 			"prompt": "Are you sure you want to restore your account from a backup? This will overwrite your current trip data. This action cannot be undone",
 			"invalid_file": "The selected file is not a valid backup file",
 			"incorrect_owner": "The selected backup file does not belong to the current user",
-			"success": "The account restoration was completed successfully"
+			"success": "The account restoration was completed successfully",
+			"owner_updated": "The account restoration was completed successfully ({{count}} owner(s) updated to your account.)",
+			"loading": {
+				"reading": "Reading backup file",
+				"validating": "Validating backup file",
+				"deleting": "Deleting current data",
+				"writing": "Restoring your data",
+				"summaries": "Updating account summaries",
+				"finishing": "Finishing up"
+			}
+		},
+		"import_documents": {
+			"title": "Import Document(s)",
+			"error_title": "Import failed",
+			"invalid_file": "The selected file is not a valid export document. Expected a JSON file with a \"trip\", \"destination\", or \"listing\" property.",
+			"none_imported": "No documents could be imported. Check that the files are valid export documents.",
+			"success": "{{count}} document(s) imported successfully!",
+			"untitled": "Untitled",
+			"conflict_title": "Conflicting Documents",
+			"conflict_desc": "The following documents already exist in your account and will be duplicated if imported. Are you sure you want to continue?",
+			"complex_hint": "Some documents include destinations that already exist. Choose whether to import only the main documents (trip/listing) without the attached destinations, or cancel.",
+			"override_confirm": "Import All",
+			"import_main_only": "Import Main Documents Only",
+			"in_db": "In your account",
+			"in_file": "In file",
+			"loading": {
+				"reading": "Reading document(s)",
+				"checking": "Checking for conflicts",
+				"importing": "Importing document {{current}} of {{total}}",
+				"finishing": "Finishing up"
+			}
+		},
+		"export_documents": {
+			"title": "Export Document(s)",
+			"select_hint": "Select documents to export",
+			"security_warning": "⚠️ Exported files contain your document data in plain text, including any protected information (reservation codes, booking links). Anyone with access to the file can read this data. Store exported files securely and delete them when no longer needed.",
+			"no_documents": "No documents available to export for this category.",
+			"none_selected": "No documents selected for export.",
+			"export_button": "Export Selected",
+			"success": "{{count}} document(s) exported successfully!",
+			"partial_success": "{{exported}} document(s) exported successfully ({{failed}} failed).",
+			"failed": "Failed to export documents."
+		},
+		"export_static": {
+			"title": "Export as Static Web Page",
+			"warning": "⚠️ The exported package contains your document data in plain text, including any protected information (reservation codes, booking links). Anyone with access to the files can read this data. Store the exported files securely and delete them when no longer needed.",
+			"select_type": "Choose what to export",
+			"select_document": "Select a document",
+			"select_mode": "Select fidelity mode",
+			"mode_light": "Light",
+			"mode_complete": "Complete",
+			"mode_light_hint": "Smaller package. Images stay as external links (needs network for media).",
+			"mode_complete_hint": "Fully offline. All mapped images are downloaded into the package.",
+			"app_title": "App title",
+			"app_icon": "App icon",
+			"build": "Build Export",
+			"building": "Building static export…",
+			"success": "Static export completed successfully!",
+			"partial_success": "Static export completed, but {{failed}} file(s) could not be downloaded.",
+			"failed": "Static export failed.",
+			"none_selected": "No document selected for export.",
+			"no_documents": "No documents available to export for this category.",
+			"loading": {
+				"gathering": "Gathering document data",
+				"assets": "Downloading app assets",
+				"images": "Downloading images ({{current}} of {{total}})",
+				"building": "Building ZIP package",
+				"finishing": "Finishing up"
+			}
 		},
 		"delete": {
 			"title": "Delete account",
@@ -33,6 +102,7 @@
 		"protected": "Protected trip data",
 		"next": "Next trips",
 		"previous": "Previous trips",
+		"current": "Current trips",
 		"new": "New trip",
 		"current_single": "Current trip",
 		"current_multi_1": "Multiple trips happening now",
@@ -48,9 +118,9 @@
 			"title_placeholder": "Enter the trip title",
 			"security": {
 				"title": "Data protection",
-				"disabled": "Don't protect trip data",
-				"sensitive_only": "Protect only sensitive data (expenses and reservation codes)",
-				"all_data": "Protect all trip data"
+				"disabled": "Disabled",
+				"sensitive_only": "Sensitive data",
+				"all_data": "Enabled"
 			},
 			"pin": {
 				"title": "Access PIN",
@@ -89,8 +159,16 @@
 			"personal": "Personal expenses",
 			"other": "Other expenses",
 			"daily": "Daily expenses",
+			"entertainment": "Entertainment",
 			"exchange_rate_api": "Exchange rate (API)",
 			"paid_by": "Paid by",
+			"shopping": "Shopping",
+			"link": "Link",
+			"split_with": "Split with",
+			"view_by": "View by",
+			"locked_title": "Expenses are protected",
+			"locked_text": "This trip's expenses are protected by an access PIN. Enter it to view them.",
+			"unlock": "Unlock expenses",
 			"min": {
 				"pre_trip": "Pre-trip",
 				"during_trip": "During Trip"
@@ -103,9 +181,13 @@
 			"arrival": "Arrival",
 			"during": "While traveling",
 			"return": "Return",
+			"departure_arrival": "Departure and arrival",
+			"duration": "Duration",
+			"departure_time": "Departure time",
+			"arrival_time": "Arrival time",
 			"simple_view": "Simplified view",
 			"leg_view": "Group by leg",
-			"people_view": "Group by people",
+			"people_view": "Group by traveler",
 			"time_window": "Time window",
 			"departure_location": {
 				"title": "Departure location",
@@ -133,6 +215,14 @@
 				"bullet_train": "Bullet Train",
 				"subway": "Subway",
 				"other": "Other"
+			},
+			"import": {
+				"label": "Reuse another traveler's transportation",
+				"button": "Import transportation",
+				"title": "Import transportation",
+				"choose": "Choose the transportation to copy",
+				"copied": "Transportation copied",
+				"no_sources": "No other traveler's transportation to copy."
 			}
 		},
 		"accommodation": {
@@ -141,15 +231,38 @@
 			"subtitle": "Add where you'll be staying during your trip",
 			"checkin": "Check-in",
 			"checkout": "Check-out",
+			"stay_duration": "Stay duration",
+			"checkin_time": "Check-in time",
+			"checkout_time": "Check-out time",
 			"breakfast": "Breakfast",
 			"name_placeholder": "Hotel, Inn, Airbnb, etc.",
 			"address_placeholder": "Example Street, 123",
-			"description_placeholder": "Double room, sea view"
+			"description_placeholder": "Double room, sea view",
+			"payment_status": "Payment status",
+			"payment_status_options": {
+				"none": "Don't show",
+				"prepaid": "Prepaid",
+				"partial_prepaid": "Partially prepaid",
+				"pay_on_site": "Pay on destination"
+			},
+			"import": {
+				"label": "Reuse a stay",
+				"button": "Import from trip",
+				"title": "Import accommodation",
+				"loading": "Loading accommodations...",
+				"loading_trips": "Loading trips...",
+				"search_placeholder": "Search trips...",
+				"no_matches": "No trips match your search.",
+				"no_trips": "No other trips with accommodations are available.",
+				"no_accommodations": "This trip has no accommodations to import.",
+				"load_error": "Could not load accommodations. Please try again."
+			}
 		},
 		"itinerary": {
 			"title": "Itinerary",
 			"subtitle": "Add your day-to-day schedule here",
 			"placeholder": "Go to...",
+			"swap_title": "Swap Itinerary",
 			"todays_itinerary": "Today's Itinerary",
 			"no_itinerary": "Nothing planned here! ☹️",
 			"full_itinerary": "Full itinerary",
@@ -178,7 +291,8 @@
 			"info": "Travelers information",
 			"quantity": "Number of travelers",
 			"unique": "Traveler names must be unique",
-			"add": "Add travelers"
+			"add": "Add travelers",
+			"add_traveler": "Add traveler"
 		}
 	},
 	"destination": {
@@ -191,10 +305,18 @@
 		"share": "Check out the destination \"{{name}}\" created on TripViewer",
 		"all_used": "Cannot add new destinations. All destinations registered in this account have already been used",
 		"nothing": "No destinations registred",
+		"unlink": {
+			"title": "Unlink destination?",
+			"message": "This destination is linked to other trip content. Unlinking will remove those links:",
+			"itinerary": "{{count}} itinerary item(s) will show only their title",
+			"wallpaper": "The wallpaper will be kept, but treated as a custom image",
+			"confirm": "Unlink"
+		},
 		"basic_information": "Add the main information about your destination here",
 		"undefined": "Undefined destination",
 		"recent": "Recently added",
 		"location_placeholder": "Chicago",
+		"image_description_placeholder": "A photo of the destination",
 		"delete": {
 			"title": "Delete destination",
 			"message": "Are you sure you want to delete the destination \"{{name}}\"? This action cannot be undone"
@@ -297,7 +419,9 @@
 			"title": "Map",
 			"description": "Interactive Google Map with highlights of the city: Restaurants, Snacks, Nightlife, Tourism, and Shopping",
 			"instructions": "Create a map for free at",
-			"my_maps": "My Maps"
+			"my_maps": "My Maps",
+			"link_label": "My Maps Link",
+			"url_placeholder": "https://www.google.com/maps/d/viewer?mid=1tgHq3Dg7zI1yMKTDlObLRryNPi_sy79t&usp=sharing"
 		},
 		"lineup": {
 			"title": "Lineup",
@@ -327,8 +451,13 @@
 			"free": "Free",
 			"placeholder": "$26 - $50"
 		},
+		"move": {
+			"title": "Move - {{category}}",
+			"label": "Move to:"
+		},
 		"errors": {
 			"missing_title": "Cannot update this destination data. Missing title information",
+			"invalid_emoji": "Enter a valid emoji 🫠",
 			"tiktok": {
 				"not_found": "TikTok link not found",
 				"conversion": "Conversion error: Tiktok",
@@ -389,6 +518,10 @@
 		"new": "New destination list",
 		"edit": "Edit destination List",
 		"share": "Check out the destination list \"{{name}}\" created on TripViewer",
+		"delete": {
+			"title": "Delete Listing",
+			"message": "Are you sure you want to delete the listing \"{{name}}\"? This action cannot be undone"
+		},
 		"basic_information": "Add the main information about your destination list here",
 		"last_update": {
 			"title": "Show last update date",
@@ -439,6 +572,17 @@
 		}
 	},
 	"datetime": {
+		"datepicker": {
+			"today": "Today",
+			"this_week": "This week",
+			"this_month": "This month",
+			"clear": "Clear",
+			"select_dates": "Select dates...",
+			"cancel": "Cancel",
+			"apply": "Apply",
+			"pick_start_date": "Pick start date",
+			"start_pick_end": "Start: {{start}} — pick end date"
+		},
 		"titles": {
 			"day_month": "{{month}} {{day}}",
 			"weekday_day_month": "{{weekday}}, {{month}} {{day}}",
@@ -498,10 +642,16 @@
 	"messages": {
 		"text_copied": "Text copied to clipboard",
 		"itinerary_copied": "Itinerary copied! Paste it into WhatsApp or a notes app to keep the formatting",
+		"expenses_copied": "List copied! Paste it into WhatsApp or a notes app to keep the checkboxes",
 		"no_data": "No data found 😔",
 		"share": "Check out what I've created on TripViewer",
 		"exit_confirmation": "Are you sure you want to exit? You may lose unsaved changes",
+		"busy_operation": "A backup/restore operation is in progress. Leaving now may interrupt it and lose data. Are you sure you want to leave?",
 		"select_one": "Please select at least one item",
+		"app_update": {
+			"title": "New version available",
+			"message": "A new version of TripViewer (v{{version}}) is available. Refresh to load the latest update."
+		},
 		"protected": {
 			"pin": "To access this document, please enter the access PIN set for it",
 			"prompt": "This trip contains protected data, such as reservation codes. Would you like to enter the PIN to view them?"
@@ -518,7 +668,9 @@
 			"module_not_active": "Cannot load the page. The module {{module}} is not active",
 			"no_data_on_module": "No data found for the module {{module}}",
 			"loading_timeout": "The request took too long to respond. Please try again later",
-			"missing_data": "We weren't able to load this document. It looks like some required information is missing"
+			"missing_data": "We weren't able to load this document. It looks like some required information is missing",
+			"with_location": "Error \"{{message}}\" located at {{location}}",
+			"without_location": "Error \"{{message}}\""
 		},
 		"too_early": {
 			"title": "You're a bit early! 😅",
@@ -529,7 +681,9 @@
 			"message": {
 				"access": "You don't have permission to access this page. Please check your credentials",
 				"edit": "You don't have permission to edit this page. Please check your credentials",
-				"default": "You don't have permission to access this resource"
+				"default": "You don't have permission to access this resource",
+				"unauthenticated": "You must be signed in to edit this document. Please log in and try again",
+				"not_owner": "Only the document owner can edit this document. You don't have permission to make changes"
 			}
 		},
 		"documents": {
@@ -599,6 +753,9 @@
 			"email": "E-mail",
 			"password": "Password"
 		},
+		"export": "Export",
+		"copy_list": "Copy list",
+		"print": "Print",
 		"adapted": "Adapted",
 		"intro": "This is",
 		"greeting": "Hello",
@@ -614,6 +771,7 @@
 			"link": "Reservation link"
 		},
 		"select": "Select",
+		"select_all": "Select All",
 		"other": "Other",
 		"optional": "Optional",
 		"cancel": "Cancel",
@@ -621,6 +779,7 @@
 		"delete": "Delete",
 		"understood": "Understood",
 		"confirm": "Confirm",
+		"refresh": "Refresh",
 		"enabled": "Enabled",
 		"disabled": "Disabled",
 		"add": "Add",
@@ -638,13 +797,17 @@
 		"try_again": "Try Again",
 		"all": "All",
 		"developed_by": "Developed by",
+		"tripviewer_version": "TripViewer v{{version}}",
 		"credits": "Credits",
 		"last_updated_on": "Last updated on",
 		"unauthenticated": "Not authenticated",
 		"home": "Home",
+		"url_placeholder": "https://drive.google.com/drive",
+		"map_url_placeholder": "https://www.google.com/maps/",
 		"days": "Days",
 		"people": "People",
 		"person": "Person",
+		"traveler": "Traveler",
 		"highlights": "Highlights",
 		"overview": "Overview",
 		"view": "View",
@@ -658,6 +821,7 @@
 		"wallpaper": "Wallpaper",
 		"logo": "Logo",
 		"edit": "Edit",
+		"reedit": "Re-edit",
 		"basic_information": "Basic Information",
 		"visibility": "Visibility",
 		"public": "Public",
@@ -666,15 +830,57 @@
 			"images": {
 				"title": "Custom images",
 				"subtitle": "Add a wallpaper and a logo",
+				"background_subtitle": "Add a background image",
+				"import_from_trip": "Trip",
+				"import_loading": "Loading trip images...",
+				"no_trip_images": "No images found in this trip yet",
+				"imported_from": "Wallpaper imported from {{name}}",
+				"custom": "Custom",
+				"add_image": "Add image",
+				"destination": "Destination",
+				"apply": "Apply",
+				"group_gallery": "Gallery",
+				"group_accommodations": "Accommodations",
+				"group_destinations": "Destinations",
+				"cover": "Cover",
+				"accommodation": "Accommodation",
+				"image_n": "Image {{n}}",
+				"photo_n": "Photo {{n}}",
+				"custom_applied": "Image applied",
+				"light_mode": "Light mode",
+				"dark_mode": "Dark mode",
+				"light_and_dark_mode": "Light and Dark mode",
+				"add_light_mode_image": "Add light mode image",
+				"add_dark_mode_image": "Add dark mode image",
 				"logo_light": "Logo: Light mode",
 				"logo_dark": "Logo: Dark mode"
 			},
+			"theme": {
+				"title": "Custom theme",
+				"subtitle": "Force the trip to display in light or dark mode",
+				"dynamic": "Dynamic",
+				"light_only": "Light mode only",
+				"dark_only": "Dark mode only"
+			},
 			"colors": {
 				"title": "Custom colors",
-				"themes": {
-					"light_and_dark": "Show in Light and Dark mode",
-					"light": "Show only in Light mode",
-					"dark": "Show only in Dark mode"
+				"theme_toggle": "Use custom colors",
+				"custom": "Custom color",
+				"presets": {
+					"purple": "Purple",
+					"rose": "Rose",
+					"magenta": "Magenta",
+					"crimson": "Crimson",
+					"sunset": "Sunset",
+					"amber": "Amber",
+					"terracotta": "Terracotta",
+					"forest": "Forest",
+					"sage": "Sage",
+					"teal": "Teal",
+					"ocean": "Ocean",
+					"steel": "Steel",
+					"indigo": "Indigo",
+					"gray": "Gray"
 				}
 			},
 			"links": {
@@ -744,6 +950,144 @@
 			"title": "Planned",
 			"multiple": "Planned on multiple dates",
 			"not_planned": "Not planned"
+		}
+	},
+	"index": {
+		"welcome_back": "Ready to explore your trips?",
+		"my_trips": "Trips",
+		"my_destinations": "Destinations",
+		"my_lists": "Lists",
+		"no_trips": "No trips yet. Create your first trip!",
+		"no_destinations": "No destinations registered yet",
+		"no_lists": "No lists created yet",
+		"active": "Active",
+		"upcoming": "Upcoming",
+		"finished": "Finished",
+		"active_trips": "Active trips",
+		"upcoming_trips": "Upcoming trips",
+		"finished_trips": "Finished trips",
+		"search_placeholder": "Search by title...",
+		"days": "days",
+		"day": "day",
+		"modules_active": "Active modules",
+		"trip_destinations": "Trip Destinations",
+		"view_trip": "View Trip",
+		"edit_trip": "Edit Trip"
+	},
+	"placesApi": {
+		"fetchInfo": "Fetch Info With Maps",
+		"updateWithMaps": "Update with Maps",
+		"dialog": {
+			"title": "Import with maps"
+		},
+		"noPermission": "You don't have permission to use the Places API",
+		"source": {
+			"message": "How do you want to import this place?",
+			"local": "Local (gmaps scraper)",
+			"localHint": "Paste a Google Maps link to scrape it on this machine",
+			"api": "Via Places API",
+			"apiHint": "Search Google and import official data"
+		},
+		"local": {
+			"title": "Google Maps link",
+			"message": "Paste a Google Maps link to import this place locally.",
+			"placeholder": "https://maps.app.goo.gl/...",
+			"import": "Import",
+			"notFound": "No place data could be retrieved from that link"
+		},
+		"search": {
+			"title": "Search",
+			"placeholder": "Search for a place...",
+			"button": "Search",
+			"noResults": "No results found",
+			"error": "An error occurred while searching. Please try again",
+			"includePhotos": "Include photos"
+		},
+		"details": {
+			"updateLabel": "Update with this info",
+			"descriptionBoth": "Description imported in English and Portuguese",
+			"noData": "No information available for this place",
+			"allUpToDate": "All information already matches what you have",
+			"back": "Back",
+			"continue": "Continue",
+			"error": "An error occurred while loading the place information. Please try again"
+		},
+		"linked": {
+			"title": "This place is already linked",
+			"message": "You can refresh the linked place's info, or map this entry to a different place.",
+			"update": "Update this place",
+			"updateHint": "Refresh the linked place's info",
+			"search": "Find a different place",
+			"searchHint": "Search Google for another place"
+		},
+		"photos": {
+			"import": "Import photos",
+			"canImport": "Photos can be imported",
+			"none": "No photos available to import",
+			"count": "{{count}} photo(s) selected"
+		},
+		"closed": {
+			"title": "Place no longer operational",
+			"message": "This place appears to be no longer operational",
+			"option": {
+				"delete": "Delete item",
+				"ignore": "Ignore",
+				"label": "Add [Closed] label"
+			},
+			"label": "[Closed]"
+		},
+		"loading": {
+			"search": "Searching...",
+			"scraping": "Scraping place information...",
+			"fetching": "Fetching place information...",
+			"importing": "Importing photos...",
+			"applying": "Applying place information..."
+		},
+		"apply": {
+			"title": "Apply information",
+			"confirm": "Apply",
+			"fields": "{{count}} field(s) will be updated",
+			"photos": "{{count}} photo(s) will be imported",
+			"closedLabel": "A [Closed] label will be added to the title",
+			"deleteItem": "This item will be deleted",
+			"success": "Place information applied successfully",
+			"error": "An error occurred while applying the place information"
+		},
+		"bulk": {
+			"confirm": "Try to get information from {{count}} linked item(s)?",
+			"local": {
+				"none": "No entries can be updated locally (none have a Google Maps link)"
+			},
+			"report": {
+				"fields": "{{count}} field(s) can have its data updated",
+				"closed": "{{count}} place(s) are no longer operational"
+			},
+			"options": {
+				"fields": {
+					"title": "Fields",
+					"all": "Replace everything with the new data",
+					"auto": "Replace only the auto-filled fields"
+				},
+				"closed": {
+					"title": "Closed places",
+					"delete": "Auto-delete closed items",
+					"label": "Add [Closed] label to closed items"
+				}
+			},
+			"success": "The places were updated successfully"
+		},
+		"limited": {
+			"message": "Places quota is nearly reached. Search and place info still work, but photos are temporarily disabled."
+		},
+		"errors": {
+			"localOnly": "This feature is only available in local development",
+			"network": "Network error. Please check your connection and try again",
+			"routeNotConfigured": "The Places API route is not configured yet",
+			"quotaExceeded": "The monthly Places API quota has been reached. Please try again next month.",
+			"invalidMapLink": "That doesn't look like a valid Google Maps link",
+			"scraperUnavailable": "The local scraper is not running. Start it with npm run dev and make sure Docker Desktop is open.",
+			"scraperFailed": "The local scraper could not import this place. Please try again.",
+			"rateLimited": "No data returned for this place. Google is likely rate-limiting scrapes — wait a few minutes and try again."
 		}
 	}
 }

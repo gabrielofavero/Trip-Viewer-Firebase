@@ -1,0 +1,1091 @@
+{
+  "trip": {
+    "title": "São Paulo ft. Amanda",
+    "currency": "BRL",
+    "start": {
+      "day": 18,
+      "month": 2,
+      "year": 2021,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 21,
+      "month": 2,
+      "year": 2021,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2021-02-21T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      },
+      {
+        "id": "amanda",
+        "name": "Amanda"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "La Residence Paulista",
+      "description": "Apart-Hotel nos Jardins, próximo à Avenida Paulista",
+      "address": "Jardins, São Paulo",
+      "dates": {
+        "checkIn": {
+          "day": 18,
+          "month": 2,
+          "year": 2021,
+          "hour": 8,
+          "minute": 10,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 21,
+          "month": 2,
+          "year": 2021,
+          "hour": 11,
+          "minute": 40,
+          "second": 0
+        }
+      },
+      "breakfast": true,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "flight",
+      "company": "gol",
+      "points": {
+        "origin": "Belo Horizonte (CNF)",
+        "destination": "São Paulo (CGH)"
+      },
+      "dates": {
+        "departure": {
+          "day": 18,
+          "month": 2,
+          "year": 2021,
+          "hour": 6,
+          "minute": 5,
+          "second": 0
+        },
+        "arrival": {
+          "day": 18,
+          "month": 2,
+          "year": 2021,
+          "hour": 7,
+          "minute": 30,
+          "second": 0
+        }
+      },
+      "duration": "01:25",
+      "direction": "departure",
+      "reservation": "ONW13T",
+      "link": "",
+      "person": ""
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "gol",
+      "points": {
+        "origin": "São Paulo (CGH)",
+        "destination": "Belo Horizonte (CNF)"
+      },
+      "dates": {
+        "departure": {
+          "day": 21,
+          "month": 2,
+          "year": 2021,
+          "hour": 16,
+          "minute": 5,
+          "second": 0
+        },
+        "arrival": {
+          "day": 21,
+          "month": 2,
+          "year": 2021,
+          "hour": 17,
+          "minute": 20,
+          "second": 0
+        }
+      },
+      "duration": "01:15",
+      "direction": "return",
+      "reservation": "WKG8NS",
+      "link": "",
+      "person": ""
+    }
+  },
+  "itinerary": {
+    "20210218": {
+      "title": {
+        "value": "Quinta-Feira — Chegada & Paulista",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 18,
+        "month": 2,
+        "year": 2021,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Família Amanda / Família Bibs: Carona para o aeroporto",
+          "start": "04:45",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo GOL CNF → CGH: G3 1417, reserva ONW13T",
+          "start": "06:05",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Aeroporto → Hotel (R$25)",
+          "start": "07:50",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Check-in / Deixar malas",
+          "start": "08:10",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Avenida Paulista: Passear e compras na região",
+          "start": "08:35",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "IMS Paulista: Mirante do IMS",
+          "start": "08:50",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa das Rosas: Fotos no jardim",
+          "start": "09:20",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Japan House: Exposição na Paulista",
+          "start": "09:40",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô: Paulista → Liberdade (R$4,40)",
+          "start": "10:05",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Liberdade: Compras de comidinhas diferentes",
+          "start": "10:25",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Empório Azuki: Supermercado oriental",
+          "start": "10:45",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Snowfall: Shake (R$20)",
+          "start": "11:00",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô: Liberdade → Paulista (R$4,40)",
+          "start": "11:25",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "McDonald's Mil: Almoço (R$40)",
+          "start": "11:45",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Deixar compras",
+          "start": "12:30",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "De Tudo Um Pouco / Oscar Freire: Comprinhas e supermercado",
+          "start": "12:50",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Descanso",
+          "start": "14:30",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Hotel → Farol Santander (R$15)",
+          "start": "15:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Farol Santander: Reserva 15:30 (R$12,50)",
+          "start": "15:20",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Bar do Cofre: Brunch (R$50)",
+          "start": "16:20",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Farol Santander → Hotel (R$15)",
+          "start": "16:50",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Descanso / Arrumar para sair",
+          "start": "17:10",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Carlos Pizza: Reserva 19h (R$100)",
+          "start": "18:40",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Augusta: Conhecer a região",
+          "start": "19:50",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Caixote Bar: Drinks baratos (R$50)",
+          "start": "21:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Baladinha: Festa (R$20)",
+          "start": "22:30",
+          "end": ""
+        }
+      ]
+    },
+    "20210219": {
+      "title": {
+        "value": "Sexta-Feira — Cultura & Gastronomia",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 19,
+        "month": 2,
+        "year": 2021,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Arrumar / Café da manhã",
+          "start": "08:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Hotel → Galeria do Rock (R$20)",
+          "start": "09:40",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Galeria do Rock: Comprinhas",
+          "start": "10:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aquário Urbano: Fotos",
+          "start": "11:10",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Aquário Urbano → Quintal Debetti (R$22)",
+          "start": "11:40",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Quintal Debetti: Reserva 12h, almoço (R$60)",
+          "start": "12:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Quintal Debetti → Ibirapuera (R$15)",
+          "start": "13:30",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Parque Ibirapuera: Passeio no parque",
+          "start": "13:45",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Ibirapuera → Pinacoteca (R$25)",
+          "start": "15:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pinacoteca: Reserva 15:30 (R$12,50)",
+          "start": "15:20",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Pinacoteca → Villa San Pietro (R$10)",
+          "start": "16:20",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Villa San Pietro: Brunch",
+          "start": "16:35",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Descanso / Arrumar",
+          "start": "17:25",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Hotel → Olivo (R$10)",
+          "start": "18:15",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Olivo: Reserva 18:30, jantar (R$100)",
+          "start": "18:30",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Augusta: Bares e baladinha (R$50)",
+          "start": "20:00",
+          "end": ""
+        }
+      ]
+    },
+    "20210220": {
+      "title": {
+        "value": "Sábado — Arte & Vida Noturna",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 20,
+        "month": 2,
+        "year": 2021,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Arrumar / Café da manhã",
+          "start": "08:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Hotel → Beco do Batman (R$15)",
+          "start": "09:40",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Beco do Batman: Fotos nos grafites",
+          "start": "10:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Beco do Batman → MAB FAAP (R$20)",
+          "start": "11:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "MAB FAAP: Exposição Gabriel Wickerbold",
+          "start": "11:30",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: MAB FAAP → O Burguer (R$20)",
+          "start": "12:20",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "O Burguer: Reserva 13h, almoço (R$100)",
+          "start": "12:50",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: O Burguer → Parque Villa Lobos (R$15)",
+          "start": "14:30",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Parque Villa Lobos: Passeio no parque",
+          "start": "14:50",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Villa Lobos → Da Mooca Pizza Shop (R$10)",
+          "start": "15:50",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Da Mooca Pizza Shop: Brunch (R$50)",
+          "start": "16:05",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô: Mooca → Paulista (R$4,40)",
+          "start": "16:45",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Descanso / Arrumar",
+          "start": "17:00",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Omalleys: Role (R$100)",
+          "start": "18:10",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Baladinha / Bar: Escolher na hora (R$50)",
+          "start": "22:00",
+          "end": ""
+        }
+      ]
+    },
+    "20210221": {
+      "title": {
+        "value": "Domingo — Despedida & Retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 21,
+        "month": 2,
+        "year": 2021,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Arrumar / Café da manhã",
+          "start": "08:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Avenida Paulista: Curtir a vibe",
+          "start": "10:05",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Fechar mala / Check-out",
+          "start": "11:10",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Hotel → Modern Mamma Osteria (R$10)",
+          "start": "11:40",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Modern Mamma Osteria: Almoço (R$100)",
+          "start": "12:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "The Good Cop Donut Shop: Donuts para a viagem! (R$30)",
+          "start": "13:20",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Donut Shop → Hotel (R$10)",
+          "start": "13:40",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Pegar malas",
+          "start": "14:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Hotel → Aeroporto (R$25)",
+          "start": "14:10",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo GOL CGH → CNF: G3 1426, reserva WKG8NS",
+          "start": "16:05",
+          "end": ""
+        }
+      ],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "type": "trip.expenses.daily",
+        "person": "",
+        "name": "Refeições durante a viagem",
+        "price": 550,
+        "currency": "BRL"
+      },
+      {
+        "type": "Atrações/Eventos",
+        "person": "",
+        "name": "Farol Santander, Pinacoteca",
+        "price": 25,
+        "currency": "BRL"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "person": "",
+        "name": "Compras na Liberdade, Paulista, Oscar Freire",
+        "price": 300,
+        "currency": "BRL"
+      },
+      {
+        "type": "Saída Noturna",
+        "person": "",
+        "name": "Bares, baladas e restaurantes noturnos",
+        "price": 370,
+        "currency": "BRL"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "person": "",
+        "name": "Metrô",
+        "price": 13.2,
+        "currency": "BRL"
+      },
+      {
+        "type": "Transporte Privado",
+        "person": "",
+        "name": "Uber durante a viagem",
+        "price": 156,
+        "currency": "BRL"
+      }
+    ],
+    "preTrip": [
+      {
+        "type": "trip.transportation.type.flights",
+        "person": "",
+        "name": "Passagem CNF→CGH→CNF — GOL G3 1417/1426, reserva ONW13T/WKG8NS",
+        "price": 196.53,
+        "currency": "BRL"
+      },
+      {
+        "type": "trip.transportation.type.flights",
+        "person": "",
+        "name": "Passagem CNF→CGH→CNF — GOL G3 1417/1426, reserva ONW13T/WKG8NS",
+        "price": 135.57,
+        "currency": "BRL"
+      },
+      {
+        "type": "trip.accommodation.title",
+        "person": "",
+        "name": "La Residence Paulista — 3 noites",
+        "price": 290,
+        "currency": "BRL"
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel",
+      "amanda": "Amanda"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2021-02-21T00:00:00.000Z"
+    }
+  }
+}

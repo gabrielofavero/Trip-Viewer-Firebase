@@ -1,0 +1,701 @@
+{
+  "_meta": {
+    "tripId": "legacy-2016-orlando",
+    "slug": "2016-orlando",
+    "sourceFiles": [
+      "Família/[2016] Orlando/2016 - Orlando.xlsx"
+    ],
+    "extractionNotes": {
+      "xlsxContent": "5 sheets: 'Família' (daily spending log in USD, 12 days, with side tables for night outings and other costs), 'Programação' (full day-by-day itinerary, 12 days), 'Pessoal' (Gabriel's personal shopping list — planned and unplanned purchases in USD), 'Online Stores' (online purchases with IOF tax, per-person breakdown), 'Outros' (LP wishlist, improbable purchases, family dollar contributions per person). Includes accommodation address: 1121 Marcello Boulevard, Kissimmee, FL 34746.",
+      "dateSource": "Spreadsheet shows 2015 dates (template carryover from 2015 NY trip — same pattern as F1). Folder is [2016] Orlando. Financial data references 'Salário (Fev)', 'Salário (Mar)' as funding sources, consistent with Jan 2016 trip. Corrected to 2016.",
+      "dateAnomaly": "All row dates show 2015 — clearly a data entry error (year not updated from 2015 NY template). Corrected to 2016.",
+      "travelerSource": "Confirmed from 'Outros' sheet (Dinheiro - Família) listing Milton, Elaine, Marianna, Gabriel.",
+      "accommodationSource": "Address in Família sheet: 'Endereço (Casa): 1121 Marcello Boulevard, Kissimmee, FL 34746'. Also referenced: Ires Goulart (5913 Iona Ave, Orlando) and Hiago (2827 Santego Bay ct., Brandon, FL). Cost: $860 from 'Outros Custos' section.",
+      "exchangeRate": "R$4.00/USD (from 'Dólar' column in Família sheet). All expenses tracked in USD.",
+      "missingData": "No flights/transport data in spreadsheet. No checkup docx. Parks and house costs are in the 'Outros Custos' side table of Família sheet."
+    }
+  },
+  "trip": {
+    "title": "Orlando 2016",
+    "currency": "USD",
+    "start": {
+      "day": 23,
+      "month": 1,
+      "year": 2016,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 3,
+      "month": 2,
+      "year": 2016,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": false,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      },
+      {
+        "id": "elaine",
+        "name": "Elaine"
+      },
+      {
+        "id": "milton",
+        "name": "Milton"
+      },
+      {
+        "id": "marianna",
+        "name": "Marianna"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Casa — 1121 Marcello Boulevard, Kissimmee",
+      "description": "Casa alugada em Kissimmee, FL 34746. Endereços de referência: Ires Goulart (5913 Iona Ave, Orlando, FL 32835) e Hiago (2827 Santego Bay ct., Brandon, FL 33511).",
+      "address": "1121 Marcello Boulevard, Kissimmee, FL 34746",
+      "dates": {
+        "checkIn": {
+          "day": 23,
+          "month": 1,
+          "year": 2016,
+          "hour": 0,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 3,
+          "month": 2,
+          "year": 2016,
+          "hour": 0,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    }
+  },
+  "itinerary": {
+    "20160123": {
+      "title": {
+        "value": "Dia 1 — Chegada: Wall Mart + Friday's",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 23,
+        "month": 1,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Wall Mart",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Friday's",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20160124": {
+      "title": {
+        "value": "Dia 2 — Outlet: Orlando Premium + Florida Mall",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 24,
+        "month": 1,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Orlando Premium Outlet",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Florida Mall",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20160125": {
+      "title": {
+        "value": "Dia 3 — Parque: Magic Kingdom",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 25,
+        "month": 1,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Magic Kingdom",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Magic Kingdom",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20160126": {
+      "title": {
+        "value": "Dia 4 — Orlando (cidade)",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 26,
+        "month": 1,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Orlando (cidade)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20160127": {
+      "title": {
+        "value": "Dia 5 — Parque: Hollywood Studios",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 27,
+        "month": 1,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hollywood Studios",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hollywood Studios",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20160128": {
+      "title": {
+        "value": "Dia 6 — Tampa",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 28,
+        "month": 1,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Tampa",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Tampa",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20160129": {
+      "title": {
+        "value": "Dia 7 — Parque: Universal (Simuladores)",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 29,
+        "month": 1,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Universal Studios (Simuladores)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Universal Studios (Simuladores)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20160130": {
+      "title": {
+        "value": "Dia 8 — Outlet",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 30,
+        "month": 1,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Outlet",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Outlet",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20160131": {
+      "title": {
+        "value": "Dia 9 — Parque: Universal (Novo)",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 31,
+        "month": 1,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Universal Studios (Área Nova)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Universal Studios (Área Nova)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20160201": {
+      "title": {
+        "value": "Dia 10 — Parque: Bush Gardens",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 1,
+        "month": 2,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Bush Gardens",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Bush Gardens",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20160202": {
+      "title": {
+        "value": "Dia 11 — Dia Livre",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 2,
+        "month": 2,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [],
+      "night": []
+    },
+    "20160203": {
+      "title": {
+        "value": "Dia 12 — Retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 3,
+        "month": 2,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "name": "Alimentação (almoço)",
+        "type": "trip.expenses.daily",
+        "price": 246.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Saídas / Entretenimento",
+        "type": "trip.expenses.entertainment",
+        "price": 402.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Gasolina",
+        "type": "trip.transportation.type.car",
+        "price": 28.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Supermercado",
+        "type": "trip.expenses.daily",
+        "price": 427.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Saídas Noturnas",
+        "type": "trip.expenses.entertainment",
+        "price": 1147.0,
+        "currency": "USD",
+        "person": ""
+      }
+    ],
+    "preTrip": [
+      {
+        "name": "Casa (hospedagem) — 1121 Marcello Blvd, Kissimmee",
+        "type": "trip.expenses.accommodation",
+        "price": 860.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Parques: Disney (Magic Kingdom + Hollywood Studios)",
+        "type": "trip.expenses.entertainment",
+        "price": 820.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Compras iniciais — Wall Mart",
+        "type": "trip.expenses.daily",
+        "price": 100.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Compras — restante",
+        "type": "trip.expenses.daily",
+        "price": 400.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Parques: Universal + Bush Gardens (estimado)",
+        "type": "trip.expenses.entertainment",
+        "price": 0,
+        "currency": "USD",
+        "person": ""
+      }
+    ],
+    "currency": "USD",
+    "travelers": {
+      "gabriel": "Gabriel",
+      "elaine": "Elaine",
+      "milton": "Milton",
+      "marianna": "Marianna"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    }
+  }
+}

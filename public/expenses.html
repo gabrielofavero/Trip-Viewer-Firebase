@@ -2,203 +2,30 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
-
-  <title>TripViewer</title>
-  <meta content="Your Travel Planner" name="description">
-  <meta property="og:description" content="Your Travel Planner">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="favicon.ico" rel="icon">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-
-  <!-- Apple Data -->
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="TripViewer" />
-  <meta name="theme-color" content="#fff">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Main CSS Files -->
-  <link data-main href="assets/css/gastos/gastos.css" rel="stylesheet">
+  <!-- #include shared/head.html -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link data-main href="assets/css/expenses/expenses.css" rel="stylesheet">
 
 </head>
 
 <body>
   <div id="expenses-content" class="loadable" style="display: none">
-    <div class="top-bar">
-      <a href="#" id="logo-link" class="logo-link">
-        <div class="logo-box">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-light">
-            <g style="isolation: isolate;">
-              <g id="Capa_1" data-name="Capa 1">
-                <g>
-                  <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                    style="fill: none; stroke: #595a5a; stroke-miterlimit: 10; stroke-width: 8px;" />
-                  <path id="light-color-1"
-                    d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
-                    style="fill: #5859a7; stroke-width: 0px;" />
-                  <path
-                    d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <path id="light-color-2"
-                    d="m3.57,12.2h72.54c1.97,0,3.57,1.6,3.57,3.57v28.62c0,1.97-1.6,3.58-3.58,3.58H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
-                    style="fill: #5859a7; stroke-width: 0px;" />
-                  <path
-                    d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #595a5a; stroke-width: 0px;" />
-                </g>
-              </g>
-            </g>
-          </svg>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-dark" style="display:none">
-            <g style="isolation: isolate;">
-              <g id="Capa_1" data-name="Capa 1">
-                <g>
-                  <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                    style="fill: none; stroke: #bfbfbf; stroke-miterlimit: 10; stroke-width: 8px;" />
-                  <path id="dark-color-1"
-                    d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
-                    style="fill: #7f75b6; stroke-width: 0px;" />
-                  <path
-                    d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <path id="dark-color-2"
-                    d="m3.57,12.2h72.54c1.97,0,3.58,1.6,3.58,3.58v28.62c0,1.97-1.6,3.57-3.57,3.57H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
-                    style="fill: #7f75b6; stroke-width: 0px;" />
-                  <path
-                    d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #bfbfbf; stroke-width: 0px;" />
-                </g>
-              </g>
-            </g>
-          </svg>
-          <div id="trip-viewer-text">TripViewer</div>
-        </div>
-      </a>
-      <div class="icons-box" id="icons-box">
-        <div class="lang-selector">
-          <button class="lang-button">EN</button>
-          <div class="lang-options">
-            <button data-lang="en">EN</button>
-            <button data-lang="pt">PT</button>
-          </div>
-        </div>
-        <i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>
-        <i id="night-mode" class="bx bx-moon icon-buttons"></i>
-      </div>
-
-    </div>
+      <!-- #include shared/top-bar.html -->
 
     <div class="section-title">
       <br><br><br><br>
       <h2 data-translate="trip.expenses.title"></h2>
     </div>
 
-    <div id="gastos-container">
-      <div class="tabs-container">
-        <div class="tabs" id="tab-moedas" style="display: none;">
-        </div>
-      </div>
-      <div class="tabs-container" id="tabs-container-gastos">
-        <div class="tabs" id="tab-gastos" style="display: none;">
-          <input type="radio" style="display: none;" id="radio-resumo" name="tabs-gastos" checked />
-          <label class="tab" for="radio-resumo" data-translate="labels.overview"></label>
-          <input type="radio" style="display: none;" id="radio-gastosPrevios" name="tabs-gastos" />
-          <label class="tab" for="radio-gastosPrevios" data-translate="trip.expenses.min.pre_trip"></label>
-          <input type="radio" style="display: none;" id="radio-gastosDurante" name="tabs-gastos" />
-          <label class="tab" for="radio-gastosDurante" data-translate="trip.expenses.min.during_trip"></label>
-          <input type="radio" style="display: none;" id="radio-gastosViajantes" name="tabs-gastos" />
-          <label class="tab" for="radio-gastosViajantes" data-translate="trip.travelers.title"></label>
-          <span class="glider"></span>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div id="conversao"></div>
-      <div id="resumo" class="main-container">
-        <div id="resumo-container" class="gastos-container">
-          <div class="gastos-card grafico">
-            <h2 id="resumo-titulo" class="gastos-titulo" data-translate="labels.overview"></h2>
-            <div id="resumo-total" class="gastos-subtitulo"></div>
-            <canvas id="resumo-grafico" width="300" height="300"></canvas>
-          </div>
-
-          <div id="resumo-gastosPrevios" class="gastos-card gastos-recibo" style="display: none;">
-            <h2 class="gastos-titulo" id="resumo-gastosPrevios-titulo" data-translate="trip.expenses.pre_trip"></h2>
-            <table id="resumo-gastosPrevios-tabela" class="card-full-size">
-            </table>
-          </div>
-
-          <div id="resumo-gastosDurante" class="gastos-card gastos-recibo" style="display: none;">
-            <h2 class="gastos-titulo" id="resumo-gastosDurante-titulo" data-translate="trip.expenses.during_trip"></h2>
-            <table id="resumo-gastosDurante-tabela" class="card-full-size">
-            </table>
-          </div>
-
-          <div id="resumo-gastosViajantes" class="gastos-card gastos-recibo" style="display: none;">
-            <h2 class="gastos-titulo" id="resumo-gastosViajantes-titulo" data-translate="trip.travelers.title"></h2>
-            <table id="resumo-gastosViajantes-tabela" class="card-full-size">
-            </table>
-          </div>
-        </div>
-      </div>
-      <div id="gastosPrevios" class="main-container" style="display: none">
-        <div id="gastosPrevios-container" class="gastos-container">
-          <div class="gastos-card grafico">
-            <h2 id="gastosPrevios-titulo" class="gastos-titulo" data-translate="trip.expenses.pre_trip"></h2>
-            <div id="gastosPrevios-total" class="gastos-subtitulo"></div>
-            <canvas id="gastosPrevios-grafico" style="margin-top: 16px;" width="300" height="150"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="gastosDurante" class="main-container" style="display: none">
-        <div id="gastosDurante-container" class="gastos-container">
-          <div class="gastos-card grafico">
-            <h2 id="gastosDurante-titulo" class="gastos-titulo" data-translate="trip.expenses.during_trip"></h2>
-            <div id="gastosDurante-total" class="gastos-subtitulo"></div>
-            <canvas id="gastosDurante-grafico" style="margin-top: 16px;" width="150" height="75"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="gastosViajantes" class="main-container" style="display: none">
-        <div id="gastosViajantes-container" class="gastos-container">
-          <div class="gastos-card grafico">
-            <h2 id="gastosViajantes-titulo" class="gastos-titulo" data-translate="trip.travelers.title"></h2>
-            <div id="gastosViajantes-total" class="gastos-subtitulo"></div>
-            <canvas id="gastosViajantes-grafico" style="margin-top: 16px;" width="300" height="150"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- #include shared/expenses-content.html -->
   </div>
 
   <!-- ======= Footer ======= -->
   <footer class="footer">
     <div class="container">
       <div class="credits">
-        <span data-translate="labels.developed_by"></span> <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel
-          Fávero</a>. <span class="atribuicoes" onclick="_openAtribuicoes()"><i class="iconify"
+        <span class="tripviewer-version"></span> <span data-translate="labels.developed_by"></span> <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel
+          Fávero</a>. <span class="attributions" data-action="open-attributions"><i class="iconify"
             data-icon="ri:information-line"></i>
           <span data-translate="labels.credits"></span></span>
       </div>
@@ -208,53 +35,11 @@
   <!-- ======= Support: Preloader ======= -->
   <div id="preloader"></div>
 
-  <!-- Firebase -->
-  <script data-main src="../../index.js" type=text/JSX"></script>
-  <script defer src="/__/firebase/10.4.0/firebase-app-compat.js"></script>
-  <script defer src="/__/firebase/10.4.0/firebase-auth-compat.js"></script>
-  <script defer src="/__/firebase/10.4.0/firebase-firestore-compat.js"></script>
-  <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/typed.js/typed.min.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/jquery/jquery.min.js"></script>
-  <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+  <!-- #include shared/scripts-vendor.html -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+  <!-- #include shared/scripts-core.html -->
 
-  <!-- Main JS Files -->
-  <script data-main src="assets/js/main/translation.js"></script>
-  <script data-main src="assets/js/main/main.js"></script>
-  <script data-main src="assets/js/suporte/firebase/database.js"></script>
-  <script data-main src="assets/js/suporte/estilos/animacoes.js"></script>
-  <script data-main src="assets/js/suporte/paginas/dados.js"></script>
-  <script data-main src="assets/js/suporte/estilos/svgs.js"></script>
-  <script data-main src="assets/js/suporte/estilos/cores.js"></script>
-  <script data-main src="assets/js/suporte/estilos/visibilidade.js"></script>
-  <script data-main src="assets/js/suporte/paginas/mensagens.js"></script>
-  <script data-main src="assets/js/suporte/paginas/carregamento.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/embed/media-embed.js"></script>
-  <script data-main src="assets/js/paginas/destinos/categorias.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/content.js"></script>
-  <script data-main src="assets/js/paginas/destinos/destinos.js"></script>
-  <script data-main src="assets/js/suporte/estilos/stylesheets.js"></script>
-  <script data-main src="assets/js/suporte/paginas/dispositivos.js"></script>
-  <script data-main src="assets/js/suporte/paginas/datas.js"></script>
-  <script data-main src="assets/js/suporte/paginas/pin.js"></script>
-  <script data-main src="assets/js/paginas/gastos/suporte/moeda.js"></script>
-  <script data-main src="assets/js/paginas/gastos/suporte/dados.js"></script>
-  <script data-main src="assets/js/suporte/html/embed.js"></script>
-  <script data-main src="assets/js/paginas/gastos/suporte/embed.js"></script>
-  <script data-main src="assets/js/paginas/gastos/categorias.js"></script>
-  <script data-main src="assets/js/paginas/gastos/gastos-convertidos.js"></script>
-  <script data-main src="assets/js/paginas/gastos/gastos.js"></script>
-  <script data-main src="assets/js/suporte/paginas/atribuicoes.js"></script>
-
+  <!-- #include shared/nav-helper.html -->
 </body>
 
 </html>

@@ -2,212 +2,52 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
-
-  <title>TripViewer</title>
-  <meta content="Your Travel Planner" name="description">
-  <meta property="og:description" content="Your Travel Planner">
-  <meta content="" name="keywords">
-
-  <!-- Apple Data -->
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="TripViewer" />
-  <meta name="theme-color" content="#fff">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-  <link rel="manifest" href="../site.webmanifest">
-  <link rel="mask-icon" href="../safari-pinned-tab.svg" color="#5bbad5">
-  <link rel="shortcut icon" href="../favicon.ico">
-  <meta name="msapplication-TileColor" content="#e4ebdb">
-  <meta name="msapplication-config" content="../browserconfig.xml">
-  <meta name="theme-color" content="#ffffff">
-
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
-  <link data-main href="../assets/css/editar/editar.css" rel="stylesheet">
+  <!-- #include shared/head.html -->
+  <link href="../assets/css/main.css" rel="stylesheet">
+  <link data-main href="../assets/css/edit/edit.css" rel="stylesheet">
 
 </head>
 
 <body>
   <!-- ======= Hero ======= -->
   <section id="hero" class="loadable" style="display: none">
-    <div class="top-bar" id="top-bar">
-      <a href="../index.html" class="logo-link">
-        <div class="logo-box">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-light">
-            <g style="isolation: isolate;">
-              <g id="Capa_1" data-name="Capa 1">
-                <g>
-                  <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                    style="fill: none; stroke: #00b6ea; stroke-miterlimit: 10; stroke-width: 8px;" />
-                  <path id="light-color-1"
-                    d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
-                    style="fill: #5859a7; stroke-width: 0px;" />
-                  <path
-                    d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <path id="light-color-2"
-                    d="m3.57,12.2h72.54c1.97,0,3.57,1.6,3.57,3.57v28.62c0,1.97-1.6,3.58-3.58,3.58H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
-                    style="fill: #5859a7; stroke-width: 0px;" />
-                  <path
-                    d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #00b6ea; stroke-width: 0px;" />
-                </g>
-              </g>
-            </g>
-          </svg>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-dark" style="display:none">
-            <g style="isolation: isolate;">
-              <g id="Capa_1" data-name="Capa 1">
-                <g>
-                  <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                    style="fill: none; stroke: #00b6ea; stroke-miterlimit: 10; stroke-width: 8px;" />
-                  <path id="dark-color-1"
-                    d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
-                    style="fill: #7f75b6; stroke-width: 0px;" />
-                  <path
-                    d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <path id="dark-color-2"
-                    d="m3.57,12.2h72.54c1.97,0,3.58,1.6,3.58,3.58v28.62c0,1.97-1.6,3.57-3.57,3.57H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
-                    style="fill: #7f75b6; stroke-width: 0px;" />
-                  <path
-                    d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #00b6ea; stroke-width: 0px;" />
-                </g>
-              </g>
-            </g>
-          </svg>
-          <div id="trip-viewer-text">TripViewer</div>
-        </div>
-      </a>
-      <div class="icons-box" id="icons-box">
-        <div class="lang-selector">
-          <button class="lang-button">EN</button>
-          <div class="lang-options">
-            <button data-lang="en">EN</button>
-            <button data-lang="pt">PT</button>
-          </div>
-        </div>
-        <i onclick="window.location = '../index.html'" id="back" class="bx bx-arrow-back icon-buttons"></i>
-        <i id="night-mode" class="bx bx-moon icon-buttons"></i>
-      </div>
-    </div>
-    <div class="demo-page">
-      <div class="demo-page-navigation">
-        <nav>
-          <ul>
-            <li>
-              <a href="#dados-basicos">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="feather feather-tool">
-                  <path
-                    d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-                </svg>
-                <span data-translate="labels.basic_information"></span></a>
-            </li>
-            <li>
-              <a href="#restaurantes">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M21 15c0-4.625-3.507-8.441-8-8.941V4h-2v2.059c-4.493.5-8 4.316-8 8.941v2h18v-2zM5 15c0-3.859 3.141-7 7-7s7 3.141 7 7H5zm-3 3h20v2H2z">
-                  </path>
-                </svg>
-                <span data-translate="destination.restaurants.title"></span></a>
-            </li>
-            <li>
-              <a href="#lanches">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M21.598 11.064a1.006 1.006 0 0 0-.854-.172A2.938 2.938 0 0 1 20 11c-1.654 0-3-1.346-3.003-2.937c.005-.034.016-.136.017-.17a.998.998 0 0 0-1.254-1.006A2.963 2.963 0 0 1 15 7c-1.654 0-3-1.346-3-3c0-.217.031-.444.099-.716a1 1 0 0 0-1.067-1.236A9.956 9.956 0 0 0 2 12c0 5.514 4.486 10 10 10s10-4.486 10-10c0-.049-.003-.097-.007-.16a1.004 1.004 0 0 0-.395-.776zM12 20c-4.411 0-8-3.589-8-8a7.962 7.962 0 0 1 6.006-7.75A5.006 5.006 0 0 0 15 9l.101-.001a5.007 5.007 0 0 0 4.837 4C19.444 16.941 16.073 20 12 20z">
-                  </path>
-                  <circle cx="12.5" cy="11.5" r="1.5" fill="currentColor"></circle>
-                  <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"></circle>
-                  <circle cx="7.5" cy="12.5" r="1.5" fill="currentColor"></circle>
-                  <circle cx="15.5" cy="15.5" r="1.5" fill="currentColor"></circle>
-                  <circle cx="10.5" cy="16.5" r="1.5" fill="currentColor"></circle>
-                </svg>
-                <span data-translate="destination.snacks.title"></span></a>
-            </li>
-            <li>
-              <a href="#saidas">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M20.832 4.555A1 1 0 0 0 20 3H4a1 1 0 0 0-.832 1.554L11 16.303V20H8v2h8v-2h-3v-3.697l7.832-11.748zm-2.7.445l-2 3H7.868l-2-3h12.264z">
-                  </path>
-                </svg>
-                <span data-translate="destination.nightlife.title"></span></a>
-            </li>
-            <li>
-              <a href="#turismo">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10s10-4.486 10-10S17.514 2 12 2zm7.931 9h-2.764a14.67 14.67 0 0 0-1.792-6.243A8.013 8.013 0 0 1 19.931 11zM12.53 4.027c1.035 1.364 2.427 3.78 2.627 6.973H9.03c.139-2.596.994-5.028 2.451-6.974c.172-.01.344-.026.519-.026c.179 0 .354.016.53.027zm-3.842.7C7.704 6.618 7.136 8.762 7.03 11H4.069a8.013 8.013 0 0 1 4.619-6.273zM4.069 13h2.974c.136 2.379.665 4.478 1.556 6.23A8.01 8.01 0 0 1 4.069 13zm7.381 6.973C10.049 18.275 9.222 15.896 9.041 13h6.113c-.208 2.773-1.117 5.196-2.603 6.972c-.182.012-.364.028-.551.028c-.186 0-.367-.016-.55-.027zm4.011-.772c.955-1.794 1.538-3.901 1.691-6.201h2.778a8.005 8.005 0 0 1-4.469 6.201z">
-                  </path>
-                </svg>
-                <span data-translate="destination.tourism.title"></span></a>
-            </li>
+      <!-- #include shared/top-bar.html -->
 
-            <li>
-              <a href="#lojas">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M5 22h14c1.103 0 2-.897 2-2V9a1 1 0 0 0-1-1h-3V7c0-2.757-2.243-5-5-5S7 4.243 7 7v1H4a1 1 0 0 0-1 1v11c0 1.103.897 2 2 2zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v1H9V7zm-4 3h2v2h2v-2h6v2h2v-2h2l.002 10H5V10z">
-                  </path>
-                </svg>
-                <span data-translate="destination.shopping.title"></span></a>
-            </li>
-
-            <li>
-              <a href="#mapa">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="m21.447 6.105l-6-3a1 1 0 0 0-.895 0L9 5.882L3.447 3.105A1 1 0 0 0 2 4v13c0 .379.214.725.553.895l6 3a1 1 0 0 0 .895 0L15 18.118l5.553 2.776a.992.992 0 0 0 .972-.043c.295-.183.475-.504.475-.851V7c0-.379-.214-.725-.553-.895zM10 7.618l4-2v10.764l-4 2V7.618zm-6-2l4 2v10.764l-4-2V5.618zm16 12.764l-4-2V5.618l4 2v10.764z">
-                  </path>
-                </svg>
-                <span data-translate="destination.map.title"></span></a>
-            </li>
-
-            <li>
-              <a href="#double-buttons">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z">
-                  </path>
-                </svg>
-                <span data-translate="labels.save"></span></a>
-            </li>
-
-          </ul>
-        </nav>
+    <div class="edit-page">
+      <div class="edit-tab-bar" id="edit-tab-bar">
+        <button class="edit-tab active" data-tab="basic-information">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          <span data-translate="labels.basic_information"></span>
+        </button>
+        <button class="edit-tab" data-tab="restaurants">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21 15c0-4.625-3.507-8.441-8-8.941V4h-2v2.059c-4.493.5-8 4.316-8 8.941v2h18v-2zM5 15c0-3.859 3.141-7 7-7s7 3.141 7 7H5zm-3 3h20v2H2z"/></svg>
+          <span data-translate="destination.restaurants.title"></span>
+        </button>
+        <button class="edit-tab" data-tab="snacks">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21.598 11.064a1.006 1.006 0 0 0-.854-.172A2.938 2.938 0 0 1 20 11c-1.654 0-3-1.346-3.003-2.937c.005-.034.016-.136.017-.17a.998.998 0 0 0-1.254-1.006A2.963 2.963 0 0 1 15 7c-1.654 0-3-1.346-3-3c0-.217.031-.444.099-.716a1 1 0 0 0-1.067-1.236A9.956 9.956 0 0 0 2 12c0 5.514 4.486 10 10 10s10-4.486 10-10c0-.049-.003-.097-.007-.16a1.004 1.004 0 0 0-.395-.776zM12 20c-4.411 0-8-3.589-8-8a7.962 7.962 0 0 1 6.006-7.75A5.006 5.006 0 0 0 15 9l.101-.001a5.007 5.007 0 0 0 4.837 4C19.444 16.941 16.073 20 12 20z"/><circle cx="12.5" cy="11.5" r="1.5" fill="currentColor"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><circle cx="7.5" cy="12.5" r="1.5" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.5" fill="currentColor"/><circle cx="10.5" cy="16.5" r="1.5" fill="currentColor"/></svg>
+          <span data-translate="destination.snacks.title"></span>
+        </button>
+        <button class="edit-tab" data-tab="nightlife">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20.832 4.555A1 1 0 0 0 20 3H4a1 1 0 0 0-.832 1.554L11 16.303V20H8v2h8v-2h-3v-3.697l7.832-11.748zm-2.7.445l-2 3H7.868l-2-3h12.264z"/></svg>
+          <span data-translate="destination.nightlife.title"></span>
+        </button>
+        <button class="edit-tab" data-tab="tourism">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10s10-4.486 10-10S17.514 2 12 2zm7.931 9h-2.764a14.67 14.67 0 0 0-1.792-6.243A8.013 8.013 0 0 1 19.931 11zM12.53 4.027c1.035 1.364 2.427 3.78 2.627 6.973H9.03c.139-2.596.994-5.028 2.451-6.974c.172-.01.344-.026.519-.026c.179 0 .354.016.53.027zm-3.842.7C7.704 6.618 7.136 8.762 7.03 11H4.069a8.013 8.013 0 0 1 4.619-6.273zM4.069 13h2.974c.136 2.379.665 4.478 1.556 6.23A8.01 8.01 0 0 1 4.069 13zm7.381 6.973C10.049 18.275 9.222 15.896 9.041 13h6.113c-.208 2.773-1.117 5.196-2.603 6.972c-.182.012-.364.028-.551.028c-.186 0-.367-.016-.55-.027zm4.011-.772c.955-1.794 1.538-3.901 1.691-6.201h2.778a8.005 8.005 0 0 1-4.469 6.201z"/></svg>
+          <span data-translate="destination.tourism.title"></span>
+        </button>
+        <button class="edit-tab" data-tab="shopping">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5 22h14c1.103 0 2-.897 2-2V9a1 1 0 0 0-1-1h-3V7c0-2.757-2.243-5-5-5S7 4.243 7 7v1H4a1 1 0 0 0-1 1v11c0 1.103.897 2 2 2zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v1H9V7zm-4 3h2v2h2v-2h6v2h2v-2h2l.002 10H5V10z"/></svg>
+          <span data-translate="destination.shopping.title"></span>
+        </button>
+        <button class="edit-tab" data-tab="map">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m21.447 6.105l-6-3a1 1 0 0 0-.895 0L9 5.882L3.447 3.105A1 1 0 0 0 2 4v13c0 .379.214.725.553.895l6 3a1 1 0 0 0 .895 0L15 18.118l5.553 2.776a.992.992 0 0 0 .972-.043c.295-.183.475-.504.475-.851V7c0-.379-.214-.725-.553-.895zM10 7.618l4-2v10.764l-4 2V7.618zm-6-2l4 2v10.764l-4-2V5.618zm16 12.764l-4-2V5.618l4 2v10.764z"/></svg>
+          <span data-translate="destination.map.title"></span>
+        </button>
       </div>
 
-      <main class="demo-page-content">
-        <section>
-          <div class="href-target" id="dados-basicos"></div>
+      <main class="edit-page-content">
+        <section data-category="basic-information">
+          <div class="href-target" id="basic-information"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -221,13 +61,13 @@
           <p data-translate="destination.basic_information"></p>
 
           <div class="nice-form-group">
-            <label id="titulo-label" data-translate="labels.title"></label>
-            <input required id="titulo" type="text" data-translate="destination.location_placeholder" />
+            <label id="title-label" data-translate="labels.title"></label>
+            <input required id="title" type="text" data-translate="destination.location_placeholder" />
           </div>
 
           <div class="nice-form-group">
             <label data-translate="currency.title"></label>
-            <select id="moeda" name="currency">
+            <select id="currency" name="currency">
               <option value="BRL" data-translate="currency.type.BRL"></option>
               <option value="USD" data-translate="currency.type.USD"></option>
               <option value="EUR" data-translate="currency.type.EUR"></option>
@@ -252,20 +92,52 @@
               <option value="HUF" data-translate="currency.type.HUF"></option>
               <option value="TWD" data-translate="currency.type.TWD"></option>
               <option value="THB" data-translate="currency.type.THB"></option>
-              <option value="outra" data-translate="currency.type.other"></option>
+              <option value="other" data-translate="currency.type.other"></option>
             </select>
-            <input style="display:none" class="nice-form-group" id="outra-moeda" type="text"
+            <input style="display:none" class="nice-form-group" id="other-currency" type="text"
               data-translate="currency.title" />
           </div>
 
+          <div class="places-fetch-wrapper">
+            <button id="places-bulk-btn" class="btn btn-basic btn-sm" type="button"
+              style="display: none;">
+              <i class="iconify" data-icon="simple-icons:googlemaps"></i>
+              <span class="places-fetch-label" data-translate="placesApi.updateWithMaps"></span>
+            </button>
+          </div>
+
+          <div class="nice-form-group">
+            <input id="images-enabled" type="checkbox" class="switch" />
+            <label for="check-4">
+              <span data-translate="labels.customization.images.title"></span>
+              <small data-translate="labels.customization.images.background_subtitle"></small>
+            </label>
+          </div>
+
+          <div class="transparent-background" id="images-enabled-content" style="display: none;">
+
+            <div class="nice-form-group customization-box" id="background-box">
+              <label><span data-translate="labels.wallpaper"></span> <span class="optional">(<span
+                    data-translate="labels.optional"></span>)</span></label>
+              <button type="button" class="image-picker-card" id="wallpaper-picker-card"
+                data-action="open-image-picker" data-type="background">
+                <span class="image-picker-thumb" id="wallpaper-picker-thumb"></span>
+                <span class="image-picker-label" id="wallpaper-picker-label"></span>
+              </button>
+            </div>
+
+            <!-- Hidden value input — set by the image picker dialog, read on save -->
+            <input type="hidden" id="link-background" value="" />
+          </div>
+
           <div id="delete-text" style="display: none;">
-            <a href="#" onclick="_deleteDestino()" data-translate="destination.delete.title"></a>
+            <a href="#" data-action="delete-destination" data-translate="destination.delete.title"></a>
           </div>
 
         </section>
 
-        <section>
-          <div class="href-target" id="restaurantes"></div>
+        <section data-category="restaurants">
+          <div class="href-target" id="restaurants"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor"
@@ -277,17 +149,17 @@
           <p data-translate="destination.restaurants.description"></p>
 
           <div class="nice-form-group">
-            <input id="habilitado-restaurantes" type="checkbox" class="switch" />
-            <label id="habilitado-restaurantes-label" for="habilitado-restaurantes"
+            <input id="restaurants-enabled" type="checkbox" class="switch" />
+            <label id="restaurants-enabled-label" for="restaurants-enabled"
               data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-restaurantes-content">
-            <div class="item-box accordion restaurantes-box" id="restaurantes-box">
+          <div id="restaurants-enabled-content">
+            <div class="item-box accordion restaurants-box" id="restaurants-box">
             </div>
           </div>
-          <div class="button-box-formatted" id="restaurantes-adicionar-box">
-            <button id="restaurantes-adicionar" class="btn btn-theme">
+          <div class="button-box-formatted" id="restaurants-add-box">
+            <button id="restaurants-add" class="btn btn-theme">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path
@@ -302,8 +174,8 @@
           </div>
         </section>
 
-        <section>
-          <div class="href-target" id="lanches"></div>
+        <section data-category="snacks">
+          <div class="href-target" id="snacks"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor"
@@ -320,16 +192,16 @@
           <p data-translate="destination.snacks.description"></p>
 
           <div class="nice-form-group">
-            <input id="habilitado-lanches" type="checkbox" class="switch" />
-            <label id="habilitado-lanches-label" for="habilitado-lanches" data-translate="labels.enabled"></label>
+            <input id="snacks-enabled" type="checkbox" class="switch" />
+            <label id="snacks-enabled-label" for="snacks-enabled" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-lanches-content">
-            <div class="item-box accordion lanches-box" id="lanches-box">
+          <div id="snacks-enabled-content">
+            <div class="item-box accordion snacks-box" id="snacks-box">
             </div>
           </div>
-          <div class="button-box-formatted" id="lanches-adicionar-box">
-            <button id="lanches-adicionar" class="btn btn-theme">
+          <div class="button-box-formatted" id="snacks-add-box">
+            <button id="snacks-add" class="btn btn-theme">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path
@@ -344,8 +216,8 @@
           </div>
         </section>
 
-        <section>
-          <div class="href-target" id="saidas"></div>
+        <section data-category="nightlife">
+          <div class="href-target" id="nightlife"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor"
@@ -357,16 +229,16 @@
           <p data-translate="destination.nightlife.description"></p>
 
           <div class="nice-form-group">
-            <input id="habilitado-saidas" type="checkbox" class="switch" />
-            <label for="habilitado-saidas-label" data-translate="labels.enabled"></label>
+            <input id="nightlife-enabled" type="checkbox" class="switch" />
+            <label for="nightlife-enabled-label" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-saidas-content">
-            <div class="item-box accordion saidas-box" id="saidas-box">
+          <div id="nightlife-enabled-content">
+            <div class="item-box accordion nightlife-box" id="nightlife-box">
             </div>
           </div>
-          <div class="button-box-formatted" id="saidas-adicionar-box">
-            <button id="saidas-adicionar" class="btn btn-theme">
+          <div class="button-box-formatted" id="nightlife-add-box">
+            <button id="nightlife-add" class="btn btn-theme">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path
@@ -381,8 +253,8 @@
           </div>
         </section>
 
-        <section>
-          <div class="href-target" id="turismo"></div>
+        <section data-category="tourism">
+          <div class="href-target" id="tourism"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor"
@@ -394,16 +266,16 @@
           <p data-translate="destination.tourism.description"></p>
 
           <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-turismo" class="switch" />
-            <label id="habilitado-turismo-label" for="habilitado-turismo" data-translate="labels.enabled"></label>
+            <input type="checkbox" id="tourism-enabled" class="switch" />
+            <label id="tourism-enabled-label" for="tourism-enabled" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-turismo-content">
-            <div class="item-box accordion turismo-box" id="turismo-box">
+          <div id="tourism-enabled-content">
+            <div class="item-box accordion tourism-box" id="tourism-box">
             </div>
           </div>
-          <div class="button-box-formatted" id="turismo-adicionar-box">
-            <button id="turismo-adicionar" class="btn btn-theme">
+          <div class="button-box-formatted" id="tourism-add-box">
+            <button id="tourism-add" class="btn btn-theme">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path
@@ -418,8 +290,8 @@
           </div>
         </section>
 
-        <section>
-          <div class="href-target" id="lojas"></div>
+        <section data-category="shopping">
+          <div class="href-target" id="shopping"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor"
@@ -431,16 +303,16 @@
           <p data-translate="destination.shopping.description"></p>
 
           <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-lojas" class="switch" />
-            <label id="habilitado-lojas-label" for="habilitado-lojas" data-translate="labels.enabled"></label>
+            <input type="checkbox" id="shopping-enabled" class="switch" />
+            <label id="shopping-enabled-label" for="shopping-enabled" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-lojas-content">
-            <div class="item-box accordion lojas-box" id="lojas-box">
+          <div id="shopping-enabled-content">
+            <div class="item-box accordion shopping-box" id="shopping-box">
             </div>
           </div>
-          <div class="button-box-formatted" id="lojas-adicionar-box">
-            <button id="lojas-adicionar" class="btn btn-theme">
+          <div class="button-box-formatted" id="shopping-add-box">
+            <button id="shopping-add" class="btn btn-theme">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path
@@ -455,8 +327,8 @@
           </div>
         </section>
 
-        <section>
-          <div class="href-target" id="mapa"></div>
+        <section data-category="map">
+          <div class="href-target" id="map-section"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor"
@@ -473,32 +345,33 @@
           </p>
 
           <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-mapa" class="switch" />
-            <label id="habilitado-mapa-label" for="habilitado-mapa" data-translate="labels.enabled"></label>
+            <input type="checkbox" id="map-enabled" class="switch" />
+            <label id="map-enabled-label" for="map-enabled" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-mapa-content">
+          <div id="map-enabled-content">
             <div class="nice-form-group">
-              <label id="mapa-link-label">My Maps Link</label>
-              <input id="mapa-link" type="url"
-                placeholder="https://www.google.com/maps/d/viewer?mid=1tgHq3Dg7zI1yMKTDlObLRryNPi_sy79t&usp=sharing "
+              <label id="map-link-label" data-translate="destination.map.link_label"></label>
+              <input id="map-link" type="url"
+                data-translate="destination.map.url_placeholder"
                 value="" class="icon-right" />
             </div>
           </div>
 
         </section>
 
-        <section id="double-button-section">
+        <section data-category="double-buttons" id="double-button-section">
           <div class="href-target" id="double-buttons"></div>
           <div class="button-box">
-            <button id="cancelar" class="btn btn-secondary" type="button">
+            <button id="cancel-btn" class="btn btn-secondary" type="button">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <path fill="currentColor"
                   d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
                 </path>
               </svg>
               <span data-translate="labels.cancel"></span>
-              <button id="salvar" class="btn btn-theme" type="submit">
+            </button>
+            <button id="save-btn" class="btn btn-theme" type="submit">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                   <path fill="currentColor"
                     d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z">
@@ -509,55 +382,20 @@
           </div>
         </section>
         <section id="footer">
-          <span data-translate="labels.developed_by"></span> <a
-            href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="atribuicoes"
-            onclick="_openAtribuicoes()"><i class="iconify" data-icon="ri:information-line"></i>
+          <span class="tripviewer-version"></span> <span data-translate="labels.developed_by"></span> <a
+            href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="attributions"
+            data-action="open-attributions"><i class="iconify" data-icon="ri:information-line"></i>
             <span data-translate="labels.credits"></span></span>
         </section>
       </main>
     </div>
   </section>
 
-  <!-- ======= Support: Modal ======= -->
-  <div id="modal" class="modal loadable" style="display: none">
-    <div class="modal-content">
-      <div class="modal-text">
-        <p id="modal-inner-text"></p>
-      </div>
-
-      <div class="button-box">
-        <button id="re-editar" class="btn btn-basic btn-format" type="button" onclick="_closeModal('delete-modal')">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-            <path fill="currentColor"
-              d="M3 17.46v3.04c0 .28.22.5.5.5h3.04c.13 0 .26-.05.35-.15L17.81 9.94l-3.75-3.75L3.15 17.1c-.1.1-.15.22-.15.36M20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z">
-            </path>
-          </svg>
-          <span data-translate="labels.edit"></span>
-        </button><button id="home" class="btn btn-secondary btn-format" type="submit">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M6 10v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9M6 10l6-6l6 6M6 10l-2 2m14-2l2 2m-10 1h4v4h-4v-4z"></path>
-          </svg>
-          <span data-translate="labels.home"></span>
-        </button>
-        </button><button id="visualizar" class="btn btn-theme btn-format" type="submit">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-            <path fill="currentColor"
-              d="M2.984 8.625v.003a.5.5 0 0 1-.612.355c-.431-.114-.355-.611-.355-.611l.018-.062s.026-.084.047-.145a6.7 6.7 0 0 1 1.117-1.982C4.096 5.089 5.605 4 8 4s3.904 1.089 4.802 2.183a6.7 6.7 0 0 1 1.117 1.982a4.077 4.077 0 0 1 .06.187l.003.013v.004l.001.002a.5.5 0 0 1-.966.258l-.001-.004l-.008-.025a4.872 4.872 0 0 0-.2-.52a5.696 5.696 0 0 0-.78-1.263C11.286 5.912 10.044 5 8 5c-2.044 0-3.285.912-4.028 1.817a5.7 5.7 0 0 0-.945 1.674a3.018 3.018 0 0 0-.035.109zM8 7a2.5 2.5 0 1 0 0 5a2.5 2.5 0 0 0 0-5M6.5 9.5a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0">
-            </path>
-          </svg>
-          <span data-translate="labels.view"></span>
-        </button>
-      </div>
-
-    </div>
-  </div>
-
   <!-- ======= Support: Preloader ======= -->
   <div id="preloader"></div>
   <div id="toast" style="display: none">
     <span id="toast-text"></span>
-    <span class="toast-close" onclick="_closeToast()">
+    <span class="toast-close" data-action="close-toast">
       <i class="iconify" data-icon="material-symbols:close"></i>
     </span>
   </div>
@@ -565,55 +403,11 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Firebase -->
-  <script data-main src="../../index.js" type=text/JSX"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-app-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-auth-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-firestore-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-functions-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-storage-compat.js"></script>
-  <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+  <!-- #include shared/scripts-vendor.html -->
+  <script src="../assets/vendor/sortable/sortable.min.js"></script>
+  <!-- #include shared/scripts-core.html -->
 
-  <!-- Vendor JS Files -->
-  <script src="../assets/vendor/aos/aos.js"></script>
-  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="../assets/vendor/php-email-form/validate.js"></script>
-  <script src="../assets/vendor/typed.js/typed.min.js"></script>
-  <script src="../assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
-  <script src="../assets/vendor/jquery/jquery.min.js"></script>
-
-  <script src="https://apis.google.com/js/api.js"></script>
-
-  <!-- App JS Files -->
-  <script data-main src="../assets/js/main/translation.js"></script>
-  <script data-main src="../assets/js/main/main.js"></script>
-  <script data-main src="../assets/js/suporte/estilos/animacoes.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/dados.js"></script>
-  <script data-main src="../assets/js/suporte/firebase/database.js"></script>
-  <script data-main src="../assets/js/suporte/firebase/user.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/datas.js"></script>
-  <script data-main src="../assets/js/suporte/estilos/stylesheets.js"></script>
-  <script data-main src="../assets/js/suporte/estilos/cores.js"></script>
-  <script data-main src="../assets/js/suporte/estilos/visibilidade.js"></script>
-  <script data-main src="../assets/js/paginas/index/suporte/visibilidade.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/dispositivos.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/mensagens.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/carregamento.js"></script>
-  <script data-main src="../assets/js/suporte/html/fields.js"></script>
-  <script data-main src="../assets/js/suporte/html/accordion.js"></script>
-  <script data-main src="../assets/js/suporte/componentes/dynamic-select.js"></script>
-  <script data-main src="../assets/js/suporte/estilos/svgs.js"></script>
-  <script data-main src="../assets/js/paginas/editar-destino/categorias/valor.js"></script>
-  <script data-main src="../assets/js/paginas/editar-destino/categorias/descricao.js"></script>
-  <script data-main src="../assets/js/paginas/editar-destino/novo-destino.js"></script>
-  <script data-main src="../assets/js/paginas/editar-destino/destino-existente.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/set.js"></script>
-  <script data-main src="../assets/js/paginas/editar-destino/set-destino.js"></script>
-  <script data-main src="../assets/js/paginas/editar-destino/editar-destino.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/atribuicoes.js"></script>
+  <!-- #include shared/nav-helper.html -->
 </body>
 
 </html>

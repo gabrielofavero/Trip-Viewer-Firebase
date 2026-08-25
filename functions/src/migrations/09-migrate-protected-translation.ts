@@ -1,14 +1,12 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
-
-admin.initializeApp();
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 
 export const migrate = functions.https.onRequest(async (req, res) => {
 	try {
 		const jobs: FirebaseFirestore.WriteBatch[] = [];
 
-		jobs.push(...(await prepareMigration("viagens", "protected", "protegido")));
-		jobs.push(...(await prepareMigration("gastos", "protected", "protegido")));
+		jobs.push(...(await prepareMigration('viagens', 'protected', 'protegido')));
+		jobs.push(...(await prepareMigration('gastos', 'protected', 'protegido')));
 
 		for (const batch of jobs) {
 			await batch.commit();
@@ -16,8 +14,8 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 
 		res.status(200).send(`Migration completed. Total batches: ${jobs.length}`);
 	} catch (error) {
-		console.error("Migration failed:", error);
-		res.status(500).send("Failed during migration.");
+		console.error('Migration failed:', error);
+		res.status(500).send('Failed during migration.');
 	}
 });
 
@@ -35,11 +33,7 @@ async function prepareMigration(rootName: string, from: string, to: string) {
 		const docs = await userCol.get();
 
 		for (const doc of docs.docs) {
-			const newRef = db
-				.collection(rootName)
-				.doc(to)
-				.collection(userId)
-				.doc(doc.id);
+			const newRef = db.collection(rootName).doc(to).collection(userId).doc(doc.id);
 
 			batch.set(newRef, doc.data());
 			batch.delete(doc.ref);

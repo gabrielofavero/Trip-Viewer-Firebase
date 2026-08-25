@@ -1,0 +1,235 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    
+    ///////////////////////
+    // System Rules      //
+    ///////////////////////
+    
+    // Config (public read)
+    match /config/{document=**} {
+      allow read;
+      allow write: if false;
+    }
+
+    // Admin — permission checks for individual users
+    // Users can read their own permission docs to check if they have
+    // a given permission (e.g. upload, unlimitedUploadSize).
+    match /admin/permissions/{permissionType}/{userId} {
+      allow read: if isLogged() && request.auth.uid == userId;
+      allow write: if false;
+    }
+
+    // Admin (fully protected)
+    match /admin/{document=**} {
+      allow read, write: if false;
+    }
+
+    // Users
+    match /users/{id} {
+      allow create: if isRegistrationOpen() && isAccessingOwnUser(id);
+      // Read allowed for authenticated users accessing their own doc
+      // (relaxed — does not require the doc to already exist, so
+      // registerIfUserNotPresent can check existence).
+      allow read: if isAuthenticated() && isAccessingOwnUser(id);
+      allow update, delete: if hasUserPermissions(id);
+    }
+
+    // User subcollections — summaries for dashboard
+    match /users/{userId}/tripSummaries/{docId} {
+      allow read, write: if isLogged() && isAccessingOwnUser(userId);
+    }
+    match /users/{userId}/destinationSummaries/{docId} {
+      allow read, write: if isLogged() && isAccessingOwnUser(userId);
+    }
+    match /users/{userId}/listingSummaries/{docId} {
+      allow read, write: if isLogged() && isAccessingOwnUser(userId);
+    }
+
+    // Trips
+    match /trips/{id} {
+      allow read: if canReadDoc(); 
+      allow create: if canCreateDoc();
+      allow update, delete: if canUpdateDoc(); 
+    }
+    
+    // Trip subcollections
+    match /trips/{tripId}/accommodations/{docId} {
+      allow read: if canReadTripSubcollection(tripId);
+      allow write: if canWriteTripSubcollection(tripId);
+    }
+    match /trips/{tripId}/transportation/{docId} {
+      allow read: if canReadTripSubcollection(tripId);
+      allow write: if canWriteTripSubcollection(tripId);
+    }
+    match /trips/{tripId}/itinerary/{docId} {
+      allow read: if canReadTripSubcollection(tripId);
+      allow write: if canWriteTripSubcollection(tripId);
+    }
+    
+    // Trips (protected)
+    match /trips/protected/{document=**} {
+      allow read, write: if false;
+    }
+    match /trips/protected/{pin}/{id} {
+      allow read: if true;
+      allow create: if canCreateDoc();
+      allow update, delete: if canUpdateDoc();
+    }
+
+    // Expenses
+    match /expenses/{id} {
+      allow read: if canReadDoc();
+      allow create: if canCreateDoc();
+      allow update, delete: if canUpdateDoc();
+    }
+
+    // Expenses (protected)
+    match /expenses/protected/{document=**} {
+      allow read, write: if false;
+    }
+    match /expenses/protected/{pin}/{id} {
+      allow read: if true;
+      allow create: if canCreateDoc();
+      allow update, delete: if canUpdateDoc();
+    }
+
+    // Destinations
+    match /destinations/{id} {
+      allow read: if canReadDoc();
+      allow create: if canCreateDoc(); 
+      allow update, delete: if canUpdateDoc(); 
+    }
+
+    // Listings
+    match /listings/{id} {
+      allow read: if canReadDoc();
+      allow create: if canCreateDoc();
+      allow update, delete: if canUpdateDoc();
+    }
+
+    // Protected documents (direct, no subcollections)
+    match /protected/{document=**} {
+      allow read, write: if false;
+    }
+
+    match /protected/{id} {
+      allow read: if isOwnerDBProtected() || isAdmin();
+      allow write: if canCreateDoc(); // create/edit only by the owner who submits
+    }
+  
+    
+    ////////////////////////
+    // Helper Functions   //
+    ////////////////////////
+    
+    function isLogged() {
+      return request.auth != null 
+        && request.auth.uid != null 
+        && exists(/databases/(default)/documents/users/$(request.auth.uid));
+    }
+
+    function isAuthenticated() {
+      return request.auth != null && request.auth.uid != null;
+    }
+
+    function isAdmin() {
+      return isLogged() &&
+        request.auth.uid in get(/databases/(default)/documents/admin/admin).data.admins;
+    }
+  
+    function isAccessingOwnUser(userID) {
+      return request.auth.uid == userID;
+    }
+    
+    function isResourceValid() {
+      return request.resource != null 
+        && request.resource.data != null 
+        && request.resource.data.sharing != null;
+    }
+    
+    function existsDB(){
+      return exists(request.path);
+    }
+  
+    function isActiveDB() {
+      return existsDB() && 
+        get(request.path).data.sharing.active == true;
+    }
+    
+    function isOwnerDB() {
+      return isLogged() 
+        && existsDB() 
+        && get(request.path).data.sharing.owner == request.auth.uid;
+    }
+
+    // For protected collections: read only by the real owner
+    function isOwnerDBProtected() {
+      return isLogged()
+        && existsDB()
+        && get(request.path).data.sharing.owner == request.auth.uid;
+    }
+  
+    function isOwnerResource() {
+      return isLogged() 
+        && isResourceValid() 
+        && request.resource.data.sharing.owner == request.auth.uid;
+    }
+  
+    function isSameOwner () {
+      return isOwnerDB() && isOwnerResource();
+    }
+    
+    function isRegistrationOpen() {
+      return get(/databases/(default)/documents/config/system).data.registrationOpen == true;
+    }
+    
+    function hasUserPermissions(userID) {
+      return isAdmin() || (isLogged() && isAccessingOwnUser(userID));
+    }
+
+    function canReadDoc() {
+      return isOwnerDB() || isAdmin() || isActiveDB();
+    }
+    
+    function canCreateDoc() {
+      return isAdmin() || isOwnerResource();
+    }
+    
+    function canUpdateDoc() {
+      return isAdmin() || (isOwnerDB() && isSameOwner());
+    }
+
+    // ── Trip subcollection helpers (check parent trip doc, not the subcollection doc) ──
+
+    function getTripDoc(tripId) {
+      return get(/databases/(default)/documents/trips/$(tripId));
+    }
+
+    function tripExists(tripId) {
+      return exists(/databases/(default)/documents/trips/$(tripId));
+    }
+
+    function isTripOwner(tripId) {
+      return isLogged()
+        && tripExists(tripId)
+        && getTripDoc(tripId).data.sharing.owner == request.auth.uid;
+    }
+
+    function isTripActive(tripId) {
+      return tripExists(tripId)
+        && getTripDoc(tripId).data.sharing.active == true;
+    }
+
+    function canReadTripSubcollection(tripId) {
+      return isTripOwner(tripId) || isAdmin() || isTripActive(tripId);
+    }
+
+    function canWriteTripSubcollection(tripId) {
+      return isTripOwner(tripId) || isAdmin();
+    }
+
+  }
+}

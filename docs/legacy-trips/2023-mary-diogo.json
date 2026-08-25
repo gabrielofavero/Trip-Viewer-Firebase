@@ -1,0 +1,922 @@
+{
+  "_meta": {
+    "tripId": "legacy-2023-mary-diogo",
+    "slug": "2023-mary-diogo",
+    "sourceFiles": [
+      "Família/[2023] Mary & Diogo/TripViewer-Mary-Diogo2023/assets/json/backups/SHEET_DATA.json",
+      "Família/[2023] Mary & Diogo/TripViewer-Mary-Diogo2023/assets/json/backups/P_DATA.json",
+      "Família/[2023] Mary & Diogo/TripViewer-Mary-Diogo2023/assets/json/backups/HYPERLINK.json",
+      "Família/[2023] Mary & Diogo/TripViewer-Mary-Diogo2023/assets/js/main/module.js",
+      "Família/[2023] Mary & Diogo/TripViewer-Mary-Diogo2023/assets/js/data/dataModules.js"
+    ],
+    "extractionNotes": {
+      "viewerData": "TripViewer v2 app with full backup JSON. SHEET_DATA.json contains daily schedule with times, activities, expense types, and values. P_DATA.json has places/attractions. HYPERLINK.json has Google Maps links. module.js has constants: TITLE, START_DATE, END_DATE, links.",
+      "dateSource": "Confirmed from module.js: START_DATE=06/18/2023, END_DATE=06/25/2023.",
+      "travelerSource": "Trip title 'Mary & Diogo 🍻', NUMBER_OF_PEOPLE=2. Travelers: Mary and Diogo (post-wedding trip).",
+      "expenseSource": "Daily totals from SHEET_DATA: R$940 total (R$340 day 1 + R$150 day 2 + R$0 day 3-4 + R$150 day 5 + R$150 day 6 + R$150 day 7). Pre-trip: Hotel Serras de Minas R$190.",
+      "transportSource": "All travel by car (Carro), no flights. Route: BH → Paraisópolis → Gonçalves → Monte Verde → BH.",
+      "accommodationSource": "Hotel Serras de Minas (Paraisópolis, 1 night), Airbnb (Gonçalves, 3 nights), Apartamento Girassol (Monte Verde, 3 nights). STAY_TEXT from dataModules.js: 'Hotel Serras de Minas, Airbnb e Apartamento Girassol'.",
+      "summaryDisabled": "DADOS_ACTIVE=false in module.js — summary/dados section was disabled in the viewer app.",
+      "missingData": "No flight reservations, no PDF confirmations, no DOCX checkup. All data from TripViewer Google Sheets backup."
+    }
+  },
+  "trip": {
+    "title": "Monteverde: Mary & Diogo 🍻",
+    "currency": "BRL",
+    "start": {
+      "day": 18,
+      "month": 6,
+      "year": 2023,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 25,
+      "month": 6,
+      "year": 2023,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": false,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "mary",
+        "name": "Mary"
+      },
+      {
+        "id": "diogo",
+        "name": "Diogo"
+      }
+    ],
+    "links": {
+      "maps": "https://www.google.com/maps/d/viewer?mid=1vL_qU3A2J-3qFJMugmZrCWJpl5s09RU&usp=sharing",
+      "attachments": "",
+      "active": false,
+      "drive": "https://drive.google.com/drive/folders/13Gwr6iXgfdjs19MKdkaVtqySYvclUVVG",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "https://docs.google.com/spreadsheets/d/1Img747RSF5lLz7eMh34qnIxvcMfWc4sUpdGkkyJRpuo/edit?usp=sharing",
+      "vaccine": "https://drive.google.com/drive/folders/13Gwr6iXgfdjs19MKdkaVtqySYvclUVVG"
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Hotel Serras de Minas",
+      "description": "Hotel em Paraisópolis. Check-in para deixar malas antes do turismo.",
+      "address": "Paraisópolis - MG",
+      "dates": {
+        "checkIn": {
+          "day": 18,
+          "month": 6,
+          "year": 2023,
+          "hour": 11,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 19,
+          "month": 6,
+          "year": 2023,
+          "hour": 10,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    },
+    "acc-002": {
+      "name": "Airbnb Gonçalves",
+      "description": "Airbnb em Gonçalves - MG. Check-in após almoço na Cervejaria 3 Orelhas.",
+      "address": "Gonçalves - MG",
+      "dates": {
+        "checkIn": {
+          "day": 19,
+          "month": 6,
+          "year": 2023,
+          "hour": 15,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 22,
+          "month": 6,
+          "year": 2023,
+          "hour": 11,
+          "minute": 30,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    },
+    "acc-003": {
+      "name": "Apartamento Girassol",
+      "description": "Apartamento em Monte Verde - MG.",
+      "address": "Monte Verde - MG",
+      "dates": {
+        "checkIn": {
+          "day": 22,
+          "month": 6,
+          "year": 2023,
+          "hour": 14,
+          "minute": 30,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 25,
+          "month": 6,
+          "year": 2023,
+          "hour": 11,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "car",
+      "company": "",
+      "points": {
+        "origin": "Belo Horizonte",
+        "destination": "Paraisópolis"
+      },
+      "dates": {
+        "departure": {
+          "day": 18,
+          "month": 6,
+          "year": 2023,
+          "hour": 5,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 18,
+          "month": 6,
+          "year": 2023,
+          "hour": 11,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "duration": "06:00",
+      "direction": "departure",
+      "reservation": "",
+      "link": "",
+      "person": ""
+    },
+    "leg-002": {
+      "type": "car",
+      "company": "",
+      "points": {
+        "origin": "Paraisópolis",
+        "destination": "Gonçalves"
+      },
+      "dates": {
+        "departure": {
+          "day": 19,
+          "month": 6,
+          "year": 2023,
+          "hour": 10,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 19,
+          "month": 6,
+          "year": 2023,
+          "hour": 11,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "departure",
+      "reservation": "",
+      "link": "",
+      "person": ""
+    },
+    "leg-003": {
+      "type": "car",
+      "company": "",
+      "points": {
+        "origin": "Gonçalves",
+        "destination": "Monte Verde"
+      },
+      "dates": {
+        "departure": {
+          "day": 22,
+          "month": 6,
+          "year": 2023,
+          "hour": 12,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 22,
+          "month": 6,
+          "year": 2023,
+          "hour": 14,
+          "minute": 30,
+          "second": 0
+        }
+      },
+      "duration": "02:00",
+      "direction": "departure",
+      "reservation": "",
+      "link": "",
+      "person": ""
+    },
+    "leg-004": {
+      "type": "car",
+      "company": "",
+      "points": {
+        "origin": "Monte Verde",
+        "destination": "Belo Horizonte"
+      },
+      "dates": {
+        "departure": {
+          "day": 25,
+          "month": 6,
+          "year": 2023,
+          "hour": 11,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 25,
+          "month": 6,
+          "year": 2023,
+          "hour": 17,
+          "minute": 30,
+          "second": 0
+        }
+      },
+      "duration": "06:00",
+      "direction": "return",
+      "reservation": "",
+      "link": "",
+      "person": ""
+    }
+  },
+  "itinerary": {
+    "20230618": {
+      "title": {
+        "value": "Dia 1 — BH → Paraisópolis",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 18,
+        "month": 6,
+        "year": 2023,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "notes": "Deslocamento de ida",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "BH → Paraisópolis (Carro)",
+          "start": "05:00",
+          "end": "11:00"
+        }
+      ],
+      "morning": [
+        {
+          "notes": "Hospedagem",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel Serras de Minas — Check In / Deixar Malas",
+          "start": "11:00",
+          "end": "12:00"
+        }
+      ],
+      "afternoon": [
+        {
+          "notes": "Turismo. R$ 40/pessoa",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Zalaz — Fazenda e Cervejaria",
+          "start": "12:00",
+          "end": "17:00"
+        }
+      ],
+      "night": [
+        {
+          "notes": "Passeio pela cidade",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Paraisópolis — Livre",
+          "start": "17:00",
+          "end": "21:00"
+        },
+        {
+          "notes": "Hospedagem",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel Serras de Minas — Descanso",
+          "start": "21:00",
+          "end": "09:30"
+        }
+      ]
+    },
+    "20230619": {
+      "title": {
+        "value": "Dia 2 — Paraisópolis → Gonçalves",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 19,
+        "month": 6,
+        "year": 2023,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "notes": "",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel Serras de Minas — Arrumar / Check Out",
+          "start": "09:30",
+          "end": "10:00"
+        },
+        {
+          "notes": "Deslocamento",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Paraisópolis → Gonçalves (Carro)",
+          "start": "10:00",
+          "end": "11:00"
+        }
+      ],
+      "afternoon": [
+        {
+          "notes": "Mais de 300 brejas. Saídas.",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Cervejaria 3 Orelhas — Aguardar check-in",
+          "start": "11:00",
+          "end": "15:00"
+        },
+        {
+          "notes": "Hospedagem",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb Gonçalves — Check In",
+          "start": "15:00",
+          "end": "16:00"
+        },
+        {
+          "notes": "Passeio pela cidade",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Gonçalves — Livre",
+          "start": "16:00",
+          "end": "21:00"
+        }
+      ],
+      "night": [
+        {
+          "notes": "Hospedagem",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb Gonçalves — Descanso",
+          "start": "21:00",
+          "end": "08:00"
+        }
+      ]
+    },
+    "20230620": {
+      "title": {
+        "value": "Dia 3 — Gonçalves (Livre)",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 20,
+        "month": 6,
+        "year": 2023,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "notes": "Dia livre em Gonçalves",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb Gonçalves — Livre",
+          "start": "08:00",
+          "end": "23:00"
+        }
+      ],
+      "afternoon": [],
+      "night": [
+        {
+          "notes": "Hospedagem",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb Gonçalves — Descanso",
+          "start": "23:00",
+          "end": "08:00"
+        }
+      ]
+    },
+    "20230621": {
+      "title": {
+        "value": "Dia 4 — Gonçalves (Livre)",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 21,
+        "month": 6,
+        "year": 2023,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "notes": "Dia livre em Gonçalves",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb Gonçalves — Livre",
+          "start": "08:00",
+          "end": "23:00"
+        }
+      ],
+      "afternoon": [],
+      "night": [
+        {
+          "notes": "Hospedagem",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb Gonçalves — Descanso",
+          "start": "23:00",
+          "end": "08:00"
+        }
+      ]
+    },
+    "20230622": {
+      "title": {
+        "value": "Dia 5 — Gonçalves → Monte Verde",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 22,
+        "month": 6,
+        "year": 2023,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "notes": "",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb Gonçalves — Arrumar",
+          "start": "08:00",
+          "end": "11:30"
+        },
+        {
+          "notes": "",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb Gonçalves — Check Out",
+          "start": "11:30",
+          "end": "12:00"
+        }
+      ],
+      "afternoon": [
+        {
+          "notes": "Deslocamento",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Gonçalves → Monte Verde (Carro)",
+          "start": "12:00",
+          "end": "14:30"
+        },
+        {
+          "notes": "Hospedagem em Monte Verde",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Apartamento Girassol — Check In",
+          "start": "14:30",
+          "end": "15:00"
+        },
+        {
+          "notes": "Cervejaria mais famosa. Só aceita dinheiro. R$ 50/pessoa",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Monte Verde — Fábrica Fritz",
+          "start": "15:00",
+          "end": "21:00"
+        }
+      ],
+      "night": [
+        {
+          "notes": "Hospedagem",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Apartamento Girassol — Descanso",
+          "start": "21:00",
+          "end": "08:00"
+        }
+      ]
+    },
+    "20230623": {
+      "title": {
+        "value": "Dia 6 — Monte Verde",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 23,
+        "month": 6,
+        "year": 2023,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "notes": "",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Apartamento Girassol — Arrumar",
+          "start": "08:00",
+          "end": "09:00"
+        }
+      ],
+      "afternoon": [
+        {
+          "notes": "Turismo em Monte Verde",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Monte Verde — Fábrica Fritz + Livre",
+          "start": "09:00",
+          "end": "23:00"
+        }
+      ],
+      "night": [
+        {
+          "notes": "Hospedagem",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Apartamento Girassol — Descanso",
+          "start": "23:00",
+          "end": "08:00"
+        }
+      ]
+    },
+    "20230624": {
+      "title": {
+        "value": "Dia 7 — Monte Verde",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 24,
+        "month": 6,
+        "year": 2023,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "notes": "",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Apartamento Girassol — Arrumar",
+          "start": "08:00",
+          "end": "09:00"
+        }
+      ],
+      "afternoon": [
+        {
+          "notes": "Passeio pela cidade: Rua Principal, Galeria Verner Grinberg, Gressoney, etc.",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Monte Verde — Livre",
+          "start": "09:00",
+          "end": "23:00"
+        }
+      ],
+      "night": [
+        {
+          "notes": "Hospedagem",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Apartamento Girassol — Descanso",
+          "start": "23:00",
+          "end": "09:00"
+        }
+      ]
+    },
+    "20230625": {
+      "title": {
+        "value": "Dia 8 — Monte Verde → BH",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 25,
+        "month": 6,
+        "year": 2023,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "notes": "",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Apartamento Girassol — Arrumar / Check Out",
+          "start": "09:00",
+          "end": "11:00"
+        }
+      ],
+      "afternoon": [
+        {
+          "notes": "Deslocamento de volta",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Monte Verde → BH (Carro)",
+          "start": "11:00",
+          "end": "17:30"
+        }
+      ],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "name": "Zalaz — Fazenda e Cervejaria (Paraisópolis)",
+        "type": "Turismo",
+        "price": 100.0,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Paraisópolis — Passeio livre",
+        "type": "Turismo",
+        "price": 50.0,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Cervejaria 3 Orelhas (Gonçalves)",
+        "type": "trip.expenses.daily",
+        "price": 100.0,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Gonçalves — Passeio livre",
+        "type": "Turismo",
+        "price": 50.0,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Fábrica Fritz (Monte Verde)",
+        "type": "Turismo",
+        "price": 150.0,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Monte Verde — Fábrica Fritz + Livre",
+        "type": "Turismo",
+        "price": 150.0,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Monte Verde — Passeio livre",
+        "type": "Turismo",
+        "price": 150.0,
+        "currency": "BRL",
+        "person": ""
+      }
+    ],
+    "preTrip": [
+      {
+        "name": "Hotel Serras de Minas (1 diária)",
+        "type": "trip.accommodation.title",
+        "price": 190.0,
+        "currency": "BRL",
+        "person": ""
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "mary": "Mary",
+      "diogo": "Diogo"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    }
+  }
+}

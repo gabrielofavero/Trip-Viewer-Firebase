@@ -1,0 +1,6 @@
+{
+	"workbench.browser.openLocalhostLinks": false,
+	"chat.agentSkillsLocations": {
+		".github/copilot/skills": true
+	}
+}

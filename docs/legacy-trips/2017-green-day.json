@@ -1,0 +1,1191 @@
+{
+  "_meta": {
+    "tripId": "legacy-2017-green-day",
+    "slug": "2017-green-day",
+    "sourceFiles": [
+      "Pessoais/2017/[2017d] Green Day/Green Day.xlsx",
+      "Pessoais/2017/[2017d] Green Day/Checkup.docx",
+      "Pessoais/2017/[2017d] Green Day/Comprovantes/Hotel.pdf",
+      "Pessoais/2017/[2017d] Green Day/Comprovantes/Voo Volta BH.pdf",
+      "Pessoais/2017/[2017d] Green Day/Comprovantes/Recibo #19451634.pdf",
+      "Pessoais/2017/[2017d] Green Day/Comprovantes/Recibo #19454248.pdf"
+    ],
+    "extractionNotes": {
+      "xlsxContent": "5 sheets: Suposições (cost scenarios for different city combos), Programação Prévia (detailed day-by-day schedule Nov 2-6 with 2 flight options for Nov 2), Voo (flight schedule comparison), Endereços (addresses + transit routes), Resultado (actual vs planned spending analysis). Final trip: São Paulo + Curitiba.",
+      "docxContent": "Packing/todo checklist only.",
+      "pdfHotelContent": "Granville Park Hotel, Curitiba. Reserved via hotel's official site. CID-encoded text, difficult to parse. Cost from spreadsheet: R$135.70 (dad paid R$271.39 actual).",
+      "pdfFlightContent": "3 flights: BH→SP (Tam PDJHNL), SP→CWU (Tam SWDDPV), CWU→BH (Avianca U6HWC5).",
+      "scenarioNote": "Spreadsheet had two versions for Nov 2: Voo Antecipado (early AM flight, full day in SP) vs Voo Mantido (afternoon flight). Used the Antecipado version (more complete data).",
+      "actualVsPlanned": "Resultado sheet shows planned R$1,817.11 vs actual R$2,075.58. Personal share: R$1,582.91, Dad share: R$492.67."
+    }
+  },
+  "trip": {
+    "title": "Green Day SP",
+    "currency": "BRL",
+    "start": {
+      "day": 2,
+      "month": 11,
+      "year": 2017,
+      "hour": 5,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 6,
+      "month": 11,
+      "year": 2017,
+      "hour": 15,
+      "minute": 5,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Casa da Gigi",
+      "description": "Casa de amiga em São Paulo",
+      "address": "Rua Cardoso de Almeida, 978, Ap. 63A - Perdizes, São Paulo",
+      "dates": {
+        "checkIn": {
+          "day": 2,
+          "month": 11,
+          "year": 2017,
+          "hour": 9,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 4,
+          "month": 11,
+          "year": 2017,
+          "hour": 8,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    },
+    "acc-002": {
+      "name": "Granville Park Hotel",
+      "description": "Hotel em Curitiba",
+      "address": "Curitiba - PR",
+      "dates": {
+        "checkIn": {
+          "day": 4,
+          "month": 11,
+          "year": 2017,
+          "hour": 12,
+          "minute": 30,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 6,
+          "month": 11,
+          "year": 2017,
+          "hour": 7,
+          "minute": 30,
+          "second": 0
+        }
+      },
+      "breakfast": true,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "flight",
+      "company": "latam",
+      "points": {
+        "origin": "Confins (BH)",
+        "destination": "Congonhas (SP)"
+      },
+      "dates": {
+        "departure": {
+          "day": 2,
+          "month": 11,
+          "year": 2017,
+          "hour": 6,
+          "minute": 20,
+          "second": 0
+        },
+        "arrival": {
+          "day": 2,
+          "month": 11,
+          "year": 2017,
+          "hour": 7,
+          "minute": 40,
+          "second": 0
+        }
+      },
+      "duration": "01:20",
+      "direction": "departure",
+      "reservation": "PDJHNL",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "latam",
+      "points": {
+        "origin": "Congonhas (SP)",
+        "destination": "Curitiba (CWB)"
+      },
+      "dates": {
+        "departure": {
+          "day": 4,
+          "month": 11,
+          "year": 2017,
+          "hour": 10,
+          "minute": 30,
+          "second": 0
+        },
+        "arrival": {
+          "day": 4,
+          "month": 11,
+          "year": 2017,
+          "hour": 11,
+          "minute": 31,
+          "second": 0
+        }
+      },
+      "duration": "01:01",
+      "direction": "departure",
+      "reservation": "SWDDPV",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-003": {
+      "type": "flight",
+      "company": "avianca",
+      "points": {
+        "origin": "Curitiba (CWB)",
+        "destination": "Confins (BH)"
+      },
+      "dates": {
+        "departure": {
+          "day": 6,
+          "month": 11,
+          "year": 2017,
+          "hour": 10,
+          "minute": 20,
+          "second": 0
+        },
+        "arrival": {
+          "day": 6,
+          "month": 11,
+          "year": 2017,
+          "hour": 14,
+          "minute": 5,
+          "second": 0
+        }
+      },
+      "duration": "03:45",
+      "direction": "return",
+      "reservation": "U6HWC5",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20171102": {
+      "title": {
+        "value": "Quinta-feira — Chegada em São Paulo",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 2,
+        "month": 11,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa → Aeroporto Confins: Carona com Pai do Lucas",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "BH → SP (Congonhas): Voo TAM — Reserva PDJHNL",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto → Casa da Gi: Ônibus + Metrô L1 Azul + L2 Verde + Ônibus",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa da Gi: Deixar mochila, encontrar a Gi",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa → Avenida Paulista: Transporte público com a Gi",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Avenida Paulista: Passeio + Donuts!",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Almoço na Paulista: Almoço livre",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Paulista → Centro Histórico: Metrô L2 + L4",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Centro Histórico: Passeio turístico",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Centro → Beco do Batman: Metrô L4",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Beco do Batman: Passeio e fotos nos grafites",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Batman → Casa: Ônibus 177Y-10",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa — Descanso: Descansar antes do jantar",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa → Jantar: Uber/Cabify",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Jantar: Sair no máximo 22h!",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Jantar → Casa: Uber/Cabify",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20171103": {
+      "title": {
+        "value": "Sexta-feira — Green Day em São Paulo!",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 3,
+        "month": 11,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa: Arrumar para o show",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa → Liberdade: Ônibus + Metrô L2 + L1",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Liberdade: Comprar suprimentos para o show",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Liberdade → Almoço: Transporte público",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Almoço: Almoço livre",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Almoço → Pré-Show: Transporte público",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pré-Show + Fila: Chegar cedo, garantir lugar",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "GREEN DAY — SP: Show no palco principal!",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pós-Show: Comprar camisa da Nana",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Show → Casa: Uber/Cabify",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20171104": {
+      "title": {
+        "value": "Sábado — SP → Curitiba",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 4,
+        "month": 11,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa: Arrumar e fechar mochila",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa → Aeroporto Congonhas: Uber/Cabify ou L2+L1+Ônibus 470",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "SP → Curitiba (CWB): Voo TAM — Reserva SWDDPV",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto → Hotel: Ônibus Executivo",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel — Check-in: Granville Park Hotel",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Totopos: Ônibus",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Totopos — Almoço: Almoço em Curitiba",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Totopos → Livre: Transporte público",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Tempo Livre: Explorar Curitiba",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Supermercado: Comprar suprimentos para amanhã",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel — Descanso: Descansar antes do jantar",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Jantar: Uber/Cabify",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Jantar: Jantar em Curitiba",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Jantar → Hotel: Uber/Cabify",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20171105": {
+      "title": {
+        "value": "Domingo — Green Day em Curitiba!",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 5,
+        "month": 11,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel — Café da manhã: Café no hotel",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Pré-Show: Uber/Cabify",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pré-Show + Fila: Chegar cedo, garantir lugar",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "GREEN DAY — Curitiba: Show no palco principal!",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pós-Show: Fim do show",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Show → Hotel: Uber/Cabify",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20171106": {
+      "title": {
+        "value": "Segunda-feira — Volta para BH",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 6,
+        "month": 11,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel — Check-out: Arrumar e fazer checkout",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Aeroporto CWB: Uber/Cabify",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Curitiba → BH (Confins): Voo Avianca — Reserva U6HWC5",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto Confins → Casa: Carona com a Mãe",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Transporte público Aeroporto → Casa Gi",
+        "price": 11.4,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Transporte público Casa → Paulista",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Donuts na Paulista",
+        "price": 30.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Almoço na Paulista",
+        "price": 60.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Metrô Paulista → Centro Histórico",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Metrô Centro → Beco do Batman",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Ônibus Batman → Casa",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.taxi",
+        "name": "Uber Casa → Jantar",
+        "price": 5.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Jantar",
+        "price": 50.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.taxi",
+        "name": "Uber Jantar → Casa",
+        "price": 5.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Transporte público Casa → Liberdade",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Suprimentos show — Liberdade",
+        "price": 50.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Transporte Liberdade → Almoço",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Almoço",
+        "price": 50.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Transporte Almoço → Pré-Show",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Alimentação no Pré-Show",
+        "price": 20.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.taxi",
+        "name": "Uber Show → Casa",
+        "price": 8.33,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.taxi",
+        "name": "Uber Casa → Aeroporto Congonhas",
+        "price": 10.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Ônibus Executivo Aeroporto CWB → Hotel",
+        "price": 15.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Almoço Totopos",
+        "price": 50.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Transporte Totopos → Livre",
+        "price": 4.25,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Transporte → Supermercado",
+        "price": 4.25,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Suprimentos supermercado",
+        "price": 20.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.taxi",
+        "name": "Uber Hotel → Jantar",
+        "price": 3.75,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Jantar Curitiba",
+        "price": 50.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.taxi",
+        "name": "Uber Jantar → Hotel",
+        "price": 3.75,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.taxi",
+        "name": "Uber Hotel → Pré-Show",
+        "price": 5.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Alimentação no Pré-Show",
+        "price": 20.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.taxi",
+        "name": "Uber Show → Hotel",
+        "price": 10.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.taxi",
+        "name": "Uber Hotel → Aeroporto CWB",
+        "price": 40.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
+    ],
+    "preTrip": [
+      {
+        "type": "trip.expenses.entertainment",
+        "name": "Ingresso Green Day — São Paulo (Premium)",
+        "price": 336.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.entertainment",
+        "name": "Ingresso Green Day — Curitiba (Premium)",
+        "price": 376.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.flights",
+        "name": "Voo BH → SP (TAM PDJHNL)",
+        "price": 109.03,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.flights",
+        "name": "Voo SP → Curitiba (TAM SWDDPV)",
+        "price": 114.9,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.flights",
+        "name": "Voo Curitiba → BH (Avianca U6HWC5)",
+        "price": 188.9,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.accommodation.title",
+        "name": "Hotel Granville Park — Curitiba (2 diárias)",
+        "price": 135.7,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    }
+  }
+}

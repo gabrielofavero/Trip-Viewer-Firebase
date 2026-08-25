@@ -1,0 +1,109 @@
+import { getID } from '../utils/dom.js';
+
+export let CUSTOM_SELECTS = {};
+
+export function loadCloseCustomSelectListeners() {
+	document.addEventListener('click', function (e) {
+		closeCustomSelects();
+	});
+}
+
+export function loadCustomSelect({ id, options = [], activeOption, action, autoExecute = true }) {
+	CUSTOM_SELECTS[id] = { options, activeOption, action, onAction: false };
+	const customSelect = getID(id);
+	customSelect.innerHTML = getCustomSelectHTML(id);
+	hideActiveOption(id);
+	const label = options.find((option) => option.value === activeOption)?.label || options[0].label;
+	(customSelect.querySelector('.title') as HTMLElement).innerText = label;
+
+	if (autoExecute) {
+		action(activeOption);
+	}
+
+	loadCustomSelectListeners(id);
+}
+
+export function getCustomSelectHTML(id) {
+	let optionsHTML = '';
+	for (const option of CUSTOM_SELECTS[id].options) {
+		optionsHTML += `<div class="option" data-value="${option.value}">${option.label}</div>`;
+	}
+	return `
+  <div class="container">
+    <div class="title">${CUSTOM_SELECTS[id].options[0].label}</div>
+      <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M17.5 14.5L12 9l-5.5 5.5">
+        </path>
+      </svg>
+      <div class="dropdown" style="display:none;">
+        ${optionsHTML}
+    </div>
+  </div>`;
+}
+
+export function loadCustomSelectListeners(id) {
+	const customSelect = getID(id);
+	const container = customSelect.querySelector('.container');
+	const dropdown = customSelect.querySelector('.dropdown');
+
+	container.addEventListener('click', function (e) {
+		e.stopPropagation();
+		if (CUSTOM_SELECTS[id].onAction) {
+			CUSTOM_SELECTS[id].onAction = false;
+			return;
+		}
+		if ((dropdown as HTMLElement).style.display === 'block') {
+			(dropdown as HTMLElement).style.display = 'none';
+			customSelect.classList.remove('opened');
+		} else {
+			(dropdown as HTMLElement).style.display = 'block';
+			customSelect.classList.add('opened');
+		}
+	});
+
+	customSelect.querySelectorAll('.option').forEach((option) => {
+		option.addEventListener('click', function (this: HTMLElement, e) {
+			closeCustomSelects();
+			loadCustomSelectAction(id, this.getAttribute('data-value'), this.innerText);
+		});
+	});
+}
+
+export function closeCustomSelects() {
+	for (const id in CUSTOM_SELECTS) {
+		closeCustomSelect(id);
+	}
+}
+
+export function closeCustomSelect(id) {
+	const customSelect = getID(id);
+	const dropdown = customSelect.querySelector('.dropdown') as HTMLElement;
+	if (dropdown.style.display === 'block') {
+		dropdown.style.display = 'none';
+		customSelect.classList.remove('opened');
+	}
+}
+
+export function loadCustomSelectAction(id, value, label) {
+	CUSTOM_SELECTS[id].onAction = true;
+	CUSTOM_SELECTS[id].activeOption = value;
+	(getID(id).querySelector('.title') as HTMLElement).innerText = label;
+	CUSTOM_SELECTS[id].action(value);
+	hideActiveOption(id);
+}
+
+export function hideActiveOption(id) {
+	const customSelect = getID(id);
+	customSelect.querySelectorAll('.option').forEach((option) => {
+		const el = option as HTMLElement;
+		if (el.getAttribute('data-value') === CUSTOM_SELECTS[id].activeOption) {
+			el.style.display = 'none';
+		} else {
+			el.style.display = 'flex';
+		}
+	});
+}
+
+export function getCustomSelectActiveOption(id) {
+	return CUSTOM_SELECTS[id]?.activeOption || null;
+}

@@ -51,13 +51,8 @@
 	--bs-font-sans-serif:
 		system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	--bs-font-monospace:
-		SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
-		monospace;
-	--bs-gradient: linear-gradient(
-		180deg,
-		rgba(255, 255, 255, 0.15),
-		rgba(255, 255, 255, 0)
-	);
+		SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	--bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 	--bs-body-font-family: var(--bs-font-sans-serif);
 	--bs-body-font-size: 1rem;
 	--bs-body-font-weight: 400;
@@ -2817,22 +2812,20 @@ textarea.form-control-lg {
 	padding-left: 3rem;
 }
 
-.input-group:not(.has-validation)
-	> :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu),
+.input-group:not(.has-validation) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu),
 .input-group:not(.has-validation) > .dropdown-toggle:nth-last-child(n + 3) {
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 }
-.input-group.has-validation
-	> :nth-last-child(n + 3):not(.dropdown-toggle):not(.dropdown-menu),
+.input-group.has-validation > :nth-last-child(n + 3):not(.dropdown-toggle):not(.dropdown-menu),
 .input-group.has-validation > .dropdown-toggle:nth-last-child(n + 4) {
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 }
 .input-group
-	> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-		.valid-feedback
-	):not(.invalid-tooltip):not(.invalid-feedback) {
+	> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(
+		.invalid-tooltip
+	):not(.invalid-feedback) {
 	margin-right: -1px;
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
@@ -2885,8 +2878,7 @@ textarea.form-control-lg {
 .was-validated textarea.form-control:valid,
 textarea.form-control.is-valid {
 	padding-left: calc(1.5em + 0.75rem);
-	background-position: top calc(0.375em + 0.1875rem) left
-		calc(0.375em + 0.1875rem);
+	background-position: top calc(0.375em + 0.1875rem) left calc(0.375em + 0.1875rem);
 }
 
 .was-validated .form-select:valid,
@@ -2995,8 +2987,7 @@ textarea.form-control.is-valid {
 .was-validated textarea.form-control:invalid,
 textarea.form-control.is-invalid {
 	padding-left: calc(1.5em + 0.75rem);
-	background-position: top calc(0.375em + 0.1875rem) left
-		calc(0.375em + 0.1875rem);
+	background-position: top calc(0.375em + 0.1875rem) left calc(0.375em + 0.1875rem);
 }
 
 .was-validated .form-select:invalid,
@@ -6705,18 +6696,8 @@ fieldset:disabled .btn {
 	}
 }
 .placeholder-wave {
-	-webkit-mask-image: linear-gradient(
-		130deg,
-		#000 55%,
-		rgba(0, 0, 0, 0.8) 75%,
-		#000 95%
-	);
-	mask-image: linear-gradient(
-		130deg,
-		#000 55%,
-		rgba(0, 0, 0, 0.8) 75%,
-		#000 95%
-	);
+	-webkit-mask-image: linear-gradient(130deg, #000 55%, rgba(0, 0, 0, 0.8) 75%, #000 95%);
+	mask-image: linear-gradient(130deg, #000 55%, rgba(0, 0, 0, 0.8) 75%, #000 95%);
 	-webkit-mask-size: 200% 100%;
 	mask-size: 200% 100%;
 	-webkit-animation: placeholder-wave 2s linear infinite;
@@ -8117,26 +8098,17 @@ fieldset:disabled .btn {
 
 .bg-primary {
 	--bs-bg-opacity: 1;
-	background-color: rgba(
-		var(--bs-primary-rgb),
-		var(--bs-bg-opacity)
-	) !important;
+	background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-secondary {
 	--bs-bg-opacity: 1;
-	background-color: rgba(
-		var(--bs-secondary-rgb),
-		var(--bs-bg-opacity)
-	) !important;
+	background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-success {
 	--bs-bg-opacity: 1;
-	background-color: rgba(
-		var(--bs-success-rgb),
-		var(--bs-bg-opacity)
-	) !important;
+	background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-info {
@@ -8146,10 +8118,7 @@ fieldset:disabled .btn {
 
 .bg-warning {
 	--bs-bg-opacity: 1;
-	background-color: rgba(
-		var(--bs-warning-rgb),
-		var(--bs-bg-opacity)
-	) !important;
+	background-color: rgba(var(--bs-warning-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-danger {
@@ -8179,10 +8148,7 @@ fieldset:disabled .btn {
 
 .bg-body {
 	--bs-bg-opacity: 1;
-	background-color: rgba(
-		var(--bs-body-bg-rgb),
-		var(--bs-bg-opacity)
-	) !important;
+	background-color: rgba(var(--bs-body-bg-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-transparent {

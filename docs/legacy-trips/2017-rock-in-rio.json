@@ -1,0 +1,505 @@
+{
+  "_meta": {
+    "tripId": "legacy-2017-rock-in-rio",
+    "slug": "2017-rock-in-rio",
+    "sourceFiles": [
+      "Pessoais/2017/[2017c] Rock in Rio/Rock in Rio.xlsx",
+      "Pessoais/2017/[2017c] Rock in Rio/Checkup.docx",
+      "Pessoais/2017/[2017c] Rock in Rio/Comprovantes/Azul Linhas Aéreas Brasileiras.pdf",
+      "Pessoais/2017/[2017c] Rock in Rio/Comprovantes/Sua reserva - Ramada Encore Ribalta Rio De Janeiro - Hoteis.pdf"
+    ],
+    "extractionNotes": {
+      "xlsxContent": "Detailed schedule for Sept 21-22 with expenses. 3 sheets: Programação (schedule + expenses), Rock in Rio (festival lineup/attractions), Endereços (addresses + transport routes).",
+      "pdfFlightContent": "Azul flight AD 2550 (ida CNF→SDU 06:45-07:50) + AD 2501 (volta SDU→CNF 12:05-13:15). Reservation GD2CYW. Total R$155.03 (20,000 + 1,750 points + taxes).",
+      "pdfHotelContent": "Ramada Encore Ribalta Rio De Janeiro. Check-in 21/09, check-out 22/09. 1 diária. Hoteis.com confirmation #8067306777682. Price R$276.36.",
+      "docxContent": "Packing/todo checklist only. No structured data."
+    }
+  },
+  "trip": {
+    "title": "Rock in Rio 2017",
+    "currency": "BRL",
+    "start": {
+      "day": 21,
+      "month": 9,
+      "year": 2017,
+      "hour": 5,
+      "minute": 30,
+      "second": 0
+    },
+    "end": {
+      "day": 22,
+      "month": 9,
+      "year": 2017,
+      "hour": 13,
+      "minute": 55,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Ramada Encore Ribalta Rio De Janeiro",
+      "description": "Standard Double Room, 1 Queen Bed",
+      "address": "Av. das Américas, 9650 - Barra da Tijuca, Rio de Janeiro",
+      "dates": {
+        "checkIn": {
+          "day": 21,
+          "month": 9,
+          "year": 2017,
+          "hour": 9,
+          "minute": 15,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 22,
+          "month": 9,
+          "year": 2017,
+          "hour": 8,
+          "minute": 30,
+          "second": 0
+        }
+      },
+      "breakfast": true,
+      "images": [],
+      "reservation": "8067306777682 (Hoteis.com)",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "flight",
+      "company": "azul",
+      "points": {
+        "origin": "Confins (BH)",
+        "destination": "Santos Dumont (RJ)"
+      },
+      "dates": {
+        "departure": {
+          "day": 21,
+          "month": 9,
+          "year": 2017,
+          "hour": 6,
+          "minute": 45,
+          "second": 0
+        },
+        "arrival": {
+          "day": 21,
+          "month": 9,
+          "year": 2017,
+          "hour": 7,
+          "minute": 50,
+          "second": 0
+        }
+      },
+      "duration": "01:05",
+      "direction": "departure",
+      "reservation": "GD2CYW (AD 2550)",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "azul",
+      "points": {
+        "origin": "Santos Dumont (RJ)",
+        "destination": "Confins (BH)"
+      },
+      "dates": {
+        "departure": {
+          "day": 22,
+          "month": 9,
+          "year": 2017,
+          "hour": 12,
+          "minute": 5,
+          "second": 0
+        },
+        "arrival": {
+          "day": 22,
+          "month": 9,
+          "year": 2017,
+          "hour": 13,
+          "minute": 15,
+          "second": 0
+        }
+      },
+      "duration": "01:10",
+      "direction": "return",
+      "reservation": "GD2CYW (AD 2501)",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20170921": {
+      "title": {
+        "value": "Quinta-feira — Rock in Rio 2017",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 21,
+        "month": 9,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa → Aeroporto Confins: Carona com Paps",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "BH → Rio (SDU): Voo AD 2550 — Assento 10C",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto SDU: Carregar Rio Card (R$33)",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto → Hotel: VLT 01 + Linha 1+4 do Metrô + Uber/Cabify",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel — Check-in: Ramada Encore Ribalta. Deixar mochila.",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Barra Shopping: BRT Alvorada / Uber",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Barra Shopping — Almoço: Almoço antes do festival",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Barra Shopping → Rock in Rio: Linha 92 (BRT)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Rock in Rio — Parque Olímpico: Explorar Game XP, Rock Street, Roda Gigante. Fall Out Boy às 21:00 no Palco Mundo. Tirolesa, MegaDrop, Montanha Russa.",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Rock in Rio → Hotel: Linha 92 (BRT) + Uber/Cabify",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20170922": {
+      "title": {
+        "value": "Sexta-feira — Volta para BH",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 22,
+        "month": 9,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel — Café da manhã + Checkout: Check-out do Ramada Encore Ribalta",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Aeroporto SDU: Uber/Cabify (Jardim Oceânico) + Linha 1+4 do Metrô",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Starbucks: Café no aeroporto",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Rio → BH: Voo AD 2501 — Assento 7C",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto Confins → Casa: Uber/carona Paps",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Rio Card — Recarga",
+        "price": 33.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.taxi",
+        "name": "Uber/Cabify Aeroporto → Hotel",
+        "price": 24.24,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.taxi",
+        "name": "Uber/Cabify Hotel → Barra Shopping",
+        "price": 15.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Almoço Barra Shopping",
+        "price": 30.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Alimentação no Rock in Rio",
+        "price": 70.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.taxi",
+        "name": "Uber/Cabify Rock in Rio → Hotel",
+        "price": 30.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.taxi",
+        "name": "Uber/Cabify Hotel → Aeroporto",
+        "price": 25.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.taxi",
+        "name": "Uber/Cabify (Jardim Oceânico)",
+        "price": 7.75,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Starbucks — Café no aeroporto",
+        "price": 36.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
+    ],
+    "preTrip": [
+      {
+        "type": "trip.expenses.entertainment",
+        "name": "Ingresso Rock in Rio 2017",
+        "price": 262.5,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.flights",
+        "name": "Voo Azul — Ida e Volta (AD 2550 + AD 2501)",
+        "price": 155.03,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.accommodation.title",
+        "name": "Hotel Ramada Encore Ribalta — 1 diária",
+        "price": 276.36,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    }
+  }
+}

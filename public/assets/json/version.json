@@ -1,19 +1,12 @@
 {
-	"build": 29,
-	"projects": {
-		"trip-viewer-dev": {
-			"timestamp": "2026-01-22T00:25:43.345373+00:00",
-			"version": {
-				"firebase": "face51dea39cf4a7",
-				"system": "2.26.13"
-			}
-		},
-		"trip-viewer-prd": {
-			"timestamp": "2026-01-22T00:25:58.331388+00:00",
-			"version": {
-				"firebase": "2b54f7b76e7e4b29",
-				"system": "2.26.13"
-			}
-		}
-	}
+  "build": 67,
+  "projects": {
+    "trip-viewer-prd": {
+      "timestamp": "2026-08-25T23:34:55.757704+00:00",
+      "version": {
+        "firebase": "22fdf08223452dea",
+        "system": "2.26.0"
+      }
+    }
+  }
 }

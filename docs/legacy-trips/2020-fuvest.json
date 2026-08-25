@@ -1,0 +1,563 @@
+{
+  "trip": {
+    "title": "FUVEST Fase 2 SP",
+    "currency": "BRL",
+    "start": {
+      "day": 1,
+      "month": 4,
+      "year": 2020,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 2,
+      "month": 4,
+      "year": 2020,
+      "hour": 23,
+      "minute": 59,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2020-04-01T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Airbnb Jardins",
+      "description": "Apartamento na região dos Jardins, próximo à Avenida Paulista. Endereço: R. Augusta, 2099.",
+      "address": "R. Augusta, 2099 - Jardins, São Paulo - SP",
+      "dates": {
+        "checkIn": {
+          "day": 1,
+          "month": 4,
+          "year": 2020,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 2,
+          "month": 4,
+          "year": 2020,
+          "hour": 11,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "flight",
+      "company": "latam",
+      "points": {
+        "origin": "Belo Horizonte (CNF)",
+        "destination": "São Paulo (CGH)"
+      },
+      "dates": {
+        "departure": {
+          "day": 1,
+          "month": 4,
+          "year": 2020,
+          "hour": 11,
+          "minute": 45,
+          "second": 0
+        },
+        "arrival": {
+          "day": 1,
+          "month": 4,
+          "year": 2020,
+          "hour": 13,
+          "minute": 5,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "departure",
+      "reservation": "AYNBTX",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "latam",
+      "points": {
+        "origin": "São Paulo (CGH)",
+        "destination": "Belo Horizonte (CNF)"
+      },
+      "dates": {
+        "departure": {
+          "day": 2,
+          "month": 4,
+          "year": 2020,
+          "hour": 18,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 2,
+          "month": 4,
+          "year": 2020,
+          "hour": 19,
+          "minute": 15,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "return",
+      "reservation": "AYNBTX",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20200401": {
+      "title": {
+        "value": "Dia 1 — Chegada e Passeios",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 1,
+        "month": 4,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Carona com o Pai: Translado até o aeroporto",
+          "start": "10:00",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "expenseType": "Voo",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo LATAM: Reserva AYNBTX. BH → São Paulo",
+          "start": "11:45",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ A pé: Deslocamento do aeroporto",
+          "start": "13:05",
+          "end": ""
+        },
+        {
+          "expenseType": "Alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "O Burger: Almoço. Burger de Coxinha",
+          "start": "13:35",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Deslocamento",
+          "start": "14:35",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Check-in / Descanso",
+          "start": "15:35",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Deslocamento para a Liberdade",
+          "start": "16:00",
+          "end": ""
+        },
+        {
+          "expenseType": "Compras",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Liberdade: Compras no bairro",
+          "start": "16:20",
+          "end": ""
+        },
+        {
+          "expenseType": "Alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Snow Bubble / Donut: Lanche na Liberdade",
+          "start": "17:20",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "expenseType": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Volta para o Airbnb",
+          "start": "17:50",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Descanso / Estudo",
+          "start": "18:10",
+          "end": ""
+        },
+        {
+          "expenseType": "Alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Carlos Pizza: Jantar",
+          "start": "20:10",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Descanso / Estudo",
+          "start": "21:20",
+          "end": ""
+        }
+      ]
+    },
+    "20200402": {
+      "title": {
+        "value": "Dia 2 — Prova FUVEST",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 2,
+        "month": 4,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Arrumar / Preparação",
+          "start": "10:00",
+          "end": ""
+        },
+        {
+          "expenseType": "Alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Taco Bell: Almoço rápido na Paulista",
+          "start": "11:10",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Deslocamento para UNIP Pinheiros",
+          "start": "11:40",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "FUVEST — Prova: UNIP Pinheiros - Sala 3. Portões fecham 13h",
+          "start": "12:00",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "expenseType": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Volta para o Airbnb",
+          "start": "18:00",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Descanso / Estudo",
+          "start": "18:30",
+          "end": ""
+        },
+        {
+          "expenseType": "Alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Bráz Elettrica: Jantar",
+          "start": "20:10",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Descanso",
+          "start": "21:20",
+          "end": ""
+        }
+      ]
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "O Burger — Almoço",
+        "price": 60,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "Snow Bubble / Donut — Lanche",
+        "price": 25,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "Carlos Pizza — Jantar",
+        "price": 80,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "Taco Bell — Almoço",
+        "price": 30,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "Bráz Elettrica — Jantar",
+        "price": 50,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "Liberdade — Compras",
+        "price": 100,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "currency": "BRL",
+        "name": "Metrô — Deslocamentos",
+        "price": 17.2,
+        "person": "gabriel"
+      }
+    ],
+    "preTrip": [
+      {
+        "type": "Inscrição",
+        "currency": "BRL",
+        "name": "Inscrição FUVEST",
+        "price": 892,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.flights",
+        "currency": "BRL",
+        "name": "LATAM — Passagem ida e volta (Reserva AYNBTX)",
+        "price": 248.47,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.accommodation.title",
+        "currency": "BRL",
+        "name": "Airbnb Jardins",
+        "price": 643.53,
+        "person": "gabriel"
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2020-04-01T00:00:00.000Z"
+    }
+  }
+}

@@ -1,0 +1,660 @@
+{
+  "trip": {
+    "title": "MITA 2022",
+    "currency": "BRL",
+    "start": {
+      "day": 21,
+      "month": 5,
+      "year": 2022,
+      "hour": 5,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 22,
+      "month": 5,
+      "year": 2022,
+      "hour": 21,
+      "minute": 35,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2022-05-22T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Airbnb - Ipanema",
+      "description": "R. Nascimento Silva, 4 Bloco C, apartment 1808, 22421-020",
+      "address": "R. Nascimento Silva, 4 Bloco C, apto 1808, Ipanema, Rio de Janeiro - RJ, 22421-020",
+      "dates": {
+        "checkIn": {
+          "day": 21,
+          "month": 5,
+          "year": 2022,
+          "hour": 8,
+          "minute": 25,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 22,
+          "month": 5,
+          "year": 2022,
+          "hour": 11,
+          "minute": 40,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "flight",
+      "company": "azul",
+      "points": {
+        "origin": "CNF - Belo Horizonte",
+        "destination": "SDU - Rio de Janeiro"
+      },
+      "dates": {
+        "departure": {
+          "day": 21,
+          "month": 5,
+          "year": 2022,
+          "hour": 6,
+          "minute": 20,
+          "second": 0
+        },
+        "arrival": {
+          "day": 21,
+          "month": 5,
+          "year": 2022,
+          "hour": 7,
+          "minute": 25,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "departure",
+      "reservation": "YWZ52E",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "azul",
+      "points": {
+        "origin": "SDU - Rio de Janeiro",
+        "destination": "CNF - Belo Horizonte"
+      },
+      "dates": {
+        "departure": {
+          "day": 22,
+          "month": 5,
+          "year": 2022,
+          "hour": 19,
+          "minute": 10,
+          "second": 0
+        },
+        "arrival": {
+          "day": 22,
+          "month": 5,
+          "year": 2022,
+          "hour": 20,
+          "minute": 15,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "return",
+      "reservation": "YWZ52E",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20220521": {
+      "title": {
+        "value": "Dia 1 — Chegada + MITA Festival",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 21,
+        "month": 5,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Paps: Translado para o aeroporto",
+          "start": "05:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto (CNF): Embarcar",
+          "start": "05:30",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo Azul CNF → SDU: Reserva YWZ52E",
+          "start": "06:20",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto (SDU): Desembarcar. Carregar RioCard",
+          "start": "07:25",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ VLT + Metrô: Translado para o Airbnb",
+          "start": "07:45",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Check-In. Deixar Malas",
+          "start": "08:25",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Livre / Descanso",
+          "start": "09:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ A pé",
+          "start": "11:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Nema: Almoço Rápido",
+          "start": "11:05",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Translado para o festival",
+          "start": "11:45",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "MITA Festival: Almoço / Livre",
+          "start": "12:10",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Two Doors Cinema Club: Palco Corcovado",
+          "start": "16:55",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "The Kooks: Palco Deezer",
+          "start": "18:25",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Gorillaz: Palco Corcovado",
+          "start": "19:55",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "MITA: Sair do Festival",
+          "start": "21:30",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Volta para o Airbnb",
+          "start": "22:30",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Saída: Noite no Rio",
+          "start": "23:00",
+          "end": ""
+        }
+      ]
+    },
+    "20220522": {
+      "title": {
+        "value": "Dia 2 — Turismo + Museus + Volta",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 22,
+        "month": 5,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Volta para o Airbnb",
+          "start": "01:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Descanso",
+          "start": "01:15",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Arrumar e Check Out",
+          "start": "10:30",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô + VLT: Translado para o almoço",
+          "start": "11:40",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Low Fire: Almoço",
+          "start": "12:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Translado para o Boulevard",
+          "start": "14:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Boulevard Olímpico: Aguardar",
+          "start": "14:30",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Museu do Amanhã: Museu de ciências aplicadas",
+          "start": "15:00",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Museu de Arte do Rio (MAR): Praça Mauá, 5, Centro",
+          "start": "16:05",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Translado para o aeroporto",
+          "start": "16:45",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto (SDU): Embarcar",
+          "start": "17:05",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo Azul SDU → CNF: Reserva YWZ52E",
+          "start": "19:10",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto (CNF): Desembarcar",
+          "start": "20:15",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Paps: Translado para casa",
+          "start": "20:35",
+          "end": ""
+        }
+      ]
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "type": "trip.accommodation.title",
+        "person": "",
+        "name": "Airbnb - R. Nascimento Silva, 4 Bloco C, apto 1808",
+        "price": 171.5,
+        "currency": "BRL"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "person": "",
+        "name": "Nema - Almoço Rápido",
+        "price": 50.0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Turismo",
+        "person": "",
+        "name": "MITA Festival - Almoço/Livre + atrações (Two Doors Cinema Club, The Kooks, Gorillaz)",
+        "price": 0,
+        "currency": "BRL"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "person": "",
+        "name": "Saída noturna pós-festival",
+        "price": 100.0,
+        "currency": "BRL"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "person": "",
+        "name": "VLT + Metrô (ida e volta)",
+        "price": 20.6,
+        "currency": "BRL"
+      },
+      {
+        "type": "Transporte Privado",
+        "person": "",
+        "name": "Ubers diversos (aeroporto→Airbnb, Airbnb→MITA, MITA→saída, saída→Airbnb, Airbnb→almoço, almoço→Boulevard, MAR→aeroporto)",
+        "price": 90.0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Turismo",
+        "person": "",
+        "name": "Low Fire - Almoço",
+        "price": 100.0,
+        "currency": "BRL"
+      },
+      {
+        "type": "Turismo",
+        "person": "",
+        "name": "Museu do Amanhã - Ingresso meia-entrada universitário",
+        "price": 16.5,
+        "currency": "BRL"
+      },
+      {
+        "type": "Turismo",
+        "person": "",
+        "name": "Museu de Arte do Rio (MAR) - Ingresso meia-entrada estudante",
+        "price": 11.0,
+        "currency": "BRL"
+      }
+    ],
+    "preTrip": [
+      {
+        "type": "Ida/Volta",
+        "person": "",
+        "name": "Voo Azul CNF ↔ SDU - Reserva YWZ52E (ida e volta)",
+        "price": 71.06,
+        "currency": "BRL"
+      },
+      {
+        "type": "trip.expenses.entertainment",
+        "person": "",
+        "name": "MITA Festival - Pista Meia-Entrada - Jockey Clube, Gávea - 21/mai/22 (R$350 + R$35 tx)",
+        "price": 385.0,
+        "currency": "BRL"
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2022-05-22T00:00:00.000Z"
+    }
+  }
+}

@@ -1,0 +1,194 @@
+<!--
+  Shared Dev Nav Helper — included at build time by scripts/inject-partials.js
+  DEV ONLY (localhost). Pure additive: appends its own floating widget and never
+  modifies existing DOM or changes page functionality. Gives AI agents + developers
+  quick cross-page navigation for TripViewer (view/edit/itinerary/expenses/destination)
+  while preserving the current document IDs and theme.
+
+  Usage:
+    - AI-only: renders ONLY when the URL contains &ai=1 (see browser-navigation skill),
+      so final users never see it.
+    - Click the 🧭 button (bottom-left) or press Alt+Shift+N to toggle the panel.
+    - "Copy URL" copies the canonical URL (visibility + ai stripped).
+    - window.__TRIPVIEWER_NAV__ = { toggle(), open() }
+-->
+<style>
+  #tvn-nav { position: fixed; left: 14px; bottom: 14px; z-index: 999999; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  #tvn-nav .tvn-fab { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; border: none; cursor: pointer; background: #5859a7; color: #fff; font-size: 20px; line-height: 1; box-shadow: 0 2px 10px rgba(0,0,0,.3); }
+  #tvn-nav .tvn-fab:hover { background: #45459a; }
+  #tvn-panel { display: none; position: absolute; left: 0; bottom: 52px; width: 268px; max-height: 80vh; overflow: auto; background: #fff; color: #1f2430; border: 1px solid #e2e4ea; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,.18); padding: 12px; box-sizing: border-box; }
+  #tvn-nav.tvn-open #tvn-panel { display: block; }
+  #tvn-panel h4 { margin: 0 0 8px; font-size: 13px; font-weight: 700; color: #5859a7; text-transform: uppercase; letter-spacing: .4px; }
+  #tvn-panel .tvn-row { font-size: 12px; color: #5a6070; margin-bottom: 8px; line-height: 1.5; word-break: break-all; }
+  #tvn-panel .tvn-row b { color: #1f2430; }
+  #tvn-panel .tvn-links { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  #tvn-panel a.tvn-link, #tvn-panel button.tvn-link { display: block; width: 100%; text-align: left; padding: 6px 8px; border-radius: 6px; background: #f2f3f7; color: #2b2e3a; font-size: 12px; text-decoration: none; border: 1px solid #e4e6ec; cursor: pointer; font-family: inherit; box-sizing: border-box; }
+  #tvn-panel a.tvn-link:hover, #tvn-panel button.tvn-link:hover { background: #e7e8f1; }
+  #tvn-panel .tvn-hint { margin-top: 8px; font-size: 11px; color: #8a90a0; border-top: 1px dashed #e2e4ea; padding-top: 8px; }
+  @media (prefers-color-scheme: dark) {
+    #tvn-panel { background: #23262f; color: #e6e8ee; border-color: #383c48; }
+    #tvn-panel .tvn-row b { color: #fff; }
+    #tvn-panel .tvn-row { color: #aab0c0; }
+    #tvn-panel a.tvn-link, #tvn-panel button.tvn-link { background: #2d303b; color: #dfe2ea; border-color: #3b3f4c; }
+    #tvn-panel a.tvn-link:hover, #tvn-panel button.tvn-link:hover { background: #383c48; }
+    #tvn-panel .tvn-hint { color: #7c8395; border-top-color: #383c48; }
+  }
+</style>
+<script>
+(function () {
+  var host = window.location.hostname;
+  var isLocal = host === 'localhost' || host === '127.0.0.1' || host === '[::1]' ||
+    host.indexOf('192.168.') === 0 || host.indexOf('10.') === 0 ||
+    /^172\.(1[6-9]|2\d|3[01])\./.test(host);
+  if (!isLocal) return;
+
+  function params() {
+    var p = {};
+    new URLSearchParams(window.location.search).forEach(function (v, k) { p[k] = v; });
+    return p;
+  }
+  var p = params();
+
+  // AI-only: render ONLY when explicitly enabled with ?ai=1 — never for final users.
+  // The AI appends &ai=1 to its URLs (see browser-navigation skill); humans don't.
+  if (p.ai !== '1') return;
+
+  function vis(p) {
+    var s = p.visibility ? '&visibility=' + encodeURIComponent(p.visibility) : '';
+    if (p.ai === '1') s += '&ai=1';
+    return s;
+  }
+  function opt(p) {
+    var parts = [];
+    if (p.visibility) parts.push('visibility=' + encodeURIComponent(p.visibility));
+    if (p.ai === '1') parts.push('ai=1');
+    return parts.length ? '?' + parts.join('&') : '';
+  }
+  var t = p.t, d = p.d, l = p.l, e = p.e;
+  var type = l ? 'listing' : d ? 'destination' : (t || e) ? 'trip' : null;
+  var id = l || d || t || e || null;
+  var inEdit = window.location.pathname.indexOf('/edit/') === 0;
+  var base = inEdit ? '../' : '';       // prefix for root-level pages
+  var editP = inEdit ? '' : 'edit/';    // prefix for edit/ pages
+  var page = (window.location.pathname.split('/').pop() || 'index').replace('.html', '') || 'index';
+
+  var links = [];
+  function add(href, label, title) { links.push({ href: href, label: label, title: title || label }); }
+
+  add(base + 'index.html' + opt(p), 'Home', 'Dashboard');
+
+  if (type && id) {
+    if (type === 'trip') {
+      add(base + 'view.html?t=' + t + vis(p), 'View', 'Trip detail (view.html)');
+      add(editP + 'trip?t=' + t + vis(p), 'Edit', 'Trip editor');
+      add(base + 'itinerary?t=' + t + vis(p), 'Itinerary', 'Itinerary for trip');
+      add(base + 'expenses.html?e=' + t + vis(p), 'Expenses', 'Expenses for trip');
+    } else if (type === 'destination') {
+      add(base + 'destination?d=' + d + vis(p), 'View', 'Destination detail');
+      add(editP + 'destination?d=' + d + vis(p), 'Edit', 'Destination editor');
+    } else if (type === 'listing') {
+      add(base + 'view.html?l=' + l + vis(p), 'View', 'Listing detail (view.html)');
+      add(editP + 'listing?l=' + l + vis(p), 'Edit', 'Listing editor');
+    }
+  } else {
+    // No document context — offer creation entry points
+    add(editP + 'trip' + opt(p), 'New trip', 'Create a new trip');
+    add(editP + 'destination' + opt(p), 'New destination', 'Create a new destination');
+  }
+
+  var root = document.createElement('div');
+  root.id = 'tvn-nav';
+
+  var fab = document.createElement('button');
+  fab.className = 'tvn-fab';
+  fab.type = 'button';
+  fab.title = 'TripViewer nav helper (Alt+Shift+N)';
+  fab.setAttribute('aria-label', 'Toggle navigation helper');
+  fab.setAttribute('aria-expanded', 'false');
+  fab.textContent = '🧭';
+
+  var panel = document.createElement('div');
+  panel.id = 'tvn-panel';
+
+  var head = document.createElement('h4');
+  head.textContent = 'Nav Helper';
+  panel.appendChild(head);
+
+  var row = document.createElement('div');
+  row.className = 'tvn-row';
+  row.innerHTML = 'Page: <b>' + page + '</b>';
+  if (type && id) row.innerHTML += '<br>Doc: <b>' + type + ':' + id + '</b>';
+  panel.appendChild(row);
+
+  var grid = document.createElement('div');
+  grid.className = 'tvn-links';
+  links.forEach(function (ln) {
+    var a = document.createElement('a');
+    a.className = 'tvn-link';
+    a.href = ln.href;
+    a.textContent = ln.label;
+    a.title = ln.title;
+    a.setAttribute('data-tvn-target', ln.title);
+    grid.appendChild(a);
+  });
+  panel.appendChild(grid);
+
+  var copy = document.createElement('button');
+  copy.className = 'tvn-link';
+  copy.type = 'button';
+  copy.textContent = 'Copy URL';
+  copy.addEventListener('click', function () {
+    var url = new URL(window.location.href);
+    url.searchParams.delete('visibility');
+    url.searchParams.delete('ai');
+    var text = url.toString();
+    try { navigator.clipboard.writeText(text); } catch (err) { /* clipboard may be blocked */ }
+    copy.textContent = 'Copied!';
+    setTimeout(function () { copy.textContent = 'Copy URL'; }, 1200);
+  });
+  var copyWrap = document.createElement('div');
+  copyWrap.style.marginTop = '6px';
+  copyWrap.appendChild(copy);
+  panel.appendChild(copyWrap);
+
+  var hint = document.createElement('div');
+  hint.className = 'tvn-hint';
+  hint.textContent = 'AI-only (URL needs &ai=1). dev.firestore.get("path") / .set() in console.';
+  panel.appendChild(hint);
+
+  root.appendChild(fab);
+  root.appendChild(panel);
+  document.body.appendChild(root);
+
+  function toggle() {
+    var open = root.classList.toggle('tvn-open');
+    fab.setAttribute('aria-expanded', String(open));
+  }
+  function openPanel() {
+    if (!root.classList.contains('tvn-open')) {
+      root.classList.add('tvn-open');
+      fab.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  fab.addEventListener('click', function (ev) { ev.stopPropagation(); toggle(); });
+  panel.addEventListener('click', function (ev) { ev.stopPropagation(); });
+  document.addEventListener('click', function () {
+    if (root.classList.contains('tvn-open')) {
+      root.classList.remove('tvn-open');
+      fab.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function (ev) {
+    if (ev.altKey && ev.shiftKey && (ev.key === 'N' || ev.key === 'n')) {
+      ev.preventDefault();
+      toggle();
+    }
+  });
+
+  window.__TRIPVIEWER_NAV__ = { toggle: toggle, open: openPanel };
+  document.documentElement.setAttribute('data-tvn-helper', 'active');
+  console.log('%c[TripViewer] Nav helper active — Alt+Shift+N', 'color:#5859a7;font-weight:bold');
+})();
+</script>
+

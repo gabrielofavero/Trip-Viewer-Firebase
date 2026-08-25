@@ -1,0 +1,2886 @@
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+.backup {
+	color: #6a737c;
+}
+
+#header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	z-index: 9997;
+	transition: all 0.5s;
+	padding: 15px;
+	overflow-y: auto;
+	width: auto;
+	background: transparent;
+	border-right: none;
+}
+
+#header2 {
+	width: 400px;
+}
+
+.header-text {
+	width: 400px;
+	margin-top: 14px;
+	/* Match the hero title (#header1) so subtitle + countdown read as one
+	   heading group. */
+	color: #4f5051;
+}
+
+#itinerary-today {
+	width: fit-content;
+	font-size: 18px;
+	padding: 12px;
+	background-color: rgba(78, 79, 80, 0.05);
+	margin: 1em auto;
+	text-align: center;
+	border: 3px solid rgba(78, 79, 80, 0.05);
+	backdrop-filter: blur(2px);
+	-webkit-backdrop-filter: blur(2px);
+	border-radius: 8px;
+	color: #4f5051;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.copy-icon {
+	color: #3d85c6;
+	margin-left: 8px;
+	height: 20px;
+	width: 20px;
+	cursor: pointer;
+}
+
+.copy-icon:hover {
+	color: #6fa8dc;
+}
+
+#itinerary-today:hover {
+	background-color: rgba(78, 79, 80, 0.03);
+}
+
+@media (max-width: 1300px) {
+	#header2 {
+		max-width: 60%;
+	}
+}
+
+@media (max-width: 992px) {
+	#header {
+		width: 300px;
+		background: var(--background-color);
+		border-right: 1px solid #e6e9ec;
+		left: -300px;
+	}
+
+	#header2 {
+		max-height: 200px;
+		max-width: 80%;
+		width: auto;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.header-text {
+		width: auto;
+	}
+}
+
+@media (max-width: 450px) {
+	#header2 {
+		width: auto;
+		max-width: 90%;
+	}
+}
+
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+/**
+ * Desktop Navigation
+ */
+.nav-menu {
+	padding: 0;
+	display: block;
+}
+
+.nav-menu * {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.nav-menu > ul > li {
+	position: relative;
+	white-space: nowrap;
+}
+
+.nav-menu a,
+.nav-menu a:focus {
+	display: flex;
+	align-items: center;
+	color: #4f5051;
+	padding: 10px 18px;
+	margin-bottom: 8px;
+	font-size: 15px;
+	border-radius: 50px;
+	background: #f2f3f5;
+	height: 56px;
+	width: 100%;
+	overflow: hidden;
+	transition: 0.3s;
+}
+
+.nav-menu a i,
+.nav-menu a:focus i {
+	font-size: 20px;
+}
+
+.nav-menu a svg,
+.nav-menu a:focus svg {
+	flex-shrink: 0;
+	transition: none;
+}
+
+.nav-menu a span,
+.nav-menu a:focus span {
+	padding: 0 5px 0 7px;
+	color: #4f5051;
+}
+
+@media (min-width: 992px) {
+	.nav-menu a,
+	.nav-menu a:focus {
+		width: 56px;
+	}
+
+	.nav-menu a span,
+	.nav-menu a:focus span {
+		display: none;
+		color: #fff;
+	}
+}
+
+.nav-menu a:hover,
+.nav-menu .active,
+.nav-menu .active:focus,
+.nav-menu li:hover > a {
+	color: #fff;
+	background: var(--theme-color);
+}
+
+.nav-menu a:hover span,
+.nav-menu .active span,
+.nav-menu .active:focus span,
+.nav-menu li:hover > a span {
+	color: #fff;
+}
+
+.nav-menu a:hover,
+.nav-menu li:hover > a {
+	width: 100%;
+	color: #fff;
+}
+
+.nav-menu a:hover span,
+.nav-menu li:hover > a span {
+	display: block;
+}
+
+/**
+ * Mobile Navigation
+ */
+
+.icons-box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.icon-buttons {
+	cursor: pointer;
+	width: 30px;
+	height: 30px;
+	font-size: 30px;
+	margin: 0 7px 0 7px;
+}
+
+#menu {
+	border: 0;
+	background: none;
+	font-size: 28px;
+	outline: none !important;
+	line-height: 0;
+	cursor: pointer;
+	border-radius: 50px;
+	padding: 5px;
+	color: var(--font-color);
+}
+
+.top-bar {
+	position: fixed;
+	width: 100%;
+	height: 60px;
+	z-index: 999;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	/* Smooth slide for the auto-hide behavior below. */
+	transition: transform 0.3s ease;
+}
+
+/* Auto-hide top bar on scroll (view page only): hide while scrolling down to
+   read, reveal on any upward scroll or when near the top. view.ts toggles
+   `topbar-hidden` on <body>. Other pages keep the always-fixed bar. */
+body.topbar-hidden .top-bar {
+	transform: translateY(-100%);
+}
+
+.logo-box {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.logo-link {
+	text-decoration: none;
+	color: inherit;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+#logo-light,
+#logo-dark {
+	height: 25px;
+	margin-left: 20px;
+	cursor: pointer;
+}
+
+#trip-viewer-text {
+	font-size: 30px;
+	margin-top: 10px;
+	margin-left: 7px;
+	font-family: Chelos;
+	color: var(--theme-color);
+}
+
+.mobile-nav-toggle i,
+.custom-nav-toggle i {
+	color: #4f5051;
+}
+
+.mobile-nav-active {
+	overflow: hidden;
+}
+
+.mobile-nav-active #header {
+	left: 0;
+}
+
+.mobile-nav-active .mobile-nav-toggle {
+	color: #fff;
+	background-color: var(--theme-color);
+}
+
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+#hero {
+	width: 100%;
+	min-height: 100vh;
+	/* Dynamic viewport height: on mobile the browser chrome (URL bar / PWA
+	   status bar) shrinks the visible viewport below 100vh, leaving the hero
+	   taller than the screen and pushing the footer off the bottom. */
+	min-height: 100dvh;
+	overflow-y: auto;
+	background: url("../../img/home.jpg") top center no-repeat;
+	background-size: cover;
+	position: relative;
+}
+
+@media (min-width: 992px) {
+	#hero {
+		padding-left: 160px;
+	}
+}
+
+#hero:before {
+	content: "";
+	background: rgba(255, 255, 255, 0.8);
+	position: fixed;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+}
+
+#hero h1 {
+	margin: 0 0 26px 0;
+	font-size: 52px;
+	font-weight: 700;
+	line-height: 1.15;
+	color: #4f5051;
+	text-transform: none;
+	padding-bottom: 0;
+	position: static;
+	display: block;
+	width: auto !important;
+}
+
+#hero h1::before,
+#hero h1::after {
+	content: none;
+}
+
+#hero p {
+	color: #4f5051;
+	margin: 15px 0 0 0;
+	font-size: 26px;
+	font-family: "Poppins", sans-serif;
+}
+
+#hero p span {
+	color: var(--theme-color);
+	letter-spacing: 1px;
+}
+
+#hero .social-links {
+	margin-top: 30px;
+}
+
+#hero .social-links a {
+	font-size: 24px;
+	display: inline-block;
+	color: #4f5051;
+	line-height: 1;
+	margin-right: 20px;
+	transition: 0.3s;
+}
+
+#hero .social-links a:hover {
+	color: var(--theme-color);
+}
+
+@media (max-width: 992px) {
+	#hero {
+		text-align: center;
+	}
+
+	#hero h1 {
+		font-size: 38px;
+		line-height: 1.15;
+	}
+
+	#hero p {
+		margin-top: 10px;
+		font-size: 20px;
+		line-height: 24px;
+	}
+}
+
+/*--------------------------------------------------------------
+# Sections General
+--------------------------------------------------------------*/
+section {
+	padding: 40px 0;
+	overflow: hidden;
+}
+
+.section-title {
+	text-align: center;
+	padding-bottom: 30px;
+}
+
+.section-title h2 {
+	font-size: 32px;
+	font-weight: bold;
+	text-transform: uppercase;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	position: relative;
+	color: #4f5051;
+}
+
+.section-title h2::before {
+	content: "";
+	position: absolute;
+	display: block;
+	width: 120px;
+	height: 1px;
+	background: #ddd;
+	bottom: 1px;
+	left: calc(50% - 60px);
+}
+
+.section-title h2::after {
+	content: "";
+	position: absolute;
+	display: block;
+	width: 40px;
+	height: 3px;
+	background: var(--theme-color);
+	bottom: 0;
+	left: calc(50% - 20px);
+}
+
+.section-title p {
+	margin-bottom: 0;
+}
+
+/*--------------------------------------------------------------
+# About - Sobre
+--------------------------------------------------------------*/
+#sobre5T {
+	display: flex;
+}
+
+#googleMaps {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 50px;
+	width: 80%;
+}
+
+#googleMapsIframe {
+	width: 100%;
+	height: 300px;
+	border: 0;
+}
+
+@media (max-width: 767px) {
+	#googleMaps {
+		margin-left: 5%;
+	}
+
+	#googleMapsIframe {
+		width: 90%;
+	}
+}
+
+.about .content h3 {
+	font-weight: 700;
+	font-size: 26px;
+	color: #728394;
+}
+
+.about .content ul {
+	list-style: none;
+	padding: 0;
+}
+
+.about .content ul li {
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.about .content ul strong {
+	margin-right: 10px;
+}
+
+.about .content ul i {
+	font-size: 16px;
+	margin-right: 5px;
+	color: var(--theme-color);
+	line-height: 0;
+}
+
+.about .content p:last-child {
+	margin-bottom: 0;
+}
+
+/*--------------------------------------------------------------
+# Facts - Dados
+--------------------------------------------------------------*/
+#emoji {
+	font-size: 40px;
+}
+
+.facts .count-box,
+.about .count-box {
+	padding: 30px 30px 25px 30px;
+	margin: 30px auto 0 auto;
+	max-width: 240px;
+	width: 100%;
+	position: relative;
+	text-align: center;
+	background: #fff;
+	border: var(--card-border);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-card);
+	transition: transform var(--transition-normal);
+}
+
+.facts .count-box:hover,
+.about .count-box:hover {
+	transform: translateY(-5px);
+	box-shadow: var(--shadow-card-hover);
+}
+
+.facts .count-box i,
+.about .count-box i {
+	position: absolute;
+	top: -25px;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 24px;
+	background: var(--theme-color);
+	color: #fff;
+	border-radius: 50px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	box-shadow: 0 2px 6px rgba(110, 123, 131, 0.12);
+}
+
+.facts .count-box span,
+.about .count-box span {
+	font-size: 36px;
+	display: block;
+	font-weight: 600;
+	color: #011426;
+}
+
+.facts .count-box p,
+.about .count-box p {
+	padding: 0;
+	margin: 0;
+	font-family: "Raleway", sans-serif;
+	font-size: 14px;
+}
+
+.logoBox {
+	height: 200px;
+	margin-bottom: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.transpStayBox {
+	margin: 30px;
+	padding: 20px;
+	width: 200px;
+	background-color: #f2f2f2;
+	transition: all 0.2s ease-in-out;
+}
+
+.transpStayBox:hover {
+	transform: scale(1.1);
+}
+
+@media (max-width: 500px) {
+	.transpStayBox {
+		margin: 10px;
+	}
+}
+
+@media (max-width: 470px) {
+	.logoBox {
+		margin: 0px;
+	}
+
+	.transpStayBox {
+		width: 150px;
+		margin-bottom: 0px;
+	}
+}
+
+@media (max-width: 380px) {
+	.transpStayBox {
+		width: 130px;
+		margin-bottom: 0px;
+	}
+}
+
+@media (max-width: 315px) {
+	.logoBox {
+		display: inline;
+	}
+
+	.transpStayBox {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+@media (min-width: 991px) and (max-width: 1016px) {
+	#dados span,
+	#gDados span {
+		font-size: 34px;
+	}
+}
+
+/*--------------------------------------------------------------
+# Skills
+--------------------------------------------------------------*/
+.skills {
+	margin-top: -50px;
+}
+
+.skills .progress,
+.about .progress {
+	height: 60px;
+	display: block;
+	background: none;
+	border-radius: 0;
+}
+
+.skills .progress .skill,
+.about .progress .skill {
+	padding: 10px 0;
+	margin: 0;
+	text-transform: uppercase;
+	display: block;
+	font-weight: 600;
+	font-family: "Poppins", sans-serif;
+	color: #4f5051;
+}
+
+.skills .progress .skill .val,
+.about .progress .skill .val {
+	float: right;
+	font-style: normal;
+}
+
+.skills .progress-bar-wrap,
+.about .progress-bar-wrap {
+	background: #f2f3f5;
+}
+
+.skills .progress-bar,
+.about .progress-bar {
+	width: 1px;
+	height: 10px;
+	transition: 0.9s;
+	background-color: var(--theme-color);
+}
+
+/*--------------------------------------------------------------
+# Resume - Itinerary
+--------------------------------------------------------------*/
+
+#calendar-table-card {
+	margin-top: 24px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #fff;
+	border: none;
+	max-width: 700px;
+}
+
+#calendar {
+	color: #4f5051;
+	background-color: #fff;
+	border: 0.5px solid var(--table-border);
+	margin-bottom: 0px;
+	width: 100%;
+	table-layout: fixed;
+}
+
+#calendarTitle {
+	background: var(--theme-color);
+	border-bottom: 0.5px solid var(--theme-color);
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+	height: 40px;
+	padding: 6px;
+	width: 100%;
+	float: none;
+}
+
+#tabHeader {
+	background-color: #f6f6f6;
+	color: #4f5051;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+#calendarMonthSelector {
+	border-top: none;
+	padding: 8px;
+}
+
+/* UNUSED: .linHeader — not found in any HTML file; may be legacy calendar code */
+.linHeader {
+	width: 14.28571428571429%;
+	float: left;
+	padding-top: 15px;
+	background: #f6f6f6;
+}
+
+/* UNUSED: .linItem — not found in any HTML file; may be legacy calendar code */
+.linItem {
+	width: 14.28571428571429%;
+	float: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+	#calendar-table-card {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 700px;
+	}
+
+	#itinerary-box {
+		width: 700px;
+	}
+}
+
+#itinerary-box {
+	display: none;
+	opacity: 0;
+	transition: opacity 0.2s linear;
+	margin-top: 20px;
+	margin-bottom: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	transition: all ease-in-out 0.3s;
+	background-color: #fff;
+	box-shadow: var(--shadow-card);
+	border: 1px solid var(--table-border);
+	border-radius: 5px;
+	padding: 30px;
+}
+
+#itinerary-box.show {
+	opacity: 1;
+	transition: opacity 0.2s linear;
+}
+
+#itinerary-title .title,
+#itinerary-close {
+	color: #4f5051;
+	font-weight: bold;
+	font-size: 22px;
+}
+
+#itinerary-title {
+	margin-bottom: 10px;
+}
+
+.itinerary-title-box {
+	margin-top: 22px;
+}
+
+.itinerary-line,
+.flight-title,
+.hotel-title {
+	margin-bottom: 10px;
+	border-bottom: 0.5px solid var(--table-border);
+}
+
+#itinerary-modal {
+	opacity: 1;
+	transition: opacity 0.2s linear;
+	margin-bottom: 22px;
+}
+
+#itinerary-modal.show {
+	opacity: 0;
+	transition: opacity 0.2s linear;
+}
+
+.itinerary-item {
+	margin-top: 20px;
+	color: #4f5051;
+	font-weight: bold;
+}
+
+#itinerary-close {
+	float: right;
+	cursor: pointer;
+	margin-top: -25px;
+}
+
+#no-itinerary {
+	margin-top: 20px;
+}
+
+#progDia {
+	margin-bottom: 25px;
+}
+
+.itinerary .resume-title,
+.resume .resume-title {
+	font-size: 26px;
+	font-weight: 700;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	color: #4f5051;
+}
+
+.itinerary .resume-item,
+.resume .resume-item {
+	padding: 0 0 20px 20px;
+	margin-top: -2px;
+	border-left: 2px solid var(--theme-color);
+	position: relative;
+}
+
+.itinerary .resume-item h4,
+.resume .resume-item h4 {
+	line-height: 18px;
+	font-size: 18px;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-family: "Poppins", sans-serif;
+	color: #6f757a;
+	margin-bottom: 10px;
+}
+
+.itinerary .resume-item h5,
+.resume .resume-item h5 {
+	font-size: 16px;
+	background: #f7f8f9;
+	padding: 5px 15px;
+	display: inline-block;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
+.itinerary .resume-item ul,
+.resume .resume-item ul {
+	padding-left: 20px;
+}
+
+.itinerary .resume-item ul li,
+.resume .resume-item ul li {
+	padding-bottom: 10px;
+}
+
+.itinerary .resume-item:last-child,
+.resume .resume-item:last-child {
+	padding-bottom: 0;
+}
+
+.itinerary .resume-item::before,
+.resume .resume-item::before {
+	content: "";
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	border-radius: 50px;
+	left: -9px;
+	top: 0;
+	background: #fff;
+	border: 2px solid #f7f8f9;
+}
+
+/*--------------------------------------------------------------
+# Portfolio
+--------------------------------------------------------------*/
+.portfolio-item {
+	margin-bottom: 30px;
+}
+
+#portfolio-flters {
+	padding: 0;
+	margin: 0 auto 25px auto;
+	list-style: none;
+	text-align: center;
+	background: #fff;
+	border-radius: 50px;
+	padding: 2px 15px;
+}
+
+#portfolio-flters li {
+	cursor: pointer;
+	display: inline-block;
+	padding: 10px 15px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1;
+	text-transform: uppercase;
+	color: var(--font-color);
+	margin-bottom: 5px;
+	transition: all 0.3s ease-in-out;
+}
+
+#portfolio-flters li:hover,
+#portfolio-flters li.filter-active {
+	color: var(--theme-color);
+}
+
+#portfolio-flters li:last-child {
+	margin-right: 0;
+}
+
+/* .portfolio-wrap hover + lightbox pattern moved to components/portfolio.css
+   (shared with the destination card media). */
+
+/*--------------------------------------------------------------
+# Portfolio Details
+--------------------------------------------------------------*/
+.portfolio-details {
+	padding-top: 40px;
+}
+
+.portfolio-details .portfolio-details-slider img {
+	width: 100%;
+}
+
+.portfolio-details .portfolio-info {
+	padding: 30px;
+	box-shadow: 0px 0 30px rgba(69, 80, 91, 0.08);
+}
+
+.portfolio-details .portfolio-info h3 {
+	font-size: 22px;
+	font-weight: 700;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #eee;
+}
+
+.portfolio-details .portfolio-info ul {
+	list-style: none;
+	padding: 0;
+	font-size: 15px;
+}
+
+.portfolio-details .portfolio-info ul li + li {
+	margin-top: 10px;
+}
+
+.portfolio-details .portfolio-description {
+	padding-top: 30px;
+}
+
+.portfolio-details .portfolio-description h2 {
+	font-size: 26px;
+	font-weight: 700;
+	margin-bottom: 20px;
+}
+
+.portfolio-details .portfolio-description p {
+	padding: 0;
+}
+
+/*--------------------------------------------------------------
+# Destinations Description (View Page)
+--------------------------------------------------------------*/
+#destinations-description {
+	text-align: center;
+	max-width: 720px;
+	margin: 0 auto 24px auto;
+	font-size: 16px;
+	line-height: 1.6;
+	color: var(--font-color);
+	opacity: 0.75;
+	padding: 0 16px;
+}
+
+/*--------------------------------------------------------------
+# Services - Todos os Destinos
+--------------------------------------------------------------*/
+.services .icon-box {
+	text-align: center;
+	padding: 70px 20px 80px 20px;
+	transition: all ease-in-out 0.3s;
+	color: var(--font-color);
+	background: #fff;
+	box-shadow: var(--shadow-card);
+}
+
+.services .icon-box .icon {
+	margin: 0 auto;
+	width: 100px;
+	height: 100px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: ease-in-out 0.3s;
+	position: relative;
+}
+
+.services .icon-box .icon i {
+	font-size: 36px;
+	transition: 0.5s;
+	position: relative;
+}
+
+.services .icon-box .icon svg {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.services .icon-box .icon svg path {
+	transition: 0.5s;
+	fill: #f5f5f5;
+}
+
+.services .icon-box h4 {
+	font-weight: 600;
+	margin: 10px 0 15px 0;
+	font-size: 22px;
+}
+
+.services .icon-box h4 a {
+	color: #4f5051;
+	transition: ease-in-out 0.3s;
+}
+
+.services .icon-box p {
+	line-height: 24px;
+	font-size: 14px;
+	margin-bottom: 0;
+}
+
+.services .icon-box:hover {
+	border-color: #fff;
+	box-shadow: var(--shadow-card);
+}
+
+.services .iconbox-blue i {
+	color: #47aeff;
+}
+
+.services .iconbox-blue:hover .icon i {
+	color: #fff;
+}
+
+.services .iconbox-blue:hover .icon path {
+	fill: #47aeff;
+}
+
+.services .iconbox-orange i {
+	color: #ffa76e;
+}
+
+.services .iconbox-orange:hover .icon i {
+	color: #fff;
+}
+
+.services .iconbox-orange:hover .icon path {
+	fill: #ffa76e;
+}
+
+.services .iconbox-pink i {
+	color: #e80368;
+}
+
+.services .iconbox-pink:hover .icon i {
+	color: #fff;
+}
+
+.services .iconbox-pink:hover .icon path {
+	fill: #e80368;
+}
+
+.services .iconbox-yellow i {
+	color: #ffbb2c;
+}
+
+.services .iconbox-yellow:hover .icon i {
+	color: #fff;
+}
+
+.services .iconbox-yellow:hover .icon path {
+	fill: #ffbb2c;
+}
+
+.services .iconbox-red i {
+	color: #ff5828;
+}
+
+.services .iconbox-red:hover .icon i {
+	color: #fff;
+}
+
+.services .iconbox-red:hover .icon path {
+	fill: #ff5828;
+}
+
+.services .iconbox-teal i {
+	color: #11dbcf;
+}
+
+.services .iconbox-teal:hover .icon i {
+	color: #fff;
+}
+
+.services .iconbox-teal:hover .icon path {
+	fill: #11dbcf;
+}
+
+.services .iconbox-green i {
+	color: #52b720;
+}
+
+.services .iconbox-green:hover .icon i {
+	color: #fff;
+}
+
+.services .iconbox-green:hover .icon path {
+	fill: #52b720;
+}
+
+#ib1,
+#ib2,
+#ib3,
+#ib4,
+#ib5,
+#ib6,
+#ib7 {
+	cursor: pointer;
+}
+
+#b1d,
+#b2d,
+#b3d,
+#b4d,
+#b5d,
+#b6d,
+#b7d {
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.centered-destino-box {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+#destinosBox a {
+	color: var(--font-color);
+}
+
+/*--------------------------------------------------------------
+# Testimonials - Summary
+--------------------------------------------------------------*/
+.container {
+	position: relative;
+}
+
+.container .centered {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 35px;
+}
+
+.testimonials .section-header {
+	margin-bottom: 40px;
+}
+
+.testimonials .testimonials-carousel,
+.testimonials .testimonials-slider {
+	overflow: hidden;
+}
+
+.testimonials .testimonial-item {
+	text-align: center;
+}
+
+.testimonials .testimonial-item .testimonial-img {
+	width: 120px;
+	border-radius: 50%;
+	border: 4px solid #fff;
+	margin: 0 auto;
+}
+
+.testimonials .testimonial-item h3 {
+	font-size: 20px;
+	font-weight: bold;
+	margin: 10px 0 5px 0;
+	color: #111;
+}
+
+.testimonials .testimonial-item h4 {
+	font-size: 14px;
+	color: #999;
+	margin: 0 0 15px 0;
+}
+
+.testimonials .testimonial-item h5 {
+	font-size: 20px;
+	font-weight: bold;
+	margin: 10px 0 5px 0;
+	color: #4f5051;
+}
+
+.testimonials .testimonial-item .quote-icon-left,
+.testimonials .testimonial-item .quote-icon-right {
+	color: #90c8fc;
+	font-size: 26px;
+}
+
+.testimonials .testimonial-item .quote-icon-left {
+	display: inline-block;
+	left: -5px;
+	position: relative;
+}
+
+.testimonials .testimonial-item .quote-icon-right {
+	display: inline-block;
+	right: -5px;
+	position: relative;
+	top: 10px;
+}
+
+.testimonials .testimonial-item p {
+	font-style: italic;
+	margin: 0 auto 15px auto;
+	width: 80%;
+}
+
+@media (min-width: 992px) {
+	.testimonials .testimonial-item p {
+		width: 80%;
+	}
+}
+
+/*--------------------------------------------------------------
+# Contact
+--------------------------------------------------------------*/
+.contact .info {
+	width: 100%;
+	background: #fff;
+	float: left;
+}
+
+.contact .info i {
+	font-size: 20px;
+	color: var(--theme-color);
+	float: left;
+	width: 44px;
+	height: 44px;
+	background: #eef7ff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50px;
+	transition: all 0.3s ease-in-out;
+}
+
+.contact .info h4 {
+	padding: 0 0 0 60px;
+	font-size: 22px;
+	font-weight: 600;
+	margin-bottom: 5px;
+	color: #4f5051;
+}
+
+.contact .info p {
+	padding: 0 0 0 60px;
+	margin-bottom: 0;
+	font-size: 14px;
+	color: #728394;
+}
+
+.contact .info .email,
+.contact .info .phone {
+	margin-top: 40px;
+}
+
+.contact .info .email:hover i,
+.contact .info .address:hover i,
+.contact .info .phone:hover i {
+	background: var(--theme-color);
+	color: #fff;
+}
+
+.php-email-form {
+	width: 1px;
+	background: #fff;
+}
+
+.php-email-form .form-group {
+	padding-bottom: 8px;
+}
+
+.php-email-form input,
+.contact .php-email-form select,
+.contact .php-email-form textarea {
+	border-radius: 4px;
+	box-shadow: none;
+	font-size: 14px;
+}
+
+.php-email-form input,
+.contact .php-email-form select {
+	height: 44px;
+}
+
+.php-email-form textarea {
+	padding: 10px 12px;
+}
+
+#botao,
+#botao-right,
+#botao-salvar {
+	background: var(--theme-color);
+	border: 0;
+	padding: 10px 35px;
+	color: #fff;
+	transition: 0.4s;
+	border-radius: 50px;
+}
+
+#botao:hover,
+#botao-right:hover,
+#botao-salvar:hover {
+	background: var(--theme-color);
+}
+
+#circulo,
+#circulo-mini {
+	background: #eef7ff;
+	color: var(--theme-color);
+	padding: 10px 10px;
+	transition: 0.4s;
+	border-radius: 100%;
+	border: 0;
+	transition: 0.4s;
+	margin-top: 4px;
+}
+
+#botao-right {
+	width: 120px;
+	border-radius: 50px;
+	padding: 5px 20px;
+	font-size: 14px;
+	margin: 15px 10px 15px 590px;
+}
+
+#circulo:hover,
+#circulo-mini:hover {
+	background: var(--theme-color);
+	color: #fff;
+}
+
+.cabecalho {
+	color: #6a737c;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+#cab1,
+#cab3,
+#cab4,
+#cab5,
+#cab7,
+#cab8 {
+	float: left;
+}
+
+#cab1,
+#cab3 {
+	margin-left: 5px;
+}
+
+#cab2 {
+	margin-left: 505px;
+}
+
+#cab4 {
+	margin-left: 295px;
+}
+
+#cab5 {
+	margin-left: 75px;
+}
+
+#cab6 {
+	margin-left: 560px;
+}
+
+#cab7,
+#cab8,
+#cab9,
+#cab10,
+#cab11,
+#cab12 {
+	display: none;
+}
+
+.linha,
+.linha-mini {
+	margin-top: 20px;
+}
+
+#contact-div {
+	width: 730px;
+	margin: auto;
+}
+
+#itemLista,
+#itemLista-mini {
+	width: 490px;
+	float: left;
+	margin-right: 10px;
+	color: #6a737c;
+	font-size: 14px;
+}
+
+#itemLista-mini {
+	width: 325px;
+	float: left;
+	margin-right: 10px;
+	color: #6a737c;
+	font-size: 14px;
+}
+
+#Quantidade {
+	width: 150px;
+	float: left;
+	margin-right: 10px;
+	color: #6a737c;
+	font-size: 14px;
+}
+
+#tipo-mini,
+#Quantidade-mini,
+#Valor-mini {
+	width: 100px;
+	float: left;
+	margin-right: 10px;
+	color: #6a737c;
+	font-size: 14px;
+}
+
+#alerta-1,
+#alerta-2,
+#sucesso {
+	margin-top: 40px;
+}
+
+@media (max-width: 992px) {
+	#contact-div {
+		width: 90%;
+		margin: auto;
+	}
+
+	#cab2 {
+		margin-left: 66%;
+	}
+
+	#cab3,
+	#cab4,
+	#cab5,
+	#cab6 {
+		display: none;
+	}
+
+	#cab7,
+	#cab8,
+	#cab9,
+	#cab10 {
+		display: block;
+	}
+
+	#itemLista {
+		width: 63.9%;
+	}
+
+	#Quantidade {
+		width: 20%;
+	}
+
+	#itemLista-mini {
+		width: 60%;
+	}
+
+	#tipo-mini {
+		width: 32%;
+	}
+
+	#Quantidade-mini,
+	#Valor-mini {
+		width: 25%;
+		margin-top: 5px;
+		margin-bottom: 25px;
+	}
+
+	#Valor-mini {
+		margin-left: 3%;
+	}
+
+	#botao-right {
+		margin: 25px 10px 25px 65%;
+	}
+
+	#circulo-mini {
+		margin-top: 28px;
+		margin-left: 31%;
+	}
+}
+
+@media (max-width: 770px) {
+	#circulo-mini {
+		margin-left: 28%;
+	}
+}
+
+@media (max-width: 490px) {
+	#circulo-mini {
+		margin-left: 25%;
+	}
+}
+
+@media (max-width: 440px) {
+	#itemLista {
+		width: 63.9%;
+	}
+
+	#Quantidade {
+		width: 50px;
+	}
+
+	#circulo-mini {
+		margin-left: 22%;
+	}
+}
+
+@media (max-width: 380px) {
+	#itemLista {
+		width: 60%;
+	}
+}
+
+@media (max-width: 350px) {
+	#circulo {
+		margin-left: 57%;
+	}
+
+	#cab11,
+	#cab12 {
+		display: block;
+	}
+
+	#itemLista {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+
+	#Quantidade {
+		width: 60px;
+		margin-bottom: 25px;
+	}
+
+	.cabecalho {
+		display: none;
+	}
+
+	#circulo {
+		margin-top: 25px;
+	}
+}
+
+@media (max-width: 330px) {
+	#itemLista-mini {
+		width: 100%;
+	}
+
+	#tipo-mini,
+	#Quantidade-mini,
+	#Valor-mini {
+		width: 20%;
+		margin-top: 5px;
+		margin-right: 5px;
+		margin-left: 5px;
+		margin-bottom: 25px;
+	}
+
+	#circulo,
+	#circulo-mini {
+		margin-left: 5px;
+	}
+}
+
+@-webkit-keyframes animate-loading {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes animate-loading {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+#footer {
+	position: relative;
+	bottom: 0;
+	color: #4f5051;
+	font-size: 14px;
+	text-align: center;
+	width: 100%;
+	padding: 10px 0px 20px 0px;
+	/* Clear the iOS home indicator / PWA safe area so the footer sits flush
+	   with the very bottom of the screen. */
+	padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+}
+
+.attributions,
+.atribuicoes {
+	cursor: pointer;
+}
+
+.attributions:hover,
+.atribuicoes:hover {
+	color: #666768;
+}
+
+.attributions-icon,
+.atribuicoes-icon {
+	font-size: 10px;
+}
+
+#footer h3 {
+	font-size: 36px;
+	font-weight: 700;
+	position: relative;
+	font-family: "Poppins", sans-serif;
+	padding: 0;
+	margin: 0 0 15px 0;
+}
+
+#footer p {
+	font-size: 15;
+	font-style: italic;
+	padding: 0;
+	margin: 0 0 40px 0;
+}
+
+#footer .social-links {
+	margin-bottom: 20px;
+	margin-top: -20px;
+}
+
+#footer .social-links a {
+	font-size: 18px;
+	display: inline-block;
+	background: var(--theme-color);
+	color: #fff;
+	line-height: 1;
+	padding: 8px 0;
+	margin-right: 4px;
+	border-radius: 50%;
+	text-align: center;
+	width: 36px;
+	height: 36px;
+	transition: 0.3s;
+}
+
+#footer .social-links a:hover {
+	background: var(--theme-color);
+	color: #fff;
+	text-decoration: none;
+}
+
+#footer .copyright {
+	margin: 0 0 5px 0;
+}
+
+#footer .credits {
+	font-size: 13px;
+}
+
+.pessoa-img {
+	width: 36px;
+	height: 36px;
+}
+
+#mainP {
+	margin: 20px;
+}
+
+.custom-icon::before {
+	content: url("/assets/img/custom\ icons/01.svg");
+}
+
+/*--------------------------------------------------------------
+# Lightbox
+--------------------------------------------------------------*/
+
+.lightbox {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 1000;
+	overflow-y: hidden;
+}
+
+/* Lock the page behind the lightbox so only the lightbox content scrolls
+   (the loading screen re-enables body scroll after mount, which otherwise
+   leaves the trip page scrolling underneath → double scrollbar). */
+body.lightbox-open {
+	overflow: hidden !important;
+}
+
+.lightbox-content {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow-y: auto;
+	background: var(--background-color, #fff);
+	padding: 16px 4vw 64px;
+}
+
+/* Inline components (expenses, itinerary, destination) — no iframes anymore. */
+#expenses-embed {
+	width: 100%;
+}
+
+/* The standalone expenses page pads `.expenses-container` on wide screens
+   (10% @1300px, 20% @1750px). Inside view.html the content already sits in
+   Bootstrap's `.container`, so keep the base 2rem padding only. */
+#expenses-embed .expenses-container,
+#expenses-embed #conversion {
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+/* Lightbox chrome */
+.lightbox-toolbar {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	background: var(--background-color, #fff);
+	padding: 8px 0;
+	margin-bottom: 8px;
+}
+
+.lightbox-close {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border: none;
+	border-radius: 50%;
+	background: var(--box-color, #f1f1f1);
+	color: var(--font-color, #272829);
+	font-size: 20px;
+	line-height: 1;
+	cursor: pointer;
+	transition: background 0.2s ease;
+}
+
+.lightbox-close:hover {
+	background: var(--box-color-hover, #ecebeb);
+}
+
+.lightbox-close i {
+	font-size: 20px;
+	line-height: 1;
+}
+
+/* Printing from the inline lightbox (full itinerary): hide the trip page and
+   let the lightbox content flow normally so the itinerary table paginates
+   with its repeating <thead>. */
+@media print {
+	body.lightbox-open .loadable > *:not(#main),
+	body.lightbox-open #main > *:not(#lightbox),
+	body.lightbox-open footer,
+	body.lightbox-open #preloader,
+	body.lightbox-open #toast {
+		display: none !important;
+	}
+
+	body.lightbox-open #lightbox {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		overflow: visible !important;
+		background: #fff !important;
+	}
+
+	body.lightbox-open .lightbox-content {
+		position: static !important;
+		height: auto !important;
+		overflow: visible !important;
+		padding: 0 !important;
+		background: #fff !important;
+	}
+
+	body.lightbox-open .lightbox-toolbar {
+		display: none !important;
+	}
+}
+
+/* Destination lightbox reuses the full-bleed page hero from destination.html,
+   so drop the document padding and let the hero run edge-to-edge while the
+   close button floats over it. */
+.lightbox-content.destination-mode {
+	padding: 0;
+}
+
+.lightbox-content.destination-mode .lightbox-toolbar {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	padding: 12px 20px;
+	background: transparent;
+	/* The toolbar is in normal flow, which would otherwise push the hero down
+	   and leave a plain-white strip above it. Pull the hero up so it starts at
+	   the very top, behind the floating X. */
+	margin-bottom: -64px;
+	pointer-events: none;
+}
+
+.lightbox-content.destination-mode .lightbox-close {
+	pointer-events: auto;
+}
+
+/* The hero's `background-attachment: fixed` and its fixed white overlay both
+   anchor to the viewport, which detaches them from the lightbox's scrollable
+   container and leaves plain-white gaps. Re-anchor both to the hero so the
+   frosted photo fills the box edge-to-edge. */
+.lightbox-content.destination-mode .page-hero {
+	background-attachment: scroll;
+}
+
+.lightbox-content.destination-mode .page-hero::before {
+	position: absolute;
+}
+
+/* The destination component renders into #content; keep it full-width.
+   (Itinerary keeps its own `.content` styling from itinerary.css.) */
+#lightbox #content {
+	width: 100%;
+}
+
+/* Cancel the standalone pages' top spacer (they push content below a fixed
+   top-bar that doesn't exist inside the lightbox). */
+#lightbox .section-title h1 {
+	padding-top: 0;
+}
+
+/* The standalone content-box reserves 60px for the fixed top-bar; the
+   lightbox has none, so collapse that spacer to a small breathing gap. */
+.lightbox-content.destination-mode #destination-content-box {
+	padding-top: 24px;
+}
+
+/*--------------------------------------------------------------
+# Messages container (page-specific overrides)
+--------------------------------------------------------------*/
+
+/* Page-specific container extensions — extend .message-container base styles */
+.itinerary-container,
+.destinations-container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #fff;
+	border-radius: 10px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	padding: 20px;
+	width: 500px;
+	height: auto;
+	overflow-wrap: break-word;
+}
+
+@media (max-height: 730px) {
+	.itinerary-container {
+		max-height: 95%;
+		overflow: auto;
+		display: block;
+	}
+}
+
+/* Page-specific error message styling */
+.error-message {
+	font-size: 18px;
+	color: #666;
+}
+
+@media (max-width: 520px) {
+	.itinerary-container,
+	.destinations-container {
+		width: 90%;
+		height: auto;
+	}
+}
+
+.generic {
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	object-position: center;
+	text-align: center;
+}
+
+.calendar-navigation {
+	background-color: var(--theme-color);
+	color: #fff;
+	border-radius: 5px;
+	border: none;
+	padding: 5px;
+	margin: 5px;
+	cursor: pointer;
+	width: 50px;
+	font-size: x-large;
+}
+
+.calendar-navigation.disabled {
+	background-color: #f6f6f6;
+	color: #b0b0b0;
+	cursor: default;
+}
+
+.calendarTrip {
+	background-color: #f6f6f6 !important;
+	color: var(--font-color);
+	font-weight: bold;
+	transition: background-color 0.3s ease;
+}
+
+.calendarTrip:hover,
+.calendarTrip:active,
+.calendarTrip.active {
+	font-weight: bold;
+	background-color: var(--theme-color) !important;
+	color: white;
+	cursor: pointer;
+}
+
+.calendarDisabled {
+	color: #d9d9d9;
+}
+
+.mobile-nav-toggle:hover,
+.custom-nav-toggle:hover {
+	color: #7a7a7a;
+}
+
+.btn-format {
+	margin: 5px;
+}
+
+#fechar,
+#copiar {
+	margin-left: 20px;
+}
+
+.btn-theme {
+	background: var(--theme-color);
+	color: #ffffff;
+}
+
+.btn-theme:hover,
+.btn-theme:active {
+	background: var(--theme-color-hover);
+}
+
+/* Restore view.html button chrome from component stylesheet leakage
+   (expenses.css / itinerary.css / destination.css are loaded globally). */
+.button-box {
+	display: block;
+	text-align: center;
+}
+
+.button-box .btn {
+	font-weight: 400;
+}
+
+.button-box .btn-format:first-child,
+.button-box .btn-format:last-child {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#dDescription {
+	margin-bottom: 40px;
+	text-align: center;
+	display: none;
+}
+
+#dUpdate {
+	color: #9f9fab;
+}
+
+/* Flight Box */
+
+.flight-box {
+	display: flex;
+	flex-direction: column;
+	border: var(--card-border);
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+	width: 600px;
+	height: auto;
+	margin: 0 auto;
+	font-family: Arial, sans-serif;
+	color: #4f5051;
+	background-color: #fff;
+}
+
+.flight-title {
+	display: flex;
+	align-items: center;
+	padding: 15px;
+	justify-content: space-between;
+}
+
+.flight-img {
+	height: 20px;
+	margin-right: 5px;
+}
+
+.flight-title-text {
+	flex-grow: 1;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.flight-code {
+	font-size: 18px;
+	font-weight: bold;
+	margin-left: auto;
+}
+
+.flight-text {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding: 20px;
+	min-height: 124px;
+}
+
+.left-text,
+.right-text {
+	text-align: center;
+	flex-basis: 50%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.center-text {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0 10%;
+	margin-top: 24.2px;
+	white-space: nowrap;
+	text-align: center;
+}
+
+.flight-date,
+.flight-time,
+.flight-time-en,
+.flight-location {
+	font-size: 14px;
+	margin: -2px;
+}
+
+.flight-time,
+.flight-time-en {
+	font-size: 36px;
+	font-weight: bold;
+}
+
+.flight-time-en {
+	font-size: 30px;
+}
+
+.iconify {
+	font-size: 24px;
+}
+
+.flight-line {
+	position: absolute;
+	transform: translateY(-77%);
+	color: #d9d9d9;
+	z-index: 0;
+}
+
+.flight-icon {
+	color: var(--theme-color);
+	font-size: 36px;
+	position: relative;
+	z-index: 1;
+}
+
+.flight-duration {
+	margin-top: 5px;
+	font-size: 14px;
+	height: 15.7px;
+}
+
+@media (max-width: 767px) {
+	.flight-box {
+		width: 100%;
+	}
+}
+
+@media (max-width: 455px) {
+	.flight-time-en {
+		font-size: 25px;
+	}
+}
+
+@media (max-width: 380px) {
+	.flight-text {
+		flex-direction: column;
+		align-items: center;
+		padding: 10px;
+	}
+
+	.left-text,
+	.center-text,
+	.right-text {
+		flex-basis: auto;
+		text-align: center;
+		margin: 10px 0;
+	}
+
+	.left-text {
+		order: 1;
+	}
+
+	.center-text {
+		order: 2;
+	}
+
+	.right-text {
+		order: 3;
+	}
+}
+
+.transport-category {
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 20%;
+	margin-bottom: 10px;
+}
+
+#transportation-departure,
+#transportation-internal {
+	margin-bottom: 50px;
+}
+
+.transport-category:first-child {
+	margin-top: 0;
+}
+
+/* Accommodation Box */
+
+.hotel-box,
+.flight-box,
+.itinerary-box,
+#calendar {
+	box-shadow: var(--shadow-card);
+}
+
+.hotel-box,
+.hotel-box-inner {
+	display: flex;
+	color: #4f5051;
+	border: var(--card-border);
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+	width: 600px;
+	margin: 0 auto;
+	text-align: start;
+	transition: all ease-in-out 0.3s;
+	background-color: #fff;
+}
+
+.hotel-box-inner {
+	flex-direction: column;
+	width: 100%;
+}
+
+.hotel-box-inner .hotel-img {
+	height: 150px;
+	width: 100%;
+	background-size: cover;
+	background-position: center;
+}
+
+.hotel-img {
+	width: 180px;
+	height: 100%;
+	position: relative;
+	background-color: #f2f2f2;
+	background-size: cover;
+	background-position: center;
+	color: #fff;
+}
+
+.hotel-img::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		to top,
+		rgba(0, 0, 0, 0.8) 0%,
+		rgba(0, 0, 0, 0.5) 10%,
+		rgba(0, 0, 0, 0) 100%
+	);
+}
+
+.hotel-img-text-container {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 5px;
+}
+
+.hotel-img-text {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+.hotel-content {
+	flex: 1;
+	padding: 20px;
+}
+
+.hotel-name {
+	font-weight: bold;
+	font-size: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.hotel-address {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	font-size: 16px;
+}
+
+.hotel-text {
+	font-size: 16px;
+}
+
+.color-icon {
+	color: var(--theme-color);
+	font-size: inherit;
+}
+
+.hotel-reservation,
+.itinerary-date-box {
+	margin-top: 10px;
+}
+
+.hotel-reservation.sensitive {
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.hotel-description {
+	margin-bottom: 10px;
+}
+
+/* Payment status indicator (F065) — always uses the theme color, never a
+   hardcoded semantic green/orange, so it matches the rest of the page. */
+.hotel-payment-status {
+	margin-bottom: 10px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	color: var(--theme-color);
+}
+
+.hotel-payment-status .color-icon {
+	font-size: 18px;
+	color: var(--theme-color);
+}
+
+.external-link {
+	color: #3d85c6;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+@media (max-width: 770px) {
+	.hotel-box {
+		flex-direction: column;
+		width: 90%;
+	}
+
+	.hotel-box .hotel-img {
+		height: 150px;
+		width: 100%;
+		background-size: cover;
+		background-position: center;
+	}
+}
+
+.destination-title {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 16px;
+	border-bottom: 0.5px solid var(--table-border);
+}
+
+.rating-box {
+	display: block;
+	white-space: nowrap;
+	margin-top: 5px;
+	margin-bottom: 20px;
+}
+
+.rating-no-margin {
+	font-size: 25px;
+	color: #1f2937;
+	border-radius: 50%;
+	padding: 3px;
+	margin-right: 0;
+}
+
+.rating-5 {
+	background-color: #cfe2f3;
+}
+
+.rating-4 {
+	background-color: #d9ead3;
+}
+
+.rating-3 {
+	background-color: #fff2cc;
+}
+
+.rating-2 {
+	background-color: #fce5cd;
+}
+
+.rating-1 {
+	background-color: #f4cccc;
+}
+
+.rating-absent {
+	background-color: #ead1dc;
+}
+
+.rating-text {
+	color: #4f5051;
+	font-weight: bold;
+	position: relative;
+	top: 1.5px;
+}
+
+@media (max-width: 380px) {
+	.rating-text {
+		font-size: 16px;
+	}
+}
+
+.links-container {
+	display: flex;
+	margin-top: 4.5px;
+}
+
+.links-container .iconify {
+	margin-left: 8px;
+}
+
+.link {
+	color: #3d85c6;
+	text-decoration: none;
+	cursor: pointer;
+	font-size: 25px;
+}
+
+.link:hover {
+	color: #195b96;
+	text-decoration: none;
+}
+
+.destination-topics-box {
+	margin-bottom: 10px;
+	font-size: 16px;
+}
+
+.destination-description {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.midia-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.tiktok-embed-v2 {
+	clip-path: inset(6px 0px 0px 0px);
+	/* cut first 6px from top (white bar) */
+	width: 323.4px;
+	height: 574.92px;
+	overflow: hidden !important;
+}
+
+.tiktok-embed-v3 {
+	width: 300px;
+	height: 533px;
+}
+
+.youtube-embed {
+	width: 100%;
+	height: 213.41px;
+}
+
+.inner-itinerary-item {
+	max-width: 390px;
+}
+
+/* Itinerary Pills */
+.pill-box {
+	margin-top: 36px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 24px;
+}
+
+.pill-circle {
+	width: 12px;
+	height: 12px;
+	background-color: #aaabac;
+	border-radius: 50%;
+	display: inline-block;
+	margin-right: 8px;
+	transition: background-color 0.3s ease;
+}
+
+.pill:hover .pill-circle-default {
+	background-color: var(--theme-color);
+}
+
+.pill {
+	padding: 4px 12px;
+	display: inline-flex;
+	align-items: center;
+	border: 0.5px solid var(--table-border);
+	border-radius: 9999px;
+	background-color: #f6f6f6;
+	transition: background-color 0.3s ease;
+	cursor: pointer;
+	margin: 0 8px 8px 0;
+}
+
+.pill:hover .pill-circle-blue,
+.active-circle-blue {
+	background-color: #47aeff;
+}
+
+.pill:hover .pill-circle-yellow,
+.active-circle-yellow {
+	background-color: #ffbb2c;
+}
+
+.pill:hover .pill-circle-pink,
+.active-circle-pink {
+	background-color: #e80368;
+}
+
+.pill:hover .pill-circle-green,
+.active-circle-green {
+	background-color: #52b720;
+}
+
+.pill:hover .pill-circle-teal,
+.active-circle-teal {
+	background-color: #11dbcf;
+}
+
+.pill:hover .pill-circle-orange,
+.active-circle-orange {
+	background-color: #ffa76e;
+}
+
+.pill:hover .pill-circle-red,
+.active-circle-red {
+	background-color: #ff5828;
+}
+
+.active-calendar-blue {
+	background-color: #e3f3ff !important;
+}
+
+.active-calendar-yellow {
+	background-color: #fff5df !important;
+}
+
+.active-calendar-pink {
+	background-color: #fcd9e8 !important;
+}
+
+.active-calendar-green {
+	background-color: #e5f4de !important;
+}
+
+.active-calendar-teal {
+	background-color: #dbfaf8 !important;
+}
+
+.active-calendar-orange {
+	background-color: #fff2e9 !important;
+}
+
+.active-calendar-red {
+	background-color: #ffe6df !important;
+}
+
+#expenses-section {
+	color: #fff;
+}
+
+/*--------------------------------------------------------------
+# Tabs
+--------------------------------------------------------------*/
+
+.tabs-container {
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.left-items {
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+.tabs {
+	display: flex;
+	position: relative;
+	background-color: #fff;
+	box-shadow: var(--shadow-card);
+	padding: 0.75rem;
+	border-radius: 99px;
+	transform: scale(0.7);
+}
+
+.tabs * {
+	z-index: 2;
+}
+
+input[type="radio"] {
+	display: none;
+}
+
+.tab,
+.tab-mini {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 54px;
+	width: 200px;
+	font-size: 1.25rem;
+	font-weight: 500;
+	border-radius: 99px;
+	cursor: pointer;
+	transition: color 0.15s ease-in;
+}
+
+.tab-mini {
+	width: 100px;
+}
+
+.tabs-container input[type="radio"]:checked + label {
+	font-weight: bold;
+}
+
+.tabs-container input[type="radio"]:checked + label > .notification {
+	background-color: var(--theme-color);
+	color: #fff;
+}
+
+.tabs-container input[id="radio-ida"]:checked ~ .glider {
+	transform: translateX(0);
+}
+
+.tabs-container input[id="radio-durante"]:checked ~ .glider {
+	transform: translateX(100%);
+}
+
+.tabs-container input[id="radio-volta"]:checked ~ .glider {
+	transform: translateX(200%);
+}
+
+.glider,
+.glider-mini {
+	position: absolute;
+	display: flex;
+	height: 54px;
+	width: 200px;
+	background-color: var(--theme-color-secondary);
+	z-index: 1;
+	border-radius: 99px;
+	transition: 0.25s ease-out;
+}
+
+.glider-mini {
+	width: 100px;
+}
+
+@media (max-width: 700px) {
+	.tabs {
+		transform: scale(0.6);
+	}
+}
+
+@media (max-width: 1199px) and (min-width: 993px) {
+	#menu {
+		display: none;
+	}
+}
+
+/* GLightbox caption overrides moved to components/portfolio.css (shared with
+   the destination page so both pages render the lightbox identically). */
+
+/* Language Selector */
+
+.lang-selector {
+	position: relative;
+}
+
+.lang-button {
+	background: none;
+	border: none;
+	border-radius: 999px;
+	padding: 0.4rem 1rem;
+	cursor: pointer;
+	font-size: 1rem;
+	color: #3a3838;
+}
+
+.lang-options {
+	position: absolute;
+	top: 120%;
+	left: 0;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 0.5rem;
+	overflow: hidden;
+	box-shadow: 0 2px 6px rgba(166, 166, 166, 0.05);
+	display: none;
+	min-width: 100%;
+}
+
+.lang-options button {
+	background: none;
+	border: none;
+	padding: 0.5rem 1rem;
+	width: 100%;
+	text-align: left;
+	cursor: pointer;
+	font-size: 1rem;
+	color: #3a3838;
+}
+
+.lang-options button:hover {
+	background: #f5f5f5;
+}
+
+/* Travelers Checkboxes */
+#inner-itinerary-travelers-checkboxes {
+	margin: 12px 0 14px 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 18px;
+}
+
+/* label layout */
+#inner-itinerary-travelers-checkboxes .checkbox-item {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	cursor: pointer;
+	user-select: none;
+}
+
+/* checkbox color = theme color */
+#inner-itinerary-travelers-checkboxes input[type="checkbox"] {
+	accent-color: var(--theme-color);
+	cursor: pointer;
+}
+
+/*--------------------------------------------------------------
+# Pin (Anshul Kumar https://codepen.io/the_anshulkumar/pen/RKzYKj)
+--------------------------------------------------------------*/
+.pin-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 30px;
+	margin-bottom: 5px;
+}
+
+.pin-input,
+.pin-input-invalid {
+	width: 44px;
+	height: 44px;
+	border: 1px solid #d7d7d7;
+	border-radius: 6px;
+	outline: none;
+	margin: 1px;
+	text-align: center;
+	margin: 0 5px;
+	background: #eeeeee;
+	font-size: 20px;
+	color: var(--font-color);
+}
+
+.pin-input-invalid {
+	color: #3a3838;
+	background: #eee0e0;
+	border-color: #dbbbbb;
+}
+
+.pin {
+	color: #ffffff;
+	font-size: 20px;
+	text-align: center;
+	display: none;
+}
+
+.placeholder-text {
+	color: var(--nf-input-placeholder-color);
+}
+
+/* Blocked Reservation Container — shared base in components/sensitive-box.css */
+
+/*--------------------------------------------------------------
+# View Item Dialogs (itinerary card dialogs)
+# Reuses components/dialog.css + destination/destination.css for the
+# overlay, card, media carousel and destination detail body. Only the
+# view-specific pieces live here.
+--------------------------------------------------------------*/
+.view-item-dialog-card {
+	max-width: 520px;
+}
+
+/* Neutral themed close button (same as the destination detail dialog) */
+#view-item-dialog .dialog-close {
+	color: var(--text-primary);
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
+}
+
+#view-item-dialog .dialog-close:hover {
+	color: var(--text-primary);
+	background: var(--bg-tertiary);
+	transform: scale(1.05);
+}
+
+/* Transportation company logo area — neutral, theme-aware background.
+   Custom colors can be fed per company via the `backgrounds` section in
+   transportation.json (`--transport-media-bg-light` / `-dark`). */
+.view-item-transport-media {
+	width: 100%;
+	height: 220px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	background: var(--transport-media-bg-light, var(--bg-secondary));
+}
+
+.view-item-transport-logo {
+	max-width: 60%;
+	max-height: 60%;
+	object-fit: contain;
+}
+
+.view-item-transport-logo.light {
+	display: block;
+}
+
+.view-item-transport-logo.dark {
+	display: none;
+}
+
+.view-item-transport-title {
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--text-primary);
+	text-align: center;
+}
+
+/* Reservation badge shown top-right in the item dialog header, next to the
+   title (same position as the destination score badge). */
+.dialog-reservation-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	border-radius: 20px;
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--text-primary);
+	background: var(--bg-tertiary);
+	border: 1px solid var(--border-color);
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+.dialog-reservation-badge .reservation-icon {
+	font-size: 16px;
+	color: var(--theme-color);
+}
+
+.dialog-reservation-badge .reservation-code {
+	color: var(--text-primary);
+	text-decoration: none;
+}
+
+.dialog-reservation-badge .copy-icon {
+	margin-left: 2px;
+	height: 16px;
+	width: 16px;
+}
+
+@media (max-width: 576px) {
+	.view-item-transport-media {
+		height: 180px;
+	}
+}

@@ -1,0 +1,565 @@
+{
+  "trip": {
+    "title": "Neck Deep SP",
+    "currency": "BRL",
+    "start": {
+      "day": 7,
+      "month": 4,
+      "year": 2018,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 8,
+      "month": 4,
+      "year": 2018,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2018-04-08T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Airbnb Jardim Paulista",
+      "description": "Apartamento no Jardim Paulista, São Paulo",
+      "address": "Alameda Jaú, 1877, Ap. 21 - Jardim Paulista, São Paulo",
+      "dates": {
+        "checkIn": {
+          "day": 7,
+          "month": 4,
+          "year": 2018,
+          "hour": 15,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 8,
+          "month": 4,
+          "year": 2018,
+          "hour": 12,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "flight",
+      "company": "azul",
+      "points": {
+        "origin": "Belo Horizonte (CNF)",
+        "destination": "São Paulo (CGH)"
+      },
+      "dates": {
+        "departure": {
+          "day": 7,
+          "month": 4,
+          "year": 2018,
+          "hour": 8,
+          "minute": 5,
+          "second": 0
+        },
+        "arrival": {
+          "day": 7,
+          "month": 4,
+          "year": 2018,
+          "hour": 9,
+          "minute": 25,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "departure",
+      "reservation": "FYTYXP",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "azul",
+      "points": {
+        "origin": "São Paulo (CGH)",
+        "destination": "Belo Horizonte (CNF)"
+      },
+      "dates": {
+        "departure": {
+          "day": 8,
+          "month": 4,
+          "year": 2018,
+          "hour": 10,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 8,
+          "month": 4,
+          "year": 2018,
+          "hour": 11,
+          "minute": 15,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "return",
+      "reservation": "FYTYXP",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20180407": {
+      "title": {
+        "value": "Show do Neck Deep",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 7,
+        "month": 4,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa → Aeroporto: Carona com pai",
+          "start": "06:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo BH → SP: Azul AD6996, CNF→CGH",
+          "start": "08:05",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "cost": 8,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Ônibus 175T-10 ou Metrô L1: Aeroporto → Centro",
+          "start": "09:40",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pinacoteca: Visita ao museu",
+          "start": "10:10",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô L4: Pinacoteca → Almoço",
+          "start": "11:40",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "cost": 55,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pellegrino: Almoço",
+          "start": "12:20",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "A pé: Pellegrino → Tomie Ohtake",
+          "start": "13:20",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Museu Tomie Ohtake: Visita",
+          "start": "13:30",
+          "end": ""
+        },
+        {
+          "cost": 10,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Tomie Ohtake → MIS",
+          "start": "14:30",
+          "end": ""
+        },
+        {
+          "cost": 5,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "MIS (Museu da Imagem e do Som): Visita",
+          "start": "14:30",
+          "end": ""
+        },
+        {
+          "cost": 9,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: MIS → Airbnb",
+          "start": "15:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Check-in / Descanso",
+          "start": "15:00",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Ônibus 719R-10: Airbnb → Fabrique Club",
+          "start": "16:00",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Show Neck Deep: Fabrique Club. Portões 18:00, Show 19:15",
+          "start": "17:00",
+          "end": ""
+        },
+        {
+          "cost": 30,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Fabrique Club → Camdem House",
+          "start": "21:00",
+          "end": ""
+        },
+        {
+          "cost": 95,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Camdem House: Jantar - Pub inglês",
+          "start": "22:00",
+          "end": ""
+        },
+        {
+          "cost": 15,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Camdem House → Airbnb",
+          "start": "23:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Descanso",
+          "start": "23:15",
+          "end": ""
+        }
+      ]
+    },
+    "20180408": {
+      "title": {
+        "value": "Retorno a BH",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 8,
+        "month": 4,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Arrumar / Check-out",
+          "start": "07:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "A pé: Airbnb → Paulista",
+          "start": "07:30",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Avenida Paulista: Passeio rápido",
+          "start": "07:35",
+          "end": ""
+        },
+        {
+          "cost": 6,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô + Ônibus: Paulista → Aeroporto",
+          "start": "07:55",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo SP → BH: Azul AD2696, CGH→CNF",
+          "start": "10:00",
+          "end": ""
+        }
+      ],
+      "afternoon": [],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Ônibus e metrô em SP",
+        "price": 22.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Transporte Privado",
+        "name": "Uber em SP",
+        "price": 64.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Alimentação durante a viagem",
+        "price": 169.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Atração",
+        "name": "Ingressos museus e atrações",
+        "price": 5.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
+    ],
+    "preTrip": [
+      {
+        "type": "trip.transportation.type.flights",
+        "name": "Azul - BH ↔ SP (ida e volta com pontos TudoAzul)",
+        "price": 100.4,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.accommodation.title",
+        "name": "Airbnb - Jardim Paulista (1 noite)",
+        "price": 73.14,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.entertainment",
+        "name": "Neck Deep - Fabrique Club (Meia/Promocional)",
+        "price": 103.5,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2018-04-08T00:00:00.000Z"
+    }
+  }
+}

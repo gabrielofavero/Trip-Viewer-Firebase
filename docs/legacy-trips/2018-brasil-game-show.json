@@ -1,0 +1,1030 @@
+{
+  "trip": {
+    "title": "Brasil Game Show ft. Afonso",
+    "currency": "BRL",
+    "start": {
+      "day": 12,
+      "month": 10,
+      "year": 2018,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 15,
+      "month": 10,
+      "year": 2018,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2018-10-15T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      },
+      {
+        "id": "afonso",
+        "name": "Afonso"
+      },
+      {
+        "id": "bibs",
+        "name": "Bibs"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Airbnb Jardim Paulista",
+      "description": "Apartamento no Jardim Paulista para 3 pessoas, 3 noites",
+      "address": "Jardim Paulista, São Paulo",
+      "dates": {
+        "checkIn": {
+          "day": 12,
+          "month": 10,
+          "year": 2018,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 15,
+          "month": 10,
+          "year": 2018,
+          "hour": 11,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "flight",
+      "company": "azul",
+      "points": {
+        "origin": "Belo Horizonte (CNF)",
+        "destination": "São Paulo (CGH)"
+      },
+      "dates": {
+        "departure": {
+          "day": 12,
+          "month": 10,
+          "year": 2018,
+          "hour": 6,
+          "minute": 55,
+          "second": 0
+        },
+        "arrival": {
+          "day": 12,
+          "month": 10,
+          "year": 2018,
+          "hour": 8,
+          "minute": 15,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "departure",
+      "reservation": "LEPJWG",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "azul",
+      "points": {
+        "origin": "São Paulo (CGH)",
+        "destination": "Belo Horizonte (CNF)"
+      },
+      "dates": {
+        "departure": {
+          "day": 15,
+          "month": 10,
+          "year": 2018,
+          "hour": 18,
+          "minute": 10,
+          "second": 0
+        },
+        "arrival": {
+          "day": 15,
+          "month": 10,
+          "year": 2018,
+          "hour": 19,
+          "minute": 25,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "return",
+      "reservation": "ODM8FJ",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20181012": {
+      "title": {
+        "value": "BGS Dia 1 - Chegada e feira",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 12,
+        "month": 10,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "BH: Arrumar",
+          "start": "04:30",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa → Aeroporto: Carona com pai",
+          "start": "05:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo BH → SP: Azul AD2849, CNF→CGH",
+          "start": "06:55",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Ônibus: Aeroporto → Centro",
+          "start": "08:15",
+          "end": ""
+        },
+        {
+          "cost": 12,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Mercado Municipal: Café da manhã e compras",
+          "start": "09:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "A pé: Mercado → Memorial",
+          "start": "10:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Memorial da Resistência: Visita",
+          "start": "10:20",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Ônibus: Memorial → Almoço",
+          "start": "11:20",
+          "end": ""
+        },
+        {
+          "cost": 43,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Napoli Centrale: Almoço",
+          "start": "11:50",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "cost": 8,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Ônibus + Metrô: Almoço → Airbnb",
+          "start": "12:50",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Check-in (deixar mochila)",
+          "start": "13:20",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Ônibus: Airbnb → Expo Center",
+          "start": "13:30",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Brasil Game Show: Feira - Dia 1",
+          "start": "14:10",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Ônibus: Expo Center → Airbnb",
+          "start": "19:00",
+          "end": ""
+        },
+        {
+          "cost": 16.75,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Airbnb → Restaurante",
+          "start": "19:40",
+          "end": ""
+        },
+        {
+          "cost": 121.76,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Omalleys / TGI Fridays: Jantar com Afonso",
+          "start": "21:50",
+          "end": ""
+        },
+        {
+          "cost": 20.39,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Restaurante → Airbnb",
+          "start": "23:50",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Descanso",
+          "start": "00:10",
+          "end": ""
+        }
+      ]
+    },
+    "20181013": {
+      "title": {
+        "value": "BGS Dia 2",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 13,
+        "month": 10,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Arrumar",
+          "start": "08:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "A pé: Airbnb → Padaria",
+          "start": "08:30",
+          "end": ""
+        },
+        {
+          "cost": 15.9,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Padaria Bella Paulista: Café da manhã",
+          "start": "08:45",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Ônibus: Padaria → Ibirapuera",
+          "start": "09:15",
+          "end": ""
+        },
+        {
+          "cost": 5,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Parque Ibirapuera: Pavilhão Japonês",
+          "start": "09:55",
+          "end": ""
+        },
+        {
+          "cost": 8.72,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Ibirapuera → Almoço",
+          "start": "10:55",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "cost": 46.3,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Taco Bell / Cake Boss: Almoço perto do Expo Center",
+          "start": "12:05",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô: Almoço → Expo Center",
+          "start": "12:35",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Brasil Game Show: Feira - Dia 2",
+          "start": "13:00",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô: Expo Center → Airbnb",
+          "start": "19:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Descanso",
+          "start": "19:20",
+          "end": ""
+        },
+        {
+          "cost": 14.6,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Airbnb → Camdem House",
+          "start": "20:20",
+          "end": ""
+        },
+        {
+          "cost": 155.5,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Camdem House: Jantar - Pub inglês",
+          "start": "20:40",
+          "end": ""
+        },
+        {
+          "cost": 15.0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Camdem House → Airbnb",
+          "start": "22:40",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Descanso",
+          "start": "23:00",
+          "end": ""
+        }
+      ]
+    },
+    "20181014": {
+      "title": {
+        "value": "BGS Dia 3",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 14,
+        "month": 10,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Arrumar",
+          "start": "08:00",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô: Airbnb → Liberdade",
+          "start": "08:30",
+          "end": ""
+        },
+        {
+          "cost": 319.37,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Liberdade: Café da manhã / Compras",
+          "start": "09:00",
+          "end": ""
+        },
+        {
+          "cost": 12.75,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô / Transporte Privado: Liberdade → Paulista",
+          "start": "10:30",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Avenida Paulista: Mirante Sesc e Japan House",
+          "start": "10:50",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Ônibus: Paulista → Almoço",
+          "start": "12:20",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "cost": 74.45,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "O Burguer: Almoço",
+          "start": "12:50",
+          "end": ""
+        },
+        {
+          "cost": 23.73,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô / Transporte Privado: Almoço → Expo Center",
+          "start": "13:30",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Brasil Game Show: Feira - Dia 3",
+          "start": "14:30",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "cost": 17.6,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Ônibus / Transporte Privado: Expo Center → Airbnb",
+          "start": "20:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Descanso",
+          "start": "20:30",
+          "end": ""
+        },
+        {
+          "cost": 7.36,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Airbnb → Restaurante",
+          "start": "21:10",
+          "end": ""
+        },
+        {
+          "cost": 130.0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "TGI Fridays / Omalleys: Jantar",
+          "start": "21:20",
+          "end": ""
+        },
+        {
+          "cost": 10.0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Restaurante → Airbnb",
+          "start": "23:20",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Descanso",
+          "start": "23:30",
+          "end": ""
+        }
+      ]
+    },
+    "20181015": {
+      "title": {
+        "value": "Retorno a BH",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 15,
+        "month": 10,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Arrumar / Malas",
+          "start": "08:30",
+          "end": ""
+        },
+        {
+          "cost": 7.01,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Airbnb → Eataly",
+          "start": "11:00",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "cost": 108.49,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Eataly: Almoço",
+          "start": "11:30",
+          "end": ""
+        },
+        {
+          "cost": 8.13,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Uber: Eataly → Frutaria SP",
+          "start": "13:50",
+          "end": ""
+        },
+        {
+          "cost": 59.8,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Frutaria SP: Açaí / Lanche",
+          "start": "14:00",
+          "end": ""
+        },
+        {
+          "cost": 19.3,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Transporte Privado: Frutaria SP → Aeroporto",
+          "start": "15:00",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo SP → BH: Azul AD2678, CGH→CNF",
+          "start": "18:10",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto → Casa: Carona com pai",
+          "start": "19:25",
+          "end": ""
+        }
+      ]
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "type": "trip.expenses.daily",
+        "name": "Alimentação durante a viagem (todos)",
+        "price": 755.2,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Compras na feira e pessoais",
+        "price": 422.37,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Transporte Privado",
+        "name": "Uber e transporte privado",
+        "price": 152.34,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Ônibus e metrô em SP",
+        "price": 80.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "Atração",
+        "name": "Pavilhão Japonês e outras atrações",
+        "price": 5.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
+    ],
+    "preTrip": [
+      {
+        "type": "trip.transportation.type.flights",
+        "name": "Azul - BH → SP (ida com pontos TudoAzul, R$55,15)",
+        "price": 55.15,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.flights",
+        "name": "Azul - SP → BH (volta com pontos TudoAzul, R$31,27)",
+        "price": 31.27,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.entertainment",
+        "name": "Brasil Game Show 2018",
+        "price": 280.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.accommodation.title",
+        "name": "Airbnb - Jardim Paulista (3 noites, valor dividido)",
+        "price": 304.88,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2018-10-15T00:00:00.000Z"
+    }
+  }
+}

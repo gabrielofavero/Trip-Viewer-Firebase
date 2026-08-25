@@ -1,3 +1,20 @@
+# Build output
+dist/
+
+# Functions compiled output
+functions/lib/
+
+# Auto-generated backups
+*-tripviewer-backup-*.json
+
+# Dev
+/dev/
+tmp/
+
+# Cloudflare Workers — local wrangler state (each workers/*/ also has its own
+# .gitignore; this covers any stray leftover dir or ad-hoc run)
+.wrangler/
+
 # Logs
 logs
 *.log
@@ -11,6 +28,11 @@ functions/package-lock.json
 
 # Firebase cache
 .firebase/
+
+# Firebase emulator data (persisted between restarts)
+.emulator-data/
+.emulator-data-backups/
+firebase-export-*/
 
 # Python cache
 __pycache__/
@@ -70,3 +92,11 @@ yarn.lock
 
 # dotenv environment variables file
 .env
+
+# scripts info
+scripts/export-maps-data/.env
+scripts/export-maps-data/output.json
+scripts/export-maps-data/input/*
+!scripts/export-maps-data/input/.gitkeep
+scripts/translation/results/*
+scripts/gmaps-scraper/output/*

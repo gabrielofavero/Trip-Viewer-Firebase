@@ -1,0 +1,1010 @@
+{
+  "_meta": {
+    "tripId": "legacy-2017-california",
+    "slug": "2017-california",
+    "sourceFiles": [
+      "Família/[2017] California e São Paulo/2017a - California.xlsx"
+    ],
+    "extractionNotes": {
+      "xlsxContent": "4 sheets: 'Família' (daily spending log in USD, 17 days, with side tables for gas, night outings, and other costs), 'Programação' (dual-column itinerary: San Francisco Jan 22-30 + Las Vegas Jan 31-Feb 4, with day-type calendar), 'Pessoal' (Gabriel's personal shopping list — planned and unplanned purchases in USD), 'Compras Online' (online purchases with IOF 6.38%, per-person breakdown, hotel taxes, and credit card expenses like Six Flags, Alcatraz, Grand Canyon, Uber). Exchange rate: R$3.30/USD.",
+      "dateSource": "Programação sheet shows 2017 dates (Jan 22-Feb 4 for itinerary, calendar extends to Feb 9). Família sheet shows 2016 dates (template carryover bug — same pattern as F1/F2). Corrected to 2017.",
+      "dateAnomaly": "Família sheet dates show 2016 (template carryover). Programação sheet correctly shows 2017. Corrected to 2017.",
+      "travelerSource": "Confirmed from Compras Online sheet listing Gabriel, Marianna, Elaine, Milton with individual expenses. 'Eu e Paps' reference in SF itinerary.",
+      "accommodationSource": "Compras Online sheet lists 'Taxa Hotel' section: Hilton Grand Vacations (Las Vegas) and Hollywood Hotel (Los Angeles) with per-person tax amounts. SF accommodation not explicitly named but SF city taxes listed.",
+      "exchangeRate": "R$3.30/USD (from 'Dólar' column in Família sheet).",
+      "missingData": "No flights data in spreadsheet (only calendar emoji marks ✈). Hotel names partially inferred from tax section. No DOCX checkup."
+    }
+  },
+  "trip": {
+    "title": "California & Las Vegas 2017",
+    "currency": "USD",
+    "start": {
+      "day": 22,
+      "month": 1,
+      "year": 2017,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 7,
+      "month": 2,
+      "year": 2017,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": false,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      },
+      {
+        "id": "elaine",
+        "name": "Elaine"
+      },
+      {
+        "id": "milton",
+        "name": "Milton"
+      },
+      {
+        "id": "marianna",
+        "name": "Marianna"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Hotel em San Francisco",
+      "description": "Hospedagem em San Francisco (22 a 30 de janeiro). Taxa SF: $171.",
+      "address": "San Francisco, CA",
+      "dates": {
+        "checkIn": {
+          "day": 22,
+          "month": 1,
+          "year": 2017,
+          "hour": 0,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 30,
+          "month": 1,
+          "year": 2017,
+          "hour": 0,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    },
+    "acc-002": {
+      "name": "Hollywood Hotel — Los Angeles",
+      "description": "Hospedagem em Los Angeles. Taxa por pessoa: Gabriel $12, Marianna $8, Elaine $6, Milton $2.",
+      "address": "Los Angeles, CA",
+      "dates": {
+        "checkIn": {
+          "day": 30,
+          "month": 1,
+          "year": 2017,
+          "hour": 0,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 31,
+          "month": 1,
+          "year": 2017,
+          "hour": 0,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    },
+    "acc-003": {
+      "name": "Hilton Grand Vacations — Las Vegas",
+      "description": "Hospedagem em Las Vegas. Taxa por pessoa: Gabriel $17.50, Marianna $2.50, Elaine $10.",
+      "address": "Las Vegas, NV",
+      "dates": {
+        "checkIn": {
+          "day": 31,
+          "month": 1,
+          "year": 2017,
+          "hour": 0,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 5,
+          "month": 2,
+          "year": 2017,
+          "hour": 0,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    }
+  },
+  "itinerary": {
+    "20170122": {
+      "title": {
+        "value": "Dia 1 — Chegada: San Francisco",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 22,
+        "month": 1,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "T-Mobile e Target (4G e Supermercado)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pier 39 (a pé)",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20170123": {
+      "title": {
+        "value": "Dia 2 — Sausalito + Union Square",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 23,
+        "month": 1,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Sausalito",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "morning": [],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Union Square (Pier 33)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pier 39",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20170124": {
+      "title": {
+        "value": "Dia 3 — Alcatraz + Fisherman's Wharf",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 24,
+        "month": 1,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Alcatraz",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Fisherman's Wharf",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Crissy Field + Yoda Fountain + Fine Arts",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Boundini",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20170125": {
+      "title": {
+        "value": "Dia 4 — Viagem de carro (SF → LA)",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 25,
+        "month": 1,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Viagem de carro SF → Los Angeles",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [],
+      "night": []
+    },
+    "20170126": {
+      "title": {
+        "value": "Dia 5 — Compras em Los Angeles",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 26,
+        "month": 1,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Compras (LA)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Compras (LA)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20170127": {
+      "title": {
+        "value": "Dia 6 — Los Angeles",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 27,
+        "month": 1,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Los Angeles (cidade)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Apple Store (Eu e Paps)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20170128": {
+      "title": {
+        "value": "Dia 7 — Los Angeles",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 28,
+        "month": 1,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [],
+      "night": []
+    },
+    "20170129": {
+      "title": {
+        "value": "Dia 8 — Parque: Universal Studios",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 29,
+        "month": 1,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Universal Studios Hollywood",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Universal Studios Hollywood",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20170130": {
+      "title": {
+        "value": "Dia 9 — Universal + Warner",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 30,
+        "month": 1,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Universal / Warner",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Warner Bros. Studio",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20170131": {
+      "title": {
+        "value": "Dia 10 — Viagem LA → Las Vegas",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 31,
+        "month": 1,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Viagem de carro LA → Las Vegas",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "LIVRE",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20170201": {
+      "title": {
+        "value": "Dia 11 — Las Vegas: Strip e Hotéis",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 1,
+        "month": 2,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Strip: New York New York (Montanha-russa)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Bellagio (Show de Fontes), Venetian (Gôndola), Fashion Show Mall",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Stratosphere (Torre Gigante), High Roller (Roda Gigante)",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20170202": {
+      "title": {
+        "value": "Dia 12 — Las Vegas: Strip + Señor Frog",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 2,
+        "month": 2,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Strip",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Señor Frog",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20170203": {
+      "title": {
+        "value": "Dia 13 — Las Vegas: Strip + Beatles",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 3,
+        "month": 2,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Strip (800 Pizza)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Strip",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Beatles (Gordon Pub)",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20170204": {
+      "title": {
+        "value": "Dia 14 — Las Vegas: Mob Museum",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 4,
+        "month": 2,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Mob Museum",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [],
+      "night": []
+    },
+    "20170205": {
+      "title": {
+        "value": "Dia 15 — Las Vegas / Los Angeles",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 5,
+        "month": 2,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [],
+      "night": []
+    },
+    "20170206": {
+      "title": {
+        "value": "Dia 16 — Dia Livre",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 6,
+        "month": 2,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [],
+      "night": []
+    },
+    "20170207": {
+      "title": {
+        "value": "Dia 17 — Retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 7,
+        "month": 2,
+        "year": 2017,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "name": "Alimentação (almoço)",
+        "type": "trip.expenses.daily",
+        "price": 1135.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Saídas / Entretenimento",
+        "type": "trip.expenses.entertainment",
+        "price": 1285.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Gasolina",
+        "type": "trip.transportation.type.car",
+        "price": 174.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Supermercado",
+        "type": "trip.expenses.daily",
+        "price": 625.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Cirque du Soleil",
+        "type": "trip.expenses.entertainment",
+        "price": 356.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Cable Car (SF)",
+        "type": "trip.expenses.entertainment",
+        "price": 48.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Taxa SF (city tax)",
+        "type": "trip.expenses.accommodation",
+        "price": 171.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Transporte local",
+        "type": "trip.transportation.type.bus",
+        "price": 36.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Taxa Hotel (LA + Las Vegas)",
+        "type": "trip.expenses.accommodation",
+        "price": 58.0,
+        "currency": "USD",
+        "person": ""
+      }
+    ],
+    "preTrip": [
+      {
+        "name": "Parque: Universal Studios (4 pessoas)",
+        "type": "trip.expenses.entertainment",
+        "price": 460.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Warner Bros. Studio",
+        "type": "trip.expenses.entertainment",
+        "price": 260.0,
+        "currency": "USD",
+        "person": ""
+      },
+      {
+        "name": "Six Flags (Milton, com IOF)",
+        "type": "trip.expenses.entertainment",
+        "price": 286.16,
+        "currency": "USD",
+        "person": "milton"
+      },
+      {
+        "name": "Alcatraz (Milton, com IOF)",
+        "type": "trip.expenses.entertainment",
+        "price": 151.06,
+        "currency": "USD",
+        "person": "milton"
+      },
+      {
+        "name": "Grand Canyon (Milton, com IOF)",
+        "type": "trip.expenses.entertainment",
+        "price": 480.84,
+        "currency": "USD",
+        "person": "milton"
+      },
+      {
+        "name": "Uber (Milton, com IOF)",
+        "type": "trip.transportation.type.taxi",
+        "price": 203.27,
+        "currency": "USD",
+        "person": "milton"
+      }
+    ],
+    "currency": "USD",
+    "travelers": {
+      "gabriel": "Gabriel",
+      "elaine": "Elaine",
+      "milton": "Milton",
+      "marianna": "Marianna"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    }
+  }
+}

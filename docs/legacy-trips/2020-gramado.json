@@ -1,0 +1,653 @@
+{
+  "_meta": {
+    "tripId": "legacy-2020-gramado",
+    "slug": "2020-gramado",
+    "sourceFiles": [
+      "Família/[2020] Gramado/Gramado.xlsx",
+      "Família/[2020] Gramado/Checkup.docx",
+      "Família/[2020] Gramado/Hotel.pdf",
+      "Família/[2020] Gramado/Voo.pdf"
+    ],
+    "extractionNotes": {
+      "xlsxContent": "3 sheets: 'Programação' (detailed hour-by-hour itinerary for 4 days + expense summary), 'Airbnb' (Airbnb research — not used, they booked Hotel Colline de France instead), 'Passeios' (attractions list with priority and Uber distances — mixed with Southern USA draft data in right columns).",
+      "docxContent": "Checkup.docx has 1 table with a packing checklist (check-in, raincoats, hotel reservation, medicines, JBL Flip, toiletries, clothes, powerbank, cables, Nintendo Switch). No dates or travelers in docx.",
+      "pdfContent": "Hotel.pdf: Hotel Colline de France reservation Nº 6.506 (Milton Favero Junior), Suite Petit Colline, 2 adults, check-in 04/11/20 14:00, check-out 08/11/20 12:00, café incluso. Voo.pdf: Azul round-trip CNF↔POA, AD 2564 (07:50-10:20) and AD 2565 (19:05-21:15), reservation HFM6TZ, total R$1,993.40, travelers: Milton, Elaine, Gabriel, Marianna.",
+      "dateSource": "Confirmed from PDFs + XLSX: November 4-8, 2020.",
+      "travelerSource": "Confirmed from Voo.pdf: Milton Favero Junior, Elaine Oliveira, Gabriel Favero, Marianna Favero.",
+      "accommodationSource": "Hotel Colline de France, Rua Vigilante AVB Central, Gramado, RS. Reservation Nº 6.506. Suite Petit Colline. Café da manhã incluso.",
+      "skippedFiles": "Plano de Viagem.pptx (data duplicated in XLSX). Airbnb sheet (research only, not booked). Checkup.docx had only a packing list, no trip metadata."
+    }
+  },
+  "trip": {
+    "title": "Gramado Family",
+    "currency": "BRL",
+    "start": {
+      "day": 4,
+      "month": 11,
+      "year": 2020,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 8,
+      "month": 11,
+      "year": 2020,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      },
+      {
+        "id": "elaine",
+        "name": "Elaine"
+      },
+      {
+        "id": "milton",
+        "name": "Milton"
+      },
+      {
+        "id": "marianna",
+        "name": "Marianna"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Hotel Colline de France",
+      "description": "Suite Petit Colline. Café da manhã incluso. Reserva Nº 6.506 em nome de Milton Favero Junior.",
+      "address": "Rua Vigilante AVB Central, Gramado, RS, 95670-000",
+      "dates": {
+        "checkIn": {
+          "day": 4,
+          "month": 11,
+          "year": 2020,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 8,
+          "month": 11,
+          "year": 2020,
+          "hour": 12,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": true,
+      "images": [],
+      "reservation": "6.506",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "flight",
+      "company": "azul",
+      "points": {
+        "origin": "Belo Horizonte - Confins (CNF)",
+        "destination": "Porto Alegre (POA)"
+      },
+      "dates": {
+        "departure": {
+          "day": 4,
+          "month": 11,
+          "year": 2020,
+          "hour": 7,
+          "minute": 50,
+          "second": 0
+        },
+        "arrival": {
+          "day": 4,
+          "month": 11,
+          "year": 2020,
+          "hour": 10,
+          "minute": 20,
+          "second": 0
+        }
+      },
+      "duration": "02:00",
+      "direction": "departure",
+      "reservation": "HFM6TZ / AD 2564",
+      "link": "",
+      "person": ""
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "azul",
+      "points": {
+        "origin": "Porto Alegre (POA)",
+        "destination": "Belo Horizonte - Confins (CNF)"
+      },
+      "dates": {
+        "departure": {
+          "day": 8,
+          "month": 11,
+          "year": 2020,
+          "hour": 19,
+          "minute": 5,
+          "second": 0
+        },
+        "arrival": {
+          "day": 8,
+          "month": 11,
+          "year": 2020,
+          "hour": 21,
+          "minute": 15,
+          "second": 0
+        }
+      },
+      "duration": "02:00",
+      "direction": "return",
+      "reservation": "HFM6TZ / AD 2565",
+      "link": "",
+      "person": ""
+    }
+  },
+  "itinerary": {
+    "20201104": {
+      "title": {
+        "value": "Dia 1 — Chegada: Rua Coberta + Rua Torta + Hard Rock Café",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 4,
+        "month": 11,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo CNF→POA (Azul AD 2564, 07:50-10:20)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Translado POA→Gramado + Check-in Hotel Colline de France",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Almoço na Rua Coberta",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Rua Torta (fotos)",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Praça Major Nicoletti",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Mundo de Chocolate",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hard Rock Café",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20201105": {
+      "title": {
+        "value": "Dia 2 — Lago Negro + Bier Park + Boreal Ice Bar",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 5,
+        "month": 11,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Café da manhã no hotel",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Lago Negro",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Almoço na Rua Coberta",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Bier Park",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Boreal Ice Bar (Fondue)",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20201106": {
+      "title": {
+        "value": "Dia 3 — Olivas de Gramado + Cara de Mau",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 6,
+        "month": 11,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Café da manhã no hotel",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Olivas de Gramado (almoço incluso)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Olivas de Gramado",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Cara de Mau (jantar temático)",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20201107": {
+      "title": {
+        "value": "Dia 4 — Parques da Serra + Mini Mundo + Chateau dos Plátanos",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 7,
+        "month": 11,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Café da manhã no hotel",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Parques da Serra",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Almoço",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Mini Mundo",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Chateau dos Plátanos (jantar)",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20201108": {
+      "title": {
+        "value": "Dia 5 — Retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 8,
+        "month": 11,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Check-out Hotel Colline de France (12:00)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Translado Gramado→POA",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo POA→CNF (Azul AD 2565, 19:05-21:15)",
+          "start": "",
+          "end": ""
+        }
+      ]
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "name": "Eventos (Mundo de Chocolate + Olivas de Gramado)",
+        "type": "trip.expenses.entertainment",
+        "price": 312.0,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Alimentação (almoços)",
+        "type": "trip.expenses.daily",
+        "price": 300.0,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Saída Noturna (Hard Rock Café + Boreal Ice Bar + Cara de Mau + Chateau dos Plátanos)",
+        "type": "trip.expenses.entertainment",
+        "price": 1150.0,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Transporte Privado (translado + Uber)",
+        "type": "trip.transportation.type.taxi",
+        "price": 752.0,
+        "currency": "BRL",
+        "person": ""
+      }
+    ],
+    "preTrip": [
+      {
+        "name": "Passagens aéreas (Azul, CNF↔POA, ida e volta, 4 pessoas)",
+        "type": "trip.transportation.type.flights",
+        "price": 1993.4,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Hotel Colline de France (4 diárias, Suite Petit Colline, café incluso)",
+        "type": "trip.expenses.accommodation",
+        "price": 3803.52,
+        "currency": "BRL",
+        "person": ""
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel",
+      "elaine": "Elaine",
+      "milton": "Milton",
+      "marianna": "Marianna"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    }
+  }
+}

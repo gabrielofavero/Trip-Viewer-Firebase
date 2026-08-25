@@ -2,177 +2,36 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
-
-  <title>TripViewer</title>
-  <meta content="Your Travel Planner" name="description">
-  <meta property="og:description" content="Your Travel Planner">
-  <meta content="" name="keywords">
-
-  <!-- Apple Data -->
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="TripViewer" />
-  <meta name="theme-color" content="#fff">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-  <link rel="manifest" href="../site.webmanifest">
-  <link rel="mask-icon" href="../safari-pinned-tab.svg" color="#5bbad5">
-  <link rel="shortcut icon" href="../favicon.ico">
-  <meta name="msapplication-TileColor" content="#e4ebdb">
-  <meta name="msapplication-config" content="../browserconfig.xml">
-  <meta name="theme-color" content="#ffffff">
-
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
-  <link data-main href="../assets/css/editar/editar.css" rel="stylesheet">
+  <!-- #include shared/head.html -->
+  <link href="../assets/css/main.css" rel="stylesheet">
+  <link data-main href="../assets/css/edit/edit.css" rel="stylesheet">
 
 </head>
 
 <body>
   <!-- ======= Hero ======= -->
   <section id="hero" class="loadable" style="display: none">
-    <div class="top-bar" id="top-bar">
-      <a href="../index.html" class="logo-link">
-        <div class="logo-box">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-light">
-            <g style="isolation: isolate;">
-              <g id="Capa_1" data-name="Capa 1">
-                <g>
-                  <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                    style="fill: none; stroke: #00b6ea; stroke-miterlimit: 10; stroke-width: 8px;" />
-                  <path id="light-color-1"
-                    d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
-                    style="fill: #5859a7; stroke-width: 0px;" />
-                  <path
-                    d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <path id="light-color-2"
-                    d="m3.57,12.2h72.54c1.97,0,3.57,1.6,3.57,3.57v28.62c0,1.97-1.6,3.58-3.58,3.58H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
-                    style="fill: #5859a7; stroke-width: 0px;" />
-                  <path
-                    d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #00b6ea; stroke-width: 0px;" />
-                </g>
-              </g>
-            </g>
-          </svg>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-dark" style="display:none">
-            <g style="isolation: isolate;">
-              <g id="Capa_1" data-name="Capa 1">
-                <g>
-                  <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                    style="fill: none; stroke: #00b6ea; stroke-miterlimit: 10; stroke-width: 8px;" />
-                  <path id="dark-color-1"
-                    d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
-                    style="fill: #7f75b6; stroke-width: 0px;" />
-                  <path
-                    d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <path id="dark-color-2"
-                    d="m3.57,12.2h72.54c1.97,0,3.58,1.6,3.58,3.58v28.62c0,1.97-1.6,3.57-3.57,3.57H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
-                    style="fill: #7f75b6; stroke-width: 0px;" />
-                  <path
-                    d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #00b6ea; stroke-width: 0px;" />
-                </g>
-              </g>
-            </g>
-          </svg>
-          <div id="trip-viewer-text">TripViewer</div>
-        </div>
-      </a>
-      <div class="icons-box" id="icons-box">
-        <div class="lang-selector">
-          <button class="lang-button">EN</button>
-          <div class="lang-options">
-            <button data-lang="en">EN</button>
-            <button data-lang="pt">PT</button>
-          </div>
-        </div>
-        <i onclick="window.location = '../index.html'" id="back" class="bx bx-arrow-back icon-buttons"></i>
-        <i id="night-mode" class="bx bx-moon icon-buttons"></i>
-      </div>
-    </div>
-    <div class="demo-page">
-      <div class="demo-page-navigation">
-        <nav>
-          <ul>
-            <li>
-              <a href="#dados-basicos">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="feather feather-tool">
-                  <path
-                    d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-                </svg>
-                <span data-translate="labels.basic_information"></span></a>
-            </li>
-            <li>
-              <a href="#customizacao">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="feather feather-sliders">
-                  <line x1="4" y1="21" x2="4" y2="14" />
-                  <line x1="4" y1="10" x2="4" y2="3" />
-                  <line x1="12" y1="21" x2="12" y2="12" />
-                  <line x1="12" y1="8" x2="12" y2="3" />
-                  <line x1="20" y1="21" x2="20" y2="16" />
-                  <line x1="20" y1="12" x2="20" y2="3" />
-                  <line x1="1" y1="14" x2="7" y2="14" />
-                  <line x1="9" y1="8" x2="15" y2="8" />
-                  <line x1="17" y1="16" x2="23" y2="16" />
-                </svg>
-                <span data-translate="labels.customization.title"></span></a>
-            </li>
+      <!-- #include shared/top-bar.html -->
 
-            <li>
-              <a href="#destinos">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
-                  <path fill="currentColor"
-                    d="m12.596 11.596l-3.535 3.536a1.5 1.5 0 0 1-2.122 0l-3.535-3.536a6.5 6.5 0 1 1 9.192-9.193a6.5 6.5 0 0 1 0 9.193Zm-1.06-8.132v-.001a5 5 0 1 0-7.072 7.072L8 14.07l3.536-3.534a5 5 0 0 0 0-7.072ZM8 9a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 9Z">
-                  </path>
-                </svg>
-                <span data-translate="destination.title"></span></a>
-            </li>
-
-            <li>
-              <a href="#double-buttons">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z">
-                  </path>
-                </svg>
-                <span data-translate="labels.save"></span></a>
-            </li>
-          </ul>
-        </nav>
+    <div class="edit-page">
+      <div class="edit-tab-bar" id="edit-tab-bar">
+        <button class="edit-tab active" data-tab="basic-information">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          <span data-translate="labels.basic_information"></span>
+        </button>
+        <button class="edit-tab" data-tab="customization">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+          <span data-translate="labels.customization.title"></span>
+        </button>
+        <button class="edit-tab" data-tab="destinations">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path fill="currentColor" d="m12.596 11.596l-3.535 3.536a1.5 1.5 0 0 1-2.122 0l-3.535-3.536a6.5 6.5 0 1 1 9.192-9.193a6.5 6.5 0 0 1 0 9.193Zm-1.06-8.132v-.001a5 5 0 1 0-7.072 7.072L8 14.07l3.536-3.534a5 5 0 0 0 0-7.072ZM8 9a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 9Z"/></svg>
+          <span data-translate="destination.title"></span>
+        </button>
       </div>
 
-      <main class="demo-page-content">
-        <section>
-          <div class="href-target" id="dados-basicos"></div>
+      <main class="edit-page-content">
+        <section data-category="basic-information">
+          <div class="href-target" id="basic-information"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -187,37 +46,37 @@
 
           <div class="nice-form-group">
             <label data-translate="labels.title"></label>
-            <input required id="titulo" type="text" data-translate="listing.title_placeholder" />
+            <input required id="title" type="text" data-translate="listing.title_placeholder" />
           </div>
 
           <div class="nice-form-group">
-            <label><span data-translate="labels.subtitle"></span> <span class="opcional">(<span
+            <label><span data-translate="labels.subtitle"></span> <span class="optional">(<span
                   data-translate="labels.optional"></span>)</span></label>
-            <input id="subtitulo" type="text" data-translate="listing.subtitle_placeholder" />
+            <input id="subtitle" type="text" data-translate="listing.subtitle_placeholder" />
           </div>
 
           <div class="nice-form-group">
-            <label><span data-translate="labels.description.title"></span> <span class="opcional">(<span
+            <label><span data-translate="labels.description.title"></span> <span class="optional">(<span
                   data-translate="labels.optional"></span>)</span></label>
-            <textarea id="descricao" rows="3" data-translate="listing.description_placeholder"></textarea>
+            <textarea id="description" rows="3" data-translate="listing.description_placeholder"></textarea>
           </div>
 
           <div class="nice-form-group">
-            <input id="exibir-em-destinos" type="checkbox" class="switch" checked="">
-            <label id="exibir-em-destinos-label" for="exibir-em-destinos">
+            <input id="show-in-destinations" type="checkbox" class="switch" checked="">
+            <label id="show-in-destinations-labelfor="show-in-destinations"s">
               <span data-translate="listing.last_update.title"></span>
               <small data-translate="listing.last_update.description"></small>
             </label>
           </div>
 
           <div id="delete-text" style="display: none;">
-            <a href="#" onclick="_deleteListagem()" data-translate="labels.delete"></a>
+            <a href="#" data-action="delete-listing" data-translate="labels.delete"></a>
           </div>
 
         </section>
 
-        <section>
-          <div class="href-target" id="customizacao"></div>
+        <section data-category="customization">
+          <div class="href-target" id="customization"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -238,173 +97,183 @@
 
 
           <div class="nice-form-group">
-            <input id="habilitado-imagens" type="checkbox" id="check-4" class="switch" />
+            <input id="images-enabled" type="checkbox" id="check-4" class="switch" />
             <label for="check-4">
               <span data-translate="labels.customization.images.title"></span>
               <small data-translate="labels.customization.images.subtitle"></small>
             </label>
           </div>
 
-          <div class="transparent-background" id="habilitado-imagens-content">
+          <div class="transparent-background" id="images-enabled-content">
 
             <div class="nice-form-group customization-box" id="background-box">
-              <label><span data-translate="labels.wallpaper"></span> <span class="opcional">(<span
+              <label><span data-translate="labels.wallpaper"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="upload-background" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
+              <input id="upload-background" class="image-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
               <p id="upload-background-size-message" class="message-text"> <i class='red'>*</i> <span
                   data-translate="labels.image.upload_limit"></span></p>
             </div>
 
             <div class="nice-form-group">
-              <input id="link-background" class="imagem-input" type="url" data-translate="labels.image.placeholder"
+              <input id="link-background" class="image-input" type="url" data-translate="labels.image.placeholder"
                 value="" class="icon-right">
             </div>
 
-            <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-background">
-              <div class="nice-form-group">
-                <input type="radio" name="type-background" id="enable-link-background" checked>
-                <label for="enable-link-background" data-translate="labels.image.link"></label>
-              </div>
+            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-background">
+              <div class="modern-radio-group">
+                <div class="nice-form-group">
+                  <input type="radio" name="type-background" id="enable-link-background" checked>
+                  <label for="enable-link-background" data-translate="labels.image.link"></label>
+                </div>
 
-              <div class="nice-form-group">
-                <input type="radio" name="type-background" id="enable-upload-background">
-                <label for="enable-upload-background"><span data-translate="labels.image.upload"></span> <span
-                    class="opcional"> (<span data-translate="labels.image.upload_limit"></span>)</span>
+                <div class="nice-form-group">
+                  <input type="radio" name="type-background" id="enable-upload-background">
+                  <label for="enable-upload-background"><span data-translate="labels.image.upload"></span><span
+                      class="optional"> (<span data-translate="labels.image.upload_limit"></span>)</span></label>
+                </div>
               </div>
             </fieldset>
 
             <div class="nice-form-group customization-box">
-              <label>T<span data-translate="labels.customization.images.logo_light"></span> <span
-                  class="opcional">(<span data-translate="labels.optional"></span>)</span></label>
+              <label><span data-translate="labels.customization.images.logo_light"></span> <span
+                  class="optional">(<span data-translate="labels.optional"></span>)</span></label>
               <input id="upload-logo-light" type="file" accept=".png" />
               <p id="upload-logo-light-size-message" class="message-text"> <i class='red'>*</i> <span
                   data-translate="labels.image.upload_limit"></span></p>
             </div>
 
             <div class="nice-form-group">
-              <input id="link-logo-light" class="imagem-input" type="url" data-translate="labels.image.placeholder"
+              <input id="link-logo-light" class="image-input" type="url" data-translate="labels.image.placeholder"
                 value="" class="icon-right">
             </div>
 
             <div class="nice-form-group customization-box">
-              <label><span data-translate="labels.customization.images.logo_dark"></span> <span class="opcional">(<span
+              <label><span data-translate="labels.customization.images.logo_dark"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="upload-logo-dark" class="imagem-uploadbox" type="file" accept=".png" />
+              <input id="upload-logo-dark" class="image-uploadbox" type="file" accept=".png" />
               <p id="upload-logo-dark-size-message" class="message-text"> <i class='red'>*</i> <span
                   data-translate="labels.image.upload_limit"></span></p>
             </div>
 
             <div class="nice-form-group">
-              <input id="link-logo-dark" class="imagem-input" type="url" data-translate="labels.image.placeholder"
+              <input id="link-logo-dark" class="image-input" type="url" data-translate="labels.image.placeholder"
                 value="" class="icon-right">
             </div>
 
-            <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-logo">
-              <div class="nice-form-group">
-                <input type="radio" name="type-logo" id="enable-link-logo" checked>
-                <label for="enable-link-logo" data-translate="labels.image.link"></label>
-              </div>
+            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-logo">
+              <div class="modern-radio-group">
+                <div class="nice-form-group">
+                  <input type="radio" name="type-logo" id="enable-link-logo" checked>
+                  <label for="enable-link-logo" data-translate="labels.image.link"></label>
+                </div>
 
-              <div class="nice-form-group">
-                <input type="radio" name="type-logo" id="enable-upload-logo">
-                <label for="enable-upload-logo"><span data-translate="labels.image.upload"></span> <span
-                    class="opcional">(<span data-translate="labels.image.upload_limit"></span>)</span></label>
+                <div class="nice-form-group">
+                  <input type="radio" name="type-logo" id="enable-upload-logo">
+                  <label for="enable-upload-logo"><span data-translate="labels.image.upload"></span><span
+                      class="optional"> (<span data-translate="labels.image.upload_limit"></span>)</span></label>
+                </div>
               </div>
             </fieldset>
           </div>
 
           <div class="nice-form-group">
-            <input id="habilitado-cores" type="checkbox" id="check-4" class="switch" />
+            <input id="colors-enabled" type="checkbox" id="check-4" class="switch" />
             <label for="check-4">
               <span data-translate="labels.customization.colors.title"></span>
               <small data-translate="listing.customization.colors"></small>
             </label>
           </div>
 
-          <div class="transparent-background-color" id="habilitado-cores-content">
+          <div class="transparent-background-color" id="colors-enabled-content">
 
-            <fieldset class="nice-form-group">
-              <div class="nice-form-group">
-                <input type="radio" id="dark-and-light" name="display-mode" checked />
-                <label for="dark-and-light" data-translate="labels.customization.colors.themes.light_and_dark"></label>
+            <div class="color-toggle-row">
+              <label class="switch-label">
+                <input id="custom-theme" type="checkbox" class="switch" checked />
+                <span data-translate="labels.customization.colors.theme_toggle"></span>
+              </label>
+            </div>
+
+            <div class="color-section-spacer"></div>
+
+            <div id="color-preset-section">
+              <div class="color-preset-carousel">
+                <button class="color-preset-arrow color-preset-prev" aria-label="Previous">&lsaquo;</button>
+                <div class="color-preset-grid" id="color-presets">
+                  <!-- Populated dynamically from colors.json options + custom swatch -->
+                </div>
+                <button class="color-preset-arrow color-preset-next" aria-label="Next">&rsaquo;</button>
               </div>
+            </div>
 
-              <div class="nice-form-group">
-                <input type="radio" id="light-exclusive" name="display-mode" />
-                <label for="light-exclusive" data-translate="labels.customization.colors.themes.light"></label>
-              </div>
-
-              <div class="nice-form-group">
-                <input type="radio" id="dark-exclusive" name="display-mode" />
-                <label for="dark-exclusive" data-translate="labels.customization.colors.themes.dark"></label>
-              </div>
-            </fieldset>
-
-            <div class="side-by-side-color-box" id="cores">
-              <div class="nice-form-group side-by-side-color" id="tema-claro">
+            <div class="side-by-side-color-box" id="color-pickers" style="display: none;">
+              <div class="nice-form-group side-by-side-color" id="light-theme">
                 <label data-translate="labels.light_mode"></label>
-                <input id="claro" type="color" value="#5859a7" />
+                <div class="color-picker-box">
+                  <input id="light-color" type="color" value="#5859a7" />
+                </div>
               </div>
 
-              <div class="nice-form-group side-by-side-color" id="tema-escuro">
+              <div class="nice-form-group side-by-side-color" id="dark-theme">
                 <label data-translate="labels.dark_mode"></label>
-                <input id="escuro" type="color" value="#7f75b6" />
+                <div class="color-picker-box">
+                  <input id="dark-color" type="color" value="#7f75b6" />
+                </div>
               </div>
             </div>
           </div>
 
           <div class="nice-form-group">
-            <input id="habilitado-links" style="margin-top: 0px;" type="checkbox" id="check-4" class="switch" />
+            <input id="links-enabled" style="margin-top: 0px;" type="checkbox" id="check-4" class="switch" />
             <label for="check-4">
               <span data-translate="labels.customization.links.title"></span>
               <small data-translate="listing.customization.links"></small>
             </label>
           </div>
 
-          <div class="transparent-background" id="habilitado-links-content">
+          <div class="transparent-background" id="links-enabled-content">
             <div class="nice-form-group" style="margin-top: 10px;">
-              <label><span data-translate="labels.customization.links.attachment"></span> <span class="opcional">(<span
+              <label><span data-translate="labels.customization.links.attachment"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="link-attachments" type="url" placeholder="https://drive.google.com/drive" value=""
+              <input id="link-attachments" type="url" data-translate="labels.url_placeholder" value=""
                 class="icon-right">
             </div>
 
             <div class="nice-form-group">
               <label><span data-translate="labels.customization.links.google_drive"></span> <span
-                  class="opcional">(<span data-translate="labels.optional"></span>)</span></label>
-              <input id="link-drive" type="url" placeholder="https://drive.google.com/drive" value=""
+                  class="optional">(<span data-translate="labels.optional"></span>)</span></label>
+              <input id="link-drive" type="url" data-translate="labels.url_placeholder" value=""
                 class="icon-right">
             </div>
 
             <div class="nice-form-group">
-              <label><span data-translate="labels.customization.links.map"></span> <span class="opcional">(<span
+              <label><span data-translate="labels.customization.links.map"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="link-maps" type="url" placeholder="https://www.google.com/maps/" value="" class="icon-right">
+              <input id="link-maps" type="url" data-translate="labels.map_url_placeholder" value="" class="icon-right">
             </div>
 
             <div class="nice-form-group">
-              <label><span data-translate="labels.customization.links.pdf"></span> <span class="opcional">(<span
+              <label><span data-translate="labels.customization.links.pdf"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="link-pdf" type="url" placeholder="https://drive.google.com/drive" value="" class="icon-right">
+              <input id="link-pdf" type="url" data-translate="labels.url_placeholder" value="" class="icon-right">
             </div>
 
             <div class="nice-form-group">
               <label><span data-translate="labels.customization.links.presentation"></span> <span
-                  class="opcional">(<span data-translate="labels.optional"></span>)</span></label>
-              <input id="link-ppt" type="url" placeholder="https://drive.google.com/drive" value="" class="icon-right">
+                  class="optional">(<span data-translate="labels.optional"></span>)</span></label>
+              <input id="link-ppt" type="url" data-translate="labels.url_placeholder" value="" class="icon-right">
             </div>
 
             <div class="nice-form-group">
-              <label><span data-translate="labels.customization.links.sheet"></span> <span class="opcional">(<span
+              <label><span data-translate="labels.customization.links.sheet"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="link-sheet" type="url" placeholder="https://drive.google.com/drive" value=""
+              <input id="link-sheet" type="url" data-translate="labels.url_placeholder" value=""
                 class="icon-right">
             </div>
 
             <div class="nice-form-group">
-              <label><span data-translate="labels.customization.links.vaccination"></span> <span class="opcional">(<span
+              <label><span data-translate="labels.customization.links.vaccination"></span> <span class="optional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="link-vacina" type="url" placeholder="https://drive.google.com/drive" value=""
+              <input id="link-vaccine" type="url" data-translate="labels.url_placeholder" value=""
                 class="icon-right">
             </div>
 
@@ -412,8 +281,8 @@
 
         </section>
 
-        <section>
-          <div class="href-target" id="destinos"></div>
+        <section data-category="destinations">
+          <div class="href-target" id="destinations"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
               <path fill="currentColor"
@@ -424,32 +293,33 @@
           </h1>
           <p data-translate="destination.subtitle"></p>
 
-          <div id="habilitado-destinos-content">
-            <div class="nice-form-group" id="sem-destinos">
+          <div id="destinations-enabled-content">
+            <div class="nice-form-group" id="no-destinations">
               <input type="text" readonly data-translate="destination.nothing" />
             </div>
-            <div id="com-destinos" style="display: none">
+            <div id="has-destinations" style="display: none">
               <div class="nice-form-group">
-                <input type="search" id="destinos-search" data-translate="labels.search" value="">
+                <input type="search" id="destinations-search" data-translate="labels.search" value="">
               </div>
-              <fieldset class="nice-form-group destinos-checkboxes" id="destinos-checkboxes"></fieldset>
+              <div class="destinations-cards" id="destinations-checkboxes"></div>
             </div>
-            <div id="todos-destinos-utilizados" class="message-text"> <i class='red'>*</i> <span
+            <div id="all-destinations-used" class="message-text"> <i class='red'>*</i> <span
                 data-translate="destination.all_used"></span></div>
           </div>
         </section>
 
-        <section id="double-button-section">
+        <section data-category="double-buttons" id="double-button-section">
           <div class="href-target" id="double-buttons"></div>
           <div class="button-box">
-            <button id="cancelar" class="btn btn-secondary" type="button">
+            <button id="cancel-btn" class="btn btn-secondary" type="button">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <path fill="currentColor"
                   d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
                 </path>
               </svg>
               <span data-translate="labels.cancel"></span>
-              <button id="salvar" class="btn btn-theme" type="submit">
+            </button>
+            <button id="save-btn" class="btn btn-theme" type="submit">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                   <path fill="currentColor"
                     d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z">
@@ -460,55 +330,20 @@
           </div>
         </section>
         <section id="footer">
-          <span data-translate="labels.developed_by"></span> <a
-            href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="atribuicoes"
-            onclick="_openAtribuicoes()"><i class="iconify" data-icon="ri:information-line"></i>
+          <span class="tripviewer-version"></span> <span data-translate="labels.developed_by"></span> <a
+            href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="attributions"
+            data-action="open-attributions"><i class="iconify" data-icon="ri:information-line"></i>
             <span data-translate="labels.credits"></span></span>
         </section>
       </main>
     </div>
   </section>
 
-  <!-- ======= Support: Modal ======= -->
-  <div id="modal" class="modal loadable" style="display: none">
-    <div class="modal-content">
-      <div class="modal-text">
-        <p id="modal-inner-text"></p>
-      </div>
-
-      <div class="button-box">
-        <button id="re-editar" class="btn btn-basic btn-format" type="button" onclick="_closeModal('delete-modal')">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-            <path fill="currentColor"
-              d="M3 17.46v3.04c0 .28.22.5.5.5h3.04c.13 0 .26-.05.35-.15L17.81 9.94l-3.75-3.75L3.15 17.1c-.1.1-.15.22-.15.36M20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z">
-            </path>
-          </svg>
-          <span data-translate="labels.edit"></span>
-        </button><button id="home" class="btn btn-secondary btn-format" type="submit">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M6 10v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9M6 10l6-6l6 6M6 10l-2 2m14-2l2 2m-10 1h4v4h-4v-4z"></path>
-          </svg>
-          <span data-translate="labels.home"></span>
-        </button>
-        </button><button id="visualizar" class="btn btn-theme btn-format" type="submit">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-            <path fill="currentColor"
-              d="M2.984 8.625v.003a.5.5 0 0 1-.612.355c-.431-.114-.355-.611-.355-.611l.018-.062s.026-.084.047-.145a6.7 6.7 0 0 1 1.117-1.982C4.096 5.089 5.605 4 8 4s3.904 1.089 4.802 2.183a6.7 6.7 0 0 1 1.117 1.982a4.077 4.077 0 0 1 .06.187l.003.013v.004l.001.002a.5.5 0 0 1-.966.258l-.001-.004l-.008-.025a4.872 4.872 0 0 0-.2-.52a5.696 5.696 0 0 0-.78-1.263C11.286 5.912 10.044 5 8 5c-2.044 0-3.285.912-4.028 1.817a5.7 5.7 0 0 0-.945 1.674a3.018 3.018 0 0 0-.035.109zM8 7a2.5 2.5 0 1 0 0 5a2.5 2.5 0 0 0 0-5M6.5 9.5a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0">
-            </path>
-          </svg>
-          <span data-translate="labels.view"></span>
-        </button>
-      </div>
-
-    </div>
-  </div>
-
   <!-- ======= Support: Preloader ======= -->
   <div id="preloader"></div>
   <div id="toast" style="display: none">
     <span id="toast-text"></span>
-    <span class="toast-close" onclick="_closeToast()">
+    <span class="toast-close" data-action="close-toast">
       <i class="iconify" data-icon="material-symbols:close"></i>
     </span>
   </div>
@@ -516,55 +351,10 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Firebase -->
-  <script data-main src="../../index.js" type=text/JSX"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-app-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-auth-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-firestore-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-functions-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-storage-compat.js"></script>
-  <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+  <!-- #include shared/scripts-vendor.html -->
+  <!-- #include shared/scripts-core.html -->
 
-  <!-- Vendor JS Files -->
-  <script src="../assets/vendor/aos/aos.js"></script>
-  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="../assets/vendor/php-email-form/validate.js"></script>
-  <script src="../assets/vendor/typed.js/typed.min.js"></script>
-  <script src="../assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
-  <script src="../assets/vendor/jquery/jquery.min.js"></script>
-
-  <script src="https://apis.google.com/js/api.js"></script>
-
-  <!-- Main JS Files -->
-  <script data-main src="../assets/js/main/translation.js"></script>
-  <script data-main src="../assets/js/main/main.js"></script>
-  <script data-main src="../assets/js/suporte/estilos/animacoes.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/dados.js"></script>
-  <script data-main src="../assets/js/suporte/firebase/database.js"></script>
-  <script data-main src="../assets/js/suporte/firebase/user.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/datas.js"></script>
-  <script data-main src="../assets/js/suporte/firebase/storage.js"></script>
-  <script data-main src="../assets/js/suporte/estilos/stylesheets.js"></script>
-  <script data-main src="../assets/js/suporte/estilos/cores.js"></script>
-  <script data-main src="../assets/js/suporte/estilos/visibilidade.js"></script>
-  <script data-main src="../assets/js/paginas/index/suporte/visibilidade.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/dispositivos.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/mensagens.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/carregamento.js"></script>
-  <script data-main src="../assets/js/suporte/html/fields.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/categorias/destinos.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/nova-viagem.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/categorias/customizacao.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/viagem-existente.js"></script>
-  <script data-main src="../assets/js/paginas/editar-listagem/listagem-existente.js"></script>
-  <script data-main src="../assets/js/paginas/editar-viagem/set-viagem.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/set.js"></script>
-  <script data-main src="../assets/js/paginas/editar-listagem/editar-listagem.js"></script>
-  <script data-main src="../assets/js/suporte/paginas/atribuicoes.js"></script>
-
+  <!-- #include shared/nav-helper.html -->
 </body>
 
 </html>

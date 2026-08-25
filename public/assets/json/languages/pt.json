@@ -1,9 +1,10 @@
 {
 	"account": {
-		"settings": "Ajustes da conta",
+		"settings": "Ajustes",
 		"backup": {
-			"title": "Backup da conta",
-			"prompt": "Você gostaria de fazer backup dos dados sensíveis de viagens? Será necessário inserir o PIN de acesso para cada viagem protegida",
+			"title": "Exportar Conta",
+			"prompt": "Você gostaria de fazer backup também dos dados sensíveis de viagens?",
+			"security_warning": "⚠️ Os arquivos exportados contêm seus dados em texto simples, incluindo informações protegidas (códigos de reserva, links). Qualquer pessoa com acesso ao arquivo pode ler esses dados. Armazene os arquivos exportados com segurança e exclua-os quando não forem mais necessários.",
 			"success": "Backup realizado com sucesso",
 			"partial": {
 				"title": "Backup parcialmente concluído",
@@ -16,12 +17,80 @@
 			}
 		},
 		"restore": {
-			"title": "Restaurar conta",
+			"title": "Importar Conta",
 			"error_title": "Erro ao restaurar o backup",
 			"prompt": "Tem certeza que deseja restaurar os dados da conta? Todos os dados atuais serão substituídos pelos dados do backup. A ação não poderá ser desfeita",
 			"invalid_file": "O arquivo selecionado não é um backup válido",
 			"incorrect_owner": "O backup selecionado pertence a outro usuário",
-			"success": "Restauração realizada com sucesso"
+			"success": "Restauração realizada com sucesso",
+			"owner_updated": "Restauração realizada com sucesso ({{count}} proprietário(s) atualizados para sua conta.)",
+			"loading": {
+				"reading": "Lendo arquivo de backup",
+				"validating": "Validando arquivo de backup",
+				"deleting": "Excluindo dados atuais",
+				"writing": "Restaurando seus dados",
+				"summaries": "Atualizando resumos da conta",
+				"finishing": "Finalizando"
+			}
+		},
+		"import_documents": {
+			"title": "Importar Documento(s)",
+			"error_title": "Erro ao importar",
+			"invalid_file": "O arquivo selecionado não é um documento de exportação válido. Esperava um JSON com a propriedade \"trip\", \"destination\" ou \"listing\".",
+			"none_imported": "Nenhum documento pôde ser importado. Verifique se os arquivos são documentos de exportação válidos.",
+			"success": "{{count}} documento(s) importado(s) com sucesso!",
+			"untitled": "Sem título",
+			"conflict_title": "Documentos Conflitantes",
+			"conflict_desc": "Os seguintes documentos já existem na sua conta e serão duplicados se importados. Tem certeza que deseja continuar?",
+			"complex_hint": "Alguns documentos incluem destinos que já existem. Escolha se deseja importar apenas os documentos principais (viagem/lista) sem os destinos anexados, ou cancelar.",
+			"override_confirm": "Importar Todos",
+			"import_main_only": "Importar Apenas Documentos Principais",
+			"in_db": "Na sua conta",
+			"in_file": "No arquivo",
+			"loading": {
+				"reading": "Lendo documento(s)",
+				"checking": "Verificando conflitos",
+				"importing": "Importando documento {{current}} de {{total}}",
+				"finishing": "Finalizando"
+			}
+		},
+		"export_documents": {
+			"title": "Exportar Documento(s)",
+			"select_hint": "Selecione os documentos para exportar",
+			"security_warning": "⚠️ Os arquivos exportados contêm seus dados em texto simples, incluindo informações protegidas (códigos de reserva, links). Qualquer pessoa com acesso ao arquivo pode ler esses dados. Armazene os arquivos exportados com segurança e exclua-os quando não forem mais necessários.",
+			"no_documents": "Nenhum documento disponível para exportar nesta categoria.",
+			"none_selected": "Nenhum documento selecionado para exportar.",
+			"export_button": "Exportar Selecionados",
+			"success": "{{count}} documento(s) exportado(s) com sucesso!",
+			"partial_success": "{{exported}} documento(s) exportado(s) com sucesso ({{failed}} falhou).",
+			"failed": "Falha ao exportar documentos."
+		},
+		"export_static": {
+			"title": "Exportar como Página Web Estática",
+			"warning": "⚠️ O pacote exportado contém os dados do seu documento em texto simples, incluindo informações protegidas (códigos de reserva, links). Qualquer pessoa com acesso aos arquivos pode ler esses dados. Armazene os arquivos exportados com segurança e exclua-os quando não forem mais necessários.",
+			"select_type": "Escolha o que exportar",
+			"select_document": "Selecione um documento",
+			"select_mode": "Selecione o modo de fidelidade",
+			"mode_light": "Leve",
+			"mode_complete": "Completo",
+			"mode_light_hint": "Pacote menor. As imagens permanecem como links externos (precisa de rede para a mídia).",
+			"mode_complete_hint": "Totalmente offline. Todas as imagens mapeadas são baixadas no pacote.",
+			"app_title": "Título do app",
+			"app_icon": "Ícone do app",
+			"build": "Criar Exportação",
+			"building": "Criando exportação estática…",
+			"success": "Exportação estática concluída com sucesso!",
+			"partial_success": "Exportação estática concluída, mas {{failed}} arquivo(s) não puderam ser baixados.",
+			"failed": "Falha na exportação estática.",
+			"none_selected": "Nenhum documento selecionado para exportar.",
+			"no_documents": "Nenhum documento disponível para exportar nesta categoria.",
+			"loading": {
+				"gathering": "Coletando dados do documento",
+				"assets": "Baixando recursos do app",
+				"images": "Baixando imagens ({{current}} de {{total}})",
+				"building": "Criando pacote ZIP",
+				"finishing": "Finalizando"
+			}
 		},
 		"delete": {
 			"title": "Excluir conta",
@@ -33,6 +102,7 @@
 		"protected": "Dados protegidos da viagem",
 		"next": "Próximas viagens",
 		"previous": "Viagens anteriores",
+		"current": "Viagens em andamento",
 		"new": "Nova viagem",
 		"current_single": "Viagem em Andamento",
 		"current_multi_1": "Múltiplas viagens em andamento",
@@ -47,10 +117,10 @@
 			"subtitle": "Adicione aqui as principais informações da sua viagem",
 			"title_placeholder": "Digite o título da viagem",
 			"security": {
-				"title": "Segurança",
-				"disabled": "Não proteger dados da viagem",
-				"sensitive_only": "Proteger apenas dados sensíveis (gastos e códigos de reserva)",
-				"all_data": "Proteger todos os dados da viagem"
+				"title": "Proteção de dados",
+				"disabled": "Desabilitada",
+				"sensitive_only": "Apenas dados sensíveis",
+				"all_data": "Habilitada"
 			},
 			"pin": {
 				"title": "PIN de Acesso",
@@ -89,8 +159,16 @@
 			"personal": "Gastos pessoais",
 			"other": "Outros gastos",
 			"daily": "Gastos por dia",
+			"entertainment": "Entretenimento",
 			"exchange_rate_api": "Taxa de Câmbio (API)",
 			"paid_by": "Pago por",
+			"shopping": "Compras",
+			"link": "Link",
+			"split_with": "Dividir com",
+			"view_by": "Ver por",
+			"locked_title": "Gastos protegidos",
+			"locked_text": "Os gastos desta viagem são protegidos por um PIN de acesso. Insira-o para visualizá-los.",
+			"unlock": "Desbloquear gastos",
 			"min": {
 				"pre_trip": "Pré-Viagem",
 				"during_trip": "Durante"
@@ -103,9 +181,13 @@
 			"arrival": "Chegada",
 			"during": "Durante",
 			"return": "Retorno",
+			"departure_arrival": "Partida e chegada",
+			"duration": "Duração",
+			"departure_time": "Horário de partida",
+			"arrival_time": "Horário de chegada",
 			"simple_view": "Visualização simplificada",
 			"leg_view": "Agrupar por trajeto",
-			"people_view": "Agrupar por pessoas",
+			"people_view": "Agrupar por viajante",
 			"time_window": "Horário",
 			"departure_location": {
 				"title": "Local de partida",
@@ -133,6 +215,14 @@
 				"bullet_train": "Trem-bala",
 				"subway": "Metrô",
 				"other": "Outro"
+			},
+			"import": {
+				"label": "Reutilizar o transporte de outro viajante",
+				"button": "Importar transporte",
+				"title": "Importar transporte",
+				"choose": "Escolha o transporte para copiar",
+				"copied": "Transporte copiado",
+				"no_sources": "Não há transporte de outro viajante para copiar."
 			}
 		},
 		"accommodation": {
@@ -141,15 +231,38 @@
 			"subtitle": "Cadastre onde você ficará hospedado durante a viagem",
 			"checkin": "Check-in",
 			"checkout": "Check-out",
+			"stay_duration": "Duração da estadia",
+			"checkin_time": "Horário de check-in",
+			"checkout_time": "Horário de check-out",
 			"breakfast": "Café da manhã",
 			"name_placeholder": "Hotel, Pousada, Airbnb, etc",
 			"address_placeholder": "Rua Exemplo, 123",
-			"description_placeholder": "Quarto duplo, vista para o mar"
+			"description_placeholder": "Quarto duplo, vista para o mar",
+			"payment_status": "Status de pagamento",
+			"payment_status_options": {
+				"none": "Não mostrar",
+				"prepaid": "Pago antecipadamente",
+				"partial_prepaid": "Pago parcialmente",
+				"pay_on_site": "Pagar no local"
+			},
+			"import": {
+				"label": "Reutilizar uma hospedagem",
+				"button": "Importar de uma viagem",
+				"title": "Importar hospedagem",
+				"loading": "Carregando hospedagens...",
+				"loading_trips": "Carregando viagens...",
+				"search_placeholder": "Buscar viagens...",
+				"no_matches": "Nenhuma viagem corresponde à sua busca.",
+				"no_trips": "Não há outras viagens com hospedagens disponíveis.",
+				"no_accommodations": "Esta viagem não possui hospedagens para importar.",
+				"load_error": "Não foi possível carregar as hospedagens. Tente novamente."
+			}
 		},
 		"itinerary": {
 			"title": "Programação",
 			"subtitle": "Inclua aqui a sua programação diária",
 			"placeholder": "Ir para...",
+			"swap_title": "Trocar Programação",
 			"todays_itinerary": "Programação de hoje",
 			"no_itinerary": "Nada programado por aqui! ☹️",
 			"full_itinerary": "Programação completa",
@@ -178,7 +291,8 @@
 			"info": "Informações dos viajantes",
 			"quantity": "Quantidade de viajantes",
 			"unique": "Os nomes dos viajantes devem ser únicos",
-			"add": "Adicionar viajantes"
+			"add": "Adicionar viajantes",
+			"add_traveler": "Adicionar viajante"
 		}
 	},
 	"destination": {
@@ -191,10 +305,18 @@
 		"share": "Venha visualizar o destino \"{{name}}\" criado no TripViewer",
 		"all_used": "Não é possível adicionar novos destinos. Todos os destinos cadastrados nessa conta já foram utilizados",
 		"nothing": "Sem destinos cadastrados",
+		"unlink": {
+			"title": "Desvincular destino?",
+			"message": "Este destino está vinculado a outros conteúdos da viagem. Desvincular removerá esses vínculos:",
+			"itinerary": "{{count}} item(ns) do roteiro mostrarão apenas o título",
+			"wallpaper": "O papel de parede será mantido, mas tratado como imagem personalizada",
+			"confirm": "Desvincular"
+		},
 		"basic_information": "Adicione aqui as principais informações do seu destino",
 		"undefined": "Destino não definido",
 		"recent": "Adicionado recentemente",
 		"location_placeholder": "São Paulo",
+		"image_description_placeholder": "Uma foto do destino",
 		"delete": {
 			"title": "Excluir destino",
 			"message": "Tem certeza que deseja excluir o destino \"{{name}}\"? A ação não poderá ser desfeita"
@@ -297,7 +419,9 @@
 			"title": "Mapa",
 			"description": "Mapa interativo no Google Maps com vários pontos turísticos da cidade: Restaurantes, Lanches, Saídas, Turismo e Lojas",
 			"instructions": "Cadastre um mapa gratuitamente no",
-			"my_maps": "My Maps"
+			"my_maps": "My Maps",
+			"link_label": "Link do My Maps",
+			"url_placeholder": "https://www.google.com/maps/d/viewer?mid=1tgHq3Dg7zI1yMKTDlObLRryNPi_sy79t&usp=sharing"
 		},
 		"lineup": {
 			"title": "Lineup",
@@ -327,8 +451,13 @@
 			"free": "Gratuito",
 			"placeholder": "R$26 - R$50"
 		},
+		"move": {
+			"title": "Mover - {{category}}",
+			"label": "Mover para:"
+		},
 		"errors": {
 			"missing_title": "Não foi possível atualizar o destino. O título está ausente",
+			"invalid_emoji": "Insira um emoji válido 🫠",
 			"tiktok": {
 				"not_found": "Não foi possível encontrar o link do TikTok",
 				"conversion": "Erro ao converter TikTok",
@@ -389,6 +518,10 @@
 		"new": "Nova lista de destinos",
 		"edit": "Editar lista de destinos",
 		"share": "Venha visualizar a lista de destinos \"{{name}}\" criada no TripViewer",
+		"delete": {
+			"title": "Excluir Lista",
+			"message": "Tem certeza que deseja excluir a lista \"{{name}}\"? A ação não poderá ser desfeita"
+		},
 		"basic_information": "Adicione aqui as principais informações da sua lista de destinos",
 		"last_update": {
 			"title": "Exibir data da última atualização",
@@ -439,6 +572,17 @@
 		}
 	},
 	"datetime": {
+		"datepicker": {
+			"today": "Hoje",
+			"this_week": "Esta semana",
+			"this_month": "Este mês",
+			"clear": "Limpar",
+			"select_dates": "Selecionar datas...",
+			"cancel": "Cancelar",
+			"apply": "Aplicar",
+			"pick_start_date": "Selecionar data inicial",
+			"start_pick_end": "Início: {{start}} — selecionar data final"
+		},
 		"titles": {
 			"day_month": "{{day}} de {{month}}",
 			"weekday_day_month": "{{weekday}}, {{day}} de {{month}}",
@@ -498,10 +642,16 @@
 	"messages": {
 		"text_copied": "Texto copiado para a área de transferência",
 		"itinerary_copied": "Programação copiada! Cole no WhatsApp ou em um app de notas para manter a formatação",
+		"expenses_copied": "Lista copiada! Cole no WhatsApp ou em um app de notas para manter os checkboxes",
 		"no_data": "Sem dados cadastrados 😔",
 		"share": "Venha visualizar meus dados criados no TripViewer",
 		"exit_confirmation": "Você tem certeza que deseja sair? Todas as alterações não salvas serão perdidas",
+		"busy_operation": "Uma operação de backup/restauração está em andamento. Sair agora pode interrompê-la e causar perda de dados. Tem certeza que deseja sair?",
 		"select_one": "Selecione pelo menos um item",
+		"app_update": {
+			"title": "Nova versão disponível",
+			"message": "Uma nova versão do TripViewer (v{{version}}) está disponível. Atualize para carregar a versão mais recente."
+		},
 		"protected": {
 			"pin": "Para visualizar os dados dessa viagem, insira o PIN de acesso",
 			"prompt": "Esta viagem contém dados protegidos, como códigos de reserva. Deseja inserir o PIN para visualizá-los?"
@@ -518,7 +668,9 @@
 			"module_not_active": "Não é possível carregar a página. O módulo {{module}} não está ativo",
 			"no_data_on_module": "Não há dados cadastrados para o módulo de {{module}}",
 			"loading_timeout": "O carregamento demorou mais que o esperado. Tente novamente mais tarde",
-			"missing_data": "Não foi possível carregar este documento. Parece que informações obrigatórias estão faltando"
+			"missing_data": "Não foi possível carregar este documento. Parece que informações obrigatórias estão faltando",
+			"with_location": "Erro \"{{message}}\" localizado em {{location}}",
+			"without_location": "Erro \"{{message}}\""
 		},
 		"too_early": {
 			"title": "Você chegou muito cedo! 😅",
@@ -529,7 +681,9 @@
 			"message": {
 				"access": "Você não tem permissão para acessar esta página. Por favor, verifique suas credenciais",
 				"edit": "Você não tem permissão para editar esta página. Por favor, verifique suas credenciais",
-				"default": "Acesso não autorizado para este documento"
+				"default": "Acesso não autorizado para este documento",
+				"unauthenticated": "Você precisa estar logado para editar este documento. Faça login e tente novamente",
+				"not_owner": "Apenas o proprietário do documento pode editar este documento. Você não tem permissão para fazer alterações"
 			}
 		},
 		"documents": {
@@ -599,6 +753,9 @@
 			"email": "E-mail",
 			"password": "Senha"
 		},
+		"export": "Exportar",
+		"copy_list": "Copiar lista",
+		"print": "Imprimir",
 		"adapted": "Adaptado",
 		"intro": "Isso é ",
 		"greeting": "Olá",
@@ -614,9 +771,11 @@
 			"link": "Link da reserva"
 		},
 		"select": "Selecione",
+		"select_all": "Selecionar Todos",
 		"other": "Outro(a)",
 		"optional": "Opcional",
 		"cancel": "Cancelar",
+		"refresh": "Atualizar",
 		"save": "Salvar",
 		"delete": "Excluir",
 		"understood": "Entendi",
@@ -638,13 +797,17 @@
 		"try_again": "Tentar novamente",
 		"all": "Todos",
 		"developed_by": "Desenvolvido por",
+		"tripviewer_version": "TripViewer v{{version}}",
 		"credits": "Atribuições",
 		"last_updated_on": "Última atualização em",
 		"unauthenticated": "Não autenticado",
 		"home": "Home",
+		"url_placeholder": "https://drive.google.com/drive",
+		"map_url_placeholder": "https://www.google.com/maps/",
 		"days": "Dias",
 		"people": "Pessoas",
 		"person": "Pessoa",
+		"traveler": "Viajante",
 		"highlights": "Destaques",
 		"overview": "Resumo",
 		"view": "Ver",
@@ -658,6 +821,7 @@
 		"wallpaper": "Papel de Parede",
 		"logo": "Logotipo",
 		"edit": "Editar",
+		"reedit": "Re-editar",
 		"basic_information": "Dados básicos",
 		"visibility": "Visibilidade",
 		"public": "Público",
@@ -666,15 +830,57 @@
 			"images": {
 				"title": "Imagens Personalizadas",
 				"subtitle": "Adicione um papel de parede e um logotipo",
+				"background_subtitle": "Adicione uma imagem de fundo",
+				"import_from_trip": "Viagem",
+				"import_loading": "Carregando imagens da viagem...",
+				"no_trip_images": "Nenhuma imagem encontrada nesta viagem ainda",
+				"imported_from": "Papel de parede importado de {{name}}",
+				"custom": "Personalizado",
+				"add_image": "Adicionar imagem",
+				"destination": "Destino",
+				"apply": "Aplicar",
+				"group_gallery": "Galeria",
+				"group_accommodations": "Hospedagens",
+				"group_destinations": "Destinos",
+				"cover": "Capa",
+				"accommodation": "Hospedagem",
+				"image_n": "Imagem {{n}}",
+				"photo_n": "Foto {{n}}",
+				"custom_applied": "Imagem aplicada",
+				"light_mode": "Modo claro",
+				"dark_mode": "Modo escuro",
+				"light_and_dark_mode": "Modo claro e escuro",
+				"add_light_mode_image": "Adicionar imagem do modo claro",
+				"add_dark_mode_image": "Adicionar imagem do modo escuro",
 				"logo_light": "Logotipo: Tema Claro",
 				"logo_dark": "Logotipo: Tema Escuro"
 			},
+			"theme": {
+				"title": "Tema personalizado",
+				"subtitle": "Forçar a exibição da viagem em modo claro ou escuro",
+				"dynamic": "Dinâmico",
+				"light_only": "Apenas modo claro",
+				"dark_only": "Apenas modo escuro"
+			},
 			"colors": {
 				"title": "Cores Personalizadas",
-				"themes": {
-					"light_and_dark": "Exibir em tema Claro e Escuro",
-					"light": "Exibir apenas no tema Claro",
-					"dark": "Exibir apenas no tema Escuro"
+				"theme_toggle": "Usar cores personalizadas",
+				"custom": "Cor personalizada",
+				"presets": {
+					"purple": "Roxo",
+					"rose": "Rosa",
+					"magenta": "Magenta",
+					"crimson": "Carmim",
+					"sunset": "Pôr do sol",
+					"amber": "Âmbar",
+					"terracotta": "Terracota",
+					"forest": "Floresta",
+					"sage": "Sálvia",
+					"teal": "Verde-azulado",
+					"ocean": "Oceano",
+					"steel": "Aço",
+					"indigo": "Índigo",
+					"gray": "Cinza"
 				}
 			},
 			"links": {
@@ -744,6 +950,144 @@
 			"title": "Planejado",
 			"multiple": "Planejado em múltiplas datas",
 			"not_planned": "Não planejado"
+		}
+	},
+	"index": {
+		"welcome_back": "Pronto para explorar suas viagens?",
+		"my_trips": "Viagens",
+		"my_destinations": "Destinos",
+		"my_lists": "Listas",
+		"no_trips": "Nenhuma viagem ainda. Crie sua primeira viagem!",
+		"no_destinations": "Nenhum destino cadastrado ainda",
+		"no_lists": "Nenhuma lista criada ainda",
+		"active": "Ativa",
+		"upcoming": "Próxima",
+		"finished": "Finalizada",
+		"active_trips": "Viagens ativas",
+		"upcoming_trips": "Próximas viagens",
+		"finished_trips": "Viagens concluídas",
+		"search_placeholder": "Buscar por título...",
+		"days": "dias",
+		"day": "dia",
+		"modules_active": "Módulos ativos",
+		"trip_destinations": "Destinos da Viagem",
+		"view_trip": "Ver Viagem",
+		"edit_trip": "Editar Viagem"
+	},
+	"placesApi": {
+		"fetchInfo": "Buscar Informações com Maps",
+		"updateWithMaps": "Atualizar com Maps",
+		"dialog": {
+			"title": "Importar com mapas"
+		},
+		"noPermission": "Você não tem permissão para usar a API de Lugares",
+		"source": {
+			"message": "Como você quer importar este lugar?",
+			"local": "Local (gmaps scraper)",
+			"localHint": "Cole um link do Google Maps para fazer o scrape nesta máquina",
+			"api": "Via API de Lugares",
+			"apiHint": "Busque no Google e importe os dados oficiais"
+		},
+		"local": {
+			"title": "Link do Google Maps",
+			"message": "Cole um link do Google Maps para importar este lugar localmente.",
+			"placeholder": "https://maps.app.goo.gl/...",
+			"import": "Importar",
+			"notFound": "Não foi possível obter dados deste link"
+		},
+		"search": {
+			"title": "Buscar",
+			"placeholder": "Busque um lugar...",
+			"button": "Buscar",
+			"noResults": "Nenhum resultado encontrado",
+			"error": "Ocorreu um erro ao buscar. Tente novamente",
+			"includePhotos": "Incluir fotos"
+		},
+		"details": {
+			"updateLabel": "Atualizar com estas informações",
+			"descriptionBoth": "Descrição importada em inglês e português",
+			"noData": "Nenhuma informação disponível para este lugar",
+			"allUpToDate": "Todas as informações já correspondem ao que você tem",
+			"back": "Voltar",
+			"continue": "Continuar",
+			"error": "Ocorreu um erro ao carregar as informações do lugar. Tente novamente"
+		},
+		"linked": {
+			"title": "Este lugar já está vinculado",
+			"message": "Você pode atualizar as informações do lugar vinculado ou vincular esta entrada a outro lugar.",
+			"update": "Atualizar este lugar",
+			"updateHint": "Atualizar as informações do lugar vinculado",
+			"search": "Encontrar outro lugar",
+			"searchHint": "Buscar outro lugar no Google"
+		},
+		"photos": {
+			"import": "Importar fotos",
+			"canImport": "Fotos podem ser importadas",
+			"none": "Nenhuma foto disponível para importar",
+			"count": "{{count}} foto(s) selecionada(s)"
+		},
+		"closed": {
+			"title": "Lugar não está mais em operação",
+			"message": "Este lugar parece não estar mais em operação",
+			"option": {
+				"delete": "Excluir item",
+				"ignore": "Ignorar",
+				"label": "Adicionar etiqueta [Closed]"
+			},
+			"label": "[Closed]"
+		},
+		"loading": {
+			"search": "Buscando...",
+			"scraping": "Fazendo scrape das informações do lugar...",
+			"fetching": "Obtendo informações do lugar...",
+			"importing": "Importando fotos...",
+			"applying": "Aplicando informações do lugar..."
+		},
+		"apply": {
+			"title": "Aplicar informações",
+			"confirm": "Aplicar",
+			"fields": "{{count}} campo(s) serão atualizados",
+			"photos": "{{count}} foto(s) serão importadas",
+			"closedLabel": "Uma etiqueta [Closed] será adicionada ao título",
+			"deleteItem": "Este item será excluído",
+			"success": "Informações do lugar aplicadas com sucesso",
+			"error": "Ocorreu um erro ao aplicar as informações do lugar"
+		},
+		"bulk": {
+			"confirm": "Tentar obter informações de {{count}} item(ns) vinculado(s)?",
+			"local": {
+				"none": "Nenhuma entrada pode ser atualizada localmente (nenhuma tem um link do Google Maps)"
+			},
+			"report": {
+				"fields": "{{count}} campo(s) podem ter seus dados atualizados",
+				"closed": "{{count}} lugar(es) não estão mais em operação"
+			},
+			"options": {
+				"fields": {
+					"title": "Campos",
+					"all": "Substituir tudo pelos novos dados",
+					"auto": "Substituir apenas os campos preenchidos automaticamente"
+				},
+				"closed": {
+					"title": "Lugares fechados",
+					"delete": "Excluir automaticamente itens fechados",
+					"label": "Adicionar etiqueta [Closed] aos itens fechados"
+				}
+			},
+			"success": "Os lugares foram atualizados com sucesso"
+		},
+		"limited": {
+			"message": "A cota de Lugares está quase no limite. A busca e as informações do lugar continuam funcionando, mas as fotos estão temporariamente desativadas."
+		},
+		"errors": {
+			"localOnly": "Este recurso está disponível apenas no desenvolvimento local",
+			"network": "Erro de rede. Verifique sua conexão e tente novamente",
+			"routeNotConfigured": "A rota da API de Lugares ainda não está configurada",
+			"quotaExceeded": "A cota mensal da API de Lugares foi atingida. Tente novamente no próximo mês.",
+			"invalidMapLink": "Isso não parece um link válido do Google Maps",
+			"scraperUnavailable": "O scraper local não está rodando. Inicie com npm run dev e verifique se o Docker Desktop está aberto.",
+			"scraperFailed": "O scraper local não conseguiu importar este lugar. Tente novamente.",
+			"rateLimited": "Nenhum dado retornado para este lugar. O Google provavelmente está limitando os scrapes — aguarde alguns minutos e tente novamente."
 		}
 	}
 }

@@ -1,0 +1,914 @@
+{
+  "trip": {
+    "title": "Simple Plan + Sum 41 SP",
+    "currency": "BRL",
+    "start": {
+      "day": 6,
+      "month": 12,
+      "year": 2016,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 9,
+      "month": 12,
+      "year": 2016,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2016-12-09T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      },
+      {
+        "id": "lucas",
+        "name": "Lucas"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Hotel Trianon Paulista",
+      "description": "Alameda Casa Branca, 355 - Jardim Paulista, São Paulo",
+      "address": "Alameda Casa Branca, 355 - Jardim Paulista, São Paulo",
+      "dates": {
+        "checkIn": {
+          "day": 6,
+          "month": 12,
+          "year": 2016,
+          "hour": 12,
+          "minute": 40,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 9,
+          "month": 12,
+          "year": 2016,
+          "hour": 7,
+          "minute": 30,
+          "second": 0
+        }
+      },
+      "breakfast": true,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "flight",
+      "company": "gol",
+      "points": {
+        "origin": "Belo Horizonte - Confins (CNF)",
+        "destination": "São Paulo - Congonhas (CGH)"
+      },
+      "dates": {
+        "departure": {
+          "day": 6,
+          "month": 12,
+          "year": 2016,
+          "hour": 10,
+          "minute": 10,
+          "second": 0
+        },
+        "arrival": {
+          "day": 6,
+          "month": 12,
+          "year": 2016,
+          "hour": 11,
+          "minute": 25,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "departure",
+      "reservation": "ANKFQE (G3 1305)",
+      "link": "",
+      "person": ""
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "gol",
+      "points": {
+        "origin": "São Paulo - Congonhas (CGH)",
+        "destination": "Belo Horizonte - Confins (CNF)"
+      },
+      "dates": {
+        "departure": {
+          "day": 9,
+          "month": 12,
+          "year": 2016,
+          "hour": 10,
+          "minute": 25,
+          "second": 0
+        },
+        "arrival": {
+          "day": 9,
+          "month": 12,
+          "year": 2016,
+          "hour": 11,
+          "minute": 35,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "return",
+      "reservation": "ANKFQE (G3 1304)",
+      "link": "",
+      "person": ""
+    }
+  },
+  "itinerary": {
+    "20161206": {
+      "title": {
+        "value": "Terça — Chegada a São Paulo",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 6,
+        "month": 12,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto → Hotel: Ônibus - 6366-10",
+          "start": "11:30",
+          "end": "12:40"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Check-in: Deixar mochilas no Hotel",
+          "start": "12:40",
+          "end": "12:50"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Almoço (KFC/Taco Bell): Shopping Center 3 ou Top Center - A pé",
+          "start": "12:50",
+          "end": "13:05"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Almoço/Passeio",
+          "start": "13:05",
+          "end": "15:05"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Shopping → Hotel: A pé",
+          "start": "15:05",
+          "end": "15:20"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Fazer Check-in",
+          "start": "15:20",
+          "end": "15:40"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Instituto Tomie Ohtake: Metrô: Linha L4",
+          "start": "15:40",
+          "end": "16:20"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Instituto Tomie Ohtake",
+          "start": "16:20",
+          "end": "17:20"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Tomie Ohtake → Hotel: Metrô: Linha L4",
+          "start": "17:20",
+          "end": "18:00"
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Descanso",
+          "start": "18:00",
+          "end": "19:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → O'Malley's: A pé",
+          "start": "19:00",
+          "end": "19:15"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "O'Malley's: Alameda Itu, 1529 - Jardim Paulista",
+          "start": "19:15",
+          "end": "21:45"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "O'Malley's → Hotel: A pé ou Uber",
+          "start": "21:45",
+          "end": "22:00"
+        }
+      ]
+    },
+    "20161207": {
+      "title": {
+        "value": "Quarta — Ibirapuera, Galeria do Rock e Simple Plan",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 7,
+        "month": 12,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Café da Manhã",
+          "start": "7:20",
+          "end": "7:50"
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Ibirapuera: Ônibus: 6358-10",
+          "start": "7:50",
+          "end": "8:30"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Parque Ibirapuera",
+          "start": "8:30",
+          "end": "11:10"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Ibirapuera → Almoço (KFC/Taco Bell): Ônibus: 669A-10",
+          "start": "11:10",
+          "end": "11:50"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Almoçar",
+          "start": "11:50",
+          "end": "12:30"
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Shopping → Galeria do Rock: Metrô: Linha L4",
+          "start": "12:30",
+          "end": "13:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Galeria do Rock: Av. São João, 439 - República",
+          "start": "13:00",
+          "end": "18:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Galeria → Edifício Itália (e voltar): A pé",
+          "start": "15:00",
+          "end": "16:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Galeria → Hotel: Metrô: Linha L4",
+          "start": "18:00",
+          "end": "18:40"
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Descanso",
+          "start": "18:40",
+          "end": "19:40"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Citibank Hall: Uber",
+          "start": "19:40",
+          "end": "20:10"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Show Simple Plan: Citibank Hall - Av. das Nações Unidas, 12.551 - Santo Amaro",
+          "start": "20:10",
+          "end": "23:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Citibank Hall → Hotel: Uber",
+          "start": "23:00",
+          "end": "23:20"
+        }
+      ]
+    },
+    "20161208": {
+      "title": {
+        "value": "Quinta — Liberdade, MASP e Sum 41",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 8,
+        "month": 12,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Café da Manhã",
+          "start": "8:00",
+          "end": "8:30"
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Liberdade: Metrô: Linha L2 + Linha L1",
+          "start": "8:30",
+          "end": "9:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Bairro da Liberdade",
+          "start": "9:00",
+          "end": "11:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Liberdade → Jetis: Metrô: L1 + L4 + CPTM L09",
+          "start": "11:00",
+          "end": "12:30"
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Almoço no Jetis: R. Verbo Divino, 1194 - Chácara Santo Antônio",
+          "start": "12:30",
+          "end": "14:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Jetis → MASP: Metrô: CPTM L09 + Linha L4",
+          "start": "14:00",
+          "end": "15:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "MASP",
+          "start": "15:00",
+          "end": "16:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "MASP → Hotel: A pé",
+          "start": "16:00",
+          "end": "16:15"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Descanso",
+          "start": "16:15",
+          "end": "17:00"
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Tropical Butantã: Metrô: Linha L4",
+          "start": "17:00",
+          "end": "18:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Show Sum 41 (Honorsounds Especial): Tropical Butantã - Av. Valdemar Ferreira, 93 - Butantã. Abertura: 19h, Início: 19h45",
+          "start": "18:00",
+          "end": "23:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Tropical Butantã → Hotel: Uber",
+          "start": "23:00",
+          "end": "23:20"
+        }
+      ]
+    },
+    "20161209": {
+      "title": {
+        "value": "Sexta — Retorno a BH",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 9,
+        "month": 12,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Café da manhã",
+          "start": "7:00",
+          "end": "7:30"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Check-out",
+          "start": "7:30",
+          "end": "8:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Aeroporto de Congonhas: Uber",
+          "start": "8:00",
+          "end": "8:30"
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "SP → BH (voo GOL G3 1304): Localizador: ANKFQE",
+          "start": "10:25",
+          "end": "11:35"
+        }
+      ],
+      "afternoon": [],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Ônibus Aeroporto → Hotel",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Almoço dia 1",
+        "price": 30.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Metrô Hotel → Tomie Ohtake (ida e volta)",
+        "price": 7.6,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "entretenimento",
+        "name": "Instituto Tomie Ohtake",
+        "price": 18.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "O'Malley's",
+        "price": 100.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Ônibus Hotel → Ibirapuera",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Ônibus Ibirapuera → Shopping",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Almoço dia 2",
+        "price": 30.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Metrô Shopping → Galeria do Rock",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Metrô Galeria → Hotel",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Uber Hotel → Citibank Hall",
+        "price": 20.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Uber Citibank Hall → Hotel",
+        "price": 30.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Metrô Hotel → Liberdade",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Metrô Liberdade → Jetis",
+        "price": 7.6,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Almoço Jetis",
+        "price": 75.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Metrô Jetis → MASP",
+        "price": 7.6,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "entretenimento",
+        "name": "MASP",
+        "price": 15.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Metrô Hotel → Tropical Butantã",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Uber Tropical Butantã → Hotel",
+        "price": 60.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Uber Hotel → Aeroporto Congonhas",
+        "price": 50.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
+    ],
+    "preTrip": [
+      {
+        "type": "trip.transportation.type.flights",
+        "name": "Passagem aérea GOL BH-SP (ida e volta, 2 pessoas)",
+        "price": 522.6,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "type": "trip.expenses.entertainment",
+        "name": "Ingresso Simple Plan - Citibank Hall (2 ingressos)",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.entertainment",
+        "name": "Ingresso Sum 41 - Honorsounds Especial (2x Pista VIP Meia)",
+        "price": 383.3,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel",
+      "lucas": "Lucas"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2016-12-09T00:00:00.000Z"
+    }
+  }
+}

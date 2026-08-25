@@ -1,0 +1,39 @@
+<div class="section-title">
+  <h1 id="title"></h1>
+  <div id="destinations-subtitle"></div>
+</div>
+
+<!-- Category tab bar — rendered by JS in P2, hidden until wired -->
+<div class="category-tabs" id="destination-tab-bar" style="display: none"></div>
+
+<!-- Sort / filter controls -->
+<div class="section-buttons" id="filter-sort-container">
+  <button class="filter-sort" id="filter" data-action="open-filter-drawer">
+    <i class="iconify" data-icon="tdesign:filter"></i>
+    <span data-translate="destination.filter.title"></span>
+  </button>
+  <button class="filter-sort" id="sort" data-action="open-sort-drawer">
+    <i class="iconify" data-icon="ant-design:sort-ascending-outlined"></i>
+    <span data-translate="destination.sort.title"></span>
+  </button>
+</div>
+
+<!-- Search bar — wired to the lazy grid in P2 -->
+<div class="search-bar" id="destination-search-bar">
+  <i class="iconify search-icon" data-icon="material-symbols:search"></i>
+  <input type="text" id="destination-search-input" class="search-input" data-translate="index.search_placeholder">
+  <button class="search-clear" id="destination-search-clear" style="display: none" aria-label="Clear search">
+    <i class="iconify" data-icon="material-symbols:close"></i>
+  </button>
+</div>
+
+<!-- Add destination button (right-aligned, like the index "New trip" button) -->
+<div class="add-container" style="display: none">
+  <button id="add-button" class="btn btn-primary-theme btn-sm" data-action="add-destination">
+    <i class="iconify" data-icon="gridicons:add-outline"></i>
+    <span data-translate="labels.add"></span>
+  </button>
+</div>
+
+<div id="content"></div>
+<div class="grid-sentinel" id="destinations-grid-sentinel"></div>

@@ -1,23 +1,12 @@
-:root {
-	--theme-color: #5859a7;
-	--theme-color-hover: #505197;
-	--theme-color-secondary: #d5d6e9;
-	--subtitle: #4b5563;
-	--box-color: #fcfcfc;
-	--box-color-hover: rgb(236, 235, 235);
-	--border-color: #dedede;
-	--text-color: #272829;
-}
-
-@font-face {
-	font-family: "Chelos";
-	src: url("../../fonts/Chelos\ Free.ttf") format("truetype");
-}
-
 @media print {
 	* {
 		-webkit-print-color-adjust: exact;
 		print-color-adjust: exact;
+	}
+
+	#header,
+	#toast {
+		display: none !important;
 	}
 
 	body {
@@ -31,20 +20,6 @@
 		font-size: 24px !important;
 	}
 
-	.content h2 {
-		font-size: 16px !important;
-	}
-
-	.content h3 {
-		font-size: 14px !important;
-		margin-top: 1rem !important;
-		margin-bottom: 0.5rem !important;
-	}
-
-	.content li {
-		font-size: 12px !important;
-	}
-
 	.top-bar,
 	footer {
 		display: none !important;
@@ -52,170 +27,254 @@
 
 	.content {
 		width: 100% !important;
+		display: block !important;
+		margin-bottom: 0 !important;
 		padding: 0 !important;
 		background: transparent !important;
+		border: none !important;
 		border-radius: 0 !important;
+		box-shadow: none !important;
+		min-height: 0 !important;
 	}
 
 	.section-title h1 {
 		padding-top: 0 !important;
 	}
 
-	.content li > ul {
-		color: #4b5563 !important;
+	.section-title h1::before,
+	.section-title h1::after {
+		display: none !important;
+	}
+
+	/* Itinerary table — stacked "list" on paper. Each row becomes a bordered
+	   block and each cell shows its column header (data-label) above its
+	   content, so vertical views read top-to-bottom and tall cells are never
+	   clipped. */
+	.itin-table-wrap {
+		border: 1px solid #000 !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		background: #fff !important;
+		overflow: visible !important;
+	}
+
+	.itin-table,
+	.itin-table tbody,
+	.itin-table tr,
+	.itin-table th,
+	.itin-table td {
+		display: block !important;
+		width: 100% !important;
+		box-sizing: border-box !important;
+	}
+
+	.itin-table {
+		min-width: 0 !important;
+	}
+
+	.itin-table thead {
+		display: none !important;
+	}
+
+	.itin-table tbody tr {
+		margin: 0 0 0.75rem !important;
+		border: 1px solid #000 !important;
+		overflow: hidden !important;
+		break-inside: avoid;
+		page-break-inside: avoid;
+	}
+
+	.itin-table tbody tr:last-child {
+		margin-bottom: 0 !important;
+	}
+
+	.itin-table tbody th,
+	.itin-table tbody td {
+		border: 0 !important;
+		border-bottom: 1px solid #bbb !important;
+		padding: 0.45rem 0.5rem !important;
+		color: #000 !important;
+		background: #fff !important;
+	}
+
+	.itin-table tbody tr:last-child th,
+	.itin-table tbody tr:last-child td {
+		border-bottom: none !important;
+	}
+
+	.itin-table tbody th.itin-col-day {
+		position: static !important;
+		box-shadow: none !important;
+		background: #000 !important;
+		color: #fff !important;
+	}
+
+	/* Column header shown above each cell's content on paper. */
+	.itin-table tbody th.itin-col-day::before,
+	.itin-table td.itin-cell::before {
+		content: attr(data-label) !important;
+		display: block !important;
+		margin-bottom: 0.2rem !important;
+		font-size: 9px !important;
+		font-weight: 700 !important;
+		text-transform: uppercase !important;
+		letter-spacing: 0.08em !important;
+	}
+
+	.itin-table tbody th.itin-col-day::before {
+		color: rgba(255, 255, 255, 0.75) !important;
+	}
+
+	.itin-table td.itin-cell::before {
+		color: #000 !important;
+	}
+
+	/* Rows may split between items so tall days are never clipped on paper;
+	   each item (and the day block) stays intact. */
+	.itin-item,
+	.itin-subitem {
+		break-inside: avoid;
+		page-break-inside: avoid;
+		orphans: 2;
+		widows: 2;
+	}
+
+	.itin-item {
+		padding: 0.4rem 0 !important;
+		font-size: 12px !important;
+		line-height: 1.45 !important;
+		border-bottom: 1px solid #e0e0e0 !important;
+	}
+
+	.itin-item:last-child {
+		border-bottom: none !important;
+	}
+
+	.itin-label,
+	.itin-text {
+		color: #000 !important;
+	}
+
+	.itin-sublist {
+		margin-top: 0.25rem !important;
+	}
+
+	.itin-subitem {
+		padding: 0.25rem 0 0.25rem 0.75rem !important;
+		font-size: 11px !important;
+		color: #333 !important;
+	}
+
+	.itin-subitem .itin-label,
+	.itin-subitem .itin-text {
+		color: #333 !important;
 	}
 }
 
-body {
-	font-family: "Open Sans", sans-serif;
-	color: var(--text-color);
-	background: #fff;
-	-webkit-tap-highlight-color: transparent;
-	-webkit-touch-callout: none;
-	transition: all 0.3s;
-	padding-top: env(safe-area-inset-top);
-}
-
-a {
-	color: #3d85c6;
-	text-decoration: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-family: "Raleway", sans-serif;
-}
-
 /*--------------------------------------------------------------
-# Navigation Menu
+# Main HTML elements
 --------------------------------------------------------------*/
 
-.top-bar {
+#header {
 	position: fixed;
-	background-color: #fff;
-	width: 100%;
-	height: 60px;
-	border-bottom: 0.5px solid #d9d9d9;
-	z-index: 999;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	z-index: 9997;
+	transition: all 0.5s;
+	padding: 15px;
+	overflow-y: auto;
+	background: #fff;
+	border-right: 1px solid #e6e9ec;
+	left: -300px;
+	width: 300px;
 }
 
-.logo-box {
-	display: flex;
-	align-items: center;
+.nav-menu {
+	padding: 0;
+	display: block;
 }
 
-#logo-light,
-#logo-dark {
-	height: 25px;
-	margin-left: 20px;
+.nav-menu * {
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
-#trip-viewer-text {
-	font-size: 30px;
-	margin-top: 10px;
-	margin-left: 7px;
-	font-family: Chelos;
-	color: var(--theme-color);
-}
-
-.logo-link {
-	text-decoration: none;
-	color: inherit;
-	display: flex;
-	align-items: center;
-}
-
-.icons-box {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.icon-buttons {
-	cursor: pointer;
-	width: 30px;
-	height: 30px;
-	font-size: 30px;
-	margin: 0 7px 0 7px;
-}
-
-/*--------------------------------------------------------------
-# Footer
---------------------------------------------------------------*/
-.footer {
-	color: #4f5051;
-	font-size: 14px;
-	text-align: center;
-	padding: 20px 0;
-}
-
-.atribuicoes {
-	cursor: pointer;
-}
-
-.atribuicoes:hover {
-	color: #666768;
-}
-
-.atribuicoes-icon {
-	font-size: 10px;
-}
-
-.footer .footer h3 {
-	font-size: 36px;
-	font-weight: 700;
+.nav-menu > ul > li {
 	position: relative;
-	font-family: "Poppins", sans-serif;
-	padding: 0;
-	margin: 0 0 15px 0;
+	white-space: nowrap;
 }
 
-.footer p {
-	font-size: 15;
-	font-style: italic;
-	padding: 0;
-	margin: 0 0 40px 0;
-}
-
-.footer .social-links {
-	margin-bottom: 20px;
-	margin-top: -20px;
-}
-
-.footer .social-links a {
-	font-size: 18px;
-	display: inline-block;
-	background: var(--theme-color);
-	color: #fff;
-	line-height: 1;
-	padding: 8px 0;
-	margin-right: 4px;
-	border-radius: 50%;
-	text-align: center;
-	width: 36px;
-	height: 36px;
+.nav-menu a,
+.nav-menu a:focus {
+	display: flex;
+	align-items: center;
+	color: #4f5051;
+	padding: 10px 18px;
+	margin-bottom: 8px;
+	font-size: 15px;
+	border-radius: 50px;
+	background: #f2f3f5;
+	height: 56px;
+	width: 100%;
+	overflow: hidden;
 	transition: 0.3s;
 }
 
-.footer .social-links a:hover {
-	background: var(--theme-color);
+.nav-menu a i,
+.nav-menu a:focus i {
+	font-size: 20px;
+}
+
+.nav-menu a span,
+.nav-menu a:focus span {
+	padding: 0 5px 0 7px;
+	color: #4f5051;
+}
+
+.nav-menu a:hover,
+.nav-menu .active,
+.nav-menu .active:focus,
+.nav-menu li:hover > a {
 	color: #fff;
-	text-decoration: none;
+	background: var(--theme-color);
 }
 
-.footer .copyright {
-	margin: 0 0 5px 0;
+.nav-menu a:hover span,
+.nav-menu .active span,
+.nav-menu .active:focus span,
+.nav-menu li:hover > a span {
+	color: #fff;
 }
 
-.footer .credits {
-	font-size: 13px;
+.mobile-nav-toggle i {
+	color: #4f5051;
+}
+
+.mobile-nav-active {
+	overflow: hidden;
+}
+
+.mobile-nav-active #header {
+	left: 0;
+}
+
+.mobile-nav-active .mobile-nav-toggle {
+	color: #fff;
+	background-color: var(--theme-color);
+}
+
+@media (max-width: 1199px) {
+	#header {
+		display: block;
+	}
+}
+
+@media (min-width: 1200px) {
+	#header {
+		display: none;
+	}
 }
 
 /*--------------------------------------------------------------
@@ -229,43 +288,143 @@ h6 {
 }
 
 .content {
-	width: 1000px;
-	background-color: var(--box-color);
-	padding: 3em;
-	border-radius: 16px;
+	width: 1400px;
+	max-width: 100%;
+	display: block;
 	min-height: 500px;
-	overflow: visible !important;
+	margin-bottom: 2rem;
 }
 
-.content ul {
-	list-style-position: inside;
-	padding-left: 0;
+/* The destination page's `#content` grid rule (destination.css) leaks onto
+   view.html because destination.css is loaded globally there. The itinerary
+   `#content` carries the `.content` class, so scope an override here to win
+   on specificity and let the table span the full lightbox width. */
+#content.content {
+	display: block;
 }
 
-.content li > ul {
-	list-style-type: circle;
-	color: var(--subtitle);
+/*--------------------------------------------------------------
+# Itinerary table (full itinerary render)
+--------------------------------------------------------------*/
+
+.itin-table-wrap {
+	background-color: var(--background-color);
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-sm);
+	overflow-x: auto;
 }
 
-.content > li {
-	margin-bottom: 1rem;
+.itin-table {
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed;
 }
 
-.content > li:last-child {
+.itin-table th,
+.itin-table td {
+	vertical-align: top;
+	text-align: left;
+	padding: 0.9rem 1rem;
+	border-right: 1px solid var(--border-color);
+	border-bottom: 1px solid var(--border-color);
+	overflow-wrap: break-word;
+}
+
+.itin-table th:last-child,
+.itin-table td:last-child {
+	border-right: none;
+}
+
+.itin-table tbody tr:last-child th,
+.itin-table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.itin-table .itin-col-day {
+	width: 22%;
+}
+
+.itin-table thead th {
+	background: var(--theme-color);
+	color: #fff;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	padding: 0.75rem 1rem;
+}
+
+.itin-table tbody th.itin-col-day {
+	background: var(--bg-secondary);
+	color: var(--text-primary);
+	font-size: 0.95rem;
+	font-weight: 700;
+}
+
+.itin-table tbody tr:nth-child(even) td {
+	background: var(--bg-secondary);
+}
+
+.itin-empty {
+	display: block;
+	min-height: 1em;
+}
+
+.itin-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.itin-item {
+	padding: 0.6rem 0;
+	border-bottom: 1px solid var(--border-color);
+	line-height: 1.6;
+	overflow-wrap: break-word;
+}
+
+.itin-item:last-child {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+.itin-label {
+	font-weight: 700;
+	color: var(--text-primary);
+}
+
+.itin-text {
+	color: var(--text-primary);
+}
+
+.itin-sublist {
+	list-style: none;
+	margin: 0.5rem 0 0;
+	padding: 0;
+}
+
+.itin-subitem {
+	position: relative;
+	padding: 0.3rem 0 0.3rem 0.9rem;
+	border-left: 2px solid var(--border-color);
+	margin-bottom: 0.3rem;
+	color: var(--text-secondary);
+	line-height: 1.5;
+	overflow-wrap: break-word;
+}
+
+.itin-subitem:last-child {
 	margin-bottom: 0;
 }
 
-.content li ul > li {
-	margin-bottom: 0;
+.itin-subitem .itin-label {
+	font-weight: 600;
+	color: var(--text-secondary);
 }
 
-.content h2:not(:first-of-type) {
-	margin-top: 3rem;
-}
-
-.content h3 {
-	margin-top: 2rem;
-	margin-bottom: 1rem;
+.itin-subitem .itin-text {
+	color: var(--text-secondary);
 }
 
 @media (max-width: 1200px) {
@@ -275,8 +434,105 @@ h6 {
 }
 
 @media (max-width: 600px) {
-	.content {
-		padding: 2em;
+	.itin-table th,
+	.itin-table td {
+		padding: 0.6rem 0.5rem;
+	}
+
+	.itin-table thead th {
+		font-size: 0.7rem;
+	}
+}
+
+/* Mobile: convert the 5-column table into a stacked "card list". Each row
+   becomes a bordered block and every cell shows its column header (via
+   data-label) above its content, so the itinerary reads top-to-bottom
+   without horizontal scrolling. */
+@media (max-width: 768px) {
+	.itin-table-wrap {
+		overflow: visible;
+		border: 0;
+		box-shadow: none;
+		background: transparent;
+	}
+
+	.itin-table,
+	.itin-table tbody,
+	.itin-table tr,
+	.itin-table th,
+	.itin-table td {
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.itin-table {
+		min-width: 0;
+	}
+
+	.itin-table thead {
+		display: none;
+	}
+
+	.itin-table tbody tr {
+		margin-bottom: 1rem;
+		border: 1px solid var(--border-color);
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow-sm);
+		background: var(--background-color);
+		overflow: hidden;
+	}
+
+	.itin-table tbody tr:last-child {
+		margin-bottom: 0;
+	}
+
+	.itin-table tbody th,
+	.itin-table tbody td {
+		border: 0;
+		border-bottom: 1px solid var(--border-color);
+		padding: 0.75rem 1rem;
+		background: transparent;
+	}
+
+	.itin-table tbody tr:last-child th,
+	.itin-table tbody tr:last-child td {
+		border-bottom: 0;
+	}
+
+	/* Neutralize the zebra striping of the desktop table inside the cards. */
+	.itin-table tbody tr:nth-child(even) td {
+		background: transparent;
+	}
+
+	.itin-table tbody th.itin-col-day {
+		position: static;
+		box-shadow: none;
+		/* Override the desktop 22% day-column width so the day header spans
+		   the full card. */
+		width: 100%;
+		background: var(--theme-color);
+		color: #fff;
+	}
+
+	/* Column header shown above each cell's content. */
+	.itin-table tbody th.itin-col-day::before,
+	.itin-table td.itin-cell::before {
+		content: attr(data-label);
+		display: block;
+		margin-bottom: 0.25rem;
+		font-size: 0.65rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+
+	.itin-table tbody th.itin-col-day::before {
+		color: rgba(255, 255, 255, 0.75);
+	}
+
+	.itin-table td.itin-cell::before {
+		color: var(--theme-color);
 	}
 }
 
@@ -334,64 +590,7 @@ h3 {
 }
 
 /*--------------------------------------------------------------
-# Preloader
---------------------------------------------------------------*/
-.preloader {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 9999;
-	overflow: hidden;
-}
-
-.preloader {
-	background: #fff;
-}
-
-.preloader:before {
-	content: "";
-	position: fixed;
-	top: calc(50% - 30px);
-	left: calc(50% - 30px);
-	border: 6px solid var(--theme-color);
-	border-top-color: #f7f8f9;
-	border-bottom-color: #f7f8f9;
-	border-radius: 50%;
-	width: 60px;
-	height: 60px;
-	-webkit-animation: animate-preloader 1s linear infinite;
-	animation: animate-preloader 1s linear infinite;
-}
-
-.preloader:before {
-	border-top-color: #fff;
-	border-bottom-color: #fff;
-}
-
-@-webkit-keyframes animate-preloader {
-	0% {
-		transform: rotate(0deg);
-	}
-
-	100% {
-		transform: rotate(360deg);
-	}
-}
-
-@keyframes animate-preloader {
-	0% {
-		transform: rotate(0deg);
-	}
-
-	100% {
-		transform: rotate(360deg);
-	}
-}
-
-/*--------------------------------------------------------------
-# Botões
+# Buttons
 --------------------------------------------------------------*/
 
 .button-box,
@@ -440,55 +639,7 @@ h3 {
 	color: #fff;
 }
 
-/*--------------------------------------------------------------
-# Botões
---------------------------------------------------------------*/
-
-.message-container,
-.input-container {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 450px;
-	height: auto;
-	background: #fff;
-	border-radius: 10px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 30px;
-	overflow-wrap: break-word;
-}
-
-.message-container {
-	text-align: center;
-}
-
-.message-text-container {
-	width: 100%;
-	font-size: 18px;
-	line-height: 1.5;
-}
-
-.message-title {
-	font-size: 24px;
-	font-weight: 700;
-	margin-bottom: 20px;
-}
-
-.error-message {
-	margin-top: 10px;
-}
-
-@media (max-width: 520px) {
-	.message-container,
-	.input-container {
-		width: 90%;
-		height: auto;
-	}
-}
+/* Message containers — shared base in components/modal.css */
 
 /* Language Selector */
 
@@ -576,43 +727,4 @@ h3 {
 	display: none;
 }
 
-#toast {
-	position: fixed;
-	bottom: 16px;
-	left: 50%;
-	transform: translateX(-50%);
-	min-width: 300px;
-	width: auto;
-	background-color: var(--theme-color);
-	color: white;
-	text-align: center;
-	padding: 10px;
-	font-size: 16px;
-	box-sizing: border-box;
-	text-decoration: bold;
-	display: flex;
-	align-items: center;
-	word-wrap: break-word;
-	word-break: break-word;
-	white-space: normal;
-	padding: 10px 40px 10px 10px;
-}
-
-#toast-text {
-	flex-grow: 1;
-}
-
-.toast-close {
-	position: absolute;
-	top: 50%;
-	right: 10px;
-	transform: translateY(-50%);
-	cursor: pointer;
-}
-
-@media (max-width: 430px) {
-	#toast {
-		bottom: 4em;
-		min-width: 80%;
-	}
-}
+/* Toast — shared base in components/toast.css */

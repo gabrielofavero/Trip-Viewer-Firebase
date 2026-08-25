@@ -1,0 +1,989 @@
+{
+  "trip": {
+    "title": "New York 2022",
+    "currency": "BRL",
+    "start": {
+      "day": 11,
+      "month": 4,
+      "year": 2022,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 23,
+      "month": 4,
+      "year": 2022,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2022-04-23T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      },
+      {
+        "id": "elaine",
+        "name": "Elaine"
+      },
+      {
+        "id": "milton",
+        "name": "Milton"
+      },
+      {
+        "id": "marianna",
+        "name": "Marianna"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Hotel Brooklyn",
+      "description": "Hotel no Brooklyn, primeira parada em NY",
+      "address": "Brooklyn, New York",
+      "dates": {
+        "checkIn": {
+          "day": 12,
+          "month": 4,
+          "year": 2022,
+          "hour": 18,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 14,
+          "month": 4,
+          "year": 2022,
+          "hour": 11,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    },
+    "acc-002": {
+      "name": "Hotel Manhattan/Times Square",
+      "description": "Hotel principal em Manhattan. Opções: The Manhattan At Times Square ou Sheraton New York Times Square",
+      "address": "Times Square, MidTown Manhattan, New York",
+      "dates": {
+        "checkIn": {
+          "day": 14,
+          "month": 4,
+          "year": 2022,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 22,
+          "month": 4,
+          "year": 2022,
+          "hour": 11,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "flight",
+      "company": "americanAirlines",
+      "points": {
+        "origin": "CNF (Confins)",
+        "destination": "GRU (Guarulhos)"
+      },
+      "dates": {
+        "departure": {
+          "day": 11,
+          "month": 4,
+          "year": 2022,
+          "hour": 19,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 11,
+          "month": 4,
+          "year": 2022,
+          "hour": 20,
+          "minute": 25,
+          "second": 0
+        }
+      },
+      "duration": "01:25",
+      "direction": "departure",
+      "reservation": "WJFXJI",
+      "link": "",
+      "person": ""
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "americanAirlines",
+      "points": {
+        "origin": "GRU (Guarulhos)",
+        "destination": "DFW (Dallas/Fort Worth)"
+      },
+      "dates": {
+        "departure": {
+          "day": 11,
+          "month": 4,
+          "year": 2022,
+          "hour": 22,
+          "minute": 25,
+          "second": 0
+        },
+        "arrival": {
+          "day": 12,
+          "month": 4,
+          "year": 2022,
+          "hour": 6,
+          "minute": 55,
+          "second": 0
+        }
+      },
+      "duration": "10:30",
+      "direction": "departure",
+      "reservation": "WJFXJI",
+      "link": "",
+      "person": ""
+    },
+    "leg-003": {
+      "type": "flight",
+      "company": "americanAirlines",
+      "points": {
+        "origin": "DFW (Dallas/Fort Worth)",
+        "destination": "JFK (John F. Kennedy)"
+      },
+      "dates": {
+        "departure": {
+          "day": 12,
+          "month": 4,
+          "year": 2022,
+          "hour": 12,
+          "minute": 51,
+          "second": 0
+        },
+        "arrival": {
+          "day": 12,
+          "month": 4,
+          "year": 2022,
+          "hour": 17,
+          "minute": 29,
+          "second": 0
+        }
+      },
+      "duration": "03:38",
+      "direction": "departure",
+      "reservation": "WJFXJI",
+      "link": "",
+      "person": ""
+    },
+    "leg-004": {
+      "type": "flight",
+      "company": "americanAirlines",
+      "points": {
+        "origin": "JFK (John F. Kennedy)",
+        "destination": "GRU (Guarulhos)"
+      },
+      "dates": {
+        "departure": {
+          "day": 22,
+          "month": 4,
+          "year": 2022,
+          "hour": 22,
+          "minute": 30,
+          "second": 0
+        },
+        "arrival": {
+          "day": 23,
+          "month": 4,
+          "year": 2022,
+          "hour": 9,
+          "minute": 15,
+          "second": 0
+        }
+      },
+      "duration": "09:45",
+      "direction": "return",
+      "reservation": "BGATIO",
+      "link": "",
+      "person": ""
+    },
+    "leg-005": {
+      "type": "flight",
+      "company": "latam",
+      "points": {
+        "origin": "GRU (Guarulhos)",
+        "destination": "CNF (Confins)"
+      },
+      "dates": {
+        "departure": {
+          "day": 23,
+          "month": 4,
+          "year": 2022,
+          "hour": 20,
+          "minute": 15,
+          "second": 0
+        },
+        "arrival": {
+          "day": 23,
+          "month": 4,
+          "year": 2022,
+          "hour": 21,
+          "minute": 25,
+          "second": 0
+        }
+      },
+      "duration": "01:10",
+      "direction": "return",
+      "reservation": "SPXEYN",
+      "link": "",
+      "person": ""
+    }
+  },
+  "itinerary": {
+    "20220411": {
+      "title": {
+        "value": "Voo de Ida",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 11,
+        "month": 4,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo BH → SP (CNF → GRU) - 19:00",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo SP → Dallas (GRU → DFW) - 22:25",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20220412": {
+      "title": {
+        "value": "Chegada em New York",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 12,
+        "month": 4,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Conexão em Dallas (DFW)",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo Dallas → NY (DFW → JFK) - 12:51 às 17:29",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Chick-Fill-A - Almoço/Jantar",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Five Guys - Almoço com a Família",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20220413": {
+      "title": {
+        "value": "Compras",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 13,
+        "month": 4,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Dia de compras - adaptação ao fuso horário",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [],
+      "night": []
+    },
+    "20220414": {
+      "title": {
+        "value": "Brooklyn",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 14,
+        "month": 4,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Williamsburg",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "East River State Park",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Domino Park",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Brooklyn Heights Promenade - Vista de Manhattan",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "DUMBO",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Manhattan Bridge à noite",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20220415": {
+      "title": {
+        "value": "New York - Dia 3",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 15,
+        "month": 4,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [],
+      "night": []
+    },
+    "20220416": {
+      "title": {
+        "value": "New York - Dia 2",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 16,
+        "month": 4,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [],
+      "night": []
+    },
+    "20220417": {
+      "title": {
+        "value": "New York - Central Park",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 17,
+        "month": 4,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Central Park",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "ONU 09:30 - Gabriel",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Museu de História Natural",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20220418": {
+      "title": {
+        "value": "New York - Dia 5",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 18,
+        "month": 4,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Brooklyn Brewery",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Champs Diner, Vinnie Pizza",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20220419": {
+      "title": {
+        "value": "New York - Dia 6",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 19,
+        "month": 4,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Gallaghers Steakhouse",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20220420": {
+      "title": {
+        "value": "Livre Família",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 20,
+        "month": 4,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Dia livre em família",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Chelsea Market + Dos Caminos",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20220421": {
+      "title": {
+        "value": "New York - Último Dia",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 21,
+        "month": 4,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Home Depot",
+          "start": "",
+          "end": ""
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "High Line + Mercado Espanhol",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": []
+    },
+    "20220422": {
+      "title": {
+        "value": "Voo de Volta",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 22,
+        "month": 4,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Último dia em NY - compras de última hora",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aguardar em Guarulhos ou tentar antecipar voo",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo NY → SP (JFK → GRU) - 22:30",
+          "start": "",
+          "end": ""
+        }
+      ]
+    },
+    "20220423": {
+      "title": {
+        "value": "Chegada ao Brasil",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 23,
+        "month": 4,
+        "year": 2022,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Chegada em GRU às 09:15",
+          "start": "",
+          "end": ""
+        }
+      ],
+      "morning": [],
+      "afternoon": [],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo SP → BH (GRU → CNF) - 20:15 às 21:25",
+          "start": "",
+          "end": ""
+        }
+      ]
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "type": "food",
+        "currency": "BRL",
+        "notes": "Orçamento diário de $80/dia para 11 dias",
+        "name": "Alimentação (orçamento)",
+        "price": 880.0,
+        "person": ""
+      },
+      {
+        "type": "transport",
+        "currency": "BRL",
+        "notes": "Orçamento diário de $10/dia para metrô/ônibus",
+        "name": "Transporte local (orçamento)",
+        "price": 110.0,
+        "person": ""
+      },
+      {
+        "type": "shopping",
+        "currency": "BRL",
+        "notes": "Orçamento diário de $60/dia",
+        "name": "Supermercado (orçamento)",
+        "price": 600.0,
+        "person": ""
+      },
+      {
+        "type": "entertainment",
+        "currency": "BRL",
+        "notes": "Orçamento diário de $150/dia para passeios e entretenimento",
+        "name": "Saídas/Passeios (orçamento)",
+        "price": 1500.0,
+        "person": ""
+      }
+    ],
+    "preTrip": [
+      {
+        "type": "transport",
+        "currency": "BRL",
+        "notes": "Voos CNF→GRU→DFW→JFK (ida) + JFK→GRU (volta). American Airlines. Reservas WJFXJI e BGATIO. 4 passageiros. Total pago: R$ 8.480,12 + extras.",
+        "name": "Passagem Aérea NY (internacional)",
+        "price": 16000.0,
+        "person": ""
+      },
+      {
+        "type": "transport",
+        "currency": "BRL",
+        "notes": "Trecho doméstico GRU→CNF. Latam LA4508. Reserva SPXEYN. Total pago: R$ 1.757,68.",
+        "name": "Passagem Aérea SP (doméstico)",
+        "price": 1400.0,
+        "person": ""
+      },
+      {
+        "type": "accommodation",
+        "currency": "BRL",
+        "notes": "Hotel em Manhattan/Times Square. IOF: R$ 982,52.",
+        "name": "Hotel New York",
+        "price": 15400.0,
+        "person": ""
+      },
+      {
+        "type": "accommodation",
+        "currency": "BRL",
+        "notes": "Hotel Brooklyn ou escala em SP. IOF: R$ 163,20.",
+        "name": "Hotel Brooklyn/SP",
+        "price": 2557.98,
+        "person": ""
+      },
+      {
+        "type": "shopping",
+        "currency": "BRL",
+        "notes": "LPs comprados online para entrega no hotel. IOF: $2,55.",
+        "name": "Compras Online - Fandom + Wake Up Sunshine (LPs)",
+        "price": 42.55,
+        "person": "gabriel"
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel",
+      "elaine": "Elaine",
+      "milton": "Milton",
+      "marianna": "Marianna"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2022-04-23T00:00:00.000Z"
+    }
+  }
+}

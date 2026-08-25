@@ -1,0 +1,313 @@
+{
+  "_meta": {
+    "tripId": "legacy-2020-salvador",
+    "slug": "2020-salvador",
+    "sourceFiles": [
+      "Pessoais/2020/[2020] Salvador/Salvador.xlsx"
+    ],
+    "extractionNotes": {
+      "xlsxContent": "3 sheets: Programação (itinerary + expenses), Airbnb (accommodation research), Passeios (restaurant wishlist). Spreadsheet reuses FUVEST template — title cell says 'FUVEST - Programação Diária' but content is Salvador.",
+      "dateSource": "Confirmed from XLSX: January 28-30, 2020 (Tuesday-Thursday).",
+      "transportSource": "Gol flight FSJRQE — Jan 28 10:00→11:45 (BH→SSA), Jan 30 17:10→18:55 (SSA→BH). Total R$ 1.215.",
+      "accommodationSource": "Aparthotel Adagio Salvador (mentioned in Programação sheet). Airbnb sheet shows 'Jardins' neighborhood was selected. Cost: R$ 500.",
+      "travelerSource": "Confirmed from expense split columns: Gabriel and Milton.",
+      "missingData": "Day 2 itinerary is empty (no activities listed). Passeios sheet lists restaurants not visited (wishlist only)."
+    }
+  },
+  "trip": {
+    "title": "Salvador",
+    "currency": "BRL",
+    "start": {
+      "day": 28,
+      "month": 1,
+      "year": 2020,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 30,
+      "month": 1,
+      "year": 2020,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      },
+      {
+        "id": "milton",
+        "name": "Milton"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Aparthotel Adagio Salvador",
+      "description": "Bairro Jardins. Diárias planejadas: 4 (Airbnb sheet).",
+      "address": "Jardins, Salvador - BA",
+      "dates": {
+        "checkIn": {
+          "day": 28,
+          "month": 1,
+          "year": 2020,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 30,
+          "month": 1,
+          "year": 2020,
+          "hour": 12,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "flight",
+      "company": "gol",
+      "points": {
+        "origin": "Belo Horizonte",
+        "destination": "Salvador"
+      },
+      "dates": {
+        "departure": {
+          "day": 28,
+          "month": 1,
+          "year": 2020,
+          "hour": 10,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 28,
+          "month": 1,
+          "year": 2020,
+          "hour": 11,
+          "minute": 45,
+          "second": 0
+        }
+      },
+      "duration": "01:45",
+      "direction": "departure",
+      "reservation": "FSJRQE",
+      "link": "",
+      "person": ""
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "gol",
+      "points": {
+        "origin": "Salvador",
+        "destination": "Belo Horizonte"
+      },
+      "dates": {
+        "departure": {
+          "day": 30,
+          "month": 1,
+          "year": 2020,
+          "hour": 17,
+          "minute": 10,
+          "second": 0
+        },
+        "arrival": {
+          "day": 30,
+          "month": 1,
+          "year": 2020,
+          "hour": 18,
+          "minute": 55,
+          "second": 0
+        }
+      },
+      "duration": "01:45",
+      "direction": "return",
+      "reservation": "FSJRQE",
+      "link": "",
+      "person": ""
+    }
+  },
+  "itinerary": {
+    "20200128": {
+      "title": {
+        "value": "Chegada em Salvador",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 28,
+        "month": 1,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "notes": "",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo Gol FSJRQE — BH → Salvador",
+          "start": "10:00",
+          "end": "11:45"
+        }
+      ],
+      "afternoon": [],
+      "night": []
+    },
+    "20200129": {
+      "title": {
+        "value": "Salvador",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 29,
+        "month": 1,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [],
+      "night": []
+    },
+    "20200130": {
+      "title": {
+        "value": "Retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 30,
+        "month": 1,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [],
+      "afternoon": [
+        {
+          "notes": "",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo Gol FSJRQE — Salvador → BH",
+          "start": "17:10",
+          "end": "18:55"
+        }
+      ],
+      "night": []
+    }
+  },
+  "expenses": {
+    "duringTrip": [],
+    "preTrip": [
+      {
+        "name": "Voo Gol FSJRQE — BH ↔ Salvador",
+        "type": "trip.transportation.type.flights",
+        "price": 1215.0,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "name": "Aparthotel Adagio Salvador",
+        "type": "trip.accommodation.title",
+        "price": 500.0,
+        "currency": "BRL",
+        "person": ""
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel",
+      "milton": "Milton"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2026-07-19T12:00:00.000Z"
+    }
+  }
+}

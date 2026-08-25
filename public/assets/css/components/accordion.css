@@ -1,0 +1,63 @@
+/*--------------------------------------------------------------
+# Accordion
+--------------------------------------------------------------*/
+
+/* Shared accordion structural styles — uses CSS variables for light/dark */
+
+.accordion-item {
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md);
+	margin-bottom: 8px;
+	overflow: hidden;
+}
+
+.accordion-item.dragging {
+	opacity: 0.5;
+}
+
+.accordion-header {
+	background: var(--bg-tertiary);
+	border-radius: var(--radius-md);
+}
+
+.accordion-body {
+	background: var(--bg-primary);
+	color: var(--text-primary);
+	padding: 16px;
+}
+
+.accordion-button {
+	background: transparent;
+	color: var(--text-primary);
+	font-weight: 600;
+	font-size: 14px;
+	padding: 14px 16px;
+	width: 100%;
+	text-align: left;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.accordion-button[aria-expanded="false"] {
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
+}
+
+.accordion-button[aria-expanded="true"] {
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
+}
+
+.accordion-button:focus,
+.purple:focus,
+.btn:focus {
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.25);
+}
+
+.accordion-button::after {
+	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%235859a7'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}

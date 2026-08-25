@@ -1,13 +1,56 @@
+we 
+
 ![alt text](https://i.imgur.com/vejNzOv.png)
+
+# Description
+
+A web application for planning, managing, and viewing trips, destinations, expenses, and itineraries.
+
+# How it works
+
+## Stack
+
+- Vanilla web application
+- Modularized HTML with partials injection for reutilization
+- Modularized CSS
+- TypeScript that is compiled into ESM modularized JavaScript
+- Built to be ran with Google's Firebase (Firestore for data and Authenticarion for account management. Storage and Functions disabled to stay on free tier)
+- API integration with Places API
+- Customized dev environment with AI tooling to speed development / debugging
+
+## Build Instructions
+
+```bash
+# Install dependencies
+npm install
+
+# One-shot prod build (copies public/ → dist/, injects HTML partials, content-hashes assets)
+npm run build
+
+# Watch mode (dev mode — rebuilds on file changes with live reload)
+npm run watch
+
+# Clean build output
+npm run clean
+
+# Serve locally (requires Firebase CLI)
+npm run serve
+
+# Full dev mode (frontend watch + live reload, emulators, auto-open browser)
+npm run dev
+
+# Real-data dev (NO emulators — reads/writes the real Firebase project)
+npm run dev:prd    # firebase use prd first (trip-viewer-prd)
+```
 
 # Tasks
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 142   | 137  | 2         | 3       |
-| 🏆   | Feature     | F000 | 142   | 120  | 22        | 0       |
-| 📈   | Improvement | M000 | 140   | 109  | 30        | 1       |
-| ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
+| 🐞   | Bug         | B000 | 193   | 189  | 4         | 0       |
+| 🏆   | Feature     | F000 | 196   | 181  | 15        | 0       |
+| 📈   | Improvement | M000 | 207   | 184  | 22        | 1       |
+| ⚔️   | Epic        | E000 | 51    | 42   | 7         | 2       |
 
 ## Backlog
 
@@ -17,15 +60,224 @@
 
 ### Low Priority
 
-- 🐞 **B127:** Document changes still not working (accepting everything)
-- 🐞 **B096:** Fix Gallery module
-- 🐞 **B123:** Main try catchs for pages are failing because main is not async
-- 📈 **M135:** Refactor "dados.js" to shared dir
+- ⚔️ **E047:** [DEV] Implement Unit Tests
+- ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
+- 📈 **M171:** Safeguard unauthenticated access message
 
 ## Done
 
+### August 2026
+
+- 🏆 **F159:** [DEV] Add AI skill for browsing pages
+- 📈 **M161:** [DEV] Improve AI skills detection
+- 🏆 **F155:** Add images for each destination item
+- 🐞 **B164:** Cannot add new itinerary post migration
+- 📈 **M164:** Improve bulletpoints for trip cards on index
+- 🏆 **F174:** Block edit trip page for unauthenticated users and non-owners
+- 📈 **M165:** Improve itinerary modal
+- 📈 **M166:** Improve input boxes animation and visibility
+- 🏆 **F170:** Create progress bar loading (restore operations)
+- 🐞 **B165:** Fix dark mode backup/restore elements and dialog visual issues
+- 🏆 **F175:** Add real versioning
+- 📈 **M167:** Add database profile info since auth data is not always filled
+- 🐞 **B167:** Edit trip labels on customization not showing
+- 🐞 **B166:** Can't save new transportations
+- 🐞 **B168:** We can close the dialog on saved document and it doesnt refresh the page
+- 🐞 **B169:** Account restore giving "Access Denied"
+- 🐞 **B170:** Fix mismatched color preset pairs on edit trip
+- 🐞 **B171:** Image dialog not transitioning when user clicks on add image button
+- 📈 **M168:** [DEV] Auto restart if emulator functions failed
+- 🏆 **F176:** Add custom colors on trip cards
+- 📈 **M169:** [DEV] Improve cache busting
+- 🏆 **F177:** Add app version on footers
+- 📈 **M170:** Improve import/export icons on index
+- ⚔️ **E045:** Add Maps integration into edit page (dev only poc)
+  - *[🏆F172] Get place information*
+  - *[🏆F173] Update integrated places*
+  - *[🏆F178] Add local scraper for testing*
+  - *[🏆F179] Add dev stats*
+- ⚔️ **E017:** Optimize firebase operations usage
+- ⚔️ **E027:** New Front-End: view.html
+  - *[📈M173] Extract expenses/itinerary/destination render logic into shared mount components*
+  - *[📈M174] No more iframe/embeds. Use html injection instead*
+  - *[📈M175] No more need to read destination on view.html*
+  - *[📈M176] Normalize visuals: header, cards, buttons, calendar should match*
+- 🐞 **B174:** Issue with transportation duration card on edit trip
+- 🐞 **B173:** Fix issues with index cards closing and not reopening
+- 📈 **M172:** Minor visual improvements on index.html (search, order, image loading)
+- 📈 **M178:** [DEV] Reorganize docs
+- 📈 **M177:** Make tab selector on index mobile friendly
+- ⚔️ **E016:** New Front-End: destination.html
+  - *[🏆F181] New destination page look (cards, hero background, lazy load, search, tab bar)*
+  - *[🏆F180] Reuse destination dialogs on itinerary view*
+  - *[🐞B163] Fix color and destination image issues*
+  - *[🏆F063] Allow adding multiple regions to a destination*
+- 📈 **M163:** [DEV] Improve live reload functionality
+- 🐞 **B175:** Fix saving issues for trips and destinations
+- 🏆 **F182:** Add new dialogs into all itinerary items for view
+- 📈 **M153:** Minor visual improvements on itinerary.html
+- ⚔️ **E043:** Export as static web page (Offline Mode)
+  - *[🏆F183] Static-mode runtime seam (render from local data.json, no Firebase SDK)*
+  - *[📈M179] Build-time asset graph + static-export manifest*
+  - *[🏆F184] Static export Settings dialog (type, doc, PIN, mode, title/icon)*
+  - *[🏆F185] Export ZIP builder (HTML transform + manifest fetch + download)*
+  - *[🏆F186] PWA customization (app title + icon in the export)*
+  - *[📈M180] Self-hosted icons & web fonts (drop dead gapi)*
+- 🏆 **F187:** [DEV] Add support for AI mobile push notification (ntfy)
+- 📈 **M181:** Remove PIN typing need on index.html
+- ⚔️ **E014:** Implementation: Shopping List
+  - *[🏆F188] Group transportation by traveler (select from trip travelers instead of free text)*
+  - *[🏆F071] Multi-person expenses*
+- 🐞 **B176:** Order upcoming trips on index from closest to furthest from now
+- 📈 **M185:** [DEV] Make emulator exit backup opt-in (not automatic on npm run dev exit)
+- 🏆 **F189:** Import destination images from edit trip + link improvements
+- 🐞 **B177:** [DEV] Fix backup and on ready dev env issues
+- 🐞 **B178:** Fix pin dialog issues
+- 📈 **M186:** Improve expenses visualization and protected data
+- 📈 **M183:** [DEV] Auto run migration scripts after deployment
+- 📈 **M184:** [DEV] Remove double deployment
+- 📈 **M187:** [DEV] Run post-deploy migrations via local functions emulator (no prod function deploy / no billing prompt)
+- 📈 **M182:** [DEV] Kill dev env
+- 📈 **M188:** [DEV] Add mandatory end-of-task backlog check to readme skill
+- 📈 **M189:** [DEV] initLocalDb skips seeding when the database already has data
+- 🏆 **F190:** Use LocalStorage logic for detecting new versions (cache refreshing)
+- 🏆 **F191:** Expenses: exclusive shopping-bag icon for the Shopping type + copy list to iOS Notes (native checkboxes)
+- 📈 **M190:** Expand wallpaper import to trip gallery, accommodation and destination place images
+- 🏆 **F065:** Show if accommodation was prepaid or not
+- 🏆 **F192:** Import accommodation from previous trips
+- 🏆 **F193:** Seed an empty light or dark logo from the first logo selected
+- 🏆 **F194:** Reuse transportation between travelers
+- 🐞 **B179:** Fix transportation accordion titles not refreshing (edit trip)
+- 🐞 **B180:** Fix transportation visual issues + recent features side effects
+- 🐞 **B181:** Migrations already run in PRD still offered as deploy options (backfill completed state)
+- 🐞 **B182:** Auto dark mode: fix UTC->local hour bug and switch to timezone-based sunrise/sunset detection (offline, session-cached)
+- 🐞 **B183:** Footer not reaching the bottom of the page on mobile (view page)
+- 📈 **M191:** Auto-hide top bar when scrolling down on view page (immersive PWA reading)
+- 🐞 **B184:** Fix visual quality in F192/F194 import dialogs (dark mode, plane icon, import button styling) + F065 payment status color
+- 📈 **M192:** Expenses: people view as a select (View-by "People" option) instead of an extra tab; hide it for a single traveler or when all expenses are unspecified; drop the non-specified bucket from the per-person breakdown
+- 🐞 **B185:** Fix transportation card not showing departure/arrival locations (points key mismatch) + soften flight line in dark mode
+- 🐞 **B186:** Save-success dialog buttons (Edit/Home/View) cropped on mobile edit pages — make the dialog full-screen on mobile with the actions stacked full-width at the bottom (desktop unchanged)
+- 📈 **M193:** Expenses (view page): drop the container-level auto-scroll so the page grows with content; a single category box scrolls internally only when it has many items
+- 📈 **M194:** Minor front-end adjustments: left-align edit-page time inputs (transportation + accommodation), move accommodation payment status to the bottom of the view card, neutral border on destination dialog link buttons
+- 📈 **M195:** Index: replace the greeting content with the account card while on the Settings tab (single box, content fades in on tab switch instead of two duplicate boxes)
+- 🏆 **F195:** Add a dedicated "Active trips" section on top of the index when a trip is currently happening (was merged into Upcoming before)
+- 📈 **M196:** View page: remove the dominant card shadows
+- 📈 **M197:** [DEV] Make npm run dev and dev:prd launch kill-ports instead of just checking ports
+- 📈 **M198:** Index: style the "Active trips" section with the same neutral styling as Upcoming/Finished (no green accent)
+- 📈 **M199:** [DEV] Add a color rule to the CSS skill + project instructions: use only theme/neutral colors, and request user authorization before adding any non-theme/non-neutral color
+- 📈 **M200:** Settings (Advanced): block page refresh/close with a confirmation prompt while a backup, restore, document import/export, or static-export operation is in progress; on account import, drop the loading spinner shown over the native file picker's backdrop blur (progress starts only after a file is selected)
+- 🐞 **B187:** Edit trip: dragging an expense between groups doesn't update its group (keeps the old type on click and reverts on save) — update the expense type when dropped into another group
+- 🐞 **B188:** Edit trip: transportation legs without a valid direction all collapse into "While traveling" (and missing direction could crash loading) — guard the direction on load so legs stay distributed across Departure/During/Return
+- 🐞 **B189:** Edit trip: remove leftover broken accommodation import HTML and the duplicate import-button IDs
+- 📈 **M201:** Edit trip: restyle "Reuse another traveler's transportation" and accommodation import as a top-right themed button with icon + short label (like destination's "Fetch Info With Maps"), always visible with a friendly empty-state toast
+- 📈 **M202:** Edit trip: add a separator border to the image-picker card label
+- 📈 **M203:** [DEV] Consolidate emulator backups to a single source of truth — `backup.js` prunes stray `firebase-export-*` folders (from ad-hoc `firebase emulators:export` runs without a target); `.emulator-data/` + `.emulator-data-backups/` are the only backup locations
+- 📈 **M204:** Edit trip: hide the expense "Paid by" and "Split with" fields when the trip has zero or only one named traveler (including when no traveler name was defined)
+- 📈 **M205:** Edit trip: accommodation import dialog improvements
+- 🐞 **B190:** View page transportation tabs flicker
+- 📈 **M206:** Edit trip: itinerary destination cards match destinations-checkboxes layout
+- 🐞 **B191:** Edit trip: destination cards overflow the destinations box
+- 🐞 **B192:** Edit trip: itinerary "Set the title"/"Set start and end time" only apply start/end — itinerary button keeps placeholder, time of day unset
+- 🏆 **F196:** Add a "Partially prepaid" option to the accommodation payment status (edit + view)
+- 📈 **M207:** Make the zoom hover overlay more subtle (more transparency) with a dark-gray tint in dark mode and a neutral adaptive icon (view gallery, destination media, accommodations)
+- 🐞 **B193:** Edit trip: expense subtotals convert mixed currencies to the trip currency (modularized shared currency conversion API)
+
+### July 2026
+
+- ⚔️ **E048:** Database ovehaul
+- 🐞 **B161:** Fix page issues post migration
+- 📈 **M155:** Load dark/light mode as soon as page starts (no flicker)
+- 📈 **M156:** Export useful dev scripts into npm run
+- ⚔️ **E049:** Code translation (PT -> EN)
+- ⚔️ **E050:** [DEV] Create proper dev env (emulators, data preparation scripts, easy config)
+- 🏆 **F169:** Add option to import only a single trip document
+- 🏆 **F171:** Add single document export
+- 📈 **M157:** Expand single document import/export features by allowing all types
+- 🏆 **F152:** Add firestore rules into deployment
+- 📈 **M158:** Optimize user data + user permissions
+- 🏆 **F153:** [DEV] Auto open dev browser on npm run dev
+- 🏆 **F154:** [DEV] Add AI skills for project
+- 📈 **M159:** [DEV] Improve skills behavior
+- 🐞 **B162:** People-view transportation wrapper not loading on initial page load
+- 📈 **M160:** [DEV] Improve emulator data backup actions
+- 🏆 **F156:** Add support for legacy trips
+- 🏆 **F158:** Add default color options for trips
+- 🏆 **F168:** Add image for destination documents
+- 🏆 **F157:** Add destination images on index.html
+
+### June 2026
+
+- 🐞 **B158:** When clicking on last item of transportation tab, nothing happens
+- 📈 **M145:** If "long loading" pop up shows, close it if loading finishes
+- 🐞 **B157:** Trip being considered as finished on last day (index only)
+- 🐞 **B156:** Reservation being copied with # in it
+- 🐞 **B154:** Itinerary title showing as "[object object]" on newer trips
+- ⚔️ **E042:** During Trip Automations
+  - *[🐞B152] Todays itinerary button not opening calendar item*
+  - *[🐞B153] Today itinerary button should go to calendar item, not calendar*
+  - *[🏆F149] If multiple transportations, page should load on closest next one instead of first*
+  - *[🏆F150] If multiple accommodations, page should load on closest next one instead of first*
+  - *[🏆F151] If multiple destinations and itinerary is set with destinations, page should load on closest next one instead of first*
+- 📈 **M143:** Improve spacing for full itineray
+- 🐞 **B155:** Incorrect translation key in gallery causing exception (translation module should handle without errors)
+- 🏆 **F166:** Disable image uploads in edit trip page
+- 🏆 **F165:** Refactor folder structure for scripts and pocs
+- 📈 **M146:** Improve epic detections on readme script
+- ⚔️ **E026:** Google Maps (Places API) partial implementation (Dev Only, POC)
+  - *[🏆F160] Add example files (Places API, Pleper Extension)*
+  - *[🏆F161] Map emoji conversion layers*
+  - *[🏆F162] Python Script*
+  - *[🏆F163] edit/destination.html functions for import*
+  - *[🏆F164] destination.html single function for import*
+- 🐞 **B160:** Fix page tag for local envs
+- 📈 **M147:** Improve tags
+- 🐞 **B096:** Fix Gallery module
+- 📈 **M148:** Improve trip categories in index.html
+- ⚔️ **E018:** New Front-End: index.html
+  - *[📈M021] Improve "My Trips / Destinations / Listings" in index.html*
+- ⚔️ **E034:** Frontend code refactoring
+  - *[📈M106] Use require in js files + single entrypoint for scripts in html files*
+  - *[📈M098] Change js folder structures to EN-US*
+  - *[📈M135] Proper separation of shared elements*
+  - *[📈M105] Remove CONFIG and reduce use of global variables*
+  - *[📈M058] Modularize CSS files to reduce redundancy*
+  - *[📈M046] Clean unused properties in application CSS*
+  - *[📈M149] Better file/folder architecture + separation of concerns*
+  - *[📈M150] All functions and variables in EN-US*
+  - *[📈M151] Better folder structure for js files*
+  - *[📈M152] All ids, classes and html comments in EN-US (+ better naming)*
+- 🏆 **F167:** Add dev mode for easy debugging
+- ⚔️ **E044:** New Front-End: edit pages
+- 📈 **M162:** Minor visual improvements on expenses.html
+
+### May 2026
+
+- 🐞 **B159:** Fix travelers saving action
+
+### February 2026
+
+- 🏆 **F148:** Add environment tag on page title if running locally
+- 🐞 **B151:** Visibility change causing exception for index
+- 🐞 **B127:** Document changes not working
+- 📈 **M144:** Minor visibility improvements for view page
+- 🐞 **B150:** View page for listing not working
+- 🐞 **B149:** View page for destinations not working
+- 🐞 **B147:** Index notification bar not showing for active trip and not opening current
+
 ### January 2026
 
+- 🐞 **B123:** Main try catchs for pages are failing because main is not async
+- 🏆 **F146:** Add drawer for itinerary page when on mobile
+- 🏆 **F145:** Make itinerary page embed to view page
+- 🏆 **F147:** Add company name for transportation in itinerary page
+- 🐞 **B146:** Destination description not trimming on edit
+- 🐞 **B145:** Destination description language not loading properly on add
+- 🐞 **B144:** Duplicated pin keydown functionality causing crashes
+- 🏆 **F144:** Add git sync script (master/develop branches)
+- 🐞 **B143:** Inner itinerary message for edit page closes on confirm if no data
+- 🏆 **F143:** Add keyboard navigation for message modal actions
+- 📈 **M142:** Increase EMBED_TIMEOUT from 4000 to 10000 milliseconds
+- 📈 **M141:** Refactor _getPageURL to remove visibility parameter
 - 🐞 **B142:** View visibility not auto-switching on embed destination visibility change
 - 🐞 **B141:** Custom itinerary title not showing
 - 🐞 **B140:** Edit button being shown on view page
@@ -376,7 +628,6 @@
 - ⚔️ **E013:** Project Migration
   - *Create dev and prd environments*
   - *Create develop branch*
-  - *Deprecate trip-viewer-tcc (redirect to prd)*
   - *Create custom domain for prd*
 
 ### May 2024
@@ -432,6 +683,7 @@
 - 📈 **M053:** Allow more than one location for same itinerary day
 - 🏆 **F054:** Implement ID system for transportation and accommodation, to be used as reference in itinerary
 - 📈 **M036:** Improve destination CSS so table does not break at zooms below 100%
+- 📈 **M108:** Change USER_DATA in index to only get necessary data
 
 ### April 2024
 
@@ -573,18 +825,23 @@
 - ⚔️ **E005:** Backend structure via Cloud Functions (NodeJS with TypeScript)
 - ⚔️ **E006:** Main backend read functions (get.ts)
 
-### Discarded (Most will be done on the 2.0 version)
+### Duplicated (Already Done)
 
 - 🏆 **F047:** Firebase Firestore Rules in Front-End
-  - *Security risk exposing rules to user*
-- 🐞 **B031:** Fix gallery image from twitter opening with wrong proportions in GLightbox
-- 📈 **M072:** Improve automatic date adjustment in edit trips
-- 📈 **M076:** Automate PRD to DEV data restore (weekly) + Manual Function
-- 📈 **M077:** Weekly PRD Backups + oldest backup exclusion (3 weeks only)
 - ⚔️ **E030:** Account Import/Export
   - 🏆 **F088:** *Export Selected (Functions Only)*
   - 🏆 **F089:** *Import Selected (Functions Only)*
   - 🏆 **F090:** *Account Import/Export: Interface*
+- 📈 **M086:** Improved error pop-up
+- 📈 **M154:** Reduce firestore calls on index
+- ⚔️ **E028:** Places API Text Search
+
+### Discarded
+
+- 🐞 **B031:** Fix gallery image from twitter opening with wrong proportions in GLightbox
+- 📈 **M072:** Improve automatic date adjustment in edit trips
+- 📈 **M076:** Automate PRD to DEV data restore (weekly) + Manual Function
+- 📈 **M077:** Weekly PRD Backups + oldest backup exclusion (3 weeks only)
 - ⚔️ **E031:** Document History
   - 🏆 **F084:** Store copies within the document itself
   - 🏆 **F091:** Restore function + compatibility check
@@ -593,34 +850,9 @@
   - 🏆 **F085:** Create printable trip/destination page
   - 🏆 **F093:** Automatic PDF export + Interface
 - 🏆 **F087:** Single load of destinations
-  - *All destinations loaded*
-  - *Switch via function*
-  - *Switch via tab*
-  - *Lightbox persists (no reload)*
-- ⚔️ **E018:** New Front-End: index.html
-  - *Waiting for Guilherme's template*
-- 📈 **M106:** Use require in js files
-- ⚔️ **E034:** Frontend code refactoring
-  - *Use require*
-  - *Convert to ts*
-- ⚔️ **E028:** Places API Text Search
-- ⚔️ **E017:** Optimize firebase operations usage (reads, cloud functions)
 - 📈 **M096:** Mobile and webview adjustments
 - 📈 **M097:** Itinerary automations (edit/trip.html)
 - 🏆 **F069:** Tab for selecting destinations within the page
-- 🏆 **F063:** Allow adding multiple regions to a destination (edit/trip.html)
-  - *Change in get and set (edit/trip.html)*
-  - *Create structure in front (edit/trip.html)*
-  - *Change in get (view.html and destination.html)*
-  - *Change in dynamic select (edit/trip.html)*
-  - *Migration script*
-- 🏆 **F065:** Show if accommodation was prepaid or not
-- 🏆 **F071:** Multi-person expenses
-- 📈 **M086:** Improved error pop-up
-  - *Force Refresh (Home or try again)*
-  - *Try again enabled on first load, disabled later*
-  - *Message in English at the end with different highlight*
-  - *Ensure a notification is always shown to the user*
 - ⚔️ **E021:** Implementation: Lineup in view.html
   - *Instead of being in Destinations, it's a new category*
   - *Displays list of artists as a festival lineup (Example: RiR site)*
@@ -631,26 +863,12 @@
 - 🏆 **F046:** Create reordering options for destinations
   - *On edit and trip pages*
   - *Order by rating and by name (↑↓)*
-- 📈 **M021:** Improve "My Trips / Destinations / Listings" in index.html
-  - *Order by date (ascending) in trips*
-  - *Add previous trips in trips*
-  - *Order by update date in Destinations and Listings*
-- ⚔️ **E014:** Implementation: Wishlist
-  - *Find a template online and apply (credit the source)*
-- ⚔️ **E016:** New Front-End: destination.html
-  - *Waiting for Guilherme to develop new template version*
-- ⚔️**E027:** New Front-End: view.html
-  - *Waiting for Guilherme's template*
 - 📈 **M104:** All external links should open via window.open
-- 📈 **M087:** Destination load loads everything immediately
-- ⚔️ **E019:** Implement Sonarqube
+- 📈 **M087:** Destination loads everything immediately
 - 🏆 **F070:** Add to calendar component
-- ⚔️ **E026:** Import data from Google Maps
 - 📈 **M100:** Storage size limit for document (10MB)
 - 📈 **M101:** Put Swiper inside accommodation image box when accommodation has more than one image
 - 📈 **M102:** Instead of opening accommodation/transportation pop-up, scroll page to position and auto-click item
-- 📈 **M108:** Change USER_DATA in index to only get necessary data
-- ⚔️ **E024:** Migrate project to React OR Angular
 - ⚔️ **E025:** iOS and Android implementation
 - 🏆 **F043:** Create customizable keypoints
 - 📈 **M018:** Improve centering of demo-box element on edit screens in tablet mode
@@ -661,18 +879,18 @@
 - 📈 **M045:** Show rating inside edit-destinations accordion and order by Rating + title
 - 📈 **M054:** Improve getJs functions for more scenarios
 - 🏆 **F055:** Implement getKs function + Rename functions for clarity
-- 📈 **M046:** Clean unused properties in application CSS
 - 📈 **M055:** Improve all dark mode changes to be applied via js
-- 📈 **M058:** Modularize CSS files to reduce redundancy
-  -*Will also need to change dark mode calculation function*
 - 📈 **M069:** Loading timer disabled by default
 - 📈 **M047:** Change modal messages to bottomsheet messages
 - 📈 **M089:** Replace color values with environment variables in CSS
 - 🏆 **F067:** OneDrive integration
 - 🏆 **F081:** Embed map when there is no video in the destination
-- 📈 **M105:** Remove CONFIG ~~and reduce use of global variables~~
 - 📈 **M114:** Make button / select outlines theme color (view.html)
 - 🐞 **B097:** Fix Image upload module
 - 🏆 **F116:** Destinations data refactoring
 - 📈 **M119:** Instead of pop-ups, scroll to item (if not destination)
-- 📈 **M098:** Change js folder structures to EN-US
+- 🐞 **B148:** Full itinerary page giving multiple blank pages
+- ⚔️ **E024:** Migrate project to React
+- 🐞 **B172:** Fix error when switching a destination category
+- ⚔️ **E019:** [DEV] Implement Sonarqube
+- ⚔️ **E046:** [DEV] Implement Playwright

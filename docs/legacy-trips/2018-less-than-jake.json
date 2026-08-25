@@ -1,0 +1,751 @@
+{
+  "trip": {
+    "title": "Less Than Jake SP",
+    "currency": "BRL",
+    "start": {
+      "day": 26,
+      "month": 5,
+      "year": 2018,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 27,
+      "month": 5,
+      "year": 2018,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2018-05-27T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Airbnb - Cond. Edifício Saint Cyr",
+      "description": "Apartamento próximo à estação Brigadeiro, São Paulo",
+      "address": "Cond Edifício Saint Cyr - Rua Maria Figueiredo, 85, Ap. 22, São Paulo, 04002",
+      "dates": {
+        "checkIn": {
+          "day": 26,
+          "month": 5,
+          "year": 2018,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 27,
+          "month": 5,
+          "year": 2018,
+          "hour": 13,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": false,
+      "images": [],
+      "reservation": "HM9BJJC2AZ",
+      "link": "https://www.airbnb.com.br/rooms/14692847"
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "flight",
+      "company": "gol",
+      "points": {
+        "origin": "Belo Horizonte (CNF)",
+        "destination": "São Paulo (CGH)"
+      },
+      "dates": {
+        "departure": {
+          "day": 26,
+          "month": 5,
+          "year": 2018,
+          "hour": 7,
+          "minute": 10,
+          "second": 0
+        },
+        "arrival": {
+          "day": 26,
+          "month": 5,
+          "year": 2018,
+          "hour": 8,
+          "minute": 30,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "departure",
+      "reservation": "LLGB2Q",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "gol",
+      "points": {
+        "origin": "São Paulo (CGH)",
+        "destination": "Belo Horizonte (CNF)"
+      },
+      "dates": {
+        "departure": {
+          "day": 27,
+          "month": 5,
+          "year": 2018,
+          "hour": 16,
+          "minute": 20,
+          "second": 0
+        },
+        "arrival": {
+          "day": 27,
+          "month": 5,
+          "year": 2018,
+          "hour": 17,
+          "minute": 25,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "return",
+      "reservation": "LLGB2Q",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20180526": {
+      "title": {
+        "value": "Show do Less Than Jake",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 26,
+        "month": 5,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa → Aeroporto: Carona com pai",
+          "start": "05:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo BH → SP: GOL G31301, CNF→CGH",
+          "start": "07:10",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Ônibus + Metrô: Aeroporto → Paulista",
+          "start": "08:30",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Galerias do Centro: Galeria Nova Barão e Galeria do Rock. Vinil",
+          "start": "09:30",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "A pé / Metrô: Centro → Paulista",
+          "start": "11:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Sensorial Discos: Loja de discos na Paulista",
+          "start": "11:30",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô: Paulista → Pinheiros",
+          "start": "12:00",
+          "end": ""
+        },
+        {
+          "cost": 52.8,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pellegrino: Almoço",
+          "start": "12:30",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô: Pinheiros → Airbnb",
+          "start": "13:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Check-in - Deixar mochila",
+          "start": "13:30",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô: Airbnb → Liberdade",
+          "start": "14:00",
+          "end": ""
+        },
+        {
+          "cost": 237.28,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Liberdade: Compras + Passeio",
+          "start": "14:20",
+          "end": ""
+        },
+        {
+          "cost": 14,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Snowfall: Lanche rápido",
+          "start": "15:20",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô: Liberdade → Airbnb",
+          "start": "15:40",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Descanso",
+          "start": "16:00",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô + A pé: Airbnb → Fabrique Club",
+          "start": "16:30",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Show Less Than Jake: Fabrique Club",
+          "start": "17:10",
+          "end": ""
+        },
+        {
+          "cost": 5,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Água: Comprar água no show",
+          "start": "17:10",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô: Fabrique Club → Airbnb",
+          "start": "22:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Arrumar para sair",
+          "start": "22:40",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "A pé: Airbnb → Hooters",
+          "start": "23:10",
+          "end": ""
+        },
+        {
+          "cost": 97,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hooters: Jantar",
+          "start": "23:15",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "A pé: Hooters → Airbnb",
+          "start": "00:15",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Descanso",
+          "start": "00:20",
+          "end": ""
+        }
+      ]
+    },
+    "20180527": {
+      "title": {
+        "value": "Passeio e retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 27,
+        "month": 5,
+        "year": 2018,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Acordar / Arrumar",
+          "start": "09:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Avenida Paulista: Caminhada",
+          "start": "09:45",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Japan House: Visita rápida",
+          "start": "10:00",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô: Paulista → Liberdade",
+          "start": "10:30",
+          "end": ""
+        },
+        {
+          "cost": 24.99,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Liberdade: Café da manhã",
+          "start": "10:50",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô + A pé: Liberdade → Centro",
+          "start": "11:20",
+          "end": ""
+        },
+        {
+          "cost": 17.8,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Liberdade: Compras",
+          "start": "11:30",
+          "end": ""
+        },
+        {
+          "cost": 50,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Z Deli: Almoço - Hamburgueria",
+          "start": "12:00",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "A pé: Z Deli → Happy Donuts",
+          "start": "12:30",
+          "end": ""
+        },
+        {
+          "cost": 20,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Happy Donuts: Sobremesa",
+          "start": "12:45",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Metrô: Centro → Airbnb",
+          "start": "12:50",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Airbnb: Check-out",
+          "start": "13:05",
+          "end": ""
+        },
+        {
+          "cost": 4,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Ônibus: Airbnb → Aeroporto",
+          "start": "13:05",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo SP → BH: GOL G31308, CGH→CNF",
+          "start": "16:20",
+          "end": ""
+        },
+        {
+          "cost": 0,
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto → Casa: Carona com Matheus",
+          "start": "17:25",
+          "end": ""
+        }
+      ]
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "type": "trip.expenses.daily",
+        "name": "Alimentação durante a viagem",
+        "price": 263.79,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Compras (discos, itens pessoais)",
+        "price": 255.08,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Metrô e ônibus em SP",
+        "price": 48.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
+    ],
+    "preTrip": [
+      {
+        "type": "trip.transportation.type.flights",
+        "name": "GOL - BH ↔ SP (ida e volta)",
+        "price": 213.86,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.accommodation.title",
+        "name": "Airbnb - Cond. Saint Cyr (1 noite)",
+        "price": 151.91,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.entertainment",
+        "name": "Less Than Jake - Fabrique Club",
+        "price": 126.5,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2018-05-27T00:00:00.000Z"
+    }
+  }
+}

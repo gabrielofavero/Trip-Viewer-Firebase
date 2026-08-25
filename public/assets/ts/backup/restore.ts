@@ -1,0 +1,616 @@
+import {
+	beginOperation,
+	endOperation,
+} from '../utils/operation-guard.js';
+import {
+	startProgressLoading,
+	stopProgressLoading,
+	updateProgressLoading,
+} from '../ui/progress-loading.js';
+import {
+	closeMessage,
+	displayError,
+	displayMessage,
+	displayPrompt,
+	openToast,
+} from '../utils/messages.js';
+import { translate } from '../i18n/translation.js';
+import { getUID } from '../data/firebase/auth.js';
+import { DATABASE_EDITABLE_DOCUMENTS } from '../data/firebase/database.js';
+import { normalizeLegacyJson } from './normalize.js';
+
+export async function restoreOnClickAction() {
+	const title = translate('account.restore.title');
+	const content = translate('account.restore.prompt');
+	displayPrompt({
+		title,
+		content,
+		yesAction: () => {
+			// No loading screen here: it would show a spinner on top of the
+			// native file picker's backdrop blur before any file is chosen.
+			// The progress overlay starts once a file is actually selected.
+			closeMessage();
+			openRestoreFilePicker();
+		},
+	});
+}
+
+export function restoreOnFileSelectionAction(event) {
+	const file = event.target.files[0];
+	if (!file) {
+		stopProgressLoading();
+		return;
+	}
+
+	const reader = new FileReader();
+	reader.onload = function (e) {
+		try {
+			const jsonData = JSON.parse((e.target as FileReader).result as string);
+			restoreAccountData(jsonData);
+		} catch (err) {
+			stopProgressLoading();
+			displayError(translate('messages.documents.get.error'), false, false);
+			console.error(err);
+		}
+	};
+	reader.readAsText(file);
+}
+
+export function openRestoreFilePicker() {
+	document.getElementById('restore-account-input').click();
+}
+
+async function restoreAccountData(restore) {
+	// Loading screen was already started when the user pressed "Yes"
+
+	// Normalize legacy (Portuguese) JSON if detected
+	const normalized = normalizeLegacyJson(restore);
+	if (normalized._normalizationMeta?.wasLegacy) {
+		console.log(
+			`[restore] Legacy JSON normalized: ${normalized._normalizationMeta.fieldsRenamed} fields, ${normalized._normalizationMeta.valuesTranslated} values.`,
+		);
+	}
+
+	if (!isRestoreValid(normalized)) {
+		stopProgressLoading();
+		displayMessage(
+			translate('account.restore.error_title'),
+			translate('account.restore.invalid_file'),
+		);
+		return;
+	}
+
+	// Fix ownership: if sharing.owner doesn't match the current user, update it
+	const uid = await getUID();
+	const ownershipFixed = fixRestoreOwnership(normalized, uid);
+	if (ownershipFixed > 0) {
+		console.log(
+			`[restore] Fixed sharing.owner on ${ownershipFixed} document(s) to match current user.`,
+		);
+	}
+
+	try {
+		// Block refresh/close while the restore writes are in flight — an
+		// interrupted restore could leave the account in a partial state.
+		beginOperation();
+		await restoreAccount(normalized);
+
+		// Show success toast with optional ownership note
+		const successMsg = ownershipFixed > 0
+			? translate('account.restore.owner_updated', { count: String(ownershipFixed) })
+			: translate('account.restore.success');
+		openToast(successMsg);
+
+		// Keep the progress bar at 100% — the page will auto-refresh shortly.
+		setTimeout(() => {
+			location.reload();
+		}, 5000);
+	} catch (err) {
+		console.error('Restoration failed:', err);
+		stopProgressLoading();
+		displayError(err.message || translate('account.restore.error_title'));
+	} finally {
+		endOperation();
+	}
+}
+
+function isRestoreValid(restore) {
+	const REQUIRED_KEYS = ['destinations', 'expenses', 'listings', 'protected', 'trips'];
+
+	// Basic type check
+	if (!restore || typeof restore !== 'object') return false;
+
+	// All required keys must exist
+	if (!REQUIRED_KEYS.every((key) => key in restore)) return false;
+
+	// Basic structure check for each group
+	for (const key of REQUIRED_KEYS) {
+		const group = restore[key];
+		if (typeof group !== 'object' || group === null) return false;
+	}
+
+	return true;
+}
+
+/**
+ * Walk all documents in the restore payload and update sharing.owner
+ * to match the current user's UID where it differs.
+ * Returns the number of documents that were fixed.
+ */
+function fixRestoreOwnership(restore, uid: string): number {
+	const REQUIRED_KEYS = ['destinations', 'expenses', 'listings', 'protected', 'trips'];
+	let fixed = 0;
+
+	for (const key of REQUIRED_KEYS) {
+		const group = restore[key];
+		if (!group || typeof group !== 'object') continue;
+
+		for (const docID in group) {
+			if (docID === 'protected') {
+				fixed += fixProtectedOwnership(group.protected);
+				continue;
+			}
+
+			if (fixDocOwnership(group[docID])) fixed++;
+		}
+	}
+
+	return fixed;
+
+	function fixDocOwnership(doc): boolean {
+		if (!doc || typeof doc !== 'object') return false;
+		const sharing = doc.sharing;
+		if (!sharing || typeof sharing !== 'object') return false;
+		if (sharing.owner === uid) return false;
+		sharing.owner = uid;
+		return true;
+	}
+
+	function fixProtectedOwnership(protectedGroup): number {
+		if (!protectedGroup || typeof protectedGroup !== 'object') return 0;
+		let count = 0;
+		for (const pin in protectedGroup) {
+			const pinGroup = protectedGroup[pin];
+			if (!pinGroup || typeof pinGroup !== 'object') continue;
+			for (const docID in pinGroup) {
+				if (fixDocOwnership(pinGroup[docID])) count++;
+			}
+		}
+		return count;
+	}
+}
+
+async function restoreAccount(restore) {
+	const uid = await getUID();
+
+	/**
+	 * Firestore security rules can only call get()/exists() on a limited number
+	 * of DISTINCT documents per request (~10 for the web SDK; admin/admin and
+	 * users/{uid} add 2 cached reads on top). Ops whose rule reads the same doc
+	 * can share a batch without increasing that count, so we group ops by the
+	 * document(s) their rule reads and flush a batch once it would exceed
+	 * MAX_RULE_READ_DOCS distinct targets. Ops are ordered by trip (see
+	 * collectSubcollectionCreateOps/collectDeleteOps), so this yields batches of
+	 * a few trips each instead of one huge multi-trip batch that would raise
+	 * "PERMISSION_DENIED: evaluation error" on every subcollection write.
+	 */
+	const MAX_RULE_READ_DOCS = 8;
+
+	// Progress: 0 → 35 — removing current data
+	startProgressLoading({
+		message: translate('account.restore.loading.deleting'),
+		progress: 5,
+	});
+
+	console.log('Preparing delete operations...');
+	const deleteOps = await collectDeleteOps(uid);
+	console.log(`${deleteOps.length} delete operations.`);
+
+	console.log('Executing delete batches...');
+	await commitInChunksByRead(deleteOps, (fraction) => {
+		updateProgressLoading({
+			message: translate('account.restore.loading.deleting'),
+			progress: 5 + fraction * 30,
+		});
+	});
+	console.log('Deletions complete');
+
+	// Progress: 35 → 65 — writing restored documents (main collections)
+	console.log('Preparing create operations...');
+	const createOps = await collectCreateOps(restore);
+	console.log(`${createOps.length} create operations.`);
+
+	console.log('Executing create batches...');
+	await commitInChunks(createOps, 450, (fraction) => {
+		updateProgressLoading({
+			message: translate('account.restore.loading.writing'),
+			progress: 35 + fraction * 30,
+		});
+	});
+	console.log('Main documents restored');
+
+	// Trip subcollections (accommodations, transportation, itinerary) are
+	// written in a SEPARATE phase, AFTER the parent trip docs are committed:
+	//  1. The rules for trip subcollections check the parent trip doc via
+	//     exists()/get(). Within one batch those functions see the PRE-batch
+	//     state, so mixing a trip create with its subcollection creates in the
+	//     same batch would make tripExists() return false → PERMISSION_DENIED.
+	//  2. Each subcollection op reads the parent trip doc, and Firestore rules
+	//     cap get()/exists() at ~10 DISTINCT documents per request. Batching
+	//     hundreds of ops across many trips exceeds that limit and raises an
+	//     "evaluation error". commitInChunksByRead keeps each batch under the cap.
+	const subOps = collectSubcollectionCreateOps(restore);
+	if (subOps.length > 0) {
+		console.log(`${subOps.length} subcollection create operations.`);
+		await commitInChunksByRead(subOps, (fraction) => {
+			updateProgressLoading({
+				message: translate('account.restore.loading.writing'),
+				progress: 65 + fraction * 5,
+			});
+		});
+		console.log('Subcollections restored');
+	}
+
+	console.log('Restoration complete');
+
+	// Progress: 70 → 90 — user summary subcollections
+	// (tripSummaries, destinationSummaries, listingSummaries)
+	const summaryOps = collectUserSummaryOps(restore, uid);
+	if (summaryOps.length > 0) {
+		console.log(`${summaryOps.length} user summary operations.`);
+		updateProgressLoading({
+			message: translate('account.restore.loading.summaries'),
+			progress: 80,
+		});
+		await commitInChunks(summaryOps);
+		console.log('User summaries complete');
+	}
+
+	// Progress: 90 → 100 — user document update
+	console.log('Preparing user update...');
+	const userUpdateOp = collectUserUpdateOp(restore, uid);
+
+	console.log('Executing user update...');
+	updateProgressLoading({
+		message: translate('account.restore.loading.finishing'),
+		progress: 95,
+	});
+	await commitInChunks([userUpdateOp]);
+	console.log('User update complete');
+
+	updateProgressLoading({
+		message: translate('account.restore.loading.finishing'),
+		progress: 100,
+	});
+
+	console.log('All operations finished successfully');
+
+	async function commitInChunks(ops, chunkSize = 450, onProgress?: (fraction: number) => void) {
+		const total = ops.length;
+		for (let i = 0; i < ops.length; i += chunkSize) {
+			const batch = firebase.firestore().batch();
+			const slice = ops.slice(i, i + chunkSize);
+
+			for (const op of slice) {
+				if (op.type === 'delete') {
+					batch.delete(op.ref);
+				} else if (op.type === 'set') {
+					batch.set(op.ref, op.data, op.options || {});
+				}
+			}
+
+			await batch.commit();
+			if (onProgress && total > 0) {
+				onProgress(Math.min((i + slice.length) / total, 1));
+			}
+		}
+	}
+
+	/** Canonical document path that this op's security rule reads via get()/exists(). */
+	function ruleReadKey(op): string {
+		const p = op.ref.path;
+		const segs = p.split('/');
+
+		// Trips + trip subcollections: the rule reads the PARENT trip doc.
+		if (segs[0] === 'trips') {
+			if (segs[1] === 'protected') {
+				// trips/protected/{pin}/{id}: create reads admin+user only;
+				// delete (canUpdateDoc → isOwnerDB) reads its own doc.
+				return op.type === 'delete' ? `read:${p}` : 'shared';
+			}
+			// trips/{id} or trips/{id}/{sub}/{docId}
+			return `trip:${segs[1]}`;
+		}
+
+		// destinations/listings/expenses: create reads admin+user only (shared);
+		// delete (canUpdateDoc → isOwnerDB) reads the doc itself.
+		if (segs[0] === 'destinations' || segs[0] === 'listings' || segs[0] === 'expenses') {
+			return op.type === 'delete' ? `read:${p}` : 'shared';
+		}
+
+		// protected/{id}: write is canCreateDoc (isAdmin || isOwnerResource) → shared.
+		if (segs[0] === 'protected') {
+			return 'shared';
+		}
+
+		// users/{uid}/...: rule reads the user doc.
+		if (segs[0] === 'users') {
+			return `user:${segs[1]}`;
+		}
+
+		return 'shared';
+	}
+
+	async function commitInChunksByRead(ops, onProgress?: (fraction: number) => void) {
+		const total = ops.length;
+		if (total === 0) return;
+
+		let batch = firebase.firestore().batch();
+		const readKeys = new Set<string>();
+		let count = 0;
+
+		const flush = async (index: number) => {
+			await batch.commit();
+			batch = firebase.firestore().batch();
+			readKeys.clear();
+			count = 0;
+			if (onProgress) onProgress(Math.min(index / total, 1));
+		};
+
+		for (let i = 0; i < ops.length; i++) {
+			const op = ops[i];
+			const key = ruleReadKey(op);
+
+			if (count >= 450 || (readKeys.size >= MAX_RULE_READ_DOCS && !readKeys.has(key))) {
+				await flush(i);
+			}
+
+			readKeys.add(key);
+			if (op.type === 'delete') {
+				batch.delete(op.ref);
+			} else if (op.type === 'set') {
+				batch.set(op.ref, op.data, op.options || {});
+			}
+			count++;
+		}
+
+		if (count > 0) {
+			await batch.commit();
+			if (onProgress) onProgress(1);
+		}
+	}
+
+	async function collectDeleteOps(uid) {
+		const ops: any[] = [];
+		const pushDelete = (ref: any) => ops.push({ type: 'delete', ref });
+
+		// --- Step 1: Read summary subcollections to discover document IDs ---
+		const summaryIds: Record<string, string[]> = {
+			trips: [],
+			destinations: [],
+			listings: [],
+		};
+
+		for (const [type, subName] of [
+			['trips', 'tripSummaries'],
+			['destinations', 'destinationSummaries'],
+			['listings', 'listingSummaries'],
+		] as const) {
+			try {
+				const subSnap = await firebase
+					.firestore()
+					.collection(`users/${uid}/${subName}`)
+					.get();
+				subSnap.forEach((doc) => {
+					summaryIds[type].push(doc.id);
+					pushDelete(doc.ref); // Delete the summary doc itself
+				});
+			} catch {
+				// Subcollection may not exist
+			}
+		}
+
+		// --- Step 2: Delete main documents discovered from summaries ---
+
+		// Destinations + listings
+		for (const type of ['destinations', 'listings']) {
+			for (const id of summaryIds[type]) {
+				pushDelete(firebase.firestore().collection(type).doc(id));
+			}
+		}
+
+		// Trips (with protected data, expenses, and subcollections)
+		for (const tripID of summaryIds.trips) {
+			pushDelete(firebase.firestore().collection('trips').doc(tripID));
+
+			// Subcollections: accommodations, transportation, itinerary
+			for (const sub of ['accommodations', 'transportation', 'itinerary']) {
+				try {
+					const subSnap = await firebase
+						.firestore()
+						.collection(`trips/${tripID}/${sub}`)
+						.get();
+					subSnap.forEach((doc) => pushDelete(doc.ref));
+				} catch {
+					// Subcollection may not exist
+				}
+			}
+
+			const protRef = firebase.firestore().collection('protected').doc(tripID);
+			let protSnap = null;
+			try {
+				protSnap = await protRef.get();
+			} catch {}
+
+			if (protSnap?.exists) {
+				const pin = protSnap.data()?.pin;
+				if (pin) {
+					pushDelete(firebase.firestore().doc(`trips/protected/${pin}/${tripID}`));
+					pushDelete(firebase.firestore().doc(`expenses/protected/${pin}/${tripID}`));
+				}
+				pushDelete(protRef);
+			} else {
+				pushDelete(firebase.firestore().collection('expenses').doc(tripID));
+			}
+		}
+
+		// --- Step 3: User doc is handled by collectUserUpdateOp (merge set) ---
+		// Legacy trips/destinations/listings arrays no longer written here.
+
+		return ops;
+	}
+
+	async function collectCreateOps(restore) {
+		const ops = [];
+
+		const pushCreate = (ref, data, options?) => ops.push({ type: 'set', ref, data, options });
+
+		for (const type of DATABASE_EDITABLE_DOCUMENTS) {
+			const group = restore?.[type];
+			if (!group) continue;
+
+			for (const docID of Object.keys(group)) {
+				if (docID === 'protected') {
+					const tree = group.protected;
+
+					for (const pin of Object.keys(tree)) {
+						for (const innerID of Object.keys(tree[pin])) {
+							pushCreate(
+								firebase.firestore().doc(`${type}/protected/${pin}/${innerID}`),
+								tree[pin][innerID],
+							);
+						}
+					}
+					continue;
+				}
+
+				pushCreate(firebase.firestore().doc(`${type}/${docID}`), group[docID]);
+			}
+		}
+
+		return ops;
+	}
+
+	/**
+	 * Collect write operations for subcollection data.
+	 * Reads from restore._subcollections.trips[tripId].{accommodations,transportation,itinerary}
+	 */
+	function collectSubcollectionCreateOps(restore) {
+		const ops = [];
+		const pushCreate = (ref, data, options?) => ops.push({ type: 'set', ref, data, options });
+
+		const scTrips = restore?._subcollections?.trips;
+		if (!scTrips || typeof scTrips !== 'object') return ops;
+
+		for (const [tripId, subData] of Object.entries(scTrips as Record<string, any>)) {
+			if (!subData || typeof subData !== 'object') continue;
+
+			// Accommodations
+			const accs = subData.accommodations;
+			if (accs && typeof accs === 'object') {
+				for (const [accId, accDoc] of Object.entries(accs)) {
+					pushCreate(
+						firebase.firestore().doc(`trips/${tripId}/accommodations/${accId}`),
+						accDoc,
+					);
+				}
+			}
+
+			// Transportation
+			const trans = subData.transportation;
+			if (trans && typeof trans === 'object') {
+				for (const [legId, legDoc] of Object.entries(trans)) {
+					pushCreate(
+						firebase.firestore().doc(`trips/${tripId}/transportation/${legId}`),
+						legDoc,
+					);
+				}
+			}
+
+			// Itinerary
+			const itin = subData.itinerary;
+			if (itin && typeof itin === 'object') {
+				for (const [dayId, dayDoc] of Object.entries(itin)) {
+					pushCreate(
+						firebase.firestore().doc(`trips/${tripId}/itinerary/${dayId}`),
+						dayDoc,
+					);
+				}
+			}
+		}
+
+		return ops;
+	}
+
+	/**
+	 * Collect write operations for user summary subcollections.
+	 * Reads from restore.user.{trips,destinations,listings} and writes to:
+	 *   users/{uid}/tripSummaries/{id}
+	 *   users/{uid}/destinationSummaries/{id}
+	 *   users/{uid}/listingSummaries/{id}
+	 *
+	 * These subcollections are what the home page reads to render the trip/listing cards.
+	 */
+	function collectUserSummaryOps(restore, uid: string) {
+		const ops = [];
+		const pushCreate = (ref, data) => ops.push({ type: 'set', ref, data });
+
+		const userData = restore?.user;
+		if (!userData || typeof userData !== 'object') return ops;
+
+		// Trip summaries → users/{uid}/tripSummaries/{tripId}
+		const trips = userData.trips;
+		if (trips && typeof trips === 'object') {
+			for (const [tripId, summary] of Object.entries(trips as Record<string, any>)) {
+				if (!summary || typeof summary !== 'object') continue;
+				pushCreate(
+					firebase.firestore().doc(`users/${uid}/tripSummaries/${tripId}`),
+					summary,
+				);
+			}
+		}
+
+		// Destination summaries → users/{uid}/destinationSummaries/{destId}
+		const destinations = userData.destinations;
+		if (destinations && typeof destinations === 'object') {
+			for (const [destId, summary] of Object.entries(destinations as Record<string, any>)) {
+				if (!summary || typeof summary !== 'object') continue;
+				pushCreate(
+					firebase.firestore().doc(`users/${uid}/destinationSummaries/${destId}`),
+					summary,
+				);
+			}
+		}
+
+		// Listing summaries → users/{uid}/listingSummaries/{listingId}
+		const listings = userData.listings;
+		if (listings && typeof listings === 'object') {
+			for (const [listingId, summary] of Object.entries(listings as Record<string, any>)) {
+				if (!summary || typeof summary !== 'object') continue;
+				pushCreate(
+					firebase.firestore().doc(`users/${uid}/listingSummaries/${listingId}`),
+					summary,
+				);
+			}
+		}
+
+		return ops;
+	}
+
+	function collectUserUpdateOp(restore, uid) {
+		const patch = buildUserUpdateFromRestore(restore);
+
+		return {
+			type: 'set',
+			ref: firebase.firestore().collection('users').doc(uid),
+			data: patch,
+			options: { merge: true },
+		};
+	}
+
+	function buildUserUpdateFromRestore(restore) {
+		// After migration 15, user doc has no embedded summary arrays.
+		// Summaries are written to subcollections via collectUserSummaryOps.
+		return {};
+	}
+}

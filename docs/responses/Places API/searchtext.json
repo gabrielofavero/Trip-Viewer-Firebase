@@ -1,0 +1,1199 @@
+{
+	"places": [
+		{
+			"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4",
+			"id": "ChIJbSt7rF1ZwokRrnJ-xbOu0i4",
+			"types": [
+				"pizza_restaurant",
+				"pizza_delivery",
+				"vegan_restaurant",
+				"meal_delivery",
+				"vegetarian_restaurant",
+				"italian_restaurant",
+				"food_delivery",
+				"restaurant",
+				"food",
+				"point_of_interest",
+				"establishment"
+			],
+			"nationalPhoneNumber": "(718) 782-7078",
+			"internationalPhoneNumber": "+1 718-782-7078",
+			"formattedAddress": "148 Bedford Ave, Brooklyn, NY 11249, USA",
+			"addressComponents": [
+				{
+					"longText": "148",
+					"shortText": "148",
+					"types": [
+						"street_number"
+					],
+					"languageCode": "en-US"
+				},
+				{
+					"longText": "Bedford Avenue",
+					"shortText": "Bedford Ave",
+					"types": [
+						"route"
+					],
+					"languageCode": "en"
+				},
+				{
+					"longText": "Williamsburg",
+					"shortText": "Williamsburg",
+					"types": [
+						"neighborhood",
+						"political"
+					],
+					"languageCode": "en"
+				},
+				{
+					"longText": "Brooklyn",
+					"shortText": "Brooklyn",
+					"types": [
+						"sublocality_level_1",
+						"sublocality",
+						"political"
+					],
+					"languageCode": "en"
+				},
+				{
+					"longText": "Kings County",
+					"shortText": "Kings County",
+					"types": [
+						"administrative_area_level_2",
+						"political"
+					],
+					"languageCode": "en"
+				},
+				{
+					"longText": "New York",
+					"shortText": "NY",
+					"types": [
+						"administrative_area_level_1",
+						"political"
+					],
+					"languageCode": "en"
+				},
+				{
+					"longText": "United States",
+					"shortText": "US",
+					"types": [
+						"country",
+						"political"
+					],
+					"languageCode": "en"
+				},
+				{
+					"longText": "11249",
+					"shortText": "11249",
+					"types": [
+						"postal_code"
+					],
+					"languageCode": "en-US"
+				}
+			],
+			"plusCode": {
+				"globalCode": "87G8P29V+H7",
+				"compoundCode": "P29V+H7 Brooklyn, NY, USA"
+			},
+			"location": {
+				"latitude": 40.7188807,
+				"longitude": -73.956775499999992
+			},
+			"viewport": {
+				"low": {
+					"latitude": 40.717499969708506,
+					"longitude": -73.958074280291513
+				},
+				"high": {
+					"latitude": 40.720197930291505,
+					"longitude": -73.955376319708492
+				}
+			},
+			"rating": 4.5,
+			"googleMapsUri": "https://maps.google.com/?cid=3373951157989700270&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+			"websiteUri": "http://vinniespizzeria.com/",
+			"regularOpeningHours": {
+				"openNow": false,
+				"periods": [
+					{
+						"open": {
+							"day": 0,
+							"hour": 11,
+							"minute": 30
+						},
+						"close": {
+							"day": 0,
+							"hour": 23,
+							"minute": 0
+						}
+					},
+					{
+						"open": {
+							"day": 3,
+							"hour": 11,
+							"minute": 30
+						},
+						"close": {
+							"day": 3,
+							"hour": 23,
+							"minute": 0
+						}
+					},
+					{
+						"open": {
+							"day": 4,
+							"hour": 11,
+							"minute": 30
+						},
+						"close": {
+							"day": 5,
+							"hour": 0,
+							"minute": 0
+						}
+					},
+					{
+						"open": {
+							"day": 5,
+							"hour": 11,
+							"minute": 30
+						},
+						"close": {
+							"day": 6,
+							"hour": 2,
+							"minute": 0
+						}
+					},
+					{
+						"open": {
+							"day": 6,
+							"hour": 11,
+							"minute": 30
+						},
+						"close": {
+							"day": 0,
+							"hour": 2,
+							"minute": 0
+						}
+					}
+				],
+				"weekdayDescriptions": [
+					"Monday: Closed",
+					"Tuesday: Closed",
+					"Wednesday: 11:30 AM – 11:00 PM",
+					"Thursday: 11:30 AM – 12:00 AM",
+					"Friday: 11:30 AM – 2:00 AM",
+					"Saturday: 11:30 AM – 2:00 AM",
+					"Sunday: 11:30 AM – 11:00 PM"
+				],
+				"nextOpenTime": "2026-08-08T15:30:00Z"
+			},
+			"utcOffsetMinutes": -240,
+			"adrFormatAddress": "<span class=\"street-address\">148 Bedford Ave</span>, <span class=\"locality\">Brooklyn</span>, <span class=\"region\">NY</span> <span class=\"postal-code\">11249</span>, <span class=\"country-name\">USA</span>",
+			"businessStatus": "OPERATIONAL",
+			"priceLevel": "PRICE_LEVEL_INEXPENSIVE",
+			"userRatingCount": 1762,
+			"iconMaskBaseUri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+			"iconBackgroundColor": "#FF9E67",
+			"displayName": {
+				"text": "Vinnie's Pizzeria",
+				"languageCode": "en"
+			},
+			"primaryTypeDisplayName": {
+				"text": "Pizza Restaurant",
+				"languageCode": "en-US"
+			},
+			"takeout": true,
+			"delivery": true,
+			"dineIn": true,
+			"reservable": false,
+			"servesBreakfast": false,
+			"servesLunch": true,
+			"servesDinner": true,
+			"servesBeer": false,
+			"servesWine": false,
+			"servesBrunch": false,
+			"servesVegetarianFood": true,
+			"currentOpeningHours": {
+				"openNow": false,
+				"periods": [
+					{
+						"open": {
+							"day": 0,
+							"hour": 11,
+							"minute": 30,
+							"date": {
+								"year": 2026,
+								"month": 8,
+								"day": 9
+							}
+						},
+						"close": {
+							"day": 0,
+							"hour": 23,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 8,
+								"day": 9
+							}
+						}
+					},
+					{
+						"open": {
+							"day": 3,
+							"hour": 11,
+							"minute": 30,
+							"date": {
+								"year": 2026,
+								"month": 8,
+								"day": 12
+							}
+						},
+						"close": {
+							"day": 3,
+							"hour": 23,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 8,
+								"day": 12
+							}
+						}
+					},
+					{
+						"open": {
+							"day": 4,
+							"hour": 11,
+							"minute": 30,
+							"date": {
+								"year": 2026,
+								"month": 8,
+								"day": 13
+							}
+						},
+						"close": {
+							"day": 5,
+							"hour": 0,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 8,
+								"day": 14
+							}
+						}
+					},
+					{
+						"open": {
+							"day": 5,
+							"hour": 11,
+							"minute": 30,
+							"date": {
+								"year": 2026,
+								"month": 8,
+								"day": 14
+							}
+						},
+						"close": {
+							"day": 5,
+							"hour": 23,
+							"minute": 59,
+							"truncated": true,
+							"date": {
+								"year": 2026,
+								"month": 8,
+								"day": 14
+							}
+						}
+					},
+					{
+						"open": {
+							"day": 6,
+							"hour": 0,
+							"minute": 0,
+							"truncated": true,
+							"date": {
+								"year": 2026,
+								"month": 8,
+								"day": 8
+							}
+						},
+						"close": {
+							"day": 6,
+							"hour": 2,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 8,
+								"day": 8
+							}
+						}
+					},
+					{
+						"open": {
+							"day": 6,
+							"hour": 11,
+							"minute": 30,
+							"date": {
+								"year": 2026,
+								"month": 8,
+								"day": 8
+							}
+						},
+						"close": {
+							"day": 0,
+							"hour": 2,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 8,
+								"day": 9
+							}
+						}
+					}
+				],
+				"weekdayDescriptions": [
+					"Monday: Closed",
+					"Tuesday: Closed",
+					"Wednesday: 11:30 AM – 11:00 PM",
+					"Thursday: 11:30 AM – 12:00 AM",
+					"Friday: 11:30 AM – 2:00 AM",
+					"Saturday: 11:30 AM – 2:00 AM",
+					"Sunday: 11:30 AM – 11:00 PM"
+				],
+				"nextOpenTime": "2026-08-08T15:30:00Z"
+			},
+			"currentSecondaryOpeningHours": [
+				{
+					"openNow": false,
+					"periods": [
+						{
+							"open": {
+								"day": 0,
+								"hour": 11,
+								"minute": 30,
+								"date": {
+									"year": 2026,
+									"month": 8,
+									"day": 9
+								}
+							},
+							"close": {
+								"day": 0,
+								"hour": 23,
+								"minute": 0,
+								"date": {
+									"year": 2026,
+									"month": 8,
+									"day": 9
+								}
+							}
+						},
+						{
+							"open": {
+								"day": 1,
+								"hour": 11,
+								"minute": 30,
+								"date": {
+									"year": 2026,
+									"month": 8,
+									"day": 10
+								}
+							},
+							"close": {
+								"day": 1,
+								"hour": 23,
+								"minute": 0,
+								"date": {
+									"year": 2026,
+									"month": 8,
+									"day": 10
+								}
+							}
+						},
+						{
+							"open": {
+								"day": 2,
+								"hour": 11,
+								"minute": 30,
+								"date": {
+									"year": 2026,
+									"month": 8,
+									"day": 11
+								}
+							},
+							"close": {
+								"day": 2,
+								"hour": 23,
+								"minute": 0,
+								"date": {
+									"year": 2026,
+									"month": 8,
+									"day": 11
+								}
+							}
+						},
+						{
+							"open": {
+								"day": 3,
+								"hour": 11,
+								"minute": 30,
+								"date": {
+									"year": 2026,
+									"month": 8,
+									"day": 12
+								}
+							},
+							"close": {
+								"day": 3,
+								"hour": 23,
+								"minute": 0,
+								"date": {
+									"year": 2026,
+									"month": 8,
+									"day": 12
+								}
+							}
+						},
+						{
+							"open": {
+								"day": 4,
+								"hour": 11,
+								"minute": 30,
+								"date": {
+									"year": 2026,
+									"month": 8,
+									"day": 13
+								}
+							},
+							"close": {
+								"day": 4,
+								"hour": 23,
+								"minute": 0,
+								"date": {
+									"year": 2026,
+									"month": 8,
+									"day": 13
+								}
+							}
+						},
+						{
+							"open": {
+								"day": 5,
+								"hour": 11,
+								"minute": 30,
+								"date": {
+									"year": 2026,
+									"month": 8,
+									"day": 14
+								}
+							},
+							"close": {
+								"day": 5,
+								"hour": 23,
+								"minute": 30,
+								"date": {
+									"year": 2026,
+									"month": 8,
+									"day": 14
+								}
+							}
+						},
+						{
+							"open": {
+								"day": 6,
+								"hour": 11,
+								"minute": 30,
+								"date": {
+									"year": 2026,
+									"month": 8,
+									"day": 8
+								}
+							},
+							"close": {
+								"day": 6,
+								"hour": 23,
+								"minute": 30,
+								"date": {
+									"year": 2026,
+									"month": 8,
+									"day": 8
+								}
+							}
+						}
+					],
+					"weekdayDescriptions": [
+						"Monday: 11:30 AM – 11:00 PM",
+						"Tuesday: 11:30 AM – 11:00 PM",
+						"Wednesday: 11:30 AM – 11:00 PM",
+						"Thursday: 11:30 AM – 11:00 PM",
+						"Friday: 11:30 AM – 11:30 PM",
+						"Saturday: 11:30 AM – 11:30 PM",
+						"Sunday: 11:30 AM – 11:00 PM"
+					],
+					"secondaryHoursType": "DELIVERY",
+					"nextOpenTime": "2026-08-08T15:30:00Z"
+				}
+			],
+			"regularSecondaryOpeningHours": [
+				{
+					"openNow": false,
+					"periods": [
+						{
+							"open": {
+								"day": 0,
+								"hour": 11,
+								"minute": 30
+							},
+							"close": {
+								"day": 0,
+								"hour": 23,
+								"minute": 0
+							}
+						},
+						{
+							"open": {
+								"day": 1,
+								"hour": 11,
+								"minute": 30
+							},
+							"close": {
+								"day": 1,
+								"hour": 23,
+								"minute": 0
+							}
+						},
+						{
+							"open": {
+								"day": 2,
+								"hour": 11,
+								"minute": 30
+							},
+							"close": {
+								"day": 2,
+								"hour": 23,
+								"minute": 0
+							}
+						},
+						{
+							"open": {
+								"day": 3,
+								"hour": 11,
+								"minute": 30
+							},
+							"close": {
+								"day": 3,
+								"hour": 23,
+								"minute": 0
+							}
+						},
+						{
+							"open": {
+								"day": 4,
+								"hour": 11,
+								"minute": 30
+							},
+							"close": {
+								"day": 4,
+								"hour": 23,
+								"minute": 0
+							}
+						},
+						{
+							"open": {
+								"day": 5,
+								"hour": 11,
+								"minute": 30
+							},
+							"close": {
+								"day": 5,
+								"hour": 23,
+								"minute": 30
+							}
+						},
+						{
+							"open": {
+								"day": 6,
+								"hour": 11,
+								"minute": 30
+							},
+							"close": {
+								"day": 6,
+								"hour": 23,
+								"minute": 30
+							}
+						}
+					],
+					"weekdayDescriptions": [
+						"Monday: 11:30 AM – 11:00 PM",
+						"Tuesday: 11:30 AM – 11:00 PM",
+						"Wednesday: 11:30 AM – 11:00 PM",
+						"Thursday: 11:30 AM – 11:00 PM",
+						"Friday: 11:30 AM – 11:30 PM",
+						"Saturday: 11:30 AM – 11:30 PM",
+						"Sunday: 11:30 AM – 11:00 PM"
+					],
+					"secondaryHoursType": "DELIVERY",
+					"nextOpenTime": "2026-08-08T15:30:00Z"
+				}
+			],
+			"primaryType": "pizza_restaurant",
+			"shortFormattedAddress": "148 Bedford Ave, Brooklyn",
+			"editorialSummary": {
+				"text": "Bedford Avenue pizza fixture serving up exotic slices & vegan options from a modest counter.",
+				"languageCode": "en"
+			},
+			"reviews": [
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/reviews/Ci9DQUlRQUNvZENodHljRjlvT25vMFlsZ3daRkJNWjNaQlZIVTJjbWc1TVVkbVFsRRAB",
+					"relativePublishTimeDescription": "3 months ago",
+					"rating": 5,
+					"text": {
+						"text": "Definitely worth a visit if you're in the Williamsburg area. No matter which slice you get, each has that beautiful undercarriage with perfect cheese to sauce ratio. They even offer vegan slices which not many slice shops offer. The staff is quick but very courteous. Interior is loud but it's that lively friendly kind.\n\nOverall just a great pizza joint.",
+						"languageCode": "en"
+					},
+					"originalText": {
+						"text": "Definitely worth a visit if you're in the Williamsburg area. No matter which slice you get, each has that beautiful undercarriage with perfect cheese to sauce ratio. They even offer vegan slices which not many slice shops offer. The staff is quick but very courteous. Interior is loud but it's that lively friendly kind.\n\nOverall just a great pizza joint.",
+						"languageCode": "en"
+					},
+					"authorAttribution": {
+						"displayName": "Jesse Yuan",
+						"uri": "https://www.google.com/maps/contrib/107151196602471892701/reviews",
+						"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjUaGciavbxCPFvSAYJKtogLkQy9e2JEoLBDpe7MHoWkeQAHefzS=s128-c0x00000000-cc-rp-mo-ba6"
+					},
+					"publishTime": "2026-04-19T13:19:23.056765764Z",
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=Ci9DQUlRQUNvZENodHljRjlvT25vMFlsZ3daRkJNWjNaQlZIVTJjbWc1TVVkbVFsRRAB&d=17924085&t=1",
+					"googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT25vMFlsZ3daRkJNWjNaQlZIVTJjbWc1TVVkbVFsRRAB!2m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/reviews/Ci9DQUlRQUNvZENodHljRjlvT21aYWQzUkpOMnRLWDJacE1VUmtjRGxOV2pOMWQyYxAB",
+					"relativePublishTimeDescription": "a month ago",
+					"rating": 2,
+					"text": {
+						"text": "Great vibes but the pizza disappointed. The vodka slice was low on sauce with a cheese that didn't melt. The specialty ndjua slice was bitter and imbalanced. And the pepperoni roll was very doughy and chewy and cold. It's a local spot but unfortunately all three pieces were disappointing.",
+						"languageCode": "en"
+					},
+					"originalText": {
+						"text": "Great vibes but the pizza disappointed. The vodka slice was low on sauce with a cheese that didn't melt. The specialty ndjua slice was bitter and imbalanced. And the pepperoni roll was very doughy and chewy and cold. It's a local spot but unfortunately all three pieces were disappointing.",
+						"languageCode": "en"
+					},
+					"authorAttribution": {
+						"displayName": "Syed Ashrafulla",
+						"uri": "https://www.google.com/maps/contrib/109064557960791093228/reviews",
+						"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjWmS0WN8YvyXCg6mBCPBQ5DRaZ_GOZqa-yx-cthzBQbuMJ0lSdkOQ=s128-c0x00000000-cc-rp-mo"
+					},
+					"publishTime": "2026-06-25T01:29:23.228013124Z",
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=Ci9DQUlRQUNvZENodHljRjlvT21aYWQzUkpOMnRLWDJacE1VUmtjRGxOV2pOMWQyYxAB&d=17924085&t=1",
+					"googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT21aYWQzUkpOMnRLWDJacE1VUmtjRGxOV2pOMWQyYxAB!2m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/reviews/Ci9DQUlRQUNvZENodHljRjlvT2paUlNXOU9UVFpPWjNoUFJWQmxMVVZ3WTFKVlgzYxAB",
+					"relativePublishTimeDescription": "7 months ago",
+					"rating": 5,
+					"text": {
+						"text": "Came here because of their crazy Instagram Videos (you guys are nuts).\nI‘m from Germany & they brought me all the way down to their Pizza Shop!\n\nBest Crust i had in NY (had a lot).\n\nTasty Pizza, good Humor! Loved it.",
+						"languageCode": "en"
+					},
+					"originalText": {
+						"text": "Came here because of their crazy Instagram Videos (you guys are nuts).\nI‘m from Germany & they brought me all the way down to their Pizza Shop!\n\nBest Crust i had in NY (had a lot).\n\nTasty Pizza, good Humor! Loved it.",
+						"languageCode": "en"
+					},
+					"authorAttribution": {
+						"displayName": "GanzGnau Der",
+						"uri": "https://www.google.com/maps/contrib/117445051492559869809/reviews",
+						"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjW-ekCyMVWlSbi_n0G90rNM6_upMla5NYhKeQNIrjUqLmc8bt1y=s128-c0x00000000-cc-rp-mo-ba4"
+					},
+					"publishTime": "2025-12-12T01:32:41.691592762Z",
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=Ci9DQUlRQUNvZENodHljRjlvT2paUlNXOU9UVFpPWjNoUFJWQmxMVVZ3WTFKVlgzYxAB&d=17924085&t=1",
+					"googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT2paUlNXOU9UVFpPWjNoUFJWQmxMVVZ3WTFKVlgzYxAB!2m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/reviews/Ci9DQUlRQUNvZENodHljRjlvT2pFd2FrOTRWUzB6UTBKeFQzZHRNMHhIVWpGWmJYYxAB",
+					"relativePublishTimeDescription": "6 months ago",
+					"rating": 4,
+					"text": {
+						"text": "been seeing the silly tiktoks & i was hungry in the neighborhood so i decided to stop by. really good food, i'll definitely be back!! the employees were also super nice! there are only 3 tables so don't expect to be able to dine in. as a ranch connoisseur & midwesterner, i approve of this ranch. the crust becomes inedible after reheating, i wouldn't recommend buying extra for leftovers unless you wanna reheat it in the stove.",
+						"languageCode": "en"
+					},
+					"originalText": {
+						"text": "been seeing the silly tiktoks & i was hungry in the neighborhood so i decided to stop by. really good food, i'll definitely be back!! the employees were also super nice! there are only 3 tables so don't expect to be able to dine in. as a ranch connoisseur & midwesterner, i approve of this ranch. the crust becomes inedible after reheating, i wouldn't recommend buying extra for leftovers unless you wanna reheat it in the stove.",
+						"languageCode": "en"
+					},
+					"authorAttribution": {
+						"displayName": "ina",
+						"uri": "https://www.google.com/maps/contrib/102360868758436896857/reviews",
+						"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjXNC6fkuSgqZkxQwA1ALlD1BnplxmaDrCinSYxjssSE5t-Nw_I=s128-c0x00000000-cc-rp-mo-ba4"
+					},
+					"publishTime": "2026-01-20T12:39:06.560417449Z",
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=Ci9DQUlRQUNvZENodHljRjlvT2pFd2FrOTRWUzB6UTBKeFQzZHRNMHhIVWpGWmJYYxAB&d=17924085&t=1",
+					"googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT2pFd2FrOTRWUzB6UTBKeFQzZHRNMHhIVWpGWmJYYxAB!2m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/reviews/Ci9DQUlRQUNvZENodHljRjlvT2tveWQwazBSbk40VFZSRExUVm1ORWRNVVhNMVIzYxAB",
+					"relativePublishTimeDescription": "a month ago",
+					"rating": 5,
+					"text": {
+						"text": "10/10 no notes… fun flavors and great vibes. genuinely one of the top 5 pizzas i’ve eaten in my decades of life. good service!",
+						"languageCode": "en"
+					},
+					"originalText": {
+						"text": "10/10 no notes… fun flavors and great vibes. genuinely one of the top 5 pizzas i’ve eaten in my decades of life. good service!",
+						"languageCode": "en"
+					},
+					"authorAttribution": {
+						"displayName": "Sachi Kapoor",
+						"uri": "https://www.google.com/maps/contrib/117046818074635890258/reviews",
+						"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjWpYdGMC5EOBqhinJuByRuDIAWG-268gFekkF93_sKc_gZTq8Z7=s128-c0x00000000-cc-rp-mo"
+					},
+					"publishTime": "2026-06-27T19:44:17.116384020Z",
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=Ci9DQUlRQUNvZENodHljRjlvT2tveWQwazBSbk40VFZSRExUVm1ORWRNVVhNMVIzYxAB&d=17924085&t=1",
+					"googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT2tveWQwazBSbk40VFZSRExUVm1ORWRNVVhNMVIzYxAB!2m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				}
+			],
+			"photos": [
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydg_u-7xiKT9iC1PNX-mvf6Zm8tmAG6AmixlUce_549kWt49zZCOgMAbY32hAkwRo10DH52EJVS9F0SK_f1VIJJmmxlu9nEPoC5W9mB2maakiNRTCgWqFz4adVtc51Jw8T6LoMY0Fh8Zta9Am3QfVC4ugEZtP-mwPe8JkPauJhx_VXtCeTskU84PeN-qJ6yCK2h6bBfQBNQ2ZtvIFy8bQQDYaBcJaUOMUUG61RveSD2PxF616ETV6FWr8zJCM5pHegGzWtRgmJq4CSbQVzPpiYiAzTwgEZktj9eY31us87tV6sAx17yUR3C2lJLmQ3L0i4oC_vc0WhqnSWXarycSrjdZ-hogmX1shC7NuA4mAgnEo163jWOTxiuHI7BlQDWZIHaP6LUMO6uw4rbMrPZrS7wDmSKkJ6CF9WksiTl0qBqeheuxrli0BHkLgIY4L4NO",
+					"widthPx": 1168,
+					"heightPx": 659,
+					"authorAttributions": [
+						{
+							"displayName": "Vinnie's Pizzeria",
+							"uri": "https://maps.google.com/maps/contrib/107847948194841648412",
+							"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjUgsAKWBDGn-QJav5tlFNOLHxeABphXabMCB1CoFne5AeOs2Kc=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIABIhAA3ilWbzkYsGf21akADLiN&t=27&cb_client=maps_api_places.places_api&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhAA3ilWbzkYsGf21akADLiN!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydhOa4S2w718NTCmko4OL7Cbn9FPmO3M6hGnTbxIwzgcT8NMtXAChkX_WvR5jgLXytFt6bCg5cxDUwucewLzSxRRcxg23mu9-jCTMSYXJEdFA3lq9BGMHHXYuWWEoL9J1Dp6iS1HlpcDJhjcueC75aEJ9XItYYFu3FQdhvVA-VRDOen0zriXFbcOkBpO5a1iC7GAhrO3OKF1TKcE8fyLQX5E0HI1V4bU8aPHBZ0R8B0-pdlWbmiHA6bX7vTEAEODJwcFznabJXC-ztaNqBnqYph0VD64r62-GcPqaHuCSsqDINArS3I3H8vzmdvALbLNC3va-g6vzaJqk5k-dhNpKGhMBmEXMDf-IaCcg-201Zj9TjGUP_gcowjYXOaaeAB-S3wxvmBky_V_UbP_wZcT3Z1v-a8QXEaWR42Vs94RyDyamg",
+					"widthPx": 3024,
+					"heightPx": 3024,
+					"authorAttributions": [
+						{
+							"displayName": "Vinnie's Pizzeria",
+							"uri": "https://maps.google.com/maps/contrib/107847948194841648412",
+							"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjUgsAKWBDGn-QJav5tlFNOLHxeABphXabMCB1CoFne5AeOs2Kc=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIHM0ogKEICAgID8kKCPCQ&t=27&cb_client=maps_api_places.places_api&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgID8kKCPCQ!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydgcGLgC8NLlgImvnHYvkuCTdfdVLcsN9PLoCZmasbPNFhH0AOPQRepYzmdCvmfwWYqEco-plAYjaivydiZMHgSHRwbV5G3F8QsAD3oytuQ-KfE2ip7gOGeAGfEi-Mm_Q5-Zo7bheMApfYmw_3GqG3EBxors88GkTNGNyvnh3vqjXCxh-Ub985FLXdHJcjwN7Gbh9jftNDfDJMtFsqxRgG_5G6L3EifJ8gwrdAt9jJa5NLr7MyZ9LutWfytp-mfsjf8VU4WlQb5ECvIBSUq8nxZGynodO-5Z7hO0IMRX5p0ntKhtHuvYU0vA_-vT-SVMjZAwnGcNCO4AI-8DTlXViqTdcc-oJ9CXtfbl9HQPQyqhtIthHBpMN-c5PZixM2TKUE--G5qxi1rQEscb2O7PXdp7lQ46D0vECzJuZHtrsKurngJwjIEoNW0uTO2LSdVR",
+					"widthPx": 4032,
+					"heightPx": 2268,
+					"authorAttributions": [
+						{
+							"displayName": "Boris P.",
+							"uri": "https://maps.google.com/maps/contrib/101214414976060054235",
+							"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjV3RbKsoQ7JCXnEcfRk0u69G7lVm4QqDIWm6oHZ6IFaVfZ0yW2VtQ=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIABIhAMQt7TtReabpn3kBwAZ7x5&t=27&cb_client=maps_api_places.places_api&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhAMQt7TtReabpn3kBwAZ7x5!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydjalOdR11VG53tlLkbrDvlR99Cvi0KnkbcqeBV5rbP70lkLojYSwdG9oekFQ7sFfIbE2ymmylwuowPOEiI6NO7GU7e2K0ZKRyOHkQlPLG9NvTlKeul97ojEjEMiR3AcHeyyMTY_-QCE57wMf2a3FZbzXboDDz9YoqHyEmyCVHALIuTMSx9z5wBvGLhEATKKd_MQ1BBm2jv_y8fnpxZt8EMWnta4S2ZOSVZKHz89QZD_0vXMY4ZcByx68ZLDUMk_z5UH2WP1rTliGZQPlXKuLerKkKUYLFPExO43sdx2h1S1X5FADnm7jhY7xzickE6K7HViE8z2m4lkOm5ArytjmK7M8g9iKB3Op5n9GTF1ym4-xl_encHp7-FKmMrbcz7RtQeGp2LEfJpyNTnFK54FIEYGxMqRE2U8gawQ50C7Smx7ZG9Mew9E0xe3auN4bA",
+					"widthPx": 4000,
+					"heightPx": 3000,
+					"authorAttributions": [
+						{
+							"displayName": "Kinga",
+							"uri": "https://maps.google.com/maps/contrib/114880782462347650541",
+							"photoUri": "https://lh3.googleusercontent.com/a/ACg8ocKPehJF7d0Tk38d2J4Q4LKVjbXANFwwp011PCIodeKDaXURtl7B=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIABIhBIoGE8cUXR73pxV3pnAzRf&t=27&cb_client=maps_api_places.places_api&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhBIoGE8cUXR73pxV3pnAzRf!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydj8QWEZsIVXvyhGv1v2Z4ifOBu4FdFKKyfepRGaThIKDpmjvlQ8tBw_3JrkQGtl4Mt-ue94tJWETJ3M4WIzIAF0D_kx4Ena9iFFB3CKa-VdqEo3guLnH-uYOf2gdysulVSgH_7imS6MbRngsiunQjrKcfzxOhX1WXyRx7jDnFyU9Pzhx-qIuO28hykHQluxZFBY5E-BR_8i_cIFNDrWl9r-RABl59nmqoPQTZgnpTp1Mt7m4QznZSYBhRve62LJsxO9KQEgZvK53ZMZ-OEEvNzIjiFIAB8c2Cg8g8qPCP9-amuYW28Y2-gRY_3eLbLMZEwigpZlTVAD0R54J64kxvxaHVR84pSY1ltJRz6-hNEGy14L6_QZzg78sJWhVACni0fsj8WOcnMpVWFTRWueTbC9n80OTyaMGlIVlPFsoy3vDatqzNbLJggsZj1VrQ",
+					"widthPx": 3600,
+					"heightPx": 4800,
+					"authorAttributions": [
+						{
+							"displayName": "Raheem Lakhani",
+							"uri": "https://maps.google.com/maps/contrib/111427939320226069146",
+							"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjVvNiXzV2ZRCd42ioLwLO3jSp_BgZ6hOF5XBGRxORnyY7dcckULgQ=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIABIhCgrO8GnKvCr-piRnsVPGbn&t=27&cb_client=maps_api_places.places_api&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhCgrO8GnKvCr-piRnsVPGbn!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydgtRWIW4iuheXQyqYtd43a9fJXnolpDSPQzV9eLjnDsnrM3CILaAVfK2dhjhf7PQi0mKpSseP5yH5f5z3ep00uPByq8tr-dqWnKUjeqO8CzHDiu1onPUpr1K4QvTpWrFUgLg_61Ccya4jaaL_zwU5Be_KqWBDHcN6W4riz5Ss_3j7ZNhKFClmALF_dIAP4OVJU7TdGywHs7wtlq2ONVUpCMTBvwXbfy6c0JaMsyXT_E9sUYe28dPO7z4kEkSYEnYsv_x5Bwa91ide5-4sGTwoqH65M4qMitKQJCrlIyFSyMvFUKfYUnal-ubJeZpM5nKCG8fZGjmxGpoRkiUqWsrs5D1LZ48l5PkXQf6M92yl62S22vIc7ESZ2WMbB2yv-QCjVmMS9OjrPkdWvQFFag_mokgWEZHQAARBkUNlBqEcwvlVuq",
+					"widthPx": 4032,
+					"heightPx": 3024,
+					"authorAttributions": [
+						{
+							"displayName": "Duncan Fletcher",
+							"uri": "https://maps.google.com/maps/contrib/103897534261322347759",
+							"photoUri": "https://lh3.googleusercontent.com/a/ACg8ocJSyyypBrQV-UVnOL9QD5y1dgyN36_ZQUs9i33nDxnrxv-W4Q77=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIHM0ogKEICAgID5xrPvuwE&t=27&cb_client=maps_api_places.places_api&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgID5xrPvuwE!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydjdyTOeT-Y2-ZSLrFoJvnv5xQIF12Bsb-oXGcNEoYhn1aY_4rUT1OqLiuu0UBhp0zDSuot47vtslEiyb4_APT5_hXH-ussxfF7PLhPNW6LpcEm_WtRLA05CZyWpSvO1ZSR7_PvdR67Pb57EVmBqCmgmxmE2pURVytiJOJcyjADwMj2daOz6WTwLNCaU02ttMNxqBZCFS3NtUonBBctAq5dzdaP1JzSRjHxlABkWej1JUmvlxVIOLE0FC40z2Xq7Gnx1XlQj5YF_JLJZP3fog8PsatFci3y7RoEAee1ZvfNBPwLMzbAOpEj0zUWebkH_6fzVMmM0x-HRVMNGHvIxv5oWuPHz20Wjes9Leu2kcWLXMopW_P-LUg2DyluBjhGZ7jDJQXCMS9LEAPhr-3DBtS2rvTcKeXWbyzmlco18fjdkh19M",
+					"widthPx": 4032,
+					"heightPx": 3024,
+					"authorAttributions": [
+						{
+							"displayName": "Alejandro Reyna",
+							"uri": "https://maps.google.com/maps/contrib/104317291762781651504",
+							"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjXRJvay--lhwp3fhVxm1fBuOPAh33bRRx7KEtrOTGXQotvj0GTLVw=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIHM0ogKEICAgICX-_LNyAE&t=27&cb_client=maps_api_places.places_api&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgICX-_LNyAE!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydjTWLqm7Mevqy7v-4yArnKGF5E4GKYe0UpdO8Sh80AX2zGz1pyBhhg7CL01I7HwKzMixo7E3x_l6DwetKiKK0DlRjQasZI54a6BKQg6KBTmagZ0LV9xk8NB0brm4_Vlod1m7qE8qdn02aJDLYPlqzE5uTOGIWmfwaAbJ84GKHkZSAxl5YgSrbbWlXCBI5ltJqbvb-wQJJSgGzoj0HwSeXIULtgkjUG0oKIptnVwf6uTv08YlQfLq6jTytj4xGo3WOmKP75MIUQVyBlIuM1HhC3NtXkB29arMmpI05iOFPfdr6NZC-wPRB-78OP7B2_vq5rv6aYQ1sFUcbN_ptDLpX16sMLuD17UHrOts6PXqYaqzLpZPUQaoRjMjH47dQ02RGiVSh6g0CozGKyqNL1uPflR1iw74hfmT6AhpKR4eebFvzs",
+					"widthPx": 4032,
+					"heightPx": 2268,
+					"authorAttributions": [
+						{
+							"displayName": "Mpande",
+							"uri": "https://maps.google.com/maps/contrib/103767825675614184795",
+							"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjV2nkofpW_ZpLZM7QmhzMSEveILgqbOBpDN60lq4Us_SQeQz245Dw=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIHM0ogKEICAgICL4IGZ5wE&t=27&cb_client=maps_api_places.places_api&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgICL4IGZ5wE!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydjS29cdWMwEpPy3upRRTMtYhNoz12IJ47ixiMNwYqs0iA6_0gz0SJOvics-DpU5JpLS2h7kQxXgfb4nKGg8Jsx0x_wLAEAkekWRS20n1yP-iknnRW3v_U0CUky-x82_Ncv9ivJCDhpsPD5LmBHmqtqAgxF-GRG1Z55QPrLGQ_FlOSNgZFnxaYUKRE6jcOJqhsDrpSHl1P2YS5hYiy0p1YyQV4bEEklVdsynLvUymvhjlLx3Pss3-2KWb6qzQl_oIAKws-O_e3AdCNEGM3mdRho1c2sEnQJmNr2qonmvlWGhSybIfj8t2-GDK5fG9B9Yh6KV4IfvvpJBmj7Y7-QtAHNNyHlni5SGKef7pUtHXnHfBj-Y1oVoQRUMLq5a-63GVLT8Ys44mgLexNwgsPSV7PcvXY4hbv0DJOF2NJpN-yfwoBtx__NRgRfYiXwihUjz",
+					"widthPx": 3024,
+					"heightPx": 4032,
+					"authorAttributions": [
+						{
+							"displayName": "Jeannell Carpio",
+							"uri": "https://maps.google.com/maps/contrib/113348734743425086553",
+							"photoUri": "https://lh3.googleusercontent.com/a/ACg8ocLV7NVczmrdiBmI-7dkIH8_W_K6slESo2SdSBa4D2OznJH0FM4=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIABIhCjyKkoK8B0Ck80U5YTb3o5&t=27&cb_client=maps_api_places.places_api&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhCjyKkoK8B0Ck80U5YTb3o5!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydhNMPjmaqBO4NYFHBOOHKfnHb-n3_dikuQ7WXJgWNxliEgTzpnBcCScFVP5VWYM8N6ElkEku2sE1ZTuXSU84kIVC9AmiuFluROzuQvioXdKAOZjUv38QUrVLWbQrxGlkyiW_Ktqpan6xgGSlj8dbJNe188Wh4Qpoa_qHB0NpDTj3QFiw7VEx_DaAbanyn7r_y64PHcTm-mPF5_FzNFMUe69yn9-aCL8snxqPKNhvoiGdznXGJioeCrmoHHBfreIqwwDyvWbE7gZMQplQ7ECtSaxZK90k-YWB7hub2dtj8FmayiHC_0FCdtAUUigwfFeZ6QWsseqaSK_OAf4PKDdB_0jmhXqQPNt35cnu6faqrCZLi0hXRy5vNcHZtcZnfJgmT-039dJ_t80fQ7U_NxDp2ns0bU2mVJPKoL6lIYr5vylyDyWGbnZn-k3szLxd42Q",
+					"widthPx": 4032,
+					"heightPx": 2268,
+					"authorAttributions": [
+						{
+							"displayName": "Jonathan Wagner",
+							"uri": "https://maps.google.com/maps/contrib/116523743622438001831",
+							"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjUrZG9Jk5qggTBABySJfvg3fhrYuWP11fIOV3HisIrjk_wLffd5vw=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIABIhCpUZ9eAEPStnvSeHTNUyfn&t=27&cb_client=maps_api_places.places_api&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhCpUZ9eAEPStnvSeHTNUyfn!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				}
+			],
+			"outdoorSeating": true,
+			"liveMusic": false,
+			"menuForChildren": false,
+			"servesCocktails": false,
+			"servesDessert": true,
+			"servesCoffee": false,
+			"goodForChildren": true,
+			"restroom": false,
+			"goodForWatchingSports": false,
+			"paymentOptions": {
+				"acceptsDebitCards": true,
+				"acceptsCashOnly": false,
+				"acceptsNfc": true
+			},
+			"parkingOptions": {
+				"freeStreetParking": true,
+				"paidStreetParking": true
+			},
+			"accessibilityOptions": {
+				"wheelchairAccessibleParking": false,
+				"wheelchairAccessibleEntrance": false
+			},
+			"generativeSummary": {
+				"overview": {
+					"text": "Pizza and Italian restaurant for dine-in, takeout and delivery serving by-the-slice pie.",
+					"languageCode": "en"
+				},
+				"overviewFlagContentUri": "https://www.google.com/local/content/rap/report?postId=CiUweDg5YzI1OTVkYWM3YjJiNmQ6MHgyZWQyYWViM2M1N2U3MmFlMAI&d=17924085&t=12",
+				"disclosureText": {
+					"text": "Summarized with Gemini",
+					"languageCode": "en-US"
+				}
+			},
+			"addressDescriptor": {
+				"landmarks": [
+					{
+						"name": "places/ChIJM8G7s0RZwokRWzCUMjlxA0I",
+						"placeId": "ChIJM8G7s0RZwokRWzCUMjlxA0I",
+						"displayName": {
+							"text": "McCarren Park",
+							"languageCode": "en"
+						},
+						"types": [
+							"establishment",
+							"park",
+							"point_of_interest",
+							"tourist_attraction"
+						],
+						"straightLineDistanceMeters": 515.0953,
+						"travelDistanceMeters": 268.94818
+					},
+					{
+						"name": "places/ChIJAQgOgGBZwokRlIfVINst0E0",
+						"placeId": "ChIJAQgOgGBZwokRlIfVINst0E0",
+						"displayName": {
+							"text": "IRIS - a piercing studio",
+							"languageCode": "en"
+						},
+						"types": [
+							"establishment",
+							"jewelry_store",
+							"point_of_interest",
+							"store"
+						],
+						"spatialRelationship": "BESIDE",
+						"straightLineDistanceMeters": 10.609803,
+						"travelDistanceMeters": 0.0028800964
+					},
+					{
+						"name": "places/ChIJl813_1xZwokRRjatUoBO9ko",
+						"placeId": "ChIJl813_1xZwokRRjatUoBO9ko",
+						"displayName": {
+							"text": "Aurora Hardware & Locksmith",
+							"languageCode": "en"
+						},
+						"types": [
+							"establishment",
+							"hardware_store",
+							"locksmith",
+							"point_of_interest",
+							"store"
+						],
+						"spatialRelationship": "DOWN_THE_ROAD",
+						"straightLineDistanceMeters": 55.831463,
+						"travelDistanceMeters": 52.498478
+					},
+					{
+						"name": "places/ChIJ2ZuYw11ZwokRrVlK1mXsCjo",
+						"placeId": "ChIJ2ZuYw11ZwokRrVlK1mXsCjo",
+						"displayName": {
+							"text": "Bedford Av",
+							"languageCode": "en"
+						},
+						"types": [
+							"establishment",
+							"point_of_interest",
+							"subway_station",
+							"transit_station"
+						],
+						"spatialRelationship": "AROUND_THE_CORNER",
+						"straightLineDistanceMeters": 173.50249,
+						"travelDistanceMeters": 156.52898
+					},
+					{
+						"name": "places/ChIJ9-C4sWdZwokRjDucHJ5DepI",
+						"placeId": "ChIJ9-C4sWdZwokRjDucHJ5DepI",
+						"displayName": {
+							"text": "Smorgasburg Williamsburg",
+							"languageCode": "en"
+						},
+						"types": [
+							"establishment",
+							"food",
+							"point_of_interest"
+						],
+						"straightLineDistanceMeters": 551.8774,
+						"travelDistanceMeters": 457.11066
+					}
+				],
+				"areas": [
+					{
+						"name": "places/ChIJQSrBBv1bwokRbNfFHCnyeYI",
+						"placeId": "ChIJQSrBBv1bwokRbNfFHCnyeYI",
+						"displayName": {
+							"text": "Williamsburg",
+							"languageCode": "en"
+						},
+						"containment": "WITHIN"
+					},
+					{
+						"name": "places/ChIJCSF8lBZEwokRhngABHRcdoI",
+						"placeId": "ChIJCSF8lBZEwokRhngABHRcdoI",
+						"displayName": {
+							"text": "Brooklyn",
+							"languageCode": "en"
+						},
+						"containment": "OUTSKIRTS"
+					}
+				]
+			},
+			"googleMapsLinks": {
+				"directionsUri": "https://www.google.com/maps/dir//''/data=!4m7!4m6!1m1!4e2!1m2!1m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae!3e0?g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+				"placeUri": "https://maps.google.com/?cid=3373951157989700270&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+				"writeAReviewUri": "https://www.google.com/maps/place//data=!4m3!3m2!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae!12e1?g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+				"reviewsUri": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae!9m1!1b1?g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+				"photosUri": "https://www.google.com/maps/place//data=!4m3!3m2!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae!10e5?g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+			},
+			"priceRange": {
+				"startPrice": {
+					"currencyCode": "USD",
+					"units": "1"
+				},
+				"endPrice": {
+					"currencyCode": "USD",
+					"units": "10"
+				}
+			},
+			"reviewSummary": {
+				"text": {
+					"text": "People say this pizza place offers delicious pizza with a wide variety of unique and interesting flavors, including excellent vegan and vegetarian options like vegan garlic knots and \"roni wheels.\" They also highlight the friendly, helpful, and attentive staff, who contribute to the fun, lively, and cozy atmosphere.",
+					"languageCode": "en-US"
+				},
+				"flagContentUri": "https://www.google.com/local/content/rap/report?postId=5%401:CAIQACodChtyc19oOkNJdUJOcjZIMWxHN01QbmZVczBET1E%7CCAIQACoqChtyc19oOkNJdUJOcjZIMWxHN01QbmZVczBET1ESCwieguzSBhCI-dN0&d=17924085&t=8",
+				"disclosureText": {
+					"text": "Summarized with Gemini",
+					"languageCode": "en-US"
+				},
+				"reviewsUri": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae!9m1!1b1"
+			},
+			"timeZone": {
+				"id": "America/New_York"
+			},
+			"postalAddress": {
+				"regionCode": "US",
+				"languageCode": "en-US",
+				"postalCode": "11249",
+				"administrativeArea": "New York",
+				"locality": "Brooklyn",
+				"addressLines": [
+					"148 Bedford Ave"
+				]
+			},
+			"googleMapsTypeLabel": {
+				"text": "Pizza Restaurant",
+				"languageCode": "en-US"
+			},
+			"entrances": [
+				{
+					"location": {
+						"latitude": 40.718870300000006,
+						"longitude": -73.9567605
+					},
+					"tags": [
+						"PREFERRED"
+					]
+				}
+			],
+			"navigationPoints": [
+				{
+					"navigationPointToken": "ChIJPz9CgwNcREAR3HLkNzt9UsASEgltK3usXVnCiRGucn7Fs67SLhoSCW0re6xdWcKJEa5yfsWzrtIuIhIJ8VDzrV1ZwokRWuzWdXoLtCA",
+					"displayName": {
+						"text": "Bedford Avenue",
+						"languageCode": "en"
+					},
+					"location": {
+						"latitude": 40.718857199999995,
+						"longitude": -73.9567394
+					},
+					"travelModes": [
+						"DRIVE",
+						"WALK"
+					],
+					"usages": [
+						"DROPOFF",
+						"PICKUP"
+					]
+				}
+			]
+		}
+	],
+	"contextualContents": [
+		{
+			"photos": [
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydh2BYAxgwS51kami4n5A-AjSFaODAhXCetAt9tW4lcCtS246h_CS3tbBqcFacoYiZcS0QjPG7Qqg8VIvJjA4vwPLiaEdOrWIc2KklFlKHgwIbC0ZEzPhM2Iln4drQQBwW3T2p1W0ZjihpxkLbLoS9_kzv9hD10ogYDrN4wG6EL3SguLSiWp7jO_uiAzYpWKBbjwie_5LRQHyGcVdZk0D73HvkjYPy3kID4_kTQyKWg8orukAzszMlg0rExnXX3dmPAOPI1r4h0tnZmluH6X7hBISSsggXToBKTwaxA1k-swQ2mrPvs26ZGtINW24MrSp8xb2NOKYZC3WiiVU9VZ0QqV6A6Yf1mNQuqvOp2faKxcxvMjVNz1yeHFldSOa98e5cdq7VImP6r5OExAZrg0I2fWus50bhen",
+					"widthPx": 1168,
+					"heightPx": 659,
+					"authorAttributions": [
+						{
+							"displayName": "Vinnie's Pizzeria",
+							"uri": "https://maps.google.com/maps/contrib/107847948194841648412",
+							"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjUgsAKWBDGn-QJav5tlFNOLHxeABphXabMCB1CoFne5AeOs2Kc=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIABIhAA3ilWbzkYsGf21akADLiN&t=27&cb_client=maps_api_places&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhAA3ilWbzkYsGf21akADLiN!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydg6lcNY8NqwT7AFLKy44rmoweqluqjJq6IV6YdEoq3LZ3zgjSa4NHw_Ltj8_XdXeE2Rw0l-67Dw1WQmFdvUGmEGUl_BS4sKkDgyA9GYaQ6mxg9HKcXxPxRK8eFIsWow5ylgWB1bu_KnDHvbhMQaZUqRZMlFRLJTbjnxLmTK7PNLSYPLeHwNaNMV-Qqyxa6LHdsPR6kuvudseUToK3XtDXX2aq6Iedlhq_PWD4GBw9DiN7yCbnu9TXAq28TiTCFml3Uda68MRT6n1rEIAEuTnN0186eIKXip-38VhakqiZp261W4APWZ82oxHB5AxbGUbyn8gA1d-KXYz3naZ5nOiOzNelTexQLsiy_WDlTMOYuIfbG_AjxSfi3_L4LvrpDOix8GYm6ngvHnAfvLAI093ztF6Fs7XTDs",
+					"widthPx": 4032,
+					"heightPx": 2268,
+					"authorAttributions": [
+						{
+							"displayName": "Boris P.",
+							"uri": "https://maps.google.com/maps/contrib/101214414976060054235",
+							"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjV3RbKsoQ7JCXnEcfRk0u69G7lVm4QqDIWm6oHZ6IFaVfZ0yW2VtQ=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIABIhAJo3U3VTUS-DQUCnOnj3vy&t=27&cb_client=maps_api_places&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhAJo3U3VTUS-DQUCnOnj3vy!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydhl8w4NMak4N0q2tMSv4c3mmdpcgXm14uOhWGcw_z3mF97QKqLLduBGiwbR1enbWbJCwSfAzAIgSkFQDzNelTKd_SF4FaB8TzWTkrfaiAHK5ahrB7637tqpFcYG7cI0_lmYpxojaVEjDCf8Os4t8MjcAp7_rr-7KB_cKyZbcKjbWgR31GhqgGELIjimLrFcrpyXBpwb4kTXSY6IZ3cOhZYtnUAvk7fkRIoCxu0jYQYGEk0bA62AymJgi7pi0Fu8oj-_V8bl6mj0xMA5G9ofhtusat4RKVWtl4SFwhTSk5wbvTeRMdusLzYLjAbwfA4YQAin7JDeiG_L13u7ALSgr29gPt2ackCwgnlfM9K4x9ubd0T1ZSprWw1F8jttKuuMpLEJRVR_0TDJ1Q",
+					"widthPx": 3024,
+					"heightPx": 3024,
+					"authorAttributions": [
+						{
+							"displayName": "Vinnie's Pizzeria",
+							"uri": "https://maps.google.com/maps/contrib/107847948194841648412",
+							"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjUgsAKWBDGn-QJav5tlFNOLHxeABphXabMCB1CoFne5AeOs2Kc=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIHM0ogKEICAgID8kKCPSQ&t=27&cb_client=maps_api_places&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgID8kKCPSQ!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydjg1Gho3M2rr0V7r3c2nuAg4H_h-ns_7vxifnZhILCEFBYRqlHs7dvisMsTK7sLulqhMr3uLe1W07hwJV4y7JEh5CPN_vRRK0ph0vHyOnzl6ZsnFF_VztbPg_vU2TjGmYMWhva_MdSSNmne-vjhsl8H5SeWgg478Ttr39q1cWukH7o6TsYi7IHp3C0KKbPAUQaph-sGZfVn7v4rXa9bTOIH2rdy9kaTI7OVRBw4jIQQBb9tK-Trc4bw2Su-hNXvsewsHB6Ob4xw6Om3HY78m7yTxIZVr3rZXyZfhOWJ6NcjaKV4AG1u6sTwOwLcjCk9bHN4zd1Aq0_cjBJoRDtFNma4PQTIY7lbDPGVnKuFq4YqD9Upv5ZP54fL7WZlWpmvk8fJjQpD9JVrqBnGnQQAlwvkxzp23cVr",
+					"widthPx": 4032,
+					"heightPx": 2268,
+					"authorAttributions": [
+						{
+							"displayName": "Boris P.",
+							"uri": "https://maps.google.com/maps/contrib/101214414976060054235",
+							"photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjV3RbKsoQ7JCXnEcfRk0u69G7lVm4QqDIWm6oHZ6IFaVfZ0yW2VtQ=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIABIhAmFd-EbDiUizanOtkZpbrr&t=27&cb_client=maps_api_places&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhAmFd-EbDiUizanOtkZpbrr!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				},
+				{
+					"name": "places/ChIJbSt7rF1ZwokRrnJ-xbOu0i4/photos/AWCwydijR1ntJ1Ub0pd9dbC0Qc1J8OhkuUItkeSYhnuzgN3_HDVlBglsqgfcTGSjI01J1J3tk2mlJd_HGP5tNJ_n4KWTozHrf4vzzWJXizFcPHKMAeFfbJAfTlnSLrzW22vIHxKZEmBAPtNMGzryv_9RFt8A37yGb7P2Xa2TgOaqXzArk_oH0bRR3cGkv3bAspQlNEG_Bi2ve6yFis8jAGyCDK4iLqCbO7j1v8qhtO8shUt9on68OABTbsC9jEhX1mJmgygPogHLEK2sjkwi0yduU0ycKakwowZ0HxStVxyPH9cxm4i8Ijjp-Te0IDZjIL79A5ymN8vx5Z1BrX-9yQfbz8Z7E6KxpDWgEArW2Aevai_wibPZ1RiLYsbwP_zbKph98kO4RA6gdwPlmMimBXVqAXExMHHjVkA",
+					"widthPx": 4000,
+					"heightPx": 3000,
+					"authorAttributions": [
+						{
+							"displayName": "Kinga",
+							"uri": "https://maps.google.com/maps/contrib/114880782462347650541",
+							"photoUri": "https://lh3.googleusercontent.com/a/ACg8ocKPehJF7d0Tk38d2J4Q4LKVjbXANFwwp011PCIodeKDaXURtl7B=s100-p-k-no-mo"
+						}
+					],
+					"flagContentUri": "https://www.google.com/local/content/rap/report?postId=!1e10!2sCIABIhBIoGE8cUXR73pxV3pnAzRf&t=27&cb_client=maps_api_places&hl=en-US",
+					"googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIABIhBIoGE8cUXR73pxV3pnAzRf!2e10!4m2!3m1!1s0x89c2595dac7b2b6d:0x2ed2aeb3c57e72ae"
+				}
+			],
+			"justifications": [
+				{
+					"businessAvailabilityAttributesJustification": {
+						"takeout": true,
+						"dineIn": true
+					}
+				}
+			]
+		}
+	],
+	"searchUri": "https://www.google.com/maps/search/Vinnie's+Pizzeria+Brooklyn"
+}

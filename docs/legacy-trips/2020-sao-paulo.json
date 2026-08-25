@@ -1,0 +1,1283 @@
+{
+  "trip": {
+    "title": "São Paulo ft. Nana",
+    "currency": "BRL",
+    "start": {
+      "day": 10,
+      "month": 12,
+      "year": 2020,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 13,
+      "month": 12,
+      "year": 2020,
+      "hour": 23,
+      "minute": 59,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2020-12-10T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      },
+      {
+        "id": "milton",
+        "name": "Milton"
+      },
+      {
+        "id": "marianna",
+        "name": "Marianna"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Matiz Manhattan",
+      "description": "Hotel localizado na região dos Jardins, São Paulo. Reserva feita pelo Hoteis.com.",
+      "address": "São Paulo - SP",
+      "dates": {
+        "checkIn": {
+          "day": 10,
+          "month": 12,
+          "year": 2020,
+          "hour": 14,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 13,
+          "month": 12,
+          "year": 2020,
+          "hour": 12,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": true,
+      "images": [],
+      "reservation": "9202007731222",
+      "link": "https://www.hoteis.com/booking/confirmation.html"
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "flight",
+      "company": "latam",
+      "points": {
+        "origin": "Belo Horizonte (CNF)",
+        "destination": "São Paulo (CGH)"
+      },
+      "dates": {
+        "departure": {
+          "day": 10,
+          "month": 12,
+          "year": 2020,
+          "hour": 7,
+          "minute": 25,
+          "second": 0
+        },
+        "arrival": {
+          "day": 10,
+          "month": 12,
+          "year": 2020,
+          "hour": 8,
+          "minute": 45,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "departure",
+      "reservation": "TFJCNR",
+      "link": "",
+      "person": "gabriel"
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "latam",
+      "points": {
+        "origin": "São Paulo (CGH)",
+        "destination": "Belo Horizonte (CNF)"
+      },
+      "dates": {
+        "departure": {
+          "day": 13,
+          "month": 12,
+          "year": 2020,
+          "hour": 20,
+          "minute": 10,
+          "second": 0
+        },
+        "arrival": {
+          "day": 13,
+          "month": 12,
+          "year": 2020,
+          "hour": 21,
+          "minute": 25,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "return",
+      "reservation": "TFJCNR",
+      "link": "",
+      "person": "gabriel"
+    }
+  },
+  "itinerary": {
+    "20201210": {
+      "title": {
+        "value": "Dia 1 — Chegada e Paulista",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 10,
+        "month": 12,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Carona com o Pai: Translado até o aeroporto",
+          "start": "05:30",
+          "end": ""
+        }
+      ],
+      "morning": [
+        {
+          "expenseType": "Voo",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo LATAM: Reserva TFJCNR. BH → São Paulo",
+          "start": "07:25",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Aeroporto → Hotel",
+          "start": "08:45",
+          "end": ""
+        },
+        {
+          "expenseType": "Hotel",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel Matiz Manhattan: Check-in",
+          "start": "09:15",
+          "end": ""
+        },
+        {
+          "expenseType": "Alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Paulista: Café da manhã na região",
+          "start": "09:30",
+          "end": ""
+        },
+        {
+          "expenseType": "Atrações",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Mirante Sesc Paulista: Vista aérea da cidade",
+          "start": "10:00",
+          "end": ""
+        },
+        {
+          "expenseType": "Atrações",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Japan House: Centro cultural japonês",
+          "start": "10:40",
+          "end": ""
+        },
+        {
+          "expenseType": "Alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Taco Bell: Almoço",
+          "start": "11:20",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "expenseType": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Deslocamento para a Liberdade",
+          "start": "12:00",
+          "end": ""
+        },
+        {
+          "expenseType": "Compras",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Liberdade: Compras no bairro japonês",
+          "start": "12:20",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Volta para o hotel",
+          "start": "14:20",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Deixar compras",
+          "start": "14:40",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Deslocamento para Pinacoteca",
+          "start": "15:00",
+          "end": ""
+        },
+        {
+          "expenseType": "Atrações",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Pinacoteca: Visita ao museu",
+          "start": "15:20",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Descanso / Arrumar",
+          "start": "16:40",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Transporte Privado: Deslocamento para o jantar",
+          "start": "19:30",
+          "end": ""
+        },
+        {
+          "expenseType": "Saída Noturna",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Mexicaníssimo: Saída noturna",
+          "start": "19:45",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Transporte Privado: Volta ao hotel",
+          "start": "22:00",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Descanso",
+          "start": "22:15",
+          "end": ""
+        }
+      ]
+    },
+    "20201211": {
+      "title": {
+        "value": "Dia 2 — Vila Madalena e Pinheiros",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 11,
+        "month": 12,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Acordar / Arrumar",
+          "start": "08:00",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Café da manhã",
+          "start": "09:00",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Deslocamento",
+          "start": "09:20",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Beco do Batman: Vila Madalena — Grafites",
+          "start": "09:40",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô L2 + CPTM L10 + Uber: Deslocamento longo",
+          "start": "10:40",
+          "end": ""
+        },
+        {
+          "expenseType": "Alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "The Burger Map: Almoço",
+          "start": "12:00",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber + Metrô: Volta para região central",
+          "start": "13:30",
+          "end": ""
+        },
+        {
+          "expenseType": "Atrações",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Museu da Imagem e Som: MIS — Exposições",
+          "start": "14:50",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ A pé: Caminhada",
+          "start": "15:50",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Descanso / Arrumar",
+          "start": "16:20",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ A pé: Deslocamento",
+          "start": "18:30",
+          "end": ""
+        },
+        {
+          "expenseType": "Alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Bráz Elettrica: Tira-gosto",
+          "start": "18:45",
+          "end": ""
+        },
+        {
+          "expenseType": "Saída Noturna",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Caixote Bar + Augusta: Saída noturna",
+          "start": "19:15",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Transporte Privado: Volta ao hotel",
+          "start": "22:00",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Descanso",
+          "start": "22:10",
+          "end": ""
+        }
+      ]
+    },
+    "20201212": {
+      "title": {
+        "value": "Dia 3 — Centro e Vida Noturna",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 12,
+        "month": 12,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Acordar / Arrumar",
+          "start": "08:00",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Café da manhã",
+          "start": "09:00",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Deslocamento para o centro",
+          "start": "09:20",
+          "end": ""
+        },
+        {
+          "expenseType": "Compras",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Galeria do Rock: Compras e visita",
+          "start": "09:40",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Deslocamento",
+          "start": "10:40",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Memorial da Resistência: Visita ao museu",
+          "start": "10:50",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Deslocamento",
+          "start": "11:50",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Oscar Freire: Passeio na rua",
+          "start": "12:15",
+          "end": ""
+        },
+        {
+          "expenseType": "Alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Cabana Burger: Almoço",
+          "start": "12:45",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber + Metrô: Deslocamento para Museu da Imigração",
+          "start": "13:25",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Museu da Imigração: Visita",
+          "start": "14:05",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Deslocamento",
+          "start": "17:30",
+          "end": ""
+        },
+        {
+          "expenseType": "Saída Noturna",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "O Burguer: Pré-saída (drinks)",
+          "start": "17:50",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Deslocamento",
+          "start": "19:00",
+          "end": ""
+        },
+        {
+          "expenseType": "Saída Noturna",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Omalleys: Saída noturna",
+          "start": "19:20",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Transporte Privado: Volta ao hotel",
+          "start": "22:00",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Descanso",
+          "start": "22:10",
+          "end": ""
+        }
+      ]
+    },
+    "20201213": {
+      "title": {
+        "value": "Dia 4 — Ibirapuera e Retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 13,
+        "month": 12,
+        "year": 2020,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Acordar / Arrumar",
+          "start": "08:00",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Café da manhã",
+          "start": "09:00",
+          "end": ""
+        },
+        {
+          "expenseType": "Hotel",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Checkout / Deixar malas",
+          "start": "09:20",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Deslocamento para o Ibirapuera",
+          "start": "09:40",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Parque Ibirapuera: Passeio no parque",
+          "start": "10:00",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Deslocamento",
+          "start": "11:30",
+          "end": ""
+        },
+        {
+          "expenseType": "Alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Modern Mamma Osteria: Almoço",
+          "start": "11:40",
+          "end": ""
+        }
+      ],
+      "afternoon": [
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Deslocamento",
+          "start": "13:10",
+          "end": ""
+        },
+        {
+          "expenseType": "Compras",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Eataly: Compras",
+          "start": "13:20",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Deslocamento",
+          "start": "14:20",
+          "end": ""
+        },
+        {
+          "expenseType": "Alimentação",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "O Tradicionalíssimo: Donuts",
+          "start": "14:40",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Público",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Metrô: Volta ao hotel",
+          "start": "15:10",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel: Buscar malas",
+          "start": "15:40",
+          "end": ""
+        },
+        {
+          "expenseType": "Transporte Privado",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Uber: Hotel → Aeroporto",
+          "start": "15:50",
+          "end": ""
+        }
+      ],
+      "night": [
+        {
+          "expenseType": "Voo",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Voo LATAM: Reserva TFJCNR. São Paulo → BH",
+          "start": "20:10",
+          "end": ""
+        },
+        {
+          "expenseType": "-",
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "→ Carona com o Pai: Translado do aeroporto para casa",
+          "start": "21:25",
+          "end": ""
+        }
+      ]
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "Paulista — Café da manhã",
+        "price": 30,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "Taco Bell — Almoço",
+        "price": 30,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "Liberdade — Compras",
+        "price": 150,
+        "person": "gabriel"
+      },
+      {
+        "type": "Saída Noturna",
+        "currency": "BRL",
+        "name": "Mexicaníssimo — Jantar e saída",
+        "price": 100,
+        "person": "gabriel"
+      },
+      {
+        "type": "Transporte Privado",
+        "currency": "BRL",
+        "name": "Uber — Deslocamentos (Dia 1)",
+        "price": 50,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "currency": "BRL",
+        "name": "Metrô — Deslocamentos (Dia 1)",
+        "price": 12.9,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "The Burger Map — Almoço",
+        "price": 60,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.entertainment",
+        "currency": "BRL",
+        "name": "Museu da Imagem e Som — Entrada",
+        "price": 5,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "Bráz Elettrica — Tira-gosto",
+        "price": 30,
+        "person": "gabriel"
+      },
+      {
+        "type": "Saída Noturna",
+        "currency": "BRL",
+        "name": "Caixote Bar + Augusta",
+        "price": 100,
+        "person": "gabriel"
+      },
+      {
+        "type": "Transporte Privado",
+        "currency": "BRL",
+        "name": "Uber — Deslocamentos (Dia 2)",
+        "price": 28.4,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "currency": "BRL",
+        "name": "Metrô — Deslocamentos (Dia 2)",
+        "price": 8.5,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "Galeria do Rock",
+        "price": 50,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "Cabana Burger — Almoço",
+        "price": 30,
+        "person": "gabriel"
+      },
+      {
+        "type": "Saída Noturna",
+        "currency": "BRL",
+        "name": "O Burguer — Drinks",
+        "price": 50,
+        "person": "gabriel"
+      },
+      {
+        "type": "Saída Noturna",
+        "currency": "BRL",
+        "name": "Omalleys — Saída noturna",
+        "price": 100,
+        "person": "gabriel"
+      },
+      {
+        "type": "Transporte Privado",
+        "currency": "BRL",
+        "name": "Uber — Deslocamentos (Dia 3)",
+        "price": 75,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "currency": "BRL",
+        "name": "Metrô — Deslocamentos (Dia 3)",
+        "price": 8.8,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "Modern Mamma Osteria — Almoço",
+        "price": 100,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "Eataly — Compras",
+        "price": 50,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "currency": "BRL",
+        "name": "O Tradicionalíssimo — Donuts",
+        "price": 15,
+        "person": "gabriel"
+      },
+      {
+        "type": "Transporte Privado",
+        "currency": "BRL",
+        "name": "Uber — Deslocamentos (Dia 4)",
+        "price": 70,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "currency": "BRL",
+        "name": "Metrô — Deslocamentos (Dia 4)",
+        "price": 4.4,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.accommodation.title",
+        "currency": "BRL",
+        "name": "Taxa extra no checkout",
+        "price": 11.7,
+        "person": "gabriel"
+      }
+    ],
+    "preTrip": [
+      {
+        "type": "trip.transportation.type.flights",
+        "currency": "BRL",
+        "name": "LATAM — Passagem ida e volta (Reserva TFJCNR)",
+        "price": 550,
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.accommodation.title",
+        "currency": "BRL",
+        "name": "Matiz Manhattan — 3 noites (Hoteis.com)",
+        "price": 1072.26,
+        "person": "gabriel"
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel",
+      "milton": "Milton",
+      "marianna": "Marianna"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2020-12-10T00:00:00.000Z"
+    }
+  }
+}

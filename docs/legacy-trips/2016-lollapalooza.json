@@ -1,0 +1,676 @@
+{
+  "trip": {
+    "title": "Lollapalooza 2016",
+    "currency": "BRL",
+    "start": {
+      "day": 12,
+      "month": 3,
+      "year": 2016,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "end": {
+      "day": 14,
+      "month": 3,
+      "year": 2016,
+      "hour": 0,
+      "minute": 0,
+      "second": 0
+    },
+    "pin": "no-pin",
+    "version": {
+      "lastUpdated": "2016-03-14T00:00:00.000Z"
+    },
+    "visibility": {
+      "light": true,
+      "dark": true
+    },
+    "colors": {
+      "light": "#966313",
+      "dark": "#966313",
+      "active": false
+    },
+    "sharing": {
+      "owner": "",
+      "active": false,
+      "editors": []
+    },
+    "modules": {
+      "destinations": false,
+      "transportation": true,
+      "itinerary": true,
+      "gallery": false,
+      "summary": true,
+      "accommodations": true,
+      "expenses": true
+    },
+    "travelers": [
+      {
+        "id": "gabriel",
+        "name": "Gabriel"
+      },
+      {
+        "id": "lucas",
+        "name": "Lucas"
+      },
+      {
+        "id": "marina",
+        "name": "Marina"
+      }
+    ],
+    "links": {
+      "maps": "",
+      "attachments": "",
+      "active": false,
+      "drive": "",
+      "pdf": "",
+      "ppt": "",
+      "sheet": "",
+      "vaccine": ""
+    },
+    "gallery": {
+      "categories": [],
+      "descriptions": [],
+      "images": [],
+      "titles": []
+    },
+    "destinationRefs": [],
+    "image": {
+      "dark": "",
+      "light": "",
+      "background": "",
+      "active": false
+    }
+  },
+  "accommodations": {
+    "acc-001": {
+      "name": "Hotel em São Paulo",
+      "description": "Hotel próximo ao metrô para acesso ao Lollapalooza. Café da manhã incluso.",
+      "address": "",
+      "dates": {
+        "checkIn": {
+          "day": 12,
+          "month": 3,
+          "year": 2016,
+          "hour": 9,
+          "minute": 0,
+          "second": 0
+        },
+        "checkOut": {
+          "day": 14,
+          "month": 3,
+          "year": 2016,
+          "hour": 10,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "breakfast": true,
+      "images": [],
+      "reservation": "",
+      "link": ""
+    }
+  },
+  "transportation": {
+    "_settings": {
+      "viewMode": "simple"
+    },
+    "leg-001": {
+      "type": "flight",
+      "company": "",
+      "points": {
+        "origin": "Belo Horizonte (CNF)",
+        "destination": "São Paulo (CGH)"
+      },
+      "dates": {
+        "departure": {
+          "day": 12,
+          "month": 3,
+          "year": 2016,
+          "hour": 6,
+          "minute": 20,
+          "second": 0
+        },
+        "arrival": {
+          "day": 12,
+          "month": 3,
+          "year": 2016,
+          "hour": 8,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "departure",
+      "reservation": "",
+      "link": "",
+      "person": ""
+    },
+    "leg-002": {
+      "type": "flight",
+      "company": "",
+      "points": {
+        "origin": "São Paulo (CGH)",
+        "destination": "Belo Horizonte (CNF)"
+      },
+      "dates": {
+        "departure": {
+          "day": 14,
+          "month": 3,
+          "year": 2016,
+          "hour": 21,
+          "minute": 0,
+          "second": 0
+        },
+        "arrival": {
+          "day": 14,
+          "month": 3,
+          "year": 2016,
+          "hour": 22,
+          "minute": 0,
+          "second": 0
+        }
+      },
+      "duration": "01:00",
+      "direction": "return",
+      "reservation": "",
+      "link": "",
+      "person": ""
+    }
+  },
+  "itinerary": {
+    "20160312": {
+      "title": {
+        "value": "Sábado — Chegada e Lollapalooza Dia 1",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 12,
+        "month": 3,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Acordar/Arrumar",
+          "start": "3:30",
+          "end": "4:25"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Buscar Lucas e Marina",
+          "start": "4:25",
+          "end": "4:30"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Casa → Aeroporto: Carro - Pai",
+          "start": "4:30",
+          "end": "5:50"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Embarque",
+          "start": "5:50",
+          "end": "6:20"
+        }
+      ],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "BH → SP (voo)",
+          "start": "6:20",
+          "end": "8:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto → Hotel: Ônibus - 675A-10",
+          "start": "8:00",
+          "end": "9:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Check-in: Deixar as mochilas no hotel",
+          "start": "9:00",
+          "end": "9:30"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Almoço: Próximo ao hotel",
+          "start": "9:30",
+          "end": "11:00"
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Interlagos: Metrô - CPTM L09 + A pé",
+          "start": "11:00",
+          "end": "12:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Lollapalooza Dia 1: Eminem, Mumford & Sons, Tame Impala, Of Monsters and Men, Bad Religion, Matanza, Ego Kill Talent, Super Combo",
+          "start": "12:00",
+          "end": "23:00"
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Interlagos → Hotel: Metrô ou Táxi",
+          "start": "23:00",
+          "end": "00:30"
+        }
+      ]
+    },
+    "20160313": {
+      "title": {
+        "value": "Domingo — Lollapalooza Dia 2",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 13,
+        "month": 3,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Café da Manhã: Incluso no Hotel",
+          "start": "9:30",
+          "end": "10:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Interlagos: Metrô - CPTM L09 + A pé",
+          "start": "10:00",
+          "end": "11:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Almoço: Próximo ao Autódromo",
+          "start": "11:00",
+          "end": "12:00"
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Lollapalooza Dia 2: Florence & The Machine, Jack U, Noel Gallagher, Alabama Shakes, Twenty One Pilots",
+          "start": "12:00",
+          "end": "22:00"
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Interlagos → Rolé / Hotel: Ir em algum lugar após o Lolla, depois voltar para o hotel",
+          "start": "22:00",
+          "end": "23:30"
+        }
+      ]
+    },
+    "20160314": {
+      "title": {
+        "value": "Segunda — São Paulo e Retorno",
+        "showDestinations": false,
+        "translate": false
+      },
+      "date": {
+        "day": 14,
+        "month": 3,
+        "year": 2016,
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+      },
+      "destinationIds": [],
+      "earlyMorning": [],
+      "morning": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Café da Manhã: Incluso no Hotel",
+          "start": "9:30",
+          "end": "10:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Check-out Hotel",
+          "start": "10:00",
+          "end": "10:15"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Hotel → Galeria do Rock: Metrô - CPTM L09 + METRÔ L4",
+          "start": "10:15",
+          "end": "11:15"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Galeria do Rock",
+          "start": "11:15",
+          "end": "12:30"
+        }
+      ],
+      "afternoon": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Almoço no O'Malley's",
+          "start": "12:30",
+          "end": "14:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Museu → Ibirapuera: Ônibus - 669A-10",
+          "start": "15:30",
+          "end": "16:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Parque Ibirapuera",
+          "start": "16:00",
+          "end": "18:30"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Ibirapuera → Aeroporto: Ônibus - 5178-10 ou 175T-10",
+          "start": "18:30",
+          "end": "19:30"
+        }
+      ],
+      "night": [
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Embarque",
+          "start": "19:30",
+          "end": "21:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "SP → BH (voo)",
+          "start": "21:00",
+          "end": "22:00"
+        },
+        {
+          "item": {
+            "type": "",
+            "id": "",
+            "location": "",
+            "category": ""
+          },
+          "label": "Aeroporto → Casa: Carro – Lucas/Vitor",
+          "start": "22:00",
+          "end": "23:00"
+        }
+      ]
+    }
+  },
+  "expenses": {
+    "duringTrip": [
+      {
+        "type": "trip.accommodation.title",
+        "name": "Diária do hotel (2 noites)",
+        "price": 250.0,
+        "currency": "BRL",
+        "person": ""
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Transporte Aeroporto → Hotel (ônibus)",
+        "price": 3.8,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Almoço dia 1",
+        "price": 25.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Metrô Hotel → Interlagos (ida e volta)",
+        "price": 7.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "entretenimento",
+        "name": "Gastos no Lollapalooza dia 1",
+        "price": 50.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Almoço dia 2",
+        "price": 25.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Metrô Hotel → Interlagos dia 2",
+        "price": 3.5,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "entretenimento",
+        "name": "Gastos no Lollapalooza dia 2",
+        "price": 50.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "entretenimento",
+        "name": "Rolé pós-Lolla + táxi",
+        "price": 60.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Metrô Hotel → Galeria do Rock",
+        "price": 7.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.daily",
+        "name": "Almoço O'Malley's",
+        "price": 50.0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.transportation.type.bus",
+        "name": "Ônibus Museu → Ibirapuera → Aeroporto",
+        "price": 7.6,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
+    ],
+    "preTrip": [
+      {
+        "type": "trip.transportation.type.flights",
+        "name": "Passagem aérea BH-SP (ida e volta)",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.entertainment",
+        "name": "Ingresso Lollapalooza - Dia 1 (Sábado)",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      },
+      {
+        "type": "trip.expenses.entertainment",
+        "name": "Ingresso Lollapalooza - Dia 2 (Domingo)",
+        "price": 0,
+        "currency": "BRL",
+        "person": "gabriel"
+      }
+    ],
+    "currency": "BRL",
+    "travelers": {
+      "gabriel": "Gabriel",
+      "lucas": "Lucas",
+      "marina": "Marina"
+    },
+    "sharing": {
+      "owner": "",
+      "active": true,
+      "editors": []
+    },
+    "version": {
+      "lastUpdated": "2016-03-14T00:00:00.000Z"
+    }
+  }
+}

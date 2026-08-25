@@ -1,352 +1,383 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
-
-  <title>TripViewer</title>
-  <meta content="Your Travel Planner" name="description">
-  <meta property="og:description" content="Your Travel Planner">
-  <meta content="" name="keywords">
-
-  <!-- Apple Data -->
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="TripViewer" />
-  <meta name="theme-color" content="#fff">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
-  <link rel="shortcut icon" href="favicon.ico">
-  <meta name="msapplication-TileColor" content="#e4ebdb">
-  <meta name="msapplication-config" content="browserconfig.xml">
-  <meta name="theme-color" content="#ffffff">
-
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
+  <!-- #include shared/head.html -->
+  <link href="assets/css/main.css" rel="stylesheet">
   <link data-main href="assets/css/index/index.css" rel="stylesheet">
 
 </head>
 
 <body>
-  <div class="top-bar loadable" id="top-bar" style="display: none">
-    <a href="index.html" class="logo-link">
-      <div class="logo-box">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-light">
-          <g style="isolation: isolate;">
-            <g id="Capa_1" data-name="Capa 1">
-              <g>
-                <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                  style="fill: none; stroke: #00b6ea; stroke-miterlimit: 10; stroke-width: 8px;" />
-                <path id="light-color-1"
-                  d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
-                  style="fill: #5859a7; stroke-width: 0px;" />
-                <path
-                  d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
-                  style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                <path id="light-color-2"
-                  d="m3.57,12.2h72.54c1.97,0,3.57,1.6,3.57,3.57v28.62c0,1.97-1.6,3.58-3.58,3.58H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
-                  style="fill: #5859a7; stroke-width: 0px;" />
-                <path
-                  d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
-                  style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #00b6ea; stroke-width: 0px;" />
-              </g>
-            </g>
-          </g>
-        </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-dark" style="display:none">
-          <g style="isolation: isolate;">
-            <g id="Capa_1" data-name="Capa 1">
-              <g>
-                <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                  style="fill: none; stroke: #00b6ea; stroke-miterlimit: 10; stroke-width: 8px;" />
-                <path id="dark-color-1"
-                  d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
-                  style="fill: #7f75b6; stroke-width: 0px;" />
-                <path
-                  d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
-                  style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                <path id="dark-color-2"
-                  d="m3.57,12.2h72.54c1.97,0,3.58,1.6,3.58,3.58v28.62c0,1.97-1.6,3.57-3.57,3.57H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
-                  style="fill: #7f75b6; stroke-width: 0px;" />
-                <path
-                  d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
-                  style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #00b6ea; stroke-width: 0px;" />
-              </g>
-            </g>
-          </g>
-        </svg>
-        <div id="trip-viewer-text">TripViewer</div>
-      </div>
-    </a>
-    <div class="icons-box" id="icons-box">
-      <i id="back" class="bx bx-arrow-back icon-buttons" style="display: none;"></i>
-      <div class="lang-selector">
-        <button class="lang-button">EN</button>
-        <div class="lang-options">
-          <button data-lang="en">EN</button>
-          <button data-lang="pt">PT</button>
-        </div>
-      </div>
-      <i id="night-mode" class="bx bx-moon icon-buttons"></i>
-      <i id="profile-icon" class="icon-buttons" style="display: none;"></i>
-    </div>
-  </div>
-  <div class="notification-bar loadable" id="notification-bar" style="display: none">
-    <span class="notification-text" id="notification-text"></span>
-    <span class="notification-link" id="notification-link" onclick="goToCurrentTrip()"><i class="iconify external-link"
-        data-icon="tabler:external-link"></i></span>
-    <span class="notification-close" onclick="closeNotification()"><i class="iconify"
-        data-icon="material-symbols:close"></i></span>
-  </div>
+  <!-- #include shared/top-bar.html -->
 
-  <!-- ======= Hero ======= -->
+  <!-- ======= Notification Bar (removed - no longer needed) ======= -->
+  <!-- ======= Notification Bar (removed) ======= -->
+
+  <!-- ======= Main Content ======= -->
   <section id="hero" class="loadable" style="display: none">
-    <div class="content-box">
-      <div id="index-unlogged-title" class="index-title" style="display: none">
-        <p>
-          <span data-translate="labels.intro"></span>
-          <span class="typed" data-typed-items="Las Vegas, New York, São Paulo, TripViewer"></span>
-        </p>
-      </div>
-      <div id="index-logged-title" class="index-title" style="display: none">
-        <p><span data-translate="labels.greeting"></span>, <span class="typed" id="title-name"></span></p>
-      </div>
+    <div class="content-box" id="content-box">
 
-      <div class="login-box" id="login-box" style="display: none">
-        <div class="login-input">
-          <input type="email" id="login-email" class="login-item" data-translate="labels.auth.email" required>
+      <!-- Unlogged State -->
+      <div id="unlogged-view" class="view-panel" style="display: none">
+        <div class="hero-brand">
+          <div class="hero-wordmark">TripViewer</div>
         </div>
-        <div class="login-input">
-          <input type="password" id="login-password" class="login-item" data-translate="labels.auth.password" required>
-        </div>
-        <button id="login-button" class="btn btn-theme" type="button" data-translate="labels.auth.sign_in"></button>
-      </div>
-
-      <div class="logged-menu" id="logged-menu" style="display: none" style="display: none">
-        <div class="logged-menu-item" id="proximasViagens"><i class="iconify index-buttons logged-menu-buttons"
-            data-icon="material-symbols-light:trip"></i>
-          <div class="logged-menu-text" data-translate="trip.next"></div>
-        </div>
-        <div class="logged-menu-item" id="viagensAnteriores"><i class="iconify index-buttons logged-menu-buttons"
-            data-icon="wpf:past"></i>
-          <div class="logged-menu-text" data-translate="trip.previous"></div>
-        </div>
-        <div class="logged-menu-item" id="destinosCadastrados"><i class="iconify index-buttons logged-menu-buttons"
-            data-icon="bx:trip"></i>
-          <div class="logged-menu-text" data-translate="destination.mine"></div>
-        </div>
-        <div class="logged-menu-item" id="listasDeDestinos"><i class="iconify index-buttons logged-menu-buttons"
-            data-icon="fluent:list-28-filled"></i>
-          <div class="logged-menu-text" data-translate="listing.title"></div>
-        </div>
-        <div class="logged-menu-item" id="ajustesDaConta"><i class="iconify index-buttons logged-menu-buttons"
-            data-icon="material-symbols:settings"></i>
-          <div class="logged-menu-text" data-translate="account.settings"></div>
+        <div class="login-box" id="login-box">
+          <div class="login-input">
+            <input type="email" id="login-email" class="login-item" data-translate="labels.auth.email" required>
+          </div>
+          <div class="login-input">
+            <input type="password" id="login-password" class="login-item" data-translate="labels.auth.password" required>
+          </div>
+          <button id="login-button" class="btn btn-primary-theme" type="button" data-translate="labels.auth.sign_in"></button>
         </div>
       </div>
 
-      <div class="userList-box" id="proximasViagens-box" style="display: none">
-        <h4 data-translate="trip.next"></h4>
-        <div class="content-list"></div>
-        <button id="nova-viagem-1" class="btn btn-theme" type="button"><i class="iconify add"
-            data-icon="gridicons:add-outline"></i><span data-translate="trip.new"></span></button>
-      </div>
+      <!-- Logged State: Dashboard -->
+      <div id="logged-view" class="view-panel" style="display: none">
+        <!-- Greeting / Account Bar -->
+        <div class="greeting-section" id="greeting-section">
+          <div class="greeting-content" id="greeting-content">
+            <div class="greeting-avatar" id="greeting-avatar"></div>
+            <div class="greeting-text">
+              <h2 class="greeting-title"><span data-translate="labels.greeting"></span>, <span id="title-name"></span>!</h2>
+              <p class="greeting-subtitle" data-translate="index.welcome_back"></p>
+            </div>
+          </div>
+          <div class="greeting-account" id="greeting-account">
+            <div class="settings-avatar" id="settings-avatar"></div>
+            <div class="settings-user-info">
+              <div class="settings-user-name" id="settings-user-name"></div>
+              <div class="settings-user-email" id="settings-user-email"></div>
+            </div>
+            <button class="btn btn-outline-theme" data-action="sign-out">
+              <i class="iconify" data-icon="material-symbols:logout"></i>
+              <span data-translate="labels.auth.sign_out"></span>
+            </button>
+          </div>
+        </div>
 
-      <div class="userList-box" id="viagensAnteriores-box" style="display: none">
-        <h4 data-translate="trip.previous"></h4>
-        <div class="content-list"></div>
-        <button id="nova-viagem-2" class="btn btn-theme" type="button"><i class="iconify add"
-            data-icon="gridicons:add-outline"></i><span data-translate="trip.new"></span></button>
-      </div>
+        <!-- Category Tabs -->
+        <div class="category-tabs" id="category-tabs">
+          <button class="category-tab active" data-tab="trips">
+            <i class="iconify" data-icon="tabler:plane-departure"></i>
+            <span class="tab-label" data-translate="index.my_trips"></span>
+          </button>
+          <button class="category-tab" data-tab="destinations">
+            <i class="iconify" data-icon="bx:trip"></i>
+            <span class="tab-label" data-translate="index.my_destinations"></span>
+          </button>
+          <button class="category-tab" data-tab="lists">
+            <i class="iconify" data-icon="fluent:list-28-filled"></i>
+            <span class="tab-label" data-translate="index.my_lists"></span>
+          </button>
+          <button class="category-tab" data-tab="settings">
+            <i class="iconify" data-icon="material-symbols:settings"></i>
+            <span class="tab-label" data-translate="account.settings"></span>
+          </button>
+        </div>
 
-      <div class="userList-box" id="destinos-box" style="display: none">
-        <h4 data-translate="destination.mine"></h4>
-        <div class="content-list"></div>
-        <button id="new-destino" class="btn btn-theme" type="button"><i class="iconify add"
-            data-icon="gridicons:add-outline"></i><span data-translate="destination.new"></button>
-      </div>
+        <!-- Search Bar -->
+        <div class="search-bar" id="search-bar">
+          <i class="iconify search-icon" data-icon="material-symbols:search"></i>
+          <input type="text" id="search-input" class="search-input" data-translate="index.search_placeholder">
+          <button class="search-clear" id="search-clear" style="display:none" aria-label="Clear search">
+            <i class="iconify" data-icon="material-symbols:close"></i>
+          </button>
+        </div>
 
-      <div class="userList-box" id="listagens-box" style="display: none">
-        <h4 data-translate="listing.title"></h4>
-        <div class="content-list"></div>
-        <button id="new-listagem" class="btn btn-theme" type="button"><i class="iconify add"
-            data-icon="gridicons:add-outline" data-translate=""></i><span data-translate="listing.new"></span></button>
-      </div>
+        <!-- Tab Content: Trips -->
+        <div class="tab-content active" id="tab-trips">
+          <div class="tab-header">
+            <span class="tab-header-count" id="trips-count"></span>
+            <button id="new-trip-btn" class="btn btn-primary-theme btn-sm">
+              <i class="iconify" data-icon="gridicons:add-outline"></i>
+              <span data-translate="trip.new"></span>
+            </button>
+          </div>
 
-      <div class="settings-box" id="settings-box" style="display: none">
-        <div class="general-settings">
-          <div id="settings-account-container">
-            <div id="settings-account" class="settings-account-item">
-              <div id="settings-account-picture"></div>
-              <div id="settings-account-text">
-                <div id="settings-account-name"></div>
+          <div class="trip-section" id="trip-active-section">
+            <h3 class="trip-section-title">
+              <span data-translate="index.active_trips"></span>
+              <span class="trip-section-count" id="trip-active-count"></span>
+            </h3>
+            <div class="trip-grid" id="trip-active-grid">
+              <!-- Active trip cards rendered by JS -->
+            </div>
+            <div class="grid-sentinel" id="trip-active-sentinel"></div>
+          </div>
+
+          <div class="trip-section" id="trip-upcoming-section">
+            <h3 class="trip-section-title">
+              <span data-translate="index.upcoming_trips"></span>
+              <span class="trip-section-count" id="trip-upcoming-count"></span>
+            </h3>
+            <div class="trip-grid" id="trip-upcoming-grid">
+              <!-- Upcoming trip cards rendered by JS -->
+            </div>
+            <div class="grid-sentinel" id="trip-upcoming-sentinel"></div>
+          </div>
+
+          <div class="trip-section" id="trip-finished-section">
+            <h3 class="trip-section-title">
+              <span data-translate="index.finished_trips"></span>
+              <span class="trip-section-count" id="trip-finished-count"></span>
+            </h3>
+            <div class="trip-grid" id="trip-finished-grid">
+              <!-- Finished trip cards rendered by JS -->
+            </div>
+            <div class="grid-sentinel" id="trip-finished-sentinel"></div>
+          </div>
+
+          <div class="empty-state" id="trips-empty" style="display:none">
+            <i class="iconify empty-icon" data-icon="tabler:plane-off"></i>
+            <p data-translate="index.no_trips"></p>
+          </div>
+        </div>
+
+        <!-- Tab Content: Destinations -->
+        <div class="tab-content" id="tab-destinations">
+          <div class="tab-header">
+            <span class="tab-header-count" id="dests-count"></span>
+            <button id="new-dest-btn" class="btn btn-primary-theme btn-sm">
+              <i class="iconify" data-icon="gridicons:add-outline"></i>
+              <span data-translate="destination.new"></span>
+            </button>
+          </div>
+          <div class="dest-grid" id="dest-grid">
+            <!-- Destination cards rendered by JS -->
+          </div>
+          <div class="grid-sentinel" id="dest-sentinel"></div>
+          <div class="empty-state" id="dest-empty" style="display:none">
+            <i class="iconify empty-icon" data-icon="material-symbols:location-off"></i>
+            <p data-translate="index.no_destinations"></p>
+          </div>
+        </div>
+
+        <!-- Tab Content: Lists -->
+        <div class="tab-content" id="tab-lists">
+          <div class="tab-header">
+            <span class="tab-header-count" id="lists-count"></span>
+            <button id="new-list-btn" class="btn btn-primary-theme btn-sm">
+              <i class="iconify" data-icon="gridicons:add-outline"></i>
+              <span data-translate="listing.new"></span>
+            </button>
+          </div>
+          <div class="list-grid" id="list-grid">
+            <!-- List cards rendered by JS -->
+          </div>
+          <div class="grid-sentinel" id="list-sentinel"></div>
+          <div class="empty-state" id="lists-empty" style="display:none">
+            <i class="iconify empty-icon" data-icon="fluent:list-28-regular"></i>
+            <p data-translate="index.no_lists"></p>
+          </div>
+        </div>
+
+        <!-- Tab Content: Settings -->
+        <div class="tab-content" id="tab-settings">
+          <div class="settings-panel">
+            <!-- Advanced Settings -->
+            <div class="settings-section">
+              <h3 class="settings-section-title" data-translate="labels.advanced"></h3>
+              <div class="settings-actions">
+                <button class="btn btn-secondary-theme settings-action-btn" data-action="import-documents">
+                  <i class="iconify" data-icon="heroicons:document-arrow-down-16-solid"></i>
+                  <span data-translate="account.import_documents.title"></span>
+                </button>
+                <input type="file" id="import-documents-input" accept="application/json" multiple style="display:none">
+                <button class="btn btn-secondary-theme settings-action-btn" data-action="export-documents">
+                  <i class="iconify" data-icon="heroicons:document-arrow-up-16-solid"></i>
+                  <span data-translate="account.export_documents.title"></span>
+                </button>
+                <button class="btn btn-secondary-theme settings-action-btn" data-action="export-static">
+                  <i class="iconify" data-icon="heroicons:globe-alt-16-solid"></i>
+                  <span data-translate="account.export_static.title"></span>
+                </button>
+                <button class="btn btn-secondary-theme settings-action-btn" data-action="restore-account">
+                  <i class="iconify" data-icon="mdi:account-arrow-down"></i>
+                  <span data-translate="account.restore.title"></span>
+                </button>
+                <button class="btn btn-secondary-theme settings-action-btn" data-action="backup-account">
+                  <i class="iconify" data-icon="mdi:account-arrow-up"></i>
+                  <span data-translate="account.backup.title"></span>
+                </button>
+                <input type="file" id="restore-account-input" accept="application/json" style="display:none">
+              </div>
+              <div class="settings-danger">
+                <a id="settings-delete-account" href="#" data-action="open-delete-modal" data-translate="account.delete.title"></a>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <a id="settings-sign-out" href="#" onclick="_signOut()">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                  d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z">
-                </path>
-              </svg>
-              <span data-translate="labels.auth.sign_out"></span>
+      <!-- Delete Account Modal -->
+      <div id="modal" class="modal-overlay">
+        <div class="modal-card">
+          <div class="modal-header">
+            <h4 id="modal-text-title" data-translate="account.delete.title"></h4>
+            <a data-action="close-delete-modal" class="modal-close-btn">
+              <i class="iconify" data-icon="material-symbols:close"></i>
             </a>
           </div>
-        </div>
-
-        <div class="advanced-settings">
-          <span class="title" data-translate="labels.advanced"></span>
-          <div class="options">
-            <button id="settings-backup-account" class="btn btn-theme" onclick="_backupOnClickAction()" type="button"
-              data-translate="">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                  d="M12 15.575q-.2 0-.375-.062T11.3 15.3l-3.6-3.6q-.3-.3-.288-.7t.288-.7q.3-.3.713-.312t.712.287L11 12.15V5q0-.425.288-.712T12 4t.713.288T13 5v7.15l1.875-1.875q.3-.3.713-.288t.712.313q.275.3.288.7t-.288.7l-3.6 3.6q-.15.15-.325.213t-.375.062M6 20q-.825 0-1.412-.587T4 18v-2q0-.425.288-.712T5 15t.713.288T6 16v2h12v-2q0-.425.288-.712T19 15t.713.288T20 16v2q0 .825-.587 1.413T18 20z" />
-              </svg>
-              <span data-translate="account.backup.title"></span>
-            </button>
-            <button id="settings-restore-account" class="btn btn-theme" onclick="_restoreOnClickAction()" type="button"
-              data-translate="">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                  d="M6 20q-.825 0-1.412-.587T4 18v-2q0-.425.288-.712T5 15t.713.288T6 16v2h12v-2q0-.425.288-.712T19 15t.713.288T20 16v2q0 .825-.587 1.413T18 20zm5-12.15L9.125 9.725q-.3.3-.712.288T7.7 9.7q-.275-.3-.288-.7t.288-.7l3.6-3.6q.15-.15.325-.212T12 4.425t.375.063t.325.212l3.6 3.6q.3.3.288.7t-.288.7q-.3.3-.712.313t-.713-.288L13 7.85V15q0 .425-.288.713T12 16t-.712-.288T11 15z" />
-              </svg>
-              <span data-translate="account.restore.title"></span>
-            </button>
-            <input type="file" id="restore-account-input" accept="application/json" style="display:none">
-            <div id="delete-account-container">
-              <a id="settings-delete-account" href="#" onclick="_openModal()" data-translate="account.delete.title"></a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div id="modal" class="modal">
-        <div class="modal-content">
-          <div class="modal-text">
-            <div id="cancel-icon" style="text-align: right;">
-              <a onclick="_closeModal()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
-                  </path>
-                </svg>
-              </a>
-            </div>
-            <h4 id="modal-text-title" data-translate="account.delete.title"></h4>
-            <p data-translate="account.delete.message"></p>
-          </div>
-          <div class="button-box">
-            <button id="cancelar" class="btn btn-secondary" type="button" onclick="_closeModal()" data-translate="">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                  d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
-                </path>
-              </svg>
+          <p class="modal-body" data-translate="account.delete.message"></p>
+          <div class="modal-actions">
+            <button id="cancel-btn" class="btn btn-outline-theme" type="button" data-action="close-delete-modal">
               <span data-translate="labels.cancel"></span>
-              <button id="apagar" class="btn btn-theme" type="submit" data-translate="">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                  <path fill="currentColor" fill-rule="evenodd"
-                    d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                    clip-rule="evenodd"></path>
-                </svg>
-                <span data-translate="labels.delete"></span>
-              </button>
+            </button>
+            <button id="delete-btn" class="btn btn-danger" type="submit">
+              <span data-translate="labels.delete"></span>
+            </button>
           </div>
         </div>
       </div>
+
+      <!-- Trip Detail Dialog -->
+      <div id="trip-dialog" class="dialog-overlay" style="display:none">
+        <div class="dialog-card">
+          <div class="dialog-image" id="trip-dialog-image"></div>
+          <a class="dialog-close" data-action="close-trip-dialog">
+            <i class="iconify" data-icon="material-symbols:close"></i>
+          </a>
+          <div class="dialog-body">
+            <div class="dialog-header">
+              <h2 class="dialog-title" id="trip-dialog-title"></h2>
+              <span class="dialog-badge" id="trip-dialog-badge"></span>
+            </div>
+            <div class="dialog-meta">
+              <div class="dialog-meta-item">
+                <i class="iconify" data-icon="material-symbols:calendar-month"></i>
+                <span id="trip-dialog-dates"></span>
+              </div>
+              <div class="dialog-meta-item" id="trip-dialog-duration-row">
+                <i class="iconify" data-icon="material-symbols:timelapse"></i>
+                <span id="trip-dialog-duration"></span>
+              </div>
+              <div class="dialog-meta-item">
+                <i class="iconify" data-icon="material-symbols:schedule"></i>
+                <span id="trip-dialog-updated"></span>
+              </div>
+            </div>
+            <div class="dialog-modules" id="trip-dialog-modules"></div>
+            <div class="dialog-actions">
+              <button class="btn btn-primary-theme dialog-action-btn" id="trip-dialog-view">
+                <i class="iconify" data-icon="fluent:eye-16-regular"></i>
+                <span data-translate="labels.view"></span>
+              </button>
+              <button class="btn btn-outline-theme dialog-action-btn" id="trip-dialog-edit">
+                <i class="iconify" data-icon="tabler:edit"></i>
+                <span data-translate="labels.edit"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Destination Detail Dialog -->
+      <div id="dest-dialog" class="dialog-overlay" style="display:none">
+        <div class="dialog-card">
+          <div class="dialog-image no-image" id="dest-dialog-image">
+            <i class="iconify dialog-image-icon" data-icon="material-symbols:location-on"></i>
+          </div>
+          <a class="dialog-close" data-action="close-dest-dialog">
+            <i class="iconify" data-icon="material-symbols:close"></i>
+          </a>
+          <div class="dialog-body">
+            <div class="dialog-header">
+              <h2 class="dialog-title" id="dest-dialog-title"></h2>
+            </div>
+            <div class="dialog-meta">
+              <div class="dialog-meta-item" id="dest-dialog-currency-row">
+                <i class="iconify" data-icon="material-symbols:payments"></i>
+                <span id="dest-dialog-currency"></span>
+              </div>
+              <div class="dialog-meta-item">
+                <i class="iconify" data-icon="material-symbols:schedule"></i>
+                <span id="dest-dialog-updated"></span>
+              </div>
+            </div>
+            <div class="dialog-actions">
+              <button class="btn btn-primary-theme dialog-action-btn" id="dest-dialog-view">
+                <i class="iconify" data-icon="fluent:eye-16-regular"></i>
+                <span data-translate="labels.view"></span>
+              </button>
+              <button class="btn btn-outline-theme dialog-action-btn" id="dest-dialog-edit">
+                <i class="iconify" data-icon="tabler:edit"></i>
+                <span data-translate="labels.edit"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- List Detail Dialog -->
+      <div id="list-dialog" class="dialog-overlay" style="display:none">
+        <div class="dialog-card">
+          <div class="dialog-image" id="list-dialog-image"></div>
+          <a class="dialog-close" data-action="close-list-dialog">
+            <i class="iconify" data-icon="material-symbols:close"></i>
+          </a>
+          <div class="dialog-body">
+            <div class="dialog-header">
+              <h2 class="dialog-title" id="list-dialog-title"></h2>
+            </div>
+            <div class="dialog-meta">
+              <div class="dialog-meta-item" id="list-dialog-subtitle-row">
+                <i class="iconify" data-icon="material-symbols:info"></i>
+                <span id="list-dialog-subtitle"></span>
+              </div>
+              <div class="dialog-meta-item">
+                <i class="iconify" data-icon="material-symbols:schedule"></i>
+                <span id="list-dialog-updated"></span>
+              </div>
+            </div>
+            <div class="dialog-actions">
+              <button class="btn btn-primary-theme dialog-action-btn" id="list-dialog-view">
+                <i class="iconify" data-icon="fluent:eye-16-regular"></i>
+                <span data-translate="labels.view"></span>
+              </button>
+              <button class="btn btn-outline-theme dialog-action-btn" id="list-dialog-edit">
+                <i class="iconify" data-icon="tabler:edit"></i>
+                <span data-translate="labels.edit"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="loadable" style="display: none">
     <div class="container">
       <div class="credits">
-        <span data-translate="labels.developed_by"></span> <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel
-          Fávero</a>. <span class="atribuicoes" onclick="_openAtribuicoes()"><i class="iconify"
+        <span class="tripviewer-version"></span> <span data-translate="labels.developed_by"></span> <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel
+          Fávero</a>. <span class="attributions" data-action="open-attributions"><i class="iconify"
             data-icon="ri:information-line"></i>
           <span data-translate="labels.credits"></span></span>
       </div>
     </div>
-  </footer><!-- End Footer -->
+  </footer>
 
-  <!-- ======= Support: Preloader ======= -->
+  <!-- ======= Preloader ======= -->
   <div id="preloader"></div>
 
+  <!-- ======= Toast ======= -->
   <div id="toast" style="display: none">
     <span id="toast-text"></span>
-    <span class="toast-close" onclick="_closeToast()">
+    <span class="toast-close" data-action="close-toast">
       <i class="iconify" data-icon="material-symbols:close"></i>
     </span>
   </div>
 
-  <!-- Firebase -->
-  <script data-main src="../index.js" type=text/JSX"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-app-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-auth-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-firestore-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-functions-compat.js"></script>
-  <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+  <!-- JSZip (index only — used by the static-export flow; never leaks into exports) -->
+  <script src="assets/vendor/jszip/jszip.min.js"></script>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/typed.js/typed.min.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
-  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <!-- #include shared/scripts-vendor.html -->
+  <!-- #include shared/scripts-core.html -->
 
-  <script src="https://apis.google.com/js/api.js"></script>
-
-  <!-- Main JS Files -->
-  <script data-main src="assets/js/main/translation.js"></script>
-  <script data-main src="assets/js/main/main.js"></script>
-  <script data-main src="assets/js/suporte/estilos/animacoes.js"></script>
-  <script data-main src="assets/js/suporte/paginas/datas.js"></script>
-  <script data-main src="assets/js/suporte/paginas/dados.js"></script>
-  <script data-main src="assets/js/suporte/firebase/database.js"></script>
-  <script data-main src="assets/js/suporte/firebase/user.js"></script>
-  <script data-main src="assets/js/suporte/estilos/stylesheets.js"></script>
-  <script data-main src="assets/js/suporte/estilos/cores.js"></script>
-  <script data-main src="assets/js/suporte/estilos/visibilidade.js"></script>
-  <script data-main src="assets/js/paginas/index/suporte/visibilidade.js"></script>
-  <script data-main src="assets/js/suporte/paginas/dispositivos.js"></script>
-  <script data-main src="assets/js/suporte/paginas/mensagens.js"></script>
-  <script data-main src="assets/js/suporte/paginas/carregamento.js"></script>
-  <script data-main src="assets/js/paginas/index/suporte/dados.js"></script>
-  <script data-main src="assets/js/paginas/index/suporte/event-listeners.js"></script>
-  <script data-main src="assets/js/paginas/index/suporte/navegacao.js"></script>
-  <script data-main src="assets/js/paginas/index/index.js"></script>
-  <script data-main src="assets/js/suporte/paginas/atribuicoes.js"></script>
-  <script data-main src="assets/js/main/backup.js"></script>
-  <script data-main src="assets/js/main/restore.js"></script>
-
+  <!-- #include shared/nav-helper.html -->
 </body>
 
 </html>

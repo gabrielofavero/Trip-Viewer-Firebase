@@ -1,0 +1,4083 @@
+/*--------------------------------------------------------------
+# Edit Pages — Modern Styling
+# Targets: public/edit/trip.html, destination.html, listing.html
+# Consistent with index.html aesthetic (frosted glass, CSS vars, dark mode)
+# Phase 1 — CSS Rewrite (edit-styling-guide.md)
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Hero / Page Shell
+--------------------------------------------------------------*/
+#hero {
+	width: 100%;
+	min-height: 100vh;
+	background: url("/assets/img/backgrounds/home-light.jpg") top center no-repeat;
+	background-size: cover;
+	background-position: 50% 50%;
+	overflow-y: auto;
+	border-radius: 0;
+	position: relative;
+	top: 30px;
+	padding: 2em 1em !important;
+	scroll-padding-top: 120px;
+}
+
+#hero::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	background: rgba(255, 255, 255, 0.55);
+	z-index: 0;
+	pointer-events: none;
+}
+
+/*--------------------------------------------------------------
+# Demo Page Container (replaces sidebar layout)
+--------------------------------------------------------------*/
+.edit-page {
+	margin: 0 auto;
+	max-width: 55em;
+	position: relative;
+	z-index: 1;
+}
+
+.edit-page-content {
+	padding: 16px 0;
+	max-width: 100%;
+}
+
+/*--------------------------------------------------------------
+# Button Box — Right aligned (expense add buttons)
+--------------------------------------------------------------*/
+.button-box-right {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 16px;
+}
+
+/*--------------------------------------------------------------
+# Side-by-side Color Box
+--------------------------------------------------------------*/
+.side-by-side-color-box {
+	display: flex;
+	gap: 16px;
+	margin-top: 16px;
+}
+
+.side-by-side-color-box .nice-form-group {
+	flex: 1;
+	margin-top: 0;
+}
+
+/*--------------------------------------------------------------
+# Color Section Labels
+--------------------------------------------------------------*/
+.color-section-label {
+	display: block;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--text-secondary, #666);
+	margin-bottom: 8px;
+}
+
+/*--------------------------------------------------------------
+# Color Theme Toggle Row
+--------------------------------------------------------------*/
+.color-toggle-row {
+	margin-bottom: 4px;
+}
+
+.color-toggle-row .switch-label {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--text-secondary, #666);
+}
+
+.color-section-spacer {
+	height: 14px;
+}
+
+/*--------------------------------------------------------------
+/*--------------------------------------------------------------
+# Color Preset Carousel
+--------------------------------------------------------------*/
+.color-preset-carousel {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 4px;
+}
+
+.color-preset-grid {
+	display: flex;
+	flex: 1;
+	flex-wrap: nowrap;
+	gap: 10px;
+	overflow-x: auto;
+	scroll-behavior: smooth;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+	min-width: 0;
+	padding: 4px 4px 26px 4px;
+	margin: -4px -4px -26px -4px;
+}
+
+.color-preset-grid::-webkit-scrollbar {
+	display: none;
+}
+
+.color-preset-arrow {
+	flex-shrink: 0;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	border: 1.5px solid var(--border-color, #ddd);
+	background: var(--nf-input-background-color, #fff);
+	color: var(--text-secondary, #666);
+	font-size: 18px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition:
+		border-color 0.2s,
+		color 0.2s,
+		background 0.2s;
+	padding: 0;
+	user-select: none;
+}
+
+.color-preset-arrow:hover {
+	border-color: var(--theme-color, #5859a7);
+	color: var(--theme-color, #5859a7);
+	background: rgba(var(--theme-color-rgb, 88, 89, 167), 0.06);
+}
+
+.color-preset-arrow:active {
+	transform: scale(0.93);
+}
+
+[data-theme="dark"] .color-preset-arrow {
+	border-color: var(--border-color, #404040);
+	background: var(--nf-input-background-color, #303030);
+	color: var(--text-secondary, #a6a6a6);
+}
+
+[data-theme="dark"] .color-preset-arrow:hover {
+	border-color: var(--theme-color);
+	color: var(--theme-color);
+}
+
+.color-preset-swatch {
+	width: 48px;
+	height: 48px;
+	min-width: 48px;
+	flex-shrink: 0;
+	border-radius: var(--radius-md);
+	cursor: pointer;
+	border: 1.5px solid var(--border-color);
+	transition:
+		border-color 0.2s,
+		transform 0.15s,
+		box-shadow 0.2s;
+	position: relative;
+	padding: 4px;
+	background-clip: content-box;
+}
+
+.color-preset-swatch:hover {
+	transform: scale(1.08);
+	border-color: var(--nf-input-focus-border-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.color-preset-swatch.selected {
+	border-color: var(--theme-color, #5859a7);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.25);
+	transform: scale(1.08);
+}
+
+.color-preset-swatch::after {
+	content: attr(data-name);
+	position: absolute;
+	bottom: -20px;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 10px;
+	color: var(--text-secondary, #666);
+	white-space: nowrap;
+	opacity: 0;
+	transition: opacity 0.2s;
+	pointer-events: none;
+}
+
+.color-preset-swatch:hover::after {
+	opacity: 1;
+}
+
+/*--------------------------------------------------------------
+# Color Custom Toggle ("+" swatch at end of preset grid)
+--------------------------------------------------------------*/
+.color-preset-swatch.add-custom {
+	background: var(--nf-input-background-color, #fff);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 24px;
+	font-weight: 300;
+	color: var(--text-secondary, #666);
+	line-height: 1;
+	user-select: none;
+}
+
+.color-preset-swatch.add-custom::before {
+	content: "+";
+}
+
+.color-preset-swatch.add-custom::after {
+	content: attr(data-name);
+}
+
+[data-theme="dark"] .color-preset-swatch.add-custom {
+	background: var(--nf-input-background-color, #303030);
+	color: var(--text-secondary, #a6a6a6);
+}
+
+/*--------------------------------------------------------------
+# Accordion — First/Last border-radius
+--------------------------------------------------------------*/
+.accordion .accordion-item:first-child {
+	border-top-left-radius: var(--radius-md);
+	border-top-right-radius: var(--radius-md);
+}
+
+.accordion .accordion-item:last-child {
+	border-bottom-left-radius: var(--radius-md);
+	border-bottom-right-radius: var(--radius-md);
+	margin-bottom: 0;
+}
+
+.accordion .accordion-item:only-child {
+	border-radius: var(--radius-md);
+}
+
+/* Draggable accordions: .inner-box wrapper (SortableJS).
+   Wrapper is transparent; accordion-item fills it.
+   Drag icon is a flex sibling — keep wrapper display:flex. */
+.accordion > .inner-box {
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+	border-radius: 0;
+}
+
+.accordion > .inner-box > .accordion-item {
+	flex: 1;
+	border-radius: 0;
+	margin-bottom: 0;
+}
+
+.accordion > .inner-box:first-child > .accordion-item {
+	border-top-left-radius: var(--radius-md);
+	border-top-right-radius: var(--radius-md);
+}
+
+.accordion > .inner-box:last-child > .accordion-item {
+	border-bottom-left-radius: var(--radius-md);
+	border-bottom-right-radius: var(--radius-md);
+}
+
+.accordion > .inner-box:only-child > .accordion-item {
+	border-radius: var(--radius-md);
+}
+
+/* Accordion items fill container width */
+.accordion .accordion-item {
+	width: 100%;
+}
+
+/* Consistent gap between stacked accordion items */
+.accordion {
+	display: flex;
+	flex-direction: column;
+	gap: 1px;
+}
+
+/*--------------------------------------------------------------
+# Language Selector (in shared top-bar)
+--------------------------------------------------------------*/
+.lang-selector {
+	position: relative;
+}
+.lang-button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--text-secondary);
+	padding: 6px 10px;
+	border-radius: 8px;
+	font-family: inherit;
+	transition: all var(--transition-fast);
+}
+.lang-button:hover {
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
+}
+.lang-options {
+	display: none;
+	position: absolute;
+	top: 100%;
+	right: 0;
+	background: var(--bg-primary);
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-md);
+	overflow: hidden;
+	z-index: 100;
+	min-width: 60px;
+}
+.lang-selector:hover .lang-options {
+	display: block;
+}
+.lang-options button {
+	display: block;
+	width: 100%;
+	padding: 8px 16px;
+	border: none;
+	background: none;
+	cursor: pointer;
+	font-size: 13px;
+	font-family: inherit;
+	color: var(--text-primary);
+	transition: background var(--transition-fast);
+	text-align: center;
+}
+.lang-options button:hover {
+	background: var(--bg-tertiary);
+}
+
+/*--------------------------------------------------------------
+# Edit Tab Bar
+# Base .edit-tab-bar / .edit-tab styles moved to components/frosted-tabs.css
+# (imported globally via main.css). Edit-specific responsive overrides
+# (fixed-on-mobile, icon-only tabs) remain below in this file.
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Section Cards — Frosted Glass (matches index.html cards)
+--------------------------------------------------------------*/
+.edit-page-content section {
+	background: rgba(255, 255, 255, 0.7);
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-lg);
+	padding: 24px;
+	margin-bottom: 20px;
+	box-shadow: var(--shadow-sm);
+	line-height: 1.6;
+	font-size: 0.9375rem;
+	position: relative;
+}
+
+.edit-page-content section h1 {
+	font-size: 1.25rem;
+	font-weight: 700;
+	color: var(--text-primary);
+	margin-bottom: 8px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.edit-page-content section h1 svg {
+	width: 1.25em;
+	height: 1.25em;
+	color: var(--theme-color);
+	flex-shrink: 0;
+}
+
+.edit-page-content section p {
+	color: var(--text-muted);
+	margin: 0 0 20px 0;
+	font-size: 0.875rem;
+	line-height: 1.5;
+}
+
+/* Caption — helper text below inputs */
+.caption {
+	display: block;
+	font-style: italic;
+	color: var(--text-muted);
+	margin-top: 8px;
+	line-height: 1.4;
+}
+
+.edit-page-content section p:last-child {
+	margin-bottom: 0;
+}
+
+.edit-page-content section strong {
+	font-weight: 600;
+	color: var(--text-primary);
+}
+
+.edit-page-content section p a {
+	text-decoration: none;
+	font-weight: 500;
+	color: var(--theme-color);
+}
+
+.edit-page-content section code {
+	font-weight: 500;
+	font-family: Consolas, monaco, monospace;
+	position: relative;
+	z-index: 1;
+	margin: 0 2px;
+	background: var(--bg-tertiary);
+	border-radius: 3px;
+	padding: 2px 5px;
+	white-space: nowrap;
+}
+
+.edit-page-content section ul {
+	margin-top: 0.5em;
+	padding-left: 1em;
+	list-style-type: disc;
+}
+
+/* Scroll anchor targets — keep for backward compat, not used for scrolling */
+.href-target {
+	position: absolute;
+	top: -2em;
+}
+
+/*--------------------------------------------------------------
+# Nice Form Group — Modernized Overrides
+# Uses project CSS variables instead of hardcoded nice-forms.css values
+--------------------------------------------------------------*/
+.nice-form-group {
+	--nf-input-size: 1rem;
+	--nf-input-font-size: 0.9375rem;
+	--nf-small-font-size: 0.8125rem;
+	--nf-input-font-family: inherit;
+	--nf-label-font-family: inherit;
+	--nf-input-color: var(--text-primary);
+	--nf-input-border-radius: var(--radius-md);
+	--nf-input-placeholder-color: var(--text-muted);
+	--nf-input-border-color: var(--border-color);
+	--nf-input-border-width: 1.5px;
+	--nf-input-border-style: solid;
+	--nf-input-border-bottom-width: 1.5px;
+	--nf-input-focus-border-color: var(--theme-color);
+	--nf-input-background-color: var(--bg-secondary);
+	--nf-invalid-input-border-color: var(--nf-input-border-color);
+	--nf-invalid-input-background-color: var(--nf-input-background-color);
+	--nf-invalid-input-color: var(--nf-input-color);
+	--nf-valid-input-border-color: var(--nf-input-border-color);
+	--nf-valid-input-background-color: var(--nf-input-background-color);
+	--nf-valid-input-color: inherit;
+	--nf-invalid-input-border-bottom-color: #e74c3c;
+	--nf-valid-input-border-bottom-color: #34c759;
+	--nf-label-font-size: var(--nf-small-font-size);
+	--nf-label-color: var(--text-primary);
+	--nf-label-font-weight: 600;
+	--nf-slider-track-background: var(--bg-tertiary);
+	--nf-slider-track-height: 0.25rem;
+	--nf-slider-thumb-size: calc(var(--nf-slider-track-height) * 4);
+	--nf-slider-track-border-radius: var(--nf-slider-track-height);
+	--nf-slider-thumb-border-width: 2px;
+	--nf-slider-thumb-border-focus-width: 1px;
+	--nf-slider-thumb-border-color: #fff;
+	--nf-slider-thumb-background: var(--nf-input-focus-border-color);
+	display: block;
+	margin-top: calc(var(--nf-input-size) * 1.5);
+	line-height: 1;
+	white-space: nowrap;
+	--switch-orb-size: calc(var(--nf-input-size) * 0.875);
+	--switch-orb-offset: calc(var(--nf-input-border-width) * 2);
+	--switch-width: calc(var(--nf-input-size) * 2.25);
+	--switch-height: calc(var(--nf-input-size) * 1.125 + var(--switch-orb-offset));
+}
+
+.nice-form-group > label {
+	font-weight: var(--nf-label-font-weight);
+	display: block;
+	color: var(--nf-label-color);
+	font-size: var(--nf-label-font-size);
+	font-family: var(--nf-label-font-family);
+	margin-bottom: calc(var(--nf-input-size) / 4);
+	white-space: normal;
+}
+
+.nice-form-group > label + small {
+	font-style: normal;
+}
+
+.nice-form-group small {
+	font-family: var(--nf-input-font-family);
+	display: block;
+	font-weight: 400;
+	opacity: 0.75;
+	font-size: var(--nf-small-font-size);
+	margin-bottom: calc(var(--nf-input-size) * 0.75);
+}
+
+.nice-form-group small:last-child {
+	margin-bottom: 0;
+}
+
+.nice-form-group > legend {
+	font-weight: var(--nf-label-font-weight);
+	display: block;
+	color: var(--nf-label-color);
+	font-size: var(--nf-label-font-size);
+	font-family: var(--nf-label-font-family);
+	margin-bottom: calc(var(--nf-input-size) / 5);
+}
+
+.nice-form-group > .nice-form-group {
+	margin-top: calc(var(--nf-input-size) / 2);
+}
+
+/* Input fields — unified modern style */
+.nice-form-group > input[type="checkbox"],
+.nice-form-group > input[type="date"],
+.nice-form-group > input[type="email"],
+.nice-form-group > input[type="month"],
+.nice-form-group > input[type="number"],
+.nice-form-group > input[type="password"],
+.nice-form-group > input[type="radio"],
+.nice-form-group > input[type="search"],
+.nice-form-group > input[type="tel"],
+.nice-form-group > input[type="text"],
+.nice-form-group > input[type="time"],
+.nice-form-group > input[type="url"],
+.nice-form-group > input[type="week"],
+.nice-form-group > select,
+.nice-form-group > textarea {
+	background: var(--nf-input-background-color);
+	font-family: var(--nf-input-font-family);
+	font-size: var(--nf-input-font-size);
+	box-shadow: none;
+	border-radius: var(--nf-input-border-radius);
+	border: var(--nf-input-border-width) var(--nf-input-border-style) var(--nf-input-border-color);
+	color: var(--nf-input-color);
+	width: 100%;
+	padding: 12px 16px;
+	height: auto;
+	min-height: 48px;
+	line-height: normal;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	transition:
+		border var(--transition-fast),
+		box-shadow var(--transition-fast);
+	outline: none;
+}
+
+.nice-form-group > textarea {
+	height: auto;
+	min-height: 100px;
+}
+
+.nice-form-group > input:focus,
+.nice-form-group > select:focus,
+.nice-form-group > textarea:focus {
+	outline: none;
+	border-color: var(--nf-input-focus-border-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+/* Placeholder */
+.nice-form-group > input::-webkit-input-placeholder,
+.nice-form-group > select::-webkit-input-placeholder,
+.nice-form-group > textarea::-webkit-input-placeholder {
+	color: var(--nf-input-placeholder-color);
+	letter-spacing: 0;
+}
+
+.nice-form-group > input:-ms-input-placeholder,
+.nice-form-group > select:-ms-input-placeholder,
+.nice-form-group > textarea:-ms-input-placeholder {
+	color: var(--nf-input-placeholder-color);
+}
+
+.nice-form-group > input::-moz-placeholder,
+.nice-form-group > select::-moz-placeholder,
+.nice-form-group > textarea::-moz-placeholder {
+	color: var(--nf-input-placeholder-color);
+	letter-spacing: 0;
+}
+
+/* Disabled */
+.nice-form-group > input:disabled,
+.nice-form-group > select:disabled,
+.nice-form-group > textarea:disabled {
+	cursor: not-allowed;
+	opacity: 0.6;
+}
+
+/* Checkbox & Radio */
+.nice-form-group > input[type="checkbox"],
+.nice-form-group > input[type="radio"] {
+	width: var(--nf-input-size);
+	height: var(--nf-input-size);
+	min-width: var(--nf-input-size);
+	min-height: var(--nf-input-size);
+	flex-shrink: 0;
+	padding: 0;
+	margin: 0;
+	display: inline-flex;
+	vertical-align: top;
+	border-radius: calc(var(--nf-input-border-radius) / 2);
+	border-width: var(--nf-input-border-width);
+	cursor: pointer;
+	background-position: 50%;
+}
+
+.nice-form-group > input[type="checkbox"]:focus:not(:checked),
+.nice-form-group > input[type="radio"]:focus:not(:checked) {
+	border: var(--nf-input-border-width) solid var(--nf-input-focus-border-color);
+	outline: none;
+}
+
+.nice-form-group > input[type="checkbox"]:hover,
+.nice-form-group > input[type="radio"]:hover {
+	border: var(--nf-input-border-width) solid var(--nf-input-focus-border-color);
+}
+
+.nice-form-group > input[type="checkbox"] + label,
+.nice-form-group > input[type="radio"] + label {
+	display: inline-block;
+	margin-bottom: 0;
+	padding-left: calc(var(--nf-input-size) / 2.5);
+	font-weight: 400;
+	-webkit-user-select: none;
+	user-select: none;
+	cursor: pointer;
+	max-width: calc(100% - var(--nf-input-size) * 2);
+	line-height: normal;
+}
+
+.nice-form-group > input[type="checkbox"] + label > small,
+.nice-form-group > input[type="radio"] + label > small {
+	margin-top: calc(var(--nf-input-size) / 4);
+}
+
+.nice-form-group > input[type="checkbox"]:checked {
+	background:
+		url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23FFF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E")
+		no-repeat 50% / 70%;
+	background-color: var(--nf-input-focus-border-color);
+	border-color: var(--nf-input-focus-border-color);
+}
+
+.nice-form-group > input[type="radio"] {
+	border-radius: 100%;
+}
+
+.nice-form-group > input[type="radio"]:checked {
+	background-color: var(--nf-input-focus-border-color);
+	border-color: var(--nf-input-focus-border-color);
+	box-shadow: inset 0 0 0 3px #fff;
+}
+
+/* Switch (toggle) */
+.nice-form-group > input[type="checkbox"].switch {
+	width: var(--switch-width);
+	height: var(--switch-height);
+	border-radius: var(--switch-height);
+	position: relative;
+	min-height: auto;
+}
+
+.nice-form-group > input[type="checkbox"].switch:after {
+	background: var(--nf-input-border-color);
+	border-radius: var(--switch-orb-size);
+	height: var(--switch-orb-size);
+	left: var(--switch-orb-offset);
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: var(--switch-orb-size);
+	content: "";
+	transition: all 0.2s ease-out;
+}
+
+.nice-form-group > input[type="checkbox"].switch + label {
+	margin-top: calc(var(--switch-height) / 8);
+}
+
+.nice-form-group > input[type="checkbox"].switch:checked {
+	background: none;
+	background-position: 0 0;
+	background-color: var(--nf-input-focus-border-color);
+}
+
+.nice-form-group > input[type="checkbox"].switch:checked:after {
+	transform: translateY(-50%) translateX(calc(var(--switch-width) / 2 - var(--switch-orb-offset)));
+	background: #fff;
+}
+
+/* File upload */
+.nice-form-group > input[type="file"],
+.upload-box {
+	background: rgba(0, 0, 0, 0.025);
+	padding: var(--nf-input-size);
+	display: block;
+	width: 100%;
+	border-radius: var(--nf-input-border-radius);
+	border: 1.5px dashed var(--nf-input-border-color);
+	outline: none;
+	cursor: pointer;
+}
+
+.nice-form-group > input[type="file"]:focus,
+.nice-form-group > input[type="file"]:hover,
+.upload-box:focus,
+.upload-box:hover {
+	border-color: var(--nf-input-focus-border-color);
+}
+
+.nice-form-group > input[type="file"]::file-selector-button {
+	background: var(--nf-input-focus-border-color);
+	border: 0;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	padding: 0.5rem;
+	border-radius: var(--nf-input-border-radius);
+	color: #fff;
+	margin-right: 1rem;
+	outline: none;
+	font-family: var(--nf-input-font-family);
+	cursor: pointer;
+}
+
+.nice-form-group > input[type="file"]::-webkit-file-upload-button {
+	background: var(--nf-input-focus-border-color);
+	border: 0;
+	-webkit-appearance: none;
+	appearance: none;
+	padding: 0.5rem;
+	border-radius: var(--nf-input-border-radius);
+	color: #fff;
+	margin-right: 1rem;
+	outline: none;
+	font-family: var(--nf-input-font-family);
+	cursor: pointer;
+}
+
+/* Select */
+.nice-form-group > select {
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+	background-position: right 12px bottom 50%;
+	background-repeat: no-repeat;
+	background-size: var(--nf-input-size);
+	padding-right: 36px;
+}
+
+/* Date / Time */
+.nice-form-group > input[type="date"],
+.nice-form-group > input[type="month"],
+.nice-form-group > input[type="week"] {
+	min-width: 14em;
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-calendar'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E");
+}
+
+.nice-form-group > input[type="time"] {
+	min-width: 6em;
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-clock'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 6v6l4 2'/%3E%3C/svg%3E");
+	/* Left-align the time value — WebKit browsers center it by default. */
+	text-align: left;
+}
+
+.nice-form-group > input[type="time"]::-webkit-datetime-edit {
+	text-align: left;
+}
+
+.nice-form-group > input[type="date"],
+.nice-form-group > input[type="month"],
+.nice-form-group > input[type="time"],
+.nice-form-group > input[type="week"] {
+	background-position: right 12px bottom 50%;
+	background-repeat: no-repeat;
+	background-size: var(--nf-input-size);
+	width: auto;
+	padding-right: 36px;
+}
+
+.nice-form-group > input[type="date"]::-webkit-calendar-picker-indicator,
+.nice-form-group > input[type="date"]::-webkit-inner-spin-button,
+.nice-form-group > input[type="month"]::-webkit-calendar-picker-indicator,
+.nice-form-group > input[type="month"]::-webkit-inner-spin-button,
+.nice-form-group > input[type="time"]::-webkit-calendar-picker-indicator,
+.nice-form-group > input[type="time"]::-webkit-inner-spin-button,
+.nice-form-group > input[type="week"]::-webkit-calendar-picker-indicator,
+.nice-form-group > input[type="week"]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	cursor: pointer;
+	opacity: 0;
+}
+
+@-moz-document url-prefix() {
+	.nice-form-group > input[type="date"],
+	.nice-form-group > input[type="month"],
+	.nice-form-group > input[type="time"],
+	.nice-form-group > input[type="week"] {
+		min-width: auto;
+		width: auto;
+		background-image: none;
+	}
+}
+
+/* Range slider */
+.nice-form-group > input[type="range"] {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	cursor: pointer;
+	min-height: auto;
+}
+
+.nice-form-group > input[type="range"]:focus {
+	outline: none;
+}
+
+.nice-form-group > input[type="range"]::-webkit-slider-runnable-track {
+	width: 100%;
+	height: var(--nf-slider-track-height);
+	background: var(--nf-slider-track-background);
+	border-radius: var(--nf-slider-track-border-radius);
+}
+
+.nice-form-group > input[type="range"]::-moz-range-track {
+	width: 100%;
+	height: var(--nf-slider-track-height);
+	background: var(--nf-slider-track-background);
+	border-radius: var(--nf-slider-track-border-radius);
+}
+
+.nice-form-group > input[type="range"]::-webkit-slider-thumb {
+	height: var(--nf-slider-thumb-size);
+	width: var(--nf-slider-thumb-size);
+	border-radius: var(--nf-slider-thumb-size);
+	background: var(--nf-slider-thumb-background);
+	border: 0;
+	border: var(--nf-slider-thumb-border-width) solid var(--nf-slider-thumb-border-color);
+	-webkit-appearance: none;
+	appearance: none;
+	margin-top: calc(var(--nf-slider-track-height) * 0.5 - var(--nf-slider-thumb-size) * 0.5);
+}
+
+.nice-form-group > input[type="range"]::-moz-range-thumb {
+	height: var(--nf-slider-thumb-size);
+	width: var(--nf-slider-thumb-size);
+	border-radius: var(--nf-slider-thumb-size);
+	background: var(--nf-slider-thumb-background);
+	border: 0;
+	border: var(--nf-slider-thumb-border-width) solid var(--nf-slider-thumb-border-color);
+	-moz-appearance: none;
+	appearance: none;
+	box-sizing: border-box;
+}
+
+.nice-form-group > input[type="range"]:focus::-webkit-slider-thumb {
+	box-shadow: 0 0 0 var(--nf-slider-thumb-border-focus-width) var(--nf-slider-thumb-background);
+}
+
+.nice-form-group > input[type="range"]:focus::-moz-range-thumb {
+	box-shadow: 0 0 0 var(--nf-slider-thumb-border-focus-width) var(--nf-slider-thumb-background);
+}
+
+/* Color input */
+.nice-form-group > input[type="color"] {
+	border: var(--nf-input-border-width) solid var(--nf-input-border-color);
+	height: calc(var(--nf-input-size) * 2);
+	border-radius: var(--nf-input-border-radius);
+	padding: calc(var(--nf-input-border-width) * 2);
+	min-height: auto;
+}
+
+.nice-form-group > input[type="color"]:focus {
+	outline: none;
+	border-color: var(--nf-input-focus-border-color);
+}
+
+.nice-form-group > input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 5%;
+}
+
+.nice-form-group > input[type="color"]::-moz-color-swatch {
+	border-radius: calc(var(--nf-input-border-radius) / 2);
+	border: none;
+}
+
+.nice-form-group > input[type="color"]::-webkit-color-swatch {
+	border-radius: calc(var(--nf-input-border-radius) / 2);
+	border: none;
+}
+
+.nice-form-group > input[type="number"] {
+	width: auto;
+}
+
+/* Invalid / valid states */
+.nice-form-group > input:required:not(:placeholder-shown):invalid,
+.nice-form-group > select:required:not(:placeholder-shown):invalid,
+.nice-form-group > textarea:required:not(:placeholder-shown):invalid {
+	background-color: var(--nf-invalid-input-background-color);
+	border-color: var(--nf-invalid-input-border-bottom-color);
+	color: var(--nf-invalid-input-color);
+}
+
+.nice-form-group > input:required:not(:placeholder-shown):invalid:focus,
+.nice-form-group > select:required:not(:placeholder-shown):invalid:focus,
+.nice-form-group > textarea:required:not(:placeholder-shown):invalid:focus {
+	background-color: var(--nf-input-background-color);
+	border-color: var(--nf-input-focus-border-color);
+	color: var(--nf-input-color);
+}
+
+/* Search-specific */
+.nice-form-group > input[type="search"]:placeholder-shown {
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-search'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");
+	background-position: left 12px bottom 50%;
+	padding-left: 36px;
+	background-size: var(--nf-input-size);
+	background-repeat: no-repeat;
+}
+
+.nice-form-group > input[type="search"]::-webkit-search-cancel-button {
+	-webkit-appearance: none;
+	width: var(--nf-input-size);
+	height: var(--nf-input-size);
+	background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-x'%3E%3Cpath d='M18 6L6 18M6 6l12 12'/%3E%3C/svg%3E");
+}
+
+.nice-form-group > input[type="search"]:focus {
+	padding-left: 12px;
+	background-position: left -16px bottom 50%;
+}
+
+/* Icon inputs */
+.nice-form-group > input[type="email"][class^="icon"] {
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-at-sign'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M16 8v5a3 3 0 006 0v-1a10 10 0 10-3.92 7.94'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+}
+
+.nice-form-group > input[type="tel"][class^="icon"] {
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-phone'%3E%3Cpath d='M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+}
+
+.nice-form-group > input[type="url"][class^="icon"] {
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-link'%3E%3Cpath d='M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71'/%3E%3Cpath d='M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+}
+
+.nice-form-group > input[type="password"] {
+	letter-spacing: 2px;
+}
+
+.nice-form-group > input[type="password"][class^="icon"] {
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-lock'%3E%3Crect x='3' y='11' width='18' height='11' rx='2' ry='2'/%3E%3Cpath d='M7 11V7a5 5 0 0110 0v4'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+}
+
+.nice-form-group > input.icon-left {
+	background-position: left 12px bottom 50%;
+	padding-left: 36px;
+	background-size: var(--nf-input-size);
+}
+
+.nice-form-group > input.icon-right {
+	background-position: right 12px bottom 50%;
+	padding-right: 36px;
+	background-size: var(--nf-input-size);
+}
+
+/* Autofill override */
+.nice-form-group > input:-webkit-autofill,
+.nice-form-group > select:-webkit-autofill,
+.nice-form-group > textarea:-webkit-autofill {
+	padding: 12px 16px !important;
+}
+
+/* Side-by-side fields */
+.side-by-side-box {
+	display: flex;
+	gap: 16px;
+}
+
+.side-by-side-box .nice-form-group {
+	flex: 1;
+}
+
+/*--------------------------------------------------------------
+# Buttons — Project Standard (matches index.html system)
+--------------------------------------------------------------*/
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 10px 20px;
+	border-radius: var(--radius-md);
+	font-size: 14px;
+	font-weight: 600;
+	font-family: inherit;
+	border: none;
+	cursor: pointer;
+	transition: all var(--transition-fast);
+	outline: none;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.btn:active {
+	transform: scale(0.97);
+}
+
+/* Filled accent — matches both .btn-primary-theme and legacy .btn-theme */
+.btn-primary-theme,
+.btn-theme {
+	background: var(--theme-color);
+	color: #fff;
+	box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.3);
+}
+
+.btn-primary-theme:hover,
+.btn-theme:hover {
+	background: var(--theme-secondary);
+	box-shadow: 0 4px 16px rgba(var(--theme-color-rgb), 0.4);
+	transform: translateY(-1px);
+	color: #fff;
+}
+
+/* Outlined accent */
+.btn-outline-theme {
+	background: transparent;
+	color: var(--theme-color);
+	border: 1.5px solid var(--theme-color);
+}
+
+.btn-outline-theme:hover {
+	background: rgba(var(--theme-color-rgb), 0.06);
+}
+
+/* Neutral / secondary */
+.btn-secondary-theme,
+.input-button {
+	background: var(--bg-secondary);
+	color: var(--text-primary);
+	border: 1px solid var(--border-color);
+}
+
+.btn-secondary-theme:hover,
+.input-button:hover {
+	background: var(--bg-tertiary);
+	border-color: #ccc;
+}
+
+/* Danger */
+.btn-danger {
+	background: #e74c3c;
+	color: #fff;
+	box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+}
+
+.btn-danger:hover {
+	background: #c0392b;
+	box-shadow: 0 4px 16px rgba(231, 76, 60, 0.4);
+}
+
+/* Button layout spacing */
+.btn-format {
+	margin: 5px;
+}
+
+.btn-format:first-child {
+	margin-left: 0;
+}
+
+.btn-format:last-child {
+	margin-right: 0;
+}
+
+/* Outlined basic — matches theme color */
+.btn-basic {
+	border-width: 2px;
+	border-style: solid;
+	border-color: var(--theme-color);
+	color: var(--theme-color);
+	background: none;
+}
+
+.btn-basic:hover,
+.btn-basic:focus {
+	background: var(--theme-color);
+	color: #fff;
+}
+
+/* Outlined secondary — neutral gray */
+.btn-basic-secondary {
+	border-width: 2px;
+	border-style: solid;
+	border-color: var(--text-secondary);
+	color: var(--text-secondary);
+	background: none;
+}
+
+.btn-basic-secondary:hover,
+.btn-basic-secondary:focus {
+	background: var(--text-secondary);
+	color: #fff;
+}
+
+/* Small variant */
+.btn-sm {
+	padding: 7px 16px;
+	font-size: 13px;
+	border-radius: var(--radius-sm);
+}
+
+/* Input-trigger buttons (full-width, left-aligned text) */
+.input-button {
+	width: 100%;
+	min-height: 48px;
+	height: auto;
+	justify-content: flex-start;
+	font-weight: 500;
+	white-space: normal;
+	word-break: break-word;
+	text-align: left;
+}
+
+/* Focus ring — shared by buttons and accordion */
+.btn:focus,
+.accordion-button:focus {
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.25);
+}
+
+/*--------------------------------------------------------------
+# Accordion Items (JS-Rendered)
+# Uses CSS variables for automatic light/dark compatibility
+--------------------------------------------------------------*/
+.accordion-item {
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
+	border-radius: 0;
+	margin-bottom: 0;
+	overflow: hidden;
+}
+
+.accordion-item.dragging {
+	opacity: 0.5;
+}
+
+.accordion-header {
+	background: var(--bg-tertiary);
+	border-radius: 0;
+}
+
+.accordion-button {
+	background: transparent;
+	color: var(--text-primary);
+	font-weight: 600;
+	font-size: 14px;
+	padding: 14px 16px;
+	width: 100%;
+	text-align: left;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.accordion-button[aria-expanded="false"] {
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
+}
+
+.accordion-button[aria-expanded="true"] {
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
+}
+
+.accordion-body {
+	background: var(--bg-primary);
+	color: var(--text-primary);
+	padding: 16px;
+}
+
+.accordion-button::after {
+	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%235859a7'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}
+
+/* "New" badge icon — right-aligned in accordion headers */
+.title-text {
+	margin-right: auto;
+}
+
+.flex-button-inner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	margin-right: 6px;
+}
+
+.new {
+	fill: var(--theme-color);
+}
+
+.icon-container {
+	display: flex;
+	align-items: center;
+}
+
+/*--------------------------------------------------------------
+# Places API — "Fetch Info With Maps" button at the top of entry accordion bodies (P4)
+--------------------------------------------------------------*/
+.accordion-header--places {
+	display: flex;
+	align-items: center;
+}
+
+.accordion-header--places .accordion-button {
+	flex: 1 1 auto;
+	width: auto;
+}
+
+.places-fetch-wrapper {
+	display: flex;
+	justify-content: flex-end;
+	margin: 12px 0;
+}
+
+.accordion-body .places-fetch-wrapper {
+	margin-top: 0;
+}
+
+/* Shared "action at the top-right" wrapper for editor accordion bodies
+   (transport copy, accommodation import) — mirrors the Places API button. */
+.import-fetch-wrapper {
+	display: flex;
+	justify-content: flex-end;
+	margin: 12px 0;
+}
+
+.accordion-body .import-fetch-wrapper {
+	margin-top: 0;
+}
+
+/*--------------------------------------------------------------
+# Drag Icon (sortable accordion items)
+--------------------------------------------------------------*/
+.drag-icon {
+	cursor: grab;
+	font-size: 20px;
+	color: var(--text-muted);
+	flex-shrink: 0;
+	margin-right: 8px;
+	opacity: 1;
+	width: 20px;
+	overflow: hidden;
+	transition:
+		opacity 0.25s ease,
+		width 0.25s ease,
+		margin-right 0.25s ease,
+		color var(--transition-fast);
+}
+.drag-icon:hover {
+	color: var(--text-primary);
+}
+.drag-icon:active {
+	cursor: grabbing;
+}
+.drag-icon-hidden {
+	opacity: 0;
+	width: 0;
+	margin-right: 0;
+	pointer-events: none;
+}
+
+.draggable {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.input-button-container {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 8px;
+}
+
+/* Inner itinerary modal screens — auto-scroll when content is taller than the viewport */
+#inner-itinerary-box > .inner-itinerary,
+#inner-itinerary-main-screen {
+	max-height: 70vh;
+	overflow-y: auto;
+	scroll-behavior: smooth;
+	padding-right: 4px;
+}
+
+/* Image editor modal screens — auto-scroll when content is taller than the viewport */
+.image-editor-box > .image-editor-screen {
+	max-height: 70vh;
+	overflow-y: auto;
+	scroll-behavior: smooth;
+	padding-right: 4px;
+}
+
+.expenses-item {
+	margin-bottom: 16px;
+}
+
+.expenses-item > label {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	font-weight: 600;
+	font-size: 0.8125rem;
+	color: var(--text-primary);
+	margin-bottom: 8px;
+}
+
+/* Transportation grouping (leg / people view) — group header + items area */
+.transportation-group {
+	margin-bottom: 16px;
+}
+
+.transportation-group-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-weight: 600;
+	font-size: 0.875rem;
+	color: var(--text-primary);
+	padding: 8px 10px;
+	margin-bottom: 8px;
+	border: 1px solid var(--border-color);
+	border-left: 3px solid var(--theme-color, currentColor);
+	border-radius: 8px;
+	background-color: var(--box-color);
+}
+
+.transportation-group-items {
+	border-radius: 8px;
+}
+
+.transportation-group-items .inner-box {
+	margin-bottom: 8px;
+}
+
+.transportation-group-items .inner-box:last-child {
+	margin-bottom: 0;
+}
+
+/* Legs nested inside group wrappers are no longer direct .accordion children,
+   so restore the rounded corners the flat layout gets from :first/:last-child. */
+.transportation-group-items .inner-box > .accordion-item {
+	border-radius: var(--radius-md);
+}
+
+.expenses-category-total {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	font-weight: 700;
+	font-size: 0.9375rem;
+	color: var(--text-primary);
+	padding: 10px 12px;
+	margin-bottom: 12px;
+	border: 1px solid var(--border-color);
+	border-radius: 8px;
+	background-color: var(--box-color);
+}
+
+.expense-type-subtotal {
+	margin-left: auto;
+	font-weight: 600;
+	font-size: 0.8125rem;
+	color: var(--subtitle);
+}
+
+.expense-item-button {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	width: 100%;
+	text-align: left;
+}
+
+.expense-item-main {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.expense-item-price {
+	margin-left: auto;
+	flex-shrink: 0;
+	font-weight: 600;
+	color: var(--subtitle);
+}
+
+.expense-people-list {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin-top: 4px;
+}
+
+.expense-people-item {
+	margin-top: 0;
+}
+
+.expense-people-item label {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-bottom: 0;
+}
+
+.expense-people-item input[type="checkbox"] {
+	margin: 0;
+}
+
+/*--------------------------------------------------------------
+# Habilitado Content Spacing
+--------------------------------------------------------------*/
+[id$="-enabled-content"] {
+	margin-top: 16px;
+}
+
+[id^="habilitado-"][id$="-content"] .item-box {
+	margin-top: 8px;
+}
+
+#transportation-enabled-content > .transportation-box {
+	margin-top: 16px;
+}
+
+/* Destinos Cards — modern card-based layout */
+#destinations-enabled-content {
+	max-height: 420px;
+	display: flex;
+	flex-direction: column;
+	/* Contain the destinations content: a long card list must scroll inside
+	   this box instead of overflowing past it (e.g. running under the sticky
+	   save/cancel footer below). */
+	overflow: hidden;
+}
+
+#destinations-enabled-content > #has-destinations {
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	flex: 1;
+	/* Keep the search input fixed; let only the cards list scroll below. */
+	overflow: hidden;
+}
+
+.destinations-cards {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-height: 0;
+	gap: 4px;
+	padding: 8px 0;
+	overflow-y: auto;
+}
+
+.destination-card {
+	display: flex;
+	align-items: center;
+	padding: 10px 14px;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--border-color, #e0e0e0);
+	background: var(--bg-primary, #fff);
+	cursor: pointer;
+	transition:
+		background 0.2s ease,
+		border-color 0.2s ease,
+		box-shadow 0.2s ease,
+		transform 0.2s ease;
+	user-select: none;
+}
+
+.destination-card:hover {
+	background: rgba(var(--theme-color-rgb), 0.04);
+	border-color: rgba(var(--theme-color-rgb), 0.25);
+}
+
+.destination-card:active {
+	transform: scale(0.98);
+}
+
+.destination-card.selected {
+	background: rgba(var(--theme-color-rgb), 0.08);
+	border-color: rgba(var(--theme-color-rgb), 0.35);
+	color: var(--theme-color);
+	box-shadow: 0 0 0 1px rgba(var(--theme-color-rgb), 0.1);
+}
+
+.destination-card.selected .destination-card-name {
+	color: var(--theme-color);
+	font-weight: 600;
+}
+
+.destination-card-name {
+	font-weight: 500;
+	font-size: 0.875rem;
+	flex: 1;
+}
+
+/* Wider screens: 2-column grid layout */
+@media (min-width: 640px) {
+	.destinations-cards {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 6px;
+	}
+}
+
+/* Keep old class for itinerary inner checkboxes (they still use checkboxes) */
+.destinations-checkboxes {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	min-height: auto !important;
+	padding: 8px 0;
+}
+
+.destinations-checkboxes .nice-form-group {
+	margin-top: 0;
+	padding: 8px 12px;
+	border-radius: var(--radius-sm);
+	transition: background var(--transition-fast);
+}
+
+.destinations-checkboxes .nice-form-group:hover {
+	background: var(--bg-secondary);
+}
+
+.destinations-checkboxes .nice-form-group > label {
+	margin-bottom: 0;
+	font-weight: 500;
+	font-size: 0.875rem;
+}
+
+/*--------------------------------------------------------------
+# Button Box & Add Button Row
+--------------------------------------------------------------*/
+.button-box {
+	display: flex;
+	gap: 8px;
+	justify-content: flex-end;
+}
+
+.button-box-formatted,
+.button-box-right-formatted {
+	display: flex;
+	justify-content: flex-end;
+	padding: 12px 0 0;
+	margin-top: 8px;
+}
+
+.button-box-formatted .btn,
+.button-box-right-formatted .btn {
+	min-height: 40px;
+}
+
+/*--------------------------------------------------------------
+# Double Buttons Section — Persistent Save/Cancel Bar
+# Always visible regardless of active tab filter
+--------------------------------------------------------------*/
+#double-button-section {
+	position: sticky;
+	bottom: 0;
+	z-index: 10;
+	background: rgba(255, 255, 255, 0.85);
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+	border-top: 1px solid var(--border-color);
+	border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+	padding: 16px 24px;
+	margin-bottom: 0;
+	margin-top: 20px;
+	box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] #double-button-section {
+	background: rgba(44, 44, 46, 0.85);
+}
+
+/*--------------------------------------------------------------
+# Transparent Background Container (customization sections)
+--------------------------------------------------------------*/
+.transparent-background {
+	margin-top: 12px;
+}
+
+.transparent-background .nice-form-group:first-child {
+	margin-top: 0;
+}
+
+.customization-box {
+	margin-top: 16px;
+	margin-bottom: 4px;
+}
+
+.transparent-background .image-checkbox {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+/* Period-box — itinerary time-of-day containers */
+.period-box {
+	margin-top: 16px;
+	padding: 16px;
+	background: var(--bg-secondary);
+	border-radius: var(--radius-md);
+	border: 1px solid var(--border-color);
+}
+
+.period-box > label:first-of-type {
+	font-weight: 700;
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.6px;
+	color: var(--text-primary);
+	margin-bottom: 12px;
+	display: block;
+	opacity: 0.85;
+}
+
+[data-theme="dark"] .period-box {
+	background: rgba(255, 255, 255, 0.03);
+}
+
+.period-box > .nice-form-group:first-child {
+	margin-top: 0;
+}
+
+/* Input-button inside period-box — differentiate from container background */
+.period-box .input-button {
+	background: var(--bg-primary);
+	border-color: var(--border-color);
+}
+
+.period-box .input-button:hover {
+	background: var(--bg-tertiary);
+}
+
+/* Itinerary destination cards — match destinations-checkboxes layout (same card styling, side-by-side grid on wide screens) */
+.itinerary-cards {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 8px 0;
+}
+
+@media (min-width: 640px) {
+	.itinerary-cards {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 6px;
+	}
+}
+
+/*--------------------------------------------------------------
+# Inner Itinerary Modal — Compact Layout
+# Reduces modal height: travelers in columns + start/end side by side
+--------------------------------------------------------------*/
+
+/* Travelers checkboxes — auto columns (3 on desktop, collapses for fewer) */
+.double-fieldset {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+	gap: 4px 16px;
+	margin: 8px 0 0;
+	padding: 0;
+	border: none;
+}
+
+.double-fieldset .nice-form-group {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 0;
+	white-space: nowrap;
+}
+
+/* Start / End time inputs — two columns side by side */
+.side-by-side-box-fixed {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	align-items: start;
+}
+
+/* Spacing between the travelers fieldset and the start/end time box */
+#inner-itinerary-main-screen .side-by-side-box-fixed {
+	margin-top: 16px;
+}
+
+.side-by-side-box-fixed .side-by-side-fixed {
+	margin-top: 0;
+	min-width: 0;
+}
+
+.side-by-side-box-fixed .flex-input-50-50 {
+	width: 100%;
+}
+
+/* Inner expense — compact currency picker (short code closed, full label open) */
+/* Spacing: match a normal form group above the cost/currency row */
+.expense-currency-row {
+	margin-top: 1.5rem;
+}
+
+.expense-currency-select {
+	position: relative;
+	width: 100%;
+}
+
+/* The cost number input must stay full-width inside its half-column cell — the
+   generic `.nice-form-group > input[type="number"] { width: auto }` rule would
+   otherwise let it overflow into the currency column. */
+.expense-currency-row .nice-form-group > input[type="number"] {
+	width: 100%;
+}
+
+.expense-currency-trigger {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	width: 100%;
+	background: var(--nf-input-background-color);
+	font-family: var(--nf-input-font-family);
+	font-size: var(--nf-input-font-size);
+	color: var(--nf-input-color);
+	border-radius: var(--nf-input-border-radius);
+	border: var(--nf-input-border-width) var(--nf-input-border-style) var(--nf-input-border-color);
+	padding: 12px 16px;
+	min-height: 48px;
+	cursor: pointer;
+	text-align: left;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: none;
+	transition:
+		border var(--transition-fast),
+		box-shadow var(--transition-fast);
+}
+
+.expense-currency-trigger:hover {
+	border-color: var(--nf-input-focus-border-color);
+}
+
+.expense-currency-select.opened .expense-currency-trigger {
+	border-color: var(--nf-input-focus-border-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.expense-currency-chevron {
+	flex-shrink: 0;
+	pointer-events: none;
+	transition: transform var(--transition-fast);
+}
+
+.expense-currency-select.opened .expense-currency-chevron {
+	transform: rotate(180deg);
+}
+
+.expense-currency-dropdown {
+	position: absolute;
+	top: calc(100% + 4px);
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	max-height: 220px;
+	overflow-y: auto;
+	background: var(--bg-primary);
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-lg);
+}
+
+.expense-currency-option {
+	padding: 10px 14px;
+	/* Fallback covers the floating case, where the dropdown is appended to
+	   <body> and no longer inherits the --nf-* tokens. */
+	font-size: var(--nf-input-font-size, 0.9375rem);
+	color: var(--text-primary);
+	white-space: normal;
+	line-height: 1.3;
+	cursor: pointer;
+}
+
+.expense-currency-option:hover,
+.expense-currency-option.active {
+	background: var(--bg-tertiary);
+}
+
+/*--------------------------------------------------------------
+# Travelers Modal — Dynamic List
+# Replaces the old "number of travelers" spinner with explicit
+# add / remove rows.
+--------------------------------------------------------------*/
+.travelers-list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.travelers-row {
+	display: flex;
+	align-items: flex-end;
+	gap: 8px;
+}
+
+.travelers-row .travelers-name-group {
+	flex: 1;
+	min-width: 0;
+	margin-top: 0;
+}
+
+.travelers-row .travelers-name-group label {
+	margin-bottom: calc(var(--nf-input-size) / 4);
+}
+
+.travelers-remove {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 48px;
+	height: 48px;
+	min-height: 48px;
+	padding: 0;
+	margin: 0;
+	border: 1.5px solid var(--border-color);
+	border-radius: var(--radius-md);
+	background: var(--bg-secondary);
+	color: var(--text-muted);
+	cursor: pointer;
+	transition:
+		border var(--transition-fast),
+		color var(--transition-fast),
+		background var(--transition-fast);
+}
+
+.travelers-remove:hover {
+	border-color: #e74c3c;
+	color: #e74c3c;
+	background: rgba(231, 76, 60, 0.08);
+}
+
+.travelers-remove svg {
+	width: 18px;
+	height: 18px;
+}
+
+.travelers-add {
+	margin-top: 12px;
+}
+
+/*--------------------------------------------------------------
+# Wallpaper Import from Destination — Dialog
+# Lazily-loaded destination picker with image previews.
+--------------------------------------------------------------*/
+.wallpaper-import-loading {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 16px 0;
+	color: var(--text-muted);
+}
+
+.wallpaper-import-spinner {
+	width: 20px;
+	height: 20px;
+	border: 2px solid transparent;
+	border-top-color: var(--theme-color);
+	border-radius: 50%;
+	animation: wallpaper-import-spin 0.8s linear infinite;
+}
+
+@keyframes wallpaper-import-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.wallpaper-import-scroll {
+	display: block;
+	max-height: min(58vh, 520px);
+	overflow-y: auto;
+	padding-right: 6px;
+	scrollbar-gutter: stable;
+}
+
+.wallpaper-import-group {
+	margin-bottom: 18px;
+}
+
+.wallpaper-import-group:last-child {
+	margin-bottom: 0;
+}
+
+.wallpaper-import-group-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 10px;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--text-muted);
+}
+
+.wallpaper-import-group-count {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 20px;
+	height: 20px;
+	padding: 0 6px;
+	border-radius: 999px;
+	font-size: 0.6875rem;
+	font-weight: 700;
+	background: var(--bg-tertiary);
+	color: var(--text-secondary);
+}
+
+.wallpaper-import-subgroup {
+	margin-bottom: 14px;
+}
+
+.wallpaper-import-subgroup:last-child {
+	margin-bottom: 0;
+}
+
+.wallpaper-import-subgroup-title {
+	margin: 0 0 8px;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--text-secondary);
+}
+
+.wallpaper-import-group-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+	gap: 12px;
+}
+
+.wallpaper-import-card {
+	position: relative;
+	display: block;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	text-align: left;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md);
+	overflow: hidden;
+	cursor: pointer;
+	background: var(--bg-secondary);
+	/* Explicit theme-aware text color — without it the <button> falls back to
+	   the UA's ButtonText (near-black), which is unreadable on dark cards. */
+	color: var(--text-primary);
+	transition:
+		border-color var(--transition-fast),
+		transform var(--transition-fast),
+		box-shadow var(--transition-fast);
+}
+
+.wallpaper-import-card:hover {
+	border-color: rgba(var(--theme-color-rgb), 0.5);
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-md);
+}
+
+.wallpaper-import-thumb {
+	height: 96px;
+	background-size: cover;
+	background-position: center;
+	background-color: var(--bg-tertiary);
+	/* Centered icon placeholder (transportation import) — image cards are
+	   unaffected because they only use the background. */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Icon-only thumb (no image): gray like the index plane icons, not the
+   inherited button text color. */
+.wallpaper-import-thumb .image-picker-icon {
+	color: var(--text-muted);
+}
+
+/* Gray placeholder thumb (accommodation import) — mirrors index no-image cards. */
+.wallpaper-import-thumb.no-image {
+	background: linear-gradient(135deg, var(--no-image-bg), var(--no-image-bg-alt));
+}
+
+/* Trip-picker search bar inside the dialog — tighter than the page-level one. */
+.wallpaper-import-search-bar .search-bar {
+	margin-bottom: 12px;
+}
+
+.wallpaper-import-name {
+	padding: 8px 10px;
+	font-weight: 600;
+	font-size: 0.8125rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* Active destination card in the picker dialog (selection, not yet applied) */
+.wallpaper-import-card.selected {
+	border-color: rgba(var(--theme-color-rgb), 0.6);
+	box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.35);
+}
+
+.wallpaper-import-card.selected .wallpaper-import-name {
+	color: var(--theme-color);
+}
+
+.wallpaper-import-empty {
+	padding: 16px 0;
+	color: var(--text-muted);
+}
+
+/* Disabled confirm button (nothing selected yet) */
+.btn:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+/*--------------------------------------------------------------
+# Image Picker Cards (Wallpaper + Logos)
+--------------------------------------------------------------*/
+.image-picker-mode {
+	margin-bottom: 12px;
+}
+
+.image-picker-card {
+	display: block;
+	width: 100%;
+	max-width: 360px;
+	padding: 0;
+	margin: 0;
+	text-align: left;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md);
+	overflow: hidden;
+	cursor: pointer;
+	background: var(--bg-secondary);
+	transition:
+		border-color var(--transition-fast),
+		transform var(--transition-fast),
+		box-shadow var(--transition-fast);
+}
+
+.image-picker-card:hover {
+	border-color: rgba(var(--theme-color-rgb), 0.5);
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-md);
+}
+
+.image-picker-thumb {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 120px;
+	background-size: cover;
+	background-position: center;
+	background-color: var(--bg-tertiary);
+	color: var(--text-muted);
+	/* The whole card is clickable; Bootstrap's .placeholder sets cursor: wait
+	   on the thumb, so force pointer here too. */
+	cursor: pointer;
+}
+
+.image-picker-thumb.placeholder {
+	background-image: none !important;
+	/* Higher specificity than Bootstrap's .placeholder (cursor: wait). */
+	cursor: pointer;
+}
+
+.image-picker-icon {
+	font-size: 40px;
+}
+
+.image-picker-label {
+	display: block;
+	padding: 8px 10px;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/* Separator line between the preview thumb and the caption. */
+	border-top: 1px solid var(--border-color);
+	/* Theme-aware caption color — adapts automatically in dark mode. */
+	color: var(--text-secondary);
+}
+
+/* Dark mode: keep the picker label clearly readable on the dark card. */
+[data-theme="dark"] .image-picker-label {
+	color: var(--text-primary);
+}
+
+.image-picker-logos {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	max-width: 360px;
+}
+
+/* Logo cards: contain the image and show it on contrasting backgrounds */
+.image-picker-card.logo-light .image-picker-thumb {
+	background-color: #ffffff;
+}
+
+.image-picker-card.logo-dark .image-picker-thumb {
+	background-color: #1a1a2e;
+}
+
+.image-picker-card.logo-light .image-picker-thumb,
+.image-picker-card.logo-dark .image-picker-thumb {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+/*--------------------------------------------------------------
+# Delete Link
+--------------------------------------------------------------*/
+#delete-text {
+	text-align: right;
+	margin-top: 16px;
+}
+
+#delete-text a {
+	color: #e74c3c;
+	font-size: 14px;
+	font-weight: 500;
+	text-decoration: none;
+}
+
+#delete-text a:hover {
+	color: #c0392b;
+	text-decoration: underline;
+}
+
+/*--------------------------------------------------------------
+# Optional label indicator
+--------------------------------------------------------------*/
+.optional {
+	font-weight: 400;
+	font-size: 0.85em;
+	color: var(--text-muted);
+}
+
+/*--------------------------------------------------------------
+# Message / Help Text
+--------------------------------------------------------------*/
+.message-text {
+	font-size: 0.75rem;
+	color: var(--text-muted);
+	margin-top: 4px;
+}
+
+.message-text .red {
+	color: #e74c3c;
+}
+
+/*--------------------------------------------------------------
+# PIN Input Overrides
+# Matches the shared PIN modal styling used on the expenses page
+# (flex-centered wrapper, square input boxes, hidden `.pin` value
+# holder) while also restoring dedicated pin-input styling that the
+# general .nice-form-group > input rules would otherwise clobber.
+--------------------------------------------------------------*/
+.pin-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 30px;
+	margin-bottom: 5px;
+}
+
+.nice-form-group > input.pin-input,
+.nice-form-group > input.pin-input-invalid,
+input.pin-input,
+input.pin-input-invalid {
+	width: 44px;
+	height: 44px;
+	min-height: auto;
+	border: 1px solid #d7d7d7;
+	border-radius: 6px;
+	outline: none;
+	margin: 1px;
+	text-align: center;
+	margin: 0 5px;
+	background: #eeeeee;
+	font-size: 20px;
+	color: var(--font-color);
+	padding: 0;
+}
+
+input.pin-input-invalid {
+	color: #3a3838;
+	background: #eee0e0;
+	border-color: #dbbbbb;
+}
+
+.pin {
+	color: #ffffff;
+	font-size: 20px;
+	text-align: center;
+	display: none;
+}
+
+[data-theme="dark"] input.pin-input {
+	background: #3a3a3c;
+	border-color: #555;
+	color: #e2e2e2;
+}
+
+[data-theme="dark"] input.pin-input-invalid {
+	background: #4a3030;
+	border-color: #6b4040;
+	color: #e2c0c0;
+}
+
+/*--------------------------------------------------------------
+# Side-by-side Fixed — Desktop layout for color pickers
+--------------------------------------------------------------*/
+.side-by-side-color-box .side-by-side-fixed {
+	flex: 1;
+	min-width: 0;
+}
+
+/* Spacing between theme radio group and color pickers on desktop */
+#colors-enabled-content > fieldset {
+	margin-bottom: 16px;
+}
+
+@media (max-width: 900px) {
+	.side-by-side-color-box {
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.side-by-side-color-box .nice-form-group {
+		margin-top: calc(var(--nf-input-size) * 1.5);
+	}
+}
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+#footer {
+	background: var(--bg-secondary);
+	color: var(--text-secondary);
+	font-size: 12px;
+	text-align: center;
+	width: 100%;
+	padding: 10px 0;
+	margin-bottom: 32px;
+	border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.attributions,
+.atribuicoes {
+	cursor: pointer;
+}
+
+.attributions:hover,
+.atribuicoes:hover {
+	color: var(--text-muted);
+}
+
+/*--------------------------------------------------------------
+# Details / Code toggle (legacy, minimally styled)
+--------------------------------------------------------------*/
+details {
+	background: var(--bg-tertiary);
+	margin: 2em -2em -2em;
+	padding: 1.5em 2em;
+}
+
+details .gist {
+	margin-top: 1.5em;
+}
+
+details .toggle-code {
+	display: inline-block;
+	padding: 0.5em 1em;
+	border-radius: 5px;
+	font-size: 0.875rem;
+	background: var(--theme-color);
+	top: 1em;
+	right: 1em;
+	color: #fff;
+	font-weight: 500;
+	-webkit-user-select: none;
+	user-select: none;
+	cursor: pointer;
+}
+
+details .toggle-code:hover {
+	background: var(--theme-secondary);
+}
+
+details .toggle-code svg {
+	display: inline-block;
+	vertical-align: -15%;
+	margin-right: 0.25em;
+}
+
+details summary {
+	outline: none;
+	list-style-type: none;
+}
+
+details summary::marker {
+	display: none;
+}
+
+details summary::-webkit-details-marker {
+	display: none;
+}
+
+/*--------------------------------------------------------------
+# Legacy: to-repo / to-reset
+--------------------------------------------------------------*/
+.to-repo,
+.to-reset {
+	display: inline-flex;
+	background: #24292e;
+	color: #fff;
+	border-radius: 5px;
+	padding: 0.5em 1em;
+	text-decoration: none;
+	align-items: center;
+}
+
+.to-repo:hover,
+.to-reset:hover {
+	background: #000;
+}
+
+.to-repo svg,
+.to-reset svg {
+	width: 1.125rem;
+	height: 1.125rem;
+	margin-right: 0.75em;
+}
+
+.to-reset {
+	background: var(--theme-color);
+}
+
+.to-reset:hover {
+	background: var(--theme-secondary);
+}
+
+/*--------------------------------------------------------------
+# Base Reset (scoped to edit pages, minimal)
+--------------------------------------------------------------*/
+.edit-page-content *,
+.edit-page-content *:after,
+.edit-page-content *:before {
+	box-sizing: inherit;
+}
+
+/*--------------------------------------------------------------
+# Dark Mode Overrides for Edit Pages
+# All [data-theme="dark"] rules scoped to edit components
+--------------------------------------------------------------*/
+[data-theme="dark"] #hero::before {
+	background: rgba(0, 0, 0, 0.55);
+}
+
+/* Tab Bar */
+[data-theme="dark"] .edit-tab-bar {
+	background: rgba(28, 28, 30, 0.6);
+	border-color: var(--border-color);
+}
+
+[data-theme="dark"] .edit-tab:hover {
+	background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .edit-tab.active {
+	background: var(--bg-tertiary);
+	color: var(--theme-color);
+}
+
+/* Section Cards */
+[data-theme="dark"] .edit-page-content section {
+	background: rgba(44, 44, 46, 0.7);
+	border-color: var(--border-color);
+}
+
+[data-theme="dark"] .edit-page-content section h1 {
+	color: var(--text-primary);
+}
+
+[data-theme="dark"] .edit-page-content section h1 svg {
+	color: var(--theme-color);
+}
+
+[data-theme="dark"] .edit-page-content section p {
+	color: var(--text-muted);
+}
+
+[data-theme="dark"] .edit-page-content section strong {
+	color: var(--text-primary);
+}
+
+[data-theme="dark"] .edit-page-content section code {
+	background: #303030;
+}
+
+/* Details */
+[data-theme="dark"] details {
+	background: #303030;
+}
+
+[data-theme="dark"] details .toggle-code {
+	background: var(--theme-color);
+	color: #e2e2e2;
+}
+
+[data-theme="dark"] details .toggle-code:hover {
+	background: var(--theme-secondary);
+}
+
+/* Buttons */
+[data-theme="dark"] .btn-secondary-theme {
+	background: var(--bg-secondary);
+	color: var(--text-primary);
+	border-color: var(--border-color);
+}
+
+[data-theme="dark"] .btn-secondary-theme:hover {
+	background: var(--bg-tertiary);
+}
+
+/* Input-button — match the nice-form-group input field color (same as light mode) */
+[data-theme="dark"] .input-button {
+	background: var(--nf-input-background-color, #404040);
+	color: var(--nf-input-color, #e2e2e2);
+	border-color: var(--nf-input-border-color, #383838);
+}
+
+[data-theme="dark"] .input-button:hover {
+	background: var(--bg-tertiary);
+}
+
+/* Delete */
+[data-theme="dark"] #delete-text a {
+	color: #e74c3c;
+}
+
+/* To-reset */
+[data-theme="dark"] .to-reset {
+	background: var(--theme-color);
+}
+
+[data-theme="dark"] .to-reset:hover {
+	background: #665e94;
+}
+
+/* Demo page */
+[data-theme="dark"] .edit-page {
+	color: #e2e2e2;
+}
+
+/* Footer */
+[data-theme="dark"] #footer {
+	background: var(--bg-secondary);
+}
+
+/* Color preset grid — dark mode */
+[data-theme="dark"] .color-preset-swatch {
+	border-color: var(--border-color, #404040);
+}
+
+[data-theme="dark"] .color-preset-swatch:hover {
+	border-color: var(--nf-input-focus-border-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.18);
+}
+
+[data-theme="dark"] .color-preset-swatch.selected {
+	border-color: var(--theme-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.3);
+}
+
+[data-theme="dark"] .color-preset-swatch::after {
+	color: var(--text-secondary, #a6a6a6);
+}
+
+[data-theme="dark"] .color-section-label {
+	color: var(--text-secondary, #a6a6a6);
+}
+
+[data-theme="dark"] .color-toggle-row .switch-label {
+	color: var(--text-secondary, #a6a6a6);
+}
+
+[data-theme="dark"] .color-custom-toggle {
+	color: var(--text-secondary, #a6a6a6);
+}
+
+/*--------------------------------------------------------------
+# Mobile — Responsive Breakpoints
+--------------------------------------------------------------*/
+
+@media (max-width: 900px) {
+	.edit-tab-bar {
+		position: fixed;
+		top: 60px;
+		left: 0;
+		right: 0;
+		border-top: none;
+		margin: 0;
+		border-radius: 0;
+		padding: 6px 8px;
+		z-index: 100;
+		background: rgba(255, 255, 255, 0.85);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+	}
+
+	.edit-tab {
+		font-size: 12px;
+		padding: 8px 10px;
+		gap: 4px;
+	}
+
+	.edit-tab svg {
+		width: 16px;
+		height: 16px;
+	}
+
+	.edit-page {
+		padding-top: 120px;
+	}
+
+	.edit-page-content {
+		padding: 0 12px 12px;
+	}
+
+	.edit-page-content section {
+		padding: 16px;
+		border-radius: var(--radius-md);
+	}
+
+	.edit-page-content section h1 {
+		font-size: 1.1rem;
+	}
+
+	/* Side-by-side fields collapse to stacked */
+	.side-by-side-box {
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.side-by-side-box .nice-form-group {
+		margin-top: calc(var(--nf-input-size) * 1.5);
+	}
+
+	.nice-form-group > input[type="file"] {
+		width: 100%;
+	}
+
+	.nice-form-group > input[type="date"],
+	.nice-form-group > input[type="time"] {
+		width: 100%;
+	}
+
+	#hero {
+		top: 0;
+		padding: 0 0.5em 0 0.5em !important;
+	}
+}
+
+/* Always icon-only tabs */
+.edit-tab span {
+	display: none;
+}
+
+/*--------------------------------------------------------------
+# Modern Radio — Pill / Segmented Style
+# Replaces native radio with card-like segmented buttons
+--------------------------------------------------------------*/
+.modern-radio-group {
+	display: flex;
+	gap: 2px;
+	background: var(--bg-tertiary);
+	border-radius: var(--radius-md);
+	padding: 3px;
+	border: 1px solid var(--border-color);
+}
+
+/* Sections containing overlays (date picker, etc.) need elevated stacking */
+.edit-page-content section:has(.date-range-picker) {
+	z-index: 11;
+}
+
+.modern-radio-group .nice-form-group {
+	margin-top: 0;
+	flex: 1;
+}
+
+.modern-radio-group input[type="radio"] {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+	pointer-events: none;
+}
+
+.modern-radio-group input[type="radio"] + label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	padding: 10px 16px;
+	border-radius: calc(var(--radius-md) - 2px);
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--text-muted);
+	cursor: pointer;
+	transition: all var(--transition-fast);
+	white-space: normal;
+	text-align: center;
+	line-height: 1.35;
+	user-select: none;
+	-webkit-user-select: none;
+	margin-bottom: 0;
+	max-width: 100%;
+	padding-left: 16px;
+	word-break: break-word;
+	hyphens: auto;
+}
+
+.modern-radio-group input[type="radio"] + label:hover {
+	color: var(--text-primary);
+	background: rgba(0, 0, 0, 0.03);
+}
+
+.modern-radio-group input[type="radio"]:checked + label {
+	background: rgba(var(--theme-color-rgb), 0.12);
+	color: var(--theme-color);
+	font-weight: 600;
+	box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .modern-radio-group input[type="radio"] + label:hover {
+	background: rgba(255, 255, 255, 0.05);
+}
+
+/* Modern radio group in a fieldset — stack vertically on mobile */
+fieldset.modern-radio-group {
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+	.modern-radio-group {
+		flex-direction: column;
+		gap: 2px;
+	}
+	.modern-radio-group input[type="radio"] + label {
+		justify-content: flex-start;
+	}
+}
+
+/*--------------------------------------------------------------
+# Color Picker with Hex Input
+# Native color input + adjacent hex text field in a neat row
+--------------------------------------------------------------*/
+.color-picker-box {
+	display: flex;
+	align-items: stretch;
+	gap: 8px;
+}
+
+.color-picker-box input[type="color"] {
+	flex: 0 0 48px;
+	width: 48px;
+	height: 48px;
+	padding: 4px;
+	border-radius: var(--radius-md);
+	border: 1.5px solid var(--border-color);
+	cursor: pointer;
+	background: transparent;
+	min-height: auto;
+}
+
+.color-picker-box input[type="color"]:focus {
+	border-color: var(--nf-input-focus-border-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.color-picker-box input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+.color-picker-box input[type="color"]::-webkit-color-swatch {
+	border-radius: calc(var(--radius-md) - 4px);
+	border: none;
+}
+
+.color-picker-box input[type="color"]::-moz-color-swatch {
+	border-radius: calc(var(--radius-md) - 4px);
+	border: none;
+}
+
+.color-picker-box .hex-input {
+	flex: 1;
+	background: var(--nf-input-background-color);
+	font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+	font-size: var(--nf-input-font-size);
+	border-radius: var(--nf-input-border-radius);
+	border: var(--nf-input-border-width) var(--nf-input-border-style) var(--nf-input-border-color);
+	color: var(--nf-input-color);
+	padding: 12px 16px;
+	letter-spacing: 0.5px;
+	transition:
+		border var(--transition-fast),
+		box-shadow var(--transition-fast);
+	outline: none;
+}
+
+.color-picker-box .hex-input:focus {
+	border-color: var(--nf-input-focus-border-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+/*--------------------------------------------------------------
+# Date Range Picker — Single calendar, period selection
+# A combined input that opens a custom calendar overlay
+--------------------------------------------------------------*/
+.date-range-picker {
+	position: relative;
+	width: 100%;
+}
+
+.date-range-input {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	background: var(--nf-input-background-color);
+	border: var(--nf-input-border-width) var(--nf-input-border-style) var(--nf-input-border-color);
+	border-radius: var(--nf-input-border-radius);
+	padding: 0 16px;
+	min-height: 48px;
+	cursor: pointer;
+	transition:
+		border var(--transition-fast),
+		box-shadow var(--transition-fast);
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.date-range-input:hover {
+	border-color: var(--text-muted);
+}
+
+.date-range-input.active,
+.date-range-input:focus-within {
+	border-color: var(--nf-input-focus-border-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.date-range-input .date-icon {
+	flex-shrink: 0;
+	color: var(--text-muted);
+	width: 20px;
+	height: 20px;
+}
+
+.date-range-input .date-text {
+	flex: 1;
+	font-size: var(--nf-input-font-size);
+	color: var(--text-primary);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 1.4;
+}
+
+.date-range-input .date-text.placeholder {
+	color: var(--nf-input-placeholder-color);
+	cursor: inherit;
+}
+
+.date-range-input .date-clear {
+	flex-shrink: 0;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: var(--text-muted);
+	padding: 4px;
+	border-radius: 50%;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	transition:
+		color var(--transition-fast),
+		background var(--transition-fast);
+}
+
+.date-range-input .date-clear:hover {
+	color: var(--text-primary);
+	background: var(--bg-tertiary);
+}
+
+.date-range-input.has-value .date-clear {
+	display: flex;
+}
+
+/* Calendar dropdown */
+.date-range-calendar {
+	position: absolute;
+	top: calc(100% + 8px);
+	left: 0;
+	z-index: 1000;
+	background: rgba(255, 255, 255, 0.97);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-lg);
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+	padding: 16px;
+	display: none;
+	min-width: 320px;
+	width: max-content;
+}
+
+[data-theme="dark"] .date-range-calendar {
+	background: rgba(44, 44, 46, 0.97);
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.date-range-calendar.open {
+	display: block;
+}
+
+/* Calendar header with month navigation */
+.cal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 12px;
+}
+
+.cal-nav-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: var(--radius-sm);
+	border: none;
+	background: transparent;
+	color: var(--text-primary);
+	cursor: pointer;
+	transition: background var(--transition-fast);
+}
+
+.cal-nav-btn:hover {
+	background: var(--bg-tertiary);
+}
+
+.cal-month-label {
+	font-size: 0.9375rem;
+	font-weight: 700;
+	color: var(--text-primary);
+	cursor: default;
+}
+
+/* Day-of-week header */
+.cal-weekdays {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	text-align: center;
+	margin-bottom: 4px;
+}
+
+.cal-weekdays span {
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--text-muted);
+	padding: 4px 0;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+/* Day grid */
+.cal-days {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 2px;
+}
+
+.cal-day {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 36px;
+	border-radius: var(--radius-sm);
+	font-size: 0.8125rem;
+	color: var(--text-primary);
+	cursor: pointer;
+	transition:
+		background var(--transition-fast),
+		color var(--transition-fast);
+	position: relative;
+	border: none;
+	background: transparent;
+	font-family: inherit;
+	width: 100%;
+}
+
+.cal-day:hover {
+	background: var(--bg-tertiary);
+}
+
+.cal-day.other-month {
+	color: var(--text-muted);
+	opacity: 0.4;
+	cursor: default;
+	pointer-events: none;
+}
+
+.cal-day.today {
+	font-weight: 700;
+	color: var(--theme-color);
+}
+
+.cal-day.in-range {
+	background: rgba(var(--theme-color-rgb), 0.08);
+	border-radius: 0;
+}
+
+.cal-day.range-start {
+	background: var(--theme-color);
+	color: #fff;
+	font-weight: 600;
+	border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.cal-day.range-end {
+	background: var(--theme-color);
+	color: #fff;
+	font-weight: 600;
+	border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.cal-day.range-start.range-end {
+	border-radius: var(--radius-sm);
+}
+
+/* Quick shortcuts below calendar */
+.cal-shortcuts {
+	display: flex;
+	gap: 6px;
+	margin-top: 12px;
+	padding-top: 12px;
+	border-top: 1px solid var(--border-color);
+	flex-wrap: wrap;
+}
+
+.cal-shortcut-btn {
+	flex: 1;
+	min-width: fit-content;
+	padding: 6px 10px;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--border-color);
+	background: transparent;
+	color: var(--text-secondary);
+	font-size: 0.75rem;
+	font-weight: 500;
+	cursor: pointer;
+	font-family: inherit;
+	transition: all var(--transition-fast);
+	white-space: nowrap;
+}
+
+.cal-shortcut-btn:hover {
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
+	border-color: var(--text-muted);
+}
+
+.cal-shortcut-btn.active-shortcut {
+	background: rgba(var(--theme-color-rgb), 0.1);
+	color: var(--theme-color);
+	border-color: rgba(var(--theme-color-rgb), 0.3);
+	font-weight: 600;
+}
+
+/* Calendar footer with Apply/Cancel */
+.cal-footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 8px;
+	margin-top: 12px;
+	padding-top: 12px;
+	border-top: 1px solid var(--border-color);
+}
+
+.cal-footer .cal-range-label {
+	font-size: 0.75rem;
+	color: var(--text-muted);
+	flex: 1;
+}
+
+.cal-footer-buttons {
+	display: flex;
+	gap: 8px;
+}
+
+.cal-apply-btn,
+.cal-cancel-btn {
+	padding: 8px 16px;
+	border-radius: var(--radius-md);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	cursor: pointer;
+	font-family: inherit;
+	border: none;
+	transition: all var(--transition-fast);
+}
+
+.cal-cancel-btn {
+	background: transparent;
+	color: var(--text-secondary);
+}
+
+.cal-cancel-btn:hover {
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
+}
+
+.cal-apply-btn {
+	background: var(--theme-color);
+	color: #fff;
+	box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.3);
+}
+
+.cal-apply-btn:hover {
+	background: var(--theme-secondary);
+	box-shadow: 0 4px 16px rgba(var(--theme-color-rgb), 0.4);
+}
+
+/* Calendar responsive */
+@media (max-width: 400px) {
+	.date-range-calendar {
+		left: -8px;
+		right: auto;
+		min-width: auto;
+		width: calc(100vw - 32px);
+	}
+	.cal-day {
+		height: 32px;
+		font-size: 0.75rem;
+	}
+}
+
+/* ≤975px: Compact tab bar, reduced section padding */
+@media (max-width: 975px) {
+	.edit-tab {
+		padding: 8px 10px;
+	}
+
+	.edit-page-content section {
+		padding: 12px;
+	}
+}
+
+/*--------------------------------------------------------------
+# Places API — Multi-step Dialog (P5)
+# Shell + dialog-scoped loading for the "Fetch Info With Maps" flow.
+# The spinner reuses the preloader's `animate-preloader` ring animation
+# (base/preloader.css). The step CONTENTS are rendered by later prompts
+# (P6 search / P7 details / P8 photos+closed).
+--------------------------------------------------------------*/
+
+/* The dialog carries more data than a regular message — widen it a bit. */
+.input-container.places-dialog-container {
+	width: min(560px, 92vw);
+}
+
+.places-dialog {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	min-height: 240px;
+	text-align: left;
+}
+
+/* Header icons (back arrow + close X) live in the shared icon box above the
+   title (see .message-text-container > .icon-container in modal.css), matching
+   the itinerary dialog. The title stays left-aligned like every other
+   .input-container dialog — no text-align override needed here. */
+
+/* Step body — scrolls internally when the content is tall */
+.places-dialog-step {
+	position: relative;
+	min-height: 200px;
+	max-height: calc(100vh - 260px);
+	overflow-y: auto;
+}
+
+/* Dialog-scoped loading overlay — sits over the dialog body and reuses the
+   app's spinner ring animation (see base/preloader.css animate-preloader). */
+.places-dialog-loading {
+	position: absolute;
+	inset: 0;
+	z-index: 20;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
+	background: rgba(255, 255, 255, 0.88);
+	backdrop-filter: blur(2px);
+	-webkit-backdrop-filter: blur(2px);
+	border-radius: var(--radius-md, 8px);
+}
+
+/* Dark mode: the light 2px blur is invisible against dark content, so the
+   overlay turns into a flat dark box. Match the app's dark glass treatment
+   (see base/dark-mode.css top-bar) — stronger blur + saturation so the
+   frosted degrade looks natural instead of muddy. The tint matches the
+   dialog's #303030 background (dark-mode.css .input-container) so the
+   overlay isn't darker than the dialog behind it. */
+[data-theme="dark"] .places-dialog-loading {
+	background: rgba(48, 48, 48, 0.85);
+	backdrop-filter: blur(20px) saturate(180%);
+	-webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.places-dialog-loading-ring {
+	width: 46px;
+	height: 46px;
+	border: 5px solid var(--theme-color);
+	border-top-color: transparent;
+	border-bottom-color: transparent;
+	border-radius: 50%;
+	animation: animate-preloader 1s linear infinite;
+}
+
+.places-dialog-loading-message {
+	font-size: 0.9375rem;
+	font-weight: 600;
+	color: var(--text-secondary);
+	text-align: center;
+	padding: 0 16px;
+}
+
+.places-dialog-loading-cancel {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 26px;
+	color: var(--text-secondary);
+	cursor: pointer;
+	transition: color var(--transition-fast, 0.2s);
+}
+
+.places-dialog-loading-cancel:hover {
+	color: var(--text-primary);
+}
+
+/* Placeholder / error states (shown before a step renderer is registered) */
+.places-dialog-placeholder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 200px;
+	color: var(--text-secondary);
+	text-align: center;
+}
+
+.places-dialog-placeholder-icon {
+	font-size: 40px;
+	opacity: 0.6;
+}
+
+.places-dialog-placeholder-title {
+	font-size: 1rem;
+	font-weight: 700;
+	color: var(--text-primary);
+	margin: 0;
+}
+
+.places-dialog-placeholder-note {
+	font-size: 0.8125rem;
+	margin: 0;
+}
+
+.places-dialog-error {
+	padding: 18px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: rgba(var(--theme-color-rgb), 0.06);
+	color: var(--text-primary);
+	text-align: center;
+}
+
+/* Mobile: let the step body flex-fill the fullscreen dialog and scroll on its
+   own (the dialog itself is the page on mobile, see components/modal.css). */
+@media (max-width: 768px) {
+	.fullscreen-dialog .places-dialog {
+		height: 100%;
+		min-height: 0;
+	}
+
+	.fullscreen-dialog .places-dialog-step {
+		max-height: none;
+		flex: 1 1 auto;
+		min-height: 0;
+	}
+
+	/* The places dialog container must fill the screen on mobile — undo the
+	   desktop width above so the .fullscreen-dialog rules in
+	   components/modal.css win (same specificity, declared later here). */
+	.places-dialog-container.fullscreen-dialog {
+		width: 100%;
+		max-width: none;
+	}
+}
+
+/*--------------------------------------------------------------
+# Places API — Step 1: Search (P6)
+# Search bar + result list for the "Fetch Info With Maps" dialog.
+# The input mirrors the .nice-form-group unified input style but is
+# styled directly because it sits inside a flex wrapper (.places-search-bar).
+--------------------------------------------------------------*/
+
+.places-search-bar {
+	display: flex;
+	gap: 10px;
+}
+
+/* "Include photos" toggle under the search bar */
+.places-search-photos {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 12px;
+	font-size: 0.875rem;
+	color: var(--text-secondary);
+	cursor: pointer;
+	user-select: none;
+}
+
+.places-search-photos-input {
+	accent-color: var(--theme-color);
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	cursor: pointer;
+}
+
+.places-search-input {
+	background: var(--nf-input-background-color, var(--bg-secondary));
+	font-family: var(--nf-input-font-family, inherit);
+	font-size: var(--nf-input-font-size, 0.9375rem);
+	box-shadow: none;
+	border-radius: var(--nf-input-border-radius, var(--radius-md));
+	border: var(--nf-input-border-width, 1.5px) solid
+		var(--nf-input-border-color, var(--border-color));
+	color: var(--nf-input-color, var(--text-primary));
+	width: 100%;
+	flex: 1;
+	min-width: 0;
+	padding: 12px 16px;
+	height: auto;
+	min-height: 48px;
+	line-height: normal;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	transition:
+		border var(--transition-fast, 0.2s),
+		box-shadow var(--transition-fast, 0.2s);
+	outline: none;
+}
+
+.places-search-input:focus {
+	outline: none;
+	border-color: var(--nf-input-focus-border-color, var(--theme-color));
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.places-search-input::placeholder {
+	color: var(--nf-input-placeholder-color, var(--text-muted));
+}
+
+.places-search-submit {
+	flex-shrink: 0;
+	padding: 0 18px;
+	height: 48px;
+	border: none;
+	border-radius: var(--radius-md, 8px);
+	background: var(--theme-color);
+	color: var(--bg-primary);
+	font-family: inherit;
+	font-size: 0.9375rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: opacity var(--transition-fast, 0.2s);
+}
+
+.places-search-submit:hover {
+	opacity: 0.85;
+}
+
+.places-search-results {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-top: 16px;
+}
+
+.places-search-empty,
+.places-search-error {
+	padding: 18px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: rgba(var(--theme-color-rgb), 0.06);
+	color: var(--text-primary);
+	text-align: center;
+	font-size: 0.9375rem;
+}
+
+.places-search-error {
+	background: rgba(231, 76, 60, 0.08);
+}
+
+.places-search-result {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+	padding: 12px 14px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: var(--bg-secondary);
+	color: var(--text-primary);
+	font-family: inherit;
+	text-align: left;
+	cursor: pointer;
+	transition:
+		border-color var(--transition-fast, 0.2s),
+		background var(--transition-fast, 0.2s);
+}
+
+.places-search-result:hover {
+	border-color: var(--theme-color);
+	background: var(--bg-tertiary);
+}
+
+.places-search-result-emoji {
+	font-size: 1.375rem;
+	flex-shrink: 0;
+	width: 32px;
+	text-align: center;
+}
+
+.places-search-result-info {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.places-search-result-name {
+	font-weight: 600;
+	font-size: 0.9375rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.places-search-result-region {
+	font-size: 0.8125rem;
+	color: var(--text-secondary);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.places-search-result-meta {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-shrink: 0;
+}
+
+.places-search-result-rating {
+	font-size: 0.8125rem;
+	font-weight: 700;
+	color: var(--theme-color);
+}
+
+.places-search-result-price {
+	font-size: 0.875rem;
+	color: var(--text-secondary);
+}
+
+@media (max-width: 480px) {
+	.places-search-result {
+		flex-wrap: wrap;
+	}
+}
+
+/*--------------------------------------------------------------
+# Places API — Step 2: Details (P7)
+# Disabled (read-only) field previews + "Update with this info"
+# checkboxes for the "Fetch Info With Maps" dialog.
+--------------------------------------------------------------*/
+
+.places-details-fields {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+/* Empty state — every field was empty, so there's nothing to preview */
+.places-details-empty {
+	padding: 18px;
+	border: 1px dashed var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	color: var(--text-secondary);
+	text-align: center;
+	font-size: 0.9375rem;
+}
+
+/* The read-only preview sits on top of the "nice-form-group" label, so the
+   checkbox row is separated with a small margin. */
+.places-detail-field {
+	margin-bottom: 0;
+}
+
+.places-detail-input[disabled] {
+	opacity: 0.9;
+	color: var(--text-secondary);
+	background: var(--bg-secondary);
+	cursor: default;
+}
+
+/* Checkbox row: "Update with this info" */
+.places-detail-check {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 8px;
+	font-size: 0.8125rem;
+	color: var(--text-secondary);
+	cursor: pointer;
+	user-select: none;
+}
+
+.places-detail-check-input {
+	accent-color: var(--theme-color);
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	cursor: pointer;
+}
+
+/* Footer: primary action (Continue / Confirm) */
+.places-details-footer {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	margin-top: 20px;
+	padding-top: 14px;
+	border-top: 1px solid var(--border-color);
+}
+
+.places-details-continue {
+	padding: 10px 22px;
+	border: none;
+	border-radius: var(--radius-md, 8px);
+	background: var(--theme-color);
+	color: var(--bg-primary);
+	font-family: inherit;
+	font-size: 0.9375rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: opacity var(--transition-fast, 0.2s);
+}
+
+.places-details-continue:hover {
+	opacity: 0.85;
+}
+
+/* Inline error state (keeps the dialog open for a retry) */
+.places-detail-error {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
+	padding: 18px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: rgba(231, 76, 60, 0.08);
+	color: var(--text-primary);
+	text-align: center;
+	font-size: 0.9375rem;
+}
+
+.places-detail-error .btn {
+	margin: 0;
+}
+
+/*--------------------------------------------------------------
+# Places API — Step 3: Closed + Photos (P8)
+# Closed-place notice/options + conditional photo import preview
+# for the "Fetch Info With Maps" dialog.
+--------------------------------------------------------------*/
+
+/* --- Closed-place notice + options --- */
+.places-closed {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 14px;
+	text-align: center;
+	padding: 12px 0;
+}
+
+.places-closed-icon {
+	font-size: 44px;
+	line-height: 1;
+	color: var(--theme-color);
+	opacity: 0.85;
+}
+
+.places-closed-title {
+	margin: 0;
+	font-size: 1.125rem;
+	font-weight: 700;
+	color: var(--text-primary);
+}
+
+.places-closed-message {
+	margin: 0;
+	font-size: 0.9375rem;
+	color: var(--text-secondary);
+	max-width: 420px;
+}
+
+.places-closed-options {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+	max-width: 320px;
+	margin-top: 8px;
+}
+
+.places-closed-option {
+	padding: 12px 18px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: var(--bg-secondary);
+	color: var(--text-primary);
+	font-family: inherit;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition:
+		background var(--transition-fast, 0.2s),
+		border-color var(--transition-fast, 0.2s);
+}
+
+.places-closed-option:hover {
+	background: var(--bg-tertiary);
+	border-color: var(--theme-color);
+}
+
+/* Destructive action (Delete item) */
+.places-closed-option-danger {
+	border-color: rgba(231, 76, 60, 0.45);
+	color: #e74c3c;
+}
+
+.places-closed-option-danger:hover {
+	background: rgba(231, 76, 60, 0.1);
+	border-color: #e74c3c;
+}
+
+/* --- Already-linked place: update vs find a different place --- */
+.places-linked {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 14px;
+	text-align: center;
+	padding: 12px 0;
+}
+
+.places-linked-icon {
+	font-size: 44px;
+	line-height: 1;
+	color: var(--theme-color);
+	opacity: 0.85;
+}
+
+.places-linked-title {
+	margin: 0;
+	font-size: 1.125rem;
+	font-weight: 700;
+	color: var(--text-primary);
+}
+
+.places-linked-message {
+	margin: 0;
+	font-size: 0.9375rem;
+	color: var(--text-secondary);
+	max-width: 420px;
+}
+
+.places-linked-options {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+	max-width: 360px;
+	margin-top: 8px;
+}
+
+.places-linked-option {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 14px 18px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: var(--bg-secondary);
+	color: var(--text-primary);
+	font-family: inherit;
+	text-align: left;
+	cursor: pointer;
+	transition:
+		background var(--transition-fast, 0.2s),
+		border-color var(--transition-fast, 0.2s);
+}
+
+.places-linked-option:hover {
+	background: var(--bg-tertiary);
+	border-color: var(--theme-color);
+}
+
+.places-linked-option-title {
+	font-size: 0.9375rem;
+	font-weight: 700;
+}
+
+.places-linked-option-caption {
+	font-size: 0.8125rem;
+	font-weight: 400;
+	color: var(--text-secondary);
+}
+
+/* --- Photos import --- */
+.places-photos {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.places-photos-hint {
+	margin: 0;
+	font-size: 0.9375rem;
+	color: var(--text-secondary);
+}
+
+/* "Import photos" checkbox row */
+.places-photos-import {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	color: var(--text-primary);
+	cursor: pointer;
+	user-select: none;
+	align-self: flex-start;
+}
+
+.places-photos-import-input {
+	accent-color: var(--theme-color);
+	width: 17px;
+	height: 17px;
+	flex-shrink: 0;
+	cursor: pointer;
+}
+
+/* Selected-photo count badge next to the "Import photos" label */
+.places-photos-import-count {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 20px;
+	height: 20px;
+	padding: 0 5px;
+	border-radius: 999px;
+	font-size: 0.75rem;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	background: var(--theme-color);
+}
+
+/* Preview grid (first 3 photos) */
+.places-photos-preview {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+}
+
+.places-photos-preview-item {
+	margin: 0;
+	position: relative;
+	border-radius: var(--radius-md, 8px);
+	overflow: hidden;
+	aspect-ratio: 4 / 3;
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
+	cursor: pointer;
+	transition:
+		opacity var(--transition-fast, 0.2s),
+		border-color var(--transition-fast, 0.2s),
+		filter var(--transition-fast, 0.2s);
+}
+
+.places-photos-preview-item:hover {
+	border-color: var(--theme-color);
+}
+
+/* Deselected (clicked off): dimmed + grayscale + ✕ badge */
+.places-photos-preview-item.is-deselected {
+	opacity: 0.35;
+	filter: grayscale(0.6);
+	border-color: var(--border-color);
+}
+
+.places-photos-preview-item.is-deselected figcaption {
+	background: rgba(0, 0, 0, 0.45);
+}
+
+.places-photos-preview-item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.places-photos-preview-item figcaption {
+	position: absolute;
+	top: 6px;
+	left: 6px;
+	width: 22px;
+	height: 22px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: rgba(0, 0, 0, 0.55);
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 700;
+}
+
+/* Empty / error state inside the preview area */
+.places-photos-empty {
+	margin: 0;
+	grid-column: 1 / -1;
+	font-size: 0.875rem;
+	color: var(--text-secondary);
+	text-align: center;
+	padding: 12px 0;
+}
+
+/* Preview taller than two rows scrolls internally (gmaps-scraper can return
+   many photos — keeps the Continue button in view) */
+.places-photos-preview--scroll {
+	overscroll-behavior: contain;
+	scrollbar-width: thin;
+	padding-right: 4px;
+}
+
+/* Mobile: single-column preview */
+@media (max-width: 480px) {
+	.places-photos-preview {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* --- Apply/persist (done step) --- */
+.places-apply {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 14px;
+	text-align: center;
+	padding: 12px 0;
+}
+
+.places-apply-icon {
+	font-size: 44px;
+	line-height: 1;
+	color: var(--theme-color);
+	opacity: 0.85;
+}
+
+.places-apply-title {
+	margin: 0;
+	font-size: 1.125rem;
+	font-weight: 700;
+	color: var(--text-primary);
+}
+
+.places-apply-summary {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	max-width: 420px;
+}
+
+.places-apply-summary li {
+	font-size: 0.9375rem;
+	color: var(--text-secondary);
+}
+
+/*--------------------------------------------------------------
+# Places API — Bulk "Update with Maps" (P11)
+# Report dialog for the bulk flow. Reuses .places-dialog-container width and
+# the .places-dialog-loading dialog-scoped overlay (spinner ring + cancel X)
+# from P5 — the bulk shell references those exact classes.
+--------------------------------------------------------------*/
+
+/* Wrapper is the positioning context for the absolute loading overlay. */
+.places-bulk {
+	position: relative;
+	text-align: left;
+	min-height: 200px;
+}
+
+/* Report body — scrolls internally when the content is tall */
+.places-bulk-content {
+	position: relative;
+	min-height: 160px;
+	max-height: calc(100vh - 260px);
+	overflow-y: auto;
+}
+
+/* Report */
+.places-bulk-report-icon {
+	font-size: 44px;
+	text-align: center;
+	opacity: 0.9;
+	margin-bottom: 8px;
+}
+
+.places-bulk-report-counts {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin: 10px 0 14px;
+	padding: 10px 14px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: rgba(var(--theme-color-rgb), 0.06);
+	font-size: 0.9375rem;
+	color: var(--text-primary);
+}
+
+.places-bulk-report-list {
+	list-style: none;
+	margin: 0 0 14px;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.places-bulk-report-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+	padding: 8px 10px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: var(--bg-tertiary);
+	font-size: 0.875rem;
+}
+
+.places-bulk-report-item-name {
+	font-weight: 600;
+	color: var(--text-primary);
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.places-bulk-report-item-meta {
+	color: var(--text-secondary);
+	font-size: 0.8125rem;
+}
+
+.places-bulk-report-item-error {
+	color: #e74c3c;
+	font-size: 0.8125rem;
+}
+
+/* "[Closed]" badge (shared with the per-item closed flow) */
+.places-bulk-badge {
+	font-size: 0.75rem;
+	font-weight: 700;
+	padding: 2px 8px;
+	border-radius: 999px;
+	background: rgba(231, 76, 60, 0.1);
+	color: #e74c3c;
+	border: 1px solid rgba(231, 76, 60, 0.45);
+}
+
+.places-bulk-footer {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 4px;
+}
+
+/* Bulk apply options (P12) — fields + closed strategies */
+.places-bulk-options {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	margin: 4px 0 14px;
+	padding: 12px 14px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: var(--bg-tertiary);
+}
+
+.places-bulk-options-group {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.places-bulk-options-title {
+	margin: 0 0 2px;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	color: var(--text-secondary);
+}
+
+.places-bulk-option {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.875rem;
+	color: var(--text-primary);
+	cursor: pointer;
+}
+
+.places-bulk-option input[type="radio"] {
+	margin: 0;
+	accent-color: var(--theme-color, #7c3aed);
+}
+
+/*--------------------------------------------------------------
+# Places API — Import source + local (gmaps scraper) steps
+# The 'source' step reuses the linked-step option cards
+# (.places-linked-options / .places-linked-option); 'local' adds the
+# Maps-link input (the input/button reuse .places-search-bar styles).
+--------------------------------------------------------------*/
+
+/* Import-source prompt: same centered column layout as the linked step. */
+.places-source {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 14px;
+	text-align: center;
+	padding: 12px 0;
+}
+
+/* Local import step: message + link input + inline status. */
+.places-local {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.places-local-message {
+	margin: 0;
+	font-size: 0.9375rem;
+	color: var(--text-secondary);
+	max-width: 420px;
+}
+
+.places-local-status {
+	margin: 0;
+}
+
+/* The local link input inherits .places-search-input sizing; widen it a touch
+   since a Maps URL is longer than a search term. */
+.places-local .places-search-input {
+	width: 100%;
+}
