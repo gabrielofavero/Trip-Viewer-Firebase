@@ -27,6 +27,7 @@ import {
 	accommodationsAddListenerAction,
 	confirmAccommodationImages,
 } from '../categories/accommodation.js';
+import { openAccommodationImport } from '../categories/accommodation-import.js';
 import { galleryAddListenerAction } from '../categories/gallery.js';
 import { reloadItinerary } from '../categories/itinerary-module/itinerary-module.js';
 import {
@@ -67,6 +68,10 @@ export function loadEventListeners() {
 		'open-accommodation-images': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) openAccommodationImages(index);
+		},
+		'open-accommodation-import': (target) => {
+			const index = parseInt(target.getAttribute('data-index'));
+			if (!isNaN(index)) openAccommodationImport(index);
 		},
 		'open-inner-itinerary': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));

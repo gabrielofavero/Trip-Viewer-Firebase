@@ -231,6 +231,15 @@
 				"none": "Não mostrar",
 				"prepaid": "Pago antecipadamente",
 				"pay_on_site": "Pagar no local"
+			},
+			"import": {
+				"label": "Reutilizar uma hospedagem",
+				"button": "Importar de uma viagem",
+				"title": "Importar hospedagem",
+				"loading": "Carregando hospedagens...",
+				"no_trips": "Não há outras viagens com hospedagens disponíveis.",
+				"no_accommodations": "Esta viagem não possui hospedagens para importar.",
+				"load_error": "Não foi possível carregar as hospedagens. Tente novamente."
 			}
 		},
 		"itinerary": {

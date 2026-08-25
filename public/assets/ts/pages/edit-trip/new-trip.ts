@@ -334,6 +334,11 @@ export function addAccommodations() {
               <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <button id="accommodation-images-button-${j}" data-action="open-accommodation-images" data-index="${j}" class="btn input-button" style="margin-top:0px">${translate('labels.image.add_title')}</button>
             </div>
+
+            <div class="nice-form-group customization-box">
+              <label>${translate('trip.accommodation.import.label')}</label>
+              <button data-action="open-accommodation-import" data-index="${j}" class="btn input-button" style="margin-top:0px">${translate('trip.accommodation.import.button')}</button>
+            </div>
               
           </div>
       

@@ -234,6 +234,15 @@
 				"none": "Don't show",
 				"prepaid": "Prepaid",
 				"pay_on_site": "Pay on destination"
+			},
+			"import": {
+				"label": "Reuse a stay",
+				"button": "Import from trip",
+				"title": "Import accommodation",
+				"loading": "Loading accommodations...",
+				"no_trips": "No other trips with accommodations are available.",
+				"no_accommodations": "This trip has no accommodations to import.",
+				"load_error": "Could not load accommodations. Please try again."
 			}
 		},
 		"itinerary": {
