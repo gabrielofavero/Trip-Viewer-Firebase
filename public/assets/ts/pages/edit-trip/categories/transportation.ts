@@ -74,22 +74,26 @@ export function updateTransportationTitle(i) {
 	const departurePoint = getID(`departure-point-${i}`).value;
 	const arrivalPoint = getID(`arrival-point-${i}`).value;
 
-	if (!departurePoint || !arrivalPoint) {
+	// Prefix depends on the active view mode: leg view → direction label,
+	// people view → traveler name (falls back to the raw stored value).
+	const prefix = getID('leg-view').checked
+		? getTransportationType(i)
+		: getID('people-view').checked
+			? getPerson(i)
+			: '';
+
+	// No route points yet: keep the default "Transportation N" placeholder, but
+	// surface the direction/traveler so leg & person edits always show up.
+	if (!departurePoint && !arrivalPoint) {
+		if (prefix) {
+			getID(`transportation-title-${i}`).innerText = prefix;
+		}
 		return;
 	}
 
-	let text = `${departurePoint} → ${arrivalPoint}`;
-
-	if (getID('leg-view').checked) {
-		text = `${getTransportationType(i)}: ${text}`;
-	} else {
-		const person = getPerson(i);
-		if (getID('people-view').checked && person) {
-			text = `${person}: ${text}`;
-		}
-	}
-
-	getID(`transportation-title-${i}`).innerText = text;
+	// Build "origin → destination" (tolerates a missing side).
+	const text = [departurePoint, arrivalPoint].filter(Boolean).join(' → ');
+	getID(`transportation-title-${i}`).innerText = prefix ? `${prefix}: ${text}` : text;
 }
 
 function getTransportationType(i) {
@@ -135,9 +139,11 @@ export function buildTransportationPersonSelect(selectID, currentValue = '') {
 /** Rebuild every transportation leg person select, keeping current values. */
 export function refreshTransportationPersonSelects() {
 	for (const child of getChildIDs('transportation-box')) {
-		const select = getID(`transportation-person-select-${getJ(child)}`);
+		const j = getJ(child);
+		const select = getID(`transportation-person-select-${j}`);
 		if (select) {
 			buildTransportationPersonSelect(select.id, select.value);
+			updateTransportationTitle(j);
 		}
 	}
 }
@@ -255,12 +261,18 @@ export function loadTransportationListeners(j) {
 		loadTransportationVisibility(j),
 	);
 
-	// Dynamic Title
+	// Dynamic Title — refresh live as the user types the route points (input),
+	// plus on blur/selection change to cover programmatic and edge cases.
+	getID(`departure-point-${j}`).addEventListener('input', () => updateTransportationTitle(j));
+	getID(`arrival-point-${j}`).addEventListener('input', () => updateTransportationTitle(j));
 	getID(`departure-point-${j}`).addEventListener('change', () => updateTransportationTitle(j));
 	getID(`arrival-point-${j}`).addEventListener('change', () => updateTransportationTitle(j));
 	getID(`departure-${j}`).addEventListener('change', () => updateTransportationTitle(j));
 	getID(`during-${j}`).addEventListener('change', () => updateTransportationTitle(j));
 	getID(`return-${j}`).addEventListener('change', () => updateTransportationTitle(j));
+	getID(`transportation-person-select-${j}`).addEventListener('change', () =>
+		updateTransportationTitle(j),
+	);
 
 	// Automatic Route Duration Calculation
 	getID(`transportation-departure-date-${j}`).addEventListener('change', () => loadAutoDuration(j));
