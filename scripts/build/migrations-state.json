@@ -1,7 +1,16 @@
 {
-  "$comment": "Per-environment record of which runnable migrations (scripts/build/migrations-config.json) have already been applied. Migrations listed here are NOT offered automatically on the next deploy (use the 're-run' option to run them again manually).",
+  "$comment": "Per-environment record of which runnable migrations (scripts/build/migrations-config.json) have already been applied. Migrations listed here are NOT offered automatically on the next deploy (use the 're-run' option to run them again manually). Entries 18/19/20 were backfilled on 2026-08-25 from the user's confirmation that they were already run in PRD before per-env run tracking existed.",
   "trip-viewer-prd": {
     "completed": {
+      "18": {
+        "at": "2026-08-25T01:31:55.524675+00:00"
+      },
+      "19": {
+        "at": "2026-08-25T01:31:55.524675+00:00"
+      },
+      "20": {
+        "at": "2026-08-25T01:31:55.524675+00:00"
+      },
       "21": {
         "at": "2026-08-25T00:45:10.047204+00:00"
       }
