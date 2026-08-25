@@ -1,6 +1,10 @@
 {
   "$comment": "Per-environment record of which runnable migrations (scripts/build/migrations-config.json) have already been applied. Migrations listed here are NOT offered automatically on the next deploy (use the 're-run' option to run them again manually).",
   "trip-viewer-prd": {
-    "completed": {}
+    "completed": {
+      "21": {
+        "at": "2026-08-25T00:45:10.047204+00:00"
+      }
+    }
   }
 }

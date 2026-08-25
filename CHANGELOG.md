@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.25.0] - 2026-08-24
+
+- 📈 **M182:** [DEV] Kill dev env
+- 📈 **M188:** [DEV] Add mandatory end-of-task backlog check to readme skill
+- 📈 **M189:** [DEV] initLocalDb skips seeding when the database already has data
+- 🏆 **F190:** Use LocalStorage logic for detecting new versions (cache refreshing)
+- 🏆 **F191:** Expenses: exclusive shopping-bag icon for the Shopping type + copy list to iOS Notes (native checkboxes)
+- 📈 **M190:** Expand wallpaper import to trip gallery, accommodation and destination place images
+- 🏆 **F065:** Show if accommodation was prepaid or not
+- 🏆 **F192:** Import accommodation from previous trips
+- 🏆 **F193:** Seed an empty light or dark logo from the first logo selected
+- 🏆 **F194:** Reuse transportation between travelers
+
 ## [2.24.0] - 2026-08-23
 
 - ⚔️ **E014:** Implementation: Shopping List
