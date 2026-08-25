@@ -8,7 +8,7 @@ import { getUserTrips } from '../../../data/services/auth.service.js';
 import { getTripAccommodations, getTripRaw } from '../../../data/services/trip.service.js';
 import { DOCUMENT_ID } from '../../../data/state.js';
 import { translate } from '../../../i18n/translation.js';
-import { cloneObject, getID } from '../../../utils/dom.js';
+import { cloneObject, getChildIDs, getID, getJ } from '../../../utils/dom.js';
 import {
 	closeMessage,
 	displayFullMessage,
@@ -21,6 +21,17 @@ import { ACCOMMODATION_IMAGES, setImageButtonLabel } from './accommodation.js';
 let TARGET_INDEX = 0;
 let SOURCE_ACCOMMODATIONS: Record<string, any> = {};
 let SELECTED_SOURCE_ID = '';
+let AVAILABLE_SOURCE_TRIPS: Record<string, any>[] | null = null;
+let AVAILABLE_SOURCE_TRIPS_REQUEST: Promise<Record<string, any>[]> | null = null;
+
+/** Toggle every import button after the summaries have been checked once. */
+export async function refreshAccommodationImportButtons() {
+	const trips = await getAvailableSourceTrips();
+	for (const childId of getChildIDs('accommodations-box')) {
+		const button = getID(`accommodation-import-button-${getJ(childId)}`);
+		if (button) button.style.display = trips.length ? '' : 'none';
+	}
+}
 
 /** Open the source-trip picker for accommodation row `index`. */
 export function openAccommodationImport(index: number) {
@@ -52,9 +63,7 @@ async function loadSourceTrips() {
 	if (!list) return;
 
 	try {
-		const trips = (await getUserTrips()).filter(
-			(trip) => trip.id !== DOCUMENT_ID && trip.modules?.accommodations === true,
-		);
+		const trips = await getAvailableSourceTrips();
 
 		if (!trips.length) {
 			list.innerHTML = `<div class="wallpaper-import-empty">${translate(
@@ -77,6 +86,19 @@ async function loadSourceTrips() {
 		)}</div>`;
 		console.error('Could not load accommodation import trips:', error);
 	}
+}
+
+function getAvailableSourceTrips(): Promise<Record<string, any>[]> {
+	if (AVAILABLE_SOURCE_TRIPS) return Promise.resolve(AVAILABLE_SOURCE_TRIPS);
+	if (!AVAILABLE_SOURCE_TRIPS_REQUEST) {
+		AVAILABLE_SOURCE_TRIPS_REQUEST = getUserTrips().then((trips) => {
+			AVAILABLE_SOURCE_TRIPS = trips.filter(
+				(trip) => trip.id !== DOCUMENT_ID && trip.modules?.accommodations === true,
+			);
+			return AVAILABLE_SOURCE_TRIPS;
+		});
+	}
+	return AVAILABLE_SOURCE_TRIPS_REQUEST;
 }
 
 function getTripCard(trip: Record<string, any>) {

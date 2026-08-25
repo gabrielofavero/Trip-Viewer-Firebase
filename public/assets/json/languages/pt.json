@@ -211,6 +211,13 @@
 				"bullet_train": "Trem-bala",
 				"subway": "Metrô",
 				"other": "Outro"
+			},
+			"import": {
+				"label": "Reutilizar o transporte de outro viajante",
+				"button": "Copiar transporte",
+				"title": "Copiar transporte",
+				"choose": "Escolha o transporte para copiar",
+				"copied": "Transporte copiado"
 			}
 		},
 		"accommodation": {

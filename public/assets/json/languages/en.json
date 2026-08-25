@@ -214,6 +214,13 @@
 				"bullet_train": "Bullet Train",
 				"subway": "Subway",
 				"other": "Other"
+			},
+			"import": {
+				"label": "Reuse another traveler's transportation",
+				"button": "Copy transportation",
+				"title": "Copy transportation",
+				"choose": "Choose the transportation to copy",
+				"copied": "Transportation copied"
 			}
 		},
 		"accommodation": {

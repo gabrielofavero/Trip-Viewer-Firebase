@@ -27,7 +27,14 @@ import {
 	accommodationsAddListenerAction,
 	confirmAccommodationImages,
 } from '../categories/accommodation.js';
-import { openAccommodationImport } from '../categories/accommodation-import.js';
+import {
+	openAccommodationImport,
+	refreshAccommodationImportButtons,
+} from '../categories/accommodation-import.js';
+import {
+	openTransportationImport,
+	refreshTransportationImportButtons,
+} from '../categories/transportation-import.js';
 import { galleryAddListenerAction } from '../categories/gallery.js';
 import { reloadItinerary } from '../categories/itinerary-module/itinerary-module.js';
 import {
@@ -72,6 +79,10 @@ export function loadEventListeners() {
 		'open-accommodation-import': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) openAccommodationImport(index);
+		},
+		'open-transportation-import': (target) => {
+			const index = parseInt(target.getAttribute('data-index'));
+			if (!isNaN(index)) openTransportationImport(index);
 		},
 		'open-inner-itinerary': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
@@ -130,8 +141,14 @@ export function loadEventListeners() {
 	// Buttons
 	getID('save-btn').addEventListener('click', () => setTripData());
 	getID('cancel-btn').addEventListener('click', () => (window.location.href = '../index.html'));
-	getID('transportation-add').addEventListener('click', () => transportationAddListenerAction());
-	getID('accommodation-add').addEventListener('click', () => accommodationsAddListenerAction());
+	getID('transportation-add').addEventListener('click', () => {
+		transportationAddListenerAction();
+		refreshTransportationImportButtons();
+	});
+	getID('accommodation-add').addEventListener('click', () => {
+		accommodationsAddListenerAction();
+		void refreshAccommodationImportButtons();
+	});
 	getID('gallery-add').addEventListener('click', () => galleryAddListenerAction());
 	getID('pin-disabled').addEventListener('click', switchPin);
 	getID('pin-sensitive-only').addEventListener('click', switchPin);
@@ -139,9 +156,12 @@ export function loadEventListeners() {
 	getID('light-color').addEventListener('change', () => autoFillDarkColor());
 
 	// Visibility do Ida e Volta (Transporte)
-	getID('simple-view').addEventListener('change', () => applyTransportationTypeVisualization());
-	getID('leg-view').addEventListener('change', () => applyTransportationTypeVisualization());
-	getID('people-view').addEventListener('change', () => applyTransportationTypeVisualization());
+	getID('simple-view').addEventListener('change', refreshTransportationView);
+	getID('leg-view').addEventListener('change', refreshTransportationView);
+	getID('people-view').addEventListener('change', refreshTransportationView);
+	getID('transportation-box').addEventListener('change', () =>
+		refreshTransportationImportButtons(),
+	);
 
 	// Image Validation in Customization module
 	getID('link-background').addEventListener('change', () => validateImageLink('link-background'));
@@ -163,6 +183,8 @@ export function loadEventListeners() {
 	// Render the wallpaper/logo picker cards (values are set for existing
 	// trips; the destination-changed event handles mid-edit changes).
 	refreshImagePickers();
+	void refreshAccommodationImportButtons();
+	refreshTransportationImportButtons();
 
 	window.addEventListener('beforeunload', (event) => {
 		if (hasUnsavedChanges() && !SUCCESSFUL_SAVE) {
@@ -170,6 +192,11 @@ export function loadEventListeners() {
 			event.returnValue = translate('messages.exit_confirmation');
 		}
 	});
+}
+
+function refreshTransportationView() {
+	applyTransportationTypeVisualization();
+	refreshTransportationImportButtons();
 }
 
 // Actions

@@ -196,6 +196,11 @@ export function addTransportation() {
               <input id="transportation-link-${j}" type="url" placeholder="https://www.google.com/" value=""
                 class="icon-right" />
             </div>
+
+            <div class="nice-form-group customization-box">
+              <label>${translate('trip.transportation.import.label')}</label>
+              <button id="transportation-import-button-${j}" data-action="open-transportation-import" data-index="${j}" class="btn input-button" style="margin-top:0px; display:none">${translate('trip.transportation.import.button')}</button>
+            </div>
     
           </div>
     
@@ -337,7 +342,7 @@ export function addAccommodations() {
 
             <div class="nice-form-group customization-box">
               <label>${translate('trip.accommodation.import.label')}</label>
-              <button data-action="open-accommodation-import" data-index="${j}" class="btn input-button" style="margin-top:0px">${translate('trip.accommodation.import.button')}</button>
+              <button id="accommodation-import-button-${j}" data-action="open-accommodation-import" data-index="${j}" class="btn input-button" style="margin-top:0px; display:none">${translate('trip.accommodation.import.button')}</button>
             </div>
               
           </div>
