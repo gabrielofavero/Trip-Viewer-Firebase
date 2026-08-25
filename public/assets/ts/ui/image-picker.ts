@@ -508,6 +508,7 @@ async function applyCustomFromDialog() {
 	}
 
 	linkInput.value = finalLink;
+	copyLogoToEmptyCounterpart(type, finalLink);
 
 	if (type === 'background') {
 		// A new custom image replaces any trip-imported wallpaper.
@@ -518,6 +519,17 @@ async function applyCustomFromDialog() {
 	closeMessage();
 	refreshImagePickers();
 	if (finalLink) openToast(translate('labels.customization.images.custom_applied'));
+}
+
+/** Seed an unset logo mode from the first logo the user chooses. */
+function copyLogoToEmptyCounterpart(type: string, link: string) {
+	if (!link || (type !== 'logo-light' && type !== 'logo-dark')) return;
+
+	const counterpartType = type === 'logo-light' ? 'logo-dark' : 'logo-light';
+	const counterpartInput = getID(IMAGE_INPUT_BY_TYPE[counterpartType]) as HTMLInputElement | null;
+	if (counterpartInput && !counterpartInput.value.trim()) {
+		counterpartInput.value = link;
+	}
 }
 
 function activateImagesModule() {
