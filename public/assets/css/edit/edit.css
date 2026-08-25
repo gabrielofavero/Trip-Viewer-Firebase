@@ -1924,6 +1924,9 @@
 	overflow: hidden;
 	cursor: pointer;
 	background: var(--bg-secondary);
+	/* Explicit theme-aware text color — without it the <button> falls back to
+	   the UA's ButtonText (near-black), which is unreadable on dark cards. */
+	color: var(--text-primary);
 	transition:
 		border-color var(--transition-fast),
 		transform var(--transition-fast),
@@ -1941,6 +1944,17 @@
 	background-size: cover;
 	background-position: center;
 	background-color: var(--bg-tertiary);
+	/* Centered icon placeholder (transportation import) — image cards are
+	   unaffected because they only use the background. */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Icon-only thumb (no image): gray like the index plane icons, not the
+   inherited button text color. */
+.wallpaper-import-thumb .image-picker-icon {
+	color: var(--text-muted);
 }
 
 .wallpaper-import-name {

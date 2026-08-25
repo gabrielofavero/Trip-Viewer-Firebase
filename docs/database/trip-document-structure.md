@@ -205,6 +205,9 @@ Each transport leg is a separate document. One special document exists:
 #### Leg documents
 ```ts
 interface TransportLeg {
+  order:      number;          // 0-based display order — legs are stored as random-ID
+                              // docs, so the reader sorts by this to keep the user's
+                              // arrangement (drag-reorder friendly). Absent on legacy legs.
   type:        "flight" | "bus" | "car" | "bullet_train";  // and potentially others
   company:     string;         // airline/bus company name (e.g. "latam", "klm", "eurostar")
   points: {

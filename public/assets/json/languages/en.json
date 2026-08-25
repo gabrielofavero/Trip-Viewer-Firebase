@@ -181,6 +181,7 @@
 			"arrival": "Arrival",
 			"during": "While traveling",
 			"return": "Return",
+			"departure_arrival": "Departure and arrival",
 			"duration": "Duration",
 			"departure_time": "Departure time",
 			"arrival_time": "Arrival time",

@@ -43,7 +43,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 179   | 175  | 4         | 0       |
+| 🐞   | Bug         | B000 | 180   | 176  | 4         | 0       |
 | 🏆   | Feature     | F000 | 194   | 179  | 15        | 0       |
 | 📈   | Improvement | M000 | 190   | 167  | 22        | 1       |
 | ⚔️   | Epic        | E000 | 51    | 42   | 7         | 2       |
@@ -144,6 +144,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🏆 **F193:** Seed an empty light or dark logo from the first logo selected
 - 🏆 **F194:** Reuse transportation between travelers
 - 🐞 **B179:** Fix transportation accordion titles not refreshing (edit trip)
+- 🐞 **B180:** Fix transportation visual issues + recent features side effects
 
 ### July 2026
 

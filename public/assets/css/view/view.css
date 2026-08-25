@@ -2299,27 +2299,20 @@ body.lightbox-open {
 	margin-bottom: 10px;
 }
 
-/* Payment status indicator (F065) */
+/* Payment status indicator (F065) — always uses the theme color, never a
+   hardcoded semantic green/orange, so it matches the rest of the page. */
 .hotel-payment-status {
 	margin-bottom: 10px;
 	font-weight: 600;
 	display: flex;
 	align-items: center;
 	gap: 5px;
+	color: var(--theme-color);
 }
 
 .hotel-payment-status .color-icon {
 	font-size: 18px;
-}
-
-.hotel-payment-status.prepaid,
-.hotel-payment-status.prepaid .color-icon {
-	color: #2e7d32;
-}
-
-.hotel-payment-status.pay-on-site,
-.hotel-payment-status.pay-on-site .color-icon {
-	color: #b26a00;
+	color: var(--theme-color);
 }
 
 .external-link {

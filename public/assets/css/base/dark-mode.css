@@ -629,17 +629,6 @@
 	color: #e2e2e2;
 }
 
-/* Payment status indicator — lighter variants for dark mode (F065) */
-[data-theme="dark"] .hotel-payment-status.prepaid,
-[data-theme="dark"] .hotel-payment-status.prepaid .color-icon {
-	color: #81c784;
-}
-
-[data-theme="dark"] .hotel-payment-status.pay-on-site,
-[data-theme="dark"] .hotel-payment-status.pay-on-site .color-icon {
-	color: #ffb74d;
-}
-
 [data-theme="dark"] #accommodations-box {
 	background-color: transparent;
 }
@@ -985,6 +974,38 @@
 
 [data-theme="dark"] .input-button:hover {
 	background: var(--bg-tertiary);
+}
+
+/* Import picker cards (edit-trip: accommodation/transportation import) */
+[data-theme="dark"] .wallpaper-import-card {
+	background: var(--bg-secondary);
+	border-color: var(--border-color);
+	color: var(--text-primary);
+}
+
+[data-theme="dark"] .wallpaper-import-card:hover {
+	border-color: rgba(var(--theme-color-rgb), 0.6);
+	box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .wallpaper-import-thumb {
+	background-color: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .wallpaper-import-thumb .image-picker-icon {
+	color: var(--text-muted);
+}
+
+[data-theme="dark"] .wallpaper-import-name {
+	color: var(--text-primary);
+}
+
+[data-theme="dark"] .wallpaper-import-subgroup-title {
+	color: var(--text-secondary);
+}
+
+[data-theme="dark"] .wallpaper-import-empty {
+	color: var(--text-muted);
 }
 
 /* Button Box */

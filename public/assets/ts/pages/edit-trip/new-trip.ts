@@ -140,17 +140,17 @@ export function addTransportation() {
             </div>
 
             <div class="nice-form-group">
-              <label>Departure Point <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <label>Departure Point</label>
               <input id="departure-point-${j}" type="text" placeholder="Belo Horizonte" />
             </div>
 
             <div class="nice-form-group">
-              <label>Arrival Point <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <label>Arrival Point</label>
               <input id="arrival-point-${j}" type="text" placeholder="Las Vegas" />
             </div>
     
             <div class="nice-form-group">
-              <label>${translate('trip.transportation.duration')}</label>
+              <label>${translate('trip.transportation.departure_arrival')}</label>
               <div class="date-range-picker" id="transportation-duration-${j}">
                 <input type="hidden" id="transportation-departure-date-${j}" />
                 <input type="hidden" id="transportation-arrival-date-${j}" />
@@ -176,7 +176,7 @@ export function addTransportation() {
             </div>
 
             <div class="nice-form-group">
-              <label>${translate('labels.other')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <label>${translate('trip.transportation.duration')}</label>
               <input class="flex-input" id="transportation-duration-other-${j}" type="time" />
             </div>
 
@@ -199,7 +199,10 @@ export function addTransportation() {
 
             <div class="nice-form-group customization-box">
               <label>${translate('trip.transportation.import.label')}</label>
-              <button id="transportation-import-button-${j}" data-action="open-transportation-import" data-index="${j}" class="btn input-button" style="margin-top:0px; display:none">${translate('trip.transportation.import.button')}</button>
+              <button type="button" id="transportation-import-button-${j}" data-action="open-transportation-import" data-index="${j}" class="btn btn-basic btn-sm" style="display:none">
+                <i class="iconify" data-icon="heroicons:document-arrow-down-16-solid"></i>
+                <span>${translate('trip.transportation.import.button')}</span>
+              </button>
             </div>
     
           </div>
@@ -339,7 +342,10 @@ export function addAccommodations() {
               <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <button id="accommodation-images-button-${j}" data-action="open-accommodation-images" data-index="${j}" class="btn input-button" style="margin-top:0px">${translate('labels.image.add_title')}</button>
             </div>
-
+type="button" id="accommodation-import-button-${j}" data-action="open-accommodation-import" data-index="${j}" class="btn btn-basic btn-sm" style="display:none">
+                <i class="iconify" data-icon="heroicons:document-arrow-down-16-solid"></i>
+                <span>${translate('trip.accommodation.import.button')}</span>
+              
             <div class="nice-form-group customization-box">
               <label>${translate('trip.accommodation.import.label')}</label>
               <button id="accommodation-import-button-${j}" data-action="open-accommodation-import" data-index="${j}" class="btn input-button" style="margin-top:0px; display:none">${translate('trip.accommodation.import.button')}</button>

@@ -27,6 +27,10 @@ export function getTransportationObject(protectedReservationCodes = false) {
 	for (const child of getChildIDs('transportation-box')) {
 		const j = getJ(child);
 		result.data.push({
+			// Explicit order so the subcollection reader can restore the user's
+			// arrangement (legs are stored as random-ID docs, so Firestore's
+			// default doc-ID order would otherwise scramble them).
+			order: result.data.length,
 			dates: {
 				arrival: formattedDateToDateObject(
 					getID(`transportation-arrival-date-${j}`).value,

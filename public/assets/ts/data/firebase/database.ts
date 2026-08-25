@@ -554,6 +554,7 @@ export async function getTransportation(tripId: string): Promise<{ legs: any[]; 
 				}
 			});
 		}
+		sortTransportationLegs(legs);
 		return { legs, settings };
 	}
 	const colRef = firebase
@@ -569,7 +570,19 @@ export async function getTransportation(tripId: string): Promise<{ legs: any[]; 
 			legs.push({ id: doc.id, ...doc.data() });
 		}
 	});
+	sortTransportationLegs(legs);
 	return { legs, settings };
+}
+
+/**
+ * Restore the user's saved leg order. Legs are stored as separate documents
+ * with random IDs, so Firestore returns them in document-ID order — sort by the
+ * explicit `order` field written on save. Legacy legs without it keep doc order.
+ */
+function sortTransportationLegs(legs: any[]) {
+	legs.sort(
+		(a, b) => (a?.order ?? Number.MAX_SAFE_INTEGER) - (b?.order ?? Number.MAX_SAFE_INTEGER),
+	);
 }
 
 /** Get all itinerary days for a trip from trips/{tripId}/itinerary */
