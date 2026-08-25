@@ -15,7 +15,14 @@ import { getTravelerName } from './travelers.js';
 import { getTravelersSelectOptionsHTML } from './travelers.js';
 import { FIRESTORE_EXPENSES_DATA } from '../edit-trip.js';
 import { getSharingObject } from '../set-trip.js';
-import { getCurrencies } from '../../../app/config.js';
+import {
+	CURRENCY_CONVERSION,
+	canConvert,
+	convertCurrency,
+	formatCurrency as formatCurrencyShared,
+	loadCurrencyConversion,
+	setDefaultCurrency,
+} from '../../../models/currency.model.js';
 
 var INNER_EXPENSES = {
 	preTrip: [],
@@ -91,7 +98,7 @@ function loadExpensesHTML() {
 			const totalDiv = document.createElement('div');
 			totalDiv.className = 'expenses-category-total';
 			totalDiv.innerHTML = `${translate('labels.total')}: <span class="highlight">${formatTripCurrency(
-				sumExpenses(allExpenses),
+				sumExpensesConverted(allExpenses),
 			)}</span>`;
 			container.appendChild(totalDiv);
 		}
@@ -101,6 +108,10 @@ function loadExpensesHTML() {
 		}
 	}
 
+	// Load missing exchange rates for the current expense currencies and
+	// re-render once when new rates arrive (fire-and-forget — never blocks).
+	refreshExpenseConversions();
+
 	function buildInnerExpense(category, innerExpense) {
 		const div = document.createElement('div');
 		const id = `${category}-${innerExpense.type}`;
@@ -109,7 +120,7 @@ function loadExpensesHTML() {
 		div.id = id;
 
 		const label = document.createElement('label');
-		const subtotal = sumExpenses(innerExpense.expenses);
+		const subtotal = sumExpensesConverted(innerExpense.expenses);
 		label.innerHTML = `${translate(innerExpense.type, {}, false)}<span class="expense-type-subtotal">${formatTripCurrency(
 			subtotal,
 		)}</span>`;
@@ -155,21 +166,91 @@ function loadExpensesHTML() {
 
 // ======= Edit-page helpers =======
 
-function sumExpenses(expenses): number {
-	return expenses.reduce((sum, e) => sum + (Number(e.price) || 0), 0);
+/**
+ * Sum expenses converted to the trip currency (#currency). Expenses already in
+ * the trip currency are added as-is; others are converted via the shared
+ * currency model when a rate is available and fall back to their raw amount
+ * when no rate has been loaded (so a missing rate never zeroes out an expense).
+ */
+function sumExpensesConverted(expenses): number {
+	const tripCurrency = getID('currency')?.value || 'BRL';
+	return expenses.reduce((sum, e) => {
+		const amount = Number(e.price) || 0;
+		if (!amount) return sum;
+		const currency = e.currency || tripCurrency;
+		if (currency === tripCurrency || !canConvert([currency, tripCurrency])) {
+			return sum + amount;
+		}
+		return sum + convertCurrency(currency, tripCurrency, amount);
+	}, 0);
 }
 
 /** Format an amount using the trip's currency (or the expense's own currency). */
 function formatTripCurrency(amount: number, currency?: string): string {
 	const cur = currency || getID('currency')?.value || 'BRL';
-	const symbols = getCurrencies()?.symbols || {};
-	const symbol = symbols[cur] || cur;
-	const formatted = new Intl.NumberFormat('pt-BR', {
-		style: 'decimal',
-		minimumFractionDigits: 2,
-		maximumFractionDigits: 2,
-	}).format(amount);
-	return `${symbol} ${formatted}`;
+	return formatCurrencyShared(amount, cur, true);
+}
+
+// ======= Currency conversion for the subtotals =======
+
+/** Currencies actually used by the current expenses (deduplicated, non-empty). */
+function getExpenseCurrencies(): string[] {
+	const currencies: string[] = [];
+	for (const category in INNER_EXPENSES) {
+		for (const typeObj of INNER_EXPENSES[category]) {
+			for (const expense of typeObj.expenses) {
+				const currency = expense.currency;
+				if (currency && !currencies.includes(currency)) {
+					currencies.push(currency);
+				}
+			}
+		}
+	}
+	return currencies;
+}
+
+/**
+ * Fetch AwesomeAPI rates for every expense currency against the trip currency.
+ * Only fetches currencies that don't already have a rate loaded for that base.
+ */
+async function loadExpenseConversions(): Promise<void> {
+	const tripCurrency = getID('currency')?.value || 'BRL';
+	const currencies = getExpenseCurrencies();
+	if (currencies.length <= 1) {
+		return;
+	}
+	setDefaultCurrency(tripCurrency);
+	const missing = currencies.filter(
+		(currency) => currency !== tripCurrency && !CURRENCY_CONVERSION[currency + tripCurrency],
+	);
+	if (missing.length === 0) {
+		return;
+	}
+	await loadCurrencyConversion(tripCurrency, missing);
+}
+
+let EXPENSE_CONVERSION_REFRESHING = false;
+
+/**
+ * Fire-and-forget: load missing exchange rates, then re-render once so the
+ * subtotals switch from raw sums to converted values. Guards against re-entrant
+ * loops and repeated fetches.
+ */
+async function refreshExpenseConversions(): Promise<void> {
+	if (EXPENSE_CONVERSION_REFRESHING) {
+		return;
+	}
+	EXPENSE_CONVERSION_REFRESHING = true;
+	try {
+		const before = Object.keys(CURRENCY_CONVERSION).length;
+		await loadExpenseConversions();
+		const after = Object.keys(CURRENCY_CONVERSION).length;
+		if (after > before) {
+			loadExpensesHTML();
+		}
+	} finally {
+		EXPENSE_CONVERSION_REFRESHING = false;
+	}
 }
 
 function escapeHtml(str: string): string {
@@ -289,6 +370,10 @@ function applyExpenseInnerType(type) {
 }
 
 function getInnerExpenseContent(category, type, index) {
+	// "Paid by" / "Split with" are only useful when there are multiple named
+	// travelers to choose between. Hide both when there's zero or one named
+	// traveler (including when no traveler name was defined).
+	const showPeopleFields = TRAVELERS.filter((t) => t.name).length > 1;
 	return `<div id='inner-expense-box'>
                 <div class="nice-form-group">
                     <label>${translate('labels.name')}</label>
@@ -310,14 +395,14 @@ function getInnerExpenseContent(category, type, index) {
                     </select>
                     <input required id="expense-type-input" type="text" placeholder="${translate('trip.transportation.title')}" style="margin-top: 8px; display: none"/>
                 </div>
-                <div class="nice-form-group" style="display:${TRAVELERS.length === 0 ? 'none' : ''}">
+                <div class="nice-form-group" style="display:${showPeopleFields ? '' : 'none'}">
                     <label>${translate('trip.expenses.paid_by')}</label>
                         <select id="expense-person" class="edit-select" name="person">
                         <option value="">${translate('labels.non_specified')}</option>
                         ${getTravelersSelectOptionsHTML()}
                     </select>
                 </div>
-                <div class="nice-form-group" id="expense-people-group" style="display:${TRAVELERS.length === 0 ? 'none' : ''}">
+                <div class="nice-form-group" id="expense-people-group" style="display:${showPeopleFields ? '' : 'none'}">
                     <label>${translate('trip.expenses.split_with')}</label>
                     <div id="expense-people-checkboxes" class="expense-people-list">${getExpensePeopleCheckboxesHTML()}</div>
                 </div>
@@ -572,8 +657,8 @@ export function deleteInnerExpense(category, type, index) {
 }
 
 function afterDragInnerExpense(evt) {
-	const from = parseExpenseGroup(evt.from.getAttribute('data-group'));
-	const to = parseExpenseGroup(evt.to.getAttribute('data-group'));
+	const from = parseExpenseGroup(evt.from?.dataset?.group);
+	const to = parseExpenseGroup(evt.to?.dataset?.group);
 
 	// Sortable indices include the group's <label> as item 0, so subtract 1 to get
 	// the expense position within the subgroup.
@@ -594,12 +679,15 @@ function afterDragInnerExpense(evt) {
 		);
 	} else {
 		// Cross-category (and possibly cross-section) move.
-		const fromSubgroup = INNER_EXPENSES[from.category]?.find(
-			(entry) => entry.type === from.type,
-		);
+		const fromSubgroup = INNER_EXPENSES[from.category]?.find((entry) => entry.type === from.type);
 		if (!fromSubgroup) return;
 
 		const [moved] = fromSubgroup.expenses.splice(fromIndex, 1);
+
+		// The expense's own `type` is its group identity — update it so the
+		// move persists on save/reload and the edit dialog opens on the new
+		// group (previously only the DOM moved, so it snapped back on save).
+		moved.type = to.type;
 
 		let toSubgroup = INNER_EXPENSES[to.category]?.find((entry) => entry.type === to.type);
 		if (toSubgroup) {
@@ -624,6 +712,6 @@ function afterDragInnerExpense(evt) {
  * The category is always the first segment; the type is everything after it.
  */
 function parseExpenseGroup(id) {
-	const split = id.split('-');
+	const split = String(id ?? '').split('-');
 	return { category: split[0], type: split.slice(1).join('-') };
 }

@@ -23,8 +23,12 @@ let SOURCE_ACCOMMODATIONS: Record<string, any> = {};
 let SELECTED_SOURCE_ID = '';
 let AVAILABLE_SOURCE_TRIPS: Record<string, any>[] | null = null;
 let AVAILABLE_SOURCE_TRIPS_REQUEST: Promise<Record<string, any>[]> | null = null;
+let SEARCH_QUERY = '';
 
-/** Toggle every import button after the summaries have been checked once. */
+/**
+ * Show the accommodation import button only when the user actually has other
+ * trips with accommodations to import from — hide it otherwise.
+ */
 export async function refreshAccommodationImportButtons() {
 	const trips = await getAvailableSourceTrips();
 	for (const childId of getChildIDs('accommodations-box')) {
@@ -43,7 +47,26 @@ export function openAccommodationImport(index: number) {
 	properties.title = translate('trip.accommodation.import.title');
 	properties.containers = getContainersInput();
 	properties.fullscreen = true;
-	properties.content = getLoadingContent();
+	// Back arrow (shared #back-icon, hidden until a trip is selected) returns to
+	// the trip picker so another source trip can be chosen.
+	properties.icons = [{ type: 'goBack', action: goBackToTripPicker }];
+	properties.content = `
+		<div class="wallpaper-import-loading" id="accommodation-import-loading">
+			<div class="wallpaper-import-spinner"></div>
+			<span>${translate('trip.accommodation.import.loading_trips')}</span>
+		</div>
+		<div class="wallpaper-import-search-bar" id="accommodation-import-search-bar">
+			<div class="search-bar">
+				<i class="iconify search-icon" data-icon="material-symbols:search"></i>
+				<input type="text" id="accommodation-import-search" class="search-input"
+					placeholder="${translate('trip.accommodation.import.search_placeholder')}" />
+				<button class="search-clear" id="accommodation-import-search-clear" style="display:none"
+					aria-label="Clear search">
+					<i class="iconify" data-icon="material-symbols:close"></i>
+				</button>
+			</div>
+		</div>
+		<div class="wallpaper-import-scroll" id="accommodation-import-list"></div>`;
 	properties.buttons = [
 		{ type: 'cancel' },
 		{
@@ -64,23 +87,15 @@ async function loadSourceTrips() {
 
 	try {
 		const trips = await getAvailableSourceTrips();
+		hideImportLoading();
+		SEARCH_QUERY = '';
 
-		if (!trips.length) {
-			list.innerHTML = `<div class="wallpaper-import-empty">${translate(
-				'trip.accommodation.import.no_trips',
-			)}</div>`;
-			return;
-		}
+		renderTripPicker(list);
+		initTripSearch();
 
-		list.innerHTML = `<div class="wallpaper-import-group-grid">${trips
-			.map((trip) => getTripCard(trip))
-			.join('')}</div>`;
-		list.addEventListener('click', (event) => {
-			const card = (event.target as Element).closest<HTMLElement>('[data-trip-id]');
-			const tripId = card?.getAttribute('data-trip-id');
-			if (tripId) void loadTripAccommodations(tripId);
-		});
+		list.addEventListener('click', handleImportListClick);
 	} catch (error) {
+		hideImportLoading();
 		list.innerHTML = `<div class="wallpaper-import-empty">${translate(
 			'trip.accommodation.import.load_error',
 		)}</div>`;
@@ -88,17 +103,68 @@ async function loadSourceTrips() {
 	}
 }
 
+/** Render the trip cards filtered by the current search query. */
+function renderTripPicker(list: HTMLElement) {
+	const query = SEARCH_QUERY.trim().toLowerCase();
+	const filtered = query
+		? (AVAILABLE_SOURCE_TRIPS || []).filter((trip) =>
+				(trip.title || '').toLowerCase().includes(query),
+			)
+		: AVAILABLE_SOURCE_TRIPS || [];
+
+	if (!filtered.length) {
+		list.innerHTML = `<div class="wallpaper-import-empty">${translate(
+			query ? 'trip.accommodation.import.no_matches' : 'trip.accommodation.import.no_trips',
+		)}</div>`;
+		return;
+	}
+
+	list.innerHTML = `<div class="wallpaper-import-group-grid">${filtered
+		.map((trip) => getTripCard(trip))
+		.join('')}</div>`;
+}
+
+/** Wire up the trip-picker search input (clear button mirrors index). */
+function initTripSearch() {
+	const input = getID('accommodation-import-search') as HTMLInputElement | null;
+	const clear = getID('accommodation-import-search-clear');
+	const list = getID('accommodation-import-list');
+	if (!input || !list) return;
+
+	input.addEventListener('input', () => {
+		SEARCH_QUERY = input.value;
+		if (clear) clear.style.display = input.value ? 'flex' : 'none';
+		renderTripPicker(list);
+	});
+	if (clear) {
+		clear.addEventListener('click', () => {
+			input.value = '';
+			SEARCH_QUERY = '';
+			clear.style.display = 'none';
+			renderTripPicker(list);
+		});
+	}
+}
+
 function getAvailableSourceTrips(): Promise<Record<string, any>[]> {
 	if (AVAILABLE_SOURCE_TRIPS) return Promise.resolve(AVAILABLE_SOURCE_TRIPS);
 	if (!AVAILABLE_SOURCE_TRIPS_REQUEST) {
 		AVAILABLE_SOURCE_TRIPS_REQUEST = getUserTrips().then((trips) => {
-			AVAILABLE_SOURCE_TRIPS = trips.filter(
-				(trip) => trip.id !== DOCUMENT_ID && trip.modules?.accommodations === true,
-			);
+			// Newest first (older trips last), from the summary's start date.
+			AVAILABLE_SOURCE_TRIPS = trips
+				.filter((trip) => trip.id !== DOCUMENT_ID && trip.modules?.accommodations === true)
+				.sort((a, b) => getTripStartTime(b) - getTripStartTime(a));
 			return AVAILABLE_SOURCE_TRIPS;
 		});
 	}
 	return AVAILABLE_SOURCE_TRIPS_REQUEST;
+}
+
+/** Timestamp for a trip summary's start date (0 when missing). */
+function getTripStartTime(trip: Record<string, any>): number {
+	const start = trip?.start;
+	if (!start || typeof start.year !== 'number') return 0;
+	return new Date(start.year, (start.month || 1) - 1, start.day || 1).getTime();
 }
 
 function getTripCard(trip: Record<string, any>) {
@@ -113,12 +179,20 @@ function getTripCard(trip: Record<string, any>) {
 async function loadTripAccommodations(tripId: string) {
 	const list = getID('accommodation-import-list');
 	if (!list) return;
-	list.innerHTML = getLoadingContent();
+	const searchBar = getID('accommodation-import-search-bar');
+	if (searchBar) searchBar.style.display = 'none';
+	// Show the back arrow so the user can return to the trip picker.
+	const back = getID('back-icon');
+	if (back) back.style.visibility = 'visible';
+	list.innerHTML = '';
+	setImportLoading(translate('trip.accommodation.import.loading'));
 
 	try {
 		const trip = await getTripRaw(tripId);
 		const accommodations = await getTripAccommodations(tripId);
 		const source = accommodations.length ? accommodations : trip?.accommodations || [];
+
+		hideImportLoading();
 
 		if (!source.length) {
 			list.innerHTML = `<div class="wallpaper-import-empty">${translate(
@@ -133,10 +207,10 @@ async function loadTripAccommodations(tripId: string) {
 		list.innerHTML = `
 			<p class="wallpaper-import-subgroup-title">${trip?.title || ''}</p>
 			<div class="wallpaper-import-group-grid">
-				${source.map((accommodation) => getAccommodationCard(accommodation, trip)).join('')}
+				${source.map((accommodation) => getAccommodationCard(accommodation)).join('')}
 			</div>`;
-		list.addEventListener('click', selectSourceAccommodation);
 	} catch (error) {
+		hideImportLoading();
 		list.innerHTML = `<div class="wallpaper-import-empty">${translate(
 			'trip.accommodation.import.load_error',
 		)}</div>`;
@@ -144,11 +218,14 @@ async function loadTripAccommodations(tripId: string) {
 	}
 }
 
-function getAccommodationCard(accommodation: Record<string, any>, trip: Record<string, any>) {
-	const image = accommodation.images?.[0]?.link || trip?.image?.background || '';
+function getAccommodationCard(accommodation: Record<string, any>) {
+	const image = accommodation.images?.[0]?.link || '';
+	const thumb = image
+		? `<div class="wallpaper-import-thumb" style="background-image: url('${image}')"></div>`
+		: `<div class="wallpaper-import-thumb no-image"><i class="iconify image-picker-icon" data-icon="material-symbols:hotel-outline"></i></div>`;
 	return `
 		<button type="button" class="wallpaper-import-card" data-accommodation-id="${accommodation.id}">
-			<div class="wallpaper-import-thumb" style="background-image: url('${image}')"></div>
+			${thumb}
 			<div class="wallpaper-import-name">${accommodation.name || translate('labels.no_title')}</div>
 		</button>`;
 }
@@ -165,6 +242,38 @@ function selectSourceAccommodation(event: Event) {
 
 	const confirm = getID('message-confirm') as HTMLButtonElement | null;
 	if (confirm) confirm.disabled = false;
+}
+
+/**
+ * Single delegated click handler for the import list — handles both the trip
+ * picker (selecting a trip) and the accommodations step (selecting a stay),
+ * so listeners don't pile up across back/forward navigation.
+ */
+function handleImportListClick(event: Event) {
+	const tripCard = (event.target as Element).closest<HTMLElement>('[data-trip-id]');
+	if (tripCard) {
+		const tripId = tripCard.getAttribute('data-trip-id');
+		if (tripId) void loadTripAccommodations(tripId);
+		return;
+	}
+	selectSourceAccommodation(event);
+}
+
+/** Return from the accommodations list to the trip picker (back arrow). */
+function goBackToTripPicker() {
+	const back = getID('back-icon');
+	if (back) back.style.visibility = 'hidden';
+
+	const searchBar = getID('accommodation-import-search-bar');
+	if (searchBar) searchBar.style.display = '';
+
+	const list = getID('accommodation-import-list');
+	if (list) renderTripPicker(list);
+
+	SOURCE_ACCOMMODATIONS = {};
+	SELECTED_SOURCE_ID = '';
+	const confirm = getID('message-confirm') as HTMLButtonElement | null;
+	if (confirm) confirm.disabled = true;
 }
 
 /** Copy the selected source while retaining fields that belong to this trip. */
@@ -198,11 +307,17 @@ function setImportedTime(inputId: string, date: Record<string, any> | undefined)
 		`${String(date.hour).padStart(2, '0')}:${String(date.minute).padStart(2, '0')}`;
 }
 
-function getLoadingContent() {
-	return `
-		<div class="wallpaper-import-loading">
-			<div class="wallpaper-import-spinner"></div>
-			<span>${translate('trip.accommodation.import.loading')}</span>
-		</div>
-		<div class="wallpaper-import-scroll" id="accommodation-import-list"></div>`;
+/** Show the dialog's loading indicator with the given label. */
+function setImportLoading(label: string) {
+	const loading = getID('accommodation-import-loading');
+	if (!loading) return;
+	const span = loading.querySelector('span');
+	if (span) span.textContent = label;
+	loading.style.display = 'flex';
+}
+
+/** Hide the dialog's loading indicator once content has rendered. */
+function hideImportLoading() {
+	const loading = getID('accommodation-import-loading');
+	if (loading) loading.style.display = 'none';
 }

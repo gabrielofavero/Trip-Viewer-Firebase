@@ -229,6 +229,15 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	/* Smooth slide for the auto-hide behavior below. */
+	transition: transform 0.3s ease;
+}
+
+/* Auto-hide top bar on scroll (view page only): hide while scrolling down to
+   read, reveal on any upward scroll or when near the top. view.ts toggles
+   `topbar-hidden` on <body>. Other pages keep the always-fixed bar. */
+body.topbar-hidden .top-bar {
+	transform: translateY(-100%);
 }
 
 .logo-box {
@@ -284,6 +293,10 @@
 #hero {
 	width: 100%;
 	min-height: 100vh;
+	/* Dynamic viewport height: on mobile the browser chrome (URL bar / PWA
+	   status bar) shrinks the visible viewport below 100vh, leaving the hero
+	   taller than the screen and pushing the footer off the bottom. */
+	min-height: 100dvh;
 	overflow-y: auto;
 	background: url("../../img/home.jpg") top center no-repeat;
 	background-size: cover;
@@ -499,14 +512,14 @@ section {
 	background: #fff;
 	border: var(--card-border);
 	border-radius: var(--radius-lg);
-	box-shadow: 0 6px 16px 0 rgba(110, 123, 131, 0.1);
+	box-shadow: var(--shadow-card);
 	transition: transform var(--transition-normal);
 }
 
 .facts .count-box:hover,
 .about .count-box:hover {
 	transform: translateY(-5px);
-	box-shadow: 0 12px 28px 0 rgba(110, 123, 131, 0.16);
+	box-shadow: var(--shadow-card-hover);
 }
 
 .facts .count-box i,
@@ -524,7 +537,7 @@ section {
 	justify-content: center;
 	width: 48px;
 	height: 48px;
-	box-shadow: 0 4px 10px rgba(110, 123, 131, 0.25);
+	box-shadow: 0 2px 6px rgba(110, 123, 131, 0.12);
 }
 
 .facts .count-box span,
@@ -737,7 +750,7 @@ section {
 	text-align: left;
 	transition: all ease-in-out 0.3s;
 	background-color: #fff;
-	box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
+	box-shadow: var(--shadow-card);
 	border: 1px solid var(--table-border);
 	border-radius: 5px;
 	padding: 30px;
@@ -980,7 +993,7 @@ section {
 	transition: all ease-in-out 0.3s;
 	color: var(--font-color);
 	background: #fff;
-	box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
+	box-shadow: var(--shadow-card);
 }
 
 .services .icon-box .icon {
@@ -1030,7 +1043,7 @@ section {
 
 .services .icon-box:hover {
 	border-color: #fff;
-	box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
+	box-shadow: var(--shadow-card);
 }
 
 .services .iconbox-blue i {
@@ -1627,6 +1640,9 @@ section {
 	text-align: center;
 	width: 100%;
 	padding: 10px 0px 20px 0px;
+	/* Clear the iOS home indicator / PWA safe area so the footer sits flush
+	   with the very bottom of the screen. */
+	padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
 }
 
 .attributions,
@@ -2190,7 +2206,7 @@ body.lightbox-open {
 .flight-box,
 .itinerary-box,
 #calendar {
-	box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
+	box-shadow: var(--shadow-card);
 }
 
 .hotel-box,
@@ -2577,9 +2593,7 @@ body.lightbox-open {
 	display: flex;
 	position: relative;
 	background-color: #fff;
-	box-shadow:
-		0 0 1px 0 rgba(110, 123, 131, 0.15),
-		0 6px 12px 0 rgba(110, 123, 131, 0.15);
+	box-shadow: var(--shadow-card);
 	padding: 0.75rem;
 	border-radius: 99px;
 	transform: scale(0.7);

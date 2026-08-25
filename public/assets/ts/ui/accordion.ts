@@ -1,11 +1,10 @@
-import { getChildIDs, getID } from '../utils/dom.js';
+import { getCategoryLegJs, getID } from '../utils/dom.js';
 
 // Accordion Open - Close
 export function closeAccordions(category) {
-	const childs = getChildIDs(`${category}-box`);
+	const childs = getCategoryLegJs(category);
 
-	for (const child of childs) {
-		const i = child.split('-').pop();
+	for (const i of childs) {
 		const accordionID = `collapse-${category}-${i}`;
 
 		if (getID(accordionID).classList.contains('show')) {
@@ -15,19 +14,17 @@ export function closeAccordions(category) {
 }
 
 export function openLastAccordion(category) {
-	const childs = getChildIDs(`${category}-box`);
+	const childs = getCategoryLegJs(category);
 	const lastChild = childs[childs.length - 1];
-	const i = lastChild.split('-').pop();
-	const accordionID = `collapse-${category}-${i}`;
+	const accordionID = `collapse-${category}-${lastChild}`;
 
 	$(`#${accordionID}`).collapse('show');
 }
 
 export function areThereOpenedAccordions(category) {
-	const childs = getChildIDs(`${category}-box`);
+	const childs = getCategoryLegJs(category);
 
-	for (const child of childs) {
-		const i = child.split('-').pop();
+	for (const i of childs) {
 		const accordionID = `collapse-${category}-${i}`;
 
 		if (getID(accordionID).classList.contains('show')) {

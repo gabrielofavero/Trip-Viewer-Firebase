@@ -27,7 +27,7 @@ TripViewer tracks all work in `README.md` using a structured task system with ID
 3. **No ticket found → create one straight into Done:**
    - Assess the type: 🐞 **Bug** (defect/fix), 🏆 **Feature** (new capability), 📈 **Improvement** (polish/refactor/DEV tooling), ⚔️ **Epic** (large multi-part initiative).
    - Pick the **next available ID** for that type (see *Task ID Selection Rules*; fill any gaps reported by `npm run readme`).
-   - Format exactly like existing entries: `- 🐞 **B177:** Description of what was done`
+   - Format exactly like existing entries with a **short, clear title** (see *Title style*): `- 🐞 **B177:** What was fixed`
    - **Append it to the bottom** of the current month's list under `## Done`.
 4. **Run `npm run readme`** to refresh the summary table and check consistency.
 
@@ -78,8 +78,8 @@ Task numbers are sequential within each type. The script detects **gaps** (missi
 
 ```markdown
 - 🏆 **F154:** Add AI skills for project
-- 🐞 **B158:** When clicking on last item of transportation tab, nothing happens
-- 📈 **M157:** Expand single document import/export features by allowing all types
+- 🐞 **B158:** Last item on transportation tab does nothing
+- 📈 **M157:** Expand single-document import/export
 ```
 
 Epic sub-tasks use indented bullet points:
@@ -88,6 +88,13 @@ Epic sub-tasks use indented bullet points:
   - *[🐞B161] Fix page issues post migration*
   - *[📈M155] Load dark/light mode as soon as page starts*
 ```
+
+### Title style
+
+Keep task titles **short and clear** — a scannable summary is enough; **no full explanations**. Save detail for the commit message. Aim for a phrase readable at a glance (roughly under ~12 words).
+
+Good: `- 📈 **M207:** Keep backlog task titles short and clear`
+Bad:  `- 📈 **M200:** Settings (Advanced): block page refresh/close with a confirmation prompt while a backup, restore, document import/export, or static-export operation is in progress; ...`
 
 ---
 
@@ -203,9 +210,9 @@ Everything is derived from the README by `readme.py` — nothing is hand-maintai
    - **Just completed it** → `## Done`, **append to the bottom** of the current month's list (old on top, new at the bottom). If the month section doesn't exist yet, create `### <Month Year>` at the top of `## Done` first.
    - **Planning future work** → `## Backlog`, in the matching priority section (High/Medium/Low).
    - **Epic sub-task** → indented bullet under its parent epic.
-3. **Format** exactly like existing entries:
+3. **Format** exactly like existing entries — use a **short, clear title**, not a full explanation (see *Title style*):
    ```markdown
-   - 🏆 **F172:** Description of the new feature
+   - 🏆 **F172:** Short clear title of the feature
    ```
 4. **Run `npm run readme`** to refresh the summary table and version. **Always run after adding/moving/removing tasks.**
 

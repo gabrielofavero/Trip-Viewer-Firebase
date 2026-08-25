@@ -7,8 +7,8 @@ import {
 	removeEmptyChild,
 	setURLParam,
 } from '../utils/dom.js';
-import { getCurrentHour } from '../utils/dates.js';
 import { getState } from '../data/state.js';
+import { getAutoDayNight } from './daylight.js';
 import {
 	changeBarColorIOS,
 	DARK_COLOR,
@@ -194,7 +194,20 @@ export function switchVisibility() {
 }
 
 export function autoVisibility() {
-	let now = getCurrentHour();
+	// Dynamic day/night from the user's timezone (sunrise/sunset, cached in
+	// sessionStorage "autoTheme" by the anti-FOUC theme-init.js head script).
+	const auto = getAutoDayNight();
+	if (auto === 'night') {
+		loadDarkMode();
+		return;
+	}
+	if (auto === 'day') {
+		loadLightModeLite();
+		return;
+	}
+	// Fallback if the cache is unavailable (e.g. theme-init.js blocked): fixed
+	// 6PM-6AM dark rule using the user's LOCAL hour (not UTC).
+	const now = new Date().getHours();
 	if (now >= 18 || now < 6) {
 		loadDarkMode();
 	} else {

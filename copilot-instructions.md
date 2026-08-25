@@ -94,6 +94,7 @@ node scripts/dev/query-firestore.js --list-collections   # Query emulator
 5. Named exports only — no `export default`
 6. Vendor libs (jQuery, Bootstrap, etc.) are globals — do not import them
 7. Test locally with `npm run dev` before deploying
+8. Use only theme or neutral colors (see `css-ui-patterns` skill) — never introduce ad-hoc hex/rgb colors into CSS or inline styles. If a non-theme/non-neutral color is needed, request user authorization first; never add one silently
 
 ## Feature Validation
 

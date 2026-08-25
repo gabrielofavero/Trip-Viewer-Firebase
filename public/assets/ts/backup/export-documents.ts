@@ -1,4 +1,5 @@
 import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
+import { beginOperation, endOperation } from '../utils/operation-guard.js';
 import { translate } from '../i18n/translation.js';
 import {
 	displayFullMessage,
@@ -187,28 +188,33 @@ async function handleExportSelected(summaries: DocSummary[]) {
 
 async function executeExport(selectedIds: string[]) {
 	startLoadingScreen();
+	// Block refresh/close while the export gathers and downloads documents.
+	beginOperation();
 
 	let exported = 0;
 	let failed = 0;
 
-	for (const docId of selectedIds) {
-		try {
-			// Protected-data PINs are auto-resolved inside buildExportDocument from
-			// the owner-readable `protected/{tripId}` lookup doc — no prompt.
-			const doc = await buildExportDocument(docId, currentExportType);
-			if (doc) {
-				downloadExportDocument(docId, doc, currentExportType);
-				exported++;
-			} else {
+	try {
+		for (const docId of selectedIds) {
+			try {
+				// Protected-data PINs are auto-resolved inside buildExportDocument from
+				// the owner-readable `protected/{tripId}` lookup doc — no prompt.
+				const doc = await buildExportDocument(docId, currentExportType);
+				if (doc) {
+					downloadExportDocument(docId, doc, currentExportType);
+					exported++;
+				} else {
+					failed++;
+				}
+			} catch (err) {
 				failed++;
+				console.error(`[export-documents] Failed to export ${currentExportType}:`, docId, err);
 			}
-		} catch (err) {
-			failed++;
-			console.error(`[export-documents] Failed to export ${currentExportType}:`, docId, err);
 		}
+	} finally {
+		stopLoadingScreen();
+		endOperation();
 	}
-
-	stopLoadingScreen();
 
 	if (exported > 0) {
 		const msg = failed > 0

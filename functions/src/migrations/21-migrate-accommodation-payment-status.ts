@@ -11,6 +11,7 @@ import * as admin from 'firebase-admin';
 //
 // - ''          → don't show any payment info (default)
 // - 'prepaid'   → accommodation was paid in advance
+// - 'partial_prepaid' → part was paid in advance, rest at the destination
 // - 'pay_on_site' → accommodation is paid at the destination
 //
 // The field is optional — the app treats a missing field as

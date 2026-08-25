@@ -331,6 +331,29 @@ export function getJs(parentID) {
 		.filter(Number.isFinite);
 }
 
+/**
+ * Return the index `j` of every item under a category box, in current DOM
+ * order. Handles both item layouts:
+ *  - `.inner-box` wrappers (transportation/accommodations) — these may be
+ *    nested inside group containers in the leg/people view, so a descendant
+ *    query is used.
+ *  - direct `.accordion-item` children (destination categories, gallery,
+ *    itinerary).
+ */
+export function getCategoryLegJs(category: string): number[] {
+	const box = getID(`${category}-box`);
+	if (!box) return [];
+
+	const innerBoxes = box.querySelectorAll<HTMLElement>('.inner-box');
+	const items = innerBoxes.length
+		? innerBoxes
+		: Array.from(box.children).filter((el) => el.classList.contains('accordion-item'));
+
+	return Array.from(items)
+		.map((el) => getJ(el.id))
+		.filter((j) => Number.isFinite(j));
+}
+
 export function findJFromID(id, type) {
 	const js = getJs(`${type}-box`);
 	for (const j of js) {

@@ -184,7 +184,14 @@ async function loadTransportationData() {
 		addTransportation();
 		const transport = getState().transportation.data[j - 1];
 
-		getID(`${transport.direction}-${j}`).checked = true;
+		// Only override the direction radio for valid stored values. Missing /
+		// legacy directions keep addTransportation()'s default (departure for
+		// the first leg, return for the rest) so legs stay distributed in leg
+		// view instead of all collapsing into "While traveling".
+		if (['departure', 'during', 'return'].includes(transport.direction)) {
+			const directionRadio = getID(`${transport.direction}-${j}`);
+			if (directionRadio) directionRadio.checked = true;
+		}
 
 		const person = transport.person;
 		if (person) {

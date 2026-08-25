@@ -77,6 +77,14 @@ setCSSVariable('theme-color-hover', darkerShade);
 
 ---
 
+## Color Usage (MANDATORY)
+
+- **Use only theme or neutral colors.** All UI colors must come from the design tokens in `base/variables.css` (e.g. `--theme-color`, `--bg-*`, `--text-*`, `--border-color`, `--box-color`, shadows) or the neutral palette. **Never** introduce ad-hoc hex/rgb colors (e.g. `#34c759`, `#ff6b6b`) into component CSS, page CSS, or inline styles.
+- **Non-theme/non-neutral colors require user authorization.** If a task genuinely needs a color that isn't a theme variable or neutral (e.g. a semantic success/error tint that isn't already tokenized), STOP and ask the user for approval — state the exact color + where it applies — before adding it. Never add one silently.
+- For trip/custom accents, use the existing dynamic theme mechanism above (`setCSSVariable()` + the `--theme-color` family) instead of hardcoding a color.
+
+---
+
 ## Dark Mode System
 
 Toggle via `theme/theme.ts`:

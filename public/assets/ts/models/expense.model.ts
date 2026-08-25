@@ -2,19 +2,31 @@
 // Pure data transformation functions for expenses (currency conversion, aggregation, chart data)
 // Extracted from: expenses-converted.js, support/currency.js, support/data.js
 
-import { getCurrencies, getColors } from '../app/config.js';
-import { displayError } from '../utils/messages.js';
-import { translate } from '../i18n/translation.js';
+import { getColors } from '../app/config.js';
 import { getEmptyChar } from '../utils/dom.js';
 import { isOnDarkMode } from '../theme/visibility.js';
 import { hexToRgb, rgbToText } from '../theme/colors.js';
 import { EXPENSES_DATA } from '../pages/expenses/mount.js';
+import { CURRENCIES, CURRENT_CURRENCY } from '../pages/expenses/support/currency.js';
 import {
-	CURRENCIES,
+	canConvert,
+	convertCurrency,
 	DEFAULT_CURRENCY,
-	CURRENCY_CONVERSION,
-	CURRENT_CURRENCY,
-} from '../pages/expenses/support/currency.js';
+	filterCurrencies,
+	formatCurrency as formatCurrencyShared,
+	sortCurrencies,
+} from './currency.model.js';
+
+// Re-export the shared conversion helpers so existing importers of
+// expense.model.js keep working. `formatCurrency` is wrapped below to keep the
+// expenses-page signature `(amount, includeSymbol)` used by data.ts/categories.ts.
+export {
+	canConvert,
+	convertCurrency,
+	filterCurrencies,
+	getCurrencySymbol,
+	sortCurrencies,
+} from './currency.model.js';
 
 // ======= Global state (shared across modules) =======
 export var EXPENSES_CONVERTED: Record<string, any> = {};
@@ -74,79 +86,14 @@ export function getEffectiveExpensesList(type: string): any[] {
 		});
 }
 
-// ======= Currency Filtering & Sorting =======
-
-export function filterCurrencies(arr: string[]): string[] {
-	return arr.filter((currency, index, self) => self.indexOf(currency) === index && currency);
-}
-
-export function sortCurrencies(arr: string[]): string[] {
-	return arr.sort((a, b) => {
-		if (a === DEFAULT_CURRENCY) {
-			return -1;
-		} else if (b === DEFAULT_CURRENCY) {
-			return 1;
-		} else {
-			return 0;
-		}
-	});
-}
-
-// ======= Currency Conversion =======
-
-export function convertCurrency(from: string, to: string, amount: number): number {
-	if (from === to) {
-		return amount;
-	}
-
-	if (CURRENCY_CONVERSION[from + to]) {
-		return amount * CURRENCY_CONVERSION[from + to];
-	}
-
-	if (CURRENCY_CONVERSION[to + from]) {
-		return amount / CURRENCY_CONVERSION[to + from];
-	} else {
-		console.error(`Conversion error: from ${amount} ${from} to ? ${to}`);
-		displayError(translate('messages.errors.unknown'), false, false);
-		return 0;
-	}
-}
-
-export function canConvert(currencies: string[]): boolean {
-	if (currencies.length == 1) {
-		return true;
-	}
-
-	const keys = Object.keys(CURRENCY_CONVERSION);
-	if (keys.length === 0) {
-		return false;
-	}
-
-	for (const currency of currencies) {
-		if (!keys.some((key) => key.includes(currency))) {
-			return false;
-		}
-	}
-	return true;
-}
-
-export function getCurrencySymbol(currency: string): string {
-	const currencies = getCurrencies();
-	if (currencies.symbols[currency]) {
-		return currencies.symbols[currency];
-	} else {
-		return currency;
-	}
-}
+// ======= Currency Filtering, Sorting, Conversion & Formatting =======
+// The shared conversion/filtering/sorting helpers now live in
+// models/currency.model.ts (used by both the Expenses page and the Edit Trip
+// page). This file keeps only the expenses-page `formatCurrency` wrapper so the
+// `(amount, includeSymbol)` signature used by data.ts / categories.ts is preserved.
 
 export function formatCurrency(currencyFloat: number, includeSymbol = false): string {
-	const result = new Intl.NumberFormat('pt-BR', {
-		style: 'decimal',
-		minimumFractionDigits: 2,
-		maximumFractionDigits: 2,
-	}).format(currencyFloat);
-
-	return includeSymbol ? `${getCurrencySymbol(CURRENT_CURRENCY)} ${result}` : result;
+	return formatCurrencyShared(currencyFloat, CURRENT_CURRENCY, includeSymbol);
 }
 
 // ======= Currency Loading =======
@@ -265,7 +212,9 @@ export function processConvertedTravelerExpenses(): void {
 								: [];
 
 					if (people.length === 0) {
-						addToTraveler('labels.non_specified', amount, name);
+						// No payer (`person`) and no split members (`people`): the
+						// expense isn't attributed to anyone, so it's left out of
+						// the per-person breakdown (no "Non-specified" bucket).
 						continue;
 					}
 
@@ -278,15 +227,7 @@ export function processConvertedTravelerExpenses(): void {
 			}
 		}
 
-		function compareWithNonSpecifiedLast(a: any, b: any): number {
-			const nonSpecified = 'labels.non_specified';
-
-			const aIsNS = a.name === nonSpecified; // was "nome"
-			const bIsNS = b.name === nonSpecified; // was "nome"
-
-			if (aIsNS && !bIsNS) return 1; // a goes last
-			if (!aIsNS && bIsNS) return -1; // b goes last
-
+		function compareTravelerNames(a: any, b: any): number {
 			return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }); // was "nome"
 		}
 
@@ -295,12 +236,12 @@ export function processConvertedTravelerExpenses(): void {
 				delete v._byType; // was "_byTipo"
 				return v;
 			})
-			.sort(compareWithNonSpecifiedLast);
+			.sort(compareTravelerNames);
 
 		const summary = {
 			// was "resumo"
 			total: totalSummary,
-			items: Array.from(summaryMap.values()).sort(compareWithNonSpecifiedLast), // was "itens"
+			items: Array.from(summaryMap.values()).sort(compareTravelerNames), // was "itens"
 		};
 
 		EXPENSES_CONVERTED[currency].expensesTravelers = { summary, items }; // was "gastosViajantes", "resumo", "itens"

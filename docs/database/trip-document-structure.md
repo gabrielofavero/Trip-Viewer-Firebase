@@ -176,11 +176,11 @@ interface Accommodation {
   }[];
   reservation: string;  // EMPTY in non-protected doc (sensitive)
   link:        string;  // EMPTY in non-protected doc (sensitive)
-  paymentStatus?: "" | "prepaid" | "pay_on_site";  // F065 — optional, back-compat
+  paymentStatus?: "" | "prepaid" | "pay_on_site" | "partial_prepaid";  // F065 — optional, back-compat
 }
 ```
 
-> **Payment status (F065):** `paymentStatus` is **optional** — a missing field is treated as "don't show" (back-compat, no migration strictly required). Values: `""` = don't show (default), `"prepaid"` = paid in advance, `"pay_on_site"` = pay at the destination. Migration 21 backfills `""` into existing accommodation docs; the edit page writes it on save and `view.html` renders a colored indicator (green = prepaid, amber = pay on site).
+> **Payment status (F065):** `paymentStatus` is **optional** — a missing field is treated as "don't show" (back-compat, no migration strictly required). Values: `""` = don't show (default), `"prepaid"` = paid in advance, `"partial_prepaid"` = part paid in advance / rest paid at the destination, `"pay_on_site"` = pay at the destination. Migration 21 backfills `""` into existing accommodation docs; the edit page writes it on save and `view.html` renders a colored indicator (green = prepaid, amber = pay on site).
 
 > **Sensitive fields:** `reservation` and `link` are always empty strings (`""`) in the non-protected document. Their real values are stored in the protected subcollection at `trips/protected/{pin}/{tripId}` under `hospedagens[accId]`.
 

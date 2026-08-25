@@ -110,7 +110,6 @@ export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
                 <i class="bx bxs-file color-icon"></i>
                 ${getAccommodationReservationHTML(hospedagem)} 
               </div>
-                ${getAccommodationPaymentStatusHTML(hospedagem)}
                 <div class="hotel-description" style="display: ${hospedagem.description ? 'block' : 'none'}">
                   <i class="bx bxs-hotel color-icon"></i> 
                   ${hospedagem.description}
@@ -123,6 +122,7 @@ export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
                       <i class="bi bi-chevron-right color-icon"></i><strong>${translate('trip.accommodation.checkout')}:</strong> <span>${checkOut}</span>
                     </div>
                   </div>
+                ${getAccommodationPaymentStatusHTML(hospedagem)}
                 </div>
               </div>
             </div>`;
@@ -159,6 +159,12 @@ function getAccommodationPaymentStatusHTML(hospedagem) {
 		return `<div class="hotel-payment-status prepaid">
                 <i class="bx bxs-check-circle color-icon"></i>
                 ${translate('trip.accommodation.payment_status_options.prepaid')}
+              </div>`;
+	}
+	if (status === 'partial_prepaid') {
+		return `<div class="hotel-payment-status partial-prepaid">
+                <i class="bx bxs-adjust-alt color-icon"></i>
+                ${translate('trip.accommodation.payment_status_options.partial_prepaid')}
               </div>`;
 	}
 	if (status === 'pay_on_site') {

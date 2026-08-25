@@ -576,12 +576,40 @@ export async function getTransportation(tripId: string): Promise<{ legs: any[]; 
 
 /**
  * Restore the user's saved leg order. Legs are stored as separate documents
- * with random IDs, so Firestore returns them in document-ID order — sort by the
- * explicit `order` field written on save. Legacy legs without it keep doc order.
+ * with random IDs, so Firestore returns them in document-ID order. Sort by the
+ * explicit `order` field written on save. Legacy legs without an `order` (or
+ * with duplicate/undefined values) fall back to chronological order by their
+ * departure date so they render in a sensible sequence instead of the random
+ * document-ID order.
  */
 function sortTransportationLegs(legs: any[]) {
-	legs.sort(
-		(a, b) => (a?.order ?? Number.MAX_SAFE_INTEGER) - (b?.order ?? Number.MAX_SAFE_INTEGER),
+	legs.sort((a, b) => {
+		const orderA = a?.order ?? Number.MAX_SAFE_INTEGER;
+		const orderB = b?.order ?? Number.MAX_SAFE_INTEGER;
+		if (orderA !== orderB) return orderA - orderB;
+		// Same (or missing) order → chronological fallback, then doc-ID order
+		// for total stability.
+		const timeA = getLegDepartureTime(a) ?? Number.MAX_SAFE_INTEGER;
+		const timeB = getLegDepartureTime(b) ?? Number.MAX_SAFE_INTEGER;
+		if (timeA !== timeB) return timeA - timeB;
+		return String(a?.id ?? '').localeCompare(String(b?.id ?? ''));
+	});
+}
+
+/** Convert a leg's `dates.departure` DateObject to an epoch ms timestamp. */
+function getLegDepartureTime(leg: any): number | null {
+	const d = leg?.dates?.departure;
+	if (!d || typeof d !== 'object') return null;
+	if (typeof d.year !== 'number' || typeof d.month !== 'number' || typeof d.day !== 'number') {
+		return null;
+	}
+	return Date.UTC(
+		d.year,
+		(d.month || 1) - 1,
+		d.day || 1,
+		d.hour || 0,
+		d.minute || 0,
+		d.second || 0,
 	);
 }
 

@@ -44,6 +44,7 @@ var PREVIOUS_TRIPS: any[] = [];
 var NEXT_TRIPS: any[] = [];
 var ALL_TRIPS: any[] = []; // Merged for the unified trip view
 var SELECTED_TRIP_ID: string | null = null;
+var TRIP_ACTIVE_GRID: LazyGrid | null = null;
 var TRIP_UPCOMING_GRID: LazyGrid | null = null;
 var TRIP_FINISHED_GRID: LazyGrid | null = null;
 var DEST_GRID: LazyGrid | null = null;
@@ -164,6 +165,11 @@ function initGrids() {
 	if (GRIDS_INITIALIZED) return;
 	GRIDS_INITIALIZED = true;
 
+	TRIP_ACTIVE_GRID = new LazyGrid(
+		getID('trip-active-grid'),
+		getID('trip-active-sentinel'),
+		buildTripCardHTML,
+	);
 	TRIP_UPCOMING_GRID = new LazyGrid(
 		getID('trip-upcoming-grid'),
 		getID('trip-upcoming-sentinel'),
@@ -183,8 +189,10 @@ function loadTripsTab() {
 	const count = getID('trips-count');
 
 	if (ALL_TRIPS.length === 0) {
+		getID('trip-active-section').style.display = 'none';
 		getID('trip-upcoming-section').style.display = 'none';
 		getID('trip-finished-section').style.display = 'none';
+		TRIP_ACTIVE_GRID?.setItems([]);
 		TRIP_UPCOMING_GRID?.setItems([]);
 		TRIP_FINISHED_GRID?.setItems([]);
 		empty.style.display = 'block';
@@ -195,12 +203,17 @@ function loadTripsTab() {
 	empty.style.display = 'none';
 	count.textContent = tripCountLabel(ALL_TRIPS.length);
 
-	const upcoming = ALL_TRIPS.filter((t) => t.category === 'current' || t.category === 'next');
+	// Active trips (happening right now) get their own section on top; "next"
+	// (upcoming) and "past" (finished) follow below.
+	const active = ALL_TRIPS.filter((t) => t.category === 'current');
+	const upcoming = ALL_TRIPS.filter((t) => t.category === 'next');
 	const finished = ALL_TRIPS.filter((t) => t.category === 'past');
 
+	getID('trip-active-section').style.display = active.length > 0 ? '' : 'none';
 	getID('trip-upcoming-section').style.display = upcoming.length > 0 ? '' : 'none';
 	getID('trip-finished-section').style.display = finished.length > 0 ? '' : 'none';
 
+	TRIP_ACTIVE_GRID?.setItems(active);
 	TRIP_UPCOMING_GRID?.setItems(upcoming);
 	TRIP_FINISHED_GRID?.setItems(finished);
 
@@ -222,6 +235,9 @@ function listCountLabel(n: number): string {
 }
 
 function updateTripSectionCounts() {
+	getID('trip-active-count').textContent = TRIP_ACTIVE_GRID
+		? String(TRIP_ACTIVE_GRID.getMatchingCount())
+		: '';
 	getID('trip-upcoming-count').textContent = TRIP_UPCOMING_GRID
 		? String(TRIP_UPCOMING_GRID.getMatchingCount())
 		: '';
@@ -666,6 +682,7 @@ export function applySearch(query: string) {
 
 	switch (tab) {
 		case 'trips':
+			TRIP_ACTIVE_GRID?.setQuery(SEARCH_QUERY);
 			TRIP_UPCOMING_GRID?.setQuery(SEARCH_QUERY);
 			TRIP_FINISHED_GRID?.setQuery(SEARCH_QUERY);
 			updateTripSectionCounts();
@@ -691,7 +708,26 @@ export function clearSearch() {
 	onSearchInput('');
 }
 
-export function onTabChanged() {
+export function onTabChanged(targetTab?: string | null) {
 	const input = getID('search-input') as HTMLInputElement | null;
 	applySearch(input?.value || '');
+
+	// While the Settings tab is open, the greeting bar shows the account info
+	// (avatar, name, email, sign-out) instead of the greeting.
+	//
+	// Prefer the explicit target tab over the content panel's `.active` state:
+	// switchPanel() only moves `.active` onto the new content panel after its
+	// leave animation finishes (asynchronously), so reading `#tab-settings`
+	// here would always lag one switch behind — the greeting would swap only
+	// when leaving Settings again. The caller passes the newly selected tab;
+	// fall back to the settings tab *button* state (set synchronously on
+	// click) when no target is given.
+	const greetingSection = getID('greeting-section');
+	if (greetingSection) {
+		const settingsTabBtn = document.querySelector('.category-tab[data-tab="settings"]');
+		const isSettings = targetTab
+			? targetTab === 'settings'
+			: (settingsTabBtn?.classList.contains('active') ?? false);
+		greetingSection.classList.toggle('settings-mode', isSettings);
+	}
 }

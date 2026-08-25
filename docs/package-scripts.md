@@ -102,7 +102,7 @@ Use it when ports are stuck and emulators or servers won't start.
 ### `npm run dev`
 
 ```sh
-node scripts/dev/ensure-ports-free.js && concurrently \
+npm run kill-ports && concurrently \
   -n fn-watch,front-watch,emulators,open,worker,img-proxy,gmaps \
   "npm --prefix functions run build:watch" \
   "npm run watch" \
@@ -115,7 +115,7 @@ node scripts/dev/ensure-ports-free.js && concurrently \
 
 Starts the **entire local dev environment** in parallel:
 
-1. `ensure-ports-free.js` — verifies the required ports are free first.
+1. `npm run kill-ports` — kills any processes on the dev ports (8085, 9099, 5000, 5001, 4000, 8787, 8788, 8789, 9230, 9231) before starting.
 2. **fn-watch** — rebuilds Cloud Functions on change (`functions/`).
 3. **front-watch** — rebuilds the frontend with live reload (`npm run watch`).
 4. **emulators** — boots the Firebase emulators (Firestore 8085, Auth 9099, Functions 5001, Hosting 5000).
@@ -137,7 +137,7 @@ Identical to `npm run dev`, but sets `DEV_BACKUP_ON_EXIT=1` so the emulator data
 ### `npm run dev:prd`
 
 ```sh
-node scripts/dev/ensure-ports-free.js && firebase use prd && concurrently \
+npm run kill-ports && firebase use prd && concurrently \
   -n front-watch,live-serve,open \
   "node scripts/build/build.js --watch --use-emulator false" \
   "firebase serve --only hosting --port 5000" \
@@ -209,6 +209,10 @@ node scripts/utils/backup.js
 ```
 
 Creates rotating backups of the emulator data. Copies `.emulator-data/` into a timestamped folder under `.emulator-data-backups/` and keeps only the **3 most recent** backups (older ones are pruned automatically). Works whether or not the emulator is currently running.
+
+Also prunes any stray `firebase-export-*` folders left in the repo root by ad-hoc `firebase emulators:export` runs that omitted the target directory (the CLI then auto-names them `firebase-export-<timestamp>`). `.emulator-data/` + `.emulator-data-backups/` are the single source of truth for emulator backups.
+
+Also prunes any stray `firebase-export-*` folders left in the repo root by ad-hoc `firebase emulators:export` runs that omitted the target directory (the CLI then auto-names them `firebase-export-<timestamp>`). `.emulator-data/` + `.emulator-data-backups/` are the single source of truth for emulator backups.
 
 ---
 

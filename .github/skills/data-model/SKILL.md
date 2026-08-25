@@ -137,13 +137,14 @@ Since migration 18 and trip save, each `destinationRefs[i]` entry may carry a co
   images: { description: string, link: string }[]
   reservation: ""   // EMPTY — real value in protected subcollection
   link: ""           // EMPTY — real value in protected subcollection
-  paymentStatus?: "" | "prepaid" | "pay_on_site"   // F065 — ""/missing = don't show (default)
+  paymentStatus?: "" | "prepaid" | "pay_on_site" | "partial_prepaid"   // F065 — ""/missing = don't show (default)
 }
 ```
 
 - `paymentStatus` is optional (back-compat): a missing field renders nothing on view.html.
   - `""` (default / back-compat) → don't show any payment info
   - `"prepaid"` → show "Prepaid" indicator
+  - `"partial_prepaid"` → show "Partially prepaid" indicator
   - `"pay_on_site"` → show "Pay on destination" indicator
 
 ### Subcollection: `transportation/{legId}`

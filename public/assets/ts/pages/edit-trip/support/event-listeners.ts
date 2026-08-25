@@ -1,4 +1,4 @@
-import { getID } from '../../../utils/dom.js';
+import { getID, hideParentIfNoChildren, removeChildWithValidation } from '../../../utils/dom.js';
 import { hasUnsavedChanges, validateImageLink, validateLink } from '../../../ui/fields.js';
 import { searchDestinationsListenerAction } from '../../../theme/visibility.js';
 import { translate } from '../../../i18n/translation.js';
@@ -49,6 +49,7 @@ import { setTripData } from '../set-trip.js';
 import { autoFillDarkColor } from '../categories/customization.js';
 import {
 	applyTransportationTypeVisualization,
+	removeEmptyTransportationGroups,
 	transportationAddListenerAction,
 } from '../categories/transportation.js';
 
@@ -229,7 +230,14 @@ function endListenerAction() {
 }
 
 export function addRemoveTransportationListener(j) {
-	addRemoveChildListenerDS('transportation', j);
+	getID(`remove-transportation-${j}`).addEventListener('click', () => {
+		removeChildWithValidation('transportation', j);
+		removeEmptyTransportationGroups();
+		// Re-check now that empty group wrappers are gone — in grouped mode the
+		// generic hideParentIfNoChildren call inside removeChildWithValidation
+		// sees the group wrappers and would leave the module enabled.
+		hideParentIfNoChildren('transportation');
+	});
 }
 
 export function addRemoveGalleryListener(j) {

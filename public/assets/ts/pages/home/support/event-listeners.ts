@@ -51,7 +51,7 @@ export function loadListenersIndex() {
 			if (switchPanel(current, content)) {
 				tabs.forEach((t) => t.classList.remove('active'));
 				this.classList.add('active');
-				onTabChanged();
+				onTabChanged(target);
 			}
 		});
 	});
@@ -64,7 +64,7 @@ export function loadListenersIndex() {
 			tabs.forEach((t) => t.classList.remove('active'));
 			const settingsTab = document.querySelector('.category-tab[data-tab="settings"]');
 			if (settingsTab) settingsTab.classList.add('active');
-			onTabChanged();
+			onTabChanged('settings');
 		}
 	});
 

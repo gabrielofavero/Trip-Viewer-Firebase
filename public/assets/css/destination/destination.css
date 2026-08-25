@@ -1023,6 +1023,9 @@ h1::after {
 	flex: 0 0 auto;
 	height: 40px;
 	padding: 0 16px;
+	/* Neutral border instead of the theme color (matches the card action
+	   buttons); the theme accent stays on the label/icon color. */
+	border: 1.5px solid var(--border-color);
 }
 
 /* Title row + pencil edit button (right after the name) */

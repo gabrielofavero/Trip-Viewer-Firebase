@@ -1,4 +1,7 @@
-import { startLoadingScreen } from '../utils/loading.js';
+import {
+	beginOperation,
+	endOperation,
+} from '../utils/operation-guard.js';
 import {
 	startProgressLoading,
 	stopProgressLoading,
@@ -23,8 +26,10 @@ export async function restoreOnClickAction() {
 		title,
 		content,
 		yesAction: () => {
+			// No loading screen here: it would show a spinner on top of the
+			// native file picker's backdrop blur before any file is chosen.
+			// The progress overlay starts once a file is actually selected.
 			closeMessage();
-			startLoadingScreen();
 			openRestoreFilePicker();
 		},
 	});
@@ -85,6 +90,9 @@ async function restoreAccountData(restore) {
 	}
 
 	try {
+		// Block refresh/close while the restore writes are in flight — an
+		// interrupted restore could leave the account in a partial state.
+		beginOperation();
 		await restoreAccount(normalized);
 
 		// Show success toast with optional ownership note
@@ -101,6 +109,8 @@ async function restoreAccountData(restore) {
 		console.error('Restoration failed:', err);
 		stopProgressLoading();
 		displayError(err.message || translate('account.restore.error_title'));
+	} finally {
+		endOperation();
 	}
 }
 

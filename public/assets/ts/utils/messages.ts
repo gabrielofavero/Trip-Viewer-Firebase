@@ -711,10 +711,23 @@ export function displaySaveSuccess({
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	properties.title = '';
 	properties.content = content || translate('messages.documents.save.success');
-	// Save-success dialog: no X close button (and Escape won't dismiss it). The
-	// user must pick an explicit action (Edit / Home / View) or refresh the page
-	// to leave, so they can't silently dismiss it and keep editing.
+	// Save-success is an intervention dialog: no X close button (and Escape
+	// won't dismiss it). The user must pick an explicit action (Edit / Home /
+	// View) or refresh the page to leave, so they can't silently dismiss it and
+	// keep editing.
 	properties.closeButton = false;
+	// On mobile it becomes a full-screen "page" (see `.fullscreen-dialog` in
+	// components/modal.css) with the actions pinned to the bottom, so the
+	// Edit / Home / View buttons can never be cropped by the small centered
+	// box on narrow screens. Desktop keeps the normal centered dialog — the
+	// fullscreen styling is mobile-only (≤768px).
+	properties.fullscreen = true;
+	// Extra class so the mobile-only stacking rules in components/modal.css
+	// target only this dialog's action row, not other fullscreen dialogs.
+	properties.containers = {
+		principal: 'message-container save-success-dialog',
+		buttons: 'button-box',
+	};
 	properties.buttons = [
 		{ type: 'edit', action: { type, docId } },
 		// Static exports have no index.html home page — omit the Home button.

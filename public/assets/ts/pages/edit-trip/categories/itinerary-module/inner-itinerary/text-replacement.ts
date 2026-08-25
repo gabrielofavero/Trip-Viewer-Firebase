@@ -3,8 +3,7 @@ import { translate } from '../../../../../i18n/translation.js';
 import { getSelectCurrentLabel } from '../../../../../ui/fields.js';
 import { inputDateToKey, jsDateToInputDate } from '../../../../../utils/dates.js';
 import { DATAS } from '../../../new-trip.js';
-import { INNER_ITINERARY } from './inner-itinerary.js';
-import { getPeriod } from '../../../../destination/categories.js';
+import { getPeriod, INNER_ITINERARY } from './inner-itinerary.js';
 
 const TITLE_REPLACEMENT = {
 	current: '',

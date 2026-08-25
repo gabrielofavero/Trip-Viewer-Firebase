@@ -262,10 +262,11 @@ export interface Accommodation {
 	link: string;
 	/**
 	 * Payment status display (F065). '' = don't show (default / back-compat),
-	 * 'prepaid' = already paid, 'pay_on_site' = pay at the destination.
+	 * 'prepaid' = already paid, 'pay_on_site' = pay at the destination,
+	 * 'partial_prepaid' = part paid in advance, rest paid at the destination.
 	 * Optional — legacy docs may lack it entirely.
 	 */
-	paymentStatus?: '' | 'prepaid' | 'pay_on_site';
+	paymentStatus?: '' | 'prepaid' | 'pay_on_site' | 'partial_prepaid';
 }
 
 /** was "datas" */

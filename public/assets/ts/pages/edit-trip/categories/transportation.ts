@@ -1,6 +1,7 @@
 import { getTransportations } from '../../../app/config.js';
 import {
-	getChildIDs,
+	codifyText,
+	getCategoryLegJs,
 	getID,
 	getJ,
 	getOrCreateCategoryID,
@@ -10,10 +11,13 @@ import {
 import { formattedDateToDateObject, getTimeBetweenDates } from '../../../utils/dates.js';
 import { translate } from '../../../i18n/translation.js';
 import { validateLink } from '../../../ui/fields.js';
-import { closeAccordions, openLastAccordion } from '../../../ui/accordion.js';
+import { closeAccordions } from '../../../ui/accordion.js';
+import { initializeSortableForGroup } from '../../../ui/sortable.js';
 import { TRAVELERS } from '../../../data/state.js';
 import { getTravelerOptionsHTML } from './travelers.js';
 import { addTransportation } from '../new-trip.js';
+
+const TRANSPORTATION_DIRECTION_KEYS = ['departure', 'during', 'return'] as const;
 
 export function getTransportationObject(protectedReservationCodes = false) {
 	const result = {
@@ -24,8 +28,7 @@ export function getTransportationObject(protectedReservationCodes = false) {
 				? 'leg'
 				: 'simple',
 	};
-	for (const child of getChildIDs('transportation-box')) {
-		const j = getJ(child);
+	for (const j of getCategoryLegJs('transportation')) {
 		result.data.push({
 			// Explicit order so the subcollection reader can restore the user's
 			// arrangement (legs are stored as random-ID docs, so Firestore's
@@ -64,8 +67,7 @@ export function getTransportationObject(protectedReservationCodes = false) {
 
 export function getProtectedTransportationObject() {
 	const result = {};
-	for (const childID of getChildIDs('transportation-box')) {
-		const j = getJ(childID);
+	for (const j of getCategoryLegJs('transportation')) {
 		const id = getID(`transportation-id-${j}`).value;
 		const reservation = getID(`reservation-transportation-${j}`).value;
 		const link = getID(`transportation-link-${j}`).value;
@@ -78,42 +80,11 @@ export function updateTransportationTitle(i) {
 	const departurePoint = getID(`departure-point-${i}`).value;
 	const arrivalPoint = getID(`arrival-point-${i}`).value;
 
-	// Prefix depends on the active view mode: leg view → direction label,
-	// people view → traveler name (falls back to the raw stored value).
-	const prefix = getID('leg-view').checked
-		? getTransportationType(i)
-		: getID('people-view').checked
-			? getPerson(i)
-			: '';
-
-	// No route points yet: keep the default "Transportation N" placeholder, but
-	// surface the direction/traveler so leg & person edits always show up.
-	if (!departurePoint && !arrivalPoint) {
-		if (prefix) {
-			getID(`transportation-title-${i}`).innerText = prefix;
-		}
-		return;
-	}
-
-	// Build "origin → destination" (tolerates a missing side).
+	// In leg/people views the direction/traveler is shown by the group header,
+	// so the accordion title only carries the route ("origin → destination").
 	const text = [departurePoint, arrivalPoint].filter(Boolean).join(' → ');
-	getID(`transportation-title-${i}`).innerText = prefix ? `${prefix}: ${text}` : text;
-}
-
-function getTransportationType(i) {
-	const outboundLabel = getID(`departure-${i}`).checked
-		? translate('trip.transportation.departure')
-		: '';
-	const duringLabel = getID(`during-${i}`).checked ? translate('trip.transportation.during') : '';
-	const returnLabel = getID(`return-${i}`).checked ? translate('trip.transportation.return') : '';
-
-	return outboundLabel || duringLabel || returnLabel;
-}
-
-function getPerson(i) {
-	const id = getID(`transportation-person-select-${i}`).value;
-	const traveler = TRAVELERS.find((t) => t.id === id);
-	return traveler ? traveler.name : id;
+	getID(`transportation-title-${i}`).innerText =
+		text || `${translate('trip.transportation.title')} ${i}`;
 }
 
 /**
@@ -142,14 +113,15 @@ export function buildTransportationPersonSelect(selectID, currentValue = '') {
 
 /** Rebuild every transportation leg person select, keeping current values. */
 export function refreshTransportationPersonSelects() {
-	for (const child of getChildIDs('transportation-box')) {
-		const j = getJ(child);
+	for (const j of getCategoryLegJs('transportation')) {
 		const select = getID(`transportation-person-select-${j}`);
 		if (select) {
 			buildTransportationPersonSelect(select.id, select.value);
 			updateTransportationTitle(j);
 		}
 	}
+	// Traveler rename → refresh the people-view group header labels.
+	updateTransportationGroupTitles();
 }
 
 export function loadTransportationVisibility(j) {
@@ -208,9 +180,12 @@ export function applyTransportationTypeVisualization(i?) {
 		return;
 	}
 
-	for (const child of getChildIDs('transportation-box')) {
-		apply(getJ(child));
+	for (const j of getCategoryLegJs('transportation')) {
+		apply(j);
 	}
+
+	// Rebuild the leg/people group wrappers to match the current view mode.
+	renderTransportationGroups();
 
 	function apply(j) {
 		updateTransportationTitle(j);
@@ -293,5 +268,227 @@ export function loadTransportationListeners(j) {
 export function transportationAddListenerAction() {
 	closeAccordions('transportation');
 	addTransportation();
-	openLastAccordion('transportation');
+	// In leg/people views place the new leg inside its group wrapper.
+	const js = getCategoryLegJs('transportation');
+	const newJ = js.length ? Math.max(...js) : undefined;
+	if (newJ !== undefined) {
+		placeTransportationLegInGroup(newJ);
+		$(`#collapse-transportation-${newJ}`).collapse('show');
+	}
+}
+
+// ======= Grouping (leg / people view) =======
+
+/** Current group key for a leg: direction in leg view, traveler id in people view. */
+function getLegGroupKey(j: number): string {
+	if (getID('leg-view')?.checked) {
+		if (getID(`departure-${j}`)?.checked) return 'departure';
+		if (getID(`return-${j}`)?.checked) return 'return';
+		return 'during';
+	}
+	return getID(`transportation-person-select-${j}`)?.value || '';
+}
+
+function getGroupLabel(key: string): string {
+	if (getID('leg-view')?.checked) {
+		const labels: Record<string, string> = {
+			departure: 'trip.transportation.departure',
+			during: 'trip.transportation.during',
+			return: 'trip.transportation.return',
+		};
+		return translate(labels[key] || 'trip.transportation.title');
+	}
+	if (key) {
+		const traveler = TRAVELERS.find((t) => t.id === key);
+		return traveler ? traveler.name : key;
+	}
+	return translate('labels.select');
+}
+
+/** Canonical group order for the people view: trip travelers, then extras. */
+function getPeopleGroupOrder(): string[] {
+	const order = TRAVELERS.map((t) => t.id);
+	for (const j of getCategoryLegJs('transportation')) {
+		const key = getLegGroupKey(j);
+		if (key && !order.includes(key)) order.push(key);
+	}
+	return order;
+}
+
+/** Find a group's items container by its group key (traveler id / direction). */
+function getGroupItemsContainer(key: string): HTMLElement | null {
+	const box = getID('transportation-box');
+	if (!box) return null;
+	for (const group of Array.from(box.querySelectorAll<HTMLElement>('.transportation-group'))) {
+		if (group.dataset.transportGroup === key) {
+			return group.querySelector<HTMLElement>('.transportation-group-items');
+		}
+	}
+	return null;
+}
+
+function buildTransportationGroup(key: string, legs: HTMLElement[]): HTMLElement {
+	const wrapper = document.createElement('div');
+	wrapper.className = 'transportation-group';
+	wrapper.dataset.transportGroup = key;
+
+	const title = document.createElement('div');
+	title.className = 'transportation-group-title';
+	title.textContent = getGroupLabel(key);
+	wrapper.appendChild(title);
+
+	const items = document.createElement('div');
+	items.className = 'draggable-area transportation-group-items';
+	items.dataset.group = 'transportation';
+	items.dataset.transportGroup = key;
+	items.id = `transportation-group-items-${codifyText(key) || 'unassigned'}`;
+	for (const leg of legs) items.appendChild(leg);
+	wrapper.appendChild(items);
+
+	return wrapper;
+}
+
+/**
+ * Render the leg/people group wrappers inside #transportation-box.
+ * Legs are moved (never recreated), so their form values are preserved.
+ */
+export function renderTransportationGroups() {
+	const box = getID('transportation-box');
+	if (!box) return;
+
+	const isLeg = !!getID('leg-view')?.checked;
+	const isPeople = !!getID('people-view')?.checked;
+	const grouped = isLeg || isPeople;
+
+	destroyTransportationSortables(box);
+
+	const legs = Array.from(box.querySelectorAll<HTMLElement>('.inner-box'));
+
+	if (!grouped) {
+		box.innerHTML = '';
+		box.classList.add('draggable-area');
+		box.dataset.group = 'transportation';
+		for (const leg of legs) box.appendChild(leg);
+		initTransportationSortable();
+		return;
+	}
+
+	// Compute each leg's group while the legs are still attached to the
+	// document — getLegGroupKey() reads inputs by id (getID), and the
+	// box.innerHTML = '' below detaches them, which made every leg fall
+	// through to the "during" group.
+	const order = isLeg ? [...TRANSPORTATION_DIRECTION_KEYS] : getPeopleGroupOrder();
+
+	const groupedLegs = new Map<string, HTMLElement[]>();
+	for (const leg of legs) {
+		const key = getLegGroupKey(getJ(leg.id));
+		const groupLegs = groupedLegs.get(key) ?? [];
+		groupLegs.push(leg);
+		groupedLegs.set(key, groupLegs);
+	}
+
+	box.innerHTML = '';
+	box.classList.remove('draggable-area');
+	delete box.dataset.group;
+
+	for (const key of order) {
+		const groupLegs = groupedLegs.get(key);
+		if (!groupLegs || groupLegs.length === 0) continue;
+		box.appendChild(buildTransportationGroup(key, groupLegs));
+	}
+	// Unknown keys (e.g. legacy person names) are appended last.
+	for (const [key, groupLegs] of groupedLegs) {
+		if (!order.includes(key) && groupLegs.length > 0) {
+			box.appendChild(buildTransportationGroup(key, groupLegs));
+		}
+	}
+
+	initTransportationSortable();
+}
+
+/** Move a single leg into its group wrapper (used when adding a leg). */
+function placeTransportationLegInGroup(j: number) {
+	if (!getID('leg-view')?.checked && !getID('people-view')?.checked) return;
+	const box = getID('transportation-box');
+	const leg = getID(`transportation-inner-box-${j}`);
+	if (!box || !leg) return;
+
+	const key = getLegGroupKey(j);
+	let items = getGroupItemsContainer(key);
+	if (!items) {
+		const wrapper = buildTransportationGroup(key, []);
+		box.appendChild(wrapper);
+		items = wrapper.querySelector<HTMLElement>('.transportation-group-items');
+		// New container → make it sortable so the leg can be dragged there.
+		initTransportationSortable();
+	}
+	if (items) items.appendChild(leg);
+}
+
+/** Remove group wrappers that no longer contain any leg. */
+export function removeEmptyTransportationGroups() {
+	const box = getID('transportation-box');
+	if (!box) return;
+	for (const group of Array.from(box.querySelectorAll<HTMLElement>('.transportation-group'))) {
+		const items = group.querySelector<HTMLElement>('.transportation-group-items');
+		if (!items || items.children.length === 0) group.remove();
+	}
+}
+
+/** Refresh group header labels (e.g. after a traveler rename). */
+function updateTransportationGroupTitles() {
+	const box = getID('transportation-box');
+	if (!box) return;
+	for (const group of Array.from(box.querySelectorAll<HTMLElement>('.transportation-group'))) {
+		const title = group.querySelector<HTMLElement>('.transportation-group-title');
+		const key = group.dataset.transportGroup || '';
+		if (title) title.textContent = getGroupLabel(key);
+	}
+}
+
+/** Detach every Sortable instance inside the box (box + group containers). */
+function destroyTransportationSortables(box: HTMLElement) {
+	const targets = [box, ...Array.from(box.querySelectorAll<HTMLElement>('.draggable-area'))];
+	for (const el of targets) {
+		const withSortable = el as HTMLElement & { sortableInstance?: { destroy: () => void } };
+		if (withSortable.sortableInstance) {
+			withSortable.sortableInstance.destroy();
+			delete withSortable.sortableInstance;
+		}
+	}
+}
+
+/**
+ * Sortable for the transportation box. In simple view it targets the box
+ * itself; in leg/people views it targets each group's items container, and all
+ * containers share the "transportation" sort group so legs can be dragged
+ * between groups.
+ */
+export function initTransportationSortable() {
+	initializeSortableForGroup('transportation', { onEnd: afterDragTransportation });
+}
+
+function afterDragTransportation(evt) {
+	const fromKey = evt.from?.dataset?.transportGroup;
+	const toKey = evt.to?.dataset?.transportGroup;
+	if (!fromKey || !toKey || fromKey === toKey) return;
+
+	const j = getJ(evt.item?.id);
+	if (!Number.isFinite(j)) return;
+
+	// Cross-group drop → update the leg's direction (leg view) or traveler
+	// (people view). Sortable has already moved the DOM node into the new group.
+	if (getID('people-view')?.checked) {
+		const select = getID(`transportation-person-select-${j}`);
+		if (select && toKey) {
+			// Rebuild options so legacy/unknown traveler values get an option
+			// (buildTransportationPersonSelect preserves unknown values).
+			buildTransportationPersonSelect(select.id, toKey);
+		}
+	} else if (getID('leg-view')?.checked) {
+		const radio = getID(`${toKey}-${j}`);
+		if (radio) radio.checked = true;
+	}
+
+	applyTransportationTypeVisualization(j);
 }

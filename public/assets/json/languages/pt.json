@@ -218,10 +218,11 @@
 			},
 			"import": {
 				"label": "Reutilizar o transporte de outro viajante",
-				"button": "Copiar transporte",
-				"title": "Copiar transporte",
+				"button": "Importar transporte",
+				"title": "Importar transporte",
 				"choose": "Escolha o transporte para copiar",
-				"copied": "Transporte copiado"
+				"copied": "Transporte copiado",
+				"no_sources": "Não há transporte de outro viajante para copiar."
 			}
 		},
 		"accommodation": {
@@ -241,6 +242,7 @@
 			"payment_status_options": {
 				"none": "Não mostrar",
 				"prepaid": "Pago antecipadamente",
+				"partial_prepaid": "Pago parcialmente",
 				"pay_on_site": "Pagar no local"
 			},
 			"import": {
@@ -248,6 +250,9 @@
 				"button": "Importar de uma viagem",
 				"title": "Importar hospedagem",
 				"loading": "Carregando hospedagens...",
+				"loading_trips": "Carregando viagens...",
+				"search_placeholder": "Buscar viagens...",
+				"no_matches": "Nenhuma viagem corresponde à sua busca.",
 				"no_trips": "Não há outras viagens com hospedagens disponíveis.",
 				"no_accommodations": "Esta viagem não possui hospedagens para importar.",
 				"load_error": "Não foi possível carregar as hospedagens. Tente novamente."
@@ -641,6 +646,7 @@
 		"no_data": "Sem dados cadastrados 😔",
 		"share": "Venha visualizar meus dados criados no TripViewer",
 		"exit_confirmation": "Você tem certeza que deseja sair? Todas as alterações não salvas serão perdidas",
+		"busy_operation": "Uma operação de backup/restauração está em andamento. Sair agora pode interrompê-la e causar perda de dados. Tem certeza que deseja sair?",
 		"select_one": "Selecione pelo menos um item",
 		"app_update": {
 			"title": "Nova versão disponível",
@@ -957,6 +963,7 @@
 		"active": "Ativa",
 		"upcoming": "Próxima",
 		"finished": "Finalizada",
+		"active_trips": "Viagens ativas",
 		"upcoming_trips": "Próximas viagens",
 		"finished_trips": "Viagens concluídas",
 		"search_placeholder": "Buscar por título...",

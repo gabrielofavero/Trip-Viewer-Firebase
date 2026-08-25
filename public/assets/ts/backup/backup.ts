@@ -1,4 +1,5 @@
 import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
+import { beginOperation, endOperation } from '../utils/operation-guard.js';
 import { translate } from '../i18n/translation.js';
 import {
 	closeMessage,
@@ -137,23 +138,29 @@ function getProtectedJobObject(title, documentID, jobs, pin = '') {
 export async function backupAccountData(useSensitiveData = false) {
 	closeMessage();
 	startLoadingScreen();
-	const accountData = await getAccountData(useSensitiveData);
-	const jsonStr = JSON.stringify(accountData, null, 2);
-	const blob = new Blob([jsonStr], { type: 'application/json' });
-	const url = URL.createObjectURL(blob);
+	// Block refresh/close while the backup is gathered and downloaded.
+	beginOperation();
+	try {
+		const accountData = await getAccountData(useSensitiveData);
+		const jsonStr = JSON.stringify(accountData, null, 2);
+		const blob = new Blob([jsonStr], { type: 'application/json' });
+		const url = URL.createObjectURL(blob);
 
-	const timestamp = getTimestamp();
-	const uid = await getUID();
+		const timestamp = getTimestamp();
+		const uid = await getUID();
 
-	const link = document.createElement('a');
-	link.href = url;
-	link.download = `${timestamp}-tripviewer-backup-${uid}.json`;
-	document.body.appendChild(link);
-	link.click();
+		const link = document.createElement('a');
+		link.href = url;
+		link.download = `${timestamp}-tripviewer-backup-${uid}.json`;
+		document.body.appendChild(link);
+		link.click();
 
-	document.body.removeChild(link);
-	URL.revokeObjectURL(url);
-	stopLoadingScreen();
+		document.body.removeChild(link);
+		URL.revokeObjectURL(url);
+	} finally {
+		stopLoadingScreen();
+		endOperation();
+	}
 
 	if (MISSING_ACCOUNT_DATA.failed.length > 0) {
 		displayPartialBackupWarning();

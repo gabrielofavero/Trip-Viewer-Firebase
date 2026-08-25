@@ -1,14 +1,18 @@
+we 
+
 ![alt text](https://i.imgur.com/vejNzOv.png)
 
 # Description
 
 A web application for planning, managing, and viewing trips, destinations, expenses, and itineraries.
+
 # How it works
 
 ## Stack
+
 - Vanilla web application
 - Modularized HTML with partials injection for reutilization
-- Modularized CSS 
+- Modularized CSS
 - TypeScript that is compiled into ESM modularized JavaScript
 - Built to be ran with Google's Firebase (Firestore for data and Authenticarion for account management. Storage and Functions disabled to stay on free tier)
 - API integration with Places API
@@ -43,9 +47,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 181   | 177  | 4         | 0       |
-| 🏆   | Feature     | F000 | 194   | 179  | 15        | 0       |
-| 📈   | Improvement | M000 | 190   | 167  | 22        | 1       |
+| 🐞   | Bug         | B000 | 193   | 189  | 4         | 0       |
+| 🏆   | Feature     | F000 | 196   | 181  | 15        | 0       |
+| 📈   | Improvement | M000 | 207   | 184  | 22        | 1       |
 | ⚔️   | Epic        | E000 | 51    | 42   | 7         | 2       |
 
 ## Backlog
@@ -146,6 +150,37 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B179:** Fix transportation accordion titles not refreshing (edit trip)
 - 🐞 **B180:** Fix transportation visual issues + recent features side effects
 - 🐞 **B181:** Migrations already run in PRD still offered as deploy options (backfill completed state)
+- 🐞 **B182:** Auto dark mode: fix UTC->local hour bug and switch to timezone-based sunrise/sunset detection (offline, session-cached)
+- 🐞 **B183:** Footer not reaching the bottom of the page on mobile (view page)
+- 📈 **M191:** Auto-hide top bar when scrolling down on view page (immersive PWA reading)
+- 🐞 **B184:** Fix visual quality in F192/F194 import dialogs (dark mode, plane icon, import button styling) + F065 payment status color
+- 📈 **M192:** Expenses: people view as a select (View-by "People" option) instead of an extra tab; hide it for a single traveler or when all expenses are unspecified; drop the non-specified bucket from the per-person breakdown
+- 🐞 **B185:** Fix transportation card not showing departure/arrival locations (points key mismatch) + soften flight line in dark mode
+- 🐞 **B186:** Save-success dialog buttons (Edit/Home/View) cropped on mobile edit pages — make the dialog full-screen on mobile with the actions stacked full-width at the bottom (desktop unchanged)
+- 📈 **M193:** Expenses (view page): drop the container-level auto-scroll so the page grows with content; a single category box scrolls internally only when it has many items
+- 📈 **M194:** Minor front-end adjustments: left-align edit-page time inputs (transportation + accommodation), move accommodation payment status to the bottom of the view card, neutral border on destination dialog link buttons
+- 📈 **M195:** Index: replace the greeting content with the account card while on the Settings tab (single box, content fades in on tab switch instead of two duplicate boxes)
+- 🏆 **F195:** Add a dedicated "Active trips" section on top of the index when a trip is currently happening (was merged into Upcoming before)
+- 📈 **M196:** View page: remove the dominant card shadows
+- 📈 **M197:** [DEV] Make npm run dev and dev:prd launch kill-ports instead of just checking ports
+- 📈 **M198:** Index: style the "Active trips" section with the same neutral styling as Upcoming/Finished (no green accent)
+- 📈 **M199:** [DEV] Add a color rule to the CSS skill + project instructions: use only theme/neutral colors, and request user authorization before adding any non-theme/non-neutral color
+- 📈 **M200:** Settings (Advanced): block page refresh/close with a confirmation prompt while a backup, restore, document import/export, or static-export operation is in progress; on account import, drop the loading spinner shown over the native file picker's backdrop blur (progress starts only after a file is selected)
+- 🐞 **B187:** Edit trip: dragging an expense between groups doesn't update its group (keeps the old type on click and reverts on save) — update the expense type when dropped into another group
+- 🐞 **B188:** Edit trip: transportation legs without a valid direction all collapse into "While traveling" (and missing direction could crash loading) — guard the direction on load so legs stay distributed across Departure/During/Return
+- 🐞 **B189:** Edit trip: remove leftover broken accommodation import HTML and the duplicate import-button IDs
+- 📈 **M201:** Edit trip: restyle "Reuse another traveler's transportation" and accommodation import as a top-right themed button with icon + short label (like destination's "Fetch Info With Maps"), always visible with a friendly empty-state toast
+- 📈 **M202:** Edit trip: add a separator border to the image-picker card label
+- 📈 **M203:** [DEV] Consolidate emulator backups to a single source of truth — `backup.js` prunes stray `firebase-export-*` folders (from ad-hoc `firebase emulators:export` runs without a target); `.emulator-data/` + `.emulator-data-backups/` are the only backup locations
+- 📈 **M204:** Edit trip: hide the expense "Paid by" and "Split with" fields when the trip has zero or only one named traveler (including when no traveler name was defined)
+- 📈 **M205:** Edit trip: accommodation import dialog improvements
+- 🐞 **B190:** View page transportation tabs flicker
+- 📈 **M206:** Edit trip: itinerary destination cards match destinations-checkboxes layout
+- 🐞 **B191:** Edit trip: destination cards overflow the destinations box
+- 🐞 **B192:** Edit trip: itinerary "Set the title"/"Set start and end time" only apply start/end — itinerary button keeps placeholder, time of day unset
+- 🏆 **F196:** Add a "Partially prepaid" option to the accommodation payment status (edit + view)
+- 📈 **M207:** Make the zoom hover overlay more subtle (more transparency) with a dark-gray tint in dark mode and a neutral adaptive icon (view gallery, destination media, accommodations)
+- 🐞 **B193:** Edit trip: expense subtotals convert mixed currencies to the trip currency (modularized shared currency conversion API)
 
 ### July 2026
 

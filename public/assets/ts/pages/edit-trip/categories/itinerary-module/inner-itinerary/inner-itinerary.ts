@@ -251,13 +251,12 @@ export function openInnerItinerarySwap() {
 
 export function closeInnerItinerary(j) {
 	if (getID('inner-itinerary-select-item').style.display === 'block') {
-		syncInnerItineraryButton();
-
 		getID('message-title').innerText = getInnerItineraryMessageTitle(j);
 		getID('back-icon').style.visibility = 'hidden';
 
 		replaceTextIfEnabled();
 		replaceTimeIfEnabled();
+		syncInnerItineraryButton();
 		TEXT_REPLACEMENT.applied = true;
 
 		animate(['inner-itinerary-main-screen'], ['inner-itinerary-select-item']);

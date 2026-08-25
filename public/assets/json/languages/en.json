@@ -218,10 +218,11 @@
 			},
 			"import": {
 				"label": "Reuse another traveler's transportation",
-				"button": "Copy transportation",
-				"title": "Copy transportation",
+				"button": "Import transportation",
+				"title": "Import transportation",
 				"choose": "Choose the transportation to copy",
-				"copied": "Transportation copied"
+				"copied": "Transportation copied",
+				"no_sources": "No other traveler's transportation to copy."
 			}
 		},
 		"accommodation": {
@@ -241,6 +242,7 @@
 			"payment_status_options": {
 				"none": "Don't show",
 				"prepaid": "Prepaid",
+				"partial_prepaid": "Partially prepaid",
 				"pay_on_site": "Pay on destination"
 			},
 			"import": {
@@ -248,6 +250,9 @@
 				"button": "Import from trip",
 				"title": "Import accommodation",
 				"loading": "Loading accommodations...",
+				"loading_trips": "Loading trips...",
+				"search_placeholder": "Search trips...",
+				"no_matches": "No trips match your search.",
 				"no_trips": "No other trips with accommodations are available.",
 				"no_accommodations": "This trip has no accommodations to import.",
 				"load_error": "Could not load accommodations. Please try again."
@@ -641,6 +646,7 @@
 		"no_data": "No data found 😔",
 		"share": "Check out what I've created on TripViewer",
 		"exit_confirmation": "Are you sure you want to exit? You may lose unsaved changes",
+		"busy_operation": "A backup/restore operation is in progress. Leaving now may interrupt it and lose data. Are you sure you want to leave?",
 		"select_one": "Please select at least one item",
 		"app_update": {
 			"title": "New version available",
@@ -957,6 +963,7 @@
 		"active": "Active",
 		"upcoming": "Upcoming",
 		"finished": "Finished",
+		"active_trips": "Active trips",
 		"upcoming_trips": "Upcoming trips",
 		"finished_trips": "Finished trips",
 		"search_placeholder": "Search by title...",

@@ -21,6 +21,7 @@
 	--box-color: #f1f1f1;
 	--box-color-hover: rgb(236, 235, 235);
 	--background-color: #ffffff;
+	--portfolio-overlay: rgba(255, 255, 255, 0.45);
 	--subtitle: #4b5563;
 	--a-color: #3d85c6;
 	--a-color-hover: #6fa8dc;
@@ -30,6 +31,8 @@
 	--shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
 	--shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
 	--shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.18);
+	--shadow-card: none;
+	--shadow-card-hover: none;
 	--card-border: 1px solid rgba(110, 123, 131, 0.15);
 	--radius-sm: 8px;
 	--radius-md: 12px;

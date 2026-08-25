@@ -4,7 +4,7 @@
 
 import { markStagedChanges } from '../../../ui/fields.js';
 import { translate } from '../../../i18n/translation.js';
-import { getChildIDs, getID, getJ } from '../../../utils/dom.js';
+import { getCategoryLegJs, getID } from '../../../utils/dom.js';
 import {
 	closeMessage,
 	displayFullMessage,
@@ -18,11 +18,14 @@ import { loadTransportationVisibility, updateTransportationTitle } from './trans
 let TARGET_INDEX = 0;
 let SELECTED_SOURCE_INDEX = 0;
 
-/** Show import buttons only when a different traveler has a completed leg. */
+/**
+ * Show the copy-transportation button only in the traveler-grouped view AND
+ * when a different traveler actually has a completed leg to copy — hide it
+ * otherwise so the user never clicks a button with nothing to offer.
+ */
 export function refreshTransportationImportButtons() {
 	const peopleView = (getID('people-view') as HTMLInputElement | null)?.checked === true;
-	for (const childId of getChildIDs('transportation-box')) {
-		const index = getJ(childId);
+	for (const index of getCategoryLegJs('transportation')) {
 		const button = getID(`transportation-import-button-${index}`);
 		if (!button) continue;
 		button.style.display = peopleView && getImportSources(index).length > 0 ? '' : 'none';
@@ -37,7 +40,10 @@ export function openTransportationImport(index: number) {
 		openToast(translate('trip.transportation.import.copied'));
 		return;
 	}
-	if (!sources.length) return;
+	if (!sources.length) {
+		openToast(translate('trip.transportation.import.no_sources'));
+		return;
+	}
 
 	TARGET_INDEX = index;
 	SELECTED_SOURCE_INDEX = 0;
@@ -63,17 +69,15 @@ function getImportSources(targetIndex: number): number[] {
 	const targetPerson = getID(`transportation-person-select-${targetIndex}`)?.value || '';
 	if (!targetPerson) return [];
 
-	return getChildIDs('transportation-box')
-		.map(getJ)
-		.filter((index) => {
-			const sourcePerson = getID(`transportation-person-select-${index}`)?.value || '';
-			return (
-				index !== targetIndex &&
-				sourcePerson !== '' &&
-				sourcePerson !== targetPerson &&
-				isTransportationFilled(index)
-			);
-		});
+	return getCategoryLegJs('transportation').filter((index) => {
+		const sourcePerson = getID(`transportation-person-select-${index}`)?.value || '';
+		return (
+			index !== targetIndex &&
+			sourcePerson !== '' &&
+			sourcePerson !== targetPerson &&
+			isTransportationFilled(index)
+		);
+	});
 }
 
 function isTransportationFilled(index: number) {

@@ -147,6 +147,30 @@ export async function loadViewPage() {
 		}
 	});
 
+	// View page: auto-hide the fixed top bar when scrolling down (immersive
+	// PWA reading); reveal it again on any upward scroll. It stays visible
+	// near the top of the page and while the mobile nav drawer is open. Scoped
+	// to the view page — other pages keep the always-fixed bar.
+	const topBar = document.getElementById('top-bar');
+	if (topBar) {
+		let lastScrollY = window.scrollY;
+		const TOP_BAR_TOP_ZONE = 8; // px from the top → bar always visible
+		const onTopBarScroll = () => {
+			const y = window.scrollY;
+			const delta = y - lastScrollY;
+			lastScrollY = y;
+
+			if (document.body.classList.contains('mobile-nav-active') || y <= TOP_BAR_TOP_ZONE) {
+				document.body.classList.remove('topbar-hidden');
+			} else if (delta > 0) {
+				document.body.classList.add('topbar-hidden');
+			} else if (delta < 0) {
+				document.body.classList.remove('topbar-hidden');
+			}
+		};
+		window.addEventListener('scroll', onTopBarScroll, { passive: true });
+	}
+
 	let firestoreData;
 
 	if (TYPE === COLLECTION.TRIPS) {
@@ -246,7 +270,7 @@ function loadHeader() {
 	if (getState()?.version.showInDestinations) {
 		let dates = [new Date(getState().version.lastUpdated)];
 
-		for (const destination of (getState().destinations || getState().destinationRefs)) {
+		for (const destination of getState().destinations || getState().destinationRefs) {
 			const lastUpdated =
 				destination.version?.lastUpdated || destination.destinations?.version?.lastUpdated;
 			if (lastUpdated) {
@@ -461,7 +485,10 @@ function loadModules() {
 	function loadDestinationsModule() {
 		switch (TYPE) {
 			case 'trips':
-				if (getState().modules?.destinations === true && (getState().destinations || getState().destinationRefs)?.length > 0) {
+				if (
+					getState().modules?.destinations === true &&
+					(getState().destinations || getState().destinationRefs)?.length > 0
+				) {
 					loadDestinationsDefault();
 				} else {
 					disableDestinations();

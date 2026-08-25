@@ -324,7 +324,7 @@ Adds the `paymentStatus` field to every accommodation sub-document so the UI can
 2. Adds `paymentStatus: ""` (don't show) to every accommodation document that lacks it.
 3. **Idempotency check:** documents already carrying a string `paymentStatus` are skipped.
 
-> **Note:** the field is optional — the app treats a missing field as "don't show" (back-compat), so this migration only normalizes existing data. Values: `""` (don't show, default) | `"prepaid"` | `"pay_on_site"`.
+> **Note:** the field is optional — the app treats a missing field as "don't show" (back-compat), so this migration only normalizes existing data. Values: `""` (don't show, default) | `"prepaid"` | `"partial_prepaid"` | `"pay_on_site"`.
 
 ### Run it:
 ```bash

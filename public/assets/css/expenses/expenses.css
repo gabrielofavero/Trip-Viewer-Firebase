@@ -75,10 +75,6 @@ input[id="radio-duringTrip"]:checked ~ .glider {
 	transform: translateX(200%);
 }
 
-input[id="radio-expensesTravelers"]:checked ~ .glider {
-	transform: translateX(300%);
-}
-
 /* UNUSED: .glider-mini — not found in any HTML file; keeping .glider only */
 .glider {
 	position: absolute;
@@ -235,11 +231,11 @@ section {
 .expenses-card {
 	border: 1px solid #d9d9d9;
 	background-color: #fff;
-	box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
+	box-shadow: var(--shadow-card);
 }
 
 .expenses-card.container-mode {
-	box-shadow: 0 8px 24px rgba(110, 123, 131, 0.08);
+	box-shadow: var(--shadow-card);
 }
 
 .card-full-size {
@@ -250,6 +246,11 @@ section {
 	grid-column: span 12;
 	border-radius: 0.5rem;
 	padding: 1.5rem;
+	/* The page expands to fit all boxes; a single box scrolls internally when
+	   its category has many items. */
+	max-height: 60vh;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 /* Media query for large screens */
@@ -488,14 +489,11 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Auto-scroll (content taller than the viewport)
+# Page growth (no container-level scroll)
 --------------------------------------------------------------*/
-.expenses-container {
-	max-height: 75vh;
-	overflow-y: auto;
-	overflow-x: hidden;
-	scroll-behavior: smooth;
-}
+/* The expenses area (tabs + graphs + receipt boxes) grows with content — the
+   page itself scrolls, never the container. Scroll only happens inside a
+   single receipt box when a category has many items (see .expenses-receipt). */
 
 /*--------------------------------------------------------------
 # Traveler view selector ("View by": All / single traveler)
@@ -562,7 +560,7 @@ section {
 	background: var(--box-color, #f1f1f1);
 	border: 1px dashed var(--border-color, #d7d7d7);
 	border-radius: 16px;
-	box-shadow: var(--shadow-md);
+	box-shadow: var(--shadow-card);
 	text-align: center;
 }
 

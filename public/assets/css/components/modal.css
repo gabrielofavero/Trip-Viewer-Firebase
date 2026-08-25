@@ -133,6 +133,36 @@
 		overflow-y: auto;
 	}
 
+	/* Save-success dialog (edit pages): displaySaveSuccess marks it with
+	   `.save-success-dialog` and makes it full-screen on mobile. Center the
+	   success message in the middle area and stack the Edit / Home / View
+	   actions full-width at the bottom, so the buttons can never be cropped on
+	   narrow screens (the base `.button-box` is a single non-wrapping row).
+	   Desktop keeps the normal centered dialog — these rules are mobile-only. */
+	.message-container.fullscreen-dialog.save-success-dialog
+		> .message-text-container
+		> .message-description {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.message-container.fullscreen-dialog.save-success-dialog
+		> .message-text-container
+		> .button-box {
+		flex-direction: column;
+		align-items: stretch;
+		width: 100%;
+	}
+
+	.message-container.fullscreen-dialog.save-success-dialog
+		> .message-text-container
+		> .button-box
+		.btn {
+		width: 100%;
+		margin: 0;
+	}
+
 	/* Fullscreen dialogs (mobile only) leave by sliding down, mirroring the
 	   `fullscreenDialogUp` entrance. On desktop these dialogs also carry the
 	   `.fullscreen-dialog` class, but they stay centered via

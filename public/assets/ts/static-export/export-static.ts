@@ -23,6 +23,7 @@ import {
 import { translate } from '../i18n/translation.js';
 import { cloneObject, getID } from '../utils/dom.js';
 import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
+import { beginOperation, endOperation } from '../utils/operation-guard.js';
 import {
 	closeMessage,
 	displayFullMessage,
@@ -344,6 +345,8 @@ async function buildAndDownload() {
 		message: translate('account.export_static.loading.gathering'),
 		progress: 5,
 	});
+	// Block refresh/close while the static package is assembled and downloaded.
+	beginOperation();
 
 	const onProgress: ExportStaticProgress = (message, progress) => {
 		updateProgressLoading({ message, progress });
@@ -384,6 +387,8 @@ async function buildAndDownload() {
 		console.error('[export-static] Failed to build static export:', err);
 		stopProgressLoading();
 		openToast(translate('account.export_static.failed'));
+	} finally {
+		endOperation();
 	}
 }
 

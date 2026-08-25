@@ -7,7 +7,6 @@ import { isOnDarkMode } from '../../../theme/visibility.js';
 import { openToast } from '../../../utils/messages.js';
 import { loadCustomSelect } from '../../../ui/custom-select.js';
 import { setCSSRule } from '../../../theme/stylesheets.js';
-import { fade } from '../../../theme/animations.js';
 import { getSensitiveReservationHTML } from '../support/sensitive-reservation.js';
 import { initSwiper } from '../support/swiper.js';
 import { ADJUST_HEIGHT_CARDS, adjustCardsHeights } from '../support/visibility.js';
@@ -58,11 +57,20 @@ function getSwiperData() {
 	const key = viewMode === 'people-view' ? 'person' : 'direction';
 	const complement = key === 'person' ? 'custom-' : '';
 
-	ACTIVE_TRANSPORTATIONS = [
-		...new Set(
-			getState().transportation.data.map((item) => `${complement}${codifyText(item[key])}`),
-		),
-	];
+	if (viewMode === 'leg-view') {
+		// Leg view always shows the tabs in canonical order
+		// departure → while traveling → return, regardless of the order the
+		// legs appear in the data (which may be a legacy/scrambled order).
+		const directionOrder = ['departure', 'during', 'return'];
+		const present = new Set(getState().transportation.data.map((item) => item[key]));
+		ACTIVE_TRANSPORTATIONS = directionOrder.filter((d) => present.has(d));
+	} else {
+		ACTIVE_TRANSPORTATIONS = [
+			...new Set(
+				getState().transportation.data.map((item) => `${complement}${codifyText(item[key])}`),
+			),
+		];
+	}
 	ACTIVE_TRANSPORTATION_TITLES = [
 		...new Set(
 			getState().transportation.data.map((item) => {
@@ -71,7 +79,10 @@ function getSwiperData() {
 			}),
 		),
 	];
-	ACTIVE_TRANSPORTATION = viewMode === 'people-view' ? ACTIVE_TRANSPORTATIONS[0] : 'departure';
+	// Keep the "active" marker in sync with the initially visible group:
+	// people/leg views start on their first present group, simple view on departure.
+	ACTIVE_TRANSPORTATION =
+		viewMode === 'simple-view' ? 'departure' : ACTIVE_TRANSPORTATIONS[0];
 
 	for (const activeTransport of ACTIVE_TRANSPORTATIONS) {
 		swiperData[activeTransport] = [];
@@ -178,7 +189,8 @@ function getReservationHTML(j, company) {
 function getDepartureArrivalHTML(j, type) {
 	const transport = getState().transportation.data[j - 1];
 	const date = convertFromDateObject(transport.dates[type]);
-	const location = transport.points[type];
+	// points uses origin/destination keys, while type is departure/arrival
+	const location = transport.points[type === 'departure' ? 'origin' : 'destination'];
 	const flightTimeSuffix = getLanguagePackName() == 'en' ? '-en' : '';
 
 	let result = `<div class="flight-date">${getDateString(date, 'dd/mm')}</div>
@@ -375,6 +387,78 @@ function loadTransportationTabsHTML() {
 	}
 }
 
+// Guards against a completed crossfade restoring styles that a newer,
+// still-running crossfade is currently manipulating (rapid tab switching).
+let TRANSPORTATION_TRANSITION_TOKEN = 0;
+
+/**
+ * Smoothly crossfade between two transportation panels.
+ *
+ * The panels live inside #transportation-box-container, whose height is fixed
+ * by adjustTransportationBoxContainerHeight(). If the incoming panel simply
+ * faded in while the outgoing one stayed in normal flow, the two would stack
+ * vertically and both cards would be briefly visible at once. Overlapping both
+ * panels at the container's top makes the switch a clean in-place crossfade.
+ */
+function crossfadeTransportation(previousId: string, currentId: string) {
+	const container = getID('transportation-box-container');
+	const prevEl = getID(previousId);
+	const currEl = getID(currentId);
+	if (!container || !prevEl || !currEl) return;
+
+	// Abort any transition still in flight, settling each panel at its current
+	// opacity so rapid switching never leaves a stale animation running.
+	$(prevEl).stop(true, true);
+	$(currEl).stop(true, true);
+
+	// Reset every panel that isn't part of this switch to its hidden, in-flow
+	// state. If a previous crossfade was superseded mid-animation, this clears
+	// its leftover absolute/opacity styles so no stale card lingers on top of —
+	// or intercepts clicks meant for — the active panel.
+	for (const panel of Array.from(
+		container.querySelectorAll<HTMLElement>('.transportation-box'),
+	)) {
+		if (panel === prevEl || panel === currEl) continue;
+		panel.style.display = 'none';
+		panel.style.position = '';
+		panel.style.opacity = '';
+		panel.style.width = '';
+	}
+
+	// Share the same space: both panels pinned to the top of the fixed-height
+	// container while the crossfade runs, so the page never sees them stacked.
+	container.style.position = 'relative';
+	for (const el of [prevEl, currEl]) {
+		el.style.position = 'absolute';
+		el.style.top = '0';
+		el.style.left = '0';
+		el.style.width = '100%';
+	}
+
+	// Incoming panel fades in over the outgoing one, which fades out in place.
+	currEl.style.display = 'block';
+	currEl.style.opacity = '0';
+	prevEl.style.display = 'block';
+	prevEl.style.opacity = '1';
+
+	const token = ++TRANSPORTATION_TRANSITION_TOKEN;
+	$(currEl).animate({ opacity: 1 }, 250);
+	$(prevEl).animate({ opacity: 0 }, 250, () => {
+		// Ignore restores from superseded transitions (their panels were
+		// already reset by the next crossfade's cleanup above).
+		if (token !== TRANSPORTATION_TRANSITION_TOKEN) return;
+
+		// Restore normal flow now that the old panel is hidden.
+		prevEl.style.display = 'none';
+		prevEl.style.opacity = '';
+		prevEl.style.position = '';
+		prevEl.style.width = '';
+		currEl.style.opacity = '1';
+		currEl.style.position = '';
+		currEl.style.width = '';
+	});
+}
+
 function setTransportationTabListeners() {
 	ACTIVE_TRANSPORTATIONS.forEach((transport) => {
 		const radio = `radio-${transport}`;
@@ -395,7 +479,7 @@ function setTransportationTabListeners() {
 			if (currentEl) currentEl.style.visibility = '';
 			if (previousEl) previousEl.style.visibility = '';
 
-			fade([previous], [current]);
+			crossfadeTransportation(previous, current);
 		});
 	});
 }
@@ -436,7 +520,14 @@ function resetSwiperVisibility() {
 	switch (viewMode) {
 		case 'leg-view':
 			adjustTransportationBoxContainerHeight();
-			getID('transportation-departure').style.visibility = '';
+			// Reveal the initially active leg group (first in canonical order) —
+			// other groups stay visibility:hidden until their tab is clicked.
+			{
+				const first = ACTIVE_TRANSPORTATIONS[0];
+				if (first) {
+					getID(`transportation-${mapTransportationKey(first)}`).style.visibility = '';
+				}
+			}
 			break;
 		case 'people-view':
 			adjustTransportationBoxContainerHeight();
@@ -448,24 +539,25 @@ function resetSwiperVisibility() {
 }
 
 function customTransportationSelectAction(value) {
-	// Skip fade if the value hasn't changed — fading the same element
-	// out and in causes a race condition where fadeOut's callback sets
-	// display:none AFTER fadeIn already set display:block.
+	// Skip the transition if the value hasn't changed — re-crossfading the same
+	// panel would hide it after it is already shown.
 	if (ACTIVE_TRANSPORTATION === value) return;
 
-	fade([`transportation-${ACTIVE_TRANSPORTATION}`], [`transportation-${value}`]);
+	const previous = `transportation-${ACTIVE_TRANSPORTATION}`;
+	const current = `transportation-${value}`;
+	crossfadeTransportation(previous, current);
 	ACTIVE_TRANSPORTATION = value;
 
 	// Swipers initialized inside hidden divs (display:none) have zero dimensions.
-	// After fadeIn makes the container visible, update the swiper to recalculate
-	// and re-adjust card heights so flight-boxes get their proper height.
+	// After the crossfade makes the container visible, update the swiper to
+	// recalculate and re-adjust card heights so flight-boxes get their height.
 	setTimeout(() => {
 		const swiperEl = getID(`transportation-${value}-swiper`);
 		if (swiperEl?.swiper) {
 			swiperEl.swiper.update();
 		}
 		adjustCardsHeights('transportation');
-	}, 550); // fadeOut(250ms) + timeout(250ms) + fadeIn animate buffer
+	}, 550); // crossfade (250ms) + buffer for the swiper recalc
 }
 
 function autoNavigateTransportation() {

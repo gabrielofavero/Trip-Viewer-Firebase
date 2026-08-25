@@ -2,7 +2,8 @@
 # Portfolio Hover + Lightbox Pattern (shared)
 # Used by the view gallery and the destination card media (P3).
 # Each image is wrapped in `.portfolio-wrap` — hover reveals a
-# frosted overlay with a zoom link that opens the GLightbox slider.
+# subtle theme-aware overlay (--portfolio-overlay) with a zoom link
+# that opens the GLightbox slider.
 --------------------------------------------------------------*/
 .portfolio-wrap {
 	transition: 0.3s;
@@ -14,7 +15,7 @@
 
 .portfolio-wrap::before {
 	content: "";
-	background: rgba(255, 255, 255, 0.7);
+	background: var(--portfolio-overlay);
 	position: absolute;
 	left: 30px;
 	right: 30px;
@@ -49,8 +50,8 @@
 	position: absolute;
 	top: 35px;
 	left: 35px;
-	border-top: 3px solid #d7dce1;
-	border-left: 3px solid #d7dce1;
+	border-top: 3px solid var(--border-color);
+	border-left: 3px solid var(--border-color);
 	transition: all 0.5s ease 0s;
 	z-index: 9994;
 }
@@ -63,20 +64,20 @@
 	position: absolute;
 	bottom: 35px;
 	right: 35px;
-	border-bottom: 3px solid #d7dce1;
-	border-right: 3px solid #d7dce1;
+	border-bottom: 3px solid var(--border-color);
+	border-right: 3px solid var(--border-color);
 	transition: all 0.5s ease 0s;
 	z-index: 9994;
 }
 
 .portfolio-wrap .portfolio-info h4 {
 	font-size: 20px;
-	color: #4f5051;
+	color: var(--text-secondary);
 	font-weight: 600;
 }
 
 .portfolio-wrap .portfolio-info p {
-	color: #4f5051;
+	color: var(--text-secondary);
 	font-size: 14px;
 	text-transform: uppercase;
 	padding: 0;
@@ -89,7 +90,7 @@
 }
 
 .portfolio-wrap .portfolio-links a {
-	color: #4f5051;
+	color: var(--text-secondary);
 	margin: 0 2px;
 	font-size: 28px;
 	display: inline-block;

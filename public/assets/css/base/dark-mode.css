@@ -31,10 +31,13 @@
 	--table-border: #414040;
 	--text-color: #e2e2e2;
 	--background-color: #303030;
+	--portfolio-overlay: rgba(28, 28, 30, 0.5);
 	--shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
 	--shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
 	--shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
 	--shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.6);
+	--shadow-card: none;
+	--shadow-card-hover: none;
 	--card-border: 1px solid rgba(166, 166, 166, 0.10);
 }
 
@@ -576,19 +579,19 @@
 [data-theme="dark"] .facts .count-box,
 [data-theme="dark"] .about .count-box {
 	background: #303030;
-	box-shadow: 0 3px 8px rgba(166, 166, 166, 0.03);
+	box-shadow: var(--shadow-card);
 }
 
 [data-theme="dark"] .facts .count-box:hover,
 [data-theme="dark"] .about .count-box:hover {
-	box-shadow: 0 5px 14px rgba(166, 166, 166, 0.04);
+	box-shadow: var(--shadow-card-hover);
 }
 
 [data-theme="dark"] .facts .count-box i,
 [data-theme="dark"] .about .count-box i {
 	background: var(--theme-color);
 	color: #303030;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="dark"] .facts .count-box span,
@@ -621,6 +624,10 @@
 [data-theme="dark"] #calendar {
 	background-color: #303030;
 	color: #e2e2e2;
+}
+
+[data-theme="dark"] .flight-line {
+	color: #4a4a4c;
 }
 
 [data-theme="dark"] .hotel-box,
@@ -833,9 +840,7 @@
 --------------------------------------------------------------*/
 [data-theme="dark"] .tabs {
 	background-color: #3b3b3b;
-	box-shadow:
-		0 0 1px 0 rgba(166, 166, 166, 0.05),
-		0 6px 12px 0 rgba(166, 166, 166, 0.05);
+	box-shadow: var(--shadow-card);
 }
 
 [data-theme="dark"] input[type="radio"]:checked + label > .notification {
@@ -851,23 +856,23 @@
 [data-theme="dark"] .expenses-card {
 	border: 1px solid #414040;
 	background-color: #3b3b3b;
-	box-shadow: 0px 5px 90px 0px rgba(166, 166, 166, 0.05);
+	box-shadow: var(--shadow-card);
 }
 
 [data-theme="dark"] .gastos-card.container-mode,
 [data-theme="dark"] .expenses-card.container-mode {
-	box-shadow: 0 8px 24px rgba(166, 166, 166, 0.05);
+	box-shadow: var(--shadow-card);
 }
 
 [data-theme="dark"] .expenses-lock-card {
-	box-shadow: 0 4px 12px rgba(166, 166, 166, 0.05);
+	box-shadow: var(--shadow-card);
 }
 
 /* Full itinerary table — match the expenses-card treatment. */
 [data-theme="dark"] .itin-table-wrap {
 	border: 1px solid #414040;
 	background-color: #3b3b3b;
-	box-shadow: 0px 5px 90px 0px rgba(166, 166, 166, 0.05);
+	box-shadow: var(--shadow-card);
 }
 
 [data-theme="dark"] .expenses-subtitle,

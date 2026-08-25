@@ -107,6 +107,15 @@ export function addTransportation() {
         <div id="collapse-transportation-${j}" class="accordion-collapse collapse"
           aria-labelledby="heading-transportation-${j}" data-bs-parent="#transportation-box">
             <div class="accordion-body">
+              <div class="import-fetch-wrapper">
+                <button type="button" id="transportation-import-button-${j}" data-action="open-transportation-import"
+                  data-index="${j}" class="btn btn-basic btn-sm" style="display:none"
+                  title="${translate('trip.transportation.import.button')}"
+                  aria-label="${translate('trip.transportation.import.button')}">
+                  <i class="iconify" data-icon="heroicons:document-arrow-down-16-solid"></i>
+                  <span>${translate('trip.transportation.import.button')}</span>
+                </button>
+              </div>
               <div class="nice-form-group" style="display: none">
               <label>${translate('labels.id')}</label>
               <input id="transportation-id-${j}" type="text" disabled />
@@ -197,14 +206,6 @@ export function addTransportation() {
                 class="icon-right" />
             </div>
 
-            <div class="nice-form-group customization-box">
-              <label>${translate('trip.transportation.import.label')}</label>
-              <button type="button" id="transportation-import-button-${j}" data-action="open-transportation-import" data-index="${j}" class="btn btn-basic btn-sm" style="display:none">
-                <i class="iconify" data-icon="heroicons:document-arrow-down-16-solid"></i>
-                <span>${translate('trip.transportation.import.button')}</span>
-              </button>
-            </div>
-    
           </div>
     
           <div class="button-box-right-formatted">
@@ -272,6 +273,15 @@ export function addAccommodations() {
         <div id="collapse-accommodations-${j}" class="accordion-collapse collapse"
           aria-labelledby="heading-accommodations-${j}" data-bs-parent="#accommodations-box">
             <div class="accordion-body">
+              <div class="import-fetch-wrapper">
+                <button type="button" id="accommodation-import-button-${j}" data-action="open-accommodation-import"
+                  data-index="${j}" class="btn btn-basic btn-sm" style="display:none"
+                  title="${translate('trip.accommodation.import.button')}"
+                  aria-label="${translate('trip.accommodation.import.button')}">
+                  <i class="iconify" data-icon="heroicons:document-arrow-down-16-solid"></i>
+                  <span>${translate('trip.accommodation.import.button')}</span>
+                </button>
+              </div>
               <div class="nice-form-group" style="display: none">
               <label>${translate('labels.id')}</label>
               <input id="accommodations-id-${j}" type="text" disabled />
@@ -323,6 +333,7 @@ export function addAccommodations() {
               <select id="accommodations-payment-status-${j}">
                 <option value="">${translate('trip.accommodation.payment_status_options.none')}</option>
                 <option value="prepaid">${translate('trip.accommodation.payment_status_options.prepaid')}</option>
+                <option value="partial_prepaid">${translate('trip.accommodation.payment_status_options.partial_prepaid')}</option>
                 <option value="pay_on_site">${translate('trip.accommodation.payment_status_options.pay_on_site')}</option>
               </select>
             </div>
@@ -342,15 +353,6 @@ export function addAccommodations() {
               <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <button id="accommodation-images-button-${j}" data-action="open-accommodation-images" data-index="${j}" class="btn input-button" style="margin-top:0px">${translate('labels.image.add_title')}</button>
             </div>
-type="button" id="accommodation-import-button-${j}" data-action="open-accommodation-import" data-index="${j}" class="btn btn-basic btn-sm" style="display:none">
-                <i class="iconify" data-icon="heroicons:document-arrow-down-16-solid"></i>
-                <span>${translate('trip.accommodation.import.button')}</span>
-              
-            <div class="nice-form-group customization-box">
-              <label>${translate('trip.accommodation.import.label')}</label>
-              <button id="accommodation-import-button-${j}" data-action="open-accommodation-import" data-index="${j}" class="btn input-button" style="margin-top:0px; display:none">${translate('trip.accommodation.import.button')}</button>
-            </div>
-              
           </div>
       
             <div class="button-box-right-formatted">

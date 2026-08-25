@@ -7,6 +7,9 @@
  * - Copies the source directory into a timestamped folder under .emulator-data-backups/
  * - Keeps only the 3 most recent backups (oldest are pruned automatically)
  * - Works whether the emulator is running or not (copies the on-disk export)
+ * - Prunes any stray `firebase-export-*` folders from the repo root (created by
+ *   ad-hoc `firebase emulators:export` runs without a target dir) so
+ *   `.emulator-data/` + `.emulator-data-backups/` stay the single source of truth
  */
 
 const fs = require('fs');
@@ -35,6 +38,9 @@ function main() {
   // Ensure the backups directory exists
   fs.mkdirSync(BACKUP_DIR, { recursive: true });
 
+  // Enforce single source of truth: remove stray firebase-export-* folders
+  pruneStrayExports();
+
   // Create timestamped backup folder
   const timestamp = formatTimestamp(new Date());
   const backupPath = path.join(BACKUP_DIR, `backup-${timestamp}`);
@@ -51,6 +57,34 @@ function main() {
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
+
+/**
+ * Removes stray `firebase-export-*` folders from the repo root.
+ *
+ * The Firebase CLI creates these when `firebase emulators:export` (or
+ * `emulators:start --export-on-exit`) is invoked WITHOUT a directory argument —
+ * it auto-names the output `firebase-export-<timestamp>` in the CWD. They are
+ * not part of the backup system: `.emulator-data/` (live export) +
+ * `.emulator-data-backups/` (rotating snapshots) are the only source of truth.
+ * Running this backup entry point keeps the root free of those strays.
+ */
+function pruneStrayExports() {
+  const strays = fs
+    .readdirSync(ROOT, { withFileTypes: true })
+    .filter((e) => e.isDirectory() && /^firebase-export-/.test(e.name));
+
+  if (strays.length === 0) {
+    console.log('\u{1F9F9} No stray firebase-export-* folders to clean.');
+    return;
+  }
+
+  for (const entry of strays) {
+    const strayPath = path.join(ROOT, entry.name);
+    console.log(`\u{1F9F9} Removing stray export (not part of the backup system): ${entry.name}`);
+    fs.rmSync(strayPath, { recursive: true, force: true });
+  }
+  console.log(`\u2705 Removed ${strays.length} stray firebase-export-* folder(s).`);
+}
 
 /** Copies a directory recursively (sync, for simplicity with small exports). */
 function copyDirSync(src, dest) {

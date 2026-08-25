@@ -1,18 +1,17 @@
 import { getChildIDs, getID } from '../../../utils/dom.js';
 import { setCSSRule } from '../../../theme/stylesheets.js';
+import { loadCurrenciesObject } from '../../../models/expense.model.js';
 import {
-	canConvert,
-	convertCurrency,
-	filterCurrencies,
-	formatCurrency,
-	getCurrencySymbol,
-	loadCurrenciesObject,
-	sortCurrencies,
-} from '../../../models/expense.model.js';
+	CURRENCY_CONVERSION,
+	DEFAULT_CURRENCY,
+	loadCurrencyConversion,
+	setDefaultCurrency,
+} from '../../../models/currency.model.js';
 import { setTabListeners, applyExpenses, EXPENSES_DATA } from '../mount.js';
 
-export var DEFAULT_CURRENCY;
-export var CURRENCY_CONVERSION: Record<string, number> = {};
+// Re-exported for existing importers (mount.ts, expense.model.ts, categories.ts).
+export { CURRENCY_CONVERSION, DEFAULT_CURRENCY };
+
 export var CURRENT_CURRENCY;
 
 export var CURRENCIES = {
@@ -22,7 +21,7 @@ export var CURRENCIES = {
 };
 
 export async function loadExpenseCurrencies() {
-	DEFAULT_CURRENCY = EXPENSES_DATA.currency;
+	setDefaultCurrency(EXPENSES_DATA.currency);
 
 	loadCurrenciesObject();
 
@@ -40,45 +39,8 @@ export async function loadExpenseCurrencies() {
 			CURRENT_CURRENCY = CURRENCIES.summary.includes(DEFAULT_CURRENCY)
 				? DEFAULT_CURRENCY
 				: CURRENCIES.summary[0];
-			await loadCurrencyConversion();
+			await loadCurrencyConversion(DEFAULT_CURRENCY, CURRENCIES.summary);
 			loadCurrenciesTab();
-	}
-}
-
-async function loadCurrencyConversion() {
-	const comparacoes = [];
-	const chaves = [];
-	for (const currency of CURRENCIES.summary) {
-		if (currency !== DEFAULT_CURRENCY) {
-			comparacoes.push(`${currency}-${DEFAULT_CURRENCY}`);
-			chaves.push(currency + DEFAULT_CURRENCY);
-		}
-	}
-	if (comparacoes.length === 0) {
-		return;
-	}
-	const url = `https://economia.awesomeapi.com.br/last/${comparacoes.join(',')}`;
-	const data = await fetchConversoes(url);
-	if (data) {
-		for (const chave of chaves) {
-			CURRENCY_CONVERSION[chave] = data[chave].bid;
-		}
-	}
-}
-
-async function fetchConversoes(url) {
-	try {
-		const response = await fetch(url);
-		if (!response.ok) {
-			console.error(`Network issue while trying to fetch currency information:`);
-			console.error(response);
-			console.warn(`Using default currency ${DEFAULT_CURRENCY}`);
-		}
-		const data = await response.json();
-		return data;
-	} catch (error) {
-		console.error(error);
-		console.warn(`Using default currency ${DEFAULT_CURRENCY}`);
 	}
 }
 

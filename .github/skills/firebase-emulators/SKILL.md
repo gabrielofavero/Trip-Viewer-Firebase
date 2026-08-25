@@ -17,7 +17,7 @@ npm run dev              # Full dev: emulators + watch + auto-open browser
 npm run dev:backup       # Same as dev, but also saves a rotating backup on exit (opt-in)
 npm run dev:livereload   # Same but with live reload enabled
 npm run dev:prd          # REAL data (no emulators): firebase use prd + serve real project
-npm run backup           # Export emulator state: firebase emulators:export ./.emulator-data
+npm run backup           # Rotating snapshot of .emulator-data/ into .emulator-data-backups/
 npm run kill-ports       # Force-kill processes on all emulator ports
 npm run functions        # Build + start only Functions emulator
 ```
@@ -122,9 +122,16 @@ The emulator is **in-memory by default** — data is lost on restart.
 ### Export (save current state)
 ```bash
 npm run backup
-# Equivalent to:
-firebase emulators:export ./.emulator-data
 ```
+Copies `.emulator-data/` into a rotating snapshot under `.emulator-data-backups/backup-<timestamp>/`
+(keeps the 3 most recent). The live persisted export at `.emulator-data/` is written continuously
+by `npm run dev`'s `--export-on-exit`; `npm run backup` snapshots it on demand.
+
+> **Single source of truth:** `.emulator-data/` (live export) + `.emulator-data-backups/`
+> (rotating snapshots) are the ONLY backup locations. Never run `firebase emulators:export`
+> (or `emulators:start --export-on-exit`) without an explicit target directory — the CLI then
+> auto-creates a stray `firebase-export-<timestamp>` folder in the repo root that nothing reads.
+> `npm run backup` prunes any such stray folders automatically.
 
 > **Note — test credentials live in the export:** each export includes `auth_export/accounts.json`
 > with the Auth emulator's test users. Each account has an `email` and a `passwordHash` in the form

@@ -36,12 +36,25 @@
 
       <!-- Logged State: Dashboard -->
       <div id="logged-view" class="view-panel" style="display: none">
-        <!-- Greeting -->
-        <div class="greeting-section">
-          <div class="greeting-avatar" id="greeting-avatar"></div>
-          <div class="greeting-text">
-            <h2 class="greeting-title"><span data-translate="labels.greeting"></span>, <span id="title-name"></span>!</h2>
-            <p class="greeting-subtitle" data-translate="index.welcome_back"></p>
+        <!-- Greeting / Account Bar -->
+        <div class="greeting-section" id="greeting-section">
+          <div class="greeting-content" id="greeting-content">
+            <div class="greeting-avatar" id="greeting-avatar"></div>
+            <div class="greeting-text">
+              <h2 class="greeting-title"><span data-translate="labels.greeting"></span>, <span id="title-name"></span>!</h2>
+              <p class="greeting-subtitle" data-translate="index.welcome_back"></p>
+            </div>
+          </div>
+          <div class="greeting-account" id="greeting-account">
+            <div class="settings-avatar" id="settings-avatar"></div>
+            <div class="settings-user-info">
+              <div class="settings-user-name" id="settings-user-name"></div>
+              <div class="settings-user-email" id="settings-user-email"></div>
+            </div>
+            <button class="btn btn-outline-theme" data-action="sign-out">
+              <i class="iconify" data-icon="material-symbols:logout"></i>
+              <span data-translate="labels.auth.sign_out"></span>
+            </button>
           </div>
         </div>
 
@@ -82,6 +95,17 @@
               <i class="iconify" data-icon="gridicons:add-outline"></i>
               <span data-translate="trip.new"></span>
             </button>
+          </div>
+
+          <div class="trip-section" id="trip-active-section">
+            <h3 class="trip-section-title">
+              <span data-translate="index.active_trips"></span>
+              <span class="trip-section-count" id="trip-active-count"></span>
+            </h3>
+            <div class="trip-grid" id="trip-active-grid">
+              <!-- Active trip cards rendered by JS -->
+            </div>
+            <div class="grid-sentinel" id="trip-active-sentinel"></div>
           </div>
 
           <div class="trip-section" id="trip-upcoming-section">
@@ -153,19 +177,6 @@
         <!-- Tab Content: Settings -->
         <div class="tab-content" id="tab-settings">
           <div class="settings-panel">
-            <!-- Profile Card -->
-            <div class="settings-card" id="settings-account-card">
-              <div class="settings-avatar" id="settings-avatar"></div>
-              <div class="settings-user-info">
-                <div class="settings-user-name" id="settings-user-name"></div>
-                <div class="settings-user-email" id="settings-user-email"></div>
-              </div>
-              <button class="btn btn-outline-theme" data-action="sign-out">
-                <i class="iconify" data-icon="material-symbols:logout"></i>
-                <span data-translate="labels.auth.sign_out"></span>
-              </button>
-            </div>
-
             <!-- Advanced Settings -->
             <div class="settings-section">
               <h3 class="settings-section-title" data-translate="labels.advanced"></h3>

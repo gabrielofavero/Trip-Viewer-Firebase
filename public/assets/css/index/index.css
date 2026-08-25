@@ -177,6 +177,35 @@
 	margin-top: 2px;
 	margin-bottom: 0px;
 }
+/* While Settings is open, the greeting bar swaps its inner content for the
+   account info. The box itself stays put; only the content fades in. */
+.greeting-content,
+.greeting-account {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	animation: greetingFadeIn 0.3s ease;
+}
+.greeting-account {
+	display: none;
+}
+.greeting-section.settings-mode #greeting-content {
+	display: none;
+}
+.greeting-section.settings-mode #greeting-account {
+	display: flex;
+}
+@keyframes greetingFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-4px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
 
 /*--------------------------------------------------------------
 # Tab Content
@@ -237,7 +266,7 @@
 	margin-bottom: 12px;
 }
 
-/* Trip Sections (Upcoming / Finished) */
+/* Trip Sections (Active / Upcoming / Finished) */
 .trip-section {
 	margin-bottom: 28px;
 }
@@ -472,25 +501,15 @@
 	flex-direction: column;
 	gap: 20px;
 }
-.settings-card {
-	display: flex;
-	align-items: center;
-	gap: 16px;
-	padding: 20px;
-	background: rgba(255, 255, 255, 0.7);
-	backdrop-filter: blur(16px);
-	-webkit-backdrop-filter: blur(16px);
-	border-radius: var(--radius-lg);
-	border: 1px solid var(--border-color);
-}
 .settings-avatar {
-	width: 64px;
-	height: 64px;
+	width: 56px;
+	height: 56px;
 	border-radius: 50%;
 	background-size: cover;
 	background-position: center;
 	border: 2px solid var(--theme-color);
 	flex-shrink: 0;
+	box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.2);
 }
 .settings-user-info {
 	flex: 1;
@@ -501,8 +520,8 @@
 	color: var(--text-primary);
 }
 .settings-user-email {
-	font-size: 13px;
-	color: var(--text-secondary);
+	font-size: 14px;
+	color: var(--text-muted);
 	margin-top: 2px;
 	word-break: break-word;
 }

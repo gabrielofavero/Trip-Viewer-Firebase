@@ -61,6 +61,15 @@ export interface MountExpensesOptions {
 export var EXPENSES_DATA;
 var ACTIVE_EXPENSE_TAB = 'summary';
 
+// Sentinel value for the "People" option in the traveler view select. Real
+// traveler IDs are Firestore document IDs, so a double-underscore value can't
+// collide. When selected, the per-traveler breakdown replaces the tabbed view.
+const PEOPLE_VIEW = '__people__';
+
+// True while the per-traveler breakdown ("People" in the View-by select) is
+// shown instead of the Overview / Pre-trip / During-trip tabbed view.
+var PEOPLE_VIEW_ACTIVE = false;
+
 // When embedding into view.html (embedMode), skip the global preloader +
 // scroll-lock so the page doesn't flicker while the section loads inline.
 var EMBED_MODE = false;
@@ -285,6 +294,20 @@ async function loadExpenses(
 export function applyExpenses() {
 	loadTravelerViewSelector();
 
+	// People view: render the per-traveler breakdown and hide the tab bar (the
+	// tabbed Overview / Pre-trip / During-trip views don't apply here).
+	if (PEOPLE_VIEW_ACTIVE) {
+		getID('tabs-container-expenses').style.display = 'none';
+		getID('summary').style.display = 'none';
+		getID('preTrip').style.display = 'none';
+		getID('duringTrip').style.display = 'none';
+		getID('expensesTravelers').style.display = '';
+		loadTravelerExpenses();
+		return;
+	}
+
+	getID('tabs-container-expenses').style.display = '';
+
 	const hasPreTrip = EXPENSES_DATA.preTrip?.length > 0;
 	const hasDuringTrip = EXPENSES_DATA.duringTrip?.length > 0;
 
@@ -297,9 +320,6 @@ export function applyExpenses() {
 		loadSummary();
 		loadPreTripExpenses();
 		loadDuringTripExpenses();
-		loadTravelerExpenses();
-
-		applyAndLoadTravelerExpenses();
 		return;
 	}
 
@@ -309,8 +329,6 @@ export function applyExpenses() {
 		getID('preTrip').style.display = '';
 
 		loadPreTripExpenses();
-
-		applyAndLoadTravelerExpenses();
 		return;
 	}
 
@@ -318,11 +336,8 @@ export function applyExpenses() {
 		getID('radio-duringTrip').style.display = '';
 		getID('summary').style.display = 'none';
 		getID('duringTrip').style.display = '';
-		applyAndLoadTravelerExpenses();
 
 		loadDuringTripExpenses();
-
-		applyAndLoadTravelerExpenses();
 		return;
 	}
 
@@ -333,29 +348,10 @@ export function applyExpenses() {
 		false,
 		false,
 	);
-
-	function applyAndLoadTravelerExpenses() {
-		if (!hasTravelerExpenses()) {
-			return;
-		}
-		getID('radio-expensesTravelers').style.display = '';
-		loadTravelerExpenses();
-	}
-
-	function hasTravelerExpenses() {
-		// Consider both the payer (`person`) and split members (`people`): an
-		// expense can be tied to travelers via `people` alone (no payer chosen).
-		const referencesAny = (list: any[]) =>
-			list?.some((i: any) => i?.person || (Array.isArray(i?.people) && i.people.length > 0));
-		return (
-			EXPENSES_DATA.travelers &&
-			(referencesAny(EXPENSES_DATA.duringTrip) || referencesAny(EXPENSES_DATA.preTrip))
-		);
-	}
 }
 
 export function setTabListeners() {
-	const radios = ['radio-summary', 'radio-preTrip', 'radio-duringTrip', 'radio-expensesTravelers'];
+	const radios = ['radio-summary', 'radio-preTrip', 'radio-duringTrip'];
 	radios.forEach((radio) => {
 		const radioEl = getID(radio);
 		if (!radioEl) return;
@@ -387,34 +383,11 @@ function collectExpenseTravelerIds(): Set<string> {
 	return set;
 }
 
-function hasSplitExpenses(): boolean {
-	for (const type of ['preTrip', 'duringTrip']) {
-		for (const expense of EXPENSES_DATA?.[type] || []) {
-			if (Array.isArray(expense?.people) && expense.people.length > 1) return true;
-		}
-	}
-	return false;
-}
-
 /**
- * Any expense with no payer (`person`) and no split members (`people`). These
- * belong to nobody, so a per-person view would exclude them — which makes the
- * "All vs single traveler" toggle meaningful even with a single traveler.
- */
-function hasUnregisteredExpenses(): boolean {
-	for (const type of ['preTrip', 'duringTrip']) {
-		for (const expense of EXPENSES_DATA?.[type] || []) {
-			const hasPerson = !!expense?.person;
-			const hasPeople = Array.isArray(expense?.people) && expense.people.length > 0;
-			if (!hasPerson && !hasPeople) return true;
-		}
-	}
-	return false;
-}
-
-/**
- * Renders the "View by" traveler selector (All / per traveler) and wires it
- * to recompute the converted data + re-render the whole page.
+ * Renders the "View by" traveler selector (All / People / per traveler) and
+ * wires it to recompute the converted data + re-render the whole page. The
+ * selector doubles as the people-view switch: picking "People" replaces the
+ * tabbed view with the per-traveler breakdown.
  */
 function loadTravelerViewSelector() {
 	const container = getID('traveler-view');
@@ -422,30 +395,46 @@ function loadTravelerViewSelector() {
 	if (!container || !select) return;
 
 	const usedIds = collectExpenseTravelerIds();
-	// Show the toggle when there is at least one traveler referenced AND a
-	// per-person view would actually differ from the "All" view: multiple
-	// travelers, split expenses, or unregistered expenses to exclude.
-	if (
-		usedIds.size === 0 ||
-		(usedIds.size < 2 && !hasSplitExpenses() && !hasUnregisteredExpenses())
-	) {
+	// Show the selector only when the people view is meaningful. A lone
+	// traveler (even one with a few marked expenses and some unspecified ones)
+	// has nothing to break down, and a trip where every expense is unspecified
+	// references no one — both cases hide the selector.
+	if (usedIds.size < 2) {
 		container.style.display = 'none';
 		return;
 	}
 
 	container.style.display = '';
 	const travelers = EXPENSES_DATA?.travelers || {};
+	const peopleActive = PEOPLE_VIEW_ACTIVE;
 	const current = getActiveExpensePerson();
 
 	let options = `<option value="">${translate('labels.all')}</option>`;
+	options += `<option value="${PEOPLE_VIEW}" ${peopleActive ? 'selected' : ''}>${translate('labels.people')}</option>`;
 	for (const id of usedIds) {
 		const name = travelers[id] || id;
-		options += `<option value="${id}" ${id === current ? 'selected' : ''}>${name}</option>`;
+		options += `<option value="${id}" ${!peopleActive && id === current ? 'selected' : ''}>${name}</option>`;
 	}
 	select.innerHTML = options;
 
 	select.onchange = () => {
-		setActiveExpensePerson(select.value);
+		const enteringPeople = select.value === PEOPLE_VIEW;
+		if (enteringPeople) {
+			PEOPLE_VIEW_ACTIVE = true;
+			setActiveExpensePerson('');
+			ACTIVE_EXPENSE_TAB = 'summary';
+		} else {
+			const wasPeople = PEOPLE_VIEW_ACTIVE;
+			PEOPLE_VIEW_ACTIVE = false;
+			setActiveExpensePerson(select.value);
+			if (wasPeople) {
+				// Leaving the people view: reset to the Overview tab so the
+				// tabbed view renders cleanly.
+				ACTIVE_EXPENSE_TAB = 'summary';
+				const summaryRadio = getID('radio-summary');
+				if (summaryRadio) summaryRadio.checked = true;
+			}
+		}
 		loadConvertedExpenses();
 		applyExpenses();
 		setTabListeners();
@@ -459,6 +448,7 @@ function loadTravelerViewSelector() {
 function resetExpensesState() {
 	EXPENSES_DATA = undefined;
 	ACTIVE_EXPENSE_TAB = 'summary';
+	PEOPLE_VIEW_ACTIVE = false;
 	setActiveExpensePerson('');
 	CURRENCIES.summary = [];
 	CURRENCIES.preTrip = [];
@@ -482,12 +472,8 @@ function resetExpensesState() {
 		if (el) el.style.display = display;
 	};
 	restore('tab-expenses', 'none');
-	for (const id of [
-		'radio-summary',
-		'radio-preTrip',
-		'radio-duringTrip',
-		'radio-expensesTravelers',
-	]) {
+	restore('tabs-container-expenses', '');
+	for (const id of ['radio-summary', 'radio-preTrip', 'radio-duringTrip']) {
 		restore(id, 'none');
 	}
 	restore('summary', '');
