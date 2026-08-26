@@ -4,7 +4,11 @@
  * Usage:
  *   node scripts/utils/open-on-ready.js [url] [--timeout=60000]
  *
- * Defaults to http://127.0.0.1:5000 with a 60s timeout.
+ * Defaults to http://localhost:5000 with a 60s timeout. Uses `localhost`
+ * (not 127.0.0.1) because the local server can bind to either IPv4 or IPv6
+ * (firebase serve binds ::1 on some setups), and `localhost` matches the
+ * "Local server: http://localhost:PORT" URL both `firebase serve` and the
+ * emulators report — so the readiness poll and the opened tab always work.
  *
  * Single-shot: opens the browser at most ONCE, then exits. A guard flag plus a
  * reliable, forced exit prevent duplicate tabs even when the readiness poll
@@ -17,7 +21,7 @@ const http = require('http');
 const { spawn } = require('child_process');
 
 const args = process.argv.slice(2);
-const urlArg = args.find(a => !a.startsWith('--')) || 'http://127.0.0.1:5000';
+const urlArg = args.find(a => !a.startsWith('--')) || 'http://localhost:5000';
 const timeoutArg = args.find(a => a.startsWith('--timeout='));
 const timeoutMs = timeoutArg ? parseInt(timeoutArg.split('=')[1], 10) : 60_000;
 
