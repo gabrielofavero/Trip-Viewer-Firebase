@@ -2331,10 +2331,22 @@ body.lightbox-open {
 	color: var(--theme-color);
 }
 
+/* Itinerary "expand item" icon (and accommodation link icon) — styled like
+   the expense-link on the expenses page: theme color, 1rem icon, hover
+   feedback (the icon element has no text, so a color shift stands in for
+   the expense-link underline). */
 .external-link {
-	color: #3d85c6;
-	font-size: 20px;
+	color: var(--theme-color);
+	font-size: 1rem;
 	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	flex-shrink: 0;
+	transition: color 0.15s ease;
+}
+
+.external-link:hover {
+	color: var(--theme-color-hover);
 }
 
 @media (max-width: 770px) {
@@ -2607,13 +2619,47 @@ input[type="radio"] {
 	display: none;
 }
 
-.tab,
+/* Main tab bar (#tab-transportation) — same unified "pill" look as the
+   expenses tab bar (expenses/expenses.css): mobile visuals + desktop glider
+   slide. The glider width is set at runtime (tab count varies), see
+   loadTransportationTabsHTML(). */
+#tab-transportation {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
+	width: 100%;
+	max-width: 480px;
+	padding: 0.25rem;
+	background-color: var(--box-color);
+	border: 1px solid var(--border-color);
+	border-radius: 99px;
+	box-shadow: none;
+	transform: none;
+}
+
+.tab {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1 1 0;
+	min-width: 0;
+	height: 42px;
+	padding: 0 0.4rem;
+	font-size: 0.72rem;
+	font-weight: 600;
+	color: var(--text-muted);
+	border-radius: 99px;
+	cursor: pointer;
+	white-space: nowrap;
+	transition: color 0.15s ease-in;
+}
+
 .tab-mini {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	height: 54px;
-	width: 200px;
+	width: 100px;
 	font-size: 1.25rem;
 	font-weight: 500;
 	border-radius: 99px;
@@ -2621,12 +2667,12 @@ input[type="radio"] {
 	transition: color 0.15s ease-in;
 }
 
-.tab-mini {
-	width: 100px;
-}
-
 .tabs-container input[type="radio"]:checked + label {
 	font-weight: bold;
+}
+
+#tab-transportation input[type="radio"]:checked + label {
+	color: #fff;
 }
 
 .tabs-container input[type="radio"]:checked + label > .notification {
@@ -2634,38 +2680,29 @@ input[type="radio"] {
 	color: #fff;
 }
 
-.tabs-container input[id="radio-ida"]:checked ~ .glider {
-	transform: translateX(0);
+/* Glider positions are driven at runtime via setCSSRule() in
+   loadTransportationTabsHTML() — legacy radio-ida/durante/volta rules removed. */
+.glider {
+	position: absolute;
+	top: 0.25rem;
+	left: 0.25rem;
+	height: 42px;
+	background-color: var(--theme-color);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+	border-radius: 99px;
+	z-index: 1;
+	transition: transform 0.25s ease-out;
 }
 
-.tabs-container input[id="radio-durante"]:checked ~ .glider {
-	transform: translateX(100%);
-}
-
-.tabs-container input[id="radio-volta"]:checked ~ .glider {
-	transform: translateX(200%);
-}
-
-.glider,
 .glider-mini {
 	position: absolute;
 	display: flex;
 	height: 54px;
-	width: 200px;
+	width: 100px;
 	background-color: var(--theme-color-secondary);
 	z-index: 1;
 	border-radius: 99px;
 	transition: 0.25s ease-out;
-}
-
-.glider-mini {
-	width: 100px;
-}
-
-@media (max-width: 700px) {
-	.tabs {
-		transform: scale(0.6);
-	}
 }
 
 @media (max-width: 1199px) and (min-width: 993px) {

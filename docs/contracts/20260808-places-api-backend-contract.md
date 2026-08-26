@@ -13,7 +13,7 @@ This document defines everything a backend developer needs to build the Cloudfla
 
 ```
 TripViewer frontend
-   │  GET {base}/places/search?q=…&lang=…&photos=true      + Authorization: Bearer <firebase token>
+   │  GET {base}/places/search?q=…&lang=…&photos=true&biasLat=…&biasLng=…   + Authorization: Bearer <firebase token>
    │  GET {base}/places/{placeId}?lang=…&photos=false      + Authorization: Bearer <firebase token>
    │  GET {base}/places/{placeId}/photos?lang=…            + Authorization: Bearer <firebase token>
    ▼
@@ -47,7 +47,7 @@ Cloudflare Worker  ──►  Google Places API (New)  https://places.googleapis
 
 | # | Route (relative to `{base}`) | Purpose | Request params | Response envelope |
 |---|---|---|---|---|
-| 1 | `GET /places/search` | Name search, ≤ 5 results with all needed data | `q`, `lang`, `photos=true`; token in header | `{ "results": PlaceSearchResult[] }` |
+| 1 | `GET /places/search` | Name search, ≤ 5 results with all needed data | `q`, `lang`, `photos=true`, `biasLat`, `biasLng`, `biasRadius`; token in header | `{ "results": PlaceSearchResult[] }` |
 | 2 | `GET /places/{placeId}` | Full place info by Google Place ID | `lang`, `photos` (false on refresh); token in header (path: `placeId`) | `{ "place": PlaceDetails }` |
 | 3 | `GET /places/{placeId}/photos` | Direct image URLs for the first 3 photos | `lang`; token in header (path: `placeId`); `photos` n/a — always returns photos | `{ "photos": PlacePhoto[] }` |
 
@@ -71,6 +71,7 @@ Cloudflare Worker  ──►  Google Places API (New)  https://places.googleapis
   "price": "$$",                              // "$" | "$$" | "$$$" | "$$$$" | "-"
   "emoji": "🍕",                               // resolved from Google `types` via emoji-map
   "map": "https://maps.google.com/?cid=…",    // googleMapsUri
+  "location": { "lat": -22.9519, "lng": -43.2105 }, // Google `location` (additive; My Maps import nearest-pick)
   "businessStatus": "OPERATIONAL",            // "OPERATIONAL" | "CLOSED_PERMANENTLY" | "CLOSED_TEMPORARILY" | …
   "photos": [                                 // photo references (route 3 consumes these)
     { "name": "places/ChIJN1t_tDeuEmsRUsoyG83frY4/photos/AUc7tX…" }

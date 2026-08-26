@@ -167,9 +167,11 @@ export async function buildStaticExport(
 	zip.file(dataUrl, JSON.stringify(data, null, 2));
 	zip.file('site.webmanifest', buildSiteManifest(appTitle, iconPath));
 
-	// 7. Zip → Blob → download.
+	// 7. Zip → Blob → download. The ZIP is named from the user-chosen app name
+	//    when provided (falls back to the document title, then its id) — just
+	//    the slugified title, no timestamp or type prefix.
 	emit(translate('account.export_static.loading.finishing'), 95);
-	await downloadZip(zip, type, data?.meta?.title || data?.meta?.sourceId);
+	await downloadZip(zip, config.appTitle || data?.meta?.title || data?.meta?.sourceId);
 
 	emit(translate('account.export_static.loading.finishing'), 100);
 
@@ -226,8 +228,7 @@ async function addManifestFiles(
 // ============================================================
 
 /** Deployed Cloudflare image-proxy worker route (dev + prd share this URL). */
-const IMAGE_PROXY_DEPLOYED_URL =
-	'https://trip-viewer-image-proxy.gabriel-o-favero.workers.dev';
+const IMAGE_PROXY_DEPLOYED_URL = 'https://trip-viewer-image-proxy.gabriel-o-favero.workers.dev';
 /** Local image-proxy via `wrangler dev` (workers/image-proxy/README.md). */
 const IMAGE_PROXY_LOCAL_URL = 'http://localhost:8789';
 
@@ -236,9 +237,7 @@ const IMAGE_PROXY_LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
 
 function resolveImageProxyUrl(): string {
 	const hostname = window?.location?.hostname || '';
-	return IMAGE_PROXY_LOCAL_HOSTS.has(hostname)
-		? IMAGE_PROXY_LOCAL_URL
-		: IMAGE_PROXY_DEPLOYED_URL;
+	return IMAGE_PROXY_LOCAL_HOSTS.has(hostname) ? IMAGE_PROXY_LOCAL_URL : IMAGE_PROXY_DEPLOYED_URL;
 }
 
 interface ImageProxyImage {
@@ -475,7 +474,13 @@ function transformHtml(html: string, iconifyJson: string, opts: TransformOptions
 	// i. <title> + PWA meta from the chosen app title.
 	out = setPageMeta(out, opts.appTitle);
 
-	return out;
+	// j. UTF-8 BOM — hardening for arbitrary static hosts. Minimal mobile file
+	//    servers (PocketServer, WorldwideWeb, …) often omit the charset from the
+	//    Content-Type header or send a non-UTF-8 one. The <meta charset="utf-8">
+	//    restored in <head> covers the "no charset" case, but only a leading BOM
+	//    overrides an explicitly wrong HTTP charset, so non-ASCII static text
+	//    (e.g. the footer "Gabriel Fávero") renders correctly on iOS regardless.
+	return '\uFEFF' + out;
 }
 
 /** Vendored Iconify runtime + inline registration of the bundled collections.
@@ -588,10 +593,7 @@ function stripStandaloneChrome(html: string): string {
 	);
 
 	// 2. Back / close top-bar buttons.
-	out = out.replace(
-		/<i\b[^>]*\bid="(?:back|closeButton)"[^>]*>\s*<\/i>\s*/g,
-		'',
-	);
+	out = out.replace(/<i\b[^>]*\bid="(?:back|closeButton)"[^>]*>\s*<\/i>\s*/g, '');
 
 	// 3. Share button: keep the element (page JS reads it) but force it hidden.
 	out = out.replace(
@@ -610,12 +612,29 @@ function stripStandaloneChrome(html: string): string {
 
 function setPageMeta(html: string, appTitle: string): string {
 	const title = escapeHtml(appTitle);
-	return html
-		.replace(/<title>[\s\S]*?<\/title>/i, `<title>${title}</title>`)
-		.replace(
-			/(<meta[^>]*\bname="apple-mobile-web-app-title"[^>]*\bcontent=")[^"]*(")/i,
-			`$1${title}$2`,
-		);
+	// Replace ONLY the real <title> element. The shared head partial's comment
+	// contains the literal text "<title>" (e.g. "page-specific <title>"), so a
+	// naive `/<title>[\s\S]*?<\/title>/` starts matching inside that comment and
+	// swallows everything up to the real closing tag — deleting the
+	// <meta charset> + <meta name="viewport"> + theme-init script and leaving an
+	// unclosed <!-- comment. That broke mobile rendering (no viewport meta →
+	// desktop-width scaling → small text) and UTF-8 decoding (no charset meta →
+	// mojibake like "Gabriel FÃ¡vero") of the exported page. Mask comments with
+	// same-length padding first so string offsets stay aligned, then patch the
+	// original at the real element's position.
+	const masked = html.replace(/<!--[\s\S]*?-->/g, (m) => ' '.repeat(m.length));
+	const titleMatch = /<title>[\s\S]*?<\/title>/i.exec(masked);
+	let out = html;
+	if (titleMatch) {
+		out =
+			html.slice(0, titleMatch.index) +
+			`<title>${title}</title>` +
+			html.slice(titleMatch.index + titleMatch[0].length);
+	}
+	return out.replace(
+		/(<meta[^>]*\bname="apple-mobile-web-app-title"[^>]*\bcontent=")[^"]*(")/i,
+		`$1${title}$2`,
+	);
 }
 
 function escapeHtml(str: string): string {
@@ -630,19 +649,10 @@ function escapeHtml(str: string): string {
 // ZIP generation + download
 // ============================================================
 
-async function downloadZip(zip: any, type: string, title: string): Promise<void> {
+async function downloadZip(zip: any, title: string): Promise<void> {
 	const blob = await zip.generateAsync({ type: 'blob' });
-	const timestamp = formatTimestamp(new Date());
 	const slug = slugify(title || 'export');
-	triggerDownload(blob, `${timestamp}-tripviewer-static-${type}-${slug}.zip`);
-}
-
-function formatTimestamp(date: Date): string {
-	const p = (n: number, len = 2) => String(n).padStart(len, '0');
-	return (
-		`${date.getFullYear()}${p(date.getMonth() + 1)}${p(date.getDate())}` +
-		`${p(date.getHours())}${p(date.getMinutes())}${p(date.getSeconds())}`
-	);
+	triggerDownload(blob, `${slug}.zip`);
 }
 
 function slugify(title: string): string {

@@ -133,6 +133,17 @@
 		overflow-y: auto;
 	}
 
+	/* Inner list containers (`.export-documents-list`, `.wallpaper-import-scroll`)
+	   carry their own desktop max-height + overflow so the centered dialog
+	   doesn't grow unbounded. Inside a fullscreen dialog the
+	   `.message-description` above is already the scroll container, so the
+	   fixed max-height only caps the list and leaves dead space below it —
+	   neutralize it so the list fills the available scroll area. */
+	.fullscreen-dialog .export-documents-list,
+	.fullscreen-dialog .wallpaper-import-scroll {
+		max-height: none;
+	}
+
 	/* Save-success dialog (edit pages): displaySaveSuccess marks it with
 	   `.save-success-dialog` and makes it full-screen on mobile. Center the
 	   success message in the middle area and stack the Edit / Home / View
@@ -551,6 +562,32 @@
 	margin-top: 4px;
 	font-size: 0.8rem;
 	color: var(--text-secondary, #666);
+}
+
+/* Static Export Document Picker — search bar pinned on top while the card
+   list fills the remaining dialog height and scrolls on its own (mirrors the
+   "Import accommodation" trip picker). The wrapper is `height: 100%` only in
+   the fullscreen (mobile) case, where `.message-description` has a definite
+   height; on desktop it resolves to auto and the shared
+   `.wallpaper-import-scroll` cap keeps the centered dialog compact. */
+.export-static-picker {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-height: 0;
+}
+
+.export-static-picker .wallpaper-import-scroll {
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow-y: auto;
+	max-height: none;
+}
+
+@media (min-width: 769px) {
+	.export-static-picker .wallpaper-import-scroll {
+		max-height: min(58vh, 520px);
+	}
 }
 
 /* Import Conflict Table */

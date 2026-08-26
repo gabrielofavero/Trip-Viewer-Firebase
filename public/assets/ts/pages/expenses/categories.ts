@@ -165,26 +165,36 @@ function getExpenseTypeIcon(name: string): string | undefined {
 }
 
 /**
- * Copies a category receipt to the clipboard in an iOS Notes-friendly format:
- * the category name as an <h2> heading, then each item as a native checkbox
- * (hyperlinked when the expense has a link). Writes both text/html (so iOS
- * Notes pastes it as a checklist) and text/plain (ballot-box fallback).
+ * Copies a category receipt to the clipboard in a dual format so the SAME copy
+ * works in both iOS Notes and WhatsApp (like the itinerary export):
+ * - text/html (used by iOS Notes): <h2> heading + a clean native <ul> list
+ *   where each item is "hyperlinked-title: value". Apple Notes cannot turn
+ *   pasted HTML into real (tappable) checklists — checklist state is a
+ *   proprietary Apple format with no HTML/plain-text representation — so we
+ *   emit a plain list the user can convert to a checklist in Notes if needed.
+ * - text/plain (used by WhatsApp): "*Title* (value) link" markdown-style lines.
  */
 async function copyExpensesToClipboard(title: string, items: any[]): Promise<void> {
 	const htmlItems = (items || [])
 		.map((item) => {
 			const name = escapeHTML(translate(item.name, {}, false));
-			const text = item.link ? `<a href="${escapeHTML(item.link)}">${name}</a>` : name;
-			return `<div><input type="checkbox"> ${text}</div>`;
+			const value = escapeHTML(formatCurrency(item.amount, true));
+			const label = item.link ? `<a href="${escapeHTML(item.link)}">${name}</a>` : name;
+			return `<li>${label}: ${value}</li>`;
 		})
 		.join('');
 
-	const html = `<h2>${escapeHTML(title)}</h2>${htmlItems}`;
+	const html = `<h2>${escapeHTML(title)}</h2><ul>${htmlItems}</ul>`;
 
-	const plainTextItems = (items || [])
-		.map((item) => `\u2610 ${translate(item.name, {}, false)}`)
+	const plainLines = (items || [])
+		.map((item) => {
+			const name = translate(item.name, {}, false);
+			const value = formatCurrency(item.amount, true);
+			const link = item.link ? ` ${item.link}` : '';
+			return `*${name}* (${value})${link}`;
+		})
 		.join('\n');
-	const plainText = `${title}\n${plainTextItems}`;
+	const plainText = `*${title}*\n${plainLines}`;
 
 	try {
 		await navigator.clipboard.write([

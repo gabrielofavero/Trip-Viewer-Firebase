@@ -39,6 +39,16 @@ export function normalizePlace(raw, { photos = false } = {}) {
 	// Omit `businessStatus` when Google omits it (§7).
 	if (raw?.businessStatus) result.businessStatus = raw.businessStatus;
 
+	// `location` when Google returns it (additive — used by the My Maps import
+	// nearest-pick; not part of the original §4.1 contract shape).
+	if (raw?.location) {
+		const latitude = Number(raw.location.latitude);
+		const longitude = Number(raw.location.longitude);
+		if (Number.isFinite(latitude) && Number.isFinite(longitude)) {
+			result.location = { lat: latitude, lng: longitude };
+		}
+	}
+
 	// `photos` refs only when the caller wants them (§6.4).
 	if (photos && Array.isArray(raw?.photos)) {
 		const refs = raw.photos

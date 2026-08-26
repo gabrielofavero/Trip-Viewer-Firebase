@@ -80,16 +80,23 @@ export async function verifyToken(token, { mode, emulatorHost }) {
 		throw new AuthError('missing');
 	}
 
-	// In local mode we verify against the Auth emulator (unsigned tokens).
-	const env = mode === 'local' ? { FIREBASE_AUTH_EMULATOR_HOST: emulatorHost } : undefined;
+	// Local mode verifies against the Auth emulator first (unsigned tokens).
+	// If that fails — e.g. `npm run dev:prd` (REAL project, no emulator) —
+	// fall back to Google's public JWK set so REAL ID tokens verify too.
+	const envs =
+		mode === 'local' && emulatorHost
+			? [{ FIREBASE_AUTH_EMULATOR_HOST: emulatorHost }, undefined]
+			: [undefined];
 
 	for (const projectId of PROJECTS) {
 		const auth = getAuth(projectId);
-		try {
-			const claims = await auth.verifyIdToken(token, false, env);
-			return { uid: claims.sub, aud: claims.aud };
-		} catch {
-			// Wrong project or invalid token — try the next one.
+		for (const env of envs) {
+			try {
+				const claims = await auth.verifyIdToken(token, false, env);
+				return { uid: claims.sub, aud: claims.aud };
+			} catch {
+				// Wrong verifier/project or invalid token — try the next candidate.
+			}
 		}
 	}
 

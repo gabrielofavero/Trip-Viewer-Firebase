@@ -46,6 +46,8 @@ export interface PlaceSearchResult {
 	emoji?: string;
 	/** googleMapsUri. */
 	map?: string;
+	/** Coordinates from Google's `location` (route 1; My Maps import nearest-pick). */
+	location?: { lat: number; lng: number };
 	/** e.g. "OPERATIONAL" | "CLOSED_PERMANENTLY" | "CLOSED_TEMPORARILY". */
 	businessStatus?: string;
 	/** Photo references (route 3 consumes these). */

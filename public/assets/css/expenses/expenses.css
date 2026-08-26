@@ -18,6 +18,10 @@
 	justify-content: center;
 }
 
+#tabs-container-expenses {
+	padding: 0 0.75rem;
+}
+
 /* UNUSED: .left-items — not found in any HTML file */
 
 .tabs {
@@ -40,22 +44,50 @@ input[type="radio"] {
 	display: none;
 }
 
+/* Main tab bar (#tab-expenses) — one consistent look at every breakpoint:
+   the mobile "pill" visuals (subtle gray container, muted labels, theme-
+   colored active pill) combined with the desktop slide animation (the
+   .glider slides between tabs instead of being hidden). #tab-transportation
+   (view.css) shares this treatment so the .tab component renders identically
+   across pages. */
+#tab-expenses {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
+	width: 100%;
+	max-width: 480px;
+	padding: 0.25rem;
+	background-color: var(--box-color);
+	border: 1px solid var(--border-color);
+	border-radius: 99px;
+	box-shadow: none;
+	transform: none;
+}
+
 /* UNUSED: .tab-mini — not found in any HTML file; keeping .tab only */
 .tab {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 54px;
-	width: 200px;
-	font-size: 1.25rem;
-	font-weight: 500;
+	flex: 1 1 0;
+	min-width: 0;
+	height: 42px;
+	padding: 0 0.4rem;
+	font-size: 0.72rem;
+	font-weight: 600;
+	color: var(--text-muted);
 	border-radius: 99px;
 	cursor: pointer;
+	white-space: nowrap;
 	transition: color 0.15s ease-in;
 }
 
 input[type="radio"]:checked + label {
 	font-weight: bold;
+}
+
+#tab-expenses input[type="radio"]:checked + label {
+	color: #fff;
 }
 
 input[type="radio"]:checked + label > .notification {
@@ -75,64 +107,22 @@ input[id="radio-duringTrip"]:checked ~ .glider {
 	transform: translateX(200%);
 }
 
-/* UNUSED: .glider-mini — not found in any HTML file; keeping .glider only */
+/* The glider is the theme-colored "active" pill. It sits behind the labels
+   (z-index 1 < 2) and slides to the checked tab: its width matches a tab
+   (#tab-expenses always renders 3 equal tabs), so translateX(100%) steps it
+   exactly one tab. left/top match the container's padding so it aligns with
+   the tabs; the transition is the desktop slide animation. */
 .glider {
 	position: absolute;
-	display: flex;
-	height: 54px;
-	width: 200px;
-	background-color: var(--theme-color-secondary);
-	z-index: 1;
+	top: 0.25rem;
+	left: 0.25rem;
+	width: calc((100% - 0.5rem) / 3);
+	height: 42px;
+	background-color: var(--theme-color);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 	border-radius: 99px;
-	transition: 0.25s ease-out;
-}
-
-@media (max-width: 630px) {
-	#tabs-container-expenses {
-		padding: 0 0.75rem;
-	}
-
-	#tab-expenses {
-		display: flex;
-		flex-wrap: nowrap;
-		justify-content: center;
-		width: 100%;
-		gap: 0.25rem;
-		padding: 0.25rem;
-		background-color: var(--box-color);
-		border: 1px solid var(--border-color);
-		border-radius: 99px;
-		box-shadow: none;
-		transform: none;
-	}
-
-	#tab-expenses .tab {
-		flex: 1 1 0;
-		width: auto;
-		min-width: 0;
-		height: 42px;
-		padding: 0 0.4rem;
-		border-radius: 99px;
-		background-color: transparent;
-		border: none;
-		font-size: 0.72rem;
-		color: var(--text-muted);
-		white-space: nowrap;
-		transition:
-			background-color 0.15s ease-in,
-			color 0.15s ease-in;
-	}
-
-	#tab-expenses input[type="radio"]:checked + label {
-		background-color: var(--theme-color);
-		color: #fff;
-		font-weight: bold;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-	}
-
-	#tab-expenses .glider {
-		display: none;
-	}
+	z-index: 1;
+	transition: transform 0.25s ease-out;
 }
 
 /*--------------------------------------------------------------
@@ -282,6 +272,7 @@ section {
 	font-size: 1.125rem;
 	line-height: 1.75rem;
 	font-weight: 500;
+	color: var(--subtitle);
 }
 
 .expenses-title-row {

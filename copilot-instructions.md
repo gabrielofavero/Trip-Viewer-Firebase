@@ -9,7 +9,7 @@ This is **TripViewer** — a vanilla TypeScript/JavaScript single-page applicati
 
 ## Skills
 
-This workspace has **14 domain-specific agent skills** in `.github/skills/`. These are registered skills that Copilot discovers automatically — you do NOT need the user to invoke them with `/`. Load them proactively:
+This workspace has **15 domain-specific agent skills** in `.github/skills/`. These are registered skills that Copilot discovers automatically — you do NOT need the user to invoke them with `/`. Load them proactively:
 
 | Skill | When to Read |
 |---|---|
@@ -22,6 +22,7 @@ This workspace has **14 domain-specific agent skills** in `.github/skills/`. The
 | `css-ui-patterns` | CSS architecture, dark mode, component styles |
 | `typescript-conventions` | Module organization, page routing, service layer, coding conventions |
 | `i18n-system` | Translations, language switching, JSON language packs |
+| `implementation-plans` | Writing/updating/executing implementation plans — prompt every unanswered open question before starting |
 | `backup-restore` | Account backup/restore, document export/import |
 | `static-export` | Offline/static web export, export manifests, self-hosted assets, and image-proxy integration |
 | `backlog-management` | README task IDs, readme.py script |
@@ -30,7 +31,7 @@ This workspace has **14 domain-specific agent skills** in `.github/skills/`. The
 
 **Rules for using these skills:**
 1. **Before answering any question that touches one of these domains, you MUST read the matching `SKILL.md` first** — never answer from general knowledge.
-2. The file-scoped skills (e.g. `typescript-conventions`, `css-ui-patterns`, `i18n-system`, `build-pipeline`, `migration-system`, `firebase-emulators`, `backup-restore`, `backlog-management`, `git-workflow`) are auto-loaded via their `applyTo` globs when you touch matching files — do not skip them.
+2. The file-scoped skills (e.g. `typescript-conventions`, `css-ui-patterns`, `i18n-system`, `implementation-plans`, `build-pipeline`, `migration-system`, `firebase-emulators`, `backup-restore`, `backlog-management`, `git-workflow`) are auto-loaded via their `applyTo` globs when you touch matching files — do not skip them.
 3. The task-scoped skills (`browser-navigation`, `query-firestore`, `data-model`) have no `applyTo`; load them based on the task description match. For `browser-navigation`, read it only when the task requires URL building, emulator sign-in, waiting for Firestore-backed content, or `Loading Error` triage — for a trivial re-check of an already-loaded/verified page, skip it and just re-read the page.
 4. **Browser / Playwright requires explicit approval.** Do NOT open the integrated browser, navigate pages, click/type, take screenshots, or drive the app with Playwright unless the user has explicitly approved browser validation for the current task. When a task could be checked in the browser but the user hasn't approved it, **ask first** — don't assume. Prefer non-browser verification (`npm run build`, `query-firestore`, reading code) unless approval is given.
 5. **`ntfy-notifications` is always-on.** Read `.github/skills/ntfy-notifications/SKILL.md` at the start of every task and follow it. See **Notifications (do not skip)** below — before ending ANY turn where you completed work, reached a milestone, hit an error, or need the user's input, you MUST have sent a notification. This applies even to the "which validation level?" question.

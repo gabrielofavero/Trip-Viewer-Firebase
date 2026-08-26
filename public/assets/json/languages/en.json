@@ -70,6 +70,8 @@
 			"warning": "⚠️ The exported package contains your document data in plain text, including any protected information (reservation codes, booking links). Anyone with access to the files can read this data. Store the exported files securely and delete them when no longer needed.",
 			"select_type": "Choose what to export",
 			"select_document": "Select a document",
+			"search_placeholder": "Search documents...",
+			"no_matches": "No documents match your search.",
 			"select_mode": "Select fidelity mode",
 			"mode_light": "Light",
 			"mode_complete": "Complete",
@@ -154,7 +156,7 @@
 			"full_title": "Trip expenses",
 			"subtitle": "Manage your expenses before and during the trip",
 			"pre_trip": "Pre-trip expenses",
-			"during_trip": "On-trip expenses",
+			"during_trip": "During Trip",
 			"overview": "Expenses overview",
 			"personal": "Personal expenses",
 			"other": "Other expenses",
@@ -642,7 +644,7 @@
 	"messages": {
 		"text_copied": "Text copied to clipboard",
 		"itinerary_copied": "Itinerary copied! Paste it into WhatsApp or a notes app to keep the formatting",
-		"expenses_copied": "List copied! Paste it into WhatsApp or a notes app to keep the checkboxes",
+		"expenses_copied": "List copied! Paste it into WhatsApp or a notes app to keep the formatting",
 		"no_data": "No data found 😔",
 		"share": "Check out what I've created on TripViewer",
 		"exit_confirmation": "Are you sure you want to exit? You may lose unsaved changes",
@@ -754,6 +756,7 @@
 			"password": "Password"
 		},
 		"export": "Export",
+		"copy": "Copy",
 		"copy_list": "Copy list",
 		"print": "Print",
 		"adapted": "Adapted",
@@ -986,7 +989,9 @@
 			"local": "Local (gmaps scraper)",
 			"localHint": "Paste a Google Maps link to scrape it on this machine",
 			"api": "Via Places API",
-			"apiHint": "Search Google and import official data"
+			"apiHint": "Search Google and import official data",
+			"mymaps": "Import from My Maps",
+			"mymapsHint": "Import every placemark from your My Maps map"
 		},
 		"local": {
 			"title": "Google Maps link",
@@ -1088,6 +1093,46 @@
 			"scraperUnavailable": "The local scraper is not running. Start it with npm run dev and make sure Docker Desktop is open.",
 			"scraperFailed": "The local scraper could not import this place. Please try again.",
 			"rateLimited": "No data returned for this place. Google is likely rate-limiting scrapes — wait a few minutes and try again."
+		}
+	},
+	"mymapsImport": {
+		"importButton": "Import from My Maps",
+		"title": "Import from My Maps",
+		"summary": "Found {{count}} placemark(s) in this map",
+		"unmapped": "Couldn't map {{count}} placemark(s). Pick a category to import them, or leave them unchecked to skip.",
+		"fetching": "Fetching your My Maps map...",
+		"fetchFailed": "Couldn't fetch this map automatically. You can import the exported file instead.",
+		"upload": "Choose a .kml / .kmz file",
+		"uploadHint": "Export the map from My Maps (⋮ → Export to KML/KMZ) and pick the file here.",
+		"downloadHintBefore": "Download manually the KMZ by ",
+		"downloadHintLink": "clicking here",
+		"noMapsLink": "This destination has no My Maps link set",
+		"noMid": "No My Maps map id was found in this link",
+		"unassigned": "Unassigned",
+		"status": {
+			"resolved": "Resolved",
+			"failed": "No match"
+		},
+		"enrich": "Enrich with Places API",
+		"enriching": "Resolving places... {{done}}/{{total}}",
+		"importAction": "Import {{count}} placemark(s)",
+		"skipUncategorized": "{{count}} placemark(s) have no category and will be skipped",
+		"noCategoryHint": "Unassigned placemarks are not imported. Pick a category for them to include them.",
+		"emptySelection": "Select at least one placemark to import",
+		"conflicts": {
+			"title": "Some placemarks already exist",
+			"message": "These placemarks already exist in their category (same name or Maps link). Choose what to do with each.",
+			"keep": "Keep both",
+			"skip": "Skip the new one",
+			"replace": "Replace existing"
+		},
+		"imported": "{{count}} placemark(s) imported",
+		"errors": {
+			"jsZipMissing": "The KMZ reader could not be loaded. Please reload the page and try again.",
+			"noKmlInKmz": "No KML file was found inside this KMZ archive.",
+			"invalidKml": "This file is not a valid KML document.",
+			"noPlacemarks": "No placemarks were found in this map.",
+			"noDoc": "The destination could not be loaded"
 		}
 	}
 }

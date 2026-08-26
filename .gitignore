@@ -10,6 +10,7 @@ functions/lib/
 # Dev
 /dev/
 tmp/
+docs/exported-documents
 
 # Cloudflare Workers — local wrangler state (each workers/*/ also has its own
 # .gitignore; this covers any stray leftover dir or ad-hoc run)

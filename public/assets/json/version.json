@@ -1,11 +1,11 @@
 {
-  "build": 67,
+  "build": 69,
   "projects": {
     "trip-viewer-prd": {
-      "timestamp": "2026-08-25T23:34:55.757704+00:00",
+      "timestamp": "2026-08-26T23:42:25.865667+00:00",
       "version": {
-        "firebase": "22fdf08223452dea",
-        "system": "2.26.0"
+        "firebase": "7344ac22e2df9646",
+        "system": "2.27.0"
       }
     }
   }

@@ -14,8 +14,12 @@
 //   - the 'places-source-local' / 'places-source-api' click actions.
 //
 // The same markup is exported as getSourceOptionsHTML() so the bulk "Update
-// all" flow (places-bulk.ts) can show the identical prompt with its own
+// all" flow (edit-destination.ts) can show the identical prompt with its own
 // actions — one source of truth for the option cards.
+//
+// The "My Maps" card is BULK-ONLY (it's a batch operation, not a per-item
+// import): getSourceOptionsHTML() renders it only when the caller passes the
+// optional `mymapsAction`. The per-item dialog never passes it.
 
 import { registerActions } from '../ui/actions.js';
 import { translate } from '../i18n/translation.js';
@@ -28,15 +32,19 @@ export const SOURCE_API_ACTION = 'places-source-api';
 /** Bulk "Update all" prompt action names (registered in edit-destination.ts). */
 export const SOURCE_LOCAL_BULK_ACTION = 'places-source-local-bulk';
 export const SOURCE_API_BULK_ACTION = 'places-source-api-bulk';
+export const SOURCE_MYMAPS_BULK_ACTION = 'places-source-mymaps-bulk';
 
 /**
- * The source-selection option cards. `localAction`/`apiAction` let the caller
- * point the buttons at its own handlers — the per-item dialog uses the
- * defaults, the bulk flow passes bulk-specific actions.
+ * The source-selection option cards. `localAction`/`apiAction` point the
+ * buttons at the caller's handlers — the per-item dialog uses the defaults,
+ * the bulk flow passes bulk-specific actions. `mymapsAction` is OPTIONAL and
+ * BULK-ONLY: the "My Maps" card (a batch operation) is rendered only when the
+ * caller passes an action — the per-item dialog must never show it.
  */
 export function getSourceOptionsHTML(
 	localAction = SOURCE_LOCAL_ACTION,
 	apiAction = SOURCE_API_ACTION,
+	mymapsAction?: string,
 ): string {
 	return `
 	<div class="places-source">
@@ -58,6 +66,18 @@ export function getSourceOptionsHTML(
 					translate('placesApi.source.apiHint'),
 				)}</span>
 			</button>
+			${
+				mymapsAction
+					? `<button type="button" class="places-linked-option" data-action="${mymapsAction}">
+				<span class="places-linked-option-title">${escapeHtml(
+					translate('placesApi.source.mymaps'),
+				)}</span>
+				<span class="places-linked-option-caption">${escapeHtml(
+					translate('placesApi.source.mymapsHint'),
+				)}</span>
+			</button>`
+					: ''
+			}
 		</div>
 	</div>`;
 }

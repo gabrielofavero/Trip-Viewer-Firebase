@@ -139,10 +139,11 @@ function populateFooterVersion() {
 export function setPageName(pageName?) {
 	const host = location.hostname;
 	const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
-	// [DEV] when running locally with emulators, [PRD] when running locally with
-	// real Firebase services; no tag when deployed to a real environment.
+	// [DEV] when running locally with emulators, [LOCAL PRD] when running
+	// locally with real Firebase services (dev:prd); no tag when deployed to a
+	// real environment.
 	const isEmulator = isLocal && window.__TRIPVIEWER_EMULATOR__ === true;
-	const tag = isLocal ? (isEmulator ? '[DEV]' : '[PRD]') : '';
+	const tag = isLocal ? (isEmulator ? '[DEV]' : '[LOCAL PRD]') : '';
 	const cleanTitle = document.title
 		.replace(/\[(LOCAL )?(DEV|PRD)\]\s*/g, '')
 		.trim();

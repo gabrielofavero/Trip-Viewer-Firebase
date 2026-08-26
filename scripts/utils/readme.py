@@ -21,6 +21,9 @@ EMOJI_TYPE_MAP = {
     '⚔️': 'E'
 }
 
+# Max words allowed in a task title (keep tickets scannable)
+MAX_TITLE_WORDS = 8
+
 # ANSI color codes
 class Colors:
     BOLD = '\033[1m'
@@ -104,8 +107,22 @@ def count_tasks(tasks):
     return counts
 
 
+def extract_task_title(line):
+    """Extract the human-readable title text from a task line."""
+    # Common format: `- 🐞 **B177:** What was fixed`
+    m = re.search(r'\*\*[A-Z]\d+:\*\*\s*(.*?)\s*$', line)
+    if m:
+        return m.group(1)
+    # Epic sub-task format: `  - *[🐞B161] What was fixed*`
+    m = re.search(r'\]\s*(.*?)\s*\*?\s*$', line)
+    if m:
+        return m.group(1)
+    return ''
+
+
 def check_inconsistencies(tasks):
     issues = []
+    warnings = []
 
     all_tasks = tasks['backlog'] + tasks['done'] + tasks['discarded']
 
@@ -137,6 +154,15 @@ def check_inconsistencies(tasks):
                         f"{Colors.BOLD}Emoji mismatch:{Colors.RESET} "
                         f"{task_id} uses {emoji} but is type {task['type']}"
                     )
+
+        # --- TITLE LENGTH VALIDATION (keep tickets scannable) ---
+        title = extract_task_title(line)
+        word_count = len(title.split())
+        if word_count > MAX_TITLE_WORDS:
+            warnings.append(
+                f"{Colors.BOLD}Long title:{Colors.RESET} {task_id} has {word_count} words "
+                f"(max {MAX_TITLE_WORDS}) — keep ticket titles ≤ {MAX_TITLE_WORDS} words"
+            )
 
     # --- MISSING & DUPLICATES ---
     type_names = {
@@ -175,7 +201,7 @@ def check_inconsistencies(tasks):
                 f"{', '.join(f'{task_type}{n:03d}' for n in sorted(duplicates))}"
             )
 
-    return issues
+    return issues, warnings
 
 
 def update_table(content, counts):
@@ -251,7 +277,7 @@ def main():
               f"Cancelled: {Colors.RED}{c['cancelled']:<3}{Colors.RESET} | "
               f"Pending: {Colors.YELLOW}{c['pending']}{Colors.RESET}")
     
-    issues = check_inconsistencies(tasks)
+    issues, warnings = check_inconsistencies(tasks)
     
     if issues:
         print(f"\n{Colors.YELLOW}⚠️  {Colors.BOLD}Inconsistencies Found:{Colors.RESET}")
@@ -259,6 +285,11 @@ def main():
             print(f"   {Colors.YELLOW}•{Colors.RESET} {issue}")
     else:
         print(f"\n{Colors.GREEN}✓ No inconsistencies found{Colors.RESET}")
+
+    if warnings:
+        print(f"\n{Colors.YELLOW}⚠️  {Colors.BOLD}Title length warnings (keep titles ≤ {MAX_TITLE_WORDS} words):{Colors.RESET}")
+        for warning in warnings:
+            print(f"   {Colors.YELLOW}•{Colors.RESET} {warning}")
     
     updated_content = update_table(content, counts)
     readme_path.write_text(updated_content, encoding="utf-8")

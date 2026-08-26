@@ -34,6 +34,7 @@ const GET_FIELDS = [
 	'priceLevel',
 	'priceRange',
 	'googleMapsUri',
+	'location',
 	'websiteUri',
 	'reviewSummary',
 	'editorialSummary',
@@ -76,12 +77,24 @@ async function throwUpstreamError(res) {
 /**
  * Text search (route 1). `POST /places:searchText`, ≤ 20 results (pageSize max
  * per request — cost is per request, not per result, so more results is free).
+ *
+ * `bias` is an optional location bias (My Maps import enrichment): forwarded
+ * as Google's `locationBias.circle` — a soft ranking hint, not a hard filter.
  * @param {string} query - The text query (`q`).
- * @param {{apiKey: string, lang?: string, photos?: boolean}} opts
+ * @param {{apiKey: string, lang?: string, photos?: boolean, bias?: {latitude: number, longitude: number, radius?: number}}} opts
  * @returns {Promise<Record<string, unknown>>} Raw Google JSON body.
  */
-export async function searchText(query, { apiKey, lang = 'en', photos = false } = {}) {
+export async function searchText(query, { apiKey, lang = 'en', photos = false, bias } = {}) {
 	const languageCode = LANG_MAP[lang] ?? LANG_MAP.en;
+	const body = { textQuery: query, pageSize: 20, languageCode };
+	if (bias) {
+		body.locationBias = {
+			circle: {
+				center: { latitude: bias.latitude, longitude: bias.longitude },
+				radius: bias.radius ?? 5000,
+			},
+		};
+	}
 	const res = await fetch(`${BASE_URL}/places:searchText`, {
 		method: 'POST',
 		headers: {
@@ -89,7 +102,7 @@ export async function searchText(query, { apiKey, lang = 'en', photos = false } 
 			'X-Goog-Api-Key': apiKey,
 			'X-Goog-FieldMask': fieldMask({ photos, search: true }),
 		},
-		body: JSON.stringify({ textQuery: query, pageSize: 20, languageCode }),
+		body: JSON.stringify(body),
 		signal: AbortSignal.timeout(TIMEOUT_MS),
 	});
 	if (!res.ok) await throwUpstreamError(res);

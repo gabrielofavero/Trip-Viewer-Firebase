@@ -31,6 +31,7 @@ import {
 	NotFoundError,
 	PermissionError,
 	QuotaExceededError,
+	UpstreamError,
 	jsonResponse,
 	toEnvelope,
 	toStatus,
@@ -121,8 +122,12 @@ async function route(request, url, env, corsHeaders, origin) {
 
 	let placeId;
 	let handler;
+	let raw = false;
 	if (segments.length === 2 && segments[1] === 'search') {
 		handler = handleSearch;
+	} else if (segments.length === 2 && segments[1] === 'kml') {
+		handler = handleKml;
+		raw = true;
 	} else if (segments.length === 2) {
 		placeId = segments[1];
 		handler = handleDetails;
@@ -133,9 +138,13 @@ async function route(request, url, env, corsHeaders, origin) {
 		throw new NotFoundError('Route not found');
 	}
 
-	// Auth middleware (all JSON routes): 401 → 403 → 429.
+	// Auth middleware (all routes): 401 → 403 → 429.
 	await authenticate(request, { mode, config, env });
 
+	// Raw (non-JSON) routes build their own Response (e.g. KML text).
+	if (raw) {
+		return await handler(url, placeId, { config, corsHeaders });
+	}
 	const body = await handler(url, placeId, { config, quota });
 	return jsonResponse(200, body, corsHeaders);
 }
@@ -201,7 +210,12 @@ async function authenticate(request, { mode, config, env }) {
 // --- Route handlers -------------------------------------------------------
 
 /**
- * Route 1: `GET /places/search?q&lang&photos` → `{ results }` (≤ 20).
+ * Route 1: `GET /places/search?q&lang&photos&biasLat&biasLng&biasRadius`
+ * → `{ results }` (≤ 20).
+ *
+ * Optional location bias (`biasLat`/`biasLng`, required together; `biasRadius`
+ * meters, default 5000) is forwarded to Google as `locationBias.circle` — a
+ * soft ranking hint used by the My Maps import enrichment, not a hard filter.
  *
  * Quota: a `photos=true` request runs on the real (paid) photos key; when that
  * budget is ≥ 90% spent the worker degrades it to `photos=false` (free trial
@@ -218,9 +232,10 @@ async function handleSearch(url, _placeId, { config, quota }) {
 		throw new BadRequestError('places/missing-q', 'Missing required query parameter: q');
 	}
 	const lang = parseLang(url);
+	const bias = parseBias(url);
 	const { photos, limited } = await resolveQuota(quota, parsePhotos(url), config.photosEnabled);
 	const apiKey = apiKeyFor(config, photos);
-	const data = await searchText(q.trim(), { apiKey, lang, photos });
+	const data = await searchText(q.trim(), { apiKey, lang, photos, bias });
 	const results = (data?.places ?? []).map((place) => normalizePlace(place, { photos }));
 	await quota.record(photos ? 'photos' : 'main');
 	return limited ? { results, limited: true } : { results };
@@ -290,6 +305,196 @@ async function handlePhotos(url, placeId, { config, quota }) {
 	return { photos };
 }
 
+/**
+ * Route 5: `GET /places/kml?mid&lid` → raw KML for a Google My Maps map.
+ *
+ * Proxies Google's My Maps KML export (`forcekml=1`) server-side — Google
+ * sends no CORS headers on that endpoint, so the browser can't fetch it
+ * directly. NOT a Places API call (no Google key, no quota tracking), but
+ * still gated by the same auth/permission/rate-limit chain.
+ * @param {URL} url
+ * @param {string|undefined} _placeId
+ * @param {{corsHeaders: Record<string, string>|null}} opts
+ * @returns {Promise<Response>}
+ */
+async function handleKml(url, _placeId, { corsHeaders }) {
+	const mid = url.searchParams.get('mid');
+	if (!mid || !mid.trim()) {
+		throw new BadRequestError('places/missing-mid', 'Missing required query parameter: mid');
+	}
+	const lid = (url.searchParams.get('lid') ?? '').trim();
+	const kml = await fetchMyMapsKml(mid.trim(), lid);
+	return new Response(kml, {
+		status: 200,
+		headers: {
+			'Content-Type': 'application/vnd.google-earth.kml+xml; charset=utf-8',
+			'Cache-Control': 'no-store',
+			...(corsHeaders ?? {}),
+		},
+	});
+}
+
+const MYMAPS_KML_BASE = 'https://www.google.com/maps/d/kml';
+
+/**
+ * Hard cap on a single Google KML fetch. Google's My Maps KML endpoint can
+ * hang indefinitely for private/slow maps, and workerd has no default fetch
+ * timeout — without this a stuck map blocks the isolate and the frontend
+ * spins on "Fetching your My Maps map..." forever. On timeout the worker
+ * returns a clean 504 and the frontend falls back to the upload path.
+ */
+const MYMAPS_FETCH_TIMEOUT_MS = 15_000;
+
+/**
+ * Fetch a My Maps KML, following multi-layer `<NetworkLink>`s when present.
+ * @param {string} mid - My Maps map id.
+ * @param {string} lid - Optional layer id (skips the NetworkLink pass).
+ * @returns {Promise<string>}
+ */
+async function fetchMyMapsKml(mid, lid) {
+	if (lid) {
+		return await fetchKmlUrl(buildKmlUrl(mid, lid));
+	}
+	const first = await fetchKmlUrl(buildKmlUrl(mid));
+	if (!/<NetworkLink\b/i.test(first)) return first;
+	return expandNetworkLinks(first);
+}
+
+/**
+ * @param {string} mid
+ * @param {string} [lid]
+ * @returns {string}
+ */
+function buildKmlUrl(mid, lid = '') {
+	const params = new URLSearchParams({ mid, forcekml: '1' });
+	if (lid) params.set('lid', lid);
+	return `${MYMAPS_KML_BASE}?${params.toString()}`;
+}
+
+/**
+ * Server-side fetch of a Google KML URL (no CORS constraints on the worker).
+ * @param {string} url
+ * @returns {Promise<string>}
+ */
+async function fetchKmlUrl(url) {
+	const signal = AbortSignal.timeout(MYMAPS_FETCH_TIMEOUT_MS);
+	let res;
+	try {
+		res = await fetch(url, { signal });
+		if (res.status === 404) {
+			throw new NotFoundError('My Maps map not found or not publicly shared');
+		}
+		if (!res.ok) {
+			throw new UpstreamError(
+				res.status >= 500 ? 503 : 502,
+				`Google My Maps KML fetch failed (HTTP ${res.status})`,
+			);
+		}
+		return await res.text();
+	} catch (error) {
+		// Re-throw errors we intentionally raised (404 / non-ok upstream).
+		if (error instanceof ApiError) throw error;
+		// Timeout (AbortSignal.timeout) or network error → clean 502/504 so the
+		// frontend can fall back to the upload path instead of hanging forever.
+		const timedOut = error?.name === 'TimeoutError' || error?.name === 'AbortError';
+		throw new UpstreamError(
+			timedOut ? 504 : 502,
+			timedOut
+				? 'Google My Maps KML fetch timed out'
+				: `Google My Maps KML fetch failed: ${error?.message ?? 'network error'}`,
+		);
+	}
+}
+
+/**
+ * Multi-layer maps return a `<NetworkLink>` per layer. Fetch each layer's KML
+ * and merge its placemarks, wrapping each layer in a `<Folder name=…>` so the
+ * layer name is preserved for downstream category mapping.
+ * @param {string} firstKml - The initial `mid`-only KML (contains NetworkLinks).
+ * @returns {Promise<string>}
+ */
+async function expandNetworkLinks(firstKml) {
+	const links = extractNetworkLinks(firstKml);
+	if (links.length === 0) return firstKml;
+
+	const folders = [];
+	for (const link of links) {
+		if (!link.href) continue;
+		const layerKml = await fetchKmlUrl(link.href);
+		const placemarks = extractPlacemarks(layerKml);
+		const name = escapeXml(link.name || `Layer ${folders.length + 1}`);
+		folders.push(`<Folder><name>${name}</name>${placemarks.join('')}</Folder>`);
+	}
+
+	return (
+		'<?xml version="1.0" encoding="UTF-8"?>\n' +
+		'<kml xmlns="http://www.opengis.net/kml/2.2">\n' +
+		'<Document>' +
+		folders.join('') +
+		'</Document>\n' +
+		'</kml>'
+	);
+}
+
+/**
+ * Extract `{ name, href }` pairs from `<NetworkLink>` blocks.
+ * @param {string} kml
+ * @returns {{name: string, href: string}[]}
+ */
+function extractNetworkLinks(kml) {
+	const links = [];
+	const blockRegex = /<NetworkLink\b[\s\S]*?<\/NetworkLink>/gi;
+	const nameRegex = /<name>([\s\S]*?)<\/name>/i;
+	const hrefRegex = /<href>([\s\S]*?)<\/href>/i;
+	let block;
+	while ((block = blockRegex.exec(kml)) !== null) {
+		const hrefMatch = hrefRegex.exec(block[0]);
+		if (!hrefMatch?.[1]) continue;
+		const nameMatch = nameRegex.exec(block[0]);
+		links.push({
+			name: nameMatch?.[1] ? decodeXmlEntities(nameMatch[1].trim()) : '',
+			href: hrefMatch[1].trim(),
+		});
+	}
+	return links;
+}
+
+/**
+ * @param {string} kml
+ * @returns {string[]}
+ */
+function extractPlacemarks(kml) {
+	return kml.match(/<Placemark\b[\s\S]*?<\/Placemark>/gi) ?? [];
+}
+
+/**
+ * @param {string} text
+ * @returns {string}
+ */
+function decodeXmlEntities(text) {
+	return text
+		.replace(/&amp;/g, '&')
+		.replace(/&lt;/g, '<')
+		.replace(/&gt;/g, '>')
+		.replace(/&quot;/g, '"')
+		.replace(/&apos;/g, "'")
+		.replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+		.replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)));
+}
+
+/**
+ * @param {string} text
+ * @returns {string}
+ */
+function escapeXml(text) {
+	return text
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&apos;');
+}
+
 // --- Query param parsing --------------------------------------------------
 
 /**
@@ -316,4 +521,38 @@ export function parsePhotos(url) {
 	const raw = url.searchParams.get('photos');
 	if (raw === null) return false;
 	return String(raw).toLowerCase() === 'true';
+}
+
+/**
+ * Parse the optional Text Search location bias (route 1): `biasLat`,
+ * `biasLng`, `biasRadius` (meters, default 5000). Both coordinates are
+ * required together and must be finite; a malformed pair → 400. Returns
+ * `null` when no bias params are present.
+ * @param {URL} url
+ * @returns {{latitude: number, longitude: number, radius: number}|null}
+ */
+export function parseBias(url) {
+	const latRaw = url.searchParams.get('biasLat');
+	const lngRaw = url.searchParams.get('biasLng');
+	if (latRaw === null && lngRaw === null) return null;
+	if (latRaw === null || lngRaw === null) {
+		throw new BadRequestError(
+			'places/invalid-bias',
+			'biasLat and biasLng must be provided together',
+		);
+	}
+	const latitude = Number(latRaw);
+	const longitude = Number(lngRaw);
+	if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+		throw new BadRequestError('places/invalid-bias', 'biasLat and biasLng must be valid numbers');
+	}
+	const radiusRaw = url.searchParams.get('biasRadius');
+	let radius = 5000;
+	if (radiusRaw !== null) {
+		radius = Number(radiusRaw);
+		if (!Number.isFinite(radius) || radius <= 0) {
+			throw new BadRequestError('places/invalid-bias', 'biasRadius must be a positive number');
+		}
+	}
+	return { latitude, longitude, radius };
 }

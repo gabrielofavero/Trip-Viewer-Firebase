@@ -156,7 +156,12 @@ on every build (after esbuild + hash-assets, so it sees final hashed names):
 
 1. **Security warning** — plain-text data warning (same style as JSON export).
 2. **Type selector** — trip | destination | listing (single-select buttons).
-3. **Document list** — from `getUser*Summaries`, single-select.
+3. **Document list** — from `getUser*Summaries`, a single-select card grid with
+   a live search bar on top (same `.wallpaper-import-*` card styling as the
+   edit-trip accommodation importer, in shared
+   `components/document-picker.css`). Trips are ordered newest-first by start
+   date (matching the accommodation importer); destinations/listings are
+   alphabetical. Selecting a card sets `state.docId`.
 4. **Mode** — light | complete radio. (No PIN step: a protected trip's PIN is
    auto-resolved from the owner-readable `protected/{tripId}` lookup doc in
    `buildStaticData()` → `buildExportDocument()`.)
@@ -165,9 +170,18 @@ on every build (after esbuild + hash-assets, so it sees final hashed names):
 
 Uses `displayFullMessage` / `MESSAGE_PROPERTIES`, `start/stopLoadingScreen`,
 `openToast`. i18n keys live under `account.export_static.*` in `en.json` /
-`pt.json`. Dialog styles: `.export-static-dialog`, `.export-type-buttons`, etc.
-in `public/assets/css/components/modal.css` (next to the `export-documents-*`
-block).
+`pt.json`. Dialog styles: `.export-static-dialog`, `.export-type-buttons`, the
+`.export-static-picker` wrapper, etc. in `public/assets/css/components/modal.css`
+(next to the `export-documents-*` block). The picker's card grid reuses the
+shared `.wallpaper-import-*` styles in `components/document-picker.css`.
+
+> **Mobile dead space:** inner list containers (`.export-documents-list`,
+> `.wallpaper-import-scroll`) impose their own desktop `max-height` for the
+> centered dialog. Inside a fullscreen dialog on mobile the
+> `.message-description` is already the scroll container, so `modal.css`
+> neutralizes that `max-height` (`max-height: none`) to make the lists fill the
+> available area. The `.export-static-picker` is a flex column so its search bar
+> stays pinned while the card list fills the rest and scrolls on its own.
 
 On **Build Export** the dialog is closed and a step-by-step progress overlay
 appears (`startProgressLoading` / `updateProgressLoading`, the same UI as
@@ -278,8 +292,9 @@ modifying.
    and are counted for a warning.
 5. Write `data.json`, a generated `site.webmanifest` (custom name/icon), and the
    custom icon file(s).
-6. Zip with `JSZip` → `Blob` → download
-   `YYYYMMDDHHMMSS-tripviewer-static-<type>-<slug>.zip`.
+6. Zip with `JSZip` → `Blob` → download `<slug>.zip` — the slug is the
+   user-chosen app title (falling back to the document title, then its id),
+   lowercased with only `[a-z0-9-]` chars (no timestamp or type prefix).
 
 **Key fact:** the exported page must be **served over HTTP** (`npx serve`, any
 static host). ESM modules and `fetch()` do **not** run from `file://`. True

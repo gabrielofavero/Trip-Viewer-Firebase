@@ -29,6 +29,8 @@ TripViewer tracks all work in `README.md` using a structured task system with ID
    - Pick the **next available ID** for that type (see *Task ID Selection Rules*; fill any gaps reported by `npm run readme`).
    - Format exactly like existing entries with a **short, clear title** (see *Title style*): `- 🐞 **B177:** What was fixed`
    - **Append it to the bottom** of the current month's list under `## Done`.
+   - **Epic context? Don't create a ticket** — if the work belongs to an epic that has **no sub-tasks**, do not add a new ticket at all. Just ask whether the epic is done: if yes, move the epic to Done; if not, leave everything as it is (see *Epic without sub-tasks*).
+   - **Do not re-add a ticket you created earlier this session** — if a ticket you created in a previous request of this same session is missing when you search again, assume the user manually excluded/removed it. Leave it gone; never re-create it.
 4. **Run `npm run readme`** to refresh the summary table and check consistency.
 
 > Skip only when no work was completed (e.g. a pure read-only answer or a question answered without making any changes). If in doubt, do the check.
@@ -91,10 +93,10 @@ Epic sub-tasks use indented bullet points:
 
 ### Title style
 
-Keep task titles **short and clear** — a scannable summary is enough; **no full explanations**. Save detail for the commit message. Aim for a phrase readable at a glance (roughly under ~12 words).
+Keep task titles **short** — hard limit **≤ 8 words**, readable at a glance. One idea per ticket; if you need more detail, split it into an epic + sub-tasks or leave it for the commit message. Avoid `+` / conjunctions that pad the count. `npm run readme` flags any title over 8 words.
 
-Good: `- 📈 **M207:** Keep backlog task titles short and clear`
-Bad:  `- 📈 **M200:** Settings (Advanced): block page refresh/close with a confirmation prompt while a backup, restore, document import/export, or static-export operation is in progress; ...`
+Good: `- 🏆 **F159:** Add AI skill for browsing pages`  (6 words)
+Bad:  `- 📈 **M200:** Settings (Advanced): block page refresh/close with a confirmation prompt while a backup, restore, document import/export, or static-export operation is in progress; ...`  (44 words)
 
 ---
 
@@ -218,6 +220,13 @@ Everything is derived from the README by `readme.py` — nothing is hand-maintai
 
 ### When an epic is completed
 Move the epic **and all its sub-tasks** from Backlog to Done. Because the script treats an epic in *both* Backlog and Done as still in progress, keep the epic in Backlog until all sub-tasks are done.
+
+### Epic without sub-tasks — don't create extra tickets
+- Unless an epic **already has sub-task bullets**, do **not** create additional standalone tickets for work done in its context.
+- When completed work belongs to an epic, simply ask yourself: *is the epic done?*
+  - **Yes** → move the epic itself to Done.
+  - **No** → leave everything as it is; don't add new tickets.
+- Only treat work as an epic sub-task (with its own ID under the parent epic) when the epic already has sub-tasks.
 
 ### When a task is abandoned
 Move it from Backlog to `### Discarded`. Its number is **never reused**.
