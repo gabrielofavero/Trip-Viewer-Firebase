@@ -47,7 +47,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 193   | 189  | 4         | 0       |
+| 🐞   | Bug         | B000 | 194   | 190  | 4         | 0       |
 | 🏆   | Feature     | F000 | 196   | 181  | 15        | 0       |
 | 📈   | Improvement | M000 | 207   | 184  | 22        | 1       |
 | ⚔️   | Epic        | E000 | 51    | 42   | 7         | 2       |
@@ -181,6 +181,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🏆 **F196:** Add a "Partially prepaid" option to the accommodation payment status (edit + view)
 - 📈 **M207:** Make the zoom hover overlay more subtle (more transparency) with a dark-gray tint in dark mode and a neutral adaptive icon (view gallery, destination media, accommodations)
 - 🐞 **B193:** Edit trip: expense subtotals convert mixed currencies to the trip currency (modularized shared currency conversion API)
+- 🐞 **B194:** Category tabs (index/destination) icons and labels too small on mobile
 
 ### July 2026
 

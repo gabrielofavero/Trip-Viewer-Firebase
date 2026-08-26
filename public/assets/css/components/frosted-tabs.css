@@ -110,32 +110,24 @@
 	flex-shrink: 0;
 }
 
-/* --- Shared responsive behavior (index + destination category tabs) --- */
-.category-tab i {
+/* --- Shared responsive behavior (index + destination category tabs) ---
+# Iconify replaces the <i class="iconify"> placeholder with an inline
+# <svg class="iconify" width="1em"> at runtime, so size the icon via the
+# .iconify class (matches both the placeholder and the rendered SVG). The
+# destination tab bar uses Boxicons (<i class="bx ...">), covered by the i. */
+.category-tab i,
+.category-tab .iconify {
 	flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
 	.category-tab {
-		font-size: 13px;
+		font-size: 14px;
 		padding: 10px 14px;
 		gap: 6px;
 	}
-	.category-tab i {
-		font-size: 20px;
-	}
-}
-
-@media (max-width: 520px) {
-	.category-tabs {
-		gap: 2px;
-		padding: 3px;
-	}
-	.category-tab {
-		font-size: 12px;
-		padding: 10px 12px;
-	}
-	.category-tab i {
+	.category-tab i,
+	.category-tab .iconify {
 		font-size: 18px;
 	}
 }
@@ -155,12 +147,13 @@
 	}
 	.category-tab {
 		flex: 0 0 auto;
-		font-size: 12px;
+		font-size: 14px;
 		padding: 10px 12px;
 		gap: 0;
 	}
-	.category-tab i {
-		font-size: 22px;
+	.category-tab i,
+	.category-tab .iconify {
+		font-size: 24px;
 		flex-shrink: 0;
 	}
 	.category-tab .tab-label {
@@ -175,7 +168,7 @@
 			margin-left var(--transition-normal) ease;
 	}
 	.category-tab.active .tab-label {
-		max-width: 140px;
+		max-width: 160px;
 		opacity: 1;
 		margin-left: 6px;
 	}
