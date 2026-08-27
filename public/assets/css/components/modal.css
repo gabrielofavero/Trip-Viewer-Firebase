@@ -133,6 +133,17 @@
 		overflow-y: auto;
 	}
 
+	/* Inner list containers (`.export-documents-list`, `.wallpaper-import-scroll`)
+	   carry their own desktop max-height + overflow so the centered dialog
+	   doesn't grow unbounded. Inside a fullscreen dialog the
+	   `.message-description` above is already the scroll container, so the
+	   fixed max-height only caps the list and leaves dead space below it —
+	   neutralize it so the list fills the available scroll area. */
+	.fullscreen-dialog .export-documents-list,
+	.fullscreen-dialog .wallpaper-import-scroll {
+		max-height: none;
+	}
+
 	/* Save-success dialog (edit pages): displaySaveSuccess marks it with
 	   `.save-success-dialog` and makes it full-screen on mobile. Center the
 	   success message in the middle area and stack the Edit / Home / View
@@ -143,8 +154,20 @@
 		> .message-text-container
 		> .message-description {
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		gap: 16px;
+	}
+
+	/* The animated check circle is mobile-only: hidden by default (see
+	   `.save-success-check` below) and revealed here inside the full-screen
+	   save-success dialog. Desktop keeps the plain centered dialog. */
+	.message-container.fullscreen-dialog.save-success-dialog
+		> .message-text-container
+		> .message-description
+		.save-success-check {
+		display: block;
 	}
 
 	.message-container.fullscreen-dialog.save-success-dialog
@@ -185,6 +208,60 @@
 			transform: translateY(40px);
 			opacity: 0;
 		}
+	}
+}
+
+/*--------------------------------------------------------------
+# Save-success animated check circle
+# displaySaveSuccess (utils/messages.ts) renders `.save-success-check`
+# above the success text. The circle and the check both draw themselves
+# in the active theme colors (`--theme-color` circle, `--theme-color-hover`
+# check), so trips with a custom accent get a matching confirmation.
+# Each stroke carries `pathLength="1"`, which normalizes it to length 1
+# so the draw-in is a simple `stroke-dashoffset: 1 → 0` animation.
+# Mobile-only: hidden by default, shown only inside the full-screen
+# save-success dialog (mobile ≤768px) — desktop keeps the plain dialog.
+--------------------------------------------------------------*/
+.save-success-check {
+	display: none;
+}
+
+.save-success-check__svg {
+	display: block;
+	width: 84px;
+	height: 84px;
+	overflow: visible;
+}
+
+.save-success-check__circle,
+.save-success-check__mark {
+	fill: none;
+	stroke-width: 3;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+}
+
+.save-success-check__circle {
+	stroke: var(--theme-color);
+	animation: saveSuccessCircleDraw 0.55s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.save-success-check__mark {
+	stroke: var(--theme-color-hover);
+	animation: saveSuccessMarkDraw 0.35s cubic-bezier(0.65, 0, 0.45, 1) 0.55s forwards;
+}
+
+@keyframes saveSuccessCircleDraw {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+@keyframes saveSuccessMarkDraw {
+	to {
+		stroke-dashoffset: 0;
 	}
 }
 
@@ -551,6 +628,32 @@
 	margin-top: 4px;
 	font-size: 0.8rem;
 	color: var(--text-secondary, #666);
+}
+
+/* Static Export Document Picker — search bar pinned on top while the card
+   list fills the remaining dialog height and scrolls on its own (mirrors the
+   "Import accommodation" trip picker). The wrapper is `height: 100%` only in
+   the fullscreen (mobile) case, where `.message-description` has a definite
+   height; on desktop it resolves to auto and the shared
+   `.wallpaper-import-scroll` cap keeps the centered dialog compact. */
+.export-static-picker {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-height: 0;
+}
+
+.export-static-picker .wallpaper-import-scroll {
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow-y: auto;
+	max-height: none;
+}
+
+@media (min-width: 769px) {
+	.export-static-picker .wallpaper-import-scroll {
+		max-height: min(58vh, 520px);
+	}
 }
 
 /* Import Conflict Table */

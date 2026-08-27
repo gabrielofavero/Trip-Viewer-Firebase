@@ -15,6 +15,7 @@ All project-specific skills are located in `.github/skills/` and must be discove
 | `firebase-emulators` | Managing, seeding, inspecting, exporting, or importing Firebase emulators |
 | `git-workflow` | Performing Git operations or creating commit messages |
 | `i18n-system` | Editing translations, language packs, language switching, or translation resolution |
+| `implementation-plans` | Writing/updating/executing a proposal in `docs/implementation-plans/` — before starting, prompt each unanswered open question |
 | `migration-system` | Creating, running, or debugging Firestore migrations — new migrations (18+) must be registered in `scripts/build/migrations-config.json` |
 | `ntfy-notifications` | Every task; send the required ntfy notification before ending a completed, blocked, or input-seeking turn |
 | `query-firestore` | Reading current local Firestore emulator data |
@@ -25,6 +26,7 @@ Honor each skill's `applyTo` scope. For task-scoped skills without `applyTo`, se
 
 ## Operational constraints
 
+- **🚫 EMULATOR-ONLY. NEVER PRD/REAL DATA.** Always run/validate against the local Firebase emulator stack (`npm run dev`, tab shows `[LOCAL]`). Never use `npm run dev:prd`, `--use-emulator false`, `firebase serve`, or any real-project data path for agent-driven work unless the user explicitly asks for production work. If a page tab shows `[LOCAL PRD]`, it is the PRD build — rebuild in emulator mode (`node scripts/build/build.js --use-emulator true`) and reload before proceeding.
 - Do not use Playwright or browser tools unless the user explicitly approves browser validation for the current task.
 - Prefer non-browser validation unless browser validation is approved.
 - Follow the full project guidance in the repository-root `copilot-instructions.md`, including coding conventions and validation requirements.

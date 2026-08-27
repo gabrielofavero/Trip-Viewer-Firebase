@@ -70,6 +70,8 @@
 			"warning": "⚠️ O pacote exportado contém os dados do seu documento em texto simples, incluindo informações protegidas (códigos de reserva, links). Qualquer pessoa com acesso aos arquivos pode ler esses dados. Armazene os arquivos exportados com segurança e exclua-os quando não forem mais necessários.",
 			"select_type": "Escolha o que exportar",
 			"select_document": "Selecione um documento",
+			"search_placeholder": "Buscar documentos...",
+			"no_matches": "Nenhum documento corresponde à sua busca.",
 			"select_mode": "Selecione o modo de fidelidade",
 			"mode_light": "Leve",
 			"mode_complete": "Completo",
@@ -642,7 +644,7 @@
 	"messages": {
 		"text_copied": "Texto copiado para a área de transferência",
 		"itinerary_copied": "Programação copiada! Cole no WhatsApp ou em um app de notas para manter a formatação",
-		"expenses_copied": "Lista copiada! Cole no WhatsApp ou em um app de notas para manter os checkboxes",
+		"expenses_copied": "Lista copiada! Cole no WhatsApp ou em um app de notas para manter a formatação",
 		"no_data": "Sem dados cadastrados 😔",
 		"share": "Venha visualizar meus dados criados no TripViewer",
 		"exit_confirmation": "Você tem certeza que deseja sair? Todas as alterações não salvas serão perdidas",
@@ -754,6 +756,7 @@
 			"password": "Senha"
 		},
 		"export": "Exportar",
+		"copy": "Copiar",
 		"copy_list": "Copiar lista",
 		"print": "Imprimir",
 		"adapted": "Adaptado",
@@ -986,7 +989,9 @@
 			"local": "Local (gmaps scraper)",
 			"localHint": "Cole um link do Google Maps para fazer o scrape nesta máquina",
 			"api": "Via API de Lugares",
-			"apiHint": "Busque no Google e importe os dados oficiais"
+			"apiHint": "Busque no Google e importe os dados oficiais",
+			"mymaps": "Importar do Meu Maps",
+			"mymapsHint": "Importar todos os marcadores do seu mapa do Meu Maps"
 		},
 		"local": {
 			"title": "Link do Google Maps",
@@ -1088,6 +1093,46 @@
 			"scraperUnavailable": "O scraper local não está rodando. Inicie com npm run dev e verifique se o Docker Desktop está aberto.",
 			"scraperFailed": "O scraper local não conseguiu importar este lugar. Tente novamente.",
 			"rateLimited": "Nenhum dado retornado para este lugar. O Google provavelmente está limitando os scrapes — aguarde alguns minutos e tente novamente."
+		}
+	},
+	"mymapsImport": {
+		"importButton": "Importar do Meu Maps",
+		"title": "Importar do Meu Maps",
+		"summary": "{{count}} marcador(es) encontrado(s) neste mapa",
+		"unmapped": "Não foi possível mapear {{count}} marcador(es). Escolha uma categoria para importá-los ou deixe-os desmarcados para ignorar.",
+		"fetching": "Buscando seu mapa do Meu Maps...",
+		"fetchFailed": "Não foi possível buscar este mapa automaticamente. Você pode importar o arquivo exportado.",
+		"upload": "Escolher arquivo .kml / .kmz",
+		"uploadHint": "Exporte o mapa no Meu Maps (⋮ → Exportar para KML/KMZ) e selecione o arquivo aqui.",
+		"downloadHintBefore": "Baixe o KMZ manualmente ",
+		"downloadHintLink": "clicando aqui",
+		"noMapsLink": "Este destino não tem um link do Meu Maps",
+		"noMid": "Nenhum id de mapa do Meu Maps foi encontrado neste link",
+		"unassigned": "Sem categoria",
+		"status": {
+			"resolved": "Resolvido",
+			"failed": "Sem correspondência"
+		},
+		"enrich": "Enriquecer com API de Lugares",
+		"enriching": "Resolvendo lugares... {{done}}/{{total}}",
+		"importAction": "Importar {{count}} marcador(es)",
+		"skipUncategorized": "{{count}} marcador(es) sem categoria serão ignorados",
+		"noCategoryHint": "Marcadores sem categoria não são importados. Escolha uma categoria para incluí-los.",
+		"emptySelection": "Selecione pelo menos um marcador para importar",
+		"conflicts": {
+			"title": "Alguns marcadores já existem",
+			"message": "Estes marcadores já existem na categoria (mesmo nome ou link do Maps). Escolha o que fazer com cada um.",
+			"keep": "Manter ambos",
+			"skip": "Ignorar o novo",
+			"replace": "Substituir o existente"
+		},
+		"imported": "{{count}} marcador(es) importados",
+		"errors": {
+			"jsZipMissing": "Não foi possível carregar o leitor de KMZ. Recarregue a página e tente novamente.",
+			"noKmlInKmz": "Nenhum arquivo KML foi encontrado dentro deste arquivo KMZ.",
+			"invalidKml": "Este arquivo não é um documento KML válido.",
+			"noPlacemarks": "Nenhum marcador foi encontrado neste mapa.",
+			"noDoc": "Não foi possível carregar o destino"
 		}
 	}
 }

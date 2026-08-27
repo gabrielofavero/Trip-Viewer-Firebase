@@ -7,6 +7,12 @@ description: 'Use when you must build a TripViewer page URL (params t/d/l/e/visi
 
 Fast-path reference for driving the TripViewer web app in the integrated browser (dev emulators or production).
 
+## 🚫 HARD RULE: EMULATOR-ONLY. NEVER PRD / REAL DATA
+
+- **Always use the local emulator build (tab shows `[LOCAL]`).** Never validate, reproduce, or interact against the real Firebase project (`[LOCAL PRD]` / `npm run dev:prd` / `--use-emulator false`) — the agent must **never** read/write real user data unless the user explicitly asks for production work.
+- **Before driving any page, confirm the tab title shows `[LOCAL]`.** If it shows `[LOCAL PRD]`, the served `dist/` was built for the real project: **stop**, rebuild in emulator mode (`node scripts/build/build.js --use-emulator true` — the default), and reload the page. See the `firebase-emulators` skill for the full stack.
+- If you are not 100% sure the page is emulator-backed, verify first: the emulator Firestore on `localhost:8085` must be the data source, not the real project.
+
 ## ⚠️ Explicit Approval Required (Playwright / Browser)
 
 This skill drives the integrated browser with Playwright (open pages, navigate, click/type, screenshot, sign in). Per the project instructions, **do NOT use any browser/Playwright tools unless the user has explicitly approved browser validation for the current task** — this includes:

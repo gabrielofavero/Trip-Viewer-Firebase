@@ -1,5 +1,30 @@
 # Changelog
 
+## [2.27.1] - 2026-08-26
+
+- 🐞 **B198:** Hide Local import source on PRD
+- 🏆 **F198:** Add check animation for edit mobile saving
+- 🐞 **B199:** Minor fixes for Maps integrations
+- 🐞 **B200:** Fix error on creating itinerary item
+
+## [2.27.0] - 2026-08-26
+
+- 🐞 **B194:** Tab bar icons too small on mobile
+- 📈 **M208:** Static export picker: searchable cards, mobile dialog fix
+- 📈 **M209:** Visual polish: unify tab bar pills
+- 📈 **M210:** Expenses copy: dual WhatsApp/Notes format with values
+- 🐞 **B195:** Fix static export mobile rendering and encoding
+- 📈 **M211:** Static export ZIP uses chosen app name
+- 📈 **M212:** Backlog skill: no ticket re-adds, sub-taskless epics
+- 📈 **M213:** [DEV] Add implementation-plans skill
+- 📈 **M214:** Shorten long backlog ticket titles
+- ⚔️ **E052:** Import from MyMaps
+- 🏆 **F197:** Copy accommodation name and address
+- 📈 **M215:** My Maps import review dialog polish
+- 🐞 **B196:** [DEV] Fix dev:prd
+- 🐞 **B197:** Login input not matching button size on mobile
+- 📈 **M216:** My Maps import: manual KML download link
+
 ## [2.26.0] - 2026-08-25
 
 - 🐞 **B182:** Auto dark mode: fix UTC->local hour bug and switch to timezone-based sunrise/sunset detection (offline, session-cached)

@@ -26,10 +26,20 @@ npm run functions        # Build + start only Functions emulator
 > entirely. It runs `firebase use prd`, builds the frontend with
 > `--use-emulator false` (so `/__/firebase/init.js` and `firebase-config.js`
 > don't connect to emulators), and serves `dist/` via `firebase serve` — the app
-> then reads/writes the **real** `trip-viewer-prd` project (tab shows `[PRD]`).
+> then reads/writes the **real** `trip-viewer-prd` project (tab shows `[LOCAL PRD]`).
 > Remember it permanently switches the active `firebase use` project; run
 > `firebase use prd` (or `npm run dev:prd`) again before going back to the
-> emulator stack (tab shows `[DEV]`).
+> emulator stack (tab shows `[LOCAL]`).
+
+> **🚫 AGENT HARD RULE — EMULATOR-ONLY, NEVER PRD/REAL DATA:** The coding
+> agent must **never** run `npm run dev:prd`, `--use-emulator false`, `firebase
+> serve`, or anything that reads/writes the real `trip-viewer-prd` project for
+> validation, reproduction, or testing — unless the user explicitly asks for
+> production work. All agent-driven work uses the local emulator stack
+> (`npm run dev` / `npm run build` with default `--use-emulator true`; tab shows
+> `[LOCAL]`). If a page ever shows `[LOCAL PRD]`, the current `dist/` is the
+> PRD build — rebuild with `node scripts/build/build.js --use-emulator true`
+> and reload before proceeding.
 
 ---
 
@@ -216,4 +226,4 @@ From `.firebaserc`:
 The emulators use `singleProjectMode: true` on the single `trip-viewer-prd`
 project. `firebase-config.js` always uses the PRD config; the
 `{{USE_EMULATOR}}` build flag decides whether localhost connects to the
-emulators (tab shows `[DEV]`) or to the real project (tab shows `[PRD]`).
+emulators (tab shows `[LOCAL]`) or to the real project (tab shows `[LOCAL PRD]`).

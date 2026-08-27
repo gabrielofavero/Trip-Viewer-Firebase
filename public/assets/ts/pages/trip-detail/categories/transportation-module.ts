@@ -377,6 +377,15 @@ function loadTransportationTabsHTML() {
 
 	tab.innerHTML += '<span class="glider"></span>';
 
+	// The glider width must match a tab (tabs are equal flex columns) so the
+	// translateX(100%) steps land exactly one tab; the tab count varies with
+	// the trip's transportation data.
+	setCSSRule(
+		'#tab-transportation .glider',
+		'width',
+		`calc((100% - 0.5rem) / ${ACTIVE_TRANSPORTATIONS.length})`,
+	);
+
 	const children = getChildIDs('tab-transportation');
 	for (let i = 0; i < children.length; i++) {
 		setCSSRule(

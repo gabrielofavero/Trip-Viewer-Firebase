@@ -213,7 +213,7 @@ Common error codes:
 |---|---|---|
 | `GET /places/search` | `q`, `lang`, `photos=true`; token in header | `{ results }` (≤ 20) |
 | `GET /places/{placeId}` | `lang`, `photos`; token in header | `{ place }` |
-| `GET /places/{placeId}/photos` | `lang`; token in header | `{ photos }` (first 3, each `{ name, photoUri }`) |
+| `GET /places/{placeId}/photos` | `lang`; token in header | `{ photos }` (first 1, each `{ name, photoUri }`) |
 
 Every JSON route requires `Authorization: Bearer <Firebase ID token>` and an
 allowlisted `Origin`. Responses use the envelope `{ error: { code, message } }`
@@ -253,7 +253,8 @@ npm install
 ```
 
 - Copy `public/assets/json/currencies.json` → `workers/places-api/src/data/currencies.json`
-  if it is missing (price resolution reads its `scaleNumeric` bands).
+  if it is missing (price resolution reads its `symbols` to build the priceRange
+  label; `price-level-map.json` covers the `$`-band fallback).
 - Create `.dev.vars` from `.dev.vars.example` and fill in your secrets
   (`.dev.vars` is gitignored — never commit it).
 
@@ -504,7 +505,7 @@ curl -i -H "Origin: http://localhost:8787" \
   -H "Authorization: Bearer <token>" \
   "http://localhost:8787/places/ChIJN1t_tDeuEmsRUsoyG83frY4?lang=pt"
 
-# 200 — photos → expect ≤ 3 photoUris; each loads as an image with NO auth/key
+# 200 — photos → expect ≤ 1 photoUri; loads as an image with NO auth/key
 curl -i -H "Origin: http://localhost:8787" \
   -H "Authorization: Bearer <token>" \
   "http://localhost:8787/places/ChIJN1t_tDeuEmsRUsoyG83frY4/photos?lang=en"
@@ -537,8 +538,10 @@ Notes:
   (dedicated), picked via `config.apiKeyFor(config, photos)`.
 - **Permission = allowlist** (not a Firestore doc check) for v1 — two-step
   grant (Firestore doc **and** `ALLOWED_UIDS_JSON`).
-- **Price data** comes from `currencies.json` `scaleNumeric` bands (not the old
-  `moedas.json`).
+- **Price data** — when Google returns `priceRange`, the worker emits the final
+  display label from the actual amounts (e.g. `"$26 - $50"` / `"$100+"`), using
+  `currencies.json` `symbols`; `price-level-map.json` maps `priceLevel` to the
+  `$`-band as a fallback. (Not the old `moedas.json`.)
 
 ---
 

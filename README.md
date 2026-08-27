@@ -47,10 +47,10 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 193   | 189  | 4         | 0       |
-| 🏆   | Feature     | F000 | 196   | 181  | 15        | 0       |
-| 📈   | Improvement | M000 | 207   | 184  | 22        | 1       |
-| ⚔️   | Epic        | E000 | 51    | 42   | 7         | 2       |
+| 🐞   | Bug         | B000 | 200   | 196  | 4         | 0       |
+| 🏆   | Feature     | F000 | 198   | 183  | 15        | 0       |
+| 📈   | Improvement | M000 | 216   | 193  | 22        | 1       |
+| ⚔️   | Epic        | E000 | 52    | 43   | 7         | 2       |
 
 ## Backlog
 
@@ -73,25 +73,25 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🏆 **F155:** Add images for each destination item
 - 🐞 **B164:** Cannot add new itinerary post migration
 - 📈 **M164:** Improve bulletpoints for trip cards on index
-- 🏆 **F174:** Block edit trip page for unauthenticated users and non-owners
+- 🏆 **F174:** Block edit trip for unauthenticated users
 - 📈 **M165:** Improve itinerary modal
 - 📈 **M166:** Improve input boxes animation and visibility
 - 🏆 **F170:** Create progress bar loading (restore operations)
-- 🐞 **B165:** Fix dark mode backup/restore elements and dialog visual issues
+- 🐞 **B165:** Fix dark mode backup/restore dialog visuals
 - 🏆 **F175:** Add real versioning
-- 📈 **M167:** Add database profile info since auth data is not always filled
+- 📈 **M167:** Add database profile info
 - 🐞 **B167:** Edit trip labels on customization not showing
 - 🐞 **B166:** Can't save new transportations
-- 🐞 **B168:** We can close the dialog on saved document and it doesnt refresh the page
+- 🐞 **B168:** Saved dialog close doesn't refresh page
 - 🐞 **B169:** Account restore giving "Access Denied"
 - 🐞 **B170:** Fix mismatched color preset pairs on edit trip
-- 🐞 **B171:** Image dialog not transitioning when user clicks on add image button
+- 🐞 **B171:** Image dialog not transitioning on add
 - 📈 **M168:** [DEV] Auto restart if emulator functions failed
 - 🏆 **F176:** Add custom colors on trip cards
 - 📈 **M169:** [DEV] Improve cache busting
 - 🏆 **F177:** Add app version on footers
 - 📈 **M170:** Improve import/export icons on index
-- ⚔️ **E045:** Add Maps integration into edit page (dev only poc)
+- ⚔️ **E045:** Add Maps integration into edit page
   - *[🏆F172] Get place information*
   - *[🏆F173] Update integrated places*
   - *[🏆F178] Add local scraper for testing*
@@ -103,102 +103,121 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
   - *[📈M175] No more need to read destination on view.html*
   - *[📈M176] Normalize visuals: header, cards, buttons, calendar should match*
 - 🐞 **B174:** Issue with transportation duration card on edit trip
-- 🐞 **B173:** Fix issues with index cards closing and not reopening
-- 📈 **M172:** Minor visual improvements on index.html (search, order, image loading)
+- 🐞 **B173:** Fix index cards closing not reopening
+- 📈 **M172:** Minor visual improvements on index
 - 📈 **M178:** [DEV] Reorganize docs
 - 📈 **M177:** Make tab selector on index mobile friendly
 - ⚔️ **E016:** New Front-End: destination.html
-  - *[🏆F181] New destination page look (cards, hero background, lazy load, search, tab bar)*
+  - *[🏆F181] New destination page look*
   - *[🏆F180] Reuse destination dialogs on itinerary view*
   - *[🐞B163] Fix color and destination image issues*
   - *[🏆F063] Allow adding multiple regions to a destination*
 - 📈 **M163:** [DEV] Improve live reload functionality
 - 🐞 **B175:** Fix saving issues for trips and destinations
-- 🏆 **F182:** Add new dialogs into all itinerary items for view
+- 🏆 **F182:** Add dialogs to itinerary items
 - 📈 **M153:** Minor visual improvements on itinerary.html
 - ⚔️ **E043:** Export as static web page (Offline Mode)
-  - *[🏆F183] Static-mode runtime seam (render from local data.json, no Firebase SDK)*
+  - *[🏆F183] Static-mode runtime seam*
   - *[📈M179] Build-time asset graph + static-export manifest*
-  - *[🏆F184] Static export Settings dialog (type, doc, PIN, mode, title/icon)*
-  - *[🏆F185] Export ZIP builder (HTML transform + manifest fetch + download)*
-  - *[🏆F186] PWA customization (app title + icon in the export)*
+  - *[🏆F184] Static export Settings dialog*
+  - *[🏆F185] Export ZIP builder*
+  - *[🏆F186] PWA customization in export*
   - *[📈M180] Self-hosted icons & web fonts (drop dead gapi)*
-- 🏆 **F187:** [DEV] Add support for AI mobile push notification (ntfy)
+- 🏆 **F187:** [DEV] Add AI mobile push notifications
 - 📈 **M181:** Remove PIN typing need on index.html
 - ⚔️ **E014:** Implementation: Shopping List
-  - *[🏆F188] Group transportation by traveler (select from trip travelers instead of free text)*
+  - *[🏆F188] Group transportation by traveler*
   - *[🏆F071] Multi-person expenses*
-- 🐞 **B176:** Order upcoming trips on index from closest to furthest from now
-- 📈 **M185:** [DEV] Make emulator exit backup opt-in (not automatic on npm run dev exit)
-- 🏆 **F189:** Import destination images from edit trip + link improvements
-- 🐞 **B177:** [DEV] Fix backup and on ready dev env issues
+- 🐞 **B176:** Order upcoming trips by proximity
+- 📈 **M185:** [DEV] Make emulator exit backup opt-in
+- 🏆 **F189:** Import destination images from edit trip
+- 🐞 **B177:** [DEV] Fix backup/on-ready dev env issues
 - 🐞 **B178:** Fix pin dialog issues
 - 📈 **M186:** Improve expenses visualization and protected data
 - 📈 **M183:** [DEV] Auto run migration scripts after deployment
 - 📈 **M184:** [DEV] Remove double deployment
-- 📈 **M187:** [DEV] Run post-deploy migrations via local functions emulator (no prod function deploy / no billing prompt)
+- 📈 **M187:** [DEV] Run post-deploy migrations via local emulator
 - 📈 **M182:** [DEV] Kill dev env
-- 📈 **M188:** [DEV] Add mandatory end-of-task backlog check to readme skill
-- 📈 **M189:** [DEV] initLocalDb skips seeding when the database already has data
-- 🏆 **F190:** Use LocalStorage logic for detecting new versions (cache refreshing)
-- 🏆 **F191:** Expenses: exclusive shopping-bag icon for the Shopping type + copy list to iOS Notes (native checkboxes)
-- 📈 **M190:** Expand wallpaper import to trip gallery, accommodation and destination place images
+- 📈 **M188:** [DEV] Add mandatory backlog check
+- 📈 **M189:** [DEV] initLocalDb skips seeding when DB has data
+- 🏆 **F190:** Detect new versions via LocalStorage
+- 🏆 **F191:** Expenses: shopping-bag icon + iOS Notes copy
+- 📈 **M190:** Expand wallpaper import scope
 - 🏆 **F065:** Show if accommodation was prepaid or not
 - 🏆 **F192:** Import accommodation from previous trips
-- 🏆 **F193:** Seed an empty light or dark logo from the first logo selected
+- 🏆 **F193:** Seed empty logo from first selection
 - 🏆 **F194:** Reuse transportation between travelers
 - 🐞 **B179:** Fix transportation accordion titles not refreshing (edit trip)
-- 🐞 **B180:** Fix transportation visual issues + recent features side effects
-- 🐞 **B181:** Migrations already run in PRD still offered as deploy options (backfill completed state)
-- 🐞 **B182:** Auto dark mode: fix UTC->local hour bug and switch to timezone-based sunrise/sunset detection (offline, session-cached)
-- 🐞 **B183:** Footer not reaching the bottom of the page on mobile (view page)
-- 📈 **M191:** Auto-hide top bar when scrolling down on view page (immersive PWA reading)
-- 🐞 **B184:** Fix visual quality in F192/F194 import dialogs (dark mode, plane icon, import button styling) + F065 payment status color
-- 📈 **M192:** Expenses: people view as a select (View-by "People" option) instead of an extra tab; hide it for a single traveler or when all expenses are unspecified; drop the non-specified bucket from the per-person breakdown
-- 🐞 **B185:** Fix transportation card not showing departure/arrival locations (points key mismatch) + soften flight line in dark mode
-- 🐞 **B186:** Save-success dialog buttons (Edit/Home/View) cropped on mobile edit pages — make the dialog full-screen on mobile with the actions stacked full-width at the bottom (desktop unchanged)
-- 📈 **M193:** Expenses (view page): drop the container-level auto-scroll so the page grows with content; a single category box scrolls internally only when it has many items
-- 📈 **M194:** Minor front-end adjustments: left-align edit-page time inputs (transportation + accommodation), move accommodation payment status to the bottom of the view card, neutral border on destination dialog link buttons
-- 📈 **M195:** Index: replace the greeting content with the account card while on the Settings tab (single box, content fades in on tab switch instead of two duplicate boxes)
-- 🏆 **F195:** Add a dedicated "Active trips" section on top of the index when a trip is currently happening (was merged into Upcoming before)
+- 🐞 **B180:** Fix transportation visual side effects
+- 🐞 **B181:** Migrations run in PRD still offered
+- 🐞 **B182:** Auto dark mode: fix UTC->local hour bug
+- 🐞 **B183:** Footer not reaching bottom on mobile
+- 📈 **M191:** Auto-hide top bar on scroll (view)
+- 🐞 **B184:** Fix import dialogs + payment status color
+- 📈 **M192:** Expenses: people view as a select
+- 🐞 **B185:** Fix transportation card locations
+- 🐞 **B186:** Fix save-success dialog on mobile
+- 📈 **M193:** Expenses: drop container auto-scroll
+- 📈 **M194:** Minor front-end adjustments
+- 📈 **M195:** Index: account card on Settings tab
+- 🏆 **F195:** Add "Active trips" index section
 - 📈 **M196:** View page: remove the dominant card shadows
-- 📈 **M197:** [DEV] Make npm run dev and dev:prd launch kill-ports instead of just checking ports
-- 📈 **M198:** Index: style the "Active trips" section with the same neutral styling as Upcoming/Finished (no green accent)
-- 📈 **M199:** [DEV] Add a color rule to the CSS skill + project instructions: use only theme/neutral colors, and request user authorization before adding any non-theme/non-neutral color
-- 📈 **M200:** Settings (Advanced): block page refresh/close with a confirmation prompt while a backup, restore, document import/export, or static-export operation is in progress; on account import, drop the loading spinner shown over the native file picker's backdrop blur (progress starts only after a file is selected)
-- 🐞 **B187:** Edit trip: dragging an expense between groups doesn't update its group (keeps the old type on click and reverts on save) — update the expense type when dropped into another group
-- 🐞 **B188:** Edit trip: transportation legs without a valid direction all collapse into "While traveling" (and missing direction could crash loading) — guard the direction on load so legs stay distributed across Departure/During/Return
-- 🐞 **B189:** Edit trip: remove leftover broken accommodation import HTML and the duplicate import-button IDs
-- 📈 **M201:** Edit trip: restyle "Reuse another traveler's transportation" and accommodation import as a top-right themed button with icon + short label (like destination's "Fetch Info With Maps"), always visible with a friendly empty-state toast
-- 📈 **M202:** Edit trip: add a separator border to the image-picker card label
-- 📈 **M203:** [DEV] Consolidate emulator backups to a single source of truth — `backup.js` prunes stray `firebase-export-*` folders (from ad-hoc `firebase emulators:export` runs without a target); `.emulator-data/` + `.emulator-data-backups/` are the only backup locations
-- 📈 **M204:** Edit trip: hide the expense "Paid by" and "Split with" fields when the trip has zero or only one named traveler (including when no traveler name was defined)
+- 📈 **M197:** [DEV] dev/dev:prd kill ports first
+- 📈 **M198:** Index: neutral style for "Active trips"
+- 📈 **M199:** [DEV] Add color rule to CSS skill
+- 📈 **M200:** Settings: block refresh during operations
+- 🐞 **B187:** Edit trip: update expense type on drop
+- 🐞 **B188:** Edit trip: guard transportation direction
+- 🐞 **B189:** Edit trip: remove broken accommodation import HTML
+- 📈 **M201:** Edit trip: restyle import buttons
+- 📈 **M202:** Edit trip: image-picker label separator
+- 📈 **M203:** [DEV] Consolidate emulator backups
+- 📈 **M204:** Edit trip: hide expense traveler fields
 - 📈 **M205:** Edit trip: accommodation import dialog improvements
 - 🐞 **B190:** View page transportation tabs flicker
 - 📈 **M206:** Edit trip: itinerary destination cards match destinations-checkboxes layout
 - 🐞 **B191:** Edit trip: destination cards overflow the destinations box
-- 🐞 **B192:** Edit trip: itinerary "Set the title"/"Set start and end time" only apply start/end — itinerary button keeps placeholder, time of day unset
-- 🏆 **F196:** Add a "Partially prepaid" option to the accommodation payment status (edit + view)
-- 📈 **M207:** Make the zoom hover overlay more subtle (more transparency) with a dark-gray tint in dark mode and a neutral adaptive icon (view gallery, destination media, accommodations)
-- 🐞 **B193:** Edit trip: expense subtotals convert mixed currencies to the trip currency (modularized shared currency conversion API)
+- 🐞 **B192:** Edit trip: fix itinerary Set buttons
+- 🏆 **F196:** Add "Partially prepaid" accommodation option
+- 📈 **M207:** Make zoom hover overlay more subtle
+- 🐞 **B193:** Edit trip: convert mixed-currency subtotals
+- 🐞 **B194:** Tab bar icons too small on mobile
+- 📈 **M208:** Static export picker: searchable cards, mobile dialog fix
+- 📈 **M209:** Visual polish: unify tab bar pills
+- 📈 **M210:** Expenses copy: dual WhatsApp/Notes format with values
+- 🐞 **B195:** Fix static export mobile rendering and encoding
+- 📈 **M211:** Static export ZIP uses chosen app name
+- 📈 **M212:** Backlog skill: no ticket re-adds, sub-taskless epics
+- 📈 **M213:** [DEV] Add implementation-plans skill
+- 📈 **M214:** Shorten long backlog ticket titles
+- ⚔️ **E052:** Import from MyMaps
+- 🏆 **F197:** Copy accommodation name and address
+- 📈 **M215:** My Maps import review dialog polish
+- 🐞 **B196:** [DEV] Fix dev:prd
+- 🐞 **B197:** Login input not matching button size on mobile
+- 📈 **M216:** My Maps import: manual KML download link
+- 🐞 **B198:** Hide Local import source on PRD
+- 🏆 **F198:** Add check animation for edit mobile saving
+- 🐞 **B199:** Minor fixes for Maps integrations
+- 🐞 **B200:** Fix error on creating itinerary item
 
 ### July 2026
 
 - ⚔️ **E048:** Database ovehaul
 - 🐞 **B161:** Fix page issues post migration
-- 📈 **M155:** Load dark/light mode as soon as page starts (no flicker)
+- 📈 **M155:** Load dark/light mode early (no flicker)
 - 📈 **M156:** Export useful dev scripts into npm run
 - ⚔️ **E049:** Code translation (PT -> EN)
-- ⚔️ **E050:** [DEV] Create proper dev env (emulators, data preparation scripts, easy config)
-- 🏆 **F169:** Add option to import only a single trip document
+- ⚔️ **E050:** [DEV] Create proper dev env
+- 🏆 **F169:** Import a single trip document
 - 🏆 **F171:** Add single document export
-- 📈 **M157:** Expand single document import/export features by allowing all types
+- 📈 **M157:** Expand single-document import/export types
 - 🏆 **F152:** Add firestore rules into deployment
 - 📈 **M158:** Optimize user data + user permissions
-- 🏆 **F153:** [DEV] Auto open dev browser on npm run dev
+- 🏆 **F153:** [DEV] Auto-open dev browser
 - 🏆 **F154:** [DEV] Add AI skills for project
 - 📈 **M159:** [DEV] Improve skills behavior
-- 🐞 **B162:** People-view transportation wrapper not loading on initial page load
+- 🐞 **B162:** People-view transportation not loading
 - 📈 **M160:** [DEV] Improve emulator data backup actions
 - 🏆 **F156:** Add support for legacy trips
 - 🏆 **F158:** Add default color options for trips
@@ -207,23 +226,23 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 ### June 2026
 
-- 🐞 **B158:** When clicking on last item of transportation tab, nothing happens
-- 📈 **M145:** If "long loading" pop up shows, close it if loading finishes
-- 🐞 **B157:** Trip being considered as finished on last day (index only)
+- 🐞 **B158:** Transportation tab last item does nothing
+- 📈 **M145:** Close long-loading popup when done
+- 🐞 **B157:** Trip finished on last day (index)
 - 🐞 **B156:** Reservation being copied with # in it
-- 🐞 **B154:** Itinerary title showing as "[object object]" on newer trips
+- 🐞 **B154:** Itinerary title shows "[object object]"
 - ⚔️ **E042:** During Trip Automations
   - *[🐞B152] Todays itinerary button not opening calendar item*
-  - *[🐞B153] Today itinerary button should go to calendar item, not calendar*
-  - *[🏆F149] If multiple transportations, page should load on closest next one instead of first*
-  - *[🏆F150] If multiple accommodations, page should load on closest next one instead of first*
-  - *[🏆F151] If multiple destinations and itinerary is set with destinations, page should load on closest next one instead of first*
+  - *[🐞B153] Today button goes to calendar item*
+  - *[🏆F149] Load closest next transportation*
+  - *[🏆F150] Load closest next accommodation*
+  - *[🏆F151] Load closest next destination*
 - 📈 **M143:** Improve spacing for full itineray
-- 🐞 **B155:** Incorrect translation key in gallery causing exception (translation module should handle without errors)
+- 🐞 **B155:** Gallery wrong translation key throws
 - 🏆 **F166:** Disable image uploads in edit trip page
 - 🏆 **F165:** Refactor folder structure for scripts and pocs
 - 📈 **M146:** Improve epic detections on readme script
-- ⚔️ **E026:** Google Maps (Places API) partial implementation (Dev Only, POC)
+- ⚔️ **E026:** Google Maps (Places API) partial implementation
   - *[🏆F160] Add example files (Places API, Pleper Extension)*
   - *[🏆F161] Map emoji conversion layers*
   - *[🏆F162] Python Script*
@@ -234,9 +253,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B096:** Fix Gallery module
 - 📈 **M148:** Improve trip categories in index.html
 - ⚔️ **E018:** New Front-End: index.html
-  - *[📈M021] Improve "My Trips / Destinations / Listings" in index.html*
+  - *[📈M021] Improve index trip categories*
 - ⚔️ **E034:** Frontend code refactoring
-  - *[📈M106] Use require in js files + single entrypoint for scripts in html files*
+  - *[📈M106] Use require + single script entrypoint*
   - *[📈M098] Change js folder structures to EN-US*
   - *[📈M135] Proper separation of shared elements*
   - *[📈M105] Remove CONFIG and reduce use of global variables*
@@ -245,7 +264,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
   - *[📈M149] Better file/folder architecture + separation of concerns*
   - *[📈M150] All functions and variables in EN-US*
   - *[📈M151] Better folder structure for js files*
-  - *[📈M152] All ids, classes and html comments in EN-US (+ better naming)*
+  - *[📈M152] All ids/classes/comments in EN-US*
 - 🏆 **F167:** Add dev mode for easy debugging
 - ⚔️ **E044:** New Front-End: edit pages
 - 📈 **M162:** Minor visual improvements on expenses.html
@@ -256,17 +275,17 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 ### February 2026
 
-- 🏆 **F148:** Add environment tag on page title if running locally
+- 🏆 **F148:** Add local env tag to page title
 - 🐞 **B151:** Visibility change causing exception for index
 - 🐞 **B127:** Document changes not working
 - 📈 **M144:** Minor visibility improvements for view page
 - 🐞 **B150:** View page for listing not working
 - 🐞 **B149:** View page for destinations not working
-- 🐞 **B147:** Index notification bar not showing for active trip and not opening current
+- 🐞 **B147:** Index active-trip notification bar broken
 
 ### January 2026
 
-- 🐞 **B123:** Main try catchs for pages are failing because main is not async
+- 🐞 **B123:** Main try/catch fails (main not async)
 - 🏆 **F146:** Add drawer for itinerary page when on mobile
 - 🏆 **F145:** Make itinerary page embed to view page
 - 🏆 **F147:** Add company name for transportation in itinerary page
@@ -274,22 +293,22 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B145:** Destination description language not loading properly on add
 - 🐞 **B144:** Duplicated pin keydown functionality causing crashes
 - 🏆 **F144:** Add git sync script (master/develop branches)
-- 🐞 **B143:** Inner itinerary message for edit page closes on confirm if no data
+- 🐞 **B143:** Itinerary message closes on confirm
 - 🏆 **F143:** Add keyboard navigation for message modal actions
 - 📈 **M142:** Increase EMBED_TIMEOUT from 4000 to 10000 milliseconds
 - 📈 **M141:** Refactor _getPageURL to remove visibility parameter
-- 🐞 **B142:** View visibility not auto-switching on embed destination visibility change
+- 🐞 **B142:** View visibility not auto-switching
 - 🐞 **B141:** Custom itinerary title not showing
 - 🐞 **B140:** Edit button being shown on view page
-- 📈 **M140:** If no itinerary, do not show title on export
+- 📈 **M140:** Hide itinerary title on export
 - 📈 **M136:** Improve Notes export for itinerary
 - 📈 **M139:** Improve print export for itinerary
-- 🐞 **B138:** Itinerary should only stop loading when content is loaded
+- 🐞 **B138:** Itinerary stops loading when ready
 - 🐞 **B136:** Destination edit modules showing every time
 - 📈 **M138:** Improve dark mode loading time
 - 📈 **M137:** Improve dark mode detection
-- 🐞 **B139:** Destination custom colors not working when detached but with trip id
-- 🐞 **B137:** Destination should only stop loading when content is loaded
+- 🐞 **B139:** Destination colors break when detached
+- 🐞 **B137:** Destination stops loading when ready
 - 🏆 **F142:** Link full itinerary with button in view
 - ⚔️ **E041:** Full Itinerary page
   - *[🏆F134] Create HTML and CSS*
@@ -298,9 +317,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
   - *[🏆F137] Print / PDF Export*
   - *[🏆F138] Notes export*
 - 🏆 **F141:** Plan destination from destination page
-- 🏆 **F140:** Fetch trip data instead of relying on localhost for destination page
+- 🏆 **F140:** Fetch trip data for destination page
 - 🐞 **B135:** Destination minor fixes
-- 🏆 **F139:** Only display trip related info on destination if linked
+- 🏆 **F139:** Show trip info only if linked
 - 🏆 **F132:** Add pre-commit actions (formatting and read-me)
 - 🏆 **F133:** Add setup script
 - ⚔️ **E040:** Integrate Expenses page directly into view
@@ -312,92 +331,92 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
   - *[🏆F131] Visibility back forth for expenses lighbox*
   - *[🐞B134] Fix visibility issues for expenses page*
 - 🐞 **B133:** Single trip destination not loading
-- 📈 **M133:** Add color indicators for when a filter-sort destination button is active
+- 📈 **M133:** Color indicators for active filters
 - 🐞 **B126:** Double filter selected on mobile destination drawer
-- 🏆 **F121:** Add share button to destination page (when not on lightbox)
+- 🏆 **F121:** Add share button to destination
 - 🐞 **B129:** Expenses tab clipping when on mobile
 - 📈 **M129:** Improve expenses responsiviness for tablets
 - 🐞 **B131:** Cannot create new trip
 - 🐞 **B132:** Wrong destination secondary color for default color
-- 🐞 **B130:** Wrong theme color secondary being shown when on light mode for view page
+- 🐞 **B130:** Wrong secondary theme color on light mode
 - 🏆 **F122:** Redirect destination to destination page, not view
-- 🐞 **B128:** Transportation select not loading existing data properly if option is not flight
-- 🐞 **B113:** Function to reload itinerary breaking on edit trip page
-- 🐞 **B122:** Multiple values of same transportation/accommodation on edit trip itinerary select
+- 🐞 **B128:** Transportation select loads wrong data
+- 🐞 **B113:** Itinerary reload breaking on edit trip
+- 🐞 **B122:** Duplicate values in itinerary select
 - 🏆 **F125:** Create readme script for formatting and utils
 - 📈 **M128:** Improve deploy management and cache busting
 - 🐞 **B121:** Fix timezone issues
 - 📈 **M127:** Show traveler destinations as checkbox, not select
 - 🏆 **F124:** Add destination title to destination page
 - 📈 **M132:** Add eurostar transportation
-- 🐞 **B125:** Sort button being shown when there is only 1 destination
+- 🐞 **B125:** Sort button shows with one destination
 - 🐞 **B124:** Add button being show in destination page
 - 🏆 **F123:** Add planned date and time in destination
 - ⚔️ **E039:** Destinations Overhaul
   - *[🏆F117] Adjust destination object strucute (migration)*
   - *[🏆F118] Adjust destination object strucute (pages)*
-  - *[🏆F119] Refactor destination page to fetch data from firestore / configs*
-  - *[🏆F120] Improve how embed is loaded + tiktok photo support + fallback for errors*
-  - *[🏆F114] Add option to quickly edit / delete destination on main page (if owner)*
-  - *[🏆F126] Add option to quickly create destination on main page (if owner)*
+  - *[🏆F119] Refactor destination data fetching*
+  - *[🏆F120] Improve embed loading + TikTok support*
+  - *[🏆F114] Quick edit/delete destination (owner)*
+  - *[🏆F126] Quick-create destination (owner)*
 - 🐞 **B120:** Fix destinos-select options order
 - ⚔️ **E038:** Add filtering and sorting options to destinations page
 
 ### December 2025
 
 - ⚔️ **E036:** Expenses Overhaul
-  - *[🏆F108] Add expense type on edit trip page + saving*
+  - *[🏆F108] Add expense type + saving*
   - *[🏆F110] Add traveler name into expense name*
   - *[🐞B118] Expenses dynamic icons not showing*
   - *[🐞B119] Expenses values sometimes breaking lines*
   - *[🏆F109] Add custom tab on expenses page*
   - *[🐞B116] Fix expenses currency API*
 - 🐞 **B117:** Translation issue on expenses page
-- 🏆 **F115:** Put visual indication if destination is planned for the trip*
+- 🏆 **F115:** Indicate planned destination*
 - 🐞 **B110:** Backup and Restore functions not working
 - 📈 **M122:** Put each expense type as draggable
 - 🐞 **B115:** Change detection not working for edit pages
 - 📈 **M121:** Add "transportation" expense type
 - 📈 **M092:** Title in dark mode with more highlight
-- 🐞 **B114:** When moving destinations, content visibility and toggle are not auto-changed
+- 🐞 **B114:** Moving destinations not auto-toggling
 - 🐞 **B102:** When moving destinations, description view does not reload
 - 📈 **M125:** Improve sensitive box visibility
-- 🐞 **B108:** When returning a destination, view page auto scrolls up
+- 🐞 **B108:** Returning destination scrolls page up
 - 🐞 **B112:** Destination select animation not working
 - 🐞 **B111:** Destination data mixing between categories
 - 🐞 **B109:** Traveler-exclusive itinerary not working
 - ⚔️ **E037:** Reduce Firestore document calls
-  - *[🏆F111] Create migration for adding document/trip/listing minimal data into user data*
+  - *[🏆F111] Migration: minimal data into user data*
   - *[📈M123] Reduce document calls for index*
   - *[📈M130] Reduce document calls for edit pages*
-  - *[🏆F113] Update set method to be in batches for Firestore (either updates everything or nothing)*
-  - *[🏆F112] Adapt backup and restore functions with new user data structure*
-- 🐞 **B103:** When dragging transportations and accommodations, new transportation button glitches out
+  - *[🏆F113] Batch Firestore set method*
+  - *[🏆F112] Adapt backup/restore to new structure*
+- 🐞 **B103:** Dragging glitches new transportation button
 - 🐞 **B105:** Can't add people into itinerary
 - 🐞 **B106:** PIN being exposed on logs
-- 🐞 **B107:** "Last updated on" not being properly translated on index
-- 🐞 **B104:** Missing type causes select to show previous destination.html data
+- 🐞 **B107:** "Last updated" not translated
+- 🐞 **B104:** Missing type shows stale destination data
 - 🐞 **B099:** Fix Expenses update / loading
 - 🐞 **B101:** Fix Backup/Restore functions
 - 🐞 **B100:** sensitive-box not animating when inside of accommodations
-- 🏆 **F107:** Disable image uploads / Firebase Storage (free plan limitation)
+- 🏆 **F107:** Disable image uploads (free plan)
 - 📈 **M120:** Add Vueling company logo
-- 📈 **M124:** Make edit-trip transportation select to fetch from json file
+- 📈 **M124:** Edit-trip transportation select from JSON
 
 ### November 2025
 
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)
-  - *[📈M131] Remove all mentions of editors and sharing options (legacy)*
-  - *[🏆F100] Move HTML elements from expenses into general data (pin)*
-  - *[🏆F101] Change how set system works so that it can record protected data*
+  - *[📈M131] Remove legacy editors/sharing mentions*
+  - *[🏆F100] Move expenses HTML into general data*
+  - *[🏆F101] Set system records protected data*
   - *[🏆F102] Implement new "protected" document logic in js*
   - *[📈M126] Remove can-edit logic*
-  - *[🐞B098] Fields validation and custom checks not working on sets (edit/\*.html)*
+  - *[🐞B098] Validation not working on sets*
   - *[🏆F103] Create database migrations for new structures*
   - *[🐞B076] Import backup function not getting sensitive data*
   - *[🏆F104] Create Import/Export buttons account settings*
-  - *[🏆F105] Add PIN component to view.html and senstive data box (with eye icon)*
-  - *[🏆F106] Adapt existing trip data loading for new structure (view.html)*
+  - *[🏆F105] Add PIN + sensitive data box*
+  - *[🏆F106] Adapt trip loading to new structure*
 - 📈 **M118:** Improve config/async load of main data
 - 🐞 **B095:** Destination Descriptions getting mixed up
 - 📈 **M090:** Load logo inside pre loader
@@ -409,22 +428,22 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🏆 **F078:** Ability to reorder transportation / accommodations
 - 🐞 **B092:** Pill colors not loading when switching calendar page
 - 📈 **M115:** Replace set.json with native functions
-- 🐞 **B094:** Edit Trip page not going to home after deleting a trip
+- 🐞 **B094:** Edit Trip not returning home after delete
 - 🏆 **F060:** Allow switching between destination categories within a page
-- 🐞 **B093:** Trip without itinerary data is not loading on edit trip pages
+- 🐞 **B093:** Trip without itinerary not loading
 - 📈 **M116:** Replace call-sync-order.json with native functions
 - 📈 **M113:** Update all link validations from pop-ups to toasts.
 - 🐞 **B091:** fields.js and destination modal are not being translated
-- 📈 **M107:** Edit "Confirm" at accommodation images to return to previous instead of closing pop-up
+- 📈 **M107:** Accommodation image Confirm returns back
 - 🐞 **B090:** Itinerary title now showing if single destination (edit-trip)
 
 ### October 2025
 
 - 🐞 **B089:** Fix calendar title and loading issues
-- 📈 **M112:** Disable calendar navigation buttons if nothing present on following month
+- 📈 **M112:** Disable calendar nav when empty
 - 🐞 **B088:** Fix date calculation when in daylight saving time
 - 🐞 **B087:** Fix Attributions
-- 🐞 **B086:** Fix Calendar navigation being hidden after clicking on it
+- 🐞 **B086:** Calendar nav hidden after click
 - 🐞 **B085:** Fix destination default price being shown without translation
 - 🐞 **B084:** Share social message fix
 - 📈 **M111:** Itinerary titles now being translated
@@ -437,9 +456,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 ### August 2025
 
-- 📈 **M109:** Make highlights display 2/2 when screen width is tablet/mobile
+- 📈 **M109:** Highlights 2/2 on tablet/mobile
 - 🐞 **B077:** Daily schedule not scrolling to table
-- 🐞 **B078:** App version not loading due to CONFIG async nature
+- 🐞 **B078:** App version not loading
 
 ### July 2025
 
@@ -473,15 +492,15 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - Test accommodation
 - Test Gallery
 - 📈 **M099:** Implement Toast on invalid link in edit pages
-- 🐞 **B071:** Shift does not auto-update when schedule time is imported
+- 🐞 **B071:** Shift not updating on import
 - 🐞 **B070:** Itinerary calendar bullets not displaying correctly
-- 🐞 **B069:** Destination does not show site icon if no maps link
-- 🐞 **B068:** Trip save does not detect changes when only itinerary is edited
-- 🐞 **B024:** Menu button appears between 1199px and 993px width in view.html
+- 🐞 **B069:** Destination missing site icon
+- 🐞 **B068:** Trip save misses itinerary changes
+- 🐞 **B024:** Menu button appears mid-width (view)
 - 🐞 **B023:** Dark-mode adjustment
 - 🏆 **F079:** Tab system for transports
-- 📈 **M042:** Improve save on edit pages to not call firebase if no changes
-- 🐞 **B022:** Fix error where not all hrefs go to categories (edit screens)
+- 📈 **M042:** Skip firebase save when unchanged
+- 🐞 **B022:** Fix hrefs not going to categories
 - 🐞 **B067:** Fixes in loading expenses and editing
 - 🏆 **F061:** Rename all html pages to English names
 - 🏆 **F077:** Confirm leaving page if there are changes
@@ -514,7 +533,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 ### January 2025
 
 - 🏆 **F066:** Switch Google Login to user-password login
-- 🏆 **F062:** Allow customizing trip to only show in dark or light mode
+- 🏆 **F062:** Customize trip dark/light mode
 
 ### October 2024
 
@@ -536,28 +555,28 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 ### September 2024
 
 - 📈 **M071:** Include reservation code in Accommodations
-- 📈 **M073:** If only one destination, rename view.html from "destinations" to destination name
-- 🐞 **B049:** Itinerary in view.html does not show start time if end is missing
+- 📈 **M073:** Rename view title for single destination
+- 🐞 **B049:** Itinerary hides start time if end missing
 - 🏆 **F059:** Allow direct viewing of destinations (without listings)
-- 🏆 **F057:** Isolated destination view in trip page (rename trip page to view)
+- 🏆 **F057:** Isolated destination view in trip
 - 📈 **M023:** Drag Accordions (Itinerary)
 - 📈 **M075:** Adjustments index.html
   - *Remove "View Trip"*
   - *Add "Account Settings" + Different animations for each route*
   - *Adjust menu text width to align icons*
 - 📈 **M079:** Login by redirect
-- 📈 **M078:** Checkbox "Change activity name to ***" in "Associate Item"
+- 📈 **M078:** Checkbox to rename activity
 - 📈 **M074:** Itinerary switch button (trip.html)
 - 🐞 **B051:** Fix disabled destination not auto-deleting empty template
 - 📈 **M080:** Destination switch button (edit/trip.html)
 - 📈 **M081:** Reimplement Dynamic Select for easier maintenance
-- 📈 **M035:** Dynamic Region Select in edit-destination.html is general, not by category
-- 🐞 **B047:** Deleting item in edit page breaks "Other" region listener
+- 📈 **M035:** Dynamic Region Select not by category
+- 🐞 **B047:** Deleting item breaks region listener
 - 📈 **M066:** Auto logo size in view.html
 - 🐞 **B053:** Errors in get and set functions from database
-- 🐞 **B050:** Destination list in "destination.html" not sorting correctly after item "?"
+- 🐞 **B050:** Destination list not sorting correctly
 - 🐞 **B052:** Cannot disable expenses in trip.html
-- 📈 **M061:** Replace delete modal in edit page with native message
+- 📈 **M061:** Replace delete modal with native message
 - 📈 **M082:** Improvements and fixes pack 09/24 (pre prod deploy)
   - *View Destination on save (edit/trip.html)*
   - *Trip data uncentered (view.html)*
@@ -573,7 +592,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 ### August 2024
 
-- 📈 **M070:** Increase list size in index.html + reorder for nearest trips first
+- 📈 **M070:** Increase index list + nearest first
 - 🏆 **F058:** Add previous trips item in index.html
 - 🐞 **B048:** Itinerary not loading correctly in dark mode
 
@@ -586,7 +605,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 ### June 2024
 
-- 🐞 **B042:** Fix listeners in trip (start, end, reloadProgramacao) not working
+- 🐞 **B042:** Fix trip listeners not working
 - 📈 **M019:** More customizable itinerary module
   - *Include Time*
   - *Automate Title*
@@ -594,14 +613,14 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
   - *New design for daily itinerary in view.html*
   - *Open associated itinerary item in view.html (destination, accommodation or transportation)*
 - 📈 **M048:** Better indicator for multiple cities in itinerary calendar
-- 🐞 **B043:** Incorrect hero in dark mode + disproportionate margins in view.html
+- 🐞 **B043:** Incorrect hero/margins in dark mode
 - 📈 **M022:** Improve calendar in view.html to avoid duplicate borders
-- 🐞 **B044:** Edit screen fixes (simplified transportation, trip without itinerary and end listener)
-- 🐞 **B045:** Dark Mode fixes (Logo in view.html and background image in index.html)
-- 📈 **M056:** File reorganization + local config files (remove unnecessary Firestore call)
+- 🐞 **B044:** Edit screen fixes (transportation/itinerary)
+- 🐞 **B045:** Dark mode logo/background fixes
+- 📈 **M056:** File reorganization + local config
 - 📈 **M057:** Improve itinerary calendar to include multiple colors
-- 🏆 **F050:** Create API / Cloud Function to convert TikTok mobile link to desktop link
-- 📈 **M059:** Backend improvements: Support functions (Cors, Users, get/set data) and formatting
+- 🏆 **F050:** Convert TikTok mobile links to desktop
+- 📈 **M059:** Backend support functions improvements
 - 🏆 **F056:** Check for changes on edit pages
 - 📈 **M062:** Load config inside main
 - 📈 **M060:** Improve set methods in edit
@@ -614,7 +633,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
     - *Separate by category*
     - *Auto import from transportation and Accommodation (listener if changed on either side)*
   - *Apply template in trip page*
-- 🐞 **B025:** Fix switching visibility in lightbox not persisting after exit
+- 🐞 **B025:** Lightbox visibility not persisting
 - 📈 **M063:** Firebase performance improvement (CLI version update)
 - 📈 **M064:** Error message handling adjustment
 - 📈 **M065:** Expenses now show currency in all table values
@@ -633,24 +652,24 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 ### May 2024
 
 - 📈 **M028:** Improve share function to show adapted text (trip/listing)
-- 🐞 **B029:** Fix lists in index.html showing "No data" even when loading not finished
+- 🐞 **B029:** Index lists show "No data" too early
 - 🏆 **F048:** Dynamic Select for "Value" in edit-destination.html
-- 📈 **M029:** Optimize destination.html to get only necessary data from localStorage
+- 📈 **M029:** Destination: only necessary localStorage data
 - 🐞 **B030:** Fix errors in new trips in edit-trip.html
 - 🏆 **F049:** Dynamic Select for "Region" in edit-destination.html
-- 📈 **M024:** Improve: if user deletes all items in a category, it is automatically disabled
+- 📈 **M024:** Auto-disable emptied categories
 - ⚔️ **E020:** Create accommodation view box in view.html
-- 📈 **M032:** When a new category item is added, category accordions are closed
-- 🐞 **B032:** Fix edit pages not displaying/importing dynamic select data correctly
+- 📈 **M032:** Close accordions when item added
+- 🐞 **B032:** Edit pages dynamic select broken
 - 🐞 **B033:** Fix users freely accessing another user's edit
   - *System (firestore rules) already blocked saving, but front-end should pre-check*
-- 🐞 **B034:** Fix new items with dynamic selects (Gallery, Lineup, Region) not loading select
-- 📈 **M038:** Improve pop-up messages to include both common (closable) and error messages
-- 🏆 **F053:** Implement Firestore and Firestore Rules to enable/disable user registration
-- 📈 **M039:** Improve open/close user registration system to implement custom message
+- 🐞 **B034:** New items with dynamic selects broken
+- 📈 **M038:** Improve pop-up messages
+- 🏆 **F053:** Firestore rules for registration toggle
+- 📈 **M039:** Custom message for registration toggle
 - 🏆 **F045:** Create custom error message for image upload
-- 📈 **M030:** Instead of duration field in trip.html, have timezone field and calculate duration automatically
-- 🐞 **B036:** Fix transportation module automations in trip.html not loading on first load
+- 📈 **M030:** Timezone field calculates duration
+- 🐞 **B036:** Transportation automations not loading
 - 📈 **M033:** Add buttons in message modals
   - *Info closes and error goes to home*
 - 📈 **M040:** Validate Link and Embed input in edit-destination.html
@@ -661,29 +680,29 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M044:** Improve spacing in edit pages
 - ⚔️ **E023:** Destinations v1.1
 - 📈 **M043:** Visual improvement in destination.html and destinations.js
-- 🐞 **B039:** Fix function applying custom colors to classes not working more than once for some properties
+- 🐞 **B039:** Custom colors not applying repeatedly
 - 🐞 **B040:** Remove accordion drag function
   - *Did not work as expected on Desktop and not on Mobile*
   - *Reimplement later*
-- 🐞 **B035:** Fix itinerary in trip.html not showing full title on load
+- 🐞 **B035:** Itinerary title truncated on load
 - 📈 **M050:** Improve destinations module (edit)
   - *Switch selects to checkboxes*
   - *Search function*
 - 📈 **M049:** Add dark-mode for accommodation/gallery zoom
-- 🏆 **F052:** Create attributions button in footer that puts all credits in a modal
-- 🐞 **B027:** Fix destination data not saving if category is disabled
+- 🏆 **F052:** Attributions button in footer
+- 🐞 **B027:** Destination not saving when disabled
 - 📈 **M051:** Reorganize destinations to store data in objects
-- 📈 **M052:** Reduce media box size on mobile in destination page for better desktop view
-- 🐞 **B038:** Fix custom error message not showing on list load (index.html)
+- 📈 **M052:** Reduce destination media box on mobile
+- 🐞 **B038:** Custom error message not showing
 - 🐞 **B037:** Visual fixes in edit pages
   - Scroll bar not clickable
   - Save button not accessible on mobile (browser)
 - 🐞 **B041:** Fix trip save returning NaN in itinerary date
   - *Full title only appears when user edits input (listener)*
-- 📈 **M053:** Allow more than one location for same itinerary day
-- 🏆 **F054:** Implement ID system for transportation and accommodation, to be used as reference in itinerary
-- 📈 **M036:** Improve destination CSS so table does not break at zooms below 100%
-- 📈 **M108:** Change USER_DATA in index to only get necessary data
+- 📈 **M053:** Multiple locations per itinerary day
+- 🏆 **F054:** IDs for transportation/accommodation
+- 📈 **M036:** Destination table not breaking at zoom
+- 📈 **M108:** Index USER_DATA only necessary data
 
 ### April 2024
 
@@ -715,13 +734,13 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 ### March 2024
 
-- 🐞 **B018:** Fix login bug in safari (probably related to animation in index)
+- 🐞 **B018:** Fix Safari login bug (animation)
 - 🏆 **F038:** Create option to drag accordions (Desktop)
 - 🐞 **B017:** Fix ":" when title not filled
 - 🐞 **B016:** Fix lineup loading issue
 - 📈 **M011:** Performance improvement in destination.html
   - *Restrict embed loading to only when accordion is open*
-- 🐞 **B015:** TripViewer icon in destination.html going to home and inside lightbox
+- 🐞 **B015:** TripViewer icon goes home (lightbox)
 - 📈 **M012:** Better organization of JavaScript related to destination.html
 - 🐞 **B014:** Fix CSS errors caused by unifying edit CSSs
 - 🏆 **F039:** Create triple buttons in modal when saving
@@ -736,14 +755,14 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M006:** Minor mobile front improvement
 - 🏆 **F032:** Create way to delete destinations / trips
 - 🏆 **F033:** Create Gallery Module
-- 🐞 **B012:** Fix data loss on trip load when user does not keep data active
+- 🐞 **B012:** Fix data loss on trip load
 - 🐞 **B011:** Adjust night mode position in trip and edit-destination
 - 🏆 **F034:** Create back arrow in edit-trip and edit-destination
 - 🐞 **B010:** Fix modal title formatting
 - 📈 **M007:** Increased transparency in mobile background
-- 📈 **M008:** Improve Re-edit button not returning home if save error
+- 📈 **M008:** Improve Re-edit button on save error
 - ⚔️ **E010:** General testing and bug fixes
-- 📈 **M009:** Condense trip and edit-destination CSS into single CSS (editar.css and editar-dark.css)
+- 📈 **M009:** Condense trip/edit CSS into one
 - 📈 **M010:** Input validation in Add Destination (Remove already filled)
 - ⚔️ **E011:** Rename "Passeios" to "Destinations"
 - 🐞 **B009:** transportation link should not be required
@@ -756,15 +775,15 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 ### January 2024
 
 - ⚔️ **E009:** Migrate Project to Spark Plan
-- 🏆 **F027:** Create upload size limit + backend method for more security
-- 🐞 **B006:** Fix Loading in index finishing before loading trip/destination list
+- 🏆 **F027:** Upload size limit + security backend
+- 🐞 **B006:** Index loading finishes too early
 - 🏆 **F028:** Option to provide image link instead of upload
 - 🏆 **F029:** Support for customizable links
 - 🏆 **F030:** Create Set for customizable links
 - 🏆 **F031:** Create active/inactive mode for links, images and colors
   - *So user does not lose data if only wants to change display*
 - 📈 **M004:** Reduce dark mode CSS
-- 📈 **M005:** Edit profile box in index to handle very long strings
+- 📈 **M005:** Profile box handles long strings
 - 🐞 **B005:** Fix Links to home
   - *Only tripviewer text is clickable on some pages. Missing logo*
 
@@ -777,7 +796,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🏆 **F024:** Get images in view.html
 - 🏆 **F025:** Block editing of trips and destinations
 - 🏆 **F026:** Implement interactive Night Mode for user
-- 📈 **M003:** Improve linking and validating backend functions for editing trips and destinations
+- 📈 **M003:** Improve backend linking/validation
 - ⚔️ **E007:** Simplify DB structure
 - ⚔️ **E008:** Reimplement application security
 
@@ -838,10 +857,10 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 ### Discarded
 
-- 🐞 **B031:** Fix gallery image from twitter opening with wrong proportions in GLightbox
+- 🐞 **B031:** Twitter gallery image wrong proportions
 - 📈 **M072:** Improve automatic date adjustment in edit trips
-- 📈 **M076:** Automate PRD to DEV data restore (weekly) + Manual Function
-- 📈 **M077:** Weekly PRD Backups + oldest backup exclusion (3 weeks only)
+- 📈 **M076:** Automate PRD->DEV data restore
+- 📈 **M077:** Weekly PRD backups + exclusion
 - ⚔️ **E031:** Document History
   - 🏆 **F084:** Store copies within the document itself
   - 🏆 **F091:** Restore function + compatibility check
@@ -867,28 +886,28 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M087:** Destination loads everything immediately
 - 🏆 **F070:** Add to calendar component
 - 📈 **M100:** Storage size limit for document (10MB)
-- 📈 **M101:** Put Swiper inside accommodation image box when accommodation has more than one image
-- 📈 **M102:** Instead of opening accommodation/transportation pop-up, scroll page to position and auto-click item
+- 📈 **M101:** Swiper in multi-image accommodation
+- 📈 **M102:** Scroll to item instead of popup
 - ⚔️ **E025:** iOS and Android implementation
 - 🏆 **F043:** Create customizable keypoints
-- 📈 **M018:** Improve centering of demo-box element on edit screens in tablet mode
+- 📈 **M018:** Center demo-box on tablet
 - 🏆 **F044:** Create animations throughout the site
-- 📈 **M034:** Move Back button (←) to left corner of screen in index.html
+- 📈 **M034:** Move Back button to left corner
 - 📈 **M037:** Increase spacing in destination boxes in view.html
-- 📈 **M041:** Improve validation of missing fields in edit pages to show item title (when available)
-- 📈 **M045:** Show rating inside edit-destinations accordion and order by Rating + title
+- 📈 **M041:** Validate missing fields show item title
+- 📈 **M045:** Show rating + order by title
 - 📈 **M054:** Improve getJs functions for more scenarios
 - 🏆 **F055:** Implement getKs function + Rename functions for clarity
-- 📈 **M055:** Improve all dark mode changes to be applied via js
+- 📈 **M055:** Apply dark mode changes via JS
 - 📈 **M069:** Loading timer disabled by default
 - 📈 **M047:** Change modal messages to bottomsheet messages
 - 📈 **M089:** Replace color values with environment variables in CSS
 - 🏆 **F067:** OneDrive integration
-- 🏆 **F081:** Embed map when there is no video in the destination
+- 🏆 **F081:** Embed map when no destination video
 - 📈 **M114:** Make button / select outlines theme color (view.html)
 - 🐞 **B097:** Fix Image upload module
 - 🏆 **F116:** Destinations data refactoring
-- 📈 **M119:** Instead of pop-ups, scroll to item (if not destination)
+- 📈 **M119:** Scroll to item instead of pop-ups
 - 🐞 **B148:** Full itinerary page giving multiple blank pages
 - ⚔️ **E024:** Migrate project to React
 - 🐞 **B172:** Fix error when switching a destination category

@@ -1,6 +1,6 @@
 import { getDestinations, getItinerary } from '../../../../../app/config.js';
 import { getDateTitle, jsDateToKey } from '../../../../../utils/dates.js';
-import { cloneObject, getID, getInnerItineraryTitleHTML } from '../../../../../utils/dom.js';
+import { cloneObject, getCategoryLegJs, getID, getInnerItineraryTitleHTML } from '../../../../../utils/dom.js';
 import {
 	closeMessage,
 	displayFullMessage,
@@ -113,10 +113,17 @@ function getInnerItinerarySelect(type) {
 	let active = false;
 	let options = '';
 
-	for (const child of getID(`${type}-box`).children) {
-		const j = child.id.split('-')[3];
-		const label = getID(`${type}-title-${j}`).innerText;
-		const id = getID(`${type}-id-${j}`).value;
+	// Query the actual leg/accommodation items (.inner-box) instead of the box's
+	// direct children: in leg/people view the legs are re-wrapped inside
+	// .transportation-group containers, so iterating box.children yields group
+	// ids (e.g. transportation-group-items-<key>) with no matching title element.
+	for (const j of getCategoryLegJs(type)) {
+		const title = getID(`${type}-title-${j}`);
+		const idInput = getID(`${type}-id-${j}`);
+		if (!title || !idInput) continue;
+
+		const label = title.innerText;
+		const id = idInput.value;
 		if (id && label) {
 			active = true;
 			options += `<option value="${id}">${label}</option>`;
@@ -172,7 +179,7 @@ async function loadInnerItineraryCurrentData(j, k, period, isNew) {
 		getID(`inner-itinerary`).value = dataEntry.label;
 		getID(`inner-itinerary-start`).value = dataEntry.start;
 		getID(`inner-itinerary-end`).value = dataEntry.end;
-		updateTravelersFieldset('inner-itinerary-travelers', dataEntry.people || []);
+		updateTravelersFieldset('inner-itinerary-travelers', dataEntry.travelers || dataEntry.people || []);
 		syncInnerItineraryButton();
 
 		switch (dataEntry?.item?.type) {
@@ -347,8 +354,8 @@ function addInnerItinerary(j, k?, period?) {
 		}
 
 		return {
-			schedule: itinerary.value,
-			people: getCheckedTravelersIDs('inner-itinerary-travelers'),
+			label: itinerary.value,
+			travelers: getCheckedTravelersIDs('inner-itinerary-travelers'),
 			start: getID(`inner-itinerary-start`).value,
 			end: getID(`inner-itinerary-end`).value,
 			item: item,

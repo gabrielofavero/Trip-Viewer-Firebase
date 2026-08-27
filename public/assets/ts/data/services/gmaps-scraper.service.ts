@@ -75,6 +75,55 @@ export class GmapsScraperError extends Error {
 	}
 }
 
+/**
+ * Build a Google Maps search URL that the local scraper can actually resolve.
+ * Searches by `name`; when lat/lng are given, appends the `@lat,lng,zoom` map
+ * center so the results are biased toward that point. The scraper extracts the
+ * TOP search result, so this center bias is what disambiguates chains (e.g.
+ * `Dunkin'` ×8) and coordinate-only My Maps pins. Used by the My Maps
+ * enrichment (mymaps-kml.service.ts resolveViaScraper), the My Maps import's
+ * persisted `sourceUrl`, and the bulk local path's coordinate-link rewrite
+ * (places/places-bulk.ts).
+ */
+export function buildMapsSearchUrl(
+	name: string,
+	coords?: { lat: number; lng: number },
+): string {
+	const encoded = encodeURIComponent((name ?? '').trim());
+	if (coords && Number.isFinite(coords.lat) && Number.isFinite(coords.lng)) {
+		return `https://www.google.com/maps/search/${encoded}@${coords.lat},${coords.lng},15z`;
+	}
+	return `https://www.google.com/maps/search/${encoded}`;
+}
+
+/**
+ * Detect a My Maps coordinate-only search link
+ * (`https://www.google.com/maps/search/?api=1&query=<lat>,<lng>`) and return
+ * its coordinates, or null when the URL isn't that shape (or carries a real
+ * query like a place name). The local scraper can't extract a business from a
+ * bare coordinate pin, so callers rewrite it to a name search via
+ * `buildMapsSearchUrl` instead.
+ */
+export function parseCoordinateSearchUrl(
+	url: string,
+): { lat: number; lng: number } | null {
+	let parsed: URL;
+	try {
+		parsed = new URL(url);
+	} catch {
+		return null;
+	}
+	const path = parsed.pathname.replace(/\/+$/, '');
+	if (path !== '/maps/search') return null;
+	const query = (parsed.searchParams.get('query') ?? '').trim();
+	const match = /^(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)$/.exec(query);
+	if (!match) return null;
+	const lat = Number(match[1]);
+	const lng = Number(match[2]);
+	if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+	return { lat, lng };
+}
+
 /** Guard — throw a friendly error on any deployed host. */
 function assertLocalOnly(): void {
 	if (!GMAPS_SCRAPER_ENABLED) {

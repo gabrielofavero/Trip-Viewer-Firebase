@@ -41,11 +41,17 @@ export interface PlaceSearchResult {
 	instagram?: string;
 	/** e.g. "4" (rounded, like the python script). */
 	rating?: string;
-	/** "$" | "$$" | "$$$" | "$$$$" | "-" | "default". */
+	/**
+	 * A `$`-band ("$" | "$$" | "$$$" | "$$$$" | "-" | "default") OR — when the
+	 * Places API returns a priceRange — the final display label built from the
+	 * actual amounts, e.g. "$26 - $50" / "$100+" (see workers/places-api/src/normalize.js).
+	 */
 	price?: string;
 	emoji?: string;
 	/** googleMapsUri. */
 	map?: string;
+	/** Coordinates from Google's `location` (route 1; My Maps import nearest-pick). */
+	location?: { lat: number; lng: number };
 	/** e.g. "OPERATIONAL" | "CLOSED_PERMANENTLY" | "CLOSED_TEMPORARILY". */
 	businessStatus?: string;
 	/** Photo references (route 3 consumes these). */

@@ -35,15 +35,17 @@ const WORKER_DEPLOYED_URL = 'https://trip-viewer-places-api.gabriel-o-favero.wor
 const WORKER_LOCAL_URL = 'http://localhost:8787';
 
 /**
- * Hostnames that count as a LOCAL development environment.
- *
- * The Places API feature is HARD-GATED to local environments only: on any
- * deployed host (dev/prd) the buttons never render and every service call
- * throws a friendly error — regardless of the `canUsePlacesAPI` permission.
- * This is a deliberate safety gate (the worker proxies real Google Places
- * calls) — see docs/contracts/20260808-places-api-backend-contract.md.
+ * Hostnames that count as a LOCAL development environment
+ * (localhost / 127.0.0.1 / [::1]) — the frontend calls `wrangler dev` here.
  */
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
+
+/**
+ * Hostnames that count as the PRODUCTION (deployed) app.
+ * Only the deployed Firebase Hosting host calls the live worker — any other
+ * host stays gated off.
+ */
+const PRD_HOSTS = new Set(['trip-viewer-prd.firebaseapp.com']);
 
 /**
  * Whether the app is running on a local development environment
@@ -56,12 +58,22 @@ export function isLocalEnv(): boolean {
 }
 
 /**
- * HARD CHECK — the edit-destination Places feature is enabled ONLY on local
- * environments. `false` on any deployed host, so the whole feature is
- * unreachable there. Used by the buttons (UI) and the service calls (thrown
- * guard). Mirrors `isLocalEnv()` and drives `resolveApiBaseUrl()`.
+ * Whether the app is running on the deployed production host
+ * (trip-viewer-prd.firebaseapp.com).
+ * @returns {boolean}
  */
-export const PLACES_API_ENABLED = isLocalEnv();
+export function isProdEnv(): boolean {
+	const hostname = window?.location?.hostname || '';
+	return PRD_HOSTS.has(hostname);
+}
+
+/**
+ * HARD CHECK — the Places API feature is enabled on LOCAL (wrangler dev) and
+ * the PRODUCTION host (trip-viewer-prd.firebaseapp.com). `false` on any other
+ * host, so the whole feature is unreachable there. Used by the buttons (UI)
+ * and the service calls (thrown guard). Drives `resolveApiBaseUrl()`.
+ */
+export const PLACES_API_ENABLED = isLocalEnv() || isProdEnv();
 
 /**
  * Resolve the worker base URL per environment by hostname (same pattern as
@@ -89,6 +101,12 @@ export interface PlacesApiOptions {
 	lang?: string;
 	/** AbortSignal so callers can cancel in-flight requests (e.g. dialog close). */
 	signal?: AbortSignal;
+	/**
+	 * Location bias for the Text Search (My Maps import enrichment). Sent as
+	 * `biasLat` / `biasLng` / `biasRadius` to the worker, which forwards them
+	 * as Google's `locationBias.circle` — a soft ranking hint, not a hard filter.
+	 */
+	bias?: { latitude: number; longitude: number; radius?: number };
 	/**
 	 * Called with `true` when the worker returns a degraded response (monthly
 	 * Places quota nearly reached — photos disabled, search/details still
@@ -241,6 +259,11 @@ export async function searchPlaces(
 		lang,
 		photos: photos ? 'true' : 'false',
 	};
+	if (options.bias) {
+		params.biasLat = String(options.bias.latitude);
+		params.biasLng = String(options.bias.longitude);
+		if (options.bias.radius) params.biasRadius = String(options.bias.radius);
+	}
 	const url = buildUrl(`${PLACES_API_BASE_URL}/places/search`, params);
 	const data = await request<PlaceSearchResponse>(url, token, options);
 	return data.results ?? [];

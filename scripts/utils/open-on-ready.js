@@ -4,7 +4,14 @@
  * Usage:
  *   node scripts/utils/open-on-ready.js [url] [--timeout=60000]
  *
- * Defaults to http://127.0.0.1:5000 with a 60s timeout.
+ * Defaults to http://127.0.0.1:5000 with a 60s timeout. Uses `127.0.0.1`
+ * (not `localhost`) for two reasons:
+ *   - The local servers (`firebase serve` in `serve`/`dev:prd`, and the
+ *     hosting emulator in `npm run dev`) are bound to 127.0.0.1, so the IPv4
+ *     loopback address is always reachable regardless of IPv6 resolution.
+ *   - The PRD project's Firebase Auth blocks the `localhost` referer
+ *     (auth/requests-from-referer-http://localhost:5000-are-blocked) but
+ *     allows `127.0.0.1` — so sign-in only works on the 127.0.0.1 URL.
  *
  * Single-shot: opens the browser at most ONCE, then exits. A guard flag plus a
  * reliable, forced exit prevent duplicate tabs even when the readiness poll

@@ -17,10 +17,9 @@
 // `ALLOWED_UIDS_JSON` is not set — REAL (production) users only. Local/dev
 // users live in `.dev.vars` `ALLOWED_UIDS_JSON` instead (see worker README
 // "Granting a user access"). Replace with the Firestore permission check later.
-const FALLBACK_ALLOWED_UIDS = new Set([
-	'9fEm1PhkusNpfTLi37A9xpInZjf1',
-	'SihZPW7xcEek6DNOnHSbfQSD5Ru2',
-]);
+//
+// Single allowed production user (2026-08-26): SihZPW7xcEek6DNOnHSbfQSD5Ru2.
+const FALLBACK_ALLOWED_UIDS = new Set(['SihZPW7xcEek6DNOnHSbfQSD5Ru2']);
 
 /**
  * Resolve the set of allowed UIDs: env `ALLOWED_UIDS_JSON` (a JSON array of

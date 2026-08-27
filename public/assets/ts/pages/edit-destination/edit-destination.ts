@@ -93,9 +93,9 @@ import '../../places/places-apply-flow.js';
 //   export function countLinkedItems(): number           — linked-item count
 // runBulkUpdate() owns the dialog-scoped loading, the per-linked-item
 // getPlace() fetches, and the report rendering (see docs/implementation-plans/20260812-places-api-edit-destination.md §5 P11).
-// countBulkEligibleEntries() drives the button visibility (any entry linked by
-// id OR carrying a local scrape link); runBulkLocalUpdate() is the bulk
-// gmaps-scraper path.
+// countBulkEligibleEntries() decides whether the bulk button opens the source
+// prompt or routes straight to the My Maps import; runBulkLocalUpdate() is the
+// bulk gmaps-scraper path.
 import {
 	countBulkEligibleEntries,
 	countLinkedItems,
@@ -111,9 +111,15 @@ import {
 	getSourceOptionsHTML,
 	SOURCE_API_BULK_ACTION,
 	SOURCE_LOCAL_BULK_ACTION,
+	SOURCE_MYMAPS_BULK_ACTION,
 } from '../../places/places-source-step.js';
 import '../../places/places-local-step.js';
 import { registerActions } from '../../ui/actions.js';
+// My Maps import (P4). Side-effect import: self-registers the
+// 'mymaps-import' action + the review/write dialog flow on import, and joins
+// the edit-destination bundle (esbuild follows the import). Also used directly
+// for the bulk source-step "My Maps" option below.
+import { openMymapsImportDialog } from './support/mymaps-import.js';
 
 const TODAY = getTodayFormatted();
 const TOMORROW = getTomorrowFormatted();
@@ -258,27 +264,31 @@ function loadEventListeners() {
 /**
  * Show/hide the bulk "Update with Maps" button. Visible only when running on
  * a LOCAL environment (HARD CHECK — PLACES_API_ENABLED) AND the user holds the
- * canUsePlacesAPI permission AND at least one entry can be refreshed (linked
- * by id OR carrying a local scrape link — countBulkEligibleEntries()).
+ * canUsePlacesAPI permission. Shown even when no entry is linked to places —
+ * with nothing to refresh, opening the button routes straight to the My Maps
+ * import (see openPlacesBulkDialog).
  * Called on page load, and re-called after per-item applies (P9) / bulk apply
  * (P12) so the button stays in sync with the form.
  */
 export function refreshPlacesBulkButton(): void {
 	const button = getID<HTMLButtonElement>('places-bulk-btn');
 	if (!button) return;
-	const visible =
-		PLACES_API_ENABLED === true &&
-		PERMISSIONS?.canUsePlacesAPI === true &&
-		countBulkEligibleEntries() > 0;
+	const visible = PLACES_API_ENABLED === true && PERMISSIONS?.canUsePlacesAPI === true;
 	button.style.display = visible ? '' : 'none';
 }
 
 /**
  * Bulk "Update with Maps" entry point (P10). FIRST shows the import-source
- * prompt (Local gmaps scraper vs Places API) — the same option cards the
- * per-item dialog shows. Choosing a source then continues to that flow:
+ * prompt (Local gmaps scraper vs Places API vs My Maps) — the same option
+ * cards the per-item dialog shows (minus the My Maps card, which is
+ * bulk-only). Choosing a source then continues to that flow:
  *   - "Via Places API" → openPlacesBulkConfirm() (the existing confirm dialog).
  *   - "Local (gmaps scraper)" → runBulkLocalUpdate() (bulk local scrape).
+ *   - "My Maps" → openMymapsImportDialog() (batch placemark import).
+ *
+ * When NOTHING is linked to places (countBulkEligibleEntries() === 0) the
+ * source prompt is skipped — Places/scraper have nothing to refresh, so we go
+ * straight to the My Maps import.
  */
 function openPlacesBulkDialog(): void {
 	if (PLACES_API_ENABLED !== true) {
@@ -290,9 +300,20 @@ function openPlacesBulkDialog(): void {
 		return;
 	}
 
+	// Nothing to refresh (no destination linked to places) → the only useful
+	// bulk action is importing from My Maps. Skip the source prompt.
+	if (countBulkEligibleEntries() === 0) {
+		void openMymapsImportDialog();
+		return;
+	}
+
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	properties.title = translate('placesApi.updateWithMaps');
-	properties.content = getSourceOptionsHTML(SOURCE_LOCAL_BULK_ACTION, SOURCE_API_BULK_ACTION);
+	properties.content = getSourceOptionsHTML(
+		SOURCE_LOCAL_BULK_ACTION,
+		SOURCE_API_BULK_ACTION,
+		SOURCE_MYMAPS_BULK_ACTION,
+	);
 	properties.containers = getContainersInput();
 	properties.buttons = [];
 	displayFullMessage(properties);
@@ -340,6 +361,12 @@ registerActions({
 	[SOURCE_API_BULK_ACTION]: () => {
 		closeMessage();
 		openPlacesBulkConfirm();
+	},
+	// Bulk "Update all" → My Maps: close this prompt and start the destination
+	// My Maps import (lands in the same review flow — §5 P4 entry points).
+	[SOURCE_MYMAPS_BULK_ACTION]: () => {
+		closeMessage();
+		void openMymapsImportDialog();
 	},
 });
 

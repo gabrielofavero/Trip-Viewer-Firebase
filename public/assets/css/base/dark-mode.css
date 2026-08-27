@@ -732,10 +732,6 @@
 	border-color: #3b3b3b;
 }
 
-[data-theme="dark"] #itinerary-box .external-link {
-	color: #92caff;
-}
-
 /* Destination icon-boxes (inside #destinationsBox) */
 [data-theme="dark"] .services .icon-box {
 	background: #303030;
@@ -1054,7 +1050,7 @@
 /* ===== Mobile (shared) ===== */
 @media (max-width: 768px) {
 	[data-theme="dark"] .category-tab {
-		font-size: 11px;
+		font-size: 14px;
 	}
 }
 

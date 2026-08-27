@@ -2,9 +2,14 @@
  * normalize.js — Google Places (New) raw payload → contract shape (§7).
  *
  * Mirrors `scripts/export-maps-data/export-maps-data.py` (the python export
- * script): resolve_emoji, resolve_price_level, split_website_instagram,
- * round_rating and the description priority are 1:1 ports. The worker returns
- * ONLY the requested language (a single Google payload), never merged langs.
+ * script): resolve_emoji, split_website_instagram, round_rating and the
+ * description priority are 1:1 ports. The worker returns ONLY the requested
+ * language (a single Google payload), never merged langs.
+ *
+ * `resolvePriceLevel` differs from the python's average→band mapping: when
+ * Google returns a `priceRange` the worker emits the FINAL display label built
+ * from the actual amounts (e.g. "$26 - $50"), since the app stores the price
+ * label directly. `priceLevel` still maps to the `$`-band as a fallback.
  *
  * Output shape (§4.1): scalar fields always emitted with `""` defaults;
  * `businessStatus` / `photos` are omitted when not applicable.
@@ -13,9 +18,6 @@
 import EMOJI_MAP from './data/emoji-map.json';
 import PRICE_LEVEL_MAP from './data/price-level-map.json';
 import CURRENCIES from './data/currencies.json';
-
-/** Price bands order (scaleNumeric keys). */
-const PRICE_LEVELS = ['$', '$$', '$$$', '$$$$'];
 
 /**
  * Normalize a raw Google Places (New) place into the §4.1 contract shape.
@@ -39,6 +41,16 @@ export function normalizePlace(raw, { photos = false } = {}) {
 	// Omit `businessStatus` when Google omits it (§7).
 	if (raw?.businessStatus) result.businessStatus = raw.businessStatus;
 
+	// `location` when Google returns it (additive — used by the My Maps import
+	// nearest-pick; not part of the original §4.1 contract shape).
+	if (raw?.location) {
+		const latitude = Number(raw.location.latitude);
+		const longitude = Number(raw.location.longitude);
+		if (Number.isFinite(latitude) && Number.isFinite(longitude)) {
+			result.location = { lat: latitude, lng: longitude };
+		}
+	}
+
 	// `photos` refs only when the caller wants them (§6.4).
 	if (photos && Array.isArray(raw?.photos)) {
 		const refs = raw.photos
@@ -54,14 +66,24 @@ export function normalizePlace(raw, { photos = false } = {}) {
 /**
  * Description priority: editorialSummary.text → reviewSummary.text →
  * primaryTypeDisplayName.text (first non-empty).
+ *
+ * NOTE: `reviewSummary.text` is a LocalizedText OBJECT ({ text, languageCode }),
+ * not a plain string — `String(reviewSummary.text)` would yield "[object
+ * Object]". The inner `.text` is extracted instead (both shapes handled
+ * defensively in case Google ever returns a bare string).
  * @param {Record<string, unknown>|undefined} raw
  * @returns {string}
  */
 function resolveDescription(raw) {
 	const editorial = raw?.editorialSummary?.text;
 	if (editorial) return String(editorial);
+
 	const review = raw?.reviewSummary?.text;
-	if (review) return String(review);
+	if (review) {
+		const reviewText = typeof review === 'string' ? review : review?.text;
+		if (reviewText) return String(reviewText);
+	}
+
 	const primary = raw?.primaryTypeDisplayName?.text;
 	return primary ? String(primary) : '';
 }
@@ -92,44 +114,32 @@ function roundRating(rating) {
 }
 
 /**
- * Resolve the `$`…`$$$$` price string (priority order, §7.1):
- *   1. priceRange average against the currency's `scaleNumeric` bands.
- *   2. priceLevel via the fixed map.
+ * Resolve the price string (priority order, §7.1):
+ *   1. priceRange → the FINAL display label from Google's actual start/end
+ *      amounts, e.g. "$26 - $50" (currencies.json `symbols`), or "$100+" when
+ *      `endPrice` is unset (no upper bound). The app stores the label directly.
+ *   2. priceLevel via the fixed map (fallback when no priceRange).
  *   3. Fallback `"-"`.
  * @param {Record<string, unknown>|undefined} raw
  * @returns {string}
  */
 function resolvePriceLevel(raw) {
-	// Priority 1: priceRange (only when start AND end price exist).
+	// Priority 1: priceRange — format the actual range label.
 	const priceRange = raw?.priceRange;
-	if (priceRange) {
-		const startPrice = priceRange.startPrice;
-		const endPrice = priceRange.endPrice;
-		if (startPrice && endPrice) {
-			const currency = startPrice.currencyCode ?? '';
-			const startVal = startPrice.units;
-			const endVal = endPrice.units;
-			if (
-				currency &&
-				typeof startVal !== 'undefined' &&
-				startVal !== null &&
-				typeof endVal !== 'undefined' &&
-				endVal !== null
-			) {
-				const avg = (Number(startVal) + Number(endVal)) / 2;
-				const bands = CURRENCIES.scaleNumeric?.[currency];
-				if (bands && Number.isFinite(avg)) {
-					for (const levelKey of PRICE_LEVELS) {
-						const range = bands[levelKey];
-						if (Array.isArray(range) && range.length > 0) {
-							const low = range[0];
-							const high = range.length > 1 ? range[1] : Infinity;
-							if (low <= avg && avg <= high) return levelKey;
-						}
-					}
-				}
-			}
-		}
+	const start = priceRange?.startPrice;
+	const startVal =
+		start && typeof start.units !== 'undefined' && start.units !== null ? Number(start.units) : NaN;
+	if (Number.isFinite(startVal)) {
+		const currency = start.currencyCode ?? '';
+		const symbol = CURRENCIES.symbols?.[currency] ?? (currency ? `${currency} ` : '');
+
+		const end = priceRange.endPrice;
+		const endVal =
+			end && typeof end.units !== 'undefined' && end.units !== null ? Number(end.units) : NaN;
+
+		// Open-ended range (e.g. "More than $100") → "$100+".
+		if (!Number.isFinite(endVal)) return `${formatMoney(symbol, startVal)}+`;
+		return `${formatMoney(symbol, startVal)} - ${formatMoney(symbol, endVal)}`;
 	}
 
 	// Priority 2: priceLevel via the fixed map.
@@ -140,6 +150,13 @@ function resolvePriceLevel(raw) {
 
 	// Priority 3: fallback.
 	return '-';
+}
+
+/** Format a whole-unit amount with the currency symbol + thousands separators. */
+function formatMoney(symbol, value) {
+	const rounded = Math.round(value);
+	const formatted = rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	return `${symbol}${formatted}`;
 }
 
 /**

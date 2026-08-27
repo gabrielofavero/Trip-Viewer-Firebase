@@ -46,7 +46,12 @@ import {
 } from '../data/state.js';
 import { COLLECTION, createBatchOps } from '../data/services/destination.service.js';
 import { getPlace, PLACES_API_ENABLED } from '../data/services/places-api.service.js';
-import { GMAPS_SCRAPER_ENABLED, scrapePlaces } from '../data/services/gmaps-scraper.service.js';
+import {
+	buildMapsSearchUrl,
+	GMAPS_SCRAPER_ENABLED,
+	parseCoordinateSearchUrl,
+	scrapePlaces,
+} from '../data/services/gmaps-scraper.service.js';
 import { unregisterRegionSelect } from '../ui/region-select.js';
 import { removeDestinationImages } from '../pages/edit-destination/categories/image.js';
 import type { PlaceDetails } from '../models/places-api.model.js';
@@ -291,8 +296,7 @@ export async function runBulkLocalUpdate(): Promise<void> {
 	await runBulkFetch(
 		entries,
 		async (item, signal) => {
-			const url = item.scrapeUrl ?? '';
-			const places = await scrapePlaces([url], {
+			const places = await scrapePlaces([buildScrapeUrlForEntry(item)], {
 				signal,
 				lang: getLanguagePackName(),
 			});
@@ -305,6 +309,23 @@ export async function runBulkLocalUpdate(): Promise<void> {
 		},
 		1,
 	);
+}
+
+/**
+ * Resolve the URL to hand the local scraper for a single entry.
+ * Coordinate-only search links (what My Maps import persists as `map` /
+ * `sourceUrl` for un-enriched pins) carry no business to extract — rewrite them
+ * to a name search centered on the pin's coords so the scraper actually finds
+ * the place (mirrors mymaps-kml.service.ts resolveViaScraper). Any other URL
+ * (canonical place link, plain name search) is used as-is.
+ */
+function buildScrapeUrlForEntry(item: BulkLinkedEntry): string {
+	const raw = item.scrapeUrl ?? '';
+	const coords = parseCoordinateSearchUrl(raw);
+	if (coords && item.entry?.name) {
+		return buildMapsSearchUrl(item.entry.name, coords);
+	}
+	return raw;
 }
 
 /**

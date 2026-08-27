@@ -98,10 +98,12 @@ export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
                       <i style="display: ${hospedagem.link ? 'block' : 'none'}" class="iconify external-link" 
                       data-icon="tabler:external-link" data-action="open-link" data-url="${hospedagem.link}"></i>
                     </div> 
+                    <i class="iconify copy-icon" data-icon="mdi:content-copy" data-action="copy-to-clipboard" data-text="${hospedagem.name}" title="${translate('labels.copy')}" aria-label="${translate('labels.copy')}"></i>
                   </div>
                   <div class="hotel-address" style="display: ${hospedagem.address ? 'block' : 'none'}">
                     <i class="bx bxs-map color-icon"></i> 
                     ${hospedagem.address}
+                    <i class="iconify copy-icon" data-icon="mdi:content-copy" data-action="copy-to-clipboard" data-text="${hospedagem.address}" title="${translate('labels.copy')}" aria-label="${translate('labels.copy')}"></i>
                   </div>
                 </div>
               </div>

@@ -1906,175 +1906,6 @@
 	margin-top: 12px;
 }
 
-/*--------------------------------------------------------------
-# Wallpaper Import from Destination — Dialog
-# Lazily-loaded destination picker with image previews.
---------------------------------------------------------------*/
-.wallpaper-import-loading {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	padding: 16px 0;
-	color: var(--text-muted);
-}
-
-.wallpaper-import-spinner {
-	width: 20px;
-	height: 20px;
-	border: 2px solid transparent;
-	border-top-color: var(--theme-color);
-	border-radius: 50%;
-	animation: wallpaper-import-spin 0.8s linear infinite;
-}
-
-@keyframes wallpaper-import-spin {
-	to {
-		transform: rotate(360deg);
-	}
-}
-
-.wallpaper-import-scroll {
-	display: block;
-	max-height: min(58vh, 520px);
-	overflow-y: auto;
-	padding-right: 6px;
-	scrollbar-gutter: stable;
-}
-
-.wallpaper-import-group {
-	margin-bottom: 18px;
-}
-
-.wallpaper-import-group:last-child {
-	margin-bottom: 0;
-}
-
-.wallpaper-import-group-title {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	margin: 0 0 10px;
-	font-size: 0.8125rem;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 0.04em;
-	color: var(--text-muted);
-}
-
-.wallpaper-import-group-count {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	min-width: 20px;
-	height: 20px;
-	padding: 0 6px;
-	border-radius: 999px;
-	font-size: 0.6875rem;
-	font-weight: 700;
-	background: var(--bg-tertiary);
-	color: var(--text-secondary);
-}
-
-.wallpaper-import-subgroup {
-	margin-bottom: 14px;
-}
-
-.wallpaper-import-subgroup:last-child {
-	margin-bottom: 0;
-}
-
-.wallpaper-import-subgroup-title {
-	margin: 0 0 8px;
-	font-size: 0.8125rem;
-	font-weight: 600;
-	color: var(--text-secondary);
-}
-
-.wallpaper-import-group-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-	gap: 12px;
-}
-
-.wallpaper-import-card {
-	position: relative;
-	display: block;
-	width: 100%;
-	padding: 0;
-	margin: 0;
-	text-align: left;
-	border: 1px solid var(--border-color);
-	border-radius: var(--radius-md);
-	overflow: hidden;
-	cursor: pointer;
-	background: var(--bg-secondary);
-	/* Explicit theme-aware text color — without it the <button> falls back to
-	   the UA's ButtonText (near-black), which is unreadable on dark cards. */
-	color: var(--text-primary);
-	transition:
-		border-color var(--transition-fast),
-		transform var(--transition-fast),
-		box-shadow var(--transition-fast);
-}
-
-.wallpaper-import-card:hover {
-	border-color: rgba(var(--theme-color-rgb), 0.5);
-	transform: translateY(-2px);
-	box-shadow: var(--shadow-md);
-}
-
-.wallpaper-import-thumb {
-	height: 96px;
-	background-size: cover;
-	background-position: center;
-	background-color: var(--bg-tertiary);
-	/* Centered icon placeholder (transportation import) — image cards are
-	   unaffected because they only use the background. */
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-/* Icon-only thumb (no image): gray like the index plane icons, not the
-   inherited button text color. */
-.wallpaper-import-thumb .image-picker-icon {
-	color: var(--text-muted);
-}
-
-/* Gray placeholder thumb (accommodation import) — mirrors index no-image cards. */
-.wallpaper-import-thumb.no-image {
-	background: linear-gradient(135deg, var(--no-image-bg), var(--no-image-bg-alt));
-}
-
-/* Trip-picker search bar inside the dialog — tighter than the page-level one. */
-.wallpaper-import-search-bar .search-bar {
-	margin-bottom: 12px;
-}
-
-.wallpaper-import-name {
-	padding: 8px 10px;
-	font-weight: 600;
-	font-size: 0.8125rem;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-/* Active destination card in the picker dialog (selection, not yet applied) */
-.wallpaper-import-card.selected {
-	border-color: rgba(var(--theme-color-rgb), 0.6);
-	box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.35);
-}
-
-.wallpaper-import-card.selected .wallpaper-import-name {
-	color: var(--theme-color);
-}
-
-.wallpaper-import-empty {
-	padding: 16px 0;
-	color: var(--text-muted);
-}
-
 /* Disabled confirm button (nothing selected yet) */
 .btn:disabled {
 	opacity: 0.55;
@@ -2584,14 +2415,14 @@ details summary::-webkit-details-marker {
 	}
 
 	.edit-tab {
-		font-size: 12px;
+		font-size: 14px;
 		padding: 8px 10px;
 		gap: 4px;
 	}
 
 	.edit-tab svg {
-		width: 16px;
-		height: 16px;
+		width: 18px;
+		height: 18px;
 	}
 
 	.edit-page {
@@ -2633,6 +2464,19 @@ details summary::-webkit-details-marker {
 	#hero {
 		top: 0;
 		padding: 0 0.5em 0 0.5em !important;
+	}
+}
+
+/* ≤600px: phones — larger icons in the fixed edit tab bar
+   (font-size/gap come from the ≤900px block; padding from the ≤975px block) */
+@media (max-width: 600px) {
+	.edit-tab svg {
+		width: 24px;
+		height: 24px;
+	}
+
+	.edit-page {
+		padding-top: 128px;
 	}
 }
 
@@ -4080,4 +3924,284 @@ fieldset.modern-radio-group {
    since a Maps URL is longer than a search term. */
 .places-local .places-search-input {
 	width: 100%;
+}
+/*--------------------------------------------------------------
+# My Maps Import (P4) — review + conflict dialogs on the edit page
+# Mirrors the Places dialog styling (.places-dialog-container width, the
+# dialog-scoped spinner ring, and the fullscreen-on-mobile behavior).
+--------------------------------------------------------------*/
+
+/* The review list carries more data than a regular message — widen it. */
+.input-container.mymaps-dialog-container {
+	width: min(600px, 92vw);
+}
+
+.mymaps-dialog {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	min-height: 240px;
+	text-align: left;
+}
+
+/* Fetching state: centered spinner ring + caption (reuses the Places ring). */
+.mymaps-dialog--fetching {
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	min-height: 220px;
+}
+
+.mymaps-dialog-fetching-text {
+	margin: 0;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	color: var(--text-secondary);
+}
+
+.mymaps-dialog-summary {
+	margin: 0;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	color: var(--text-primary);
+}
+
+.mymaps-dialog-message {
+	margin: 0;
+	font-size: 0.9375rem;
+	color: var(--text-secondary);
+	max-width: 480px;
+}
+
+.mymaps-dialog-message--hint {
+	font-size: 0.8125rem;
+}
+
+/* Manual KML download link (built from the map's `mid`). */
+.mymaps-download-link {
+	color: var(--theme-color);
+	text-decoration: none;
+}
+
+.mymaps-download-link:hover {
+	text-decoration: underline;
+}
+
+/* Inline enrichment progress line. */
+.mymaps-dialog-progress {
+	margin: 0;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--theme-color, #7c3aed);
+}
+
+.mymaps-upload-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 4px;
+}
+
+/* Review list — scrolls internally when there are many placemarks. */
+.mymaps-list {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	max-height: calc(100vh - 300px);
+	overflow-y: auto;
+	padding-right: 2px;
+}
+
+.mymaps-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 8px 10px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: var(--bg-tertiary);
+	font-size: 0.875rem;
+}
+
+.mymaps-row-include {
+	display: inline-flex;
+	align-items: center;
+	margin: 0;
+	cursor: pointer;
+}
+
+.mymaps-row-include input[type="checkbox"] {
+	margin: 0;
+	accent-color: var(--theme-color, #7c3aed);
+	width: 16px;
+	height: 16px;
+}
+
+.mymaps-row-name {
+	font-weight: 600;
+	color: var(--text-primary);
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* Category <select> — styled like the app's form selects (appearance: none +
+   chevron icon) so it doesn't clash with the rest of the row. */
+.mymaps-row-category {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	flex: 0 0 auto;
+	max-width: 170px;
+	min-width: 0;
+	padding: 6px 30px 6px 10px;
+	font-family: inherit;
+	font-size: 0.8125rem;
+	color: var(--text-primary);
+	background-color: var(--bg-primary);
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+	background-position: right 8px bottom 50%;
+	background-repeat: no-repeat;
+	background-size: 14px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-sm, 8px);
+	outline: none;
+	cursor: pointer;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	transition:
+		border var(--transition-fast),
+		box-shadow var(--transition-fast);
+}
+
+.mymaps-row-category:focus {
+	border-color: var(--theme-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.mymaps-row-category:disabled {
+	cursor: not-allowed;
+	opacity: 0.6;
+}
+
+.mymaps-row-status {
+	font-size: 0.75rem;
+	font-weight: 700;
+	padding: 2px 8px;
+	border-radius: 999px;
+	white-space: nowrap;
+}
+
+.mymaps-row-status--resolved {
+	background: rgba(46, 204, 113, 0.12);
+	color: #2ecc71;
+}
+
+.mymaps-row-status--failed {
+	background: rgba(231, 76, 60, 0.1);
+	color: #e74c3c;
+}
+
+/* Unmapped placemarks — grouped under a theme-tinted heading so the user can
+   assign each a category or leave it unchecked to discard. */
+.mymaps-unmapped-heading {
+	margin: 6px 0 0;
+	padding: 8px 10px;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	color: var(--theme-color, #7c3aed);
+	background: rgba(var(--theme-color-rgb), 0.08);
+	border: 1px dashed rgba(var(--theme-color-rgb), 0.4);
+	border-radius: var(--radius-md, 8px);
+}
+
+.mymaps-row--unmapped {
+	border-color: rgba(var(--theme-color-rgb), 0.45);
+	background: rgba(var(--theme-color-rgb), 0.06);
+}
+
+.mymaps-row-badge {
+	font-size: 0.7rem;
+	font-weight: 700;
+	padding: 2px 8px;
+	border-radius: 999px;
+	white-space: nowrap;
+}
+
+.mymaps-row-badge--unassigned {
+	background: rgba(var(--theme-color-rgb), 0.14);
+	color: var(--theme-color, #7c3aed);
+}
+
+.mymaps-dialog-hint {
+	margin: 0;
+	font-size: 0.8125rem;
+	color: var(--text-secondary);
+}
+
+.mymaps-footer {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 4px;
+}
+
+/* Conflict dialog: one card per collision with a per-item choice. */
+.mymaps-conflict-list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	max-height: calc(100vh - 300px);
+	overflow-y: auto;
+}
+
+.mymaps-conflict {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 10px 12px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: var(--bg-tertiary);
+	font-size: 0.875rem;
+}
+
+.mymaps-conflict-text {
+	margin: 0;
+	color: var(--text-primary);
+}
+
+.mymaps-conflict-meta {
+	margin: 0;
+	font-size: 0.8125rem;
+	color: var(--text-secondary);
+}
+
+.mymaps-conflict-choice {
+	align-self: flex-start;
+	margin-top: 4px;
+}
+
+/* Mobile: the fullscreen dialog owns the screen — let the list flex-fill and
+   scroll on its own (mirrors the Places dialog mobile rules). */
+@media (max-width: 768px) {
+	.mymaps-dialog-container.fullscreen-dialog {
+		width: 100%;
+		max-width: none;
+	}
+
+	.fullscreen-dialog .mymaps-dialog {
+		height: 100%;
+		min-height: 0;
+	}
+
+	.fullscreen-dialog .mymaps-list,
+	.fullscreen-dialog .mymaps-conflict-list {
+		max-height: none;
+		flex: 1 1 auto;
+		min-height: 0;
+	}
 }
