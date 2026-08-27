@@ -47,8 +47,8 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 197   | 193  | 4         | 0       |
-| 🏆   | Feature     | F000 | 197   | 182  | 15        | 0       |
+| 🐞   | Bug         | B000 | 200   | 196  | 4         | 0       |
+| 🏆   | Feature     | F000 | 198   | 183  | 15        | 0       |
 | 📈   | Improvement | M000 | 216   | 193  | 22        | 1       |
 | ⚔️   | Epic        | E000 | 52    | 43   | 7         | 2       |
 
@@ -196,6 +196,10 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B196:** [DEV] Fix dev:prd
 - 🐞 **B197:** Login input not matching button size on mobile
 - 📈 **M216:** My Maps import: manual KML download link
+- 🐞 **B198:** Hide Local import source on PRD
+- 🏆 **F198:** Add check animation for edit mobile saving
+- 🐞 **B199:** Minor fixes for Maps integrations
+- 🐞 **B200:** Fix error on creating itinerary item
 
 ### July 2026
 

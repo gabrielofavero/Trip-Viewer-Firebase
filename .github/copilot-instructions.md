@@ -26,6 +26,7 @@ Honor each skill's `applyTo` scope. For task-scoped skills without `applyTo`, se
 
 ## Operational constraints
 
+- **🚫 EMULATOR-ONLY. NEVER PRD/REAL DATA.** Always run/validate against the local Firebase emulator stack (`npm run dev`, tab shows `[LOCAL]`). Never use `npm run dev:prd`, `--use-emulator false`, `firebase serve`, or any real-project data path for agent-driven work unless the user explicitly asks for production work. If a page tab shows `[LOCAL PRD]`, it is the PRD build — rebuild in emulator mode (`node scripts/build/build.js --use-emulator true`) and reload before proceeding.
 - Do not use Playwright or browser tools unless the user explicitly approves browser validation for the current task.
 - Prefer non-browser validation unless browser validation is approved.
 - Follow the full project guidance in the repository-root `copilot-instructions.md`, including coding conventions and validation requirements.

@@ -143,9 +143,9 @@ export function setPageName(pageName?) {
 	// locally with real Firebase services (dev:prd); no tag when deployed to a
 	// real environment.
 	const isEmulator = isLocal && window.__TRIPVIEWER_EMULATOR__ === true;
-	const tag = isLocal ? (isEmulator ? '[DEV]' : '[LOCAL PRD]') : '';
+	const tag = isLocal ? (isEmulator ? '[LOCAL]' : '[LOCAL PRD]') : '';
 	const cleanTitle = document.title
-		.replace(/\[(LOCAL )?(DEV|PRD)\]\s*/g, '')
+		.replace(/\[(LOCAL )?(LOCAL|PRD)\]\s*/g, '')
 		.trim();
 
 	const resolvedPageName = pageName ?? cleanTitle;

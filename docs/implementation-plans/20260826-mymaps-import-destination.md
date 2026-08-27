@@ -1,7 +1,7 @@
 # Import from Google My Maps — Edit Page — Implementation Plan
 
 > **Date:** 2026-08-26
-> **Status:** P1–P5 implemented (all phases done 2026-08-26); epic E052 complete — plus post-P5 refinements: expanded folder→category auto-detection (227 aliases) + unmapped-placemark review UX, and the My Maps entry point relocated to the basic-information **"Update with Maps"** button (opens directly when nothing is linked; via the My Maps source option otherwise; no per-item or map-section button).
+> **Status:** P1–P5 implemented (all phases done 2026-08-26); epic E052 complete — plus post-P5 refinements: expanded folder→category auto-detection (227 aliases) + unmapped-placemark review UX, the My Maps entry point relocated to the basic-information **"Update with Maps"** button (opens directly when nothing is linked; via the My Maps source option otherwise; no per-item or map-section button), and imports into a currently-disabled category auto-enable that category's module (`modules.{cat}: true` written in the same batch). Follow-up fix (2026-08-26): un-enriched placemarks persist a **scraper-friendly `sourceUrl`** (name search centered on the pin) instead of the bare coordinate link, so the bulk "Update with Maps → Local" path can actually resolve them — see §5 P3 + §8.
 > **Scope:** Add an **"Import from My Maps"** action to the **edit page**
 > (`edit/destination.html`): a button in the **general (first) section** when the
 > destination has a `myMaps` link, plus a **My Maps option** as the first step of
@@ -176,6 +176,10 @@ approves it afterwards.
 - **Stage 1 (always, no Places calls):**
   - `map = https://www.google.com/maps/search/?api=1&query=<lat>,<lng>` (coordinate deep-link)
     and `placeAPI.id = ''` (entry refreshable by link only).
+  - `placeAPI.sourceUrl` is **not** the coordinate link: it's a name search centered on the pin
+    (`https://www.google.com/maps/search/<name>@<lat>,<lng>,15z` — see `buildMapsSearchUrl`) so the
+    bulk local scraper path can resolve it later; `map` keeps the user-facing coordinate pin.
+    Once enrichment resolves a canonical link, `sourceUrl` = that link instead.
   - Persisted fields per entry: `name`, `map`, `placeAPI = { id: '', name, map, … }`,
     `isNew: false`, `createdAt`, `regions: []`, `emoji` from a per-category default.
 - **Stage 2 (optional, user-approved enrichment):**
@@ -190,7 +194,9 @@ approves it afterwards.
        when the hit is far) with `bias` = placemark coords → pick the best result (closest to
        coords, then name-similarity) → `placeId` + `googleMapsUri`.
     2. **Local scraper** (when `GMAPS_SCRAPER_ENABLED` and 1 unavailable): `scrapePlaces([mapUrl])`
-       with `mapUrl = https://www.google.com/maps/search/${encodeURIComponent(name)}`.
+       with `mapUrl = buildMapsSearchUrl(name, { lat, lng })` — a **name search centered on the
+       placemark coords** (`https://www.google.com/maps/search/<name>@<lat>,<lng>,15z`). Without the
+       center bias the scraper returns the top hit for the name alone, mis-picking chains.
     3. **Keep the coordinate link** when neither resolves.
   - **Chain disambiguation** (e.g. `Dunkin'` ×8): location bias is what makes step 1 reliable;
     Text Search bias is a soft ranking, not a hard filter — still pick nearest, and let the
@@ -315,6 +321,13 @@ approves it afterwards.
   user to the upload path.
 - **No place id in export**: resolution can mismatch chains (`Dunkin'`); location bias +
   nearest-pick mitigates; the review screen is the safety net.
+- **Coordinate-only links can't be scraped**: the stage-1 coordinate deep-link
+  (`…/maps/search/?api=1&query=<lat>,<lng>`) carries no business to extract — feeding it to the
+  local scraper yields "no place data" or a wrong nearby pin. Mitigated twice: (1) import persists
+  a name-search `sourceUrl` (`buildMapsSearchUrl`, centered on the pin) instead of the coordinate
+  link; (2) the bulk local path (`places-bulk.ts` `buildScrapeUrlForEntry`) rewrites any remaining
+  coordinate-only link into that name search before scraping. Once a real place id resolves,
+  `…/search/?api=1&query=<name>&query_place_id=<id>` pins the exact place.
 - **Rate limits**: Places Text Search (one call per placemark) and the scraper both rate-limit;
   resolve **sequentially with small concurrency** and let the user review before applying.
 - **KMZ is a ZIP**: the service loads the vendored JSZip on demand (only when a `.kmz` is

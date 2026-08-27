@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.27.1] - 2026-08-26
+
+- 🐞 **B198:** Hide Local import source on PRD
+- 🏆 **F198:** Add check animation for edit mobile saving
+- 🐞 **B199:** Minor fixes for Maps integrations
+- 🐞 **B200:** Fix error on creating itinerary item
+
 ## [2.27.0] - 2026-08-26
 
 - 🐞 **B194:** Tab bar icons too small on mobile

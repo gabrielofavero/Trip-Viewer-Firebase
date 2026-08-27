@@ -710,7 +710,21 @@ export function displaySaveSuccess({
 }) {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	properties.title = '';
-	properties.content = content || translate('messages.documents.save.success');
+	// Pair the success message with an animated themed check circle (styles +
+	// draw keyframes live in components/modal.css under `.save-success-check`).
+	// The check is decorative (aria-hidden) — the message text carries meaning.
+	// It is hidden on desktop and shown only in the mobile full-screen dialog
+	// (CSS-scoped), so desktop keeps the plain centered confirmation as before.
+	const message = content || translate('messages.documents.save.success');
+	properties.content = `
+		<div class="save-success-check" aria-hidden="true">
+			<svg class="save-success-check__svg" viewBox="0 0 52 52">
+				<circle class="save-success-check__circle" cx="26" cy="26" r="24" fill="none" pathLength="1"></circle>
+				<path class="save-success-check__mark" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" pathLength="1"></path>
+			</svg>
+		</div>
+		<div class="save-success-check__text">${message}</div>
+	`;
 	// Save-success is an intervention dialog: no X close button (and Escape
 	// won't dismiss it). The user must pick an explicit action (Edit / Home /
 	// View) or refresh the page to leave, so they can't silently dismiss it and

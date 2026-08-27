@@ -18,7 +18,11 @@ import type { PlaceItem } from '../../models/schema.js';
 import { getDestinations } from '../../app/config.js';
 import { translate } from '../../i18n/translation.js';
 import { getFirebaseIdToken } from '../firebase/auth.js';
-import { GMAPS_SCRAPER_ENABLED, scrapePlaces } from './gmaps-scraper.service.js';
+import {
+	buildMapsSearchUrl,
+	GMAPS_SCRAPER_ENABLED,
+	scrapePlaces,
+} from './gmaps-scraper.service.js';
 import { PLACES_API_BASE_URL, PLACES_API_ENABLED, searchPlaces } from './places-api.service.js';
 
 /** Options for `fetchKml()`. */
@@ -616,6 +620,13 @@ export function buildMapsCoordinateLink(lat: number, lng: number): string {
  */
 export function buildMyMapsEntry(draft: MyMapsDraft): PlaceItem {
 	const map = draft.map || buildMapsCoordinateLink(draft.lat, draft.lng);
+	// The local scraper's refresh URL. When no canonical link resolved, persist
+	// a name search centered on the pin (NOT the bare coordinate link — the
+	// scraper can't extract a business from a coordinate pin; see
+	// buildMapsSearchUrl). `map` keeps the coordinate deep-link for the user,
+	// while `sourceUrl` is what the bulk "Update with Maps → Local" path scrapes.
+	const sourceUrl =
+		draft.map || buildMapsSearchUrl(draft.name, { lat: draft.lat, lng: draft.lng });
 	const emoji = (draft.category && CATEGORY_EMOJI[draft.category]) || CATEGORY_EMOJI.default;
 	const now = new Date().toISOString();
 	return {
@@ -644,7 +655,7 @@ export function buildMyMapsEntry(draft: MyMapsDraft): PlaceItem {
 			emoji,
 			updatedAt: now,
 			instagram: '',
-			sourceUrl: map,
+			sourceUrl,
 		},
 	};
 }
@@ -739,7 +750,9 @@ async function resolveViaScraper(
 	draft: MyMapsDraft,
 	{ signal }: MyMapsEnrichOptions,
 ): Promise<MyMapsDraft | null> {
-	const mapUrl = `https://www.google.com/maps/search/${encodeURIComponent(draft.name)}`;
+	// Name search CENTERED on the placemark coords — without the center bias the
+	// scraper returns the top hit for the name alone, which mis-picks chains.
+	const mapUrl = buildMapsSearchUrl(draft.name, { lat: draft.lat, lng: draft.lng });
 	const results = await scrapePlaces([mapUrl], { signal });
 	const result = results?.[0];
 	if (!result) return null;

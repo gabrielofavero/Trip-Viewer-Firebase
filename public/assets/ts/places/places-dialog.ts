@@ -30,6 +30,7 @@ import {
 } from '../utils/messages.js';
 import { translate } from '../i18n/translation.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../data/state.js';
+import { GMAPS_SCRAPER_ENABLED } from '../data/services/gmaps-scraper.service.js';
 import { PLACES_API_ENABLED } from '../data/services/places-api.service.js';
 
 /** The steps the Places dialog can be in. */
@@ -95,11 +96,12 @@ export function notifyPlacesLimited(): void {
 
 /**
  * Open the Places dialog for the given destination entry.
- * Reads the current entry name + saved `placeAPI`. Every dialog starts on the
- * 'source' step, where the user picks the import source (local gmaps-scraper
- * vs Places API). From there: Places API routes already-linked entries to the
- * 'linked' step (update it vs find a different one) and brand-new entries to
- * search; "Local" routes to the maps-link import step.
+ * Reads the current entry name + saved `placeAPI`. On a LOCAL dev machine the
+ * dialog starts on the 'source' step, where the user picks the import source
+ * (local gmaps-scraper vs Places API). On a deployed host (e.g. PRD) the local
+ * scraper doesn't exist, so it skips straight to the Places API flow: the
+ * 'linked' step (update it vs find a different one) for entries that already
+ * have a place id, or search for brand-new entries.
  */
 export function openPlacesDialog(category: string, j: number): void {
 	// HARD CHECK — the Places feature is local-environments only. Even if the
@@ -139,8 +141,11 @@ export function openPlacesDialog(category: string, j: number): void {
 	_context = { category, j, entryName, destinationTitle, placeAPI };
 	_stepData = {};
 	_history = [];
-	// Always start by asking the user how they want to import (Local vs API).
-	_step = 'source';
+	// Local dev: ask how to import (Local gmaps-scraper vs Places API).
+	// Deployed host (PRD): the local scraper route doesn't exist, so skip the
+	// source prompt and go straight to the Places API flow — 'linked' when the
+	// entry already has a place id, else 'search'.
+	_step = GMAPS_SCRAPER_ENABLED ? 'source' : placeAPI?.id ? 'linked' : 'search';
 
 	wireDialogControls();
 	document.addEventListener('keydown', handlePlacesKeydown);

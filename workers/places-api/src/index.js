@@ -296,7 +296,7 @@ async function handlePhotos(url, placeId, { config, quota }) {
 	const raw = await getPlace(placeId, { apiKey, lang, photos: true });
 	await quota.record('photos');
 	const photos = [];
-	for (const photo of (raw?.photos ?? []).slice(0, 3)) {
+	for (const photo of (raw?.photos ?? []).slice(0, 1)) {
 		if (typeof photo?.name !== 'string' || photo.name.length === 0) continue;
 		const photoUri = await photoUriFor({ apiKey, photoName: photo.name });
 		await quota.record('photos');

@@ -41,7 +41,11 @@ export interface PlaceSearchResult {
 	instagram?: string;
 	/** e.g. "4" (rounded, like the python script). */
 	rating?: string;
-	/** "$" | "$$" | "$$$" | "$$$$" | "-" | "default". */
+	/**
+	 * A `$`-band ("$" | "$$" | "$$$" | "$$$$" | "-" | "default") OR — when the
+	 * Places API returns a priceRange — the final display label built from the
+	 * actual amounts, e.g. "$26 - $50" / "$100+" (see workers/places-api/src/normalize.js).
+	 */
 	price?: string;
 	emoji?: string;
 	/** googleMapsUri. */

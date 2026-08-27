@@ -554,6 +554,9 @@ async function writeImports(decisions: DecisionMap): Promise<number> {
 	}
 
 	const ops: { path: string; data: Record<string, unknown> }[] = [];
+	// Categories that actually receive at least one entry this run (only
+	// written ones — conflict "skip" decisions don't count).
+	const touchedCategories = new Set<string>();
 	let imported = 0;
 
 	for (let i = 0; i < _drafts.length; i++) {
@@ -574,7 +577,20 @@ async function writeImports(decisions: DecisionMap): Promise<number> {
 			usedIds.add(id);
 			ops.push({ path: _docPath, data: { [`${draft.category}.${id}`]: item } });
 		}
+		touchedCategories.add(draft.category);
 		imported++;
+	}
+
+	// A My Maps import may target a category whose module is currently
+	// disabled (its section hidden on the edit page). Auto-enable it in the
+	// same write (`modules.{category}: true` — read back by
+	// populateExistingDestinationForm/loadExistingDestination), so the imported
+	// entries are immediately visible and manageable in the form. Only persists
+	// when the stored doc has the module off; enabled categories are untouched.
+	for (const category of touchedCategories) {
+		if (FIRESTORE_DESTINATIONS_DATA?.modules?.[category] !== true) {
+			ops.push({ path: _docPath, data: { [`modules.${category}`]: true } });
+		}
 	}
 
 	for (let start = 0; start < ops.length; start += BATCH_LIMIT) {

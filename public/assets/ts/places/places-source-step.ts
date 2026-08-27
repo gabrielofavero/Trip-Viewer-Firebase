@@ -20,9 +20,15 @@
 // The "My Maps" card is BULK-ONLY (it's a batch operation, not a per-item
 // import): getSourceOptionsHTML() renders it only when the caller passes the
 // optional `mymapsAction`. The per-item dialog never passes it.
+//
+// The "Local (gmaps scraper)" card is LOCAL-ONLY: the scraper route
+// (127.0.0.1:8788) only exists on the dev machine, so getSourceOptionsHTML()
+// renders it only when GMAPS_SCRAPER_ENABLED is true. On deployed hosts
+// (e.g. PRD) the card is omitted — only Places API (and My Maps, in bulk) show.
 
 import { registerActions } from '../ui/actions.js';
 import { translate } from '../i18n/translation.js';
+import { GMAPS_SCRAPER_ENABLED } from '../data/services/gmaps-scraper.service.js';
 import { getDialogContext, goTo, registerStepRenderer } from './places-dialog.js';
 import type { PlacesDialogContext } from './places-dialog.js';
 
@@ -46,18 +52,26 @@ export function getSourceOptionsHTML(
 	apiAction = SOURCE_API_ACTION,
 	mymapsAction?: string,
 ): string {
-	return `
-	<div class="places-source">
-		<p class="places-linked-message">${escapeHtml(translate('placesApi.source.message'))}</p>
-		<div class="places-linked-options">
-			<button type="button" class="places-linked-option" data-action="${localAction}">
+	// The "Local (gmaps scraper)" card only exists on local dev machines — the
+	// scraper route (127.0.0.1:8788) doesn't run on deployed hosts. Gate the
+	// card on GMAPS_SCRAPER_ENABLED so PRD (and any other non-local host)
+	// never offers a source that can't work there.
+	const localCard = GMAPS_SCRAPER_ENABLED
+		? `<button type="button" class="places-linked-option" data-action="${localAction}">
 				<span class="places-linked-option-title">${escapeHtml(
 					translate('placesApi.source.local'),
 				)}</span>
 				<span class="places-linked-option-caption">${escapeHtml(
 					translate('placesApi.source.localHint'),
 				)}</span>
-			</button>
+			</button>`
+		: '';
+
+	return `
+	<div class="places-source">
+		<p class="places-linked-message">${escapeHtml(translate('placesApi.source.message'))}</p>
+		<div class="places-linked-options">
+			${localCard}
 			<button type="button" class="places-linked-option" data-action="${apiAction}">
 				<span class="places-linked-option-title">${escapeHtml(
 					translate('placesApi.source.api'),

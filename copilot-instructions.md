@@ -36,6 +36,10 @@ This workspace has **15 domain-specific agent skills** in `.github/skills/`. The
 4. **Browser / Playwright requires explicit approval.** Do NOT open the integrated browser, navigate pages, click/type, take screenshots, or drive the app with Playwright unless the user has explicitly approved browser validation for the current task. When a task could be checked in the browser but the user hasn't approved it, **ask first** — don't assume. Prefer non-browser verification (`npm run build`, `query-firestore`, reading code) unless approval is given.
 5. **`ntfy-notifications` is always-on.** Read `.github/skills/ntfy-notifications/SKILL.md` at the start of every task and follow it. See **Notifications (do not skip)** below — before ending ANY turn where you completed work, reached a milestone, hit an error, or need the user's input, you MUST have sent a notification. This applies even to the "which validation level?" question.
 
+## 🚫 Hard rule: EMULATOR-ONLY. NEVER PRD / REAL DATA
+
+Always run and validate against the **local Firebase emulator stack** (`npm run dev`, tab shows `[LOCAL]`). The coding agent must **never** use `npm run dev:prd`, `--use-emulator false`, `firebase serve`, or any real-project data path for validation, reproduction, or testing — unless the user explicitly asks for production work. If a page tab shows `[LOCAL PRD]`, that is the PRD build talking to the **real** `trip-viewer-prd` project: **stop**, rebuild in emulator mode (`node scripts/build/build.js --use-emulator true` — the default), and reload before proceeding.
+
 ## Notifications (do not skip)
 
 Send an ntfy.sh notification on topic `DeepSeek` via the helper below **before ending any turn** that (a) completes requested work, (b) finishes a meaningful step of a multi-step task, (c) hits an error needing the user, or (d) prompts the user with a question/approval/validation request.

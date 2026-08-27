@@ -92,6 +92,13 @@ https://maps.google.com/maps?z=16&q=Empire+State+Building
 maps.app.goo.gl/abc123
 ```
 
+> ⚠️ **Coordinate-only search links don't scrape.** A My Maps-style pin link like
+> `https://www.google.com/maps/search/?api=1&query=41.1002722,-80.6502324` opens a map with no
+> business selected, so the scraper returns "no place data" (or a wrong nearby pin). When only a
+> coordinate pin is available, search by **name + center** instead —
+> `https://www.google.com/maps/search/<name>@<lat>,<lng>,15z` — so the scraper picks the right
+> place (see `buildMapsSearchUrl` in `gmaps-scraper.service.ts`).
+
 ## Useful flags (pass via `-ExtraArgs`)
 
 ```powershell
