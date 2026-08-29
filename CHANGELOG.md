@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.28.0]
+## [2.28.0] - 2026-08-29
 
 - 🐞 **B201:** Hide the "Import Account" settings button on production (real Firebase — deployed or `dev:prd`); it stays available while connected to the local emulators
 - 🐞 **B202:** Fix export triggering a spurious "Leave site?" prompt — suspend the refresh/close guard during the programmatic download click (Chrome fires `beforeunload` on download init), while keeping it active during the actual data loading
