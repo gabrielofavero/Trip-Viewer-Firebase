@@ -47,9 +47,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 200   | 196  | 4         | 0       |
-| 🏆   | Feature     | F000 | 198   | 183  | 15        | 0       |
-| 📈   | Improvement | M000 | 216   | 193  | 22        | 1       |
+| 🐞   | Bug         | B000 | 203   | 199  | 4         | 0       |
+| 🏆   | Feature     | F000 | 200   | 185  | 15        | 0       |
+| 📈   | Improvement | M000 | 217   | 194  | 22        | 1       |
 | ⚔️   | Epic        | E000 | 53    | 44   | 7         | 2       |
 
 ## Backlog
@@ -201,6 +201,12 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B199:** Minor fixes for Maps integrations
 - 🐞 **B200:** Fix error on creating itinerary item
 - ⚔️ **E053:** Maps import/enrichment overhaul
+- 🐞 **B201:** Edit trip: itinerary day auto-title updates immediately
+- 🐞 **B202:** Edit trip: show time-of-day select for existing items
+- 🏆 **F199:** Auto-add transportations and check-in/out to itinerary
+- 🐞 **B203:** Edit trip: drag between periods crashes drags
+- 🏆 **F200:** Edit destination: priority badge + item sorting
+- 📈 **M217:** My Maps import: repeated names handling prompt
 
 ### July 2026
 

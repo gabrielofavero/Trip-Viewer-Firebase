@@ -1007,6 +1007,53 @@
 	background-size: var(--nf-input-size);
 }
 
+/*--------------------------------------------------------------
+# URL input — "open link" helper button
+# A small external-link button that appears inside url fields once
+# they hold a valid link, letting the user open it in a new tab.
+# Positioned via JS on the input's right edge (see
+# ui/url-input-open-link.ts); this only styles it.
+--------------------------------------------------------------*/
+.nice-form-group > .url-open-btn {
+	position: absolute;
+	width: 34px;
+	height: 34px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	border: none;
+	border-radius: var(--radius-sm);
+	background: var(--nf-input-background-color);
+	color: var(--text-secondary);
+	text-decoration: none;
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	z-index: 2;
+	transition:
+		opacity var(--transition-fast),
+		color var(--transition-fast),
+		background var(--transition-fast);
+}
+
+.nice-form-group > .url-open-btn.visible {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+}
+
+.nice-form-group > .url-open-btn:hover,
+.nice-form-group > .url-open-btn:focus-visible {
+	background: var(--box-color);
+	color: var(--theme-color);
+}
+
+.nice-form-group > .url-open-btn:focus-visible {
+	outline: 2px solid var(--theme-color);
+	outline-offset: 1px;
+}
+
 /* Autofill override */
 .nice-form-group > input:-webkit-autofill,
 .nice-form-group > select:-webkit-autofill,
@@ -1246,6 +1293,73 @@
 .icon-container {
 	display: flex;
 	align-items: center;
+}
+
+/*--------------------------------------------------------------
+# Priority badge — circle on accordion buttons, before the chevron.
+# Mirrors the destination page `.dest-card-score` (digit + rating tint).
+--------------------------------------------------------------*/
+.accordion-rating-badge {
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	font-size: 12px;
+	font-weight: 700;
+	color: #1f2937;
+	margin-left: 8px;
+	margin-right: 10px;
+	line-height: 1;
+}
+
+/* Rating tints — same palette as the destination page cards */
+.rating-5 {
+	background-color: #cfe2f3;
+}
+
+.rating-4 {
+	background-color: #d9ead3;
+}
+
+.rating-3 {
+	background-color: #fff2cc;
+}
+
+.rating-2 {
+	background-color: #fce5cd;
+}
+
+.rating-1 {
+	background-color: #f4cccc;
+}
+
+.rating-absent {
+	background-color: #ead1dc;
+}
+
+/*--------------------------------------------------------------
+# Item sort control — label + select at the top of each editor box
+--------------------------------------------------------------*/
+.item-sort-control {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.item-sort-control label {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--text-secondary);
+	margin: 0;
+	white-space: nowrap;
+}
+
+.item-sort-select {
+	max-width: 280px;
 }
 
 /*--------------------------------------------------------------
@@ -2009,6 +2123,43 @@
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
+}
+
+/*--------------------------------------------------------------
+# Image Slot Carousel (destination / accommodation / gallery photos)
+# Compact logo-style cards laid out in a horizontally scrollable row.
+--------------------------------------------------------------*/
+.image-slot-carousel {
+	display: flex;
+	align-items: stretch;
+	gap: 10px;
+	overflow-x: auto;
+	padding: 4px 2px 8px;
+	scroll-snap-type: x mandatory;
+	-webkit-overflow-scrolling: touch;
+}
+
+.image-slot-carousel .image-picker-card {
+	flex: 0 0 auto;
+	width: 128px;
+	max-width: none;
+	scroll-snap-align: start;
+}
+
+.image-slot-card .image-picker-thumb {
+	height: 108px;
+}
+
+.image-slot-card .image-picker-label {
+	padding: 6px 8px;
+	font-size: 0.75rem;
+}
+
+/* The "add photo" card mirrors the placeholder look of the wallpaper/logo
+   picker cards (icon over a neutral thumb). */
+.image-slot-card.is-add .image-picker-thumb {
+	background-color: var(--bg-tertiary);
+	border: 1px dashed var(--border-color);
 }
 
 /*--------------------------------------------------------------
@@ -4223,6 +4374,58 @@ fieldset.modern-radio-group {
 	margin-top: 4px;
 }
 
+/* Repeated-names prompt — one row per duplicated placemark name + the two
+   handling choices (option cards reuse the .places-linked-option look from
+   the bulk source prompt). */
+.mymaps-duplicates-list {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	max-height: calc(100vh - 340px);
+	overflow-y: auto;
+}
+
+.mymaps-duplicate-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 8px 12px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md, 8px);
+	background: var(--bg-tertiary);
+	font-size: 0.875rem;
+}
+
+.mymaps-duplicate-name {
+	font-weight: 600;
+	color: var(--text-primary);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mymaps-duplicate-count {
+	flex: 0 0 auto;
+	font-size: 0.75rem;
+	font-weight: 700;
+	padding: 2px 8px;
+	border-radius: 999px;
+	background: rgba(var(--theme-color-rgb), 0.12);
+	color: var(--theme-color, #7c3aed);
+}
+
+.mymaps-duplicates-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-top: 4px;
+}
+
+.mymaps-duplicates-actions .places-linked-option {
+	max-width: none;
+}
+
 /* Mobile: the fullscreen dialog owns the screen — let the list flex-fill and
    scroll on its own (mirrors the Places dialog mobile rules). */
 @media (max-width: 768px) {
@@ -4237,7 +4440,8 @@ fieldset.modern-radio-group {
 	}
 
 	.fullscreen-dialog .mymaps-list,
-	.fullscreen-dialog .mymaps-conflict-list {
+	.fullscreen-dialog .mymaps-conflict-list,
+	.fullscreen-dialog .mymaps-duplicates-list {
 		max-height: none;
 		flex: 1 1 auto;
 		min-height: 0;

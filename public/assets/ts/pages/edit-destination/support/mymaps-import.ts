@@ -94,7 +94,9 @@ export async function openMymapsImportDialog(): Promise<void> {
 	_reimportMode = false;
 	const drafts = await acquireKmlDrafts();
 	if (drafts === null) return;
-	_drafts = drafts;
+	// Repeated names (e.g. a chain at different locations) → ask the user
+	// whether to add every single one or keep one of each before reviewing.
+	_drafts = await handleRepeatedNames(drafts);
 	_enriched = false;
 	_enriching = false;
 	renderReview();
@@ -125,7 +127,7 @@ export async function openMymapsReimportDialog(): Promise<void> {
 		return;
 	}
 
-	_drafts = fresh;
+	_drafts = await handleRepeatedNames(fresh);
 	_enriched = false;
 	_enriching = false;
 	renderReview();
@@ -216,6 +218,170 @@ function distanceM(lat1: number, lng1: number, lat2: number, lng2: number): numb
 		Math.sin(dLat / 2) ** 2 +
 		Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
 	return EARTH_RADIUS_M * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+// ------------------------------------------------------------------
+// Repeated names — dedupe prompt
+// ------------------------------------------------------------------
+
+/**
+ * A My Maps export can contain several placemarks with the same name — e.g.
+ * the user pinned the same chain restaurant at different regions. Since My
+ * Maps only provides coordinates (no region), these can't be told apart
+ * automatically, so before the review we ask the user how to handle them:
+ * add every single one (current behavior) or keep only one of each name.
+ * Only shown when duplicates are actually found.
+ */
+
+/** Normalized comparison key for a placemark name (case/diacritics-insensitive). */
+function normalizeName(name: string): string {
+	return (name ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+}
+
+/**
+ * Find names that appear on more than one draft. Returns `{ name, count }`
+ * groups for names used by ≥ 2 placemarks, in first-appearance order.
+ */
+function findRepeatedNames(drafts: MyMapsDraft[]): Array<{ name: string; count: number }> {
+	const groups = new Map<string, { name: string; count: number }>();
+	for (const draft of drafts) {
+		const key = normalizeName(draft.name);
+		if (!key) continue;
+		const group = groups.get(key);
+		if (group) {
+			group.count++;
+		} else {
+			groups.set(key, { name: draft.name, count: 1 });
+		}
+	}
+	return [...groups.values()].filter((group) => group.count > 1);
+}
+
+/**
+ * Keep exactly one draft per repeated name (the user picked "keep one of
+ * each"): prefer a mapped draft (category resolved) so the kept row actually
+ * imports, falling back to the first occurrence. Non-repeated drafts pass
+ * through untouched.
+ */
+function keepOnePerRepeatedName(drafts: MyMapsDraft[]): MyMapsDraft[] {
+	const groups = new Map<string, MyMapsDraft[]>();
+	for (const draft of drafts) {
+		const key = normalizeName(draft.name);
+		if (!key) continue;
+		const list = groups.get(key);
+		if (list) list.push(draft);
+		else groups.set(key, [draft]);
+	}
+
+	const repeatedKeys = new Set<string>();
+	for (const [key, list] of groups) {
+		if (list.length > 1) repeatedKeys.add(key);
+	}
+	if (repeatedKeys.size === 0) return drafts;
+
+	const kept = new Set<MyMapsDraft>();
+	for (const [key, list] of groups) {
+		if (!repeatedKeys.has(key)) {
+			list.forEach((draft) => kept.add(draft));
+			continue;
+		}
+		kept.add(list.find((draft) => draft.category) ?? list[0]);
+	}
+
+	return drafts.filter((draft) => kept.has(draft));
+}
+
+type DuplicateChoice = 'keepAll' | 'keepOne';
+
+/**
+ * Ask the user how to handle repeated names (shown only when
+ * `findRepeatedNames` found any). The two option cards mirror the bulk
+ * source-prompt visual language (`.places-linked-option`). Resolves with the
+ * chosen handling — the prompt itself can only be dismissed by picking one.
+ */
+function promptDuplicateHandling(
+	groups: Array<{ name: string; count: number }>,
+	duplicateCount: number,
+): Promise<DuplicateChoice> {
+	return new Promise((resolve) => {
+		const properties = cloneObject(MESSAGE_PROPERTIES);
+		properties.title = translate('mymapsImport.duplicates.title');
+		properties.content = getDuplicatesHTML(groups, duplicateCount);
+		properties.containers = getContainersInput();
+		properties.containers.principal = `${properties.containers.principal} mymaps-dialog-container`;
+		properties.fullscreen = true;
+		// Choices only — no X / Escape (like the conflict dialog), so the
+		// awaited flow always resolves on one of the two option cards.
+		properties.closeButton = false;
+		properties.buttons = [];
+		displayFullMessage(properties);
+
+		const pick = (choice: DuplicateChoice) => () => {
+			closeMessage();
+			resolve(choice);
+		};
+		getID<HTMLButtonElement>('mymaps-duplicates-keepall')?.addEventListener('click', pick('keepAll'));
+		getID<HTMLButtonElement>('mymaps-duplicates-keepone')?.addEventListener('click', pick('keepOne'));
+	});
+}
+
+function getDuplicatesHTML(
+	groups: Array<{ name: string; count: number }>,
+	duplicateCount: number,
+): string {
+	const rows = groups
+		.map(
+			(group) => `
+			<div class="mymaps-duplicate-row">
+				<span class="mymaps-duplicate-name">${escapeHtml(group.name)}</span>
+				<span class="mymaps-duplicate-count">${escapeHtml(
+					translate('mymapsImport.duplicates.occurrences', { count: String(group.count) }),
+				)}</span>
+			</div>`,
+		)
+		.join('');
+
+	return `
+	<div class="mymaps-dialog">
+		<p class="mymaps-dialog-message">${escapeHtml(
+			translate('mymapsImport.duplicates.message', { count: String(duplicateCount) }),
+		)}</p>
+		<div class="mymaps-duplicates-list">${rows}</div>
+		<div class="mymaps-duplicates-actions">
+			<button type="button" class="places-linked-option" id="mymaps-duplicates-keepall">
+				<span class="places-linked-option-title">${escapeHtml(
+					translate('mymapsImport.duplicates.addAll'),
+				)}</span>
+				<span class="places-linked-option-caption">${escapeHtml(
+					translate('mymapsImport.duplicates.addAllHint', { count: String(duplicateCount) }),
+				)}</span>
+			</button>
+			<button type="button" class="places-linked-option" id="mymaps-duplicates-keepone">
+				<span class="places-linked-option-title">${escapeHtml(
+					translate('mymapsImport.duplicates.keepOne'),
+				)}</span>
+				<span class="places-linked-option-caption">${escapeHtml(
+					translate('mymapsImport.duplicates.keepOneHint', { count: String(groups.length) }),
+				)}</span>
+			</button>
+		</div>
+	</div>`;
+}
+
+/**
+ * Pipeline step between acquisition and the review: when the parsed drafts
+ * contain repeated names, ask the user whether to add every single one
+ * (current behavior) or keep only one of each name, then return the drafts
+ * that should be reviewed. Passes through unchanged when no duplicates exist.
+ */
+async function handleRepeatedNames(drafts: MyMapsDraft[]): Promise<MyMapsDraft[]> {
+	const groups = findRepeatedNames(drafts);
+	if (groups.length === 0) return drafts;
+
+	const duplicateCount = groups.reduce((sum, group) => sum + group.count, 0);
+	const choice = await promptDuplicateHandling(groups, duplicateCount);
+	if (choice === 'keepOne') return keepOnePerRepeatedName(drafts);
+	return drafts;
 }
 
 // ------------------------------------------------------------------
