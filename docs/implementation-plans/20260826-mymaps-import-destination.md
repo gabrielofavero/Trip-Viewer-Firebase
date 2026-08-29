@@ -238,6 +238,19 @@ approves it afterwards.
   reset the unsaved-changes baseline (`snapshotFormState`) and
   `openToast(...)`.
 
+> **Post-implementation change (2026-08-29) — import is now STAGED, not
+> written directly.** `writeImports()` → `stageImports()`: the My Maps import no
+> longer commits a Firestore batch. It stages into
+> `FIRESTORE_DESTINATIONS_NEW_DATA` (entries, auto-enabled `modules`, and the
+> `myMapsImported` marker) and adds/refreshes the live edit-form cards
+> (`addDestination` + `addDestinationHTML`), matching the Places enrich/refresh
+> convention — **the edit page's Save button persists everything**. Supporting
+> changes: `buildDestinationObject` now preserves `myMapsImported` (reads
+> DATA-or-NEW_DATA) so Save persists the marker; `isMyMapsImported()` reads the
+> staged flag too; the post-import step only refreshes the bulk button (no
+> re-read, no `snapshotFormState`, so the unsaved-changes prompt still fires);
+> the success toast uses the new `mymapsImport.staged` key.
+
 > **Post-P5 refinement (2026-08-26) — unmapped handling:** placemarks whose
 > folder didn't auto-map now default to **unchecked** and are grouped under a
 > highlighted **"Couldn't map N placemark(s)"** heading at the bottom of the

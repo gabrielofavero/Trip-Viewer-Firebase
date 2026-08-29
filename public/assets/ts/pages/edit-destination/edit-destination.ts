@@ -39,6 +39,7 @@ import { deleteUserObjectDB, getPermissions, getSingleData } from '../../data/fi
 import { loadImageSelector, PERMISSIONS, setPermissions } from '../../data/firebase/storage.js';
 import { PLACES_API_ENABLED } from '../../data/services/places-api.service.js';
 import { GMAPS_SCRAPER_ENABLED } from '../../data/services/gmaps-scraper.service.js';
+import { MYMAPS_KML_ENABLED } from '../../data/services/mymaps-kml.service.js';
 import { loadVisibilityIndex } from '../home/support/visibility.js';
 import { loadEditDestinationListeners } from './support/event-listeners.js';
 import { getVisibility } from '../../theme/theme.js';
@@ -91,11 +92,12 @@ import '../../places/places-apply-flow.js';
 // Places API — bulk "Enrich pending items" (P3). Side-effect import:
 // registers the 'places-bulk-enrich' card action + the pending dialog flow.
 import '../../places/places-pending.js';
+import { runEnrichPending } from '../../places/places-pending.js';
 // Places API — bulk "Update with Maps" (P10 hand-off to P11, run in parallel).
 // P11 (places/places-bulk.ts) exports the contract used here:
-//   export async function runBulkUpdate(): Promise<void> — bulk fetch + report
-//   export function countLinkedItems(): number           — linked-item count
-// runBulkUpdate() owns the dialog-scoped loading, the per-linked-item
+//   export async function runBulkPlacesUpdate(): Promise<void> — bulk fetch + report
+//   export function countLinkedItems(): number               — linked-item count
+// runBulkPlacesUpdate() owns the dialog-scoped loading, the per-linked-item
 // getPlace() fetches, and the report rendering (see docs/implementation-plans/20260812-places-api-edit-destination.md §5 P11).
 // countBulkEligibleEntries() decides whether the bulk button opens the source
 // prompt or routes straight to the My Maps import; runBulkLocalUpdate() is the
@@ -104,7 +106,7 @@ import {
 	countLinkedItems,
 	countUnlinkedItems,
 	runBulkLocalUpdate,
-	runBulkUpdate,
+	runBulkPlacesUpdate,
 } from '../../places/places-bulk.js';
 // Places API — import source selection + local (gmaps scraper) step. The
 // source step module self-registers its 'source' step renderer + per-item
@@ -118,7 +120,7 @@ import { registerActions } from '../../ui/actions.js';
 // 'mymaps-import' action + the review/write dialog flow on import, and joins
 // the edit-destination bundle (esbuild follows the import). Also used directly
 // for the bulk source-step "My Maps" option below.
-import { openMymapsImportDialog, openMymapsReimportDialog } from './support/mymaps-import.js';
+import { openMymapsReimportDialog } from './support/mymaps-import.js';
 
 const TODAY = getTodayFormatted();
 const TOMORROW = getTomorrowFormatted();
@@ -264,65 +266,66 @@ function loadEventListeners() {
 const BULK_REFRESH_ACTION = 'places-bulk-refresh';
 const BULK_ENRICH_ACTION = 'places-bulk-enrich';
 const BULK_ENRICH_SCRAPER_ACTION = 'places-bulk-enrich-scraper';
-const BULK_MYMAPS_IMPORT_ACTION = 'places-bulk-mymaps-import';
+/** Grouped cards open a "Which source?" sub-prompt (Enrich/Refresh). */
+const BULK_ENRICH_SOURCE_ACTION = 'places-bulk-enrich-source';
+const BULK_REFRESH_SOURCE_ACTION = 'places-bulk-refresh-source';
 const BULK_MYMAPS_REIMPORT_ACTION = 'places-bulk-mymaps-reimport';
 
-/**
- * Whether this destination has already completed a My Maps import (P5).
- * Reads the `myMapsImported` marker persisted on the destination doc when a
- * My Maps import completes (mymaps-import.ts writeImports). Legacy
- * destinations without the marker default to "not imported" (no backfill).
- */
-function isMyMapsImported(): boolean {
-	return FIRESTORE_DESTINATIONS_DATA?.myMapsImported === true;
+/** Whether the destination has a My Maps link set (drives the "Add" card). */
+function hasMymapsLink(): boolean {
+	return Boolean(getID('map-link')?.value?.trim());
 }
 
 /**
- * Whether any bulk option applies (plan decision #10 — hide the button when
- * there's nothing to refresh, enrich, or import). The My Maps term keeps the
- * button visible in practice: import (URL/KML) or re-import is always offered,
- * so the "nothing applies" state is only reachable once P5 can suppress both
- * My Maps cards.
+ * Whether any bulk option applies (hide the button when there's nothing to
+ * refresh, enrich, or add). "Add" (My Maps) is offered whenever the
+ * destination has a My Maps link.
  */
 function hasBulkOptions(): boolean {
-	return countLinkedItems() > 0 || countUnlinkedItems() > 0 || true;
+	return countLinkedItems() > 0 || countUnlinkedItems() > 0 || hasMymapsLink();
 }
 
 /**
- * Show/hide the bulk "Enrich Data" button. Visible only when running on a
- * LOCAL environment (HARD CHECK — PLACES_API_ENABLED), the user holds the
- * canUsePlacesAPI permission, AND at least one bulk option applies.
+ * Show/hide the bulk "Enrich Data" button. Visible only when at least one
+ * data source is enabled (Places API / local scraper / My Maps — the button
+ * is hidden when ALL of them are disabled), the user holds the canUsePlacesAPI
+ * permission, AND at least one bulk option applies.
  * Called on page load, and re-called after per-item applies (P9) / bulk apply
  * (P12) so the button stays in sync with the form.
  */
 export function refreshPlacesBulkButton(): void {
 	const button = getID<HTMLButtonElement>('places-bulk-btn');
 	if (!button) return;
-	const visible =
-		PLACES_API_ENABLED === true &&
-		PERMISSIONS?.canUsePlacesAPI === true &&
-		hasBulkOptions();
+	const anySource =
+		PLACES_API_ENABLED === true ||
+		GMAPS_SCRAPER_ENABLED === true ||
+		MYMAPS_KML_ENABLED === true;
+	const visible = anySource && PERMISSIONS?.canUsePlacesAPI === true && hasBulkOptions();
 	button.style.display = visible ? '' : 'none';
 }
 
 /**
- * Bulk "Enrich Data" entry point (P1). Shows the import/integration option
- * cards, each with its own visibility condition:
- *   - "Refresh enriched items"  (only when ≥1 item has a Google Place ID)
- *   - "Enrich pending items"    (only when ≥1 item has no Google Place ID)
- *   - "Import from My Maps"     (only when NOT already imported)
- *   - "Re-import from My Maps"  (only when already imported)
- * plus the existing "Local (gmaps scraper)" card on local dev machines.
- * The old "nothing linked → straight to My Maps" shortcut is gone — the user
- * always picks from the options (plan P1).
+ * Bulk "Enrich Data" entry point. Shows the 3 grouped option cards:
+ *   - Add      — My Maps import of every unused placemark (hidden if no My
+ *                Maps link is available).
+ *   - Enrich   — link the items without a place (hidden when none, or when no
+ *                source can enrich them).
+ *   - Refresh  — update the items already enriched (hidden when none, or when
+ *                no source can refresh them).
+ * Enrich/Refresh lead to a "Which source?" sub-prompt (Google Places vs Local
+ * scraper) that auto-collapses to the only available source.
  */
 function openPlacesBulkDialog(): void {
-	if (PLACES_API_ENABLED !== true) {
-		displayError(new Error(translate('placesApi.errors.localOnly')), false, false);
-		return;
-	}
 	if (PERMISSIONS?.canUsePlacesAPI !== true) {
 		displayError(new Error(translate('placesApi.noPermission')));
+		return;
+	}
+	const anySource =
+		PLACES_API_ENABLED === true ||
+		GMAPS_SCRAPER_ENABLED === true ||
+		MYMAPS_KML_ENABLED === true;
+	if (!anySource) {
+		displayError(new Error(translate('placesApi.errors.localOnly')), false, false);
 		return;
 	}
 
@@ -334,72 +337,43 @@ function openPlacesBulkDialog(): void {
 	displayFullMessage(properties);
 }
 
-/** Render the bulk option cards per their visibility conditions. */
+/** Render the 3 grouped bulk option cards (Add / Enrich / Refresh). */
 function getBulkOptionsHTML(): string {
 	const linked = countLinkedItems();
 	const unlinked = countUnlinkedItems();
-	const imported = isMyMapsImported();
+	const hasApi = PLACES_API_ENABLED === true;
+	const hasLocal = GMAPS_SCRAPER_ENABLED === true;
 
-	// The "Local (gmaps scraper)" card only exists on local dev machines — the
-	// scraper route (127.0.0.1:8788) doesn't run on deployed hosts.
-	const localCard = GMAPS_SCRAPER_ENABLED
+	// Add — My Maps: hidden when the destination has no My Maps link.
+	const addCard = hasMymapsLink()
 		? bulkOptionCard(
-				SOURCE_LOCAL_BULK_ACTION,
-				translate('placesApi.source.local'),
-				translate('placesApi.source.localHint'),
+				BULK_MYMAPS_REIMPORT_ACTION,
+				translate('placesApi.bulk.options.groupAddTitle'),
+				translate('placesApi.bulk.options.groupAddSub'),
 			)
 		: '';
 
-	const refreshCard =
-		linked > 0
-			? bulkOptionCard(
-					BULK_REFRESH_ACTION,
-					translate('placesApi.bulk.options.refreshTitle'),
-					translate('placesApi.bulk.options.refreshSub', { count: String(linked) }),
-					// Each linked item = 1 Google Places details request.
-					translate('placesApi.bulk.options.apiRequests', { count: String(linked) }),
-				)
-			: '';
-
+	// Enrich — hidden when there's nothing to enrich or no source available.
 	const enrichCard =
-		unlinked > 0
+		unlinked > 0 && (hasApi || hasLocal)
 			? bulkOptionCard(
-					BULK_ENRICH_ACTION,
-					translate('placesApi.bulk.options.enrichTitle'),
-					translate('placesApi.bulk.options.enrichSub', { count: String(unlinked) }),
-					// Each unlinked item = 1 Google Places text-search request.
-					translate('placesApi.bulk.options.apiRequests', { count: String(unlinked) }),
+					BULK_ENRICH_SOURCE_ACTION,
+					translate('placesApi.bulk.options.groupEnrichTitle'),
+					translate('placesApi.bulk.options.groupEnrichSub'),
 				)
 			: '';
 
-	// P9: the same unlinked-item flow via the LOCAL gmaps-scraper (dev only).
-	// Scraper matches always go to review for manual confirmation.
-	const enrichScraperCard =
-		GMAPS_SCRAPER_ENABLED && unlinked > 0
+	// Refresh — hidden when there's nothing to refresh or no source available.
+	const refreshCard =
+		linked > 0 && (hasApi || hasLocal)
 			? bulkOptionCard(
-					BULK_ENRICH_SCRAPER_ACTION,
-					translate('placesApi.bulk.options.enrichLocalTitle'),
-					translate('placesApi.bulk.options.enrichLocalSub', {
-						count: String(unlinked),
+					BULK_REFRESH_SOURCE_ACTION,
+					translate('placesApi.bulk.options.groupRefreshTitle'),
+					translate('placesApi.bulk.options.groupRefreshSub', {
+						count: String(linked),
 					}),
 				)
 			: '';
-
-	const mymapsImportCard = !imported
-		? bulkOptionCard(
-				BULK_MYMAPS_IMPORT_ACTION,
-				translate('placesApi.source.mymaps'),
-				translate('placesApi.source.mymapsHint'),
-			)
-		: '';
-
-	const mymapsReimportCard = imported
-		? bulkOptionCard(
-				BULK_MYMAPS_REIMPORT_ACTION,
-				translate('placesApi.bulk.options.reimportTitle'),
-				translate('placesApi.bulk.options.reimportSub'),
-			)
-		: '';
 
 	return `
 	<div class="places-source">
@@ -407,12 +381,9 @@ function getBulkOptionsHTML(): string {
 			translate('placesApi.bulk.options.message'),
 		)}</p>
 		<div class="places-linked-options">
-			${localCard}
-			${refreshCard}
+			${addCard}
 			${enrichCard}
-			${enrichScraperCard}
-			${mymapsImportCard}
-			${mymapsReimportCard}
+			${refreshCard}
 		</div>
 	</div>`;
 }
@@ -431,6 +402,114 @@ function bulkOptionCard(
 		</button>`;
 }
 
+/**
+ * "Which source?" sub-prompt — shown when both Google Places and the local
+ * scraper can handle the operation. The cards reuse the option-card visual
+ * language; their data-actions start the actual flow (which replaces this
+ * prompt with its own dialog).
+ */
+function showSourceChoice(opts: {
+	title: string;
+	options: Array<{ action: string; title: string; caption: string; tag?: string }>;
+}): void {
+	const properties = cloneObject(MESSAGE_PROPERTIES);
+	properties.title = opts.title;
+	properties.content = `
+	<div class="places-source">
+		<p class="places-linked-message">${escapeHtml(
+			translate('placesApi.bulk.options.sourceMessage'),
+		)}</p>
+		<div class="places-linked-options">
+			${opts.options.map((o) => bulkOptionCard(o.action, o.title, o.caption, o.tag)).join('')}
+		</div>
+	</div>`;
+	properties.containers = getContainersInput();
+	properties.buttons = [];
+	displayFullMessage(properties);
+}
+
+/**
+ * "Enrich" grouped card → pick the source. Goes straight to the only
+ * available source; shows the sub-prompt when both are available.
+ */
+function openEnrichSourcePrompt(): void {
+	const unlinked = countUnlinkedItems();
+	if (unlinked <= 0) {
+		refreshPlacesBulkButton();
+		return;
+	}
+	const api = PLACES_API_ENABLED === true;
+	const local = GMAPS_SCRAPER_ENABLED === true;
+	if (api && !local) {
+		void runEnrichPending('api');
+		return;
+	}
+	if (local && !api) {
+		void runEnrichPending('scraper');
+		return;
+	}
+	showSourceChoice({
+		title: translate('placesApi.bulk.options.groupEnrichTitle'),
+		options: [
+			{
+				action: BULK_ENRICH_ACTION,
+				title: translate('placesApi.bulk.options.sourceGoogleTitle'),
+				caption: translate('placesApi.bulk.options.sourceGoogleSub'),
+				// Each unlinked item = 1 Places API text-search request.
+				tag: translate('placesApi.bulk.options.apiRequests', {
+					count: String(unlinked),
+				}),
+			},
+			{
+				action: BULK_ENRICH_SCRAPER_ACTION,
+				title: translate('placesApi.source.local'),
+				caption: translate('placesApi.bulk.options.sourceLocalSub'),
+			},
+		],
+	});
+}
+
+/**
+ * "Refresh" grouped card → pick the source. Goes straight to the only
+ * available source; shows the sub-prompt when both are available.
+ */
+function openRefreshSourcePrompt(): void {
+	const linked = countLinkedItems();
+	if (linked <= 0) {
+		refreshPlacesBulkButton();
+		return;
+	}
+	const api = PLACES_API_ENABLED === true;
+	const local = GMAPS_SCRAPER_ENABLED === true;
+	if (api && !local) {
+		void runBulkPlacesUpdate();
+		return;
+	}
+	if (local && !api) {
+		void runBulkLocalUpdate();
+		return;
+	}
+	showSourceChoice({
+		title: translate('placesApi.bulk.options.groupRefreshTitle'),
+		options: [
+			{
+				action: BULK_REFRESH_ACTION,
+				title: translate('placesApi.bulk.options.sourceGoogleTitle'),
+				caption: translate('placesApi.bulk.options.sourceGoogleSub'),
+				// Each linked item = 1 Places API details request.
+				tag: translate('placesApi.bulk.options.apiRequests', {
+					count: String(linked),
+				}),
+			},
+			{
+				action: SOURCE_LOCAL_BULK_ACTION,
+				title: translate('placesApi.source.local'),
+				caption: translate('placesApi.bulk.options.sourceLocalSub'),
+			},
+		],
+	});
+}
+
 /** HTML-escape a string for safe interpolation (same pattern as the step modules). */
 function escapeHtml(value: string): string {
 	const div = document.createElement('div');
@@ -438,64 +517,29 @@ function escapeHtml(value: string): string {
 	return div.innerHTML;
 }
 
-/**
- * Bulk "Update with Maps" confirm dialog (P10, Places API source). Asks the
- * user to confirm fetching fresh info for all linked entries; on confirm,
- * hands off to P11's runBulkUpdate() which owns the bulk loading + report.
- */
-function openPlacesBulkConfirm(): void {
-	const count = countLinkedItems();
-	if (count <= 0) {
-		// No linked items — shouldn't happen while the button is hidden; guard anyway.
-		refreshPlacesBulkButton();
-		return;
-	}
-
-	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = translate('placesApi.bulk.options.refreshTitle');
-	properties.content = `${escapeHtml(
-		translate('placesApi.bulk.confirm', { count: String(count) }),
-	)}<p class="places-bulk-option-tag">${escapeHtml(
-		translate('placesApi.bulk.options.apiRequests', { count: String(count) }),
-	)}</p>`;
-	properties.containers = getContainersInput();
-	properties.buttons = [
-		{ type: 'cancel' },
-		{
-			type: 'confirm',
-			// Close the confirm modal, then start the bulk flow (P11 owns it).
-			action: () => {
-				closeMessage();
-				void runBulkUpdate();
-			},
-		},
-	];
-	displayFullMessage(properties);
-}
-
-// Bulk "Enrich Data" option actions (P1). Choosing an option closes this
-// prompt and starts the corresponding flow.
+// Bulk "Enrich Data" option actions. Choosing a grouped card closes this
+// prompt and starts the flow (Enrich/Refresh may show the "Which source?"
+// sub-prompt first; its cards trigger the actions below).
 registerActions({
-	// "Local (gmaps scraper)" — existing bulk local scrape.
+	// "Local (gmaps scraper)" — Refresh via the local scraper.
 	[SOURCE_LOCAL_BULK_ACTION]: () => {
-		closeMessage();
 		void runBulkLocalUpdate();
 	},
-	// "Refresh enriched items" — existing Places API bulk refresh.
+	// "Refresh" → Google Places — straight to the bulk fetch (no separate
+	// confirm; the report + apply step gives the user control before staging).
 	[BULK_REFRESH_ACTION]: () => {
-		closeMessage();
-		openPlacesBulkConfirm();
+		void runBulkPlacesUpdate();
 	},
-	// "Enrich pending items" — owned by places/places-pending.ts (P3), which
-	// registers the same 'places-bulk-enrich' action and overrides any stub.
-	// "Import from My Maps" — existing My Maps import.
-	[BULK_MYMAPS_IMPORT_ACTION]: () => {
-		closeMessage();
-		void openMymapsImportDialog();
+	// "Enrich" grouped card → source sub-prompt (auto-collapse when one source).
+	[BULK_ENRICH_SOURCE_ACTION]: () => {
+		void openEnrichSourcePrompt();
 	},
-	// "Re-import from My Maps" — P6: add only newly discovered placemarks.
+	// "Refresh" grouped card → source sub-prompt (auto-collapse when one source).
+	[BULK_REFRESH_SOURCE_ACTION]: () => {
+		void openRefreshSourcePrompt();
+	},
+	// "Add" — My Maps import of every unused placemark.
 	[BULK_MYMAPS_REIMPORT_ACTION]: () => {
-		closeMessage();
 		void openMymapsReimportDialog();
 	},
 });

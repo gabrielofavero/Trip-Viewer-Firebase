@@ -1082,6 +1082,17 @@
 					"label": "Add [Closed] label to closed items"
 				},
 				"message": "What would you like to do?",
+				"groupAddTitle": "Add",
+				"groupAddSub": "Import every unused placemark from your My Maps link",
+				"groupEnrichTitle": "Enrich",
+				"groupEnrichSub": "Add official information on your manually added items",
+				"groupRefreshTitle": "Refresh",
+				"groupRefreshSub": "Update the {{count}} items already enriched",
+				"sourceMessage": "Which source?",
+				"sourceGoogleTitle": "Google Places",
+				"sourceGoogleSub": "Use official Google sources",
+				"sourceLocalSub": "Developer alternative with no API usage",
+				"photosTag": "≈ {{count}} photo(s)",
 				"refreshTitle": "Refresh enriched items",
 				"refreshSub": "Update the {{count}} items already linked to Google Places",
 				"enrichTitle": "Enrich pending items",
@@ -1180,6 +1191,7 @@
 			"replace": "Replace existing"
 		},
 		"imported": "{{count}} placemark(s) imported",
+		"staged": "{{count}} placemark(s) added — click Save to apply",
 		"errors": {
 			"jsZipMissing": "The KMZ reader could not be loaded. Please reload the page and try again.",
 			"noKmlInKmz": "No KML file was found inside this KMZ archive.",

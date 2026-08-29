@@ -106,6 +106,8 @@ interface PendingItemReview {
 
 let _running = false;
 let _abort: AbortController | null = null;
+/** Which source resolved the matches — drives the photo default ('api' asks, 'scraper' defaults on). */
+let _source: 'api' | 'scraper' = 'api';
 /** Auto-selected single matches (never need review). */
 let _resolved: PendingItemResolved[] = [];
 /** Items that need review (multiple matches / no match / search error). */
@@ -148,6 +150,7 @@ export async function runEnrichPending(source: 'api' | 'scraper' = 'api'): Promi
 	}
 
 	_running = true;
+	_source = source;
 	openPendingDialog();
 	const controller = new AbortController();
 	_abort = controller;
@@ -516,6 +519,37 @@ function renderFinalReview(): void {
 	content.innerHTML = getFinalReviewHTML();
 }
 
+/**
+ * Photo group for the final review. Source-aware:
+ *   - 'api' (Google Places): ASK — the "include a photo" checkbox is off by
+ *     default, with an "≈ N photo(s)" quantity tag (like the option cards).
+ *   - 'scraper' (Local): photos are INCLUDED BY DEFAULT (checkbox pre-checked).
+ */
+function getPhotoGroupHTML(): string {
+	const count = _matched.length;
+	const byDefault = _source === 'scraper';
+	const tag =
+		_source === 'api' && count > 0
+			? `<span class="places-bulk-option-tag">${escapeHtml(
+					translate('placesApi.bulk.options.photosTag', { count: String(count) }),
+				)}</span>`
+			: '';
+	return `
+	<div class="places-bulk-options-group">
+		<h4 class="places-bulk-options-title">${escapeHtml(
+			translate('placesApi.pending.apply.photo'),
+		)}</h4>
+		<label class="places-bulk-option">
+			<input type="checkbox" id="places-pending-photo" ${byDefault ? 'checked' : ''} />
+			<span>${escapeHtml(translate('placesApi.pending.apply.photo'))}</span>
+		</label>
+		${tag}
+		<span class="places-bulk-report-item-meta">${escapeHtml(
+			translate('placesApi.pending.apply.photoHint'),
+		)}</span>
+	</div>`;
+}
+
 function getFinalReviewHTML(): string {
 	const groups = FIELD_GROUPS.map(
 		(group) => `
@@ -543,18 +577,7 @@ function getFinalReviewHTML(): string {
 				)}</h4>
 				${groups}
 			</div>
-			<div class="places-bulk-options-group">
-				<h4 class="places-bulk-options-title">${escapeHtml(
-					translate('placesApi.pending.apply.photo'),
-				)}</h4>
-				<label class="places-bulk-option">
-					<input type="checkbox" id="places-pending-photo" />
-					<span>${escapeHtml(translate('placesApi.pending.apply.photo'))}</span>
-				</label>
-				<span class="places-bulk-report-item-meta">${escapeHtml(
-					translate('placesApi.pending.apply.photoHint'),
-				)}</span>
-			</div>
+			${getPhotoGroupHTML()}
 			${getClosedGroupHTML()}
 		</div>
 		<div class="places-bulk-footer">

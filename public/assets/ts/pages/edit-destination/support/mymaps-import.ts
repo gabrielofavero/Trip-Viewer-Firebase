@@ -13,9 +13,10 @@
 //   4. Conflicts— before writing, every draft whose name OR Maps link collides
 //      with an existing entry in its target category is listed with a per-item
 //      choice (keep both / skip / replace) — decision #5.
-//   5. Write    — createBatchOps() dot-path updates (`{category}.{id}: item`),
-//      batches of ≤ 500; on success re-read the doc, re-populate the form and
-//      openToast().
+//   5. Stage    — the chosen drafts are staged into the in-memory pending data
+//      (`FIRESTORE_DESTINATIONS_NEW_DATA`) and added to the live edit form.
+//      NO direct Firestore write — the edit page's Save button persists them
+//      (same convention as the Places enrich/refresh applies).
 //
 // Local-only for now (decision #2): mirrors the Places API PLACES_API_ENABLED
 // gate via MYMAPS_KML_ENABLED.
@@ -24,7 +25,13 @@
 // - docs/implementation-plans/20260826-mymaps-import-destination.md (§5 P4)
 
 import { registerActions } from '../../../ui/actions.js';
-import { cloneObject, getID, getRandomID } from '../../../utils/dom.js';
+import {
+	cloneObject,
+	findJFromID,
+	getID,
+	getLastUnorderedJ,
+	getRandomID,
+} from '../../../utils/dom.js';
 import {
 	closeMessage,
 	displayError,
@@ -37,11 +44,8 @@ import { translate } from '../../../i18n/translation.js';
 import {
 	DOCUMENT_ID,
 	FIRESTORE_DESTINATIONS_DATA,
-	setFirestoreDestinationsData,
+	FIRESTORE_DESTINATIONS_NEW_DATA,
 } from '../../../data/state.js';
-import { COLLECTION, createBatchOps } from '../../../data/services/destination.service.js';
-import { getSingleData } from '../../../data/firebase/database.js';
-import { snapshotFormState } from '../../../ui/fields.js';
 import {
 	buildMapsCoordinateLink,
 	buildMyMapsEntry,
@@ -54,13 +58,12 @@ import {
 } from '../../../data/services/mymaps-kml.service.js';
 import { GMAPS_SCRAPER_ENABLED, parseCoordinateSearchUrl } from '../../../data/services/gmaps-scraper.service.js';
 import { PLACES_API_ENABLED } from '../../../data/services/places-api.service.js';
-import { populateExistingDestinationForm } from '../existing-destination.js';
+import { buildRegionSelects } from '../../../ui/region-select.js';
+import { setDescription, updateDescriptionButtonLabel } from '../categories/description.js';
+import { addDestination, addDestinationHTML } from '../existing-destination.js';
 
 /** The 5 content categories a My Maps folder can map into (see §5 P2). */
 const IMPORTABLE_CATEGORIES = ['restaurants', 'snacks', 'nightlife', 'tourism', 'shopping'];
-
-/** Firestore writes per batch (hard limit is 500 — keep headroom). */
-const BATCH_LIMIT = 500;
 
 /** Re-import tolerance (plan P6, decision #6): pins within this distance (m) count as the same place. */
 const REIMPORT_TOLERANCE_M = 20;
@@ -69,7 +72,6 @@ const REIMPORT_TOLERANCE_M = 20;
 // Module state
 // ------------------------------------------------------------------
 let _drafts: MyMapsDraft[] = [];
-let _docPath = '';
 let _enriched = false; // whether enrichment already ran
 let _enriching = false; // enrichment in progress
 let _busy = false; // import write in progress
@@ -143,7 +145,6 @@ async function acquireKmlDrafts(): Promise<MyMapsDraft[] | null> {
 		displayError(new Error(translate('mymapsImport.errors.noDoc')), false, false);
 		return null;
 	}
-	_docPath = `${COLLECTION.DESTINATIONS}/${DOCUMENT_ID}`;
 
 	const mapLink = (getID<HTMLInputElement>('map-link')?.value ?? '').trim();
 	const mid = extractMid(mapLink);
@@ -363,7 +364,10 @@ function extractMid(url: string): string {
 
 function renderReview(): void {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = translate(_reimportMode ? 'mymapsImport.reimportTitle' : 'mymapsImport.title');
+	// The "Add" card always imports unused placemarks (re-import filtering), so
+	// the review keeps the plain "Import from My Maps" title (the reimport
+	// summary below still reads "Found N new placemark(s)").
+	properties.title = translate('mymapsImport.title');
 	properties.containers = getContainersInput();
 	properties.containers.principal = `${properties.containers.principal} mymaps-dialog-container`;
 	properties.fullscreen = true;
@@ -605,18 +609,13 @@ async function handleImportConfirm(): Promise<void> {
 
 	_busy = true;
 	try {
-		// Close whichever dialog is showing (review or conflict) before writing.
+		// Close whichever dialog is showing (review or conflict) before staging.
 		closeMessage();
-		const imported = await writeImports(decisions);
-		// Reflect the completion marker in-memory too (P5), so the bulk options
-		// read it live even before the post-write form refresh completes.
-		if (imported > 0 && FIRESTORE_DESTINATIONS_DATA) {
-			FIRESTORE_DESTINATIONS_DATA.myMapsImported = true;
-		}
-		await refreshForm();
-		openToast(translate('mymapsImport.imported', { count: String(imported) }));
+		const imported = await stageImports(decisions);
+		await refreshBulkButton();
+		openToast(translate('mymapsImport.staged', { count: String(imported) }));
 	} catch (error) {
-		console.error('[mymaps-import] Import write failed', error);
+		console.error('[mymaps-import] Import stage failed', error);
 		displayError(
 			error instanceof Error ? error : new Error(translate('placesApi.apply.error')),
 			false,
@@ -628,12 +627,14 @@ async function handleImportConfirm(): Promise<void> {
 }
 
 /**
- * Write the included drafts to Firestore as dot-path map updates
- * (`{category}.{id}: item`, plan §5 P4) in batches of ≤ 500. Handles the
- * per-conflict decisions: skip / replace (keep the existing id) / keep both.
- * Returns the number of entries written.
+ * Stage the included drafts into the edit page (plan §5 P4, staged variant) —
+ * the in-memory pending data (`FIRESTORE_DESTINATIONS_NEW_DATA`) plus the live
+ * edit form cards. NO direct Firestore write: per the edit page's convention
+ * (same as the Places enrich/refresh applies), the Save button persists
+ * everything. Handles the per-conflict decisions: skip / replace (keep the
+ * existing id) / keep both. Returns the number of entries staged.
  */
-async function writeImports(decisions: DecisionMap): Promise<number> {
+async function stageImports(decisions: DecisionMap): Promise<number> {
 	const usedIds = new Set<string>();
 	for (const category of IMPORTABLE_CATEGORIES) {
 		for (const id of Object.keys(FIRESTORE_DESTINATIONS_DATA?.[category] || {})) {
@@ -641,9 +642,9 @@ async function writeImports(decisions: DecisionMap): Promise<number> {
 		}
 	}
 
-	const ops: { path: string; data: Record<string, unknown> }[] = [];
+	const newData = FIRESTORE_DESTINATIONS_NEW_DATA ?? {};
 	// Categories that actually receive at least one entry this run (only
-	// written ones — conflict "skip" decisions don't count).
+	// staged ones — conflict "skip" decisions don't count).
 	const touchedCategories = new Set<string>();
 	let imported = 0;
 
@@ -654,49 +655,68 @@ async function writeImports(decisions: DecisionMap): Promise<number> {
 		const decision = decisions.get(i);
 		if (decision?.choice === 'skip') continue;
 
+		const category = draft.category;
 		const item = buildMyMapsEntry(draft);
+		let id: string;
 		if (decision?.choice === 'replace' && decision.existingId) {
-			ops.push({
-				path: _docPath,
-				data: { [`${draft.category}.${decision.existingId}`]: item },
-			});
+			id = decision.existingId;
 		} else {
-			const id = getRandomID({ pool: [...usedIds] });
+			id = getRandomID({ pool: [...usedIds] });
 			usedIds.add(id);
-			ops.push({ path: _docPath, data: { [`${draft.category}.${id}`]: item } });
 		}
-		touchedCategories.add(draft.category);
+
+		// Stage into the pending data (buildDestinationObject rebuilds NEW_DATA
+		// from the form, but keeping it in sync here preserves placeAPI and makes
+		// the staged entries visible to the bulk-item collectors / conflict pass).
+		if (!newData[category]) newData[category] = {};
+		newData[category][id] = item;
+
+		// Add (new) or refresh (replace) the live edit form card — the DOM is
+		// what the Save button reads, so the entry persists on Save.
+		let j = findJFromID(id, category);
+		if (j === 0) {
+			addDestination(category);
+			j = getLastUnorderedJ(`${category}-box`);
+		}
+		addDestinationHTML(category, j, { ...item, id });
+		setDescription(category, j, item.description);
+		updateDescriptionButtonLabel(category, j);
+
+		touchedCategories.add(category);
 		imported++;
 	}
 
 	// A My Maps import may target a category whose module is currently
 	// disabled (its section hidden on the edit page). Auto-enable it in the
-	// same write (`modules.{category}: true` — read back by
-	// populateExistingDestinationForm/loadExistingDestination), so the imported
-	// entries are immediately visible and manageable in the form. Only persists
-	// when the stored doc has the module off; enabled categories are untouched.
+	// form (checkbox + section) and the pending data (`modules.{category}: true`
+	// — buildDestinationObject reads the checkbox, so Save persists it), so the
+	// imported entries are immediately visible and manageable. Only staged when
+	// the stored doc has the module off; enabled categories are untouched.
 	for (const category of touchedCategories) {
 		if (FIRESTORE_DESTINATIONS_DATA?.modules?.[category] !== true) {
-			ops.push({ path: _docPath, data: { [`modules.${category}`]: true } });
+			const checkbox = getID<HTMLInputElement>(`${category}-enabled`);
+			if (checkbox && !checkbox.checked) {
+				checkbox.checked = true;
+				const content = getID<HTMLElement>(`${category}-enabled-content`);
+				if (content) content.style.display = 'block';
+				const addBox = getID<HTMLElement>(`${category}-add-box`);
+				if (addBox) addBox.style.display = 'block';
+			}
+			if (!newData.modules) newData.modules = {};
+			newData.modules[category] = true;
 		}
 	}
 
 	// Mark the destination as having completed a My Maps import (plan P5) so
 	// the bulk options hide "Import from My Maps" and offer "Re-import from My
-	// Maps" instead. Only persisted when at least one entry was actually imported.
+	// Maps" instead. Staged into NEW_DATA only (buildDestinationObject preserves
+	// it, so Save persists it); DATA stays untouched so the diff detects it.
+	// Only marked when at least one entry was actually imported.
 	if (imported > 0) {
-		ops.push({ path: _docPath, data: { myMapsImported: true } });
+		newData.myMapsImported = true;
 	}
 
-	for (let start = 0; start < ops.length; start += BATCH_LIMIT) {
-		const chunk = ops.slice(start, start + BATCH_LIMIT);
-		const batch = createBatchOps();
-		for (const op of chunk) batch.update(op.path, op.data);
-		const result = await batch.commit();
-		if (!result?.success) {
-			throw new Error(result?.error || translate('placesApi.apply.error'));
-		}
-	}
+	buildRegionSelects();
 	return imported;
 }
 
@@ -780,29 +800,16 @@ function readConflictDecisions(conflicts: MyMapsConflict[]): DecisionMap {
 }
 
 // ------------------------------------------------------------------
-// Post-write form refresh
+// Post-stage button sync
 // ------------------------------------------------------------------
 
 /**
- * Re-read the destination doc, re-populate the edit form (so the imported
- * entries show up as cards) and reset the unsaved-changes baseline so the
- * beforeunload prompt doesn't fire right after an import.
+ * Keep the bulk "Update with Maps" button in sync after a staged import
+ * (imported entries may be linked now). The import is STAGED, not persisted —
+ * so we must NOT re-read the doc from Firestore, re-populate the form, or
+ * reset the unsaved-changes baseline (the user still needs to hit Save).
  */
-async function refreshForm(): Promise<void> {
-	const data = await getSingleData('destinations');
-	if (data) {
-		setFirestoreDestinationsData(data);
-		// A re-populate failure shouldn't mask the successful write — log it
-		// and keep going so the success toast still shows.
-		try {
-			populateExistingDestinationForm();
-		} catch (error) {
-			console.error('[mymaps-import] Form refresh failed after import', error);
-		}
-		snapshotFormState();
-	}
-	// Keep the bulk "Update with Maps" button in sync (imported entries may be
-	// linked now). Dynamic import avoids the edit-destination module cycle.
+async function refreshBulkButton(): Promise<void> {
 	try {
 		const { refreshPlacesBulkButton } = await import('../edit-destination.js');
 		refreshPlacesBulkButton();

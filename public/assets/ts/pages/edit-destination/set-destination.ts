@@ -45,6 +45,13 @@ export async function buildDestinationObject() {
 		version: {
 			lastUpdated: new Date().toISOString(),
 		},
+		// Preserve the My Maps import marker (not a form field) so the Save
+		// button persists it. Reads the staged NEW_DATA flag too — the My Maps
+		// import stages into NEW_DATA (no direct write), so without this the
+		// marker would be dropped when the form rebuilds the document.
+		myMapsImported:
+			FIRESTORE_DESTINATIONS_DATA?.myMapsImported === true ||
+			FIRESTORE_DESTINATIONS_NEW_DATA?.myMapsImported === true,
 	});
 }
 

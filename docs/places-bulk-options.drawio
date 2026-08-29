@@ -1,0 +1,176 @@
+<mxfile host="app.diagrams.net" agent="Copilot" version="24.0.0" type="device">
+  <diagram id="places-bulk-options" name="Bulk options flow">
+    <mxGraphModel dx="0" dy="0" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2250" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Trigger -->
+        <mxCell id="alt-trigger" value="Edit destination page — &quot;Enrich Data&quot; (bulk) button" style="rounded=1;arcSize=8;fillColor=#1e3a5f;strokeColor=#0f2440;fontColor=#ffffff;fontStyle=1;fontSize=14;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="20" width="900" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="alt-triggerNote" value="3 grouped actions (Add / Enrich / Refresh). Source choice (Google vs Local) moves inside Enrich/Refresh and auto-collapses to the only available source. The &quot;Enrich Data&quot; button is hidden when ALL sources (Places API + local scraper + My Maps) are disabled." style="text;html=1;fontSize=12;fontColor=#666666;whiteSpace=wrap;align=center;" vertex="1" parent="1">
+          <mxGeometry x="700" y="72" width="900" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="alt-dialog" value="&quot;What would you like to do?&quot; — pick one of 3 grouped actions" style="rounded=1;arcSize=12;fillColor=#eef2f7;strokeColor=#9db2c9;fontColor=#222222;fontStyle=1;fontSize=13;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="130" width="900" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ================= ALT Column 1: Add (My Maps) ================= -->
+        <mxCell id="c1opt" value="Add — Import every unused placemark from your My Maps link" style="rounded=1;arcSize=12;fillColor=#e8d5f5;strokeColor=#8e44ad;fontColor=#512e5f;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="200" width="560" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c1obs" value="Obs: hidden if no My Maps link is available" style="rounded=1;arcSize=8;fillColor=#fdf2e9;strokeColor=#e67e22;fontColor=#6e2c00;fontSize=12;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="264" width="560" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c1act" value="action: places-bulk-mymaps-reimport → openMymapsReimportDialog() — imports only unused placemarks" style="text;html=1;fontSize=11;fontStyle=2;fontColor=#512e5f;whiteSpace=wrap;align=center;" vertex="1" parent="1">
+          <mxGeometry x="40" y="316" width="560" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c1s1" value="Acquire KML: worker proxy via the myMaps link → .kml/.kmz upload fallback" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="374" width="560" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c1s2" value="Parse → drafts · keep only UNUSED placemarks (skip ones already in the destination)" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="446" width="560" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c1s3" value="Review dialog: one row per placemark (include checkbox, category select, status badge)" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="518" width="560" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="c1s4" value="OPTIONAL enrich: Places API Text Search (location bias) or the local scraper" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="586" width="560" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c1s5" value="Conflict check: name or Maps link collides with an existing entry → keep both / skip / replace" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="658" width="560" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c1s6" value="Stage into edit form + pending data — no direct Firestore write" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="730" width="560" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="c1end" value="Staged — click Save on the edit page to persist (also writes myMapsImported)" style="rounded=1;arcSize=8;fillColor=#d5f5e3;strokeColor=#27ae60;fontColor=#145a32;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="798" width="560" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ================= ALT Column 2: Enrich ================= -->
+        <mxCell id="c2opt" value="Enrich — Add official info on manually added items" style="rounded=1;arcSize=12;fillColor=#fde2e2;strokeColor=#e74c3c;fontColor=#7b241c;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="200" width="720" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c2obs" value="Obs: goes straight to the only available source · hidden if none available" style="rounded=1;arcSize=8;fillColor=#fdf2e9;strokeColor=#e67e22;fontColor=#6e2c00;fontSize=12;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="264" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c2sub" value="Which source?" style="rounded=1;arcSize=20;fillColor=#eef2f7;strokeColor=#9db2c9;fontColor=#222222;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="316" width="720" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="c2g1" value="Google Places — official Google sources" style="rounded=1;arcSize=14;fillColor=#d5f5e3;strokeColor=#27ae60;fontColor=#145a32;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="382" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c2l1" value="Local (gmaps scraper) — developer alternative, no API usage" style="rounded=1;arcSize=14;fillColor=#fff3cd;strokeColor=#f1c40f;fontColor=#6d4c00;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="382" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c2g2" value="runEnrichPending('api') — Places API Text Search per unlinked item" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="452" width="340" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="c2l2" value="runEnrichPending('scraper') — local scrape per item (dev only)" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="452" width="340" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="c2g3" value="1 result → auto-select · multiple / none / error → review list" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="534" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c2l3" value="Matches always go to review (manual confirmation)" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="534" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c2g4" value="Final review: ASK to include 1 photo per item — tag shows ≈ N photos" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="604" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c2l4" value="Final review: include photos BY DEFAULT (1 per item)" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="604" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c2end" value="Review → Apply matched → Save" style="rounded=1;arcSize=8;fillColor=#d5f5e3;strokeColor=#27ae60;fontColor=#145a32;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="676" width="720" height="54" as="geometry" />
+        </mxCell>
+
+        <!-- ================= ALT Column 3: Refresh ================= -->
+        <mxCell id="c3opt" value="Refresh — update the X items already enriched" style="rounded=1;arcSize=12;fillColor=#cfe8ff;strokeColor=#2e86de;fontColor=#083d77;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="200" width="720" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c3obs" value="Obs: goes straight to the only available source · hidden if none available" style="rounded=1;arcSize=8;fillColor=#fdf2e9;strokeColor=#e67e22;fontColor=#6e2c00;fontSize=12;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="264" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c3sub" value="Which source?" style="rounded=1;arcSize=20;fillColor=#eef2f7;strokeColor=#9db2c9;fontColor=#222222;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="316" width="720" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="c3g1" value="Google Places — official Google sources" style="rounded=1;arcSize=14;fillColor=#d5f5e3;strokeColor=#27ae60;fontColor=#145a32;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="382" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c3l1" value="Local (gmaps scraper) — developer alternative, no API usage" style="rounded=1;arcSize=14;fillColor=#fff3cd;strokeColor=#f1c40f;fontColor=#6d4c00;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1780" y="382" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c3g2" value="runBulkPlacesUpdate() — getPlace() per linked item (info only, no photos)" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="452" width="340" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="c3l2" value="runBulkLocalUpdate() — scrapePlaces() one local request (sequential)" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1780" y="452" width="340" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="c3g3" value="Compare fresh vs stored → count updatable fields + closed places" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="534" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c3l3" value="Report: updatable fields + closed places" style="rounded=1;arcSize=8;fillColor=#ffffff;strokeColor=#999999;fontColor=#333333;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1780" y="534" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c3end" value="Report → Apply → Save" style="rounded=1;arcSize=8;fillColor=#d5f5e3;strokeColor=#27ae60;fontColor=#145a32;fontStyle=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="606" width="720" height="54" as="geometry" />
+        </mxCell>
+
+        <!-- Proposal summary note -->
+        <mxCell id="alt-note" value="3 grouped cards (Add / Enrich / Refresh). Enrich and Refresh share a &quot;Which source?&quot; step (Google Places vs Local scraper) — it collapses to a single source when only one is available, and the whole card hides when none is. Add is gated on the destination having a My Maps link, importing only unused placemarks. Enrich photos: Local includes them BY DEFAULT; Google Places ASKS to include 1 photo per item (≈ N tag) after the text info." style="rounded=1;arcSize=8;fillColor=#fdf2e9;strokeColor=#e67e22;fontColor=#6e2c00;fontSize=12;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="700" width="1050" height="104" as="geometry" />
+        </mxCell>
+
+        <!-- ================= ALT Edges ================= -->
+        <mxCell id="eTrigDlg" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="alt-trigger" target="alt-dialog">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eDlg1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#8e44ad;strokeWidth=2;" edge="1" parent="1" source="alt-dialog" target="c1opt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eDlg2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#e74c3c;strokeWidth=2;" edge="1" parent="1" source="alt-dialog" target="c2opt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eDlg3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#2e86de;strokeWidth=2;" edge="1" parent="1" source="alt-dialog" target="c3opt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c1opt" target="c1obs"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e1b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c1obs" target="c1act"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e1c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c1act" target="c1s1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e1d" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c1s1" target="c1s2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e1e" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c1s2" target="c1s3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e1f" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c1s3" target="c1s4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e1g" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c1s4" target="c1s5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e1h" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c1s5" target="c1s6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e1i" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c1s6" target="c1end"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="e2a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2opt" target="c2obs"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2obs" target="c2sub"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.25;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2sub" target="c2g1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2d" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.75;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2sub" target="c2l1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2e" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2g1" target="c2g2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2f" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2g2" target="c2g3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2g" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2g3" target="c2g4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2h" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2l1" target="c2l2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2i" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2l2" target="c2l3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2j" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2l3" target="c2l4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2k" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.25;entryY=0;" edge="1" parent="1" source="c2g4" target="c2end"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2l" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.75;entryY=0;" edge="1" parent="1" source="c2l4" target="c2end"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="e3a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c3opt" target="c3obs"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c3obs" target="c3sub"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.25;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c3sub" target="c3g1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3d" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.75;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c3sub" target="c3l1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3e" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c3g1" target="c3g2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3f" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c3g2" target="c3g3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3g" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.25;entryY=0;" edge="1" parent="1" source="c3g3" target="c3end"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3h" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c3l1" target="c3l2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3i" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c3l2" target="c3l3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3j" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.75;entryY=0;" edge="1" parent="1" source="c3l3" target="c3end"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

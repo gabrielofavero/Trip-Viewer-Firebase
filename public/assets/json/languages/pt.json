@@ -1082,6 +1082,17 @@
 					"label": "Adicionar etiqueta [Closed] aos itens fechados"
 				},
 				"message": "O que você gostaria de fazer?",
+				"groupAddTitle": "Adicionar",
+				"groupAddSub": "Importar cada marcador não usado do seu link do My Maps",
+				"groupEnrichTitle": "Enriquecer",
+				"groupEnrichSub": "Adicionar informações oficiais nos itens adicionados manualmente",
+				"groupRefreshTitle": "Atualizar",
+				"groupRefreshSub": "Atualizar os {{count}} itens já enriquecidos",
+				"sourceMessage": "Qual fonte?",
+				"sourceGoogleTitle": "Google Places",
+				"sourceGoogleSub": "Usar fontes oficiais do Google",
+				"sourceLocalSub": "Alternativa para desenvolvedores, sem uso de API",
+				"photosTag": "≈ {{count}} foto(s)",
 				"refreshTitle": "Atualizar itens enriquecidos",
 				"refreshSub": "Atualizar os {{count}} itens já vinculados ao Google Places",
 				"enrichTitle": "Enriquecer itens pendentes",
@@ -1180,6 +1191,7 @@
 			"replace": "Substituir o existente"
 		},
 		"imported": "{{count}} marcador(es) importados",
+		"staged": "{{count}} marcador(es) adicionados — clique em Salvar para aplicar",
 		"errors": {
 			"jsZipMissing": "Não foi possível carregar o leitor de KMZ. Recarregue a página e tente novamente.",
 			"noKmlInKmz": "Nenhum arquivo KML foi encontrado dentro deste arquivo KMZ.",
