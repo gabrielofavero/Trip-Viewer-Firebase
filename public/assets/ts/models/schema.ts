@@ -416,6 +416,9 @@ export interface Destination {
 	modules: DestinationModules;
 	myMaps: string;
 
+	/** Whether a My Maps import has already been completed (P5). May be absent in legacy docs — treated as "not imported". */
+	myMapsImported?: boolean;
+
 	/** Hero image (was "imagem") — may be absent in legacy docs */
 	image?: DestinationImage;
 
@@ -554,6 +557,13 @@ export interface PlaceAPI {
 	 * refreshed by link (the local import path) — see places/places-local-step.ts.
 	 */
 	sourceUrl?: string;
+	/**
+	 * Source coordinates of the My Maps pin this entry was imported from
+	 * (plan P6). Persisted at import time so re-imports can reliably skip
+	 * already-imported placemarks by coordinate (URL parsing is fragile once
+	 * enrichment rewrites the Maps links). Absent on legacy entries.
+	 */
+	sourceCoords?: { lat: number; lng: number };
 	/** Whether the place is no longer operational (proposed — see plan Open Q3). */
 	closed?: boolean;
 }

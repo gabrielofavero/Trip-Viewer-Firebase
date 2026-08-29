@@ -215,20 +215,39 @@ export function isAutoFilled(
 // ============================================================
 
 export interface ClosedState {
-	/** Whether the place is no longer operational. */
+	/** Whether the place is PERMANENTLY closed (kept for back-compat callers). */
 	closed: boolean;
-	/** Raw businessStatus from the API (e.g. "CLOSED_PERMANENTLY"). */
+	/** Raw businessStatus from the API ('' | OPERATIONAL | CLOSED_TEMPORARILY | CLOSED_PERMANENTLY). */
 	status: string;
+	/** Tri-state classification (plan P4): operational / temporarily closed / permanently closed. */
+	kind: 'operational' | 'temporarilyClosed' | 'permanentlyClosed';
 }
 
 /**
- * Determine whether a fetched place is "no longer operational".
- * Per plan Open Question 8, only CLOSED_PERMANENTLY counts for now;
- * CLOSED_TEMPORARILY is not treated as closed.
+ * Classify a fetched place's business status into a tri-state (plan P4).
+ * Temporarily closed places are distinguished from permanently closed ones —
+ * callers treat them separately (temporary: informational, enrich normally;
+ * permanent: delete/label options).
  */
 export function buildClosedState(newPlace: Pick<PlaceDetails, 'businessStatus'>): ClosedState {
 	const status = newPlace.businessStatus ?? '';
-	return { closed: status === 'CLOSED_PERMANENTLY', status };
+	const kind =
+		status === 'CLOSED_PERMANENTLY'
+			? 'permanentlyClosed'
+			: status === 'CLOSED_TEMPORARILY'
+				? 'temporarilyClosed'
+				: 'operational';
+	return { closed: kind === 'permanentlyClosed', status, kind };
+}
+
+/** Whether the place is permanently closed. */
+export function isPermanentlyClosed(state: ClosedState): boolean {
+	return state.kind === 'permanentlyClosed';
+}
+
+/** Whether the place is temporarily closed. */
+export function isTemporarilyClosed(state: ClosedState): boolean {
+	return state.kind === 'temporarilyClosed';
 }
 
 /** Translatable "[Closed]" label used as a title prefix (P8/P12). */

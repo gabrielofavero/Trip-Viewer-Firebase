@@ -40,11 +40,9 @@ import {
 } from '../utils/messages.js';
 import { getLanguagePackName, translate } from '../i18n/translation.js';
 import {
-	DOCUMENT_ID,
 	FIRESTORE_DESTINATIONS_DATA,
 	FIRESTORE_DESTINATIONS_NEW_DATA,
 } from '../data/state.js';
-import { COLLECTION, createBatchOps } from '../data/services/destination.service.js';
 import { getPlace, PLACES_API_ENABLED } from '../data/services/places-api.service.js';
 import {
 	buildMapsSearchUrl,
@@ -144,6 +142,43 @@ export interface BulkReport {
  */
 export function countLinkedItems(): number {
 	return collectLinkedEntries().length;
+}
+
+/** A destination entry without a linked Google Place ID — "Enrich pending" candidate. */
+export interface UnlinkedEntry {
+	category: string;
+	id: string;
+	entry: PlaceItem;
+}
+
+/**
+ * Collect every entry that does NOT have a linked Google Place ID
+ * (placeAPI.id empty/absent) across all categories — the "Enrich pending
+ * items" candidates. Pending data wins over the loaded document for the same
+ * id (same merge order as collectLinkedEntries).
+ */
+export function collectUnlinkedEntries(): UnlinkedEntry[] {
+	const byKey = new Map<string, UnlinkedEntry>();
+	const addFrom = (source: Record<string, any> | null | undefined): void => {
+		if (!source) return;
+		for (const category of DESTINATION_CATEGORIES) {
+			const map: Record<string, any> | undefined = source[category];
+			if (!map || typeof map !== 'object') continue;
+			for (const [id, rawEntry] of Object.entries(map)) {
+				const placeAPI = rawEntry?.placeAPI as PlaceAPI | undefined;
+				if (placeAPI?.id) continue; // already linked
+				byKey.set(`${category}:${id}`, { category, id, entry: rawEntry as PlaceItem });
+			}
+		}
+	};
+	addFrom(FIRESTORE_DESTINATIONS_DATA);
+	addFrom(FIRESTORE_DESTINATIONS_NEW_DATA); // newer pending data wins
+	return [...byKey.values()];
+}
+
+/** Count destination entries without a Google Place ID. */
+export function countUnlinkedItems(): number {
+	return collectUnlinkedEntries().length;
 }
 
 /**
@@ -479,7 +514,7 @@ function isFieldUpdatable(
 
 function openBulkDialog(): void {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = translate('placesApi.updateWithMaps');
+	properties.title = translate('placesApi.bulk.options.refreshTitle');
 	properties.containers = getContainersInput();
 	properties.containers.principal = `${properties.containers.principal} places-dialog-container`;
 	properties.fullscreen = true;
@@ -714,37 +749,28 @@ function readApplyOptions(): BulkApplyOptions {
 }
 
 /**
- * Apply the chosen options to every fetched item and persist via a single
- * Firestore batch (plan §5 P12). Reuses P3's apply helpers (applyPlaceData /
- * isAutoFilled) and P9's form/pending-data sync (updateFormEntry /
- * refreshPendingData) so the apply + compare logic lives in exactly one place.
+ * Apply the chosen options to every fetched item WITHOUT writing to Firestore —
+ * per the edit page's convention, the Save button persists everything. Updates
+ * are staged into the in-memory pending data + the live edit form
+ * (refreshPendingData / updateFormEntry); auto-deleted items are removed from
+ * both. Matches the per-item "Enrich Data" flow (applyAndClose).
  *
  * - "Replace everything" → applies all FIELD_KEYS; "auto-filled only" → only
  *   fields whose entry value is unchanged since the stored placeAPI.
- * - "Auto-delete" removes closed items from Firestore, the in-memory maps and
- *   the edit form; "Add [Closed] label" sets placeAPI.closed + title marker.
+ * - "Auto-delete" removes closed items from the in-memory maps and the edit
+ *   form (staged; Save persists); "Add [Closed] label" sets placeAPI.closed +
+ *   title marker.
  * - placeAPI is ALWAYS refreshed (updatedAt) for every non-deleted item.
- * - Existing entries are written to the DB immediately (matching P9's decision);
- *   brand-new, never-saved entries are only staged (created by the Save flow).
  */
 async function applyBulk(report: BulkReport, options: BulkApplyOptions): Promise<void> {
 	const lang = getLanguagePackName();
-	const docPath = DOCUMENT_ID ? `${COLLECTION.DESTINATIONS}/${DOCUMENT_ID}` : null;
-	const batch = createBatchOps();
-	let hasDbOps = false;
 
 	for (const item of report.items) {
 		if (item.error) continue;
 		const { category, id, entry, oldPlaceAPI, newPlace } = item;
-		const isExisting = Boolean(FIRESTORE_DESTINATIONS_DATA?.[category]?.[id]);
-		const base = `${category}.${id}`;
 
-		// Closed-place "auto-delete" strategy: remove the item everywhere.
+		// Closed-place "auto-delete" strategy: remove the item (staged; Save persists).
 		if (item.closed && options.closedStrategy === 'delete') {
-			if (docPath && isExisting) {
-				batch.update(docPath, { [base]: firebase.firestore.FieldValue.delete() });
-				hasDbOps = true;
-			}
 			removeLinkedEntry(category, id);
 			continue;
 		}
@@ -764,34 +790,12 @@ async function applyBulk(report: BulkReport, options: BulkApplyOptions): Promise
 			updated.placeAPI = { ...updated.placeAPI, closed: true } as PlaceAPI;
 		}
 
-		// Persist existing entries (new/staged ones are created by the Save flow).
-		if (docPath && isExisting) {
-			const updates: Record<string, unknown> = { [`${base}.placeAPI`]: updated.placeAPI };
-			for (const field of fieldsToApply) {
-				const fieldKey = field === 'region' ? 'regions' : field;
-				const fieldValue =
-					field === 'description' ? updated.description : updated[fieldKey];
-				updates[
-					field === 'description' ? `${base}.description` : `${base}.${fieldKey}`
-				] = fieldValue;
-			}
-			batch.update(docPath, updates);
-			hasDbOps = true;
-		}
-
-		// Sync in-memory pending data + the live edit form so a later Save
-		// doesn't overwrite these updates with stale form values.
+		// Stage into pending data + the live edit form — the page's Save button
+		// persists everything (no direct Firestore write here).
 		refreshPendingData(category, id, updated);
 		const j = findJFromID(id, category);
 		if (getID(`${category}-id-${j}`)?.value === id) {
 			updateFormEntry(category, j, updated, fieldsToApply, applyClosedLabel, false);
-		}
-	}
-
-	if (docPath && hasDbOps) {
-		const result = await batch.commit();
-		if (!result?.success) {
-			throw new Error(result?.error || translate('placesApi.apply.error'));
 		}
 	}
 }

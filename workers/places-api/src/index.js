@@ -263,7 +263,7 @@ async function handleDetails(url, placeId, { config, quota }) {
 }
 
 /**
- * Route 3: `GET /places/{placeId}/photos?lang` → `{ photos: [{ name, photoUri }] }`.
+ * Route 3: `GET /places/{placeId}/photos?lang&count&offset` → `{ photos: [{ name, photoUri }] }`.
  *
  * Always uses the dedicated photos key (details call + each media call). The
  * returned `photoUri`s are keyless CDN URLs the frontend stores on the
@@ -281,6 +281,13 @@ async function handleDetails(url, placeId, { config, quota }) {
  */
 async function handlePhotos(url, placeId, { config, quota }) {
 	const lang = parseLang(url);
+	// P8: `count` (default 1, capped at 5) controls how many photos to return
+	// and `offset` (default 0) which photo to start from. The frontend's
+	// "Include photo" flow starts at 1 and requests one more per "+" click
+	// (count=1, offset=N), so each request resolves exactly ONE new photoUri —
+	// keeps the paid photos quota low.
+	const count = Math.min(parseInt(url.searchParams.get('count') ?? '1', 10) || 1, 5);
+	const offset = Math.max(parseInt(url.searchParams.get('offset') ?? '0', 10) || 0, 0);
 	const state = await quota.check('photos');
 	if (!config.photosEnabled || state.disabled || state.limited) {
 		// Photos master switch off (PLACES_PHOTOS_ENABLED=false), key disabled
@@ -296,7 +303,7 @@ async function handlePhotos(url, placeId, { config, quota }) {
 	const raw = await getPlace(placeId, { apiKey, lang, photos: true });
 	await quota.record('photos');
 	const photos = [];
-	for (const photo of (raw?.photos ?? []).slice(0, 1)) {
+	for (const photo of (raw?.photos ?? []).slice(offset, offset + count)) {
 		if (typeof photo?.name !== 'string' || photo.name.length === 0) continue;
 		const photoUri = await photoUriFor({ apiKey, photoName: photo.name });
 		await quota.record('photos');

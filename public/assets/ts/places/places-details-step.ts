@@ -316,8 +316,11 @@ function handleContinue(): void {
 	// and applies directly; so does a search with "Include photos" left off —
 	// the paid photos key / photos route is NEVER called then. Everything else
 	// continues to the photos step (P8).
-	const { closed } = buildClosedState(details);
-	if (closed) {
+	const closedState = buildClosedState(details);
+	// Both permanently AND temporarily closed places branch to the 'closed'
+	// step (P8/P4): temporary shows an informational notice (enrich normally),
+	// permanent shows the delete/ignore/[Closed] options.
+	if (closedState.kind !== 'operational') {
 		void goTo('closed');
 		return;
 	}

@@ -38,6 +38,7 @@ import { translate } from '../../i18n/translation.js';
 import { deleteUserObjectDB, getPermissions, getSingleData } from '../../data/firebase/database.js';
 import { loadImageSelector, PERMISSIONS, setPermissions } from '../../data/firebase/storage.js';
 import { PLACES_API_ENABLED } from '../../data/services/places-api.service.js';
+import { GMAPS_SCRAPER_ENABLED } from '../../data/services/gmaps-scraper.service.js';
 import { loadVisibilityIndex } from '../home/support/visibility.js';
 import { loadEditDestinationListeners } from './support/event-listeners.js';
 import { getVisibility } from '../../theme/theme.js';
@@ -87,6 +88,9 @@ import '../../places/places-closed-photos-step.js';
 // Places API apply & persist (P9). Side-effect import: self-registers the
 // 'done' step renderer + the apply/confirm action on import.
 import '../../places/places-apply-flow.js';
+// Places API — bulk "Enrich pending items" (P3). Side-effect import:
+// registers the 'places-bulk-enrich' card action + the pending dialog flow.
+import '../../places/places-pending.js';
 // Places API — bulk "Update with Maps" (P10 hand-off to P11, run in parallel).
 // P11 (places/places-bulk.ts) exports the contract used here:
 //   export async function runBulkUpdate(): Promise<void> — bulk fetch + report
@@ -97,29 +101,24 @@ import '../../places/places-apply-flow.js';
 // prompt or routes straight to the My Maps import; runBulkLocalUpdate() is the
 // bulk gmaps-scraper path.
 import {
-	countBulkEligibleEntries,
 	countLinkedItems,
+	countUnlinkedItems,
 	runBulkLocalUpdate,
 	runBulkUpdate,
 } from '../../places/places-bulk.js';
 // Places API — import source selection + local (gmaps scraper) step. The
 // source step module self-registers its 'source' step renderer + per-item
 // actions on import; the local step registers the maps-link import step.
-// getSourceOptionsHTML() + the bulk action names are reused by the bulk
-// "Update all" prompt below so both flows show the same option cards.
-import {
-	getSourceOptionsHTML,
-	SOURCE_API_BULK_ACTION,
-	SOURCE_LOCAL_BULK_ACTION,
-	SOURCE_MYMAPS_BULK_ACTION,
-} from '../../places/places-source-step.js';
+// Only the bulk "Local (gmaps scraper)" card action is reused here (P1) — the
+// per-item dialog still renders getSourceOptionsHTML() internally.
+import { SOURCE_LOCAL_BULK_ACTION } from '../../places/places-source-step.js';
 import '../../places/places-local-step.js';
 import { registerActions } from '../../ui/actions.js';
 // My Maps import (P4). Side-effect import: self-registers the
 // 'mymaps-import' action + the review/write dialog flow on import, and joins
 // the edit-destination bundle (esbuild follows the import). Also used directly
 // for the bulk source-step "My Maps" option below.
-import { openMymapsImportDialog } from './support/mymaps-import.js';
+import { openMymapsImportDialog, openMymapsReimportDialog } from './support/mymaps-import.js';
 
 const TODAY = getTodayFormatted();
 const TOMORROW = getTomorrowFormatted();
@@ -258,37 +257,64 @@ function loadEventListeners() {
 }
 
 // ============================================================
-// Places API — bulk "Update with Maps" (P10)
+// Places API — bulk "Enrich Data" (P1 restructure)
 // ============================================================
 
+/** Bulk "Enrich Data" option-card action names. */
+const BULK_REFRESH_ACTION = 'places-bulk-refresh';
+const BULK_ENRICH_ACTION = 'places-bulk-enrich';
+const BULK_ENRICH_SCRAPER_ACTION = 'places-bulk-enrich-scraper';
+const BULK_MYMAPS_IMPORT_ACTION = 'places-bulk-mymaps-import';
+const BULK_MYMAPS_REIMPORT_ACTION = 'places-bulk-mymaps-reimport';
+
 /**
- * Show/hide the bulk "Update with Maps" button. Visible only when running on
- * a LOCAL environment (HARD CHECK — PLACES_API_ENABLED) AND the user holds the
- * canUsePlacesAPI permission. Shown even when no entry is linked to places —
- * with nothing to refresh, opening the button routes straight to the My Maps
- * import (see openPlacesBulkDialog).
+ * Whether this destination has already completed a My Maps import (P5).
+ * Reads the `myMapsImported` marker persisted on the destination doc when a
+ * My Maps import completes (mymaps-import.ts writeImports). Legacy
+ * destinations without the marker default to "not imported" (no backfill).
+ */
+function isMyMapsImported(): boolean {
+	return FIRESTORE_DESTINATIONS_DATA?.myMapsImported === true;
+}
+
+/**
+ * Whether any bulk option applies (plan decision #10 — hide the button when
+ * there's nothing to refresh, enrich, or import). The My Maps term keeps the
+ * button visible in practice: import (URL/KML) or re-import is always offered,
+ * so the "nothing applies" state is only reachable once P5 can suppress both
+ * My Maps cards.
+ */
+function hasBulkOptions(): boolean {
+	return countLinkedItems() > 0 || countUnlinkedItems() > 0 || true;
+}
+
+/**
+ * Show/hide the bulk "Enrich Data" button. Visible only when running on a
+ * LOCAL environment (HARD CHECK — PLACES_API_ENABLED), the user holds the
+ * canUsePlacesAPI permission, AND at least one bulk option applies.
  * Called on page load, and re-called after per-item applies (P9) / bulk apply
  * (P12) so the button stays in sync with the form.
  */
 export function refreshPlacesBulkButton(): void {
 	const button = getID<HTMLButtonElement>('places-bulk-btn');
 	if (!button) return;
-	const visible = PLACES_API_ENABLED === true && PERMISSIONS?.canUsePlacesAPI === true;
+	const visible =
+		PLACES_API_ENABLED === true &&
+		PERMISSIONS?.canUsePlacesAPI === true &&
+		hasBulkOptions();
 	button.style.display = visible ? '' : 'none';
 }
 
 /**
- * Bulk "Update with Maps" entry point (P10). FIRST shows the import-source
- * prompt (Local gmaps scraper vs Places API vs My Maps) — the same option
- * cards the per-item dialog shows (minus the My Maps card, which is
- * bulk-only). Choosing a source then continues to that flow:
- *   - "Via Places API" → openPlacesBulkConfirm() (the existing confirm dialog).
- *   - "Local (gmaps scraper)" → runBulkLocalUpdate() (bulk local scrape).
- *   - "My Maps" → openMymapsImportDialog() (batch placemark import).
- *
- * When NOTHING is linked to places (countBulkEligibleEntries() === 0) the
- * source prompt is skipped — Places/scraper have nothing to refresh, so we go
- * straight to the My Maps import.
+ * Bulk "Enrich Data" entry point (P1). Shows the import/integration option
+ * cards, each with its own visibility condition:
+ *   - "Refresh enriched items"  (only when ≥1 item has a Google Place ID)
+ *   - "Enrich pending items"    (only when ≥1 item has no Google Place ID)
+ *   - "Import from My Maps"     (only when NOT already imported)
+ *   - "Re-import from My Maps"  (only when already imported)
+ * plus the existing "Local (gmaps scraper)" card on local dev machines.
+ * The old "nothing linked → straight to My Maps" shortcut is gone — the user
+ * always picks from the options (plan P1).
  */
 function openPlacesBulkDialog(): void {
 	if (PLACES_API_ENABLED !== true) {
@@ -300,23 +326,116 @@ function openPlacesBulkDialog(): void {
 		return;
 	}
 
-	// Nothing to refresh (no destination linked to places) → the only useful
-	// bulk action is importing from My Maps. Skip the source prompt.
-	if (countBulkEligibleEntries() === 0) {
-		void openMymapsImportDialog();
-		return;
-	}
-
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = translate('placesApi.updateWithMaps');
-	properties.content = getSourceOptionsHTML(
-		SOURCE_LOCAL_BULK_ACTION,
-		SOURCE_API_BULK_ACTION,
-		SOURCE_MYMAPS_BULK_ACTION,
-	);
+	properties.title = translate('placesApi.dialog.title');
+	properties.content = getBulkOptionsHTML();
 	properties.containers = getContainersInput();
 	properties.buttons = [];
 	displayFullMessage(properties);
+}
+
+/** Render the bulk option cards per their visibility conditions. */
+function getBulkOptionsHTML(): string {
+	const linked = countLinkedItems();
+	const unlinked = countUnlinkedItems();
+	const imported = isMyMapsImported();
+
+	// The "Local (gmaps scraper)" card only exists on local dev machines — the
+	// scraper route (127.0.0.1:8788) doesn't run on deployed hosts.
+	const localCard = GMAPS_SCRAPER_ENABLED
+		? bulkOptionCard(
+				SOURCE_LOCAL_BULK_ACTION,
+				translate('placesApi.source.local'),
+				translate('placesApi.source.localHint'),
+			)
+		: '';
+
+	const refreshCard =
+		linked > 0
+			? bulkOptionCard(
+					BULK_REFRESH_ACTION,
+					translate('placesApi.bulk.options.refreshTitle'),
+					translate('placesApi.bulk.options.refreshSub', { count: String(linked) }),
+					// Each linked item = 1 Google Places details request.
+					translate('placesApi.bulk.options.apiRequests', { count: String(linked) }),
+				)
+			: '';
+
+	const enrichCard =
+		unlinked > 0
+			? bulkOptionCard(
+					BULK_ENRICH_ACTION,
+					translate('placesApi.bulk.options.enrichTitle'),
+					translate('placesApi.bulk.options.enrichSub', { count: String(unlinked) }),
+					// Each unlinked item = 1 Google Places text-search request.
+					translate('placesApi.bulk.options.apiRequests', { count: String(unlinked) }),
+				)
+			: '';
+
+	// P9: the same unlinked-item flow via the LOCAL gmaps-scraper (dev only).
+	// Scraper matches always go to review for manual confirmation.
+	const enrichScraperCard =
+		GMAPS_SCRAPER_ENABLED && unlinked > 0
+			? bulkOptionCard(
+					BULK_ENRICH_SCRAPER_ACTION,
+					translate('placesApi.bulk.options.enrichLocalTitle'),
+					translate('placesApi.bulk.options.enrichLocalSub', {
+						count: String(unlinked),
+					}),
+				)
+			: '';
+
+	const mymapsImportCard = !imported
+		? bulkOptionCard(
+				BULK_MYMAPS_IMPORT_ACTION,
+				translate('placesApi.source.mymaps'),
+				translate('placesApi.source.mymapsHint'),
+			)
+		: '';
+
+	const mymapsReimportCard = imported
+		? bulkOptionCard(
+				BULK_MYMAPS_REIMPORT_ACTION,
+				translate('placesApi.bulk.options.reimportTitle'),
+				translate('placesApi.bulk.options.reimportSub'),
+			)
+		: '';
+
+	return `
+	<div class="places-source">
+		<p class="places-linked-message">${escapeHtml(
+			translate('placesApi.bulk.options.message'),
+		)}</p>
+		<div class="places-linked-options">
+			${localCard}
+			${refreshCard}
+			${enrichCard}
+			${enrichScraperCard}
+			${mymapsImportCard}
+			${mymapsReimportCard}
+		</div>
+	</div>`;
+}
+
+/** One bulk option card (same visual language as the linked/source options). */
+function bulkOptionCard(
+	action: string,
+	title: string,
+	caption: string,
+	tag?: string,
+): string {
+	return `<button type="button" class="places-linked-option" data-action="${action}">
+			<span class="places-linked-option-title">${escapeHtml(title)}</span>
+			<span class="places-linked-option-caption">${escapeHtml(caption)}</span>
+			${tag ? `<span class="places-bulk-option-tag">${escapeHtml(tag)}</span>` : ''}
+		</button>`;
+}
+
+/** HTML-escape a string for safe interpolation (same pattern as the step modules). */
+function escapeHtml(value: string): string {
+	const div = document.createElement('div');
+	div.textContent = value;
+	return div.innerHTML;
 }
 
 /**
@@ -333,8 +452,12 @@ function openPlacesBulkConfirm(): void {
 	}
 
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = translate('placesApi.updateWithMaps');
-	properties.content = translate('placesApi.bulk.confirm', { count: String(count) });
+	properties.title = translate('placesApi.bulk.options.refreshTitle');
+	properties.content = `${escapeHtml(
+		translate('placesApi.bulk.confirm', { count: String(count) }),
+	)}<p class="places-bulk-option-tag">${escapeHtml(
+		translate('placesApi.bulk.options.apiRequests', { count: String(count) }),
+	)}</p>`;
 	properties.containers = getContainersInput();
 	properties.buttons = [
 		{ type: 'cancel' },
@@ -350,23 +473,30 @@ function openPlacesBulkConfirm(): void {
 	displayFullMessage(properties);
 }
 
-// Bulk "Update all" import-source actions (the per-item ones are registered by
-// places-source-step.ts). Choosing a source closes this prompt and starts the
-// corresponding bulk flow.
+// Bulk "Enrich Data" option actions (P1). Choosing an option closes this
+// prompt and starts the corresponding flow.
 registerActions({
+	// "Local (gmaps scraper)" — existing bulk local scrape.
 	[SOURCE_LOCAL_BULK_ACTION]: () => {
 		closeMessage();
 		void runBulkLocalUpdate();
 	},
-	[SOURCE_API_BULK_ACTION]: () => {
+	// "Refresh enriched items" — existing Places API bulk refresh.
+	[BULK_REFRESH_ACTION]: () => {
 		closeMessage();
 		openPlacesBulkConfirm();
 	},
-	// Bulk "Update all" → My Maps: close this prompt and start the destination
-	// My Maps import (lands in the same review flow — §5 P4 entry points).
-	[SOURCE_MYMAPS_BULK_ACTION]: () => {
+	// "Enrich pending items" — owned by places/places-pending.ts (P3), which
+	// registers the same 'places-bulk-enrich' action and overrides any stub.
+	// "Import from My Maps" — existing My Maps import.
+	[BULK_MYMAPS_IMPORT_ACTION]: () => {
 		closeMessage();
 		void openMymapsImportDialog();
+	},
+	// "Re-import from My Maps" — P6: add only newly discovered placemarks.
+	[BULK_MYMAPS_REIMPORT_ACTION]: () => {
+		closeMessage();
+		void openMymapsReimportDialog();
 	},
 });
 

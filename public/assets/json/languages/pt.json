@@ -979,7 +979,7 @@
 	},
 	"placesApi": {
 		"fetchInfo": "Buscar Informações com Maps",
-		"updateWithMaps": "Atualizar com Maps",
+		"updateWithMaps": "Enriquecer Dados",
 		"dialog": {
 			"title": "Importar com mapas"
 		},
@@ -1006,7 +1006,7 @@
 			"button": "Buscar",
 			"noResults": "Nenhum resultado encontrado",
 			"error": "Ocorreu um erro ao buscar. Tente novamente",
-			"includePhotos": "Incluir fotos"
+			"includePhotos": "Incluir foto"
 		},
 		"details": {
 			"updateLabel": "Atualizar com estas informações",
@@ -1029,11 +1029,14 @@
 			"import": "Importar fotos",
 			"canImport": "Fotos podem ser importadas",
 			"none": "Nenhuma foto disponível para importar",
-			"count": "{{count}} foto(s) selecionada(s)"
+			"count": "{{count}} foto(s) selecionada(s)",
+			"add": "Adicionar outra foto"
 		},
 		"closed": {
 			"title": "Lugar não está mais em operação",
 			"message": "Este lugar parece não estar mais em operação",
+			"temporary": "Fechado temporariamente",
+			"temporaryMessage": "Este lugar está fechado temporariamente, mas você ainda pode enriquecê-lo.",
 			"option": {
 				"delete": "Excluir item",
 				"ignore": "Ignorar",
@@ -1077,9 +1080,56 @@
 					"title": "Lugares fechados",
 					"delete": "Excluir automaticamente itens fechados",
 					"label": "Adicionar etiqueta [Closed] aos itens fechados"
-				}
+				},
+				"message": "O que você gostaria de fazer?",
+				"refreshTitle": "Atualizar itens enriquecidos",
+				"refreshSub": "Atualizar os {{count}} itens já vinculados ao Google Places",
+				"enrichTitle": "Enriquecer itens pendentes",
+				"enrichSub": "Vincular os {{count}} itens sem um lugar",
+				"enrichLocalTitle": "Enriquecer com scraper local",
+				"enrichLocalSub": "Fazer scrape dos {{count}} itens sem um lugar",
+				"apiRequests": "≈ {{count}} solicitação(ões) à API de Lugares",
+				"reimportTitle": "Reimportar do Meu Maps",
+				"reimportSub": "Adicionar apenas lugares recém-descobertos",
+				"comingSoon": "Esta opção ainda não está disponível"
 			},
 			"success": "Os lugares foram atualizados com sucesso"
+		},
+		"pending": {
+			"title": "Enriquecer itens pendentes",
+			"searching": "Buscando lugares no Google...",
+			"none": "Nenhum item precisa de enriquecimento",
+			"noMatch": "Nenhum item pôde ser correspondido",
+			"review": {
+				"title": "Revisar resultados",
+				"message": "Alguns itens precisam da sua escolha antes de aplicar",
+				"multi": "Vários resultados encontrados",
+				"none": "Não foi possível corresponder",
+				"placeholder": "Selecione um resultado...",
+				"skip": "Sem correspondência / pular",
+				"continue": "Continuar"
+			},
+			"apply": {
+				"title": "Aplicar enriquecimento",
+				"message": "Escolha o que atualizar nos {{count}} item(ns) correspondidos",
+				"groupsTitle": "Atualizar",
+				"groups": {
+					"basic": "Informações básicas (nome, emoji)",
+					"links": "Contato e links (site, Instagram, Maps)",
+					"ratings": "Avaliações e preço",
+					"description": "Descrição",
+					"region": "Região"
+				},
+				"photo": "Incluir uma foto",
+				"photoHint": "Adiciona uma foto por item (até 5 no total)"
+			},
+			"closed": {
+				"title": "Lugares fechados",
+				"temporary": "Fechado temporariamente",
+				"permanent": "Fechado permanentemente",
+				"delete": "Excluir {{name}}"
+			},
+			"success": "Itens enriquecidos com sucesso"
 		},
 		"limited": {
 			"message": "A cota de Lugares está quase no limite. A busca e as informações do lugar continuam funcionando, mas as fotos estão temporariamente desativadas."
@@ -1098,6 +1148,9 @@
 	"mymapsImport": {
 		"importButton": "Importar do Meu Maps",
 		"title": "Importar do Meu Maps",
+		"reimportTitle": "Reimportar do Meu Maps",
+		"reimportSummary": "{{count}} novo(s) marcador(es) encontrado(s)",
+		"reimportNone": "Nenhum lugar novo encontrado — tudo já foi importado",
 		"summary": "{{count}} marcador(es) encontrado(s) neste mapa",
 		"unmapped": "Não foi possível mapear {{count}} marcador(es). Escolha uma categoria para importá-los ou deixe-os desmarcados para ignorar.",
 		"fetching": "Buscando seu mapa do Meu Maps...",

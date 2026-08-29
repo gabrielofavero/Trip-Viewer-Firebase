@@ -52,7 +52,7 @@ import {
 	readKmlFromFile,
 	resolveMyMapsDrafts,
 } from '../../../data/services/mymaps-kml.service.js';
-import { GMAPS_SCRAPER_ENABLED } from '../../../data/services/gmaps-scraper.service.js';
+import { GMAPS_SCRAPER_ENABLED, parseCoordinateSearchUrl } from '../../../data/services/gmaps-scraper.service.js';
 import { PLACES_API_ENABLED } from '../../../data/services/places-api.service.js';
 import { populateExistingDestinationForm } from '../existing-destination.js';
 
@@ -61,6 +61,9 @@ const IMPORTABLE_CATEGORIES = ['restaurants', 'snacks', 'nightlife', 'tourism', 
 
 /** Firestore writes per batch (hard limit is 500 — keep headroom). */
 const BATCH_LIMIT = 500;
+
+/** Re-import tolerance (plan P6, decision #6): pins within this distance (m) count as the same place. */
+const REIMPORT_TOLERANCE_M = 20;
 
 // ------------------------------------------------------------------
 // Module state
@@ -72,6 +75,7 @@ let _enriching = false; // enrichment in progress
 let _busy = false; // import write in progress
 let _fetchController: AbortController | null = null;
 let _uploadResolve: ((kml: string | null) => void) | null = null;
+let _reimportMode = false; // re-import: skip already-imported placemarks (P6)
 
 // ------------------------------------------------------------------
 // Entry point
@@ -85,14 +89,59 @@ let _uploadResolve: ((kml: string | null) => void) | null = null;
  * review dialog.
  */
 export async function openMymapsImportDialog(): Promise<void> {
-	if (MYMAPS_KML_ENABLED !== true) {
-		displayError(new Error(translate('placesApi.errors.localOnly')), false, false);
+	_reimportMode = false;
+	const drafts = await acquireKmlDrafts();
+	if (drafts === null) return;
+	_drafts = drafts;
+	_enriched = false;
+	_enriching = false;
+	renderReview();
+}
+
+/**
+ * Re-import from My Maps (P6): the same flow as the regular import, but
+ * placemarks that were already imported are ignored — matching by source
+ * coordinates (within ~20 m) against the destination's existing entries — so
+ * only newly discovered placemarks are offered for review/write.
+ */
+export async function openMymapsReimportDialog(): Promise<void> {
+	_reimportMode = true;
+	const drafts = await acquireKmlDrafts();
+	if (drafts === null) return;
+
+	const existing = collectExistingCoordinates();
+	const fresh = drafts.filter(
+		(draft) =>
+			!existing.some(
+				(point) =>
+					distanceM(point.lat, point.lng, draft.lat, draft.lng) <= REIMPORT_TOLERANCE_M,
+			),
+	);
+
+	if (fresh.length === 0) {
+		openToast(translate('mymapsImport.reimportNone'));
 		return;
 	}
-	if (_busy || _enriching) return;
+
+	_drafts = fresh;
+	_enriched = false;
+	_enriching = false;
+	renderReview();
+}
+
+/**
+ * Acquire the destination's My Maps KML (worker proxy first, upload fallback)
+ * and parse it into drafts. Returns null when the user cancels or parsing fails.
+ */
+async function acquireKmlDrafts(): Promise<MyMapsDraft[] | null> {
+	if (MYMAPS_KML_ENABLED !== true) {
+		displayError(new Error(translate('placesApi.errors.localOnly')), false, false);
+		return null;
+	}
+	if (_busy || _enriching) return null;
 	if (!DOCUMENT_ID) {
 		displayError(new Error(translate('mymapsImport.errors.noDoc')), false, false);
-		return;
+		return null;
 	}
 	_docPath = `${COLLECTION.DESTINATIONS}/${DOCUMENT_ID}`;
 
@@ -109,7 +158,7 @@ export async function openMymapsImportDialog(): Promise<void> {
 		} catch (error) {
 			if (isAbortError(error)) {
 				hideFetchingDialog();
-				return;
+				return null;
 			}
 			hideFetchingDialog();
 			kml = await promptUpload(mid);
@@ -117,24 +166,55 @@ export async function openMymapsImportDialog(): Promise<void> {
 	} else {
 		kml = await promptUpload(mid);
 	}
-	if (kml == null) return;
+	if (kml == null) return null;
 
-	let drafts: MyMapsDraft[];
 	try {
-		drafts = parseKml(kml);
+		return parseKml(kml);
 	} catch (error) {
 		displayError(
 			error instanceof Error ? error : new Error(translate('mymapsImport.errors.invalidKml')),
 			false,
 			false,
 		);
-		return;
+		return null;
 	}
+}
 
-	_drafts = drafts;
-	_enriched = false;
-	_enriching = false;
-	renderReview();
+/**
+ * Collect the source coordinates of every existing destination entry (P6).
+ * Prefers the persisted `placeAPI.sourceCoords` (written by My Maps imports),
+ * falling back to parsing the coordinate search URL kept in
+ * `placeAPI.sourceUrl` / `placeAPI.map` / `entry.map` (legacy imports).
+ */
+function collectExistingCoordinates(): Array<{ lat: number; lng: number }> {
+	const points: Array<{ lat: number; lng: number }> = [];
+	for (const category of IMPORTABLE_CATEGORIES) {
+		const map = FIRESTORE_DESTINATIONS_DATA?.[category] || {};
+		for (const rawEntry of Object.values(map)) {
+			const entry = rawEntry as any;
+			const coords = entry?.placeAPI?.sourceCoords;
+			if (coords && Number.isFinite(coords.lat) && Number.isFinite(coords.lng)) {
+				points.push({ lat: coords.lat, lng: coords.lng });
+				continue;
+			}
+			const url = entry?.placeAPI?.sourceUrl ?? entry?.placeAPI?.map ?? entry?.map ?? '';
+			const parsed = parseCoordinateSearchUrl(url);
+			if (parsed) points.push(parsed);
+		}
+	}
+	return points;
+}
+
+/** Haversine distance in meters between two lat/lng points. */
+function distanceM(lat1: number, lng1: number, lat2: number, lng2: number): number {
+	const EARTH_RADIUS_M = 6371000;
+	const toRad = (deg: number) => (deg * Math.PI) / 180;
+	const dLat = toRad(lat2 - lat1);
+	const dLng = toRad(lng2 - lng1);
+	const a =
+		Math.sin(dLat / 2) ** 2 +
+		Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+	return EARTH_RADIUS_M * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
 // ------------------------------------------------------------------
@@ -283,7 +363,7 @@ function extractMid(url: string): string {
 
 function renderReview(): void {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = translate('mymapsImport.title');
+	properties.title = translate(_reimportMode ? 'mymapsImport.reimportTitle' : 'mymapsImport.title');
 	properties.containers = getContainersInput();
 	properties.containers.principal = `${properties.containers.principal} mymaps-dialog-container`;
 	properties.fullscreen = true;
@@ -305,7 +385,10 @@ function getReviewHTML(): string {
 	return `
 	<div class="mymaps-dialog">
 		<p class="mymaps-dialog-summary">${escapeHtml(
-			translate('mymapsImport.summary', { count: String(_drafts.length) }),
+			translate(
+				_reimportMode ? 'mymapsImport.reimportSummary' : 'mymapsImport.summary',
+				{ count: String(_drafts.length) },
+			),
 		)}</p>
 		${_enriching ? `<p class="mymaps-dialog-progress" id="mymaps-progress">${escapeHtml(translate('mymapsImport.enriching', { done: '0', total: String(_drafts.length) }))}</p>` : ''}
 		<div class="mymaps-list" id="mymaps-list">
@@ -525,6 +608,11 @@ async function handleImportConfirm(): Promise<void> {
 		// Close whichever dialog is showing (review or conflict) before writing.
 		closeMessage();
 		const imported = await writeImports(decisions);
+		// Reflect the completion marker in-memory too (P5), so the bulk options
+		// read it live even before the post-write form refresh completes.
+		if (imported > 0 && FIRESTORE_DESTINATIONS_DATA) {
+			FIRESTORE_DESTINATIONS_DATA.myMapsImported = true;
+		}
 		await refreshForm();
 		openToast(translate('mymapsImport.imported', { count: String(imported) }));
 	} catch (error) {
@@ -591,6 +679,13 @@ async function writeImports(decisions: DecisionMap): Promise<number> {
 		if (FIRESTORE_DESTINATIONS_DATA?.modules?.[category] !== true) {
 			ops.push({ path: _docPath, data: { [`modules.${category}`]: true } });
 		}
+	}
+
+	// Mark the destination as having completed a My Maps import (plan P5) so
+	// the bulk options hide "Import from My Maps" and offer "Re-import from My
+	// Maps" instead. Only persisted when at least one entry was actually imported.
+	if (imported > 0) {
+		ops.push({ path: _docPath, data: { myMapsImported: true } });
 	}
 
 	for (let start = 0; start < ops.length; start += BATCH_LIMIT) {

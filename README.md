@@ -47,10 +47,10 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 201   | 197  | 4         | 0       |
+| 🐞   | Bug         | B000 | 200   | 196  | 4         | 0       |
 | 🏆   | Feature     | F000 | 198   | 183  | 15        | 0       |
-| 📈   | Improvement | M000 | 217   | 194  | 22        | 1       |
-| ⚔️   | Epic        | E000 | 52    | 43   | 7         | 2       |
+| 📈   | Improvement | M000 | 216   | 193  | 22        | 1       |
+| ⚔️   | Epic        | E000 | 53    | 44   | 7         | 2       |
 
 ## Backlog
 
@@ -200,8 +200,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🏆 **F198:** Add check animation for edit mobile saving
 - 🐞 **B199:** Minor fixes for Maps integrations
 - 🐞 **B200:** Fix error on creating itinerary item
-- 📈 **M217:** Hide Import Account button on production
-- 🐞 **B202:** Export download no longer prompts to leave page
+- ⚔️ **E053:** Maps import/enrichment overhaul
 
 ### July 2026
 

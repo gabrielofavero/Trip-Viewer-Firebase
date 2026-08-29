@@ -66,6 +66,9 @@ import { LOCAL_SOURCE_URL_KEY } from './places-local-step.js';
 import type { PlaceDetails } from '../models/places-api.model.js';
 import type { PlaceAPI, PlaceImage, PlaceItem } from '../models/schema.js';
 
+/** Max photos per destination entry (plan P8 — 5-photo cap). */
+const MAX_PHOTOS = 5;
+
 
 // ------------------------------------------------------------------
 // Apply (called directly at the end of the flow — no confirmation step)
@@ -135,14 +138,21 @@ export function applyAndClose(): void {
 			applyClosedLabel = true;
 		}
 
-		// Photos import → replace the entry's images with exactly the imported
-		// photos the user previewed + kept selected in the photos step (no
-		// hidden cap — the photos route returns ≤ 3, the scraper returns all
-		// of its images).
+		// Photos import → append (never replace) the imported photos to the
+		// entry's existing ones, deduped by link and capped at MAX_PHOTOS per
+		// item (plan P8 — existing photos are never removed).
 		const photosToApply = importPhotos ? importedPhotos : [];
 		const applyPhotos = photosToApply.length > 0;
 		if (applyPhotos) {
-			entry.images = photosToApply;
+			const existing = Array.isArray(entry.images) ? entry.images : [];
+			const seen = new Set(existing.map((image) => image.link));
+			const merged = [...existing];
+			for (const photo of photosToApply) {
+				if (!photo?.link || seen.has(photo.link)) continue;
+				seen.add(photo.link);
+				merged.push({ description: photo.description ?? '', link: photo.link });
+			}
+			entry.images = merged.slice(0, MAX_PHOTOS);
 		}
 
 		// Update the edit form DOM so the entry reflects the applied data.

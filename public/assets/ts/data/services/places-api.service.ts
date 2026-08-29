@@ -108,6 +108,18 @@ export interface PlacesApiOptions {
 	 */
 	bias?: { latitude: number; longitude: number; radius?: number };
 	/**
+	 * How many photos the photos route should return (P8). Defaults to 1, capped
+	 * at 5 by the worker. The single-item "Include photo" flow starts at 1 and
+	 * requests one more per "+" click, advancing `offset`.
+	 */
+	count?: number;
+	/**
+	 * Which photo to start from on the photos route (P8). The "+" flow tracks
+	 * how many API photos it already has and fetches the next one (offset), so
+	 * each request resolves exactly one new photoUri (keeps quota low).
+	 */
+	offset?: number;
+	/**
 	 * Called with `true` when the worker returns a degraded response (monthly
 	 * Places quota nearly reached — photos disabled, search/details still
 	 * returned). Use it to show a "search has been limited" toast on the modal.
@@ -317,6 +329,8 @@ export async function getPlacePhotos(
 	// Route 3 is the dedicated photos route — it always returns photo URLs,
 	// so the `photos` flag does not apply here.
 	const params: Record<string, string> = { lang };
+	if (options.count !== undefined) params.count = String(options.count);
+	if (options.offset !== undefined) params.offset = String(options.offset);
 	const url = buildUrl(`${PLACES_API_BASE_URL}/places/${encodeURIComponent(id)}/photos`, params);
 	const data = await request<PlacePhotosResponse>(url, token, options);
 	// The worker returns `photoUri` (a keyless CDN URL); the app consumes `url`.

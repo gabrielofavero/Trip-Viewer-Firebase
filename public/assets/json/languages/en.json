@@ -979,7 +979,7 @@
 	},
 	"placesApi": {
 		"fetchInfo": "Fetch Info With Maps",
-		"updateWithMaps": "Update with Maps",
+		"updateWithMaps": "Enrich Data",
 		"dialog": {
 			"title": "Import with maps"
 		},
@@ -1006,7 +1006,7 @@
 			"button": "Search",
 			"noResults": "No results found",
 			"error": "An error occurred while searching. Please try again",
-			"includePhotos": "Include photos"
+			"includePhotos": "Include photo"
 		},
 		"details": {
 			"updateLabel": "Update with this info",
@@ -1029,11 +1029,14 @@
 			"import": "Import photos",
 			"canImport": "Photos can be imported",
 			"none": "No photos available to import",
-			"count": "{{count}} photo(s) selected"
+			"count": "{{count}} photo(s) selected",
+			"add": "Add another photo"
 		},
 		"closed": {
 			"title": "Place no longer operational",
 			"message": "This place appears to be no longer operational",
+			"temporary": "Temporarily closed",
+			"temporaryMessage": "This place is temporarily closed, but you can still enrich it.",
 			"option": {
 				"delete": "Delete item",
 				"ignore": "Ignore",
@@ -1077,9 +1080,56 @@
 					"title": "Closed places",
 					"delete": "Auto-delete closed items",
 					"label": "Add [Closed] label to closed items"
-				}
+				},
+				"message": "What would you like to do?",
+				"refreshTitle": "Refresh enriched items",
+				"refreshSub": "Update the {{count}} items already linked to Google Places",
+				"enrichTitle": "Enrich pending items",
+				"enrichSub": "Link the {{count}} items without a place",
+				"enrichLocalTitle": "Enrich with Local scraper",
+				"enrichLocalSub": "Scrape the {{count}} items without a place",
+				"apiRequests": "≈ {{count}} Places API request(s)",
+				"reimportTitle": "Re-import from My Maps",
+				"reimportSub": "Add only newly discovered places",
+				"comingSoon": "This option isn't available yet"
 			},
 			"success": "The places were updated successfully"
+		},
+		"pending": {
+			"title": "Enrich pending items",
+			"searching": "Searching for Google Places...",
+			"none": "No items need enrichment",
+			"noMatch": "No items could be matched",
+			"review": {
+				"title": "Review results",
+				"message": "Some items need your input before applying",
+				"multi": "Multiple matches found",
+				"none": "Could not be matched",
+				"placeholder": "Select a result...",
+				"skip": "No match / skip",
+				"continue": "Continue"
+			},
+			"apply": {
+				"title": "Apply enrichment",
+				"message": "Choose what to update for the {{count}} matched item(s)",
+				"groupsTitle": "Update",
+				"groups": {
+					"basic": "Basic info (name, emoji)",
+					"links": "Contact & links (website, Instagram, Maps)",
+					"ratings": "Ratings & price",
+					"description": "Description",
+					"region": "Region"
+				},
+				"photo": "Include a photo",
+				"photoHint": "Adds one photo per item (up to 5 total)"
+			},
+			"closed": {
+				"title": "Closed places",
+				"temporary": "Temporarily closed",
+				"permanent": "Permanently closed",
+				"delete": "Delete {{name}}"
+			},
+			"success": "Items enriched successfully"
 		},
 		"limited": {
 			"message": "Places quota is nearly reached. Search and place info still work, but photos are temporarily disabled."
@@ -1098,6 +1148,9 @@
 	"mymapsImport": {
 		"importButton": "Import from My Maps",
 		"title": "Import from My Maps",
+		"reimportTitle": "Re-import from My Maps",
+		"reimportSummary": "Found {{count}} new placemark(s)",
+		"reimportNone": "No new places found — everything was already imported",
 		"summary": "Found {{count}} placemark(s) in this map",
 		"unmapped": "Couldn't map {{count}} placemark(s). Pick a category to import them, or leave them unchecked to skip.",
 		"fetching": "Fetching your My Maps map...",

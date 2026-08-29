@@ -642,6 +642,10 @@ export function buildMyMapsEntry(draft: MyMapsDraft): PlaceItem {
 		createdAt: now,
 		media: '',
 		emoji,
+		// P7 (requirement #4): My Maps imports/enrichment never include photos.
+		// The entry is built field-by-field (never spread from the draft), so any
+		// photo data a resolver might leak is ignored here by construction. Photos
+		// are added separately via the "Enrich Data" photo flows.
 		images: [],
 		placeAPI: {
 			id: draft.placeId ?? '',
@@ -656,6 +660,7 @@ export function buildMyMapsEntry(draft: MyMapsDraft): PlaceItem {
 			updatedAt: now,
 			instagram: '',
 			sourceUrl,
+			sourceCoords: { lat: draft.lat, lng: draft.lng },
 		},
 	};
 }
@@ -720,6 +725,9 @@ async function resolveViaPlacesApi(
 	{ destinationTitle, maxDistanceM = 3000, signal }: MyMapsEnrichOptions,
 ): Promise<MyMapsDraft | null> {
 	const bias = { latitude: draft.lat, longitude: draft.lng };
+	// P7 (requirement #4): My Maps enrichment NEVER requests photos — `photos:
+	// false` keeps the paid photos key / photos route out of the import flow.
+	// Photos are handled separately (single-item + batch "Enrich Data" flows).
 	const attempt = async (query: string) => {
 		const results = await searchPlaces(query, { bias, photos: false, signal });
 		return pickBestMatch(results, draft);
@@ -756,6 +764,9 @@ async function resolveViaScraper(
 	const results = await scrapePlaces([mapUrl], { signal });
 	const result = results?.[0];
 	if (!result) return null;
+	// P7 (requirement #4): the scraper result carries `imageUrls`, but they are
+	// deliberately NOT copied into the draft — My Maps enrichment never imports
+	// photos. Only the place id + canonical Maps link are taken.
 	return {
 		...draft,
 		placeId: result.id || '',
@@ -811,7 +822,16 @@ export async function resolveMyMapsDrafts(
 	async function worker(): Promise<void> {
 		while (next < drafts.length) {
 			const index = next++;
-			output[index] = await resolveMyMapsDraft(drafts[index], options);
+			const resolved = await resolveMyMapsDraft(drafts[index], options);
+			// P7 guard (requirement #4): My Maps enrichment must NEVER pull in
+			// photos. The resolvers request photos:false / drop imageUrls and the
+			// draft type carries no image field, but if a future resolver leaks
+			// one, warn loudly in dev so the contract can't silently regress.
+			const leaked = resolved as unknown as { images?: unknown[]; imageUrls?: unknown[] };
+			if (leaked?.images?.length || leaked?.imageUrls?.length) {
+				console.warn('[mymaps-kml] P7: enrichment produced photos — blocked.');
+			}
+			output[index] = resolved;
 			done++;
 			options.onProgress?.(done, drafts.length);
 		}
