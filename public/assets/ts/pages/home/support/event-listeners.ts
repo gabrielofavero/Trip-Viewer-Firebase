@@ -32,7 +32,23 @@ import {
 } from '../../../utils/messages.js';
 import { registerActions } from '../../../ui/actions.js';
 
+/**
+ * Hide Settings actions that must never run against real (production) Firebase
+ * data. "Import Account" overwrites the entire account from a backup file, so
+ * it is only offered while connected to the local emulators
+ * (`__TRIPVIEWER_EMULATOR__`, set by firebase-config.js). On production —
+ * deployed hosts or `dev:prd` (real Firebase on localhost) — the button is
+ * hidden to avoid clobbering real user data.
+ */
+function hideProductionOnlySettings(): void {
+	if (window.__TRIPVIEWER_EMULATOR__ === true) return;
+	const importAccountBtn = document.querySelector<HTMLElement>('[data-action="restore-account"]');
+	if (importAccountBtn) importAccountBtn.style.display = 'none';
+}
+
 export function loadListenersIndex() {
+	hideProductionOnlySettings();
+
 	// Login
 	getID('login-button').addEventListener('click', function () {
 		signInWithEmailAndPassword();

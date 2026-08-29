@@ -39,3 +39,26 @@ export function endOperation(): void {
 export function hasActiveOperation(): boolean {
 	return activeOperations > 0;
 }
+
+/**
+ * Run a synchronous callback with the beforeunload guard temporarily removed.
+ *
+ * Chrome fires `beforeunload` when a download is initiated via `link.click()`,
+ * so a guarded download would show a spurious "Leave site?" prompt even though
+ * no close/reload was attempted. Wrapping the click in this helper keeps the
+ * guard active during the actual data loading, but silent during the download
+ * hand-off. The listener is restored immediately (the callback is synchronous).
+ */
+export function suspendOperationGuard<T>(fn: () => T): T {
+	const wasGuarded = activeOperations > 0;
+	if (wasGuarded) {
+		window.removeEventListener('beforeunload', handleBeforeUnload);
+	}
+	try {
+		return fn();
+	} finally {
+		if (wasGuarded) {
+			window.addEventListener('beforeunload', handleBeforeUnload);
+		}
+	}
+}
