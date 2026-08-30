@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.28.1]
+## [2.28.1] - 2026-08-30
 
 - 🐞 **B201:** Edit trip: itinerary day auto-title updates immediately
 - 🐞 **B202:** Edit trip: show time-of-day select for existing items
