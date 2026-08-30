@@ -47,9 +47,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 203   | 199  | 4         | 0       |
+| 🐞   | Bug         | B000 | 205   | 201  | 4         | 0       |
 | 🏆   | Feature     | F000 | 200   | 185  | 15        | 0       |
-| 📈   | Improvement | M000 | 217   | 194  | 22        | 1       |
+| 📈   | Improvement | M000 | 221   | 198  | 22        | 1       |
 | ⚔️   | Epic        | E000 | 53    | 44   | 7         | 2       |
 
 ## Backlog
@@ -207,6 +207,12 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B203:** Edit trip: drag between periods crashes drags
 - 🏆 **F200:** Edit destination: priority badge + item sorting
 - 📈 **M217:** My Maps import: repeated names handling prompt
+- 📈 **M218:** Edit pages: open-link button on url inputs
+- 📈 **M219:** Photo carousel picker in edit destination/trip
+- 🐞 **B204:** Fix move destination dialog buttons
+- 🐞 **B205:** Maps/Places import: never blank priority select
+- 📈 **M220:** Edit pages: image link/upload first in photo dialogs
+- 📈 **M221:** Detect new versions via background polling
 
 ### July 2026
 

@@ -184,7 +184,7 @@ export function deleteListagem() {
 	properties.content = translate('listing.delete.message', {
 		name: listing.replace(/^ "|"$/g, ''),
 	});
-	properties.botoes = [
+	properties.buttons = [
 		{
 			type: 'cancel',
 		},

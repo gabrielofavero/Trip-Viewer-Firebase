@@ -10,7 +10,7 @@ import { translate } from '../../i18n/translation.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../../data/state.js';
 import { setDescription } from './categories/description.js';
 import { updateDescriptionButtonLabel } from './categories/description.js';
-import { DESTINATION_IMAGES, setDestinationImageButtonLabel } from './categories/image.js';
+import { DESTINATION_IMAGES, renderDestinationImageCarousel } from './categories/image.js';
 import { loadCurrencyOptions } from './categories/price.js';
 import { loadCurrencyValueAndVisibility } from './categories/price.js';
 import { addSnacks } from './new-destination.js';
@@ -19,6 +19,7 @@ import { addRestaurants } from './new-destination.js';
 import { addNightlife } from './new-destination.js';
 import { addTourism } from './new-destination.js';
 import { updatePlacesFetchButtonLabel } from './new-destination.js';
+import { updateRatingBadge } from './new-destination.js';
 
 // Existing Destination
 export function populateExistingDestinationForm() {
@@ -164,10 +165,13 @@ export function addDestinationHTML(category, j, item) {
 	loadCurrencyValueAndVisibility(item.price || '', category, j);
 
 	getID(`${category}-media-${j}`).value = item.media || '';
-	getID(`${category}-rating-${j}`).value = item.rating || '';
+	// The edit form's "Priority not set" option value is '?' — never leave the
+	// select blank when the item has no priority (e.g. a fresh My Maps import).
+	getID(`${category}-rating-${j}`).value = item.rating || '?';
+	updateRatingBadge(category, j);
 
 	DESTINATION_IMAGES[`${category}-${j}`] = Array.isArray(item.images) ? item.images : [];
-	setDestinationImageButtonLabel(category, j);
+	renderDestinationImageCarousel(category, j);
 }
 
 function loadMapData() {

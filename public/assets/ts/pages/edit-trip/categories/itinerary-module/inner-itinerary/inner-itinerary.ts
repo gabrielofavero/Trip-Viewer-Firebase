@@ -688,16 +688,47 @@ function getNewPeriod(j) {
 	return 'night';
 }
 
+const PERIOD_BY_HTML: Record<string, string> = {
+	'early-morning': 'earlyMorning',
+	morning: 'morning',
+	afternoon: 'afternoon',
+	night: 'night',
+};
+
+/** Map a period container id ("inner-itinerary-early-morning-2") to its period key. */
+function getPeriodKeyFromContainerId(id: string): string {
+	const periodHtml = String(id || '')
+		.replace(/^inner-itinerary-/, '')
+		.replace(/-\d+$/, '');
+	return PERIOD_BY_HTML[periodHtml] || periodHtml;
+}
+
 export function afterDragInnerItinerary(evt) {
-	const turnoInicial = evt.from.id.split('-')[2];
-	const turnoFinal = evt.to.id.split('-')[2];
+	try {
+		const turnoInicial = getPeriodKeyFromContainerId(evt.from?.id);
+		const turnoFinal = getPeriodKeyFromContainerId(evt.to?.id);
 
-	const j = evt.item.children[0].id.split('-')[3];
-	const key = jsDateToKey(DATAS[j - 1]);
+		// Day index comes from the item's own data attribute — deriving it from
+		// the button id breaks for the multi-word "early-morning" period.
+		const button = evt.item?.children?.[0];
+		const j = Number(button?.getAttribute('data-j')) || 0;
+		if (!j || !turnoInicial || !turnoFinal) return;
 
-	const element = INNER_ITINERARY[key][turnoInicial].splice(evt.oldIndex, 1)[0]; // First
-	INNER_ITINERARY[key][turnoFinal].splice(evt.newIndex, 0, element); // Last
-	LAST_OPENED_PERIOD[j] = turnoFinal;
+		const key = jsDateToKey(DATAS[j - 1]);
+		const sourceItems = INNER_ITINERARY[key]?.[turnoInicial];
+		if (!Array.isArray(sourceItems)) return;
 
-	loadInnerItineraryHTML(j);
+		const element = sourceItems.splice(evt.oldIndex, 1)[0]; // First
+		if (element === undefined) return;
+
+		const targetItems = INNER_ITINERARY[key][turnoFinal] || (INNER_ITINERARY[key][turnoFinal] = []);
+		targetItems.splice(evt.newIndex, 0, element); // Last
+		LAST_OPENED_PERIOD[j] = turnoFinal;
+
+		loadInnerItineraryHTML(j);
+	} catch (error) {
+		// Never let a drag-end error leak into SortableJS — when onEnd throws,
+		// its internal cleanup is skipped and every later drag on the page dies.
+		console.warn('[itinerary] drag failed:', error);
+	}
 }

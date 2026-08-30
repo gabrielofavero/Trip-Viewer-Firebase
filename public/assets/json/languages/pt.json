@@ -932,7 +932,8 @@
 			"add": "Adicionar foto",
 			"edit": "Editar fotos",
 			"quantity_limit": "Você pode adicionar até 5 fotos",
-			"description": "Descrição"
+			"description": "Descrição",
+			"description_placeholder": "Uma breve descrição da foto"
 		},
 		"no_data": "Sem dados",
 		"emoji": "Emoji(s)",

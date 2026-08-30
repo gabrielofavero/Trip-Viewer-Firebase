@@ -10,6 +10,7 @@ import {
 	cloneObject,
 	firstCharToUpperCase,
 	getID,
+	getJ,
 	getLastJ,
 	getURLParam,
 	removeChildWithValidation,
@@ -56,6 +57,7 @@ import { addShopping } from './new-destination.js';
 import { addRestaurants } from './new-destination.js';
 import { addNightlife } from './new-destination.js';
 import { addTourism } from './new-destination.js';
+import { updateRatingBadge } from './new-destination.js';
 import { setDocument } from '../../utils/set.js';
 import { buildDestinationObject, updateTikTokLinks } from './set-destination.js';
 import {
@@ -176,6 +178,116 @@ function loadEnabled() {
 	});
 }
 
+// ============================================================
+// Item ordering (edit destination page) — VISUAL ONLY.
+// The sort mode is shared across every category and persisted in
+// localStorage (per-user preference). Reordering never changes the
+// saved document: set-destination.ts always stores items in
+// creation-date order (see buildDestinationCategoryObject).
+// ============================================================
+
+/** Categories whose accordion boxes support the on-page sort control. */
+const SORTABLE_CATEGORIES = ['restaurants', 'snacks', 'nightlife', 'tourism', 'shopping'];
+
+/** localStorage key holding the user's chosen sort mode. */
+const DESTINATION_SORT_STORAGE_KEY = 'tripviewer:destinationEditSort';
+
+/** Valid sort modes, in the same order as the `<select>` options. */
+const DESTINATION_SORT_MODES = ['createdAsc', 'createdDesc', 'alpha', 'priority'];
+
+/** Default sort mode — creation date, oldest first (matches load order). */
+const DESTINATION_SORT_DEFAULT = 'createdAsc';
+
+/** Priority rank for sorting — higher is more important; unset goes last. */
+function getPriorityRank(rating: string): number {
+	const value = parseInt(rating, 10);
+	return Number.isFinite(value) && value >= 1 && value <= 5 ? value : 0;
+}
+
+/** Numeric createdAt (ms) for an entry; 0 when missing. */
+function getEntryDateValue(category: string, j: number): number {
+	const value = getID<HTMLInputElement>(`${category}-createdAt-${j}`)?.value;
+	return value ? new Date(value).getTime() : 0;
+}
+
+/** Reorder a category's accordion items by the selected mode (visual only). */
+function sortDestinationCategory(category: string, mode: string): void {
+	const box = getID(`${category}-box`);
+	if (!box) return;
+	const items = Array.from(box.children) as HTMLElement[];
+
+	items.sort((a, b) => {
+		const jA = getJ(a.id);
+		const jB = getJ(b.id);
+
+		switch (mode) {
+			case 'createdDesc':
+				return getEntryDateValue(category, jB) - getEntryDateValue(category, jA);
+			case 'createdAsc':
+				return getEntryDateValue(category, jA) - getEntryDateValue(category, jB);
+			case 'alpha': {
+				const nameA = getID<HTMLInputElement>(`${category}-name-${jA}`)?.value ?? '';
+				const nameB = getID<HTMLInputElement>(`${category}-name-${jB}`)?.value ?? '';
+				return nameA.localeCompare(nameB);
+			}
+			case 'priority':
+				return (
+					getPriorityRank(
+						getID<HTMLSelectElement>(`${category}-rating-${jB}`)?.value ?? '',
+					) - getPriorityRank(getID<HTMLSelectElement>(`${category}-rating-${jA}`)?.value ?? '')
+				);
+			default:
+				return 0;
+		}
+	});
+
+	for (const item of items) {
+		box.appendChild(item);
+	}
+}
+
+/** Read the persisted sort mode, validated against the known modes. */
+function loadDestinationSortMode(): string {
+	try {
+		const saved = window.localStorage.getItem(DESTINATION_SORT_STORAGE_KEY);
+		return saved && DESTINATION_SORT_MODES.includes(saved) ? saved : DESTINATION_SORT_DEFAULT;
+	} catch {
+		// Storage unavailable (private mode, quota, blocked cookies).
+		return DESTINATION_SORT_DEFAULT;
+	}
+}
+
+/** Persist the chosen sort mode (ignore storage failures). */
+function storeDestinationSortMode(mode: string): void {
+	try {
+		window.localStorage.setItem(DESTINATION_SORT_STORAGE_KEY, mode);
+	} catch {
+		// Ignore — the sort still applies for the current session.
+	}
+}
+
+/** Apply a sort mode to every category (selects + accordion boxes). */
+function applyDestinationSortMode(mode: string): void {
+	for (const category of SORTABLE_CATEGORIES) {
+		const select = getID<HTMLSelectElement>(`${category}-sort`);
+		if (select) select.value = mode;
+		sortDestinationCategory(category, mode);
+	}
+}
+
+/** Persist + apply a newly chosen sort mode (shared across all categories). */
+function setDestinationSortMode(mode: string): void {
+	storeDestinationSortMode(mode);
+	applyDestinationSortMode(mode);
+}
+
+/** Wire a category's sort select to update the shared sort mode. */
+function initCategorySort(category: string): void {
+	const select = getID<HTMLSelectElement>(`${category}-sort`);
+	if (!select) return;
+	select.addEventListener('change', () => setDestinationSortMode(select.value));
+}
+
 function loadEventListeners() {
 	getID('restaurants-add').addEventListener('click', () => {
 		closeAccordions('restaurants');
@@ -256,6 +368,13 @@ function loadEventListeners() {
 	// Form is populated by now (loaded + newly added entries) — sync the bulk
 	// button visibility. Re-called after per-item applies (P9) / bulk apply (P12).
 	refreshPlacesBulkButton();
+
+	// Per-category ordering controls (destination items) — shared sort mode,
+	// persisted in localStorage. Items exist by now (loaded + newly added).
+	for (const category of SORTABLE_CATEGORIES) {
+		initCategorySort(category);
+	}
+	applyDestinationSortMode(loadDestinationSortMode());
 }
 
 // ============================================================
@@ -578,6 +697,11 @@ export function addDestinationsListeners(category, j) {
 		updateDestinationsTitle(j, category),
 	);
 
+	// Priority badge — refresh the circle on the accordion button.
+	getID(`${category}-rating-${j}`).addEventListener('change', () =>
+		updateRatingBadge(category, j),
+	);
+
 	// Emoji Validation
 	getID(`${category}-emoji-${j}`).addEventListener('input', () => emojisOnInputAction(j, category));
 
@@ -658,7 +782,7 @@ export function openMoveDestinationModal(j, category) {
 			category: firstCharToUpperCase(category),
 		});
 	properties.containers = getContainersInput();
-	properties.botoes = [
+	properties.buttons = [
 		{
 			type: 'cancel',
 		},
@@ -743,7 +867,7 @@ export function deleteDestination() {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	properties.title = translate('destination.delete.title');
 	properties.content = translate('destination.delete.message', { name });
-	properties.botoes = [
+	properties.buttons = [
 		{
 			type: 'cancel',
 		},

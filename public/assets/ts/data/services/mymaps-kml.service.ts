@@ -632,7 +632,9 @@ export function buildMyMapsEntry(draft: MyMapsDraft): PlaceItem {
 	return {
 		name: draft.name,
 		description: { pt: '', en: '' },
-		rating: '',
+		// "Priority not set" — the edit form select's not-set value ('?').
+		// Never store '' here, or the priority select would end up blank.
+		rating: '?',
 		price: '-',
 		map,
 		website: '',

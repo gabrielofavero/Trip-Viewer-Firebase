@@ -39,7 +39,7 @@ import { loadCurrencyValueAndVisibility } from '../pages/edit-destination/catego
 import {
 	DESTINATION_IMAGES,
 	removeDestinationImages,
-	setDestinationImageButtonLabel,
+	renderDestinationImageCarousel,
 } from '../pages/edit-destination/categories/image.js';
 import { applyPlaceData, getClosedLabel, type PlaceFieldKey } from './places-apply.js';
 import { updatePlacesFetchButtonLabel } from '../pages/edit-destination/new-destination.js';
@@ -270,7 +270,10 @@ export function updateFormEntry(
 				regionApplied = true;
 				break;
 			case 'rating':
-				setInputValue(`${category}-rating-${j}`, entry.rating);
+				// The edit form's "Priority not set" option value is '?' — never
+				// leave the select blank (''/undefined) when the place has no
+				// priority, otherwise no option would be selected.
+				setInputValue(`${category}-rating-${j}`, entry.rating || '?');
 				break;
 			case 'price':
 				setPriceValue(category, j, entry.price);
@@ -292,7 +295,7 @@ export function updateFormEntry(
 			description: image.description ?? '',
 			link: image.link ?? '',
 		}));
-		setDestinationImageButtonLabel(category, j);
+		renderDestinationImageCarousel(category, j);
 	}
 
 	// Refresh the accordion title (name + emoji) and apply the [Closed] marker.

@@ -1341,11 +1341,14 @@
 }
 
 /*--------------------------------------------------------------
-# Item sort control — label + select at the top of each editor box
+# Item sort control — label + select at the top of each editor box.
+# The select is styled to match the editor's `.nice-form-group`
+# inputs (same tokens: background, border, radius, focus ring).
 --------------------------------------------------------------*/
 .item-sort-control {
 	display: flex;
 	align-items: center;
+	flex-wrap: wrap;
 	gap: 8px;
 	margin-bottom: 12px;
 }
@@ -1359,7 +1362,34 @@
 }
 
 .item-sort-select {
-	max-width: 280px;
+	flex: 1 1 auto;
+	min-width: 180px;
+	max-width: 320px;
+	background: var(--bg-secondary);
+	font-family: inherit;
+	font-size: 0.9375rem;
+	color: var(--text-primary);
+	border: 1.5px solid var(--border-color);
+	border-radius: var(--radius-md);
+	padding: 10px 32px 10px 12px;
+	height: auto;
+	line-height: normal;
+	appearance: none;
+	-webkit-appearance: none;
+	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%235859a7'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+	background-repeat: no-repeat;
+	background-position: right 12px center;
+	background-size: 14px;
+	cursor: pointer;
+	outline: none;
+	transition:
+		border var(--transition-fast),
+		box-shadow var(--transition-fast);
+}
+
+.item-sort-select:focus {
+	border-color: var(--theme-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
 }
 
 /*--------------------------------------------------------------

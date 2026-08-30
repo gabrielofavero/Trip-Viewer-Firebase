@@ -24,6 +24,7 @@ import {
 	loadAccommodationListeners,
 	ACCOMMODATION_IMAGES,
 	removeAccommodationImages,
+	renderAccommodationImageCarousel,
 } from './categories/accommodation.js';
 import { addRemoveTransportationListener } from './support/event-listeners.js';
 import { DateRangePicker } from '../../ui/date-range-picker.js';
@@ -36,13 +37,16 @@ import {
 	getDestinationsItemCard,
 	getActiveDestinationsCardOptions,
 } from './categories/destination.js';
-import { loadGalleryListeners } from './categories/gallery.js';
 import {
 	getItineraryTitleSelectOptions,
 	loadItineraryListeners,
 	updateItineraryTitle,
 	reloadItinerary,
 } from './categories/itinerary-module/itinerary-module.js';
+import {
+	addAccommodationToItinerary,
+	addTransportationToItinerary,
+} from './categories/itinerary-module/inner-itinerary/auto-populate.js';
 import {
 	countItineraryDestinationLinks,
 	unlinkItineraryDestinationLinks,
@@ -55,7 +59,6 @@ import {
 	updateActiveDestinationsHTMLs,
 	reorganizeDestinationsCheckbox,
 } from './categories/destination.js';
-import { addRemoveGalleryListener } from './support/event-listeners.js';
 
 export var DATAS = [];
 
@@ -66,7 +69,6 @@ const TOMORROW = getTomorrowFormatted();
 registerVisibilityExport('_addTransportation', addTransportation);
 registerVisibilityExport('_addAccommodations', addAccommodations);
 registerVisibilityExport('_addDestinations', loadDestinations);
-registerVisibilityExport('_addGallery', addGallery);
 registerVisibilityExport('_addItinerary', loadItinerarySchedule);
 export function loadNewTrip() {
 	loadBasicFieldsNewTrip();
@@ -246,6 +248,11 @@ export function addTransportation() {
 	applyTransportationTypeVisualization(j);
 	addRemoveTransportationListener(j);
 
+	// Auto-add the new leg to the itinerary when the module is enabled.
+	if (getID('itinerary-enabled')?.checked) {
+		addTransportationToItinerary(j);
+	}
+
 	function getTypeOptions() {
 		let result = '';
 		const transportation = getTransportations();
@@ -351,7 +358,7 @@ export function addAccommodations() {
 
             <div class="nice-form-group customization-box" id="accommodations-${j}-box">
               <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-              <button id="accommodation-images-button-${j}" data-action="open-accommodation-images" data-index="${j}" class="btn input-button" style="margin-top:0px">${translate('labels.image.add_title')}</button>
+              <div id="accommodation-images-carousel-${j}" class="image-slot-carousel"></div>
             </div>
           </div>
       
@@ -380,6 +387,12 @@ export function addAccommodations() {
 
 	loadAccommodationListeners(j);
 	ACCOMMODATION_IMAGES[j] = [];
+	renderAccommodationImageCarousel(j);
+
+	// Auto-add check-in/check-out to the itinerary when the module is enabled.
+	if (getID('itinerary-enabled')?.checked) {
+		addAccommodationToItinerary(j);
+	}
 }
 
 export function loadDestinations() {
@@ -575,93 +588,9 @@ export function loadItinerarySchedule() {
 			updateItineraryTitle(j),
 		);
 		getID(`itinerary-inner-title-${j}`).addEventListener('change', () => updateItineraryTitle(j));
-		// Card click for itinerary destination cards
-		const localContainer = getID(`itinerary-location-${j}`);
-		for (const card of localContainer.querySelectorAll('.destination-card')) {
-			card.addEventListener('click', () => {
-				card.classList.toggle('selected');
-				if (card.classList.contains('selected')) {
-					localContainer.prepend(card);
-				}
-				updateItineraryTitle(j);
-			});
-		}
+		// Destination card clicks (select + auto-title) are handled here.
 		loadItineraryListeners(j);
 	}
 
 	getID('itinerary-enabled').addEventListener('change', () => reloadItinerary());
-}
-
-export function addGallery() {
-	const j = getNextJ('gallery-box');
-	$('#gallery-box').append(`
-      <div id="gallery-${j}" class="accordion-item accordion-gallery" >
-      <h2 class="accordion-header" id="heading-gallery-${j}">
-        <button id="gallery-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-gallery-${j}" aria-expanded="false" aria-controls="collapse-accommodations-${j}">
-          ${translate('labels.image.title')} ${j}
-        </button>
-      </h2>
-      <div id="collapse-gallery-${j}" class="accordion-collapse collapse"
-        aria-labelledby="heading-gallery-${j}" data-bs-parent="#gallery-box">
-        <div class="accordion-body">
-          <div class="nice-form-group">
-            <label>${translate('labels.title')}</label>
-            <input required id="gallery-title-input-${j}" type="text" placeholder="${translate('destination.lineup.title')}" />
-          </div>
-
-          <div class="nice-form-group" id="gallery-select-form-group-${j}">
-            <label>${translate('labels.type')} <span class="optional"> (${translate('labels.optional')})</span></label>
-            <select id="gallery-category-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="gallery-category-${j}" type="text" placeholder="${translate('destination.map.title')}" />
-          </div>
-    
-          <div class="nice-form-group">
-            <label>${translate('labels.description.title')} <span class="optional"> (${translate('labels.optional')})</span></label>
-            <input id="gallery-description-${j}" type="text" placeholder="${translate('trip.gallery.description_placeholder')}" />
-          </div>
-    
-          <div class="nice-form-group customization-box" id="gallery-${j}-box">
-            <label>${translate('labels.image.title')}</label>
-            <input id="upload-gallery-${j}" class='image-uploadbox' type="file" accept=".jpg, .jpeg, .png" />
-            <div id="upload-gallery-${j}-size-message" class="message-text"> <i class='red'>*</i> ${translate('labels.image.upload_limit')}</div>
-          </div>
-    
-          <div class="nice-form-group">
-            <input id="link-gallery-${j}" class='image-input' type="url" placeholder="${translate('labels.image.placeholder')}" value=""
-              class="icon-right">
-          </div>
-    
-          <fieldset class="nice-form-group image-checkbox">
-            <div class="nice-form-group enable-link">
-              <input type="radio" name="type-gallery-${j}" id="enable-link-gallery-${j}" checked>
-              <label for="enable-link-gallery-${j}">${translate('labels.image.link')}</label>
-            </div>
-    
-            <div class="nice-form-group">
-              <input type="radio" name="type-gallery-${j}" id="enable-upload-gallery-${j}">
-              <label for="enable-upload-gallery-${j}">${translate('labels.image.upload')} <span class="optional"> (${translate('labels.image.upload_limit')})</span></label>
-            </div>
-          </fieldset>
-    
-          </div>
-  
-        <div class="button-box-right-formatted">
-          <button id="remove-gallery-${j}" class="btn btn-basic btn-format">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="currentColor" fill-rule="evenodd"
-                d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                clip-rule="evenodd"></path>
-          </svg>
-          </button>
-        </div>
-        
-      </div>
-    </div>
-      `);
-
-	loadImageSelector(`gallery-${j}`);
-	loadGalleryListeners(j);
-	addRemoveGalleryListener(j);
-	addSelectorDS('gallery-category', `gallery-category-select-${j}`, `gallery-category-${j}`);
 }

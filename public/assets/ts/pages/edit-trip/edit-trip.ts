@@ -35,7 +35,6 @@ import {
 	COLLECTION,
 } from '../../data/firebase/database.js';
 import { loadDraggablesWithAccordions } from '../../ui/sortable.js';
-import { newDynamicSelect } from '../../ui/dynamic-select.js';
 import { getUserData, getUID, setUserData, USER_DATA } from '../../data/firebase/auth.js';
 import {
 	deleteUserObjectStorage,
@@ -55,9 +54,9 @@ import {
 	addTransportation,
 	addAccommodations,
 	loadDestinations,
-	addGallery,
 	loadItinerarySchedule,
 } from './new-trip.js';
+import { initGalleryModule } from './categories/gallery.js';
 import { loadTripData } from './existing-trip.js';
 import { loadEventListeners } from './support/event-listeners.js';
 import { loadVisibilityIndex } from '../home/support/visibility.js';
@@ -107,7 +106,6 @@ export async function loadEditTripPage() {
 	initEditTabs();
 	loadEnabled();
 	loadDraggablesWithAccordions(['transportation', 'accommodations']);
-	newDynamicSelect('gallery-category');
 
 	setUserData(await getUserData());
 	const destSummaries = await getUserDestinationSummaries(await getUID());
@@ -149,7 +147,7 @@ function loadEnabled() {
 	loadEditModule('accommodations', addAccommodations);
 	loadEditModule('itinerary', loadItinerarySchedule);
 	loadEditModule('destinations', loadDestinations);
-	loadEditModule('gallery', addGallery);
+	initGalleryModule();
 }
 
 function loadUploadSelectors() {

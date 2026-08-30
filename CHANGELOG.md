@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.28.1]
+
+- 🐞 **B201:** Edit trip: itinerary day auto-title updates immediately
+- 🐞 **B202:** Edit trip: show time-of-day select for existing items
+- 🏆 **F199:** Auto-add transportations and check-in/out to itinerary
+- 🐞 **B203:** Edit trip: drag between periods crashes drags
+- 🏆 **F200:** Edit destination: priority badge + item sorting
+- 📈 **M217:** My Maps import: repeated names handling prompt
+- 📈 **M218:** Edit pages: open-link button on url inputs
+- 📈 **M219:** Photo carousel picker in edit destination/trip
+- 🐞 **B204:** Fix move destination dialog buttons
+- 🐞 **B205:** Maps/Places import: never blank priority select
+- 📈 **M221:** Detect new versions via background polling
+
 ## [2.28.0] - 2026-08-29
 
 - 🐞 **B201:** Hide the "Import Account" settings button on production (real Firebase — deployed or `dev:prd`); it stays available while connected to the local emulators

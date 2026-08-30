@@ -63,7 +63,21 @@ function getImageObject() {
 }
 
 function buildDestinationCategoryObject(category) {
-	const childIDs = getChildIDs(`${category}-box`);
+	// The on-page ordering control is visual only — the stored document
+	// always keeps the canonical creation-date order (oldest first), no
+	// matter how the user reorders the accordion items on screen. This
+	// mirrors loadExistingDestination's ordering.
+	const childIDs = getChildIDs(`${category}-box`)
+		.map((id) => ({ id, j: getJ(id) }))
+		.sort((a, b) => {
+			const dateA = getID(`${category}-createdAt-${a.j}`)?.value;
+			const dateB = getID(`${category}-createdAt-${b.j}`)?.value;
+			if (!dateA && !dateB) return 0;
+			if (!dateA) return 1;
+			if (!dateB) return -1;
+			return new Date(dateA).getTime() - new Date(dateB).getTime();
+		})
+		.map((entry) => entry.id);
 
 	let result = {};
 

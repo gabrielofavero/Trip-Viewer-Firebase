@@ -29,7 +29,7 @@ export function getInnerItineraryContent(j, k, period, selects, isNew = false) {
                     </div>
                     </div>
 
-                    <div class="nice-form-group" style="display: ${isNew ? 'block' : 'none'}">
+                    <div class="nice-form-group">
                         <label>${translate('datetime.time_of_day.title')}</label>
                         <select class="edit-select" id="inner-itinerary-select-period">
                             <option value="earlyMorning">${translate('datetime.time_of_day.early_hours')}</option>
