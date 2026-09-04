@@ -70,6 +70,10 @@ const EXCLUDED_FILES = new Set([
 	'firebase.json',
 	'firebase.dev.json',
 	'static-export-manifest.json',
+	// Stable, un-hashed version endpoint (served no-store) used by the app's
+	// background version polling — it must keep its fixed /version.json URL so
+	// each fetch reflects the latest deploy.
+	'version.json',
 	'assets/json/iconify-icons.json',
 	'assets/css/fonts.css',
 ]);

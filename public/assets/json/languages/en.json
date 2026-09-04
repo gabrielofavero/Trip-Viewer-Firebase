@@ -492,6 +492,8 @@
 		},
 		"sort": {
 			"title": "Sort by",
+			"created_ascending": "Creation date (oldest first)",
+			"created_descending": "Creation date (newest first)",
 			"name": {
 				"title": "Title",
 				"ascending": "Name (A → Z)",
@@ -807,6 +809,7 @@
 		"home": "Home",
 		"url_placeholder": "https://drive.google.com/drive",
 		"map_url_placeholder": "https://www.google.com/maps/",
+		"open_link": "Open link in a new tab",
 		"days": "Days",
 		"people": "People",
 		"person": "Person",
@@ -913,19 +916,24 @@
 		"custom": "Custom",
 		"cost": "Cost",
 		"image": {
-			"title": "Image",
-			"title_plural": "Images",
+			"title": "Photo",
+			"title_plural": "Photos",
+			"photo_n": "Photo {{n}}",
+			"add_photo": "Add photo",
+			"edit_photo": "Edit photo",
+			"gallery_photo": "Gallery photo",
 			"placeholder": "https://example.com/image.jpg",
 			"link": "Provide image link",
-			"upload": "Upload image",
+			"upload": "Upload photo",
 			"upload_limit": "Up to 1,5MB",
 			"background": "Background image",
 			"check": "Image verification",
-			"add_title": "Add images",
-			"add": "Add Image",
-			"edit": "Edit images",
-			"quantity_limit": "You can add up to 5 images",
-			"description": "Description"
+			"add_title": "Add photos",
+			"add": "Add photo",
+			"edit": "Edit photos",
+			"quantity_limit": "You can add up to 5 photos",
+			"description": "Description",
+			"description_placeholder": "A short description of the photo"
 		},
 		"no_data": "No data",
 		"emoji": "Emoji(s)",
@@ -979,7 +987,7 @@
 	},
 	"placesApi": {
 		"fetchInfo": "Fetch Info With Maps",
-		"updateWithMaps": "Update with Maps",
+		"updateWithMaps": "Enrich Data",
 		"dialog": {
 			"title": "Import with maps"
 		},
@@ -1006,7 +1014,7 @@
 			"button": "Search",
 			"noResults": "No results found",
 			"error": "An error occurred while searching. Please try again",
-			"includePhotos": "Include photos"
+			"includePhotos": "Include photo"
 		},
 		"details": {
 			"updateLabel": "Update with this info",
@@ -1029,11 +1037,14 @@
 			"import": "Import photos",
 			"canImport": "Photos can be imported",
 			"none": "No photos available to import",
-			"count": "{{count}} photo(s) selected"
+			"count": "{{count}} photo(s) selected",
+			"add": "Add another photo"
 		},
 		"closed": {
 			"title": "Place no longer operational",
 			"message": "This place appears to be no longer operational",
+			"temporary": "Temporarily closed",
+			"temporaryMessage": "This place is temporarily closed, but you can still enrich it.",
 			"option": {
 				"delete": "Delete item",
 				"ignore": "Ignore",
@@ -1077,9 +1088,66 @@
 					"title": "Closed places",
 					"delete": "Auto-delete closed items",
 					"label": "Add [Closed] label to closed items"
-				}
+				},
+				"groupAddTitle": "Add",
+				"groupAddSub": "Import every unused placemark from your My Maps link",
+				"groupEnrichTitle": "Enrich",
+				"groupEnrichSub": "Add official information on your {{count}} manually added items",
+				"groupRefreshTitle": "Refresh",
+				"groupRefreshSub": "Update the {{count}} items already enriched",
+				"sourceMessage": "Which source?",
+				"sourceGoogleTitle": "Google Places",
+				"sourceGoogleSub": "Use official Google sources",
+				"sourceLocalSub": "Developer alternative with no API usage",
+				"photosTag": "≈ {{count}} photo(s)",
+				"refreshTitle": "Refresh enriched items",
+				"refreshSub": "Update the {{count}} items already linked to Google Places",
+				"enrichTitle": "Enrich pending items",
+				"enrichSub": "Link the {{count}} items without a place",
+				"enrichLocalTitle": "Enrich with Local scraper",
+				"enrichLocalSub": "Scrape the {{count}} items without a place",
+				"apiRequests": "≈ {{count}} Places API request(s)",
+				"reimportTitle": "Re-import from My Maps",
+				"reimportSub": "Add only newly discovered places",
+				"comingSoon": "This option isn't available yet"
 			},
 			"success": "The places were updated successfully"
+		},
+		"pending": {
+			"title": "Enrich pending items",
+			"searching": "Searching for Google Places...",
+			"none": "No items need enrichment",
+			"noMatch": "No items could be matched",
+			"review": {
+				"title": "Review results",
+				"message": "Some items need your input before applying",
+				"multi": "Multiple matches found",
+				"none": "Could not be matched",
+				"placeholder": "Select a result...",
+				"skip": "No match / skip",
+				"continue": "Continue"
+			},
+			"apply": {
+				"title": "Apply enrichment",
+				"message": "Choose what to update for the {{count}} matched item(s)",
+				"groupsTitle": "Update",
+				"groups": {
+					"basic": "Basic info (name, emoji)",
+					"links": "Contact & links (website, Instagram, Maps)",
+					"ratings": "Ratings & price",
+					"description": "Description",
+					"region": "Region"
+				},
+				"photo": "Include a photo",
+				"photoHint": "Adds one photo per item (up to 5 total)"
+			},
+			"closed": {
+				"title": "Closed places",
+				"temporary": "Temporarily closed",
+				"permanent": "Permanently closed",
+				"delete": "Delete {{name}}"
+			},
+			"success": "Items enriched successfully"
 		},
 		"limited": {
 			"message": "Places quota is nearly reached. Search and place info still work, but photos are temporarily disabled."
@@ -1098,6 +1166,9 @@
 	"mymapsImport": {
 		"importButton": "Import from My Maps",
 		"title": "Import from My Maps",
+		"reimportTitle": "Re-import from My Maps",
+		"reimportSummary": "Found {{count}} new placemark(s)",
+		"reimportNone": "No new places found — everything was already imported",
 		"summary": "Found {{count}} placemark(s) in this map",
 		"unmapped": "Couldn't map {{count}} placemark(s). Pick a category to import them, or leave them unchecked to skip.",
 		"fetching": "Fetching your My Maps map...",
@@ -1109,6 +1180,7 @@
 		"noMapsLink": "This destination has no My Maps link set",
 		"noMid": "No My Maps map id was found in this link",
 		"unassigned": "Unassigned",
+		"alreadyAdded": "Already on destination",
 		"status": {
 			"resolved": "Resolved",
 			"failed": "No match"
@@ -1126,7 +1198,17 @@
 			"skip": "Skip the new one",
 			"replace": "Replace existing"
 		},
+		"duplicates": {
+			"title": "Repeated names found",
+			"message": "This map has {{count}} place(s) with repeated names — for example a chain at different locations. My Maps only provides coordinates, so they can't be told apart automatically. How do you want to import them?",
+			"occurrences": "×{{count}}",
+			"addAll": "Add every single one",
+			"addAllHint": "Current behavior — all {{count}} placemarks are imported, including the repeated ones",
+			"keepOne": "Add only one of each name",
+			"keepOneHint": "Keeps one of each repeated name ({{count}} names) and ignores the rest"
+		},
 		"imported": "{{count}} placemark(s) imported",
+		"staged": "{{count}} placemark(s) added — click Save to apply",
 		"errors": {
 			"jsZipMissing": "The KMZ reader could not be loaded. Please reload the page and try again.",
 			"noKmlInKmz": "No KML file was found inside this KMZ archive.",

@@ -16,7 +16,7 @@ import {
 	MESSAGE_PROPERTIES,
 } from '../../../utils/messages.js';
 import { markStagedChanges } from '../../../ui/fields.js';
-import { ACCOMMODATION_IMAGES, setImageButtonLabel } from './accommodation.js';
+import { ACCOMMODATION_IMAGES, renderAccommodationImageCarousel } from './accommodation.js';
 
 let TARGET_INDEX = 0;
 let SOURCE_ACCOMMODATIONS: Record<string, any> = {};
@@ -295,7 +295,7 @@ function applyAccommodationImport() {
 	setImportedTime(`check-out-time-${index}`, source.dates?.checkOut);
 	getID(`accommodations-payment-status-${index}`).value = '';
 	ACCOMMODATION_IMAGES[index] = cloneObject(source.images || []);
-	setImageButtonLabel(index);
+	renderAccommodationImageCarousel(index);
 	markStagedChanges();
 	closeMessage();
 }

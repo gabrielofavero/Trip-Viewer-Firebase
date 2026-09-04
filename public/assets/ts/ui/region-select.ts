@@ -22,6 +22,9 @@ interface RegionSelectBinding {
 	selectId: string;
 	inputId: string;
 	containerId: string;
+	// True while the adder is showing its free-text input (the user picked
+	// "Other", or there are no known regions to offer as options yet).
+	inputMode: boolean;
 }
 
 const BINDINGS: RegionSelectBinding[] = [];
@@ -55,7 +58,7 @@ export function resetRegionSelects(): void {
 /** Register a select + free-text input as a region adder. */
 export function registerRegionSelect(selectId: string, inputId: string): void {
 	const containerId = containerIdFromSelect(selectId);
-	BINDINGS.push({ selectId, inputId, containerId });
+	BINDINGS.push({ selectId, inputId, containerId, inputMode: false });
 
 	const select = getID<HTMLSelectElement>(selectId);
 	const input = getID<HTMLInputElement>(inputId);
@@ -64,15 +67,17 @@ export function registerRegionSelect(selectId: string, inputId: string): void {
 	select.addEventListener('change', () => {
 		const value = select.value;
 		if (value === OTHER_VALUE) {
-			select.value = '';
-			input.style.display = 'block';
+			// Free-text mode — stay on the input so a custom region can be
+			// typed (the rebuild must not immediately re-hide it).
+			setInputMode(selectId, true);
+			buildRegionSelects();
 			input.focus();
 		} else if (value) {
 			addRegionPill(containerId, value);
 			addKnownValue(value);
-			resetAdder(select, input);
+			setInputMode(selectId, false);
+			buildRegionSelects();
 		}
-		buildRegionSelects();
 	});
 
 	input.addEventListener('change', () => commitAdderInput(select, input, containerId));
@@ -82,6 +87,12 @@ export function registerRegionSelect(selectId: string, inputId: string): void {
 			commitAdderInput(select, input, containerId);
 		}
 	});
+}
+
+/** Mark a binding as showing its free-text input (or not). */
+function setInputMode(selectId: string, inputMode: boolean): void {
+	const binding = BINDINGS.find((b) => b.selectId === selectId);
+	if (binding) binding.inputMode = inputMode;
 }
 
 function commitAdderInput(
@@ -94,14 +105,10 @@ function commitAdderInput(
 		addRegionPill(containerId, value);
 		addKnownValue(value);
 	}
-	resetAdder(select, input);
+	// Back to the known-values select — unless no known regions exist, in
+	// which case buildRegionSelects() keeps the free-text input visible.
+	setInputMode(select.id, false);
 	buildRegionSelects();
-}
-
-function resetAdder(select: HTMLSelectElement, input: HTMLInputElement): void {
-	input.value = '';
-	input.style.display = 'none';
-	select.value = '';
 }
 
 /** Remove a binding (when its accordion item is removed/moved). */
@@ -131,14 +138,30 @@ export function addKnownValues(values: unknown): void {
 /** Rebuild every adder's options from the known-value set. */
 export function buildRegionSelects(): void {
 	const optionsHTML = buildOptionsHTML();
-	for (const { selectId, inputId } of BINDINGS) {
+	const hasKnownValues = KNOWN_VALUES.size > 0;
+	for (const binding of BINDINGS) {
+		const { selectId, inputId } = binding;
 		const select = getID<HTMLSelectElement>(selectId);
 		if (!select) continue;
+		const input = getID<HTMLInputElement>(inputId);
+
 		select.innerHTML = optionsHTML;
 		select.value = '';
+
+		// Free-text mode: the user picked "Other", or there are no known
+		// regions to list — a select holding only "Other" is useless, so show
+		// the input directly instead.
+		if (binding.inputMode || !hasKnownValues) {
+			select.style.display = 'none';
+			if (input) input.style.display = 'block';
+			continue;
+		}
+
 		select.style.display = 'block';
-		const input = getID<HTMLInputElement>(inputId);
-		if (input) input.style.display = 'none';
+		if (input) {
+			input.value = '';
+			input.style.display = 'none';
+		}
 	}
 }
 

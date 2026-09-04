@@ -7,7 +7,7 @@ import { PLACES_API_ENABLED } from '../../data/services/places-api.service.js';
 import { FIRESTORE_DESTINATIONS_DATA, FIRESTORE_DESTINATIONS_NEW_DATA } from '../../data/state.js';
 import { getDescriptionHTML } from './categories/description.js';
 import { getOtherPriceVisibility, loadCurrencySelects, PRICE_OPTIONS } from './categories/price.js';
-import { DESTINATION_IMAGES } from './categories/image.js';
+import { DESTINATION_IMAGES, renderDestinationImageCarousel } from './categories/image.js';
 import { addDestinationsListeners } from './edit-destination.js';
 import { addListenerToRemoveDestination } from './edit-destination.js';
 
@@ -81,6 +81,7 @@ export function addRestaurants() {
             <span class="title-text" id="restaurants-title-text-${j}">${translate('destination.restaurants.title_singular')} ${j}</span> 
             <div class="icon-container">${getNewSvg(`restaurants-title-icon-${j}`)}</div>
           </div>
+          ${getRatingBadgeHTML(category, j)}
         </button>
       </h2>
       <div id="collapse-restaurants-${j}" class="accordion-collapse collapse"
@@ -122,7 +123,7 @@ export function addRestaurants() {
 
           <div class="nice-form-group customization-box">
             <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="restaurants-images-button-${j}" data-action="open-destination-images" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.image.add_title')}</button>
+            <div id="restaurants-images-carousel-${j}" class="image-slot-carousel"></div>
           </div>
 
           <div class="nice-form-group">
@@ -203,6 +204,7 @@ export function addRestaurants() {
 
 	addCreatedDate(category, j);
 	DESTINATION_IMAGES[`${category}-${j}`] = [];
+	renderDestinationImageCarousel(category, j);
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	registerRegionSelect(`restaurants-region-select-${j}`, `restaurants-region-${j}`);
@@ -225,6 +227,7 @@ export function addSnacks() {
             <span class="title-text" id="snacks-title-text-${j}">${translate('destination.snacks.title_singular')} ${j}</span> 
             <div class="icon-container">${getNewSvg(`snacks-title-icon-${j}`)}</div>
           </div>
+          ${getRatingBadgeHTML(category, j)}
         </button>
       </h2>
       <div id="collapse-snacks-${j}" class="accordion-collapse collapse" aria-labelledby="heading-snacks-${j}"
@@ -266,7 +269,7 @@ export function addSnacks() {
 
           <div class="nice-form-group customization-box">
             <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="snacks-images-button-${j}" data-action="open-destination-images" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.image.add_title')}</button>
+            <div id="snacks-images-carousel-${j}" class="image-slot-carousel"></div>
           </div>
 
           <div class="nice-form-group">
@@ -348,6 +351,7 @@ export function addSnacks() {
 
 	addCreatedDate(category, j);
 	DESTINATION_IMAGES[`${category}-${j}`] = [];
+	renderDestinationImageCarousel(category, j);
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	registerRegionSelect(`snacks-region-select-${j}`, `snacks-region-${j}`);
@@ -370,6 +374,7 @@ export function addNightlife() {
             <span class="title-text" id="nightlife-title-text-${j}">${translate('destination.nightlife.title_singular')} ${j}</span> 
             <div class="icon-container">${getNewSvg(`nightlife-title-icon-${j}`)}</i></div>
           </div>
+          ${getRatingBadgeHTML(category, j)}
         </button>
       </h2>
       <div id="collapse-nightlife-${j}" class="accordion-collapse collapse" aria-labelledby="heading-nightlife-${j}"
@@ -411,7 +416,7 @@ export function addNightlife() {
 
           <div class="nice-form-group customization-box">
             <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="nightlife-images-button-${j}" data-action="open-destination-images" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.image.add_title')}</button>
+            <div id="nightlife-images-carousel-${j}" class="image-slot-carousel"></div>
           </div>
 
           <div class="nice-form-group">
@@ -492,6 +497,7 @@ export function addNightlife() {
 
 	addCreatedDate(category, j);
 	DESTINATION_IMAGES[`${category}-${j}`] = [];
+	renderDestinationImageCarousel(category, j);
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	registerRegionSelect(`nightlife-region-select-${j}`, `nightlife-region-${j}`);
@@ -514,6 +520,7 @@ export function addTourism() {
             <span class="title-text" id="tourism-title-text-${j}">${translate('destination.tourism.title_singular')} ${j}</span> 
             <div class="icon-container">${getNewSvg(`tourism-title-icon-${j}`)}</div>
           </div>
+          ${getRatingBadgeHTML(category, j)}
         </button>
       </h2>
       <div id="collapse-tourism-${j}" class="accordion-collapse collapse" aria-labelledby="heading-tourism-${j}"
@@ -555,7 +562,7 @@ export function addTourism() {
 
           <div class="nice-form-group customization-box">
             <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="tourism-images-button-${j}" data-action="open-destination-images" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.image.add_title')}</button>
+            <div id="tourism-images-carousel-${j}" class="image-slot-carousel"></div>
           </div>
 
           <div class="nice-form-group">
@@ -636,6 +643,7 @@ export function addTourism() {
 
 	addCreatedDate(category, j);
 	DESTINATION_IMAGES[`${category}-${j}`] = [];
+	renderDestinationImageCarousel(category, j);
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	registerRegionSelect(`tourism-region-select-${j}`, `tourism-region-${j}`);
@@ -658,6 +666,7 @@ export function addShopping() {
             <span class="title-text" id="shopping-title-text-${j}">${translate('destination.shopping.title_singular')} ${j}</span> 
             <div class="icon-container">${getNewSvg(`shopping-title-icon-${j}`)}</div>
           </div>
+          ${getRatingBadgeHTML(category, j)}
         </button>
       </h2>
 
@@ -700,7 +709,7 @@ export function addShopping() {
 
           <div class="nice-form-group customization-box">
             <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="shopping-images-button-${j}" data-action="open-destination-images" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate('labels.image.add_title')}</button>
+            <div id="shopping-images-carousel-${j}" class="image-slot-carousel"></div>
           </div>
 
           <div class="nice-form-group">
@@ -782,6 +791,7 @@ export function addShopping() {
 
 	addCreatedDate(category, j);
 	DESTINATION_IMAGES[`${category}-${j}`] = [];
+	renderDestinationImageCarousel(category, j);
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	registerRegionSelect(`shopping-region-select-${j}`, `shopping-region-${j}`);
@@ -789,4 +799,32 @@ export function addShopping() {
 
 function addCreatedDate(category, j) {
 	getID(`${category}-createdAt-${j}`).value = new Date().toISOString();
+}
+
+/**
+ * Priority badge — circle showing the entry's priority digit (1-5), placed on
+ * the accordion button just before the chevron (mirrors the destination page
+ * `dest-card-score`). Hidden until a priority is set.
+ */
+function getRatingBadgeHTML(category: string, j: number): string {
+	return `<span class="accordion-rating-badge rating-absent" id="${category}-rating-badge-${j}" style="display: none;"></span>`;
+}
+
+/** Priority CSS class for the badge — mirrors `destination/categories.ts`. */
+function getPriorityBadgeClass(rating: string): string {
+	return ['5', '4', '3', '2', '1'].includes(rating) ? `rating-${rating}` : 'rating-absent';
+}
+
+/**
+ * Refresh the accordion-button priority badge for an entry. Shows the digit
+ * when a priority (1-5) is selected, hides it otherwise.
+ */
+export function updateRatingBadge(category: string, j: number): void {
+	const badge = getID(`${category}-rating-badge-${j}`);
+	if (!badge) return;
+	const rating = getID<HTMLSelectElement>(`${category}-rating-${j}`)?.value || '';
+	const valid = ['5', '4', '3', '2', '1'].includes(rating);
+	badge.textContent = valid ? rating : '';
+	badge.className = `accordion-rating-badge ${getPriorityBadgeClass(rating)}`;
+	badge.style.display = valid ? 'inline-flex' : 'none';
 }

@@ -26,6 +26,10 @@ import {
 	afterDragInnerItinerary,
 	loadInnerItineraryHTML,
 } from '../itinerary-module/inner-itinerary/inner-itinerary.js';
+import {
+	autoPopulateItineraryFromTrip,
+	hasItineraryItems,
+} from './inner-itinerary/auto-populate.js';
 import { updateActiveDestinationsCardsHTML } from '../destination.js';
 import { DATAS } from '../../new-trip.js';
 
@@ -253,6 +257,11 @@ function getItineraryTitle(dataFormatada, title = '') {
 
 export function reloadItinerary() {
 	if (!getID('itinerary-enabled').checked) return;
+	// When enabling the itinerary with no scheduled items yet, pre-fill the
+	// days with the trip's transportations and accommodation check-in/out.
+	if (!hasItineraryItems(getItineraryArray() || [])) {
+		autoPopulateItineraryFromTrip();
+	}
 	const originalData = getItineraryArray() || [];
 	const originalDataInputs = originalData.map((data) => dateObjectToKey(data.date));
 

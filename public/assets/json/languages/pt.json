@@ -492,6 +492,8 @@
 		},
 		"sort": {
 			"title": "Ordenar",
+			"created_ascending": "Data de criação (mais antigas primeiro)",
+			"created_descending": "Data de criação (mais recentes primeiro)",
 			"name": {
 				"title": "Título",
 				"ascending": "Nome (A → Z)",
@@ -807,6 +809,7 @@
 		"home": "Home",
 		"url_placeholder": "https://drive.google.com/drive",
 		"map_url_placeholder": "https://www.google.com/maps/",
+		"open_link": "Abrir link em uma nova aba",
 		"days": "Dias",
 		"people": "Pessoas",
 		"person": "Pessoa",
@@ -913,19 +916,24 @@
 		"custom": "Personalizado(a)",
 		"cost": "Valor",
 		"image": {
-			"title": "Imagem",
-			"title_plural": "Imagens",
+			"title": "Foto",
+			"title_plural": "Fotos",
+			"photo_n": "Foto {{n}}",
+			"add_photo": "Adicionar foto",
+			"edit_photo": "Editar foto",
+			"gallery_photo": "Foto da galeria",
 			"placeholder": "https://exemplo.com/imagem.jpg",
 			"link": "Fornecer link da imagem",
-			"upload": "Upload de imagem",
+			"upload": "Enviar foto",
 			"upload_limit": "Até 1.5MB",
 			"background": "Imagem de fundo",
 			"check": "Verificação de imagem",
-			"add_title": "Adicionar imagens",
-			"add": "Adicionar imagem",
-			"edit": "Editar imagens",
-			"quantity_limit": "Você pode adicionar até 5 imagens",
-			"description": "Descrição da imagem"
+			"add_title": "Adicionar fotos",
+			"add": "Adicionar foto",
+			"edit": "Editar fotos",
+			"quantity_limit": "Você pode adicionar até 5 fotos",
+			"description": "Descrição",
+			"description_placeholder": "Uma breve descrição da foto"
 		},
 		"no_data": "Sem dados",
 		"emoji": "Emoji(s)",
@@ -979,7 +987,7 @@
 	},
 	"placesApi": {
 		"fetchInfo": "Buscar Informações com Maps",
-		"updateWithMaps": "Atualizar com Maps",
+		"updateWithMaps": "Enriquecer Dados",
 		"dialog": {
 			"title": "Importar com mapas"
 		},
@@ -1006,7 +1014,7 @@
 			"button": "Buscar",
 			"noResults": "Nenhum resultado encontrado",
 			"error": "Ocorreu um erro ao buscar. Tente novamente",
-			"includePhotos": "Incluir fotos"
+			"includePhotos": "Incluir foto"
 		},
 		"details": {
 			"updateLabel": "Atualizar com estas informações",
@@ -1029,11 +1037,14 @@
 			"import": "Importar fotos",
 			"canImport": "Fotos podem ser importadas",
 			"none": "Nenhuma foto disponível para importar",
-			"count": "{{count}} foto(s) selecionada(s)"
+			"count": "{{count}} foto(s) selecionada(s)",
+			"add": "Adicionar outra foto"
 		},
 		"closed": {
 			"title": "Lugar não está mais em operação",
 			"message": "Este lugar parece não estar mais em operação",
+			"temporary": "Fechado temporariamente",
+			"temporaryMessage": "Este lugar está fechado temporariamente, mas você ainda pode enriquecê-lo.",
 			"option": {
 				"delete": "Excluir item",
 				"ignore": "Ignorar",
@@ -1077,9 +1088,66 @@
 					"title": "Lugares fechados",
 					"delete": "Excluir automaticamente itens fechados",
 					"label": "Adicionar etiqueta [Closed] aos itens fechados"
-				}
+				},
+				"groupAddTitle": "Adicionar",
+				"groupAddSub": "Importar cada marcador não usado do seu link do My Maps",
+				"groupEnrichTitle": "Enriquecer",
+				"groupEnrichSub": "Adicionar informações oficiais nos seus {{count}} itens adicionados manualmente",
+				"groupRefreshTitle": "Atualizar",
+				"groupRefreshSub": "Atualizar os {{count}} itens já enriquecidos",
+				"sourceMessage": "Qual fonte?",
+				"sourceGoogleTitle": "Google Places",
+				"sourceGoogleSub": "Usar fontes oficiais do Google",
+				"sourceLocalSub": "Alternativa para desenvolvedores, sem uso de API",
+				"photosTag": "≈ {{count}} foto(s)",
+				"refreshTitle": "Atualizar itens enriquecidos",
+				"refreshSub": "Atualizar os {{count}} itens já vinculados ao Google Places",
+				"enrichTitle": "Enriquecer itens pendentes",
+				"enrichSub": "Vincular os {{count}} itens sem um lugar",
+				"enrichLocalTitle": "Enriquecer com scraper local",
+				"enrichLocalSub": "Fazer scrape dos {{count}} itens sem um lugar",
+				"apiRequests": "≈ {{count}} solicitação(ões) à API de Lugares",
+				"reimportTitle": "Reimportar do Meu Maps",
+				"reimportSub": "Adicionar apenas lugares recém-descobertos",
+				"comingSoon": "Esta opção ainda não está disponível"
 			},
 			"success": "Os lugares foram atualizados com sucesso"
+		},
+		"pending": {
+			"title": "Enriquecer itens pendentes",
+			"searching": "Buscando lugares no Google...",
+			"none": "Nenhum item precisa de enriquecimento",
+			"noMatch": "Nenhum item pôde ser correspondido",
+			"review": {
+				"title": "Revisar resultados",
+				"message": "Alguns itens precisam da sua escolha antes de aplicar",
+				"multi": "Vários resultados encontrados",
+				"none": "Não foi possível corresponder",
+				"placeholder": "Selecione um resultado...",
+				"skip": "Sem correspondência / pular",
+				"continue": "Continuar"
+			},
+			"apply": {
+				"title": "Aplicar enriquecimento",
+				"message": "Escolha o que atualizar nos {{count}} item(ns) correspondidos",
+				"groupsTitle": "Atualizar",
+				"groups": {
+					"basic": "Informações básicas (nome, emoji)",
+					"links": "Contato e links (site, Instagram, Maps)",
+					"ratings": "Avaliações e preço",
+					"description": "Descrição",
+					"region": "Região"
+				},
+				"photo": "Incluir uma foto",
+				"photoHint": "Adiciona uma foto por item (até 5 no total)"
+			},
+			"closed": {
+				"title": "Lugares fechados",
+				"temporary": "Fechado temporariamente",
+				"permanent": "Fechado permanentemente",
+				"delete": "Excluir {{name}}"
+			},
+			"success": "Itens enriquecidos com sucesso"
 		},
 		"limited": {
 			"message": "A cota de Lugares está quase no limite. A busca e as informações do lugar continuam funcionando, mas as fotos estão temporariamente desativadas."
@@ -1098,6 +1166,9 @@
 	"mymapsImport": {
 		"importButton": "Importar do Meu Maps",
 		"title": "Importar do Meu Maps",
+		"reimportTitle": "Reimportar do Meu Maps",
+		"reimportSummary": "{{count}} novo(s) marcador(es) encontrado(s)",
+		"reimportNone": "Nenhum lugar novo encontrado — tudo já foi importado",
 		"summary": "{{count}} marcador(es) encontrado(s) neste mapa",
 		"unmapped": "Não foi possível mapear {{count}} marcador(es). Escolha uma categoria para importá-los ou deixe-os desmarcados para ignorar.",
 		"fetching": "Buscando seu mapa do Meu Maps...",
@@ -1109,6 +1180,7 @@
 		"noMapsLink": "Este destino não tem um link do Meu Maps",
 		"noMid": "Nenhum id de mapa do Meu Maps foi encontrado neste link",
 		"unassigned": "Sem categoria",
+		"alreadyAdded": "Já está no destino",
 		"status": {
 			"resolved": "Resolvido",
 			"failed": "Sem correspondência"
@@ -1126,7 +1198,17 @@
 			"skip": "Ignorar o novo",
 			"replace": "Substituir o existente"
 		},
+		"duplicates": {
+			"title": "Nomes repetidos encontrados",
+			"message": "Este mapa tem {{count}} lugar(es) com nomes repetidos — por exemplo, uma rede em locais diferentes. O Meu Maps fornece apenas coordenadas, então eles não podem ser diferenciados automaticamente. Como você quer importá-los?",
+			"occurrences": "×{{count}}",
+			"addAll": "Adicionar todos",
+			"addAllHint": "Comportamento atual — todos os {{count}} marcadores serão importados, incluindo os repetidos",
+			"keepOne": "Adicionar apenas um de cada nome",
+			"keepOneHint": "Mantém um de cada nome repetido ({{count}} nomes) e ignora os demais"
+		},
 		"imported": "{{count}} marcador(es) importados",
+		"staged": "{{count}} marcador(es) adicionados — clique em Salvar para aplicar",
 		"errors": {
 			"jsZipMissing": "Não foi possível carregar o leitor de KMZ. Recarregue a página e tente novamente.",
 			"noKmlInKmz": "Nenhum arquivo KML foi encontrado dentro deste arquivo KMZ.",

@@ -138,9 +138,16 @@ def stamp_project_version(version_data, project, system_version):
 
 
 def write_public_version_json(version_data):
-    """Persist version_data to public/version.json (the source the build hashes)."""
-    version_json_path = BASE_DIR / "public" / "assets" / "json" / "version.json"
-    version_json_path.write_text(json.dumps(version_data, indent=2) + "\n", encoding="utf-8")
+    """Persist version_data to public/version.json (the source the build hashes)
+    and to the root public/version.json — the stable, no-store endpoint the app
+    polls in the background to detect new versions while it is open."""
+    payload = json.dumps(version_data, indent=2) + "\n"
+    assets_path = BASE_DIR / "public" / "assets" / "json" / "version.json"
+    assets_path.write_text(payload, encoding="utf-8")
+    # Stable endpoint for background version polling; kept in sync with the
+    # hashed copy so the live build counter matches what the app loaded.
+    root_path = BASE_DIR / "public" / "version.json"
+    root_path.write_text(payload, encoding="utf-8")
     print(
         f"{Colors.GREEN}✓{Colors.RESET} Stamped public/version.json: "
         f"build={version_data['build']}"

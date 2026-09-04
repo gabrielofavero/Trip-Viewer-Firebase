@@ -1,5 +1,5 @@
 import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
-import { beginOperation, endOperation } from '../utils/operation-guard.js';
+import { beginOperation, endOperation, suspendOperationGuard } from '../utils/operation-guard.js';
 import { translate } from '../i18n/translation.js';
 import {
 	closeMessage,
@@ -153,7 +153,10 @@ export async function backupAccountData(useSensitiveData = false) {
 		link.href = url;
 		link.download = `${timestamp}-tripviewer-backup-${uid}.json`;
 		document.body.appendChild(link);
-		link.click();
+		// Suspend the beforeunload guard for the click: Chrome fires
+		// `beforeunload` when a download is initiated, which would show a
+		// spurious "Leave site?" prompt even though no close/reload happened.
+		suspendOperationGuard(() => link.click());
 
 		document.body.removeChild(link);
 		URL.revokeObjectURL(url);

@@ -28,7 +28,7 @@ import CURRENCIES from './data/currencies.json';
 export function normalizePlace(raw, { photos = false } = {}) {
 	const result = {
 		id: raw?.id ?? '',
-		name: raw?.displayName?.text ?? '',
+		name: localizedText(raw?.displayName),
 		description: resolveDescription(raw),
 		region: raw?.postalAddress?.sublocality ?? '',
 		...splitWebsiteInstagram(raw?.websiteUri ?? ''),
@@ -64,28 +64,51 @@ export function normalizePlace(raw, { photos = false } = {}) {
 }
 
 /**
- * Description priority: editorialSummary.text → reviewSummary.text →
- * primaryTypeDisplayName.text (first non-empty).
+ * Coerce a Google text value into a clean string, or ''.
  *
- * NOTE: `reviewSummary.text` is a LocalizedText OBJECT ({ text, languageCode }),
- * not a plain string — `String(reviewSummary.text)` would yield "[object
- * Object]". The inner `.text` is extracted instead (both shapes handled
- * defensively in case Google ever returns a bare string).
+ * Google documents these as LocalizedText objects ({ text, languageCode }),
+ * but real responses are loose and field shapes vary:
+ *   - `editorialSummary` / `displayName` / `primaryTypeDisplayName` are
+ *     LocalizedText objects → their `.text` is a plain string;
+ *   - `reviewSummary.text` is itself a LocalizedText OBJECT (its `.text` is a
+ *     string), so `String(reviewSummary.text)` would yield "[object Object]";
+ *   - occasionally the same value arrives as a bare string, or nested one level
+ *     deeper than documented.
+ *
+ * Every source is unwrapped through this helper — handling a bare string, a
+ * `{ text: string }` wrapper and a `{ text: { text: string } }` nesting — so a
+ * loose upstream shape can never become "[object Object]" in the app data.
+ * @param {unknown} value - string | LocalizedText | nested LocalizedText | undefined.
+ * @returns {string}
+ */
+function localizedText(value) {
+	if (typeof value === 'string') return value;
+	if (value && typeof value === 'object') {
+		const inner = value.text;
+		if (typeof inner === 'string') return inner;
+		if (inner && typeof inner === 'object' && typeof inner.text === 'string') {
+			return inner.text;
+		}
+	}
+	return '';
+}
+
+/**
+ * Description priority: editorialSummary → reviewSummary → primaryTypeDisplayName
+ * (first non-empty, §7.1). `reviewSummary.text` is a LocalizedText OBJECT
+ * ({ text, languageCode }), not a plain string — localizedText() unwraps
+ * whatever shape Google returns so the stored value is always a string.
  * @param {Record<string, unknown>|undefined} raw
  * @returns {string}
  */
 function resolveDescription(raw) {
-	const editorial = raw?.editorialSummary?.text;
-	if (editorial) return String(editorial);
+	const editorial = localizedText(raw?.editorialSummary);
+	if (editorial) return editorial;
 
-	const review = raw?.reviewSummary?.text;
-	if (review) {
-		const reviewText = typeof review === 'string' ? review : review?.text;
-		if (reviewText) return String(reviewText);
-	}
+	const review = localizedText(raw?.reviewSummary?.text);
+	if (review) return review;
 
-	const primary = raw?.primaryTypeDisplayName?.text;
-	return primary ? String(primary) : '';
+	return localizedText(raw?.primaryTypeDisplayName);
 }
 
 /**

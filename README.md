@@ -47,10 +47,10 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 200   | 196  | 4         | 0       |
-| 🏆   | Feature     | F000 | 198   | 183  | 15        | 0       |
-| 📈   | Improvement | M000 | 216   | 193  | 22        | 1       |
-| ⚔️   | Epic        | E000 | 52    | 43   | 7         | 2       |
+| 🐞   | Bug         | B000 | 210   | 206  | 4         | 0       |
+| 🏆   | Feature     | F000 | 200   | 185  | 15        | 0       |
+| 📈   | Improvement | M000 | 225   | 202  | 22        | 1       |
+| ⚔️   | Epic        | E000 | 53    | 44   | 7         | 2       |
 
 ## Backlog
 
@@ -65,6 +65,18 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M171:** Safeguard unauthenticated access message
 
 ## Done
+
+### September 2026
+
+- 📈 **M223:** My Maps repeated names dialog close button
+- 📈 **M222:** My Maps Add: disable duplicate-name pins
+- 🐞 **B206:** Enrich Data "[object Object]" description for some places
+- 🐞 **B207:** Fix empty region select on edit destination
+- 🐞 **B208:** No NEW tag when adding destination entries
+- 🐞 **B209:** Priority badge stale after enrich
+- 📈 **M224:** Import with maps options dialog tweaks
+- 🐞 **B210:** My Maps import: default price to Unknown
+- 📈 **M225:** Improve btn-basic hover
 
 ### August 2026
 
@@ -200,6 +212,19 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🏆 **F198:** Add check animation for edit mobile saving
 - 🐞 **B199:** Minor fixes for Maps integrations
 - 🐞 **B200:** Fix error on creating itinerary item
+- ⚔️ **E053:** Maps import/enrichment overhaul
+- 🐞 **B201:** Edit trip: itinerary day auto-title updates immediately
+- 🐞 **B202:** Edit trip: show time-of-day select for existing items
+- 🏆 **F199:** Auto-add transportations and check-in/out to itinerary
+- 🐞 **B203:** Edit trip: drag between periods crashes drags
+- 🏆 **F200:** Edit destination: priority badge + item sorting
+- 📈 **M217:** My Maps import: repeated names handling prompt
+- 📈 **M218:** Edit pages: open-link button on url inputs
+- 📈 **M219:** Photo carousel picker in edit destination/trip
+- 🐞 **B204:** Fix move destination dialog buttons
+- 🐞 **B205:** Maps/Places import: never blank priority select
+- 📈 **M220:** Edit pages: image link/upload first in photo dialogs
+- 📈 **M221:** Detect new versions via background polling
 
 ### July 2026
 

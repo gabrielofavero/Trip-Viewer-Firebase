@@ -30,6 +30,7 @@ import {
 } from '../utils/messages.js';
 import { translate } from '../i18n/translation.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../data/state.js';
+import type { PlaceImage } from '../models/schema.js';
 import { GMAPS_SCRAPER_ENABLED } from '../data/services/gmaps-scraper.service.js';
 import { PLACES_API_ENABLED } from '../data/services/places-api.service.js';
 
@@ -56,6 +57,8 @@ export interface PlacesDialogContext {
 	destinationTitle: string;
 	/** Previously saved `placeAPI` object for this entry (or null). */
 	placeAPI: Record<string, any> | null;
+	/** Existing photos on the entry (plan P8) — used to enforce the 5-photo cap. */
+	existingImages: PlaceImage[];
 }
 
 /** A step renderer: given the dialog context, returns HTML for the step. */
@@ -115,6 +118,7 @@ export function openPlacesDialog(category: string, j: number): void {
 	const entryName = getID(`${category}-name-${j}`)?.value ?? '';
 	const destinationTitle = getID('title')?.value ?? FIRESTORE_DESTINATIONS_DATA?.title ?? '';
 	const placeAPI = getEntryPlaceAPI(category, j);
+	const existingImages = getEntryImages(category, j);
 
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	properties.title = translate('placesApi.dialog.title');
@@ -138,7 +142,7 @@ export function openPlacesDialog(category: string, j: number): void {
 	displayFullMessage(properties);
 
 	_active = true;
-	_context = { category, j, entryName, destinationTitle, placeAPI };
+	_context = { category, j, entryName, destinationTitle, placeAPI, existingImages };
 	_stepData = {};
 	_history = [];
 	// Local dev: ask how to import (Local gmaps-scraper vs Places API).
@@ -397,4 +401,12 @@ function getEntryPlaceAPI(category: string, j: number): Record<string, any> | nu
 	if (!id) return null;
 	const entry = FIRESTORE_DESTINATIONS_DATA?.[category]?.[id];
 	return entry?.placeAPI ?? null;
+}
+
+/** Existing photos on the entry (plan P8) — enforces the 5-photo cap. */
+function getEntryImages(category: string, j: number): PlaceImage[] {
+	const id = getID(`${category}-id-${j}`)?.value;
+	if (!id) return [];
+	const entry = FIRESTORE_DESTINATIONS_DATA?.[category]?.[id];
+	return Array.isArray(entry?.images) ? (entry?.images as PlaceImage[]) : [];
 }

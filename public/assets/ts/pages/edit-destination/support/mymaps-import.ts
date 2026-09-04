@@ -13,9 +13,10 @@
 //   4. Conflicts— before writing, every draft whose name OR Maps link collides
 //      with an existing entry in its target category is listed with a per-item
 //      choice (keep both / skip / replace) — decision #5.
-//   5. Write    — createBatchOps() dot-path updates (`{category}.{id}: item`),
-//      batches of ≤ 500; on success re-read the doc, re-populate the form and
-//      openToast().
+//   5. Stage    — the chosen drafts are staged into the in-memory pending data
+//      (`FIRESTORE_DESTINATIONS_NEW_DATA`) and added to the live edit form.
+//      NO direct Firestore write — the edit page's Save button persists them
+//      (same convention as the Places enrich/refresh applies).
 //
 // Local-only for now (decision #2): mirrors the Places API PLACES_API_ENABLED
 // gate via MYMAPS_KML_ENABLED.
@@ -24,7 +25,13 @@
 // - docs/implementation-plans/20260826-mymaps-import-destination.md (§5 P4)
 
 import { registerActions } from '../../../ui/actions.js';
-import { cloneObject, getID, getRandomID } from '../../../utils/dom.js';
+import {
+	cloneObject,
+	findJFromID,
+	getID,
+	getLastUnorderedJ,
+	getRandomID,
+} from '../../../utils/dom.js';
 import {
 	closeMessage,
 	displayError,
@@ -37,11 +44,8 @@ import { translate } from '../../../i18n/translation.js';
 import {
 	DOCUMENT_ID,
 	FIRESTORE_DESTINATIONS_DATA,
-	setFirestoreDestinationsData,
+	FIRESTORE_DESTINATIONS_NEW_DATA,
 } from '../../../data/state.js';
-import { COLLECTION, createBatchOps } from '../../../data/services/destination.service.js';
-import { getSingleData } from '../../../data/firebase/database.js';
-import { snapshotFormState } from '../../../ui/fields.js';
 import {
 	buildMapsCoordinateLink,
 	buildMyMapsEntry,
@@ -52,26 +56,35 @@ import {
 	readKmlFromFile,
 	resolveMyMapsDrafts,
 } from '../../../data/services/mymaps-kml.service.js';
-import { GMAPS_SCRAPER_ENABLED } from '../../../data/services/gmaps-scraper.service.js';
+import { GMAPS_SCRAPER_ENABLED, parseCoordinateSearchUrl } from '../../../data/services/gmaps-scraper.service.js';
 import { PLACES_API_ENABLED } from '../../../data/services/places-api.service.js';
-import { populateExistingDestinationForm } from '../existing-destination.js';
+import { buildRegionSelects } from '../../../ui/region-select.js';
+import { setDescription, updateDescriptionButtonLabel } from '../categories/description.js';
+import { addDestination, addDestinationHTML } from '../existing-destination.js';
 
 /** The 5 content categories a My Maps folder can map into (see §5 P2). */
 const IMPORTABLE_CATEGORIES = ['restaurants', 'snacks', 'nightlife', 'tourism', 'shopping'];
 
-/** Firestore writes per batch (hard limit is 500 — keep headroom). */
-const BATCH_LIMIT = 500;
+/** Re-import tolerance (plan P6, decision #6): pins within this distance (m) count as the same place. */
+const REIMPORT_TOLERANCE_M = 20;
 
 // ------------------------------------------------------------------
 // Module state
 // ------------------------------------------------------------------
 let _drafts: MyMapsDraft[] = [];
-let _docPath = '';
 let _enriched = false; // whether enrichment already ran
 let _enriching = false; // enrichment in progress
 let _busy = false; // import write in progress
 let _fetchController: AbortController | null = null;
 let _uploadResolve: ((kml: string | null) => void) | null = null;
+let _reimportMode = false; // re-import: skip already-imported placemarks (P6)
+/**
+ * Normalized names already on the destination (re-import only). Placemarks
+ * whose name matches one of these are shown in the review but disabled —
+ * they can't be imported again. Kept empty in the regular import flow (which
+ * still resolves name collisions via the write-time conflict pass).
+ */
+let _existingNames = new Set<string>();
 
 // ------------------------------------------------------------------
 // Entry point
@@ -85,16 +98,77 @@ let _uploadResolve: ((kml: string | null) => void) | null = null;
  * review dialog.
  */
 export async function openMymapsImportDialog(): Promise<void> {
+	_reimportMode = false;
+	_existingNames = new Set();
+	const drafts = await acquireKmlDrafts();
+	if (drafts === null) return;
+	// Repeated names (e.g. a chain at different locations) → ask the user
+	// whether to add every single one or keep one of each before reviewing.
+	const handled = await handleRepeatedNames(drafts);
+	if (handled === null) return; // user cancelled the import
+	_drafts = handled;
+	_enriched = false;
+	_enriching = false;
+	renderReview();
+}
+
+/**
+ * Re-import from My Maps (P6): the same flow as the regular import, but
+ * placemarks that were already imported are ignored — matching by source
+ * coordinates (within ~20 m) against the destination's existing entries — so
+ * only newly discovered placemarks are offered for review/write.
+ */
+export async function openMymapsReimportDialog(): Promise<void> {
+	_reimportMode = true;
+	const drafts = await acquireKmlDrafts();
+	if (drafts === null) return;
+
+	const existing = collectExistingCoordinates();
+	const fresh = drafts.filter(
+		(draft) =>
+			!existing.some(
+				(point) =>
+					distanceM(point.lat, point.lng, draft.lat, draft.lng) <= REIMPORT_TOLERANCE_M,
+			),
+	);
+
+	if (fresh.length === 0) {
+		openToast(translate('mymapsImport.reimportNone'));
+		return;
+	}
+
+	const handled = await handleRepeatedNames(fresh);
+	if (handled === null) return; // user cancelled the import
+	_drafts = handled;
+	// Name-based "already on the destination" guard: placemarks whose name
+	// matches an existing entry (case/diacritics-insensitive) are kept in the
+	// review but disabled — they can't be imported again. The coordinate
+	// filter above already skips matches that share coordinates; this catches
+	// entries that exist only by name (typed manually, so no stored
+	// coordinates).
+	_existingNames = collectExistingEntryNames();
+	for (const draft of _drafts) {
+		if (_existingNames.has(normalizeName(draft.name))) draft.include = false;
+	}
+	_enriched = false;
+	_enriching = false;
+	renderReview();
+}
+
+/**
+ * Acquire the destination's My Maps KML (worker proxy first, upload fallback)
+ * and parse it into drafts. Returns null when the user cancels or parsing fails.
+ */
+async function acquireKmlDrafts(): Promise<MyMapsDraft[] | null> {
 	if (MYMAPS_KML_ENABLED !== true) {
 		displayError(new Error(translate('placesApi.errors.localOnly')), false, false);
-		return;
+		return null;
 	}
-	if (_busy || _enriching) return;
+	if (_busy || _enriching) return null;
 	if (!DOCUMENT_ID) {
 		displayError(new Error(translate('mymapsImport.errors.noDoc')), false, false);
-		return;
+		return null;
 	}
-	_docPath = `${COLLECTION.DESTINATIONS}/${DOCUMENT_ID}`;
 
 	const mapLink = (getID<HTMLInputElement>('map-link')?.value ?? '').trim();
 	const mid = extractMid(mapLink);
@@ -109,7 +183,7 @@ export async function openMymapsImportDialog(): Promise<void> {
 		} catch (error) {
 			if (isAbortError(error)) {
 				hideFetchingDialog();
-				return;
+				return null;
 			}
 			hideFetchingDialog();
 			kml = await promptUpload(mid);
@@ -117,24 +191,248 @@ export async function openMymapsImportDialog(): Promise<void> {
 	} else {
 		kml = await promptUpload(mid);
 	}
-	if (kml == null) return;
+	if (kml == null) return null;
 
-	let drafts: MyMapsDraft[];
 	try {
-		drafts = parseKml(kml);
+		return parseKml(kml);
 	} catch (error) {
 		displayError(
 			error instanceof Error ? error : new Error(translate('mymapsImport.errors.invalidKml')),
 			false,
 			false,
 		);
-		return;
+		return null;
+	}
+}
+
+/**
+ * Collect the source coordinates of every existing destination entry (P6).
+ * Prefers the persisted `placeAPI.sourceCoords` (written by My Maps imports),
+ * falling back to parsing the coordinate search URL kept in
+ * `placeAPI.sourceUrl` / `placeAPI.map` / `entry.map` (legacy imports).
+ */
+function collectExistingCoordinates(): Array<{ lat: number; lng: number }> {
+	const points: Array<{ lat: number; lng: number }> = [];
+	for (const category of IMPORTABLE_CATEGORIES) {
+		const map = FIRESTORE_DESTINATIONS_DATA?.[category] || {};
+		for (const rawEntry of Object.values(map)) {
+			const entry = rawEntry as any;
+			const coords = entry?.placeAPI?.sourceCoords;
+			if (coords && Number.isFinite(coords.lat) && Number.isFinite(coords.lng)) {
+				points.push({ lat: coords.lat, lng: coords.lng });
+				continue;
+			}
+			const url = entry?.placeAPI?.sourceUrl ?? entry?.placeAPI?.map ?? entry?.map ?? '';
+			const parsed = parseCoordinateSearchUrl(url);
+			if (parsed) points.push(parsed);
+		}
+	}
+	return points;
+}
+
+/** Haversine distance in meters between two lat/lng points. */
+function distanceM(lat1: number, lng1: number, lat2: number, lng2: number): number {
+	const EARTH_RADIUS_M = 6371000;
+	const toRad = (deg: number) => (deg * Math.PI) / 180;
+	const dLat = toRad(lat2 - lat1);
+	const dLng = toRad(lng2 - lng1);
+	const a =
+		Math.sin(dLat / 2) ** 2 +
+		Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+	return EARTH_RADIUS_M * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+// ------------------------------------------------------------------
+// Repeated names — dedupe prompt
+// ------------------------------------------------------------------
+
+/**
+ * A My Maps export can contain several placemarks with the same name — e.g.
+ * the user pinned the same chain restaurant at different regions. Since My
+ * Maps only provides coordinates (no region), these can't be told apart
+ * automatically, so before the review we ask the user how to handle them:
+ * add every single one (current behavior) or keep only one of each name.
+ * Only shown when duplicates are actually found.
+ */
+
+/** Normalized comparison key for a placemark name (case/diacritics-insensitive). */
+function normalizeName(name: string): string {
+	return (name ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+}
+
+/**
+ * Normalized names of every entry already on the destination (all importable
+ * categories; saved doc + staged-in-session data). Re-import compares each
+ * fresh placemark against this set so a place added by name only — e.g. typed
+ * manually, with no stored coordinates — is still recognized as "already on
+ * the destination".
+ */
+function collectExistingEntryNames(): Set<string> {
+	const names = new Set<string>();
+	for (const category of IMPORTABLE_CATEGORIES) {
+		for (const map of [
+			FIRESTORE_DESTINATIONS_DATA?.[category],
+			FIRESTORE_DESTINATIONS_NEW_DATA?.[category],
+		]) {
+			if (!map) continue;
+			for (const rawEntry of Object.values(map)) {
+				const key = normalizeName((rawEntry as any)?.name);
+				if (key) names.add(key);
+			}
+		}
+	}
+	return names;
+}
+
+/**
+ * Find names that appear on more than one draft. Returns `{ name, count }`
+ * groups for names used by ≥ 2 placemarks, in first-appearance order.
+ */
+function findRepeatedNames(drafts: MyMapsDraft[]): Array<{ name: string; count: number }> {
+	const groups = new Map<string, { name: string; count: number }>();
+	for (const draft of drafts) {
+		const key = normalizeName(draft.name);
+		if (!key) continue;
+		const group = groups.get(key);
+		if (group) {
+			group.count++;
+		} else {
+			groups.set(key, { name: draft.name, count: 1 });
+		}
+	}
+	return [...groups.values()].filter((group) => group.count > 1);
+}
+
+/**
+ * Keep exactly one draft per repeated name (the user picked "keep one of
+ * each"): prefer a mapped draft (category resolved) so the kept row actually
+ * imports, falling back to the first occurrence. Non-repeated drafts pass
+ * through untouched.
+ */
+function keepOnePerRepeatedName(drafts: MyMapsDraft[]): MyMapsDraft[] {
+	const groups = new Map<string, MyMapsDraft[]>();
+	for (const draft of drafts) {
+		const key = normalizeName(draft.name);
+		if (!key) continue;
+		const list = groups.get(key);
+		if (list) list.push(draft);
+		else groups.set(key, [draft]);
 	}
 
-	_drafts = drafts;
-	_enriched = false;
-	_enriching = false;
-	renderReview();
+	const repeatedKeys = new Set<string>();
+	for (const [key, list] of groups) {
+		if (list.length > 1) repeatedKeys.add(key);
+	}
+	if (repeatedKeys.size === 0) return drafts;
+
+	const kept = new Set<MyMapsDraft>();
+	for (const [key, list] of groups) {
+		if (!repeatedKeys.has(key)) {
+			list.forEach((draft) => kept.add(draft));
+			continue;
+		}
+		kept.add(list.find((draft) => draft.category) ?? list[0]);
+	}
+
+	return drafts.filter((draft) => kept.has(draft));
+}
+
+type DuplicateChoice = 'keepAll' | 'keepOne';
+
+/**
+ * Ask the user how to handle repeated names (shown only when
+ * `findRepeatedNames` found any). The two option cards mirror the bulk
+ * source-prompt visual language (`.places-linked-option`). Resolves with the
+ * chosen handling, or null when the user cancels (X / Escape / Cancel
+ * button) to abort the import before the review dialog.
+ */
+function promptDuplicateHandling(
+	groups: Array<{ name: string; count: number }>,
+	duplicateCount: number,
+): Promise<DuplicateChoice | null> {
+	return new Promise((resolve) => {
+		const properties = cloneObject(MESSAGE_PROPERTIES);
+		properties.title = translate('mymapsImport.duplicates.title');
+		properties.content = getDuplicatesHTML(groups, duplicateCount);
+		properties.containers = getContainersInput();
+		properties.containers.principal = `${properties.containers.principal} mymaps-dialog-container`;
+		properties.fullscreen = true;
+		// Cancel affordances — the X icon, the Cancel button, and Escape all
+		// resolve null so the awaited flow never hangs on a bare close (the
+		// caller aborts the import). The two option cards resolve with the
+		// chosen handling.
+		properties.icons = [{ type: 'close', action: () => finish(null) }];
+		properties.buttons = [{ type: 'cancel', action: () => finish(null) }];
+		displayFullMessage(properties);
+
+		const finish = (choice: DuplicateChoice | null) => () => {
+			closeMessage();
+			resolve(choice);
+		};
+		getID<HTMLButtonElement>('mymaps-duplicates-keepall')?.addEventListener('click', finish('keepAll'));
+		getID<HTMLButtonElement>('mymaps-duplicates-keepone')?.addEventListener('click', finish('keepOne'));
+	});
+}
+
+function getDuplicatesHTML(
+	groups: Array<{ name: string; count: number }>,
+	duplicateCount: number,
+): string {
+	const rows = groups
+		.map(
+			(group) => `
+			<div class="mymaps-duplicate-row">
+				<span class="mymaps-duplicate-name">${escapeHtml(group.name)}</span>
+				<span class="mymaps-duplicate-count">${escapeHtml(
+					translate('mymapsImport.duplicates.occurrences', { count: String(group.count) }),
+				)}</span>
+			</div>`,
+		)
+		.join('');
+
+	return `
+	<div class="mymaps-dialog">
+		<p class="mymaps-dialog-message">${escapeHtml(
+			translate('mymapsImport.duplicates.message', { count: String(duplicateCount) }),
+		)}</p>
+		<div class="mymaps-duplicates-list">${rows}</div>
+		<div class="mymaps-duplicates-actions">
+			<button type="button" class="places-linked-option" id="mymaps-duplicates-keepall">
+				<span class="places-linked-option-title">${escapeHtml(
+					translate('mymapsImport.duplicates.addAll'),
+				)}</span>
+				<span class="places-linked-option-caption">${escapeHtml(
+					translate('mymapsImport.duplicates.addAllHint', { count: String(duplicateCount) }),
+				)}</span>
+			</button>
+			<button type="button" class="places-linked-option" id="mymaps-duplicates-keepone">
+				<span class="places-linked-option-title">${escapeHtml(
+					translate('mymapsImport.duplicates.keepOne'),
+				)}</span>
+				<span class="places-linked-option-caption">${escapeHtml(
+					translate('mymapsImport.duplicates.keepOneHint', { count: String(groups.length) }),
+				)}</span>
+			</button>
+		</div>
+	</div>`;
+}
+
+/**
+ * Pipeline step between acquisition and the review: when the parsed drafts
+ * contain repeated names, ask the user whether to add every single one
+ * (current behavior) or keep only one of each name, then return the drafts
+ * that should be reviewed. Passes through unchanged when no duplicates exist,
+ * and returns null when the user closes the prompt (cancels the import).
+ */
+async function handleRepeatedNames(drafts: MyMapsDraft[]): Promise<MyMapsDraft[] | null> {
+	const groups = findRepeatedNames(drafts);
+	if (groups.length === 0) return drafts;
+
+	const duplicateCount = groups.reduce((sum, group) => sum + group.count, 0);
+	const choice = await promptDuplicateHandling(groups, duplicateCount);
+	if (choice === null) return null; // user cancelled the import
+	if (choice === 'keepOne') return keepOnePerRepeatedName(drafts);
+	return drafts;
 }
 
 // ------------------------------------------------------------------
@@ -283,6 +581,9 @@ function extractMid(url: string): string {
 
 function renderReview(): void {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
+	// The "Add" card always imports unused placemarks (re-import filtering), so
+	// the review keeps the plain "Import from My Maps" title (the reimport
+	// summary below still reads "Found N new placemark(s)").
 	properties.title = translate('mymapsImport.title');
 	properties.containers = getContainersInput();
 	properties.containers.principal = `${properties.containers.principal} mymaps-dialog-container`;
@@ -305,7 +606,10 @@ function getReviewHTML(): string {
 	return `
 	<div class="mymaps-dialog">
 		<p class="mymaps-dialog-summary">${escapeHtml(
-			translate('mymapsImport.summary', { count: String(_drafts.length) }),
+			translate(
+				_reimportMode ? 'mymapsImport.reimportSummary' : 'mymapsImport.summary',
+				{ count: String(_drafts.length) },
+			),
 		)}</p>
 		${_enriching ? `<p class="mymaps-dialog-progress" id="mymaps-progress">${escapeHtml(translate('mymapsImport.enriching', { done: '0', total: String(_drafts.length) }))}</p>` : ''}
 		<div class="mymaps-list" id="mymaps-list">
@@ -331,14 +635,20 @@ function getReviewHTML(): string {
 function getRowHTML(draft: MyMapsDraft, index: number): string {
 	const status = getStatus(draft);
 	const unmapped = !draft.category;
+	// Re-import: a placemark whose name already exists on the destination is
+	// shown for context but disabled — checkbox stays off and the category
+	// can't be changed, so it can never be imported again.
+	const existing = isExistingDraft(draft);
+	const disabled = _enriching || existing;
 	return `
-	<div class="mymaps-row ${unmapped ? 'mymaps-row--unmapped' : ''}" data-index="${index}">
+	<div class="mymaps-row ${unmapped ? 'mymaps-row--unmapped' : ''} ${existing ? 'mymaps-row--existing' : ''}" data-index="${index}">
 		<label class="mymaps-row-include">
-			<input type="checkbox" data-action="mymaps-toggle" data-index="${index}" ${draft.include ? 'checked' : ''} ${_enriching ? 'disabled' : ''} />
+			<input type="checkbox" data-action="mymaps-toggle" data-index="${index}" ${draft.include && !existing ? 'checked' : ''} ${disabled ? 'disabled' : ''} />
 		</label>
 		<span class="mymaps-row-name" title="${escapeHtml(draft.map || buildMapsCoordinateLink(draft.lat, draft.lng))}">${escapeHtml(draft.name)}</span>
 		${unmapped ? `<span class="mymaps-row-badge mymaps-row-badge--unassigned">${escapeHtml(translate('mymapsImport.unassigned'))}</span>` : ''}
-		<select class="mymaps-row-category" data-index="${index}" ${_enriching ? 'disabled' : ''}>
+		${existing ? `<span class="mymaps-row-badge mymaps-row-badge--existing">${escapeHtml(translate('mymapsImport.alreadyAdded'))}</span>` : ''}
+		<select class="mymaps-row-category" data-index="${index}" ${disabled ? 'disabled' : ''}>
 			<option value="">${escapeHtml(translate('mymapsImport.unassigned'))}</option>
 			${IMPORTABLE_CATEGORIES.map(
 				(cat) =>
@@ -349,6 +659,11 @@ function getRowHTML(draft: MyMapsDraft, index: number): string {
 		</select>
 		${status ? `<span class="mymaps-row-status mymaps-row-status--${status.key}">${escapeHtml(status.label)}</span>` : ''}
 	</div>`;
+}
+
+/** Whether the draft's name already matches an entry on the destination (re-import). */
+function isExistingDraft(draft: MyMapsDraft): boolean {
+	return _existingNames.has(normalizeName(draft.name));
 }
 
 function getStatus(draft: MyMapsDraft): { key: string; label: string } | null {
@@ -385,6 +700,9 @@ function wireReview(): void {
 	// Category <select> edits update the live draft (change, not click).
 	document.querySelectorAll<HTMLSelectElement>('.mymaps-row-category').forEach((select) => {
 		select.addEventListener('change', () => {
+			// Already-on-destination rows are disabled in the DOM; guard anyway
+			// so a stale handler can never make one importable.
+			if (select.closest('.mymaps-row')?.classList.contains('mymaps-row--existing')) return;
 			const index = Number(select.getAttribute('data-index'));
 			const draft = _drafts[index];
 			if (!draft) return;
@@ -522,13 +840,13 @@ async function handleImportConfirm(): Promise<void> {
 
 	_busy = true;
 	try {
-		// Close whichever dialog is showing (review or conflict) before writing.
+		// Close whichever dialog is showing (review or conflict) before staging.
 		closeMessage();
-		const imported = await writeImports(decisions);
-		await refreshForm();
-		openToast(translate('mymapsImport.imported', { count: String(imported) }));
+		const imported = await stageImports(decisions);
+		await refreshBulkButton();
+		openToast(translate('mymapsImport.staged', { count: String(imported) }));
 	} catch (error) {
-		console.error('[mymaps-import] Import write failed', error);
+		console.error('[mymaps-import] Import stage failed', error);
 		displayError(
 			error instanceof Error ? error : new Error(translate('placesApi.apply.error')),
 			false,
@@ -540,12 +858,14 @@ async function handleImportConfirm(): Promise<void> {
 }
 
 /**
- * Write the included drafts to Firestore as dot-path map updates
- * (`{category}.{id}: item`, plan §5 P4) in batches of ≤ 500. Handles the
- * per-conflict decisions: skip / replace (keep the existing id) / keep both.
- * Returns the number of entries written.
+ * Stage the included drafts into the edit page (plan §5 P4, staged variant) —
+ * the in-memory pending data (`FIRESTORE_DESTINATIONS_NEW_DATA`) plus the live
+ * edit form cards. NO direct Firestore write: per the edit page's convention
+ * (same as the Places enrich/refresh applies), the Save button persists
+ * everything. Handles the per-conflict decisions: skip / replace (keep the
+ * existing id) / keep both. Returns the number of entries staged.
  */
-async function writeImports(decisions: DecisionMap): Promise<number> {
+async function stageImports(decisions: DecisionMap): Promise<number> {
 	const usedIds = new Set<string>();
 	for (const category of IMPORTABLE_CATEGORIES) {
 		for (const id of Object.keys(FIRESTORE_DESTINATIONS_DATA?.[category] || {})) {
@@ -553,9 +873,9 @@ async function writeImports(decisions: DecisionMap): Promise<number> {
 		}
 	}
 
-	const ops: { path: string; data: Record<string, unknown> }[] = [];
+	const newData = FIRESTORE_DESTINATIONS_NEW_DATA ?? {};
 	// Categories that actually receive at least one entry this run (only
-	// written ones — conflict "skip" decisions don't count).
+	// staged ones — conflict "skip" decisions don't count).
 	const touchedCategories = new Set<string>();
 	let imported = 0;
 
@@ -566,42 +886,68 @@ async function writeImports(decisions: DecisionMap): Promise<number> {
 		const decision = decisions.get(i);
 		if (decision?.choice === 'skip') continue;
 
+		const category = draft.category;
 		const item = buildMyMapsEntry(draft);
+		let id: string;
 		if (decision?.choice === 'replace' && decision.existingId) {
-			ops.push({
-				path: _docPath,
-				data: { [`${draft.category}.${decision.existingId}`]: item },
-			});
+			id = decision.existingId;
 		} else {
-			const id = getRandomID({ pool: [...usedIds] });
+			id = getRandomID({ pool: [...usedIds] });
 			usedIds.add(id);
-			ops.push({ path: _docPath, data: { [`${draft.category}.${id}`]: item } });
 		}
-		touchedCategories.add(draft.category);
+
+		// Stage into the pending data (buildDestinationObject rebuilds NEW_DATA
+		// from the form, but keeping it in sync here preserves placeAPI and makes
+		// the staged entries visible to the bulk-item collectors / conflict pass).
+		if (!newData[category]) newData[category] = {};
+		newData[category][id] = item;
+
+		// Add (new) or refresh (replace) the live edit form card — the DOM is
+		// what the Save button reads, so the entry persists on Save.
+		let j = findJFromID(id, category);
+		if (j === 0) {
+			addDestination(category);
+			j = getLastUnorderedJ(`${category}-box`);
+		}
+		addDestinationHTML(category, j, { ...item, id });
+		setDescription(category, j, item.description);
+		updateDescriptionButtonLabel(category, j);
+
+		touchedCategories.add(category);
 		imported++;
 	}
 
 	// A My Maps import may target a category whose module is currently
 	// disabled (its section hidden on the edit page). Auto-enable it in the
-	// same write (`modules.{category}: true` — read back by
-	// populateExistingDestinationForm/loadExistingDestination), so the imported
-	// entries are immediately visible and manageable in the form. Only persists
-	// when the stored doc has the module off; enabled categories are untouched.
+	// form (checkbox + section) and the pending data (`modules.{category}: true`
+	// — buildDestinationObject reads the checkbox, so Save persists it), so the
+	// imported entries are immediately visible and manageable. Only staged when
+	// the stored doc has the module off; enabled categories are untouched.
 	for (const category of touchedCategories) {
 		if (FIRESTORE_DESTINATIONS_DATA?.modules?.[category] !== true) {
-			ops.push({ path: _docPath, data: { [`modules.${category}`]: true } });
+			const checkbox = getID<HTMLInputElement>(`${category}-enabled`);
+			if (checkbox && !checkbox.checked) {
+				checkbox.checked = true;
+				const content = getID<HTMLElement>(`${category}-enabled-content`);
+				if (content) content.style.display = 'block';
+				const addBox = getID<HTMLElement>(`${category}-add-box`);
+				if (addBox) addBox.style.display = 'block';
+			}
+			if (!newData.modules) newData.modules = {};
+			newData.modules[category] = true;
 		}
 	}
 
-	for (let start = 0; start < ops.length; start += BATCH_LIMIT) {
-		const chunk = ops.slice(start, start + BATCH_LIMIT);
-		const batch = createBatchOps();
-		for (const op of chunk) batch.update(op.path, op.data);
-		const result = await batch.commit();
-		if (!result?.success) {
-			throw new Error(result?.error || translate('placesApi.apply.error'));
-		}
+	// Mark the destination as having completed a My Maps import (plan P5) so
+	// the bulk options hide "Import from My Maps" and offer "Re-import from My
+	// Maps" instead. Staged into NEW_DATA only (buildDestinationObject preserves
+	// it, so Save persists it); DATA stays untouched so the diff detects it.
+	// Only marked when at least one entry was actually imported.
+	if (imported > 0) {
+		newData.myMapsImported = true;
 	}
+
+	buildRegionSelects();
 	return imported;
 }
 
@@ -685,29 +1031,16 @@ function readConflictDecisions(conflicts: MyMapsConflict[]): DecisionMap {
 }
 
 // ------------------------------------------------------------------
-// Post-write form refresh
+// Post-stage button sync
 // ------------------------------------------------------------------
 
 /**
- * Re-read the destination doc, re-populate the edit form (so the imported
- * entries show up as cards) and reset the unsaved-changes baseline so the
- * beforeunload prompt doesn't fire right after an import.
+ * Keep the bulk "Update with Maps" button in sync after a staged import
+ * (imported entries may be linked now). The import is STAGED, not persisted —
+ * so we must NOT re-read the doc from Firestore, re-populate the form, or
+ * reset the unsaved-changes baseline (the user still needs to hit Save).
  */
-async function refreshForm(): Promise<void> {
-	const data = await getSingleData('destinations');
-	if (data) {
-		setFirestoreDestinationsData(data);
-		// A re-populate failure shouldn't mask the successful write — log it
-		// and keep going so the success toast still shows.
-		try {
-			populateExistingDestinationForm();
-		} catch (error) {
-			console.error('[mymaps-import] Form refresh failed after import', error);
-		}
-		snapshotFormState();
-	}
-	// Keep the bulk "Update with Maps" button in sync (imported entries may be
-	// linked now). Dynamic import avoids the edit-destination module cycle.
+async function refreshBulkButton(): Promise<void> {
 	try {
 		const { refreshPlacesBulkButton } = await import('../edit-destination.js');
 		refreshPlacesBulkButton();

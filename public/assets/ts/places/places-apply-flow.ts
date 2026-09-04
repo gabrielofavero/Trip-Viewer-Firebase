@@ -39,10 +39,13 @@ import { loadCurrencyValueAndVisibility } from '../pages/edit-destination/catego
 import {
 	DESTINATION_IMAGES,
 	removeDestinationImages,
-	setDestinationImageButtonLabel,
+	renderDestinationImageCarousel,
 } from '../pages/edit-destination/categories/image.js';
 import { applyPlaceData, getClosedLabel, type PlaceFieldKey } from './places-apply.js';
-import { updatePlacesFetchButtonLabel } from '../pages/edit-destination/new-destination.js';
+import {
+	updatePlacesFetchButtonLabel,
+	updateRatingBadge,
+} from '../pages/edit-destination/new-destination.js';
 // Places API bulk "Update with Maps" (P11). Side-effect import: guarantees the
 // bulk module (runBulkUpdate + report) is part of the edit-destination bundle.
 // Loaded here (P9's file) so it does NOT touch P10's files (edit-destination.ts
@@ -65,6 +68,9 @@ import {
 import { LOCAL_SOURCE_URL_KEY } from './places-local-step.js';
 import type { PlaceDetails } from '../models/places-api.model.js';
 import type { PlaceAPI, PlaceImage, PlaceItem } from '../models/schema.js';
+
+/** Max photos per destination entry (plan P8 — 5-photo cap). */
+const MAX_PHOTOS = 5;
 
 
 // ------------------------------------------------------------------
@@ -135,14 +141,21 @@ export function applyAndClose(): void {
 			applyClosedLabel = true;
 		}
 
-		// Photos import → replace the entry's images with exactly the imported
-		// photos the user previewed + kept selected in the photos step (no
-		// hidden cap — the photos route returns ≤ 3, the scraper returns all
-		// of its images).
+		// Photos import → append (never replace) the imported photos to the
+		// entry's existing ones, deduped by link and capped at MAX_PHOTOS per
+		// item (plan P8 — existing photos are never removed).
 		const photosToApply = importPhotos ? importedPhotos : [];
 		const applyPhotos = photosToApply.length > 0;
 		if (applyPhotos) {
-			entry.images = photosToApply;
+			const existing = Array.isArray(entry.images) ? entry.images : [];
+			const seen = new Set(existing.map((image) => image.link));
+			const merged = [...existing];
+			for (const photo of photosToApply) {
+				if (!photo?.link || seen.has(photo.link)) continue;
+				seen.add(photo.link);
+				merged.push({ description: photo.description ?? '', link: photo.link });
+			}
+			entry.images = merged.slice(0, MAX_PHOTOS);
 		}
 
 		// Update the edit form DOM so the entry reflects the applied data.
@@ -259,9 +272,27 @@ export function updateFormEntry(
 				addKnownValues(entry.regions);
 				regionApplied = true;
 				break;
-			case 'rating':
-				setInputValue(`${category}-rating-${j}`, entry.rating);
+			case 'rating': {
+				// The edit form's "Priority not set" option value is '?' — never
+				// leave the select blank (''/undefined) when the place has no
+				// priority, otherwise no option would be selected.
+				const rawRating = entry.rating || '?';
+				// The priority select only carries the integer options 1-5 plus
+				// '?' (unset). A fetched value outside that set (e.g. a sub-1
+				// score rounding to "0") can't be represented — fall back to
+				// "not set" so the select never lands in a blank state.
+				const priority = ['1', '2', '3', '4', '5'].includes(rawRating)
+					? rawRating
+					: '?';
+				setInputValue(`${category}-rating-${j}`, priority);
+				// Keep the accordion priority badge in sync with the select.
+				// Without this, an enrich that fills the priority leaves the
+				// badge stale/hidden — setting a select programmatically doesn't
+				// fire 'change', so it only caught up if the user later picked a
+				// DIFFERENT option (re-selecting the same one fires nothing).
+				updateRatingBadge(category, j);
 				break;
+			}
 			case 'price':
 				setPriceValue(category, j, entry.price);
 				break;
@@ -282,7 +313,7 @@ export function updateFormEntry(
 			description: image.description ?? '',
 			link: image.link ?? '',
 		}));
-		setDestinationImageButtonLabel(category, j);
+		renderDestinationImageCarousel(category, j);
 	}
 
 	// Refresh the accordion title (name + emoji) and apply the [Closed] marker.

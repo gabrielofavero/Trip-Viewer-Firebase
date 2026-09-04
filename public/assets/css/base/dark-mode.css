@@ -415,8 +415,8 @@
 [data-theme="dark"] .btn-theme,
 [data-theme="dark"] .btn-basic:hover,
 [data-theme="dark"] .btn-basic:focus {
-	background: var(--theme-color);
-	color: #fff;
+	border-color: var(--text-secondary);
+	color: var(--text-secondary);
 }
 
 [data-theme="dark"] .btn-theme:hover,

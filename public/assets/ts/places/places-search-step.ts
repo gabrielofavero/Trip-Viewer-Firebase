@@ -54,6 +54,9 @@ const MAX_RESULTS = 20;
 /** Results of the most recent search, indexed by `data-index` in the DOM. */
 let _results: PlaceSearchResult[] = [];
 
+/** Max photos per destination entry (plan P8) — hide the Include-photo option at the cap. */
+const MAX_ENTRY_PHOTOS = 5;
+
 // ------------------------------------------------------------------
 // Step renderer
 // ------------------------------------------------------------------
@@ -76,10 +79,12 @@ function renderSearchStep(context: PlacesDialogContext): string {
 				<button id="places-search-submit" class="places-search-submit" type="button"
 					data-action="places-search-run">${translate('placesApi.search.button')}</button>
 			</div>
-			<label class="places-search-photos">
-				<input type="checkbox" id="places-search-photos-input" class="places-search-photos-input" />
-				<span>${escapeHtml(translate('placesApi.search.includePhotos'))}</span>
-			</label>
+			${(context.existingImages?.length ?? 0) < MAX_ENTRY_PHOTOS
+				? `<label class="places-search-photos">
+					<input type="checkbox" id="places-search-photos-input" class="places-search-photos-input" />
+					<span>${escapeHtml(translate('placesApi.search.includePhotos'))}</span>
+				</label>`
+				: ''}
 		</div>
 		<div id="places-search-results" class="places-search-results" aria-live="polite"></div>
 	</div>`;

@@ -3,7 +3,6 @@ import { hasUnsavedChanges, validateImageLink, validateLink } from '../../../ui/
 import { searchDestinationsListenerAction } from '../../../theme/visibility.js';
 import { translate } from '../../../i18n/translation.js';
 import { getNextInputDay, getPreviousInputDay, inputDateToJsDate } from '../../../utils/dates.js';
-import { addRemoveChildListenerDS } from '../../../ui/dynamic-select.js';
 import { registerActions } from '../../../ui/actions.js';
 import { registerActions as registerMessageActions } from '../../../utils/messages.js';
 import { openTravelersInfo, saveTravelersInfo } from '../categories/travelers.js';
@@ -19,14 +18,7 @@ import { openInnerExpense, deleteInnerExpense, saveInnerExpense } from '../categ
 import { openAttributions } from '../../../utils/attributions.js';
 import { switchPin } from '../categories/basic-data/protected-data.js';
 import { closeToast } from '../../../utils/messages.js';
-import {
-	openAccommodationImages,
-	openAccommodationImage,
-	closeAccommodationImages,
-	removeAccommodationImage,
-	accommodationsAddListenerAction,
-	confirmAccommodationImages,
-} from '../categories/accommodation.js';
+import { accommodationsAddListenerAction } from '../categories/accommodation.js';
 import {
 	openAccommodationImport,
 	refreshAccommodationImportButtons,
@@ -35,7 +27,6 @@ import {
 	openTransportationImport,
 	refreshTransportationImportButtons,
 } from '../categories/transportation-import.js';
-import { galleryAddListenerAction } from '../categories/gallery.js';
 import { reloadItinerary } from '../categories/itinerary-module/itinerary-module.js';
 import {
 	deleteInnerItinerary,
@@ -73,10 +64,6 @@ export function loadEventListeners() {
 		},
 		'open-attributions': () => openAttributions(),
 		'close-toast': () => closeToast(),
-		'open-accommodation-images': (target) => {
-			const index = parseInt(target.getAttribute('data-index'));
-			if (!isNaN(index)) openAccommodationImages(index);
-		},
 		'open-accommodation-import': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) openAccommodationImport(index);
@@ -88,14 +75,6 @@ export function loadEventListeners() {
 		'open-inner-itinerary': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) openInnerItinerary(index);
-		},
-		'open-accommodation-image': (target) => {
-			const index = parseInt(target.getAttribute('data-index'));
-			if (!isNaN(index)) openAccommodationImage(index);
-		},
-		'remove-accommodation-image': (target) => {
-			const index = parseInt(target.getAttribute('data-index'));
-			if (!isNaN(index)) removeAccommodationImage(index);
 		},
 		'delete-inner-expense': (target) => {
 			const category = target.getAttribute('data-category');
@@ -128,8 +107,6 @@ export function loadEventListeners() {
 		reconfirmPin,
 		validatePin,
 		deleteTripAction,
-		confirmAccommodationImages,
-		closeAccommodationImages,
 		saveInnerExpense,
 		closeInnerItinerary,
 		innerItineraryConfirmAction,
@@ -150,7 +127,6 @@ export function loadEventListeners() {
 		accommodationsAddListenerAction();
 		void refreshAccommodationImportButtons();
 	});
-	getID('gallery-add').addEventListener('click', () => galleryAddListenerAction());
 	getID('pin-disabled').addEventListener('click', switchPin);
 	getID('pin-sensitive-only').addEventListener('click', switchPin);
 	getID('pin-all-data').addEventListener('click', switchPin);
@@ -238,14 +214,4 @@ export function addRemoveTransportationListener(j) {
 		// sees the group wrappers and would leave the module enabled.
 		hideParentIfNoChildren('transportation');
 	});
-}
-
-export function addRemoveGalleryListener(j) {
-	const dynamicSelects = [
-		{
-			type: 'gallery-category',
-			selectID: `gallery-category-select-${j}`,
-		},
-	];
-	addRemoveChildListenerDS('gallery', j, dynamicSelects);
 }

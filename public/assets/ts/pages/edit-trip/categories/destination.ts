@@ -106,13 +106,12 @@ export function updateActiveDestinationsCardsHTML(type, j?) {
 				card.classList.add('selected');
 				container.prepend(card);
 			}
-			// Add click listeners
-			card.addEventListener('click', () => {
-				card.classList.toggle('selected');
-				if (card.classList.contains('selected')) {
-					container.prepend(card);
-				}
-			});
+		}
+
+		// Card clicks select the destination and update the day title
+		// immediately (auto-title when the day has no title yet).
+		if (type === 'itinerary') {
+			loadItineraryListeners(j);
 		}
 	}
 

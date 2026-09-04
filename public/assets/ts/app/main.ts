@@ -16,13 +16,18 @@ import {
 	loadLangSelectorSelect,
 } from '../i18n/translation.js';
 import { initActions } from '../ui/actions.js';
+import { initUrlInputOpenLink } from '../ui/url-input-open-link.js';
 import { initDev } from '../utils/dev.js';
 import { isStaticMode, loadStaticData } from '../static-mode/static-mode.js';
-import { checkForAppUpdate } from '../app/version-check.js';
+import {
+	checkForAppUpdate,
+	startVersionUpdatePolling,
+} from '../app/version-check.js';
 
 const APP = {
 	projectId: null,
 	version: null,
+	build: 0,
 };
 
 export async function main(pageLoaders: Record<string, () => void> = {}) {
@@ -34,9 +39,11 @@ export async function main(pageLoaders: Record<string, () => void> = {}) {
 		translatePage();
 		initializeApp();
 		populateFooterVersion();
-		// Detect a newly deployed version (LocalStorage-compared) and, on a
-		// mismatch, prompt to refresh so the user loads the latest build.
-		checkForAppUpdate(APP.version);
+		// Sync the last-seen version marker (no prompt — the loaded page is
+		// already the newest build) and start background detection of new
+		// deploys while the app stays open.
+		checkForAppUpdate(APP.version, APP.build);
+		startVersionUpdatePolling(APP.version, APP.build, APP.projectId);
 		loadLangSelectorSelect();
 		loadPage(pageLoaders);
 	} catch (error) {
@@ -120,9 +127,13 @@ function initializeApp() {
 	}
 	const versions = getVersions();
 	APP.version = versions?.projects?.[APP.projectId]?.version?.system || 'Unknown';
+	APP.build = typeof versions?.build === 'number' ? versions.build : 0;
 
 	// Initialize the centralized delegated click handler (replaces all inline onclick)
 	initActions();
+
+	// Add "open link in new tab" helpers to url inputs on the edit forms
+	initUrlInputOpenLink();
 }
 
 /**

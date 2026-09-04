@@ -13,6 +13,7 @@ import { openToast } from '../../../utils/messages.js';
 import { getDestinationRaw } from '../../../data/services/destination.service.js';
 import { ACTIVE_DESTINATIONS, DESTINOS_DATA } from './destination.js';
 import { ACCOMMODATION_IMAGES } from './accommodation.js';
+import { GALLERY_ITEMS } from './gallery.js';
 import {
 	refreshImagePickers,
 	setImagePickerTripProvider,
@@ -75,38 +76,19 @@ function getSourceDestinationId(optionId: string): string | undefined {
 	return dash === -1 ? rest : rest.slice(0, dash);
 }
 
-/** Gallery photos (live DOM state) as a flat group. */
+/** Gallery photos (staged state) as a flat group. */
 function buildGalleryGroup(): TripImageGroup {
 	const options: TripImageOption[] = [];
-	const childIDs = getChildIDs('gallery-box');
-	if (!childIDs) {
-		return {
-			key: 'gallery',
-			title: translate('labels.customization.images.group_gallery'),
-			options,
-		};
-	}
-	childIDs.forEach((childId) => {
-		const j = getJ(childId);
-		const link = (getID(`link-gallery-${j}`) as HTMLInputElement | null)?.value?.trim() || '';
+	GALLERY_ITEMS.forEach((item, i) => {
+		const link = item.link?.trim() || '';
 		if (!link) return;
-		// The real title input for a gallery row; the accordion button only
-		// mirrors it (and shows a generic "Image N" placeholder otherwise).
-		const titleInput =
-			(getID(`gallery-title-input-${j}`) as HTMLInputElement | null)?.value?.trim() || '';
-		const titleButton =
-			(getID(`gallery-title-${j}`) as HTMLElement | null)?.innerText?.trim() || '';
-		const placeholder = `${translate('labels.image.title')} ${j}`;
 		const title =
-			titleInput || (titleButton && titleButton !== placeholder ? titleButton : '') || '';
-		const description =
-			(getID(`gallery-description-${j}`) as HTMLInputElement | null)?.value?.trim() || '';
+			item.title?.trim() ||
+			item.description?.trim() ||
+			translate('labels.customization.images.image_n', { n: options.length + 1 });
 		options.push({
-			id: `gallery-${j}`,
-			title:
-				title ||
-				description ||
-				translate('labels.customization.images.image_n', { n: options.length + 1 }),
+			id: `gallery-${i}`,
+			title,
 			image: link,
 			sourceLabel: translate('labels.customization.images.group_gallery'),
 		});

@@ -16,8 +16,8 @@ import {
 	getTransportationPicker,
 	loadDestinations,
 	loadItinerarySchedule,
-	addGallery,
 } from './new-trip.js';
+import { GALLERY_ITEMS, renderGalleryCarousel } from './categories/gallery.js';
 import {
 	loadTransportationVisibility,
 	updateTransportationTitle,
@@ -26,7 +26,7 @@ import {
 } from './categories/transportation.js';
 import {
 	ACCOMMODATION_IMAGES,
-	setImageButtonLabel,
+	renderAccommodationImageCarousel,
 	loadCheckIn,
 	loadCheckOut,
 } from './categories/accommodation.js';
@@ -37,7 +37,12 @@ import {
 import {
 	setItineraryData,
 	applyLoadedItineraryData,
+	getItineraryArray,
 } from './categories/itinerary-module/itinerary-module.js';
+import {
+	autoPopulateItineraryFromTrip,
+	hasItineraryItems,
+} from './categories/itinerary-module/inner-itinerary/auto-populate.js';
 import { displayError } from '../../utils/messages.js';
 import { translate } from '../../i18n/translation.js';
 import { getState } from '../../data/state.js';
@@ -46,7 +51,6 @@ import { convertFromDateObject, getDateString, getTimeStringFromDate } from '../
 import { validateTravelersObject } from '../../models/traveler.model.js';
 import { haveErrorFromGetRequest, get } from '../../data/firebase/database.js';
 import { ERROR_FROM_GET_REQUEST } from '../../data/state.js';
-import { buildDS, updateValueDS } from '../../ui/dynamic-select.js';
 import { getHTMLpage, setPageName } from '../../app/main.js';
 
 export async function loadTripData() {
@@ -262,7 +266,7 @@ function loadAccommodationData() {
 		getID(`reservation-accommodations-${j}`).value = accommodation.reservation || '';
 		getID(`reservation-accommodations-link-${j}`).value = accommodation.link;
 
-		setImageButtonLabel(j);
+		renderAccommodationImageCarousel(j);
 		loadCheckIn(accommodation, j);
 		loadCheckOut(accommodation, j);
 	}
@@ -317,6 +321,13 @@ export function loadItineraryData() {
 		j++;
 	}
 	updateActiveDestinationsCardsHTML('itinerary');
+
+	// Pre-fill from transportations/accommodations when the itinerary is
+	// enabled but has no scheduled items yet.
+	if (getID('itinerary-enabled')?.checked && !hasItineraryItems(getItineraryArray() || [])) {
+		autoPopulateItineraryFromTrip();
+	}
+
 	setItineraryData(cloneObject(getState().itinerary));
 }
 
@@ -324,34 +335,19 @@ function loadGalleryData() {
 	if (getState().modules.gallery === true) {
 		getID('gallery-enabled').checked = true;
 		getID('gallery-enabled-content').style.display = 'block';
-		getID('gallery-add-box').style.display = 'block';
 	}
 
-	const gallerySize = getState().gallery?.images.length;
-	if (gallerySize > 0) {
-		for (let j = 1; j <= gallerySize; j++) {
-			const i = j - 1;
-			addGallery();
-
-			const title = getState().gallery.titles[i];
-			if (title) {
-				getID(`gallery-title-${j}`).value = title;
-				getID(`gallery-title-${j}`).innerText = title;
-			}
-
-			const category = getState().gallery.categories[i];
-			if (category) {
-				getID(`gallery-category-${j}`).value = category;
-				updateValueDS('gallery-category', category, `gallery-category-select-${j}`);
-				buildDS('gallery-category');
-			}
-
-			const description = getState().gallery.descriptions[i];
-			if (description) {
-				getID(`gallery-description-${j}`).value = description;
-			}
-
-			getID(`link-gallery-${j}`).value = getState().gallery.images[i];
-		}
+	const gallery = getState().gallery;
+	const size = gallery?.images?.length || 0;
+	GALLERY_ITEMS.length = 0;
+	for (let i = 0; i < size; i++) {
+		GALLERY_ITEMS.push({
+			title: gallery.titles?.[i] || '',
+			category: gallery.categories?.[i] || '',
+			description: gallery.descriptions?.[i] || '',
+			link: gallery.images?.[i] || '',
+		});
 	}
+
+	renderGalleryCarousel();
 }

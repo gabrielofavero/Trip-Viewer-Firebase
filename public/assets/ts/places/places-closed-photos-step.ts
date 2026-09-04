@@ -51,6 +51,7 @@ import {
 } from './places-dialog.js';
 import type { PlacesDialogContext } from './places-dialog.js';
 import { applyAndClose } from './places-apply-flow.js';
+import { buildClosedState, isTemporarilyClosed } from './places-apply.js';
 import { UPDATE_EXISTING_KEY } from './places-details-step.js';
 import { INCLUDE_PHOTOS_KEY } from './places-search-step.js';
 import { getID } from '../utils/dom.js';
@@ -72,6 +73,13 @@ export const SCRAPER_PHOTOS_KEY = 'scraperPhotos';
 /** Cross-step data key: whether the Places API photos route has already run. */
 export const API_PHOTOS_FETCHED_KEY = 'apiPhotosFetched';
 /**
+ * Cross-step data key (P8): how many API photos have been fetched so far — the
+ * next `offset` the "+" button requests (one new photoUri per click).
+ */
+export const API_PHOTOS_OFFSET_KEY = 'apiPhotosOffset';
+/** Cross-step data key (P8): the API returned no more photos — hide the "+". */
+export const API_PHOTOS_EXHAUSTED_KEY = 'apiPhotosExhausted';
+/**
  * Cross-step data key: the photo links the user kept selected for import
  * (subset of IMPORTED_PHOTOS_KEY). Clicking a preview thumbnail toggles its
  * selection and the count badge next to "Import photos" reflects it; when the
@@ -79,8 +87,8 @@ export const API_PHOTOS_FETCHED_KEY = 'apiPhotosFetched';
  */
 export const SELECTED_PHOTOS_KEY = 'selectedPhotos';
 
-/** Max photos imported from the photos route (route returns ≤ 3; defensive cap). */
-const MAX_PHOTOS = 3;
+/** Max photos per destination entry (plan P8 — 5-photo cap). */
+const MAX_PHOTOS = 5;
 
 /** Closed-place decision values stored in cross-step data for P9. */
 export type ClosedDecision = 'delete' | 'ignore' | 'label';
@@ -97,6 +105,32 @@ function renderClosedStep(_context: PlacesDialogContext): string {
 	const details = getStepData<PlaceDetails>(DETAILS_KEY);
 	if (!details) return renderError('closed');
 
+	const state = buildClosedState(details);
+
+	// Temporarily closed (plan P4) → informational notice only: the item can
+	// still be enriched normally, but there is NO delete option.
+	if (isTemporarilyClosed(state)) {
+		return `
+		<div class="places-closed">
+			<div class="places-closed-icon">
+				<i class="iconify" data-icon="material-symbols-light:schedule"></i>
+			</div>
+			<h3 class="places-closed-title">${escapeHtml(
+				translate('placesApi.closed.temporary'),
+			)}</h3>
+			<p class="places-closed-message">${escapeHtml(
+				translate('placesApi.closed.temporaryMessage'),
+			)}</p>
+			<div class="places-closed-options">
+				<button type="button" class="places-closed-option"
+					data-action="places-closed-temp-continue">${escapeHtml(
+						translate('placesApi.details.continue'),
+					)}</button>
+			</div>
+		</div>`;
+	}
+
+	// Permanently closed → the existing delete/ignore/[Closed] options.
 	return `
 	<div class="places-closed">
 		<div class="places-closed-icon">
@@ -127,10 +161,10 @@ function renderClosedStep(_context: PlacesDialogContext): string {
 
 /**
  * Render the 'photos' step: an "Import photos" checkbox (checked by default)
- * plus a preview area. When import is enabled, the photos route is called
- * under the scoped loading overlay and the first 3 photos are previewed.
+ * plus a preview area. P8: the first API photo is fetched immediately and the
+ * "+" button adds one more at a time (up to the 5-photo item cap).
  */
-async function renderPhotosStep(_context: PlacesDialogContext): Promise<string> {
+async function renderPhotosStep(context: PlacesDialogContext): Promise<string> {
 	const details = getStepData<PlaceDetails>(DETAILS_KEY);
 	if (!details) return renderError();
 
@@ -138,16 +172,15 @@ async function renderPhotosStep(_context: PlacesDialogContext): Promise<string> 
 	const importPhotos = getStepData<boolean>(IMPORT_PHOTOS_KEY) ?? true;
 	let imported = getStepData<PlaceImage[]>(IMPORTED_PHOTOS_KEY) ?? [];
 
-	// Fetch the Places API photos (by official id) once and merge them with the
-	// scraper images the local import pre-populated. A flag keeps the fetch
-	// idempotent across re-renders (retry via uncheck/recheck).
+	// P8: fetch the FIRST API photo (count=1) and merge it with the scraper
+	// images the local import pre-populated. A flag keeps the fetch idempotent
+	// across re-renders (retry via uncheck/recheck).
 	const canFetchApi = Boolean(details.id);
 	const alreadyFetchedApi = getStepData<boolean>(API_PHOTOS_FETCHED_KEY) ?? false;
 	if (importPhotos && canFetchApi && !alreadyFetchedApi) {
 		const base = getStepData<PlaceImage[]>(SCRAPER_PHOTOS_KEY) ?? [];
 		try {
-			// uid + lang are resolved by the service (getUID + active language pack).
-			const merged = await fetchAndMergeApiPhotos(details);
+			const merged = await fetchInitialApiPhoto(details);
 			if (merged === null) return ''; // cancelled (dialog closed / X clicked)
 			imported = merged;
 			setStepData(IMPORT_PHOTOS_KEY, true);
@@ -175,7 +208,10 @@ async function renderPhotosStep(_context: PlacesDialogContext): Promise<string> 
 		selectAllPhotos(imported);
 	}
 	const selected = getSelectedSet();
-	const html = renderPhotosHTML(importPhotos, imported, selected);
+	// P8: the "+" button can add more until the item hits its 5-photo cap.
+	const capacity = MAX_PHOTOS - (context.existingImages?.length ?? 0);
+	const exhausted = getStepData<boolean>(API_PHOTOS_EXHAUSTED_KEY) ?? false;
+	const html = renderPhotosHTML(importPhotos, imported, selected, capacity, exhausted);
 	// Cap the preview at two rows and scroll internally when there are more
 	// photos than fit (the gmaps-scraper can return many) — keeps the Continue
 	// button in view instead of scrolling the whole dialog step.
@@ -187,19 +223,25 @@ async function renderPhotosStep(_context: PlacesDialogContext): Promise<string> 
 }
 
 /**
- * Fetch the Places API photos (by official place id) and merge them with the
- * scraper images already carried in SCRAPER_PHOTOS_KEY, deduped by URL. Returns
- * the merged list, or null when cancelled. Throws on a non-abort failure. When
- * the place has no official id, the scraper images are returned as-is.
+ * P8: fetch the FIRST API photo (count=1, offset=0) and merge it with the
+ * scraper images already carried in SCRAPER_PHOTOS_KEY, deduped by URL.
+ * Returns the merged list, or null when cancelled. When the place has no
+ * official id, the scraper images are returned as-is.
  */
-async function fetchAndMergeApiPhotos(details: PlaceDetails): Promise<PlaceImage[] | null> {
+async function fetchInitialApiPhoto(details: PlaceDetails): Promise<PlaceImage[] | null> {
 	const base = getStepData<PlaceImage[]>(SCRAPER_PHOTOS_KEY) ?? [];
-	if (!details.id) return base;
+	if (!details.id) {
+		// No official place id — there is nothing more to fetch; hide the "+".
+		setStepData(API_PHOTOS_EXHAUSTED_KEY, true);
+		return base;
+	}
 
 	const photos = await withDialogLoading(
 		(signal) =>
 			getPlacePhotos(details.id, {
 				signal,
+				count: 1,
+				offset: 0,
 				onLimited: (limited) => {
 					if (limited) notifyPlacesLimited();
 				},
@@ -208,13 +250,20 @@ async function fetchAndMergeApiPhotos(details: PlaceDetails): Promise<PlaceImage
 	);
 	if (photos === null) return null; // cancelled
 
+	// Advance the offset regardless; a duplicate or missing URL just means
+	// nothing new was added (the "+" flow moves on to the next photo).
+	setStepData(API_PHOTOS_OFFSET_KEY, 1);
+	if (photos.length === 0) {
+		setStepData(API_PHOTOS_EXHAUSTED_KEY, true);
+		return base;
+	}
+
 	const merged = [...base];
 	const seen = new Set(merged.map((image) => image.link));
-	for (const photo of photos.slice(0, MAX_PHOTOS)) {
-		if (!seen.has(photo.url)) {
-			seen.add(photo.url);
-			merged.push({ description: '', link: photo.url });
-		}
+	const first = photos[0];
+	if (first?.url && !seen.has(first.url)) {
+		seen.add(first.url);
+		merged.push({ description: '', link: first.url });
 	}
 	return merged;
 }
@@ -224,7 +273,12 @@ function renderPhotosHTML(
 	importPhotos: boolean,
 	imported: PlaceImage[],
 	selected: ReadonlySet<string>,
+	capacity: number,
+	exhausted: boolean,
 ): string {
+	// P8: the "+" button fetches one more photo per click, until the item hits
+	// its 5-photo cap (capacity) or the API has no more photos.
+	const canAddMore = importPhotos && imported.length < capacity && !exhausted;
 	return `
 	<div class="places-photos">
 		<p class="places-photos-hint">${escapeHtml(translate('placesApi.photos.canImport'))}</p>
@@ -241,6 +295,12 @@ function renderPhotosHTML(
 			${renderPreviewItems(imported, selected)}
 		</div>
 		<div class="places-details-footer">
+			${canAddMore
+				? `<button type="button" class="places-photos-add" data-action="places-photos-add"
+						aria-label="${escapeAttr(translate('placesApi.photos.add'))}">
+						<i class="iconify" data-icon="material-symbols-light:add"></i>
+					</button>`
+				: ''}
 			<button type="button" class="places-details-continue" data-action="places-photos-continue">
 				${escapeHtml(translate('placesApi.details.continue'))}
 			</button>
@@ -396,7 +456,7 @@ async function loadAndRenderPhotos(): Promise<void> {
 	const base = getStepData<PlaceImage[]>(SCRAPER_PHOTOS_KEY) ?? [];
 
 	try {
-		const merged = await fetchAndMergeApiPhotos(details);
+		const merged = await fetchInitialApiPhoto(details);
 		if (merged === null) return; // cancelled
 		setStepData(IMPORT_PHOTOS_KEY, true);
 		setStepData(IMPORTED_PHOTOS_KEY, merged);
@@ -453,6 +513,70 @@ function handleClosedLabel(): void {
 	) {
 		applyAndClose();
 		return;
+	}
+	void goTo('photos');
+}
+
+/**
+ * Temporarily-closed notice (plan P4) — continue the normal enrichment flow:
+ * no delete, no [Closed] label; the item is enriched like an operational place.
+ */
+function handleClosedTempContinue(): void {
+	setStepData(CLOSED_DECISION_KEY, 'ignore' satisfies ClosedDecision);
+	// Skip the photos step when updating an existing linked place OR when the
+	// user left "Include photos" off on search — never touch the photos route.
+	if (
+		getStepData<boolean>(UPDATE_EXISTING_KEY) ||
+		!getStepData<boolean>(INCLUDE_PHOTOS_KEY)
+	) {
+		applyAndClose();
+		return;
+	}
+	void goTo('photos');
+}
+
+/**
+ * P8 "+" — fetch the NEXT API photo (one per click, advancing the offset) and
+ * append it to the imported list, keeping the paid photos quota low.
+ */
+async function handlePhotosAdd(): Promise<void> {
+	const details = getStepData<PlaceDetails>(DETAILS_KEY);
+	if (!details?.id) return;
+	const offset = getStepData<number>(API_PHOTOS_OFFSET_KEY) ?? 0;
+	const photos = await withDialogLoading(
+		(signal) =>
+			getPlacePhotos(details.id, {
+				signal,
+				count: 1,
+				offset,
+				onLimited: (limited) => {
+					if (limited) notifyPlacesLimited();
+				},
+			}),
+		getStepLoadingMessage('photos'),
+	);
+	if (photos === null) return; // cancelled
+	setStepData(API_PHOTOS_OFFSET_KEY, offset + 1);
+
+	if (photos.length === 0) {
+		setStepData(API_PHOTOS_EXHAUSTED_KEY, true);
+		void goTo('photos'); // re-render hides the "+"
+		return;
+	}
+
+	const photo = photos[0];
+	if (photo?.url) {
+		const imported = getStepData<PlaceImage[]>(IMPORTED_PHOTOS_KEY) ?? [];
+		const seen = new Set(imported.map((image) => image.link));
+		if (!seen.has(photo.url)) {
+			imported.push({ description: '', link: photo.url });
+			setStepData(IMPORTED_PHOTOS_KEY, imported);
+			// Auto-select the newly added photo (existing selection is kept).
+			const selected = getSelectedSet();
+			selected.add(photo.url);
+			setSelectedSet(selected);
+			setStepData(IMPORT_PHOTOS_KEY, true);
+		}
 	}
 	void goTo('photos');
 }
@@ -530,8 +654,14 @@ function registerClosedPhotosActions(): void {
 		'places-closed-label': () => {
 			handleClosedLabel();
 		},
+		'places-closed-temp-continue': () => {
+			handleClosedTempContinue();
+		},
 		'places-photos-continue': () => {
 			handlePhotosContinue();
+		},
+		'places-photos-add': () => {
+			void handlePhotosAdd();
 		},
 		'places-photos-toggle': (element) => {
 			const index = Number((element as HTMLElement).getAttribute('data-index'));

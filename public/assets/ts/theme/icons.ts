@@ -1,11 +1,18 @@
 /** Google Maps icon name (Iconify) used by the Places API integration. */
 export const GOOGLE_MAPS_ICON = 'simple-icons:googlemaps';
 
+/**
+ * "NEW" ribbon used next to a destination entry's accordion title. Hidden by
+ * default so a freshly added item (the "Mark as recent" checkbox starts
+ * unchecked) never shows the tag; callers flip `style.display` to 'block' /
+ * 'none' based on the entry's isNew state (e.g. updateDestinationsTitle,
+ * addDestinationHTML, the Places apply flow).
+ */
 export function getNewSvg(id = '') {
 	const idValue = id ? `id="${id}"` : '';
 	return `<svg ${idValue} class="new" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 11.4 5.3"
-                style="enable-background:new 0 0 11.4 5.3;" xml:space="preserve" height="1em">
+                style="display:none;enable-background:new 0 0 11.4 5.3;" xml:space="preserve" height="1em">
                 <style type="text/css">
                     .st0 {
                         fill: none;

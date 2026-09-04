@@ -44,6 +44,7 @@
 
 import { getFirebaseIdToken } from '../data/firebase/auth.js';
 import { translate } from '../i18n/translation.js';
+import { suspendOperationGuard } from '../utils/operation-guard.js';
 import type { ExportStaticProgress } from './data-gather.js';
 
 export interface StaticExportData {
@@ -673,7 +674,10 @@ function triggerDownload(blob: Blob, filename: string): void {
 	link.href = url;
 	link.download = filename;
 	document.body.appendChild(link);
-	link.click();
+	// Suspend the beforeunload guard for the click: Chrome fires
+	// `beforeunload` when a download is initiated, which would show a spurious
+	// "Leave site?" prompt even though no close/reload happened.
+	suspendOperationGuard(() => link.click());
 	document.body.removeChild(link);
 	URL.revokeObjectURL(url);
 }

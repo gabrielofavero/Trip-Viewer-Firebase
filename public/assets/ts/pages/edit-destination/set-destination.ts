@@ -45,6 +45,13 @@ export async function buildDestinationObject() {
 		version: {
 			lastUpdated: new Date().toISOString(),
 		},
+		// Preserve the My Maps import marker (not a form field) so the Save
+		// button persists it. Reads the staged NEW_DATA flag too — the My Maps
+		// import stages into NEW_DATA (no direct write), so without this the
+		// marker would be dropped when the form rebuilds the document.
+		myMapsImported:
+			FIRESTORE_DESTINATIONS_DATA?.myMapsImported === true ||
+			FIRESTORE_DESTINATIONS_NEW_DATA?.myMapsImported === true,
 	});
 }
 
@@ -56,7 +63,21 @@ function getImageObject() {
 }
 
 function buildDestinationCategoryObject(category) {
-	const childIDs = getChildIDs(`${category}-box`);
+	// The on-page ordering control is visual only — the stored document
+	// always keeps the canonical creation-date order (oldest first), no
+	// matter how the user reorders the accordion items on screen. This
+	// mirrors loadExistingDestination's ordering.
+	const childIDs = getChildIDs(`${category}-box`)
+		.map((id) => ({ id, j: getJ(id) }))
+		.sort((a, b) => {
+			const dateA = getID(`${category}-createdAt-${a.j}`)?.value;
+			const dateB = getID(`${category}-createdAt-${b.j}`)?.value;
+			if (!dateA && !dateB) return 0;
+			if (!dateA) return 1;
+			if (!dateB) return -1;
+			return new Date(dateA).getTime() - new Date(dateB).getTime();
+		})
+		.map((entry) => entry.id);
 
 	let result = {};
 

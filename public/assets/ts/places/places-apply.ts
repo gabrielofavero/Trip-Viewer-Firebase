@@ -85,10 +85,27 @@ export function applyPlaceData(params: ApplyPlaceDataParams): PlaceItem {
 }
 
 /**
+ * A "description slot" value that is safe to persist: a non-empty string that
+ * isn't the "[object Object]" artifact produced when an object gets
+ * stringified. Anything else falls back to `fallback` (which is itself
+ * sanitized) — so a loose (object-typed) fetched value can never be stored.
+ */
+function stringDescriptionSlot(value: unknown, fallback: string): string {
+	const isSafe = (s: unknown): s is string =>
+		typeof s === 'string' && s !== '' && s !== '[object Object]';
+	return isSafe(value) ? value : isSafe(fallback) ? fallback : '';
+}
+
+/**
  * Resolve the multi-language description object from a fetched place.
  * The local gmaps scraper returns BOTH languages (`descriptions`) → both slots
  * are written. The Places API returns only the requested language
  * (`description`) → only that slot is refreshed, the other is preserved.
+ *
+ * Every value is coerced via `stringDescriptionSlot`: an object (e.g. a loose
+ * scraper/API response) or a stale `"[object Object]"` is never written — it
+ * falls back to the previous value (or `''`), so `entry.description` /
+ * `placeAPI.description` always hold plain strings.
  */
 function resolveDescription(
 	previous: PlaceDescription,
@@ -96,14 +113,16 @@ function resolveDescription(
 	lang: string,
 ): PlaceDescription {
 	const both = newPlace.descriptions;
-	if (both && (both.en || both.pt)) {
-		return {
-			en: both.en || previous.en || '',
-			pt: both.pt || previous.pt || '',
-		} as PlaceDescription;
+	if (both && (typeof both.en === 'string' || typeof both.pt === 'string')) {
+		const en = stringDescriptionSlot(both.en, previous.en ?? '');
+		const pt = stringDescriptionSlot(both.pt, previous.pt ?? '');
+		if (en !== '' || pt !== '') {
+			return { en, pt } as PlaceDescription;
+		}
 	}
-	if (typeof newPlace.description === 'string' && newPlace.description !== '') {
-		return { ...previous, [lang]: newPlace.description } as PlaceDescription;
+	const description = stringDescriptionSlot(newPlace.description, '');
+	if (description !== '') {
+		return { ...previous, [lang]: description } as PlaceDescription;
 	}
 	return previous;
 }
@@ -215,20 +234,39 @@ export function isAutoFilled(
 // ============================================================
 
 export interface ClosedState {
-	/** Whether the place is no longer operational. */
+	/** Whether the place is PERMANENTLY closed (kept for back-compat callers). */
 	closed: boolean;
-	/** Raw businessStatus from the API (e.g. "CLOSED_PERMANENTLY"). */
+	/** Raw businessStatus from the API ('' | OPERATIONAL | CLOSED_TEMPORARILY | CLOSED_PERMANENTLY). */
 	status: string;
+	/** Tri-state classification (plan P4): operational / temporarily closed / permanently closed. */
+	kind: 'operational' | 'temporarilyClosed' | 'permanentlyClosed';
 }
 
 /**
- * Determine whether a fetched place is "no longer operational".
- * Per plan Open Question 8, only CLOSED_PERMANENTLY counts for now;
- * CLOSED_TEMPORARILY is not treated as closed.
+ * Classify a fetched place's business status into a tri-state (plan P4).
+ * Temporarily closed places are distinguished from permanently closed ones —
+ * callers treat them separately (temporary: informational, enrich normally;
+ * permanent: delete/label options).
  */
 export function buildClosedState(newPlace: Pick<PlaceDetails, 'businessStatus'>): ClosedState {
 	const status = newPlace.businessStatus ?? '';
-	return { closed: status === 'CLOSED_PERMANENTLY', status };
+	const kind =
+		status === 'CLOSED_PERMANENTLY'
+			? 'permanentlyClosed'
+			: status === 'CLOSED_TEMPORARILY'
+				? 'temporarilyClosed'
+				: 'operational';
+	return { closed: kind === 'permanentlyClosed', status, kind };
+}
+
+/** Whether the place is permanently closed. */
+export function isPermanentlyClosed(state: ClosedState): boolean {
+	return state.kind === 'permanentlyClosed';
+}
+
+/** Whether the place is temporarily closed. */
+export function isTemporarilyClosed(state: ClosedState): boolean {
+	return state.kind === 'temporarilyClosed';
 }
 
 /** Translatable "[Closed]" label used as a title prefix (P8/P12). */

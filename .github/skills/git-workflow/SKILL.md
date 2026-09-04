@@ -8,6 +8,8 @@ applyTo: 'scripts/utils/sync.py'
 
 TripViewer uses a **develop → master** branching strategy with task-ID-based commit messages. All work happens on `develop`; `master` mirrors it via force-sync.
 
+> 🚫 **AUTHORIZATION GATE (user rule):** Never run `git commit`, `git push`, `npm run sync`, or any deploy automatically. Always ask the user for explicit authorization first — propose the exact command(s) and wait for approval before executing.
+
 ---
 
 ## Branch Strategy
