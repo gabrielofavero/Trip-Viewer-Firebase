@@ -47,9 +47,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 205   | 201  | 4         | 0       |
+| 🐞   | Bug         | B000 | 210   | 206  | 4         | 0       |
 | 🏆   | Feature     | F000 | 200   | 185  | 15        | 0       |
-| 📈   | Improvement | M000 | 221   | 198  | 22        | 1       |
+| 📈   | Improvement | M000 | 225   | 202  | 22        | 1       |
 | ⚔️   | Epic        | E000 | 53    | 44   | 7         | 2       |
 
 ## Backlog
@@ -65,6 +65,18 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M171:** Safeguard unauthenticated access message
 
 ## Done
+
+### September 2026
+
+- 📈 **M223:** My Maps repeated names dialog close button
+- 📈 **M222:** My Maps Add: disable duplicate-name pins
+- 🐞 **B206:** Enrich Data "[object Object]" description for some places
+- 🐞 **B207:** Fix empty region select on edit destination
+- 🐞 **B208:** No NEW tag when adding destination entries
+- 🐞 **B209:** Priority badge stale after enrich
+- 📈 **M224:** Import with maps options dialog tweaks
+- 🐞 **B210:** My Maps import: default price to Unknown
+- 📈 **M225:** Improve btn-basic hover
 
 ### August 2026
 

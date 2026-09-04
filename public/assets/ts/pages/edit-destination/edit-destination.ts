@@ -478,7 +478,9 @@ function getBulkOptionsHTML(): string {
 			? bulkOptionCard(
 					BULK_ENRICH_SOURCE_ACTION,
 					translate('placesApi.bulk.options.groupEnrichTitle'),
-					translate('placesApi.bulk.options.groupEnrichSub'),
+					translate('placesApi.bulk.options.groupEnrichSub', {
+						count: String(unlinked),
+					}),
 				)
 			: '';
 
@@ -496,9 +498,6 @@ function getBulkOptionsHTML(): string {
 
 	return `
 	<div class="places-source">
-		<p class="places-linked-message">${escapeHtml(
-			translate('placesApi.bulk.options.message'),
-		)}</p>
 		<div class="places-linked-options">
 			${addCard}
 			${enrichCard}

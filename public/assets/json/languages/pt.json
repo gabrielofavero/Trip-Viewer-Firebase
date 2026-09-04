@@ -1089,11 +1089,10 @@
 					"delete": "Excluir automaticamente itens fechados",
 					"label": "Adicionar etiqueta [Closed] aos itens fechados"
 				},
-				"message": "O que você gostaria de fazer?",
 				"groupAddTitle": "Adicionar",
 				"groupAddSub": "Importar cada marcador não usado do seu link do My Maps",
 				"groupEnrichTitle": "Enriquecer",
-				"groupEnrichSub": "Adicionar informações oficiais nos itens adicionados manualmente",
+				"groupEnrichSub": "Adicionar informações oficiais nos seus {{count}} itens adicionados manualmente",
 				"groupRefreshTitle": "Atualizar",
 				"groupRefreshSub": "Atualizar os {{count}} itens já enriquecidos",
 				"sourceMessage": "Qual fonte?",
@@ -1181,6 +1180,7 @@
 		"noMapsLink": "Este destino não tem um link do Meu Maps",
 		"noMid": "Nenhum id de mapa do Meu Maps foi encontrado neste link",
 		"unassigned": "Sem categoria",
+		"alreadyAdded": "Já está no destino",
 		"status": {
 			"resolved": "Resolvido",
 			"failed": "Sem correspondência"

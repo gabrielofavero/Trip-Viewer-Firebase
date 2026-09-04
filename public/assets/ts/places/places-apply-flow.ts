@@ -42,7 +42,10 @@ import {
 	renderDestinationImageCarousel,
 } from '../pages/edit-destination/categories/image.js';
 import { applyPlaceData, getClosedLabel, type PlaceFieldKey } from './places-apply.js';
-import { updatePlacesFetchButtonLabel } from '../pages/edit-destination/new-destination.js';
+import {
+	updatePlacesFetchButtonLabel,
+	updateRatingBadge,
+} from '../pages/edit-destination/new-destination.js';
 // Places API bulk "Update with Maps" (P11). Side-effect import: guarantees the
 // bulk module (runBulkUpdate + report) is part of the edit-destination bundle.
 // Loaded here (P9's file) so it does NOT touch P10's files (edit-destination.ts
@@ -269,12 +272,27 @@ export function updateFormEntry(
 				addKnownValues(entry.regions);
 				regionApplied = true;
 				break;
-			case 'rating':
+			case 'rating': {
 				// The edit form's "Priority not set" option value is '?' — never
 				// leave the select blank (''/undefined) when the place has no
 				// priority, otherwise no option would be selected.
-				setInputValue(`${category}-rating-${j}`, entry.rating || '?');
+				const rawRating = entry.rating || '?';
+				// The priority select only carries the integer options 1-5 plus
+				// '?' (unset). A fetched value outside that set (e.g. a sub-1
+				// score rounding to "0") can't be represented — fall back to
+				// "not set" so the select never lands in a blank state.
+				const priority = ['1', '2', '3', '4', '5'].includes(rawRating)
+					? rawRating
+					: '?';
+				setInputValue(`${category}-rating-${j}`, priority);
+				// Keep the accordion priority badge in sync with the select.
+				// Without this, an enrich that fills the priority leaves the
+				// badge stale/hidden — setting a select programmatically doesn't
+				// fire 'change', so it only caught up if the user later picked a
+				// DIFFERENT option (re-selecting the same one fires nothing).
+				updateRatingBadge(category, j);
 				break;
+			}
 			case 'price':
 				setPriceValue(category, j, entry.price);
 				break;

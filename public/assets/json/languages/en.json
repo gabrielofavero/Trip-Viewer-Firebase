@@ -1089,11 +1089,10 @@
 					"delete": "Auto-delete closed items",
 					"label": "Add [Closed] label to closed items"
 				},
-				"message": "What would you like to do?",
 				"groupAddTitle": "Add",
 				"groupAddSub": "Import every unused placemark from your My Maps link",
 				"groupEnrichTitle": "Enrich",
-				"groupEnrichSub": "Add official information on your manually added items",
+				"groupEnrichSub": "Add official information on your {{count}} manually added items",
 				"groupRefreshTitle": "Refresh",
 				"groupRefreshSub": "Update the {{count}} items already enriched",
 				"sourceMessage": "Which source?",
@@ -1181,6 +1180,7 @@
 		"noMapsLink": "This destination has no My Maps link set",
 		"noMid": "No My Maps map id was found in this link",
 		"unassigned": "Unassigned",
+		"alreadyAdded": "Already on destination",
 		"status": {
 			"resolved": "Resolved",
 			"failed": "No match"

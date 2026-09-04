@@ -635,7 +635,10 @@ export function buildMyMapsEntry(draft: MyMapsDraft): PlaceItem {
 		// "Priority not set" — the edit form select's not-set value ('?').
 		// Never store '' here, or the priority select would end up blank.
 		rating: '?',
-		price: '-',
+		// "Unknown price" — the edit form select's not-set value ('default').
+		// Not '-' (Free): My Maps import has no price info at this stage, so
+		// defaulting to Free would be misleading.
+		price: 'default',
 		map,
 		website: '',
 		regions: [],
@@ -656,7 +659,8 @@ export function buildMyMapsEntry(draft: MyMapsDraft): PlaceItem {
 			region: '',
 			website: '',
 			rating: '',
-			price: '-',
+			// Same "unknown" sentinel as the top-level price (see above).
+			price: 'default',
 			description: { pt: '', en: '' },
 			emoji,
 			updatedAt: now,

@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.28.2] - 2026-09-03
+
+- 📈 **M223:** My Maps repeated names dialog close button
+- 📈 **M222:** My Maps Add: disable duplicate-name pins
+- 🐞 **B206:** Enrich Data "[object Object]" description for some places
+- 🐞 **B207:** Fix empty region select on edit destination
+- 🐞 **B208:** No NEW tag when adding destination entries
+- 🐞 **B209:** Priority badge stale after enrich
+- 📈 **M224:** Import with maps options dialog tweaks
+- 🐞 **B210:** My Maps import: default price to Unknown
+
 ## [2.28.1] - 2026-08-30
 
 - 🐞 **B201:** Edit trip: itinerary day auto-title updates immediately

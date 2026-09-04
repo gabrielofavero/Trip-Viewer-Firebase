@@ -1173,8 +1173,8 @@
 
 .btn-basic:hover,
 .btn-basic:focus {
-	background: var(--theme-color);
-	color: #fff;
+	border-color: var(--text-secondary);
+	color: var(--text-secondary);
 }
 
 /* Outlined secondary — neutral gray */
@@ -4353,6 +4353,23 @@ fieldset.modern-radio-group {
 .mymaps-row-badge--unassigned {
 	background: rgba(var(--theme-color-rgb), 0.14);
 	color: var(--theme-color, #7c3aed);
+}
+
+/* Re-import rows whose name already exists on the destination — kept in the
+   list for context, but disabled (can't be imported again). */
+.mymaps-row--existing {
+	border-style: dashed;
+	background: var(--bg-secondary);
+}
+
+.mymaps-row--existing .mymaps-row-name {
+	color: var(--text-muted);
+}
+
+.mymaps-row-badge--existing {
+	background: rgba(var(--theme-color-rgb), 0.08);
+	color: var(--text-secondary);
+	border: 1px solid var(--border-color);
 }
 
 .mymaps-dialog-hint {

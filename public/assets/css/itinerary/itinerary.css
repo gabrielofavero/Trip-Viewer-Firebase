@@ -629,8 +629,8 @@ h3 {
 .btn-theme,
 .btn-basic:hover,
 .btn-basic:focus {
-	background: var(--theme-color);
-	color: #fff;
+	border-color: var(--text-secondary);
+	color: var(--text-secondary);
 }
 
 .btn-theme:hover,

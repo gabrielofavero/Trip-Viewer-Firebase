@@ -78,6 +78,13 @@ let _busy = false; // import write in progress
 let _fetchController: AbortController | null = null;
 let _uploadResolve: ((kml: string | null) => void) | null = null;
 let _reimportMode = false; // re-import: skip already-imported placemarks (P6)
+/**
+ * Normalized names already on the destination (re-import only). Placemarks
+ * whose name matches one of these are shown in the review but disabled —
+ * they can't be imported again. Kept empty in the regular import flow (which
+ * still resolves name collisions via the write-time conflict pass).
+ */
+let _existingNames = new Set<string>();
 
 // ------------------------------------------------------------------
 // Entry point
@@ -92,11 +99,14 @@ let _reimportMode = false; // re-import: skip already-imported placemarks (P6)
  */
 export async function openMymapsImportDialog(): Promise<void> {
 	_reimportMode = false;
+	_existingNames = new Set();
 	const drafts = await acquireKmlDrafts();
 	if (drafts === null) return;
 	// Repeated names (e.g. a chain at different locations) → ask the user
 	// whether to add every single one or keep one of each before reviewing.
-	_drafts = await handleRepeatedNames(drafts);
+	const handled = await handleRepeatedNames(drafts);
+	if (handled === null) return; // user cancelled the import
+	_drafts = handled;
 	_enriched = false;
 	_enriching = false;
 	renderReview();
@@ -127,7 +137,19 @@ export async function openMymapsReimportDialog(): Promise<void> {
 		return;
 	}
 
-	_drafts = await handleRepeatedNames(fresh);
+	const handled = await handleRepeatedNames(fresh);
+	if (handled === null) return; // user cancelled the import
+	_drafts = handled;
+	// Name-based "already on the destination" guard: placemarks whose name
+	// matches an existing entry (case/diacritics-insensitive) are kept in the
+	// review but disabled — they can't be imported again. The coordinate
+	// filter above already skips matches that share coordinates; this catches
+	// entries that exist only by name (typed manually, so no stored
+	// coordinates).
+	_existingNames = collectExistingEntryNames();
+	for (const draft of _drafts) {
+		if (_existingNames.has(normalizeName(draft.name))) draft.include = false;
+	}
 	_enriched = false;
 	_enriching = false;
 	renderReview();
@@ -239,6 +261,30 @@ function normalizeName(name: string): string {
 }
 
 /**
+ * Normalized names of every entry already on the destination (all importable
+ * categories; saved doc + staged-in-session data). Re-import compares each
+ * fresh placemark against this set so a place added by name only — e.g. typed
+ * manually, with no stored coordinates — is still recognized as "already on
+ * the destination".
+ */
+function collectExistingEntryNames(): Set<string> {
+	const names = new Set<string>();
+	for (const category of IMPORTABLE_CATEGORIES) {
+		for (const map of [
+			FIRESTORE_DESTINATIONS_DATA?.[category],
+			FIRESTORE_DESTINATIONS_NEW_DATA?.[category],
+		]) {
+			if (!map) continue;
+			for (const rawEntry of Object.values(map)) {
+				const key = normalizeName((rawEntry as any)?.name);
+				if (key) names.add(key);
+			}
+		}
+	}
+	return names;
+}
+
+/**
  * Find names that appear on more than one draft. Returns `{ name, count }`
  * groups for names used by ≥ 2 placemarks, in first-appearance order.
  */
@@ -297,12 +343,13 @@ type DuplicateChoice = 'keepAll' | 'keepOne';
  * Ask the user how to handle repeated names (shown only when
  * `findRepeatedNames` found any). The two option cards mirror the bulk
  * source-prompt visual language (`.places-linked-option`). Resolves with the
- * chosen handling — the prompt itself can only be dismissed by picking one.
+ * chosen handling, or null when the user cancels (X / Escape / Cancel
+ * button) to abort the import before the review dialog.
  */
 function promptDuplicateHandling(
 	groups: Array<{ name: string; count: number }>,
 	duplicateCount: number,
-): Promise<DuplicateChoice> {
+): Promise<DuplicateChoice | null> {
 	return new Promise((resolve) => {
 		const properties = cloneObject(MESSAGE_PROPERTIES);
 		properties.title = translate('mymapsImport.duplicates.title');
@@ -310,18 +357,20 @@ function promptDuplicateHandling(
 		properties.containers = getContainersInput();
 		properties.containers.principal = `${properties.containers.principal} mymaps-dialog-container`;
 		properties.fullscreen = true;
-		// Choices only — no X / Escape (like the conflict dialog), so the
-		// awaited flow always resolves on one of the two option cards.
-		properties.closeButton = false;
-		properties.buttons = [];
+		// Cancel affordances — the X icon, the Cancel button, and Escape all
+		// resolve null so the awaited flow never hangs on a bare close (the
+		// caller aborts the import). The two option cards resolve with the
+		// chosen handling.
+		properties.icons = [{ type: 'close', action: () => finish(null) }];
+		properties.buttons = [{ type: 'cancel', action: () => finish(null) }];
 		displayFullMessage(properties);
 
-		const pick = (choice: DuplicateChoice) => () => {
+		const finish = (choice: DuplicateChoice | null) => () => {
 			closeMessage();
 			resolve(choice);
 		};
-		getID<HTMLButtonElement>('mymaps-duplicates-keepall')?.addEventListener('click', pick('keepAll'));
-		getID<HTMLButtonElement>('mymaps-duplicates-keepone')?.addEventListener('click', pick('keepOne'));
+		getID<HTMLButtonElement>('mymaps-duplicates-keepall')?.addEventListener('click', finish('keepAll'));
+		getID<HTMLButtonElement>('mymaps-duplicates-keepone')?.addEventListener('click', finish('keepOne'));
 	});
 }
 
@@ -372,14 +421,16 @@ function getDuplicatesHTML(
  * Pipeline step between acquisition and the review: when the parsed drafts
  * contain repeated names, ask the user whether to add every single one
  * (current behavior) or keep only one of each name, then return the drafts
- * that should be reviewed. Passes through unchanged when no duplicates exist.
+ * that should be reviewed. Passes through unchanged when no duplicates exist,
+ * and returns null when the user closes the prompt (cancels the import).
  */
-async function handleRepeatedNames(drafts: MyMapsDraft[]): Promise<MyMapsDraft[]> {
+async function handleRepeatedNames(drafts: MyMapsDraft[]): Promise<MyMapsDraft[] | null> {
 	const groups = findRepeatedNames(drafts);
 	if (groups.length === 0) return drafts;
 
 	const duplicateCount = groups.reduce((sum, group) => sum + group.count, 0);
 	const choice = await promptDuplicateHandling(groups, duplicateCount);
+	if (choice === null) return null; // user cancelled the import
 	if (choice === 'keepOne') return keepOnePerRepeatedName(drafts);
 	return drafts;
 }
@@ -584,14 +635,20 @@ function getReviewHTML(): string {
 function getRowHTML(draft: MyMapsDraft, index: number): string {
 	const status = getStatus(draft);
 	const unmapped = !draft.category;
+	// Re-import: a placemark whose name already exists on the destination is
+	// shown for context but disabled — checkbox stays off and the category
+	// can't be changed, so it can never be imported again.
+	const existing = isExistingDraft(draft);
+	const disabled = _enriching || existing;
 	return `
-	<div class="mymaps-row ${unmapped ? 'mymaps-row--unmapped' : ''}" data-index="${index}">
+	<div class="mymaps-row ${unmapped ? 'mymaps-row--unmapped' : ''} ${existing ? 'mymaps-row--existing' : ''}" data-index="${index}">
 		<label class="mymaps-row-include">
-			<input type="checkbox" data-action="mymaps-toggle" data-index="${index}" ${draft.include ? 'checked' : ''} ${_enriching ? 'disabled' : ''} />
+			<input type="checkbox" data-action="mymaps-toggle" data-index="${index}" ${draft.include && !existing ? 'checked' : ''} ${disabled ? 'disabled' : ''} />
 		</label>
 		<span class="mymaps-row-name" title="${escapeHtml(draft.map || buildMapsCoordinateLink(draft.lat, draft.lng))}">${escapeHtml(draft.name)}</span>
 		${unmapped ? `<span class="mymaps-row-badge mymaps-row-badge--unassigned">${escapeHtml(translate('mymapsImport.unassigned'))}</span>` : ''}
-		<select class="mymaps-row-category" data-index="${index}" ${_enriching ? 'disabled' : ''}>
+		${existing ? `<span class="mymaps-row-badge mymaps-row-badge--existing">${escapeHtml(translate('mymapsImport.alreadyAdded'))}</span>` : ''}
+		<select class="mymaps-row-category" data-index="${index}" ${disabled ? 'disabled' : ''}>
 			<option value="">${escapeHtml(translate('mymapsImport.unassigned'))}</option>
 			${IMPORTABLE_CATEGORIES.map(
 				(cat) =>
@@ -602,6 +659,11 @@ function getRowHTML(draft: MyMapsDraft, index: number): string {
 		</select>
 		${status ? `<span class="mymaps-row-status mymaps-row-status--${status.key}">${escapeHtml(status.label)}</span>` : ''}
 	</div>`;
+}
+
+/** Whether the draft's name already matches an entry on the destination (re-import). */
+function isExistingDraft(draft: MyMapsDraft): boolean {
+	return _existingNames.has(normalizeName(draft.name));
 }
 
 function getStatus(draft: MyMapsDraft): { key: string; label: string } | null {
@@ -638,6 +700,9 @@ function wireReview(): void {
 	// Category <select> edits update the live draft (change, not click).
 	document.querySelectorAll<HTMLSelectElement>('.mymaps-row-category').forEach((select) => {
 		select.addEventListener('change', () => {
+			// Already-on-destination rows are disabled in the DOM; guard anyway
+			// so a stale handler can never make one importable.
+			if (select.closest('.mymaps-row')?.classList.contains('mymaps-row--existing')) return;
 			const index = Number(select.getAttribute('data-index'));
 			const draft = _drafts[index];
 			if (!draft) return;
