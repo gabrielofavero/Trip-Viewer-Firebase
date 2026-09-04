@@ -945,6 +945,60 @@ h1::after {
 }
 
 /*--------------------------------------------------------------
+# Destination Detail Dialog media hover (destination page only)
+# On the standalone destination page the shared portfolio hover
+# (full-bleed tint + corner frame + centered zoom) is replaced by a
+# compact bottom-right zoom circle styled like `.dialog-close`.
+# View-page item dialogs (#view-item-dialog) keep the shared overlay.
+--------------------------------------------------------------*/
+#destination-dialog .portfolio-wrap::before {
+	display: none;
+}
+
+#destination-dialog .portfolio-wrap .portfolio-info {
+	top: auto;
+	left: auto;
+	right: 12px;
+	bottom: 12px;
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
+	color: var(--text-primary);
+	flex-direction: row;
+}
+
+#destination-dialog .portfolio-wrap .portfolio-info::before,
+#destination-dialog .portfolio-wrap .portfolio-info::after {
+	display: none;
+}
+
+#destination-dialog .portfolio-wrap .portfolio-info .portfolio-links {
+	display: contents;
+}
+
+#destination-dialog .portfolio-wrap .portfolio-info .portfolio-links a {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--text-primary);
+	font-size: 18px;
+}
+
+#destination-dialog .portfolio-wrap .portfolio-info .portfolio-links a:hover {
+	color: var(--text-primary);
+}
+
+#destination-dialog .portfolio-wrap .portfolio-info:hover {
+	background: var(--bg-tertiary);
+	transform: scale(1.05);
+}
+
+/*--------------------------------------------------------------
 # Destination Detail Dialog (card → dialog, index-like)
 --------------------------------------------------------------*/
 .destination-dialog-card {
@@ -1028,7 +1082,7 @@ h1::after {
 	border: 1.5px solid var(--border-color);
 }
 
-/* Title row + pencil edit button (right after the name) */
+/* Title row (kept for view item dialogs; destination edit no longer sits here) */
 .dialog-title-row {
 	display: flex;
 	align-items: center;
@@ -1036,29 +1090,37 @@ h1::after {
 	min-width: 0;
 }
 
-.dialog-edit-btn {
-	width: 28px;
-	height: 28px;
+/* Owner-only pencil edit button — stacked top-right next to `.dialog-close`
+   (edit to the left, close to the right), mirroring its circle styling.
+   Visibility is toggled dynamically (`display: none` ↔ `inline-flex`). */
+#destination-dialog .dialog-edit-btn {
+	position: absolute;
+	top: 12px;
+	right: 56px; /* clear of dialog-close (right: 12px + 36px wide + 8px gap) */
+	width: 36px;
+	height: 36px;
+	padding: 0;
 	border-radius: 50%;
-	border: none;
-	background: transparent;
-	color: var(--text-muted);
+	border: 1px solid var(--border-color);
+	background: var(--bg-secondary);
+	color: var(--text-primary);
 	cursor: pointer;
-	display: inline-flex;
+	display: none;
 	align-items: center;
 	justify-content: center;
-	flex-shrink: 0;
+	z-index: 11;
 	transition:
-		color var(--transition-fast),
-		background var(--transition-fast);
+		background var(--transition-fast),
+		transform var(--transition-fast);
 }
 
-.dialog-edit-btn:hover {
-	color: var(--theme-color);
-	background: rgba(var(--theme-color-rgb), 0.1);
+#destination-dialog .dialog-edit-btn:hover {
+	background: var(--bg-tertiary);
+	transform: scale(1.05);
 }
 
-.dialog-edit-btn .iconify {
-	font-size: 17px;
+#destination-dialog .dialog-edit-btn .iconify {
+	font-size: 18px;
+	pointer-events: none;
 }
 

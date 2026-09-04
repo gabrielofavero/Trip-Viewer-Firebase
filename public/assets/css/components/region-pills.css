@@ -12,6 +12,20 @@
 	align-items: center;
 }
 
+/* Inside editor form groups (destination editor) the pill row sits between
+   the label and the adder <select>/input. Give it breathing room so the
+   pills don't crowd the control below. (:not(:empty) so an empty row keeps
+   the standard label → select layout with no stray gap; the adder <select>
+   gets its own top margin so it doesn't double up with the free-text
+   input's spacing when "Other" mode is active.) */
+.nice-form-group > .region-pills:not(:empty) {
+	margin-top: 6px;
+}
+
+.nice-form-group > .region-pills:not(:empty) + select {
+	margin-top: 12px;
+}
+
 .region-pill {
 	display: inline-flex;
 	align-items: center;

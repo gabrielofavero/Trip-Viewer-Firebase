@@ -1054,6 +1054,31 @@
 	outline-offset: 1px;
 }
 
+/*--------------------------------------------------------------
+# My Maps — live preview under the destination "My Maps Link" field
+# Rendered by pages/edit-destination/map-preview.ts. The iframe keeps the
+# shared `.map-iframe` class also used by the destination page's Map tab;
+# here it's sized to fit the form field width.
+--------------------------------------------------------------*/
+.map-preview {
+	display: none;
+	margin-top: 12px;
+}
+
+.map-preview.visible {
+	display: block;
+}
+
+.map-preview .map-iframe {
+	display: block;
+	width: 100%;
+	height: 320px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-sm);
+	background: var(--bg-secondary);
+}
+
 /* Autofill override */
 .nice-form-group > input:-webkit-autofill,
 .nice-form-group > select:-webkit-autofill,
@@ -1173,8 +1198,8 @@
 
 .btn-basic:hover,
 .btn-basic:focus {
-	border-color: var(--text-secondary);
-	color: var(--text-secondary);
+	border-color: var(--theme-secondary);
+	color: var(--theme-secondary);
 }
 
 /* Outlined secondary — neutral gray */

@@ -47,9 +47,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 210   | 206  | 4         | 0       |
+| 🐞   | Bug         | B000 | 211   | 207  | 4         | 0       |
 | 🏆   | Feature     | F000 | 200   | 185  | 15        | 0       |
-| 📈   | Improvement | M000 | 225   | 202  | 22        | 1       |
+| 📈   | Improvement | M000 | 230   | 207  | 22        | 1       |
 | ⚔️   | Epic        | E000 | 53    | 44   | 7         | 2       |
 
 ## Backlog
@@ -77,6 +77,12 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M224:** Import with maps options dialog tweaks
 - 🐞 **B210:** My Maps import: default price to Unknown
 - 📈 **M225:** Improve btn-basic hover
+- 📈 **M226:** View page: remove leftover shadows, dest box bg
+- 📈 **M227:** Edit destination: improve region UI spacing
+- 📈 **M228:** Edit destination: My Maps preview and open link
+- 🐞 **B211:** View: destination detail empty on reopen
+- 📈 **M229:** Cache destination data on view reopen
+- 📈 **M230:** Destination dialog: corner zoom hover and edit top-right
 
 ### August 2026
 

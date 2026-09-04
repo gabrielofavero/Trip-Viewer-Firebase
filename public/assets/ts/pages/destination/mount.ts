@@ -30,9 +30,30 @@ import { loadSortAndFilter } from './support/sort-and-filter/sort-and-filter.js'
 import { getTripData, loadPlannedDestination, PLANNED_DESTINATION } from './support/trip.js';
 import { loadDestinationVisibility } from './support/visibility.js';
 import { LazyGrid } from '../../ui/lazy-grid.js';
+import { buildMyMapsEmbed } from '../../ui/mymaps-embed.js';
 
 export { ACTIVE_CATEGORY };
 export var CONTENT = [];
+
+/**
+ * In-memory cache of destination documents fetched in this page session, keyed
+ * by destination id. Lets a repeated mount (e.g. the view.html lightbox reopens
+ * a destination already viewed, possibly after other destinations in between)
+ * render from stored data instead of issuing another Firestore read.
+ *
+ * Scope & freshness: the cache lives only for the current page load (it resets
+ * on reload) and only ever stores data from a *successful* read. It is kept up
+ * to date by refreshDestination() after local writes, and can be dropped on
+ * demand via invalidateDestinationCache(). Cross-device edits made while the
+ * page stays open will surface on the next reload, which is the intended
+ * trade-off of trading a network read for instant reopens.
+ */
+const DESTINATION_CACHE = new Map<string, any>();
+
+/** Drop one cached destination document (e.g. right after a local write). */
+export function invalidateDestinationCache(destinationId: string): void {
+	if (destinationId) DESTINATION_CACHE.delete(destinationId);
+}
 
 export interface MountDestinationOptions {
 	/** Destination document ID (required). */
@@ -67,6 +88,19 @@ export async function mountDestination(
 	CONTAINER = container;
 	container.innerHTML = '';
 
+	// The component is re-mounted on every view.html lightbox open, and that
+	// host clears the DOM on close WITHOUT calling this mount's dispose — so a
+	// leftover LazyGrid would stay bound to detached #content/#sentinel nodes
+	// and the next mount would render into them (empty grid). Tear down any
+	// grid from a previous mount so each mount binds a fresh LazyGrid to the
+	// current container/sentinel. (In-page category tab switches call
+	// loadDestinationByType directly and keep reusing the live grid.)
+	if (GRID) {
+		GRID.disconnect();
+		GRID = null;
+	}
+	SENTINEL_CREATED = false;
+
 	setDocumentId(opts.destinationId);
 
 	if (!DOCUMENT_ID) {
@@ -75,11 +109,28 @@ export async function mountDestination(
 	}
 
 	const path = `destinations/${DOCUMENT_ID}`;
-	console.log('[destination] Fetching:', path);
-	const [tripData, destinosData] = await Promise.all([
-		opts.data ? Promise.resolve(opts.data) : getTripData(opts.tripId),
-		get(path),
-	]);
+
+	// Reopen fast-path: if this destination was fetched earlier in the page
+	// session (same or another mount), reuse the stored document and skip the
+	// Firestore read. The trip data still comes from opts.data when the host
+	// (view.html lightbox) already has it, or a single read on the standalone
+	// destination page. Only successful reads populate the cache.
+	const cachedData = DESTINATION_CACHE.get(DOCUMENT_ID);
+
+	let tripData: any;
+	let destinosData: any;
+	if (cachedData) {
+		console.log('[destination] Using cached data for:', path);
+		destinosData = cachedData;
+		tripData = opts.data ? opts.data : await getTripData(opts.tripId);
+	} else {
+		console.log('[destination] Fetching:', path);
+		[tripData, destinosData] = await Promise.all([
+			opts.data ? Promise.resolve(opts.data) : getTripData(opts.tripId),
+			get(path),
+		]);
+		if (destinosData) DESTINATION_CACHE.set(DOCUMENT_ID, destinosData);
+	}
 
 	// ── Access guard ──
 	// If the Firestore read was denied (e.g. the user is unauthenticated and the
@@ -167,13 +218,14 @@ export function loadDestinationByType(activeCategory) {
 }
 
 function loadMapDestination(link) {
-	if (!link || !link.includes('mid=')) {
+	const iframe = buildMyMapsEmbed(link);
+	if (!iframe) {
 		console.error('Invalid My Maps link.');
 		return;
 	}
-	const mid = link.split('mid=')[1].split('&')[0];
-	getContainer().innerHTML =
-		`<iframe class="map-iframe" src="https://www.google.com/maps/d/embed?mid=${mid}&ehbc=2E312F"></iframe>`;
+	const container = getContainer();
+	container.innerHTML = '';
+	container.appendChild(iframe);
 }
 
 // Setters
@@ -257,8 +309,12 @@ export function isPlanned(id) {
 }
 
 export async function refreshDestination() {
-	const data = await get(`destinations/${DOCUMENT_ID}`);
+	const path = `destinations/${DOCUMENT_ID}`;
+	const data = await get(path);
 	if (!data) return;
+	// A local write just landed — refresh the session cache so a later reopen
+	// (view.html lightbox) shows the updated document instead of the old copy.
+	DESTINATION_CACHE.set(DOCUMENT_ID, data);
 	setFirestoreDestinationsData(data);
 	loadDestinationByType(ACTIVE_CATEGORY);
 }

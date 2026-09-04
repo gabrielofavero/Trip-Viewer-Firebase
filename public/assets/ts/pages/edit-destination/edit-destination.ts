@@ -45,6 +45,7 @@ import { loadVisibilityIndex } from '../home/support/visibility.js';
 import { loadEditDestinationListeners } from './support/event-listeners.js';
 import { getVisibility } from '../../theme/theme.js';
 import { populateExistingDestinationForm } from './existing-destination.js';
+import { initMapPreview, updateMapPreview, clearMapPreview } from './map-preview.js';
 import { getDescription } from './categories/description.js';
 import { setDescription } from './categories/description.js';
 import { updateDescriptionButtonLabel } from './categories/description.js';
@@ -172,10 +173,18 @@ function loadEnabled() {
 	mapCheckbox.addEventListener('change', function () {
 		if (mapCheckbox.checked) {
 			setRequired('map-link');
+			// Re-render in case a valid link was already typed before enabling.
+			updateMapPreview();
 		} else {
 			removeRequired('map-link');
+			clearMapPreview();
 		}
 	});
+
+	// Live My Maps preview under the link field: refreshes as the value
+	// changes and renders once on load (existing destinations dispatch an
+	// `input` event after populating the field — see existing-destination.ts).
+	initMapPreview();
 }
 
 // ============================================================

@@ -415,8 +415,8 @@
 [data-theme="dark"] .btn-theme,
 [data-theme="dark"] .btn-basic:hover,
 [data-theme="dark"] .btn-basic:focus {
-	border-color: var(--text-secondary);
-	color: var(--text-secondary);
+	border-color: var(--theme-secondary);
+	color: var(--theme-secondary);
 }
 
 [data-theme="dark"] .btn-theme:hover,
@@ -734,7 +734,7 @@
 
 /* Destination icon-boxes (inside #destinationsBox) */
 [data-theme="dark"] .services .icon-box {
-	background: #303030;
+	background: var(--bg-tertiary);
 	color: var(--font-color);
 }
 

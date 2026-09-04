@@ -381,8 +381,8 @@ section {
 .btn-theme,
 .btn-basic:hover,
 .btn-basic:focus {
-	border-color: var(--text-secondary);
-	color: var(--text-secondary);
+	border-color: var(--theme-secondary);
+	color: var(--theme-secondary);
 }
 
 .btn-theme:hover,
