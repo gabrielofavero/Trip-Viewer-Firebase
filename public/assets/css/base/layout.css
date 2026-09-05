@@ -43,6 +43,7 @@
 	font-family: Chelos;
 	color: var(--theme-color);
 	letter-spacing: -0.5px;
+	transform: translateY(3px);
 }
 
 .icons-box {

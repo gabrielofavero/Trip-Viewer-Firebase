@@ -330,7 +330,9 @@
 	background-size: cover;
 	background-position: center;
 	position: relative;
+	overflow: hidden;
 }
+/* The bottom gradient overlay sits above the loaded <img>. */
 .trip-card-image::after,
 .dest-card-image::after,
 .list-card-image::after {
@@ -341,6 +343,8 @@
 	right: 0;
 	height: 60px;
 	background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+	z-index: 1;
+	pointer-events: none;
 }
 .trip-card-image.no-image,
 .dest-card-image.no-image,
@@ -358,6 +362,54 @@
 .card-image-icon {
 	font-size: 48px;
 	color: var(--text-muted);
+}
+/* Card images are backed by a real <img> (fires load/error) so we can fade it
+   in once it's ready and fall back to the icon placeholder when it fails.
+   The fallback icon is only shown in the .no-image (absent/error) state. */
+.trip-card-image .card-image-icon,
+.dest-card-image .card-image-icon,
+.list-card-image .card-image-icon {
+	display: none;
+}
+.trip-card-image.no-image .card-image-icon,
+.dest-card-image.no-image .card-image-icon,
+.list-card-image.no-image .card-image-icon {
+	display: inline-flex;
+}
+.trip-card-image > img,
+.dest-card-image > img,
+.list-card-image > img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	opacity: 0;
+	transition: opacity var(--transition-normal);
+}
+.trip-card-image.is-loaded > img,
+.dest-card-image.is-loaded > img,
+.list-card-image.is-loaded > img {
+	opacity: 1;
+}
+/* While the external image is still loading, show the shimmer skeleton on the
+   card image area (no bottom overlay yet). */
+.trip-card-image.is-loading,
+.dest-card-image.is-loading,
+.list-card-image.is-loading {
+	background-image: linear-gradient(
+		90deg,
+		var(--skeleton-base) 25%,
+		var(--skeleton-highlight) 50%,
+		var(--skeleton-base) 75%
+	);
+	background-size: 200% 100%;
+	animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+.trip-card-image.is-loading::after,
+.dest-card-image.is-loading::after,
+.list-card-image.is-loading::after {
+	display: none;
 }
 
 .trip-card-body,
@@ -440,6 +492,75 @@
 }
 .empty-state p {
 	font-size: 16px;
+}
+
+/*--------------------------------------------------------------
+# Card Skeleton (placeholder while Firestore data is loading)
+--------------------------------------------------------------*/
+.skeleton-card {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-lg);
+	background: var(--bg-secondary);
+	cursor: default;
+	pointer-events: none;
+	user-select: none;
+}
+.skeleton-shimmer {
+	background-image: linear-gradient(
+		90deg,
+		var(--skeleton-base) 25%,
+		var(--skeleton-highlight) 50%,
+		var(--skeleton-base) 75%
+	);
+	background-size: 200% 100%;
+	animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+@keyframes skeleton-shimmer {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
+	}
+}
+.skeleton-media {
+	width: 100%;
+	height: 140px;
+	border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.skeleton-body {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 14px;
+}
+.skeleton-line {
+	height: 12px;
+	border-radius: 6px;
+}
+.skeleton-title {
+	height: 14px;
+	width: 90%;
+}
+.skeleton-title-short {
+	width: 55%;
+}
+.skeleton-meta {
+	width: 40%;
+	height: 11px;
+}
+@media (prefers-reduced-motion: reduce) {
+	.skeleton-shimmer,
+	.trip-card-image.is-loading,
+	.dest-card-image.is-loading,
+	.list-card-image.is-loading {
+		animation: none;
+		background-image: none;
+		background-color: var(--skeleton-base);
+	}
 }
 
 /* Detail Dialog shared styles moved to components/dialog.css (imported in main.css).

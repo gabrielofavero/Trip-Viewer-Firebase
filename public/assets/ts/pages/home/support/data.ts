@@ -93,13 +93,26 @@ export async function loadUserIndex() {
 				getID('profile-icon').style.backgroundImage = photoURL;
 				getID('profile-icon').style.backgroundSize = 'cover';
 
+				// While the summaries below are still being fetched, show
+				// animated skeleton placeholder cards where the real cards will
+				// land (the tab loaders below replace them once data arrives).
+				showCardSkeletons();
+
 				// Load summaries from subcollections (post-migration 14)
 				const uid = await getUID();
-				const [tripSummaries, destSummaries, listSummaries] = await Promise.all([
-					getUserTripSummaries(uid),
-					getUserDestinationSummaries(uid),
-					getUserListingSummaries(uid),
-				]);
+				let tripSummaries: any[];
+				let destSummaries: any[];
+				let listSummaries: any[];
+				try {
+					[tripSummaries, destSummaries, listSummaries] = await Promise.all([
+						getUserTripSummaries(uid),
+						getUserDestinationSummaries(uid),
+						getUserListingSummaries(uid),
+					]);
+				} catch (error) {
+					clearCardSkeletons();
+					throw error;
+				}
 
 				INDEX_DATA = {
 					trips: arrayToRecord(tripSummaries),
@@ -156,6 +169,109 @@ function showUnloggedView() {
 	getID('logged-view').style.display = 'none';
 	getID('unlogged-view').style.display = 'block';
 	getID('profile-icon').style.display = 'none';
+	clearCardSkeletons();
+}
+
+/*--------------------------------------------------------------
+# Card Skeleton (shown while summaries are still loading)
+--------------------------------------------------------------*/
+// Every grid that holds cards on the index. Trips are split into three
+// sections, but while the summaries are loading we don't know which of those
+// sections will exist — so all of them (plus destinations/lists) get the same
+// placeholders and the tab loaders replace them with the real cards.
+var SKELETON_CARD_GRID_IDS = [
+	'trip-active-grid',
+	'trip-upcoming-grid',
+	'trip-finished-grid',
+	'dest-grid',
+	'list-grid',
+];
+var SKELETON_CARDS_PER_GRID = 6;
+
+function skeletonCardHTML(): string {
+	return `
+		<div class="skeleton-card" aria-hidden="true">
+			<span class="skeleton-media skeleton-shimmer"></span>
+			<span class="skeleton-body">
+				<span class="skeleton-line skeleton-title skeleton-shimmer"></span>
+				<span class="skeleton-line skeleton-title skeleton-title-short skeleton-shimmer"></span>
+				<span class="skeleton-line skeleton-meta skeleton-shimmer"></span>
+			</span>
+		</div>`;
+}
+
+function skeletonCardsHTML(count: number): string {
+	let html = '';
+	for (let i = 0; i < count; i++) html += skeletonCardHTML();
+	return html;
+}
+
+function showCardSkeletons() {
+	const html = skeletonCardsHTML(SKELETON_CARDS_PER_GRID);
+	for (const id of SKELETON_CARD_GRID_IDS) {
+		const grid = getID(id);
+		if (grid) grid.innerHTML = html;
+	}
+	// Clear any stale empty-state (e.g. from a previous sign-in) while the
+	// placeholders are visible; the tab loaders restore the correct state.
+	for (const id of ['trips-empty', 'dest-empty', 'lists-empty']) {
+		const empty = getID(id);
+		if (empty) empty.style.display = 'none';
+	}
+}
+
+function clearCardSkeletons() {
+	for (const id of SKELETON_CARD_GRID_IDS) {
+		const grid = getID(id);
+		if (grid) grid.innerHTML = '';
+	}
+}
+
+/*--------------------------------------------------------------
+# Card image loading (external URLs can be slow or unavailable)
+--------------------------------------------------------------*/
+const CARD_IMAGE_SELECTOR = '.trip-card-image, .dest-card-image, .list-card-image';
+
+function cardImageClass(kind: 'trip' | 'dest' | 'list'): string {
+	if (kind === 'trip') return 'trip-card-image';
+	if (kind === 'dest') return 'dest-card-image';
+	return 'list-card-image';
+}
+
+/** Card image backed by a real <img> so the browser reports load/error. Shows
+ *  the shimmer skeleton while loading; on error flips to the icon fallback. */
+function cardImageHTML(kind: 'trip' | 'dest' | 'list', url: string, icon: string): string {
+	return `
+		<div class="${cardImageClass(kind)} is-loading">
+			<img class="card-image-img" src="${url}" alt="" loading="lazy" decoding="async">
+			<i class="iconify card-image-icon" data-icon="${icon}"></i>
+		</div>`;
+}
+
+function handleCardImageEvent(e: Event, failed: boolean): void {
+	const target = e.target as HTMLElement | null;
+	if (!target || !(target instanceof HTMLImageElement)) return;
+	if (!target.classList.contains('card-image-img')) return;
+	const container = target.closest<HTMLElement>(CARD_IMAGE_SELECTOR);
+	if (!container) return;
+
+	container.classList.remove('is-loading');
+	if (failed) {
+		// Image could not load (broken/unavailable external link): show the
+		// placeholder icon instead of a broken image.
+		container.classList.add('no-image');
+		target.remove();
+	} else {
+		container.classList.add('is-loaded');
+	}
+}
+
+/** img load/error events don't bubble, so listen on the capture phase from
+ *  each grid — this also covers re-renders and infinite-scroll batches. */
+function bindCardImageHandlers(grid: HTMLElement | null): void {
+	if (!grid) return;
+	grid.addEventListener('load', (e) => handleCardImageEvent(e, false), true);
+	grid.addEventListener('error', (e) => handleCardImageEvent(e, true), true);
 }
 
 /*--------------------------------------------------------------
@@ -182,6 +298,14 @@ function initGrids() {
 	);
 	DEST_GRID = new LazyGrid(getID('dest-grid'), getID('dest-sentinel'), buildDestCardHTML);
 	LIST_GRID = new LazyGrid(getID('list-grid'), getID('list-sentinel'), buildListCardHTML);
+
+	// Card images are real <img>s; bind their load/error listeners once per
+	// grid (capture phase) so every rendered + lazy-loaded card is covered.
+	bindCardImageHandlers(getID('trip-active-grid'));
+	bindCardImageHandlers(getID('trip-upcoming-grid'));
+	bindCardImageHandlers(getID('trip-finished-grid'));
+	bindCardImageHandlers(getID('dest-grid'));
+	bindCardImageHandlers(getID('list-grid'));
 }
 
 function loadTripsTab() {
@@ -263,7 +387,7 @@ function buildTripCardHTML(trip): string {
 	const dateStr = dateObjectToString(trip.start) + ' – ' + dateObjectToString(trip.end);
 
 	const imageHTML = bgImage
-		? `<div class="trip-card-image" style="background-image: url('${bgImage}')"></div>`
+		? cardImageHTML('trip', bgImage, 'tabler:plane-departure')
 		: `<div class="trip-card-image no-image"><i class="iconify card-image-icon" data-icon="tabler:plane-departure"></i></div>`;
 
 	return `
@@ -468,7 +592,7 @@ function buildDestCardHTML(dest): string {
 	const dateStr = getLastUpdatedOnText(dest.version?.lastUpdated);
 	const bgImage = dest.image?.active ? dest.image.background || '' : '';
 	const imageHTML = bgImage
-		? `<div class="dest-card-image" style="background-image: url('${bgImage}')"></div>`
+		? cardImageHTML('dest', bgImage, 'material-symbols:location-on')
 		: `<div class="dest-card-image no-image"><i class="iconify card-image-icon" data-icon="material-symbols:location-on"></i></div>`;
 
 	return `
@@ -507,7 +631,7 @@ function buildListCardHTML(list): string {
 	const dateStr = getLastUpdatedOnText(list.version?.lastUpdated);
 	const bgImage = list.image?.active ? list.image.background || list.image.light || '' : '';
 	const imageHTML = bgImage
-		? `<div class="list-card-image" style="background-image: url('${bgImage}')"></div>`
+		? cardImageHTML('list', bgImage, 'fluent:list-28-filled')
 		: `<div class="list-card-image no-image"><i class="iconify card-image-icon" data-icon="fluent:list-28-filled"></i></div>`;
 
 	return `

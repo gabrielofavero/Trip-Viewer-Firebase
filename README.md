@@ -47,9 +47,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 210   | 206  | 4         | 0       |
-| 🏆   | Feature     | F000 | 200   | 185  | 15        | 0       |
-| 📈   | Improvement | M000 | 225   | 202  | 22        | 1       |
+| 🐞   | Bug         | B000 | 216   | 212  | 4         | 0       |
+| 🏆   | Feature     | F000 | 203   | 188  | 15        | 0       |
+| 📈   | Improvement | M000 | 236   | 214  | 22        | 0       |
 | ⚔️   | Epic        | E000 | 53    | 44   | 7         | 2       |
 
 ## Backlog
@@ -62,7 +62,6 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 - ⚔️ **E047:** [DEV] Implement Unit Tests
 - ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
-- 📈 **M171:** Safeguard unauthenticated access message
 
 ## Done
 
@@ -77,6 +76,26 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M224:** Import with maps options dialog tweaks
 - 🐞 **B210:** My Maps import: default price to Unknown
 - 📈 **M225:** Improve btn-basic hover
+- 📈 **M226:** View page: remove leftover shadows, dest box bg
+- 📈 **M227:** Edit destination: improve region UI spacing
+- 📈 **M228:** Edit destination: My Maps preview and open link
+- 🐞 **B211:** View: destination detail empty on reopen
+- 📈 **M229:** Cache destination data on view reopen
+- 📈 **M230:** Destination dialog: corner zoom hover and edit top-right
+- 🐞 **B212:** Edit trip duration doesn't update itinerary days
+- 🐞 **B213:** Expenses empty category header keeps showing
+- 🐞 **B214:** Transport delete wrongly disables enabled toggle
+- 🏆 **F201:** Edit destination: wallpaper picker from saved destination images
+- 📈 **M232:** Edit destination: re-sort on accordion close
+- 📈 **M233:** Minor visual adjustments on expenses page
+- 📈 **M231:** Adjust logo on top bar
+- 🐞 **B215:** Fix logo text offset
+- 📈 **M234:** Index: animated skeleton cards while loading from Firestore
+- 📈 **M235:** Index card images: shimmer loading + failure fallback
+- 🏆 **F202:** Edit destination: prompt to clear “Recently added” marks
+- 🐞 **B216:** Split combined comma/semicolon region values
+- 📈 **M236:** Reject image links that don't load
+- 🏆 **F203:** Edit destination: item filter and subfilter control
 
 ### August 2026
 
@@ -225,6 +244,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B205:** Maps/Places import: never blank priority select
 - 📈 **M220:** Edit pages: image link/upload first in photo dialogs
 - 📈 **M221:** Detect new versions via background polling
+- 📈 **M171:** Safeguard unauthenticated access message
 
 ### July 2026
 

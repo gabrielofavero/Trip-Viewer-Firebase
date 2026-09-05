@@ -38,6 +38,7 @@ import {
 	setItineraryData,
 	applyLoadedItineraryData,
 	getItineraryArray,
+	clearItineraryDurationStash,
 } from './categories/itinerary-module/itinerary-module.js';
 import {
 	autoPopulateItineraryFromTrip,
@@ -305,6 +306,10 @@ async function loadDestinationsData() {
 }
 
 export function loadItineraryData() {
+	// Fresh DB-backed load — parked days from an earlier unsaved session must
+	// not be restored on top of the saved trip data.
+	clearItineraryDurationStash();
+
 	if (getState().modules.itinerary === true) {
 		getID('itinerary-enabled').checked = true;
 		getID('itinerary-enabled-content').style.display = 'block';

@@ -368,34 +368,98 @@ export function validateMediaLink(id) {
 	}
 }
 
-export function validateImageLink(id) {
-	const div = getID(id);
-	const imageLink = div.value;
+/**
+ * Preload a URL in the background and resolve whether it actually loads and
+ * decodes as an image. Unlike URL-shape heuristics this also rejects links to
+ * web pages, missing files and any resource the browser cannot render as an
+ * image. Uses a plain <img> (no crossOrigin) so image hosts that don't send
+ * CORS headers still load fine.
+ */
+export function loadImage(url: string, timeoutMs = 10000): Promise<boolean> {
+	return new Promise((resolve) => {
+		const image = new Image();
+		let settled = false;
+		let timer = 0;
+		const done = (ok: boolean) => {
+			if (settled) return;
+			settled = true;
+			image.onload = null;
+			image.onerror = null;
+			window.clearTimeout(timer);
+			resolve(ok);
+		};
+		image.onload = () => done(true);
+		image.onerror = () => done(false);
+		timer = window.setTimeout(() => done(false), timeoutMs);
+		image.src = url;
+	});
+}
 
-	if (isHttp(imageLink) && !imageLink.includes('pbs.twimg.com')) return;
+/** Why an image link value was rejected. */
+export type ImageLinkRejectReason = 'link' | 'twitter' | 'image';
 
-	let icon = '';
-	let title = '';
-	let content = '';
+/** Show the toast that explains why an image link was rejected (no DOM change). */
+export function toastImageLinkError(reason: ImageLinkRejectReason): void {
+	let icon = '<i class="iconify" data-icon="ic:twotone-link-off"></i>';
+	let title = translate('messages.fields.link.title', { icon });
+	let content = translate('messages.fields.link.message');
 
-	if (imageLink.includes('pbs.twimg.com')) {
-		title = translate('messages.fields.twitter_link.title', {
-			icon: '<i class="iconify" data-icon="mdi:twitter"></i>',
-		});
+	if (reason === 'twitter') {
+		icon = '<i class="iconify" data-icon="mdi:twitter"></i>';
+		title = translate('messages.fields.twitter_link.title', { icon });
 		content = translate('messages.fields.twitter_link.message', {
 			xIcon: '<i class="iconify" data-icon="fa6-brands:x-twitter"></i>',
 		});
-	} else {
-		title = translate('messages.fields.link.title', {
-			icon: '<i class="iconify" data-icon="ic:twotone-link-off"></i>',
-		});
-		content = translate('messages.fields.link.message');
+	} else if (reason === 'image') {
+		icon = '<i class="iconify" data-icon="mdi:image-off"></i>';
+		title = translate('messages.fields.image_link.title', { icon });
+		content = translate('messages.fields.image_link.message');
 	}
 
-	closeAllSelects();
-	div.value = '';
-
 	openToast(`${title}: ${content}`);
+}
+
+/**
+ * Validate an image link input. Besides checking that the value is an http(s)
+ * link (and not an X/Twitter-hosted image), it actually tries to load the URL
+ * as an image and rejects links that fail to load (broken links or links to
+ * non-image pages). On rejection the field is cleared and a toast explains why.
+ * Returns true when the current value is empty or a loadable image.
+ */
+export async function validateImageLink(id): Promise<boolean> {
+	const div = getID(id);
+	if (!div) return true;
+	const imageLink = div.value.trim();
+
+	if (!imageLink) return true;
+
+	// Fast fail: must be an http(s) URL.
+	if (!isHttp(imageLink)) {
+		closeAllSelects();
+		div.value = '';
+		toastImageLinkError('link');
+		return false;
+	}
+
+	// X/Twitter-hosted images are not supported.
+	if (imageLink.includes('pbs.twimg.com')) {
+		closeAllSelects();
+		div.value = '';
+		toastImageLinkError('twitter');
+		return false;
+	}
+
+	// Real image check: try to load the URL. Only reject if the field still
+	// holds the same value (the user may have typed or cleared it while the
+	// load was in flight).
+	const ok = await loadImage(imageLink);
+	if (!ok && div.value.trim() === imageLink) {
+		closeAllSelects();
+		div.value = '';
+		toastImageLinkError('image');
+		return false;
+	}
+	return ok;
 }
 
 export function getSelectOptionsHTML(object, selectedKey) {

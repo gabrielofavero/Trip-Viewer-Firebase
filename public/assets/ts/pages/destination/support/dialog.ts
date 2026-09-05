@@ -139,6 +139,10 @@ function ensureDialog(): HTMLElement {
 	dialog.innerHTML = `
         <div class="dialog-card destination-dialog-card">
           <div class="dialog-media" id="destination-dialog-media"></div>
+          <!-- Owner-only pencil, shown dynamically next to the close button -->
+          <button class="dialog-edit-btn" id="destination-dialog-edit" data-action="edit-destination" style="display:none">
+            <i class="iconify" data-icon="tabler:edit"></i>
+          </button>
           <a class="dialog-close" data-action="close-destination-dialog">
             <i class="iconify" data-icon="material-symbols:close"></i>
           </a>
@@ -146,9 +150,6 @@ function ensureDialog(): HTMLElement {
             <div class="dialog-header">
               <div class="dialog-title-row">
                 <h2 class="dialog-title" id="destination-dialog-title"></h2>
-                <button class="dialog-edit-btn" id="destination-dialog-edit" data-action="edit-destination" style="display:none">
-                  <i class="iconify" data-icon="tabler:edit"></i>
-                </button>
               </div>
               <span class="dialog-score-badge" id="destination-dialog-score" style="display:none"></span>
             </div>

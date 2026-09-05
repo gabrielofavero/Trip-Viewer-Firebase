@@ -1,6 +1,10 @@
-import { getID, hideParentIfNoChildren, removeChildWithValidation } from '../../../utils/dom.js';
+import {
+	getCategoryLegJs,
+	getID,
+	removeChildWithValidation,
+} from '../../../utils/dom.js';
 import { hasUnsavedChanges, validateImageLink, validateLink } from '../../../ui/fields.js';
-import { searchDestinationsListenerAction } from '../../../theme/visibility.js';
+import { hideContent, searchDestinationsListenerAction } from '../../../theme/visibility.js';
 import { translate } from '../../../i18n/translation.js';
 import { getNextInputDay, getPreviousInputDay, inputDateToJsDate } from '../../../utils/dates.js';
 import { registerActions } from '../../../ui/actions.js';
@@ -27,7 +31,7 @@ import {
 	openTransportationImport,
 	refreshTransportationImportButtons,
 } from '../categories/transportation-import.js';
-import { reloadItinerary } from '../categories/itinerary-module/itinerary-module.js';
+import { adaptItineraryToDuration } from '../categories/itinerary-module/itinerary-module.js';
 import {
 	deleteInnerItinerary,
 	openInnerItinerary,
@@ -141,9 +145,9 @@ export function loadEventListeners() {
 	);
 
 	// Image Validation in Customization module
-	getID('link-background').addEventListener('change', () => validateImageLink('link-background'));
-	getID('link-logo-light').addEventListener('change', () => validateImageLink('link-logo-light'));
-	getID('link-logo-dark').addEventListener('change', () => validateImageLink('link-logo-dark'));
+	getID('link-background').addEventListener('change', () => void validateImageLink('link-background'));
+	getID('link-logo-light').addEventListener('change', () => void validateImageLink('link-logo-light'));
+	getID('link-logo-dark').addEventListener('change', () => void validateImageLink('link-logo-dark'));
 
 	// Link Validation in Customization module
 	getID('link-attachments').addEventListener('change', () => validateLink('link-attachments'));
@@ -188,7 +192,7 @@ function startListenerAction() {
 		endDiv.value = getNextInputDay(start);
 	}
 
-	reloadItinerary();
+	adaptItineraryToDuration();
 }
 
 function endListenerAction() {
@@ -202,16 +206,21 @@ function endListenerAction() {
 		startDiv.value = getPreviousInputDay(end);
 	}
 
-	reloadItinerary();
+	adaptItineraryToDuration();
 }
 
 export function addRemoveTransportationListener(j) {
 	getID(`remove-transportation-${j}`).addEventListener('click', () => {
-		removeChildWithValidation('transportation', j);
+		// Remove the leg WITHOUT the generic auto-hide: in the leg/people grouped
+		// view the box's direct children are .transportation-group wrappers (no
+		// id), so the generic child-ID check sees "no children" and would wrongly
+		// disable the module while other legs still exist.
+		removeChildWithValidation('transportation', j, true);
 		removeEmptyTransportationGroups();
-		// Re-check now that empty group wrappers are gone — in grouped mode the
-		// generic hideParentIfNoChildren call inside removeChildWithValidation
-		// sees the group wrappers and would leave the module enabled.
-		hideParentIfNoChildren('transportation');
+		// Disable the module only when no legs remain in general.
+		if (getCategoryLegJs('transportation').length === 0) {
+			getID('transportation-enabled').checked = false;
+			hideContent('transportation');
+		}
 	});
 }

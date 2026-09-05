@@ -18,7 +18,8 @@
 	justify-content: center;
 }
 
-#tabs-container-expenses {
+#tabs-container-expenses,
+#tabs-container-currencies {
 	padding: 0 0.75rem;
 }
 
@@ -44,13 +45,14 @@ input[type="radio"] {
 	display: none;
 }
 
-/* Main tab bar (#tab-expenses) — one consistent look at every breakpoint:
-   the mobile "pill" visuals (subtle gray container, muted labels, theme-
-   colored active pill) combined with the desktop slide animation (the
-   .glider slides between tabs instead of being hidden). #tab-transportation
-   (view.css) shares this treatment so the .tab component renders identically
-   across pages. */
-#tab-expenses {
+/* Main tab bars (#tab-expenses, #tab-currencies) — one consistent look at
+   every breakpoint: the mobile "pill" visuals (subtle gray container, muted
+   labels, theme-colored active pill) combined with the desktop slide
+   animation (the .glider slides between tabs instead of being hidden).
+   #tab-transportation (view.css) shares this treatment so the .tab component
+   renders identically across pages. */
+#tab-expenses,
+#tab-currencies {
 	display: flex;
 	flex-wrap: nowrap;
 	justify-content: center;
@@ -86,7 +88,8 @@ input[type="radio"]:checked + label {
 	font-weight: bold;
 }
 
-#tab-expenses input[type="radio"]:checked + label {
+#tab-expenses input[type="radio"]:checked + label,
+#tab-currencies input[type="radio"]:checked + label {
 	color: #fff;
 }
 
@@ -267,6 +270,33 @@ section {
 	}
 }
 
+/* Desktop (>=1024px): keep the exact 3-per-row sizing, but center the cards
+   instead of hugging the left. The 12-column grid above fills the full row
+   width, so when a row has fewer than 3 cards (e.g. a chart plus a single
+   receipt) the leftover columns stay empty on the right and the cards look
+   left-aligned. A centered flex-wrap reproduces the same card widths as the
+   grid (each card is 1/3 of the row) while centering incomplete rows, so the
+   empty space is split evenly on both sides. Below 1024px the grid layout
+   (full-width stacked cards) is left untouched. */
+@media (min-width: 1024px) {
+	.expenses-container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.expenses-container > .expenses-card {
+		flex: 0 1 calc((100% - 3rem) / 3);
+		/* Allow tables inside receipts to scroll instead of blowing up the row. */
+		min-width: 0;
+	}
+
+	/* Keep the (currently unused) wide chart at 2/3 of a row for future use. */
+	.expenses-container > .expenses-card.grafico-wide {
+		flex-basis: calc(((100% - 3rem) * 2 / 3) + 1rem);
+	}
+}
+
 .expenses-title {
 	margin-bottom: 1rem;
 	font-size: 1.125rem;
@@ -381,8 +411,8 @@ section {
 .btn-theme,
 .btn-basic:hover,
 .btn-basic:focus {
-	border-color: var(--text-secondary);
-	color: var(--text-secondary);
+	border-color: var(--theme-secondary);
+	color: var(--theme-secondary);
 }
 
 .btn-theme:hover,

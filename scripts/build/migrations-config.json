@@ -57,6 +57,20 @@
         }
       ],
       "body": []
+    },
+    {
+      "id": 22,
+      "function": "migrateDestinationRegionsSplit",
+      "label": "Split combined region values on destination entries (comma/semicolon)",
+      "params": [
+        {
+          "name": "dryRun",
+          "type": "bool",
+          "label": "Dry run (preview changes, write nothing)",
+          "default": false
+        }
+      ],
+      "body": []
     }
   ]
 }

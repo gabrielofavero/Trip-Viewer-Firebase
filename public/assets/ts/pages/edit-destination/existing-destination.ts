@@ -185,6 +185,10 @@ function loadMapData() {
 		const mapData = FIRESTORE_DESTINATIONS_DATA.myMaps;
 		if (mapData) {
 			mapLinkInput.value = mapData;
+			// Notify the url-open button and the live map preview (both listen
+			// to `input`) that the value was populated programmatically, so they
+			// render on load instead of waiting for the user to type.
+			mapLinkInput.dispatchEvent(new Event('input', { bubbles: true }));
 		}
 	} else {
 		mapLinkInput.removeAttribute('required');

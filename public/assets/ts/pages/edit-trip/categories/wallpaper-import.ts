@@ -16,10 +16,10 @@ import { ACCOMMODATION_IMAGES } from './accommodation.js';
 import { GALLERY_ITEMS } from './gallery.js';
 import {
 	refreshImagePickers,
-	setImagePickerTripProvider,
+	setImagePickerSourceProvider,
 } from '../../../ui/image-picker.js';
 import type {
-	ImagePickerTripProvider,
+	ImagePickerSourceProvider,
 	TripImageGroup,
 	TripImageOption,
 	TripImageSubgroup,
@@ -207,7 +207,7 @@ function countGroupImages(group: TripImageGroup): number {
 	return group.options?.length || 0;
 }
 
-const tripProvider: ImagePickerTripProvider = {
+const tripProvider: ImagePickerSourceProvider = {
 	isAvailable() {
 		// The trip page can always offer its own images (gallery, stays, places).
 		return true;
@@ -263,7 +263,7 @@ function activateImagesModule() {
 
 // Register the trip's image-import provider (side effect of loading this
 // module — edit-trip only).
-setImagePickerTripProvider(tripProvider);
+setImagePickerSourceProvider(tripProvider);
 
 // Re-render the cards whenever the linked-destination set changes during
 // editing (e.g. the wallpaper source was unlinked and is now custom).

@@ -248,12 +248,14 @@ export function removeChild(type) {
 	div.parentNode.removeChild(div);
 }
 
-export function removeChildWithValidation(category, j) {
+export function removeChildWithValidation(category, j, skipAutoHide = false) {
 	const id = getID(`${category}-inner-box-${j}`)
 		? `${category}-inner-box-${j}`
 		: `${category}-${j}`;
 	removeChild(id);
-	hideParentIfNoChildren(category);
+	if (!skipAutoHide) {
+		hideParentIfNoChildren(category);
+	}
 }
 
 export function hideParentIfNoChildren(category) {

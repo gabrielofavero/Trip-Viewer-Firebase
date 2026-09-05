@@ -2,6 +2,8 @@ import {
 	convertFromDateObject,
 	convertToDateObject,
 	dateObjectToKey,
+	formattedDateToDate,
+	getArrayOfDates,
 	getDateTitle,
 	jsDateToKey,
 } from '../../../../utils/dates.js';
@@ -20,7 +22,7 @@ import {
 	getDestinationsFromCards,
 	ACTIVE_DESTINATIONS,
 } from '../destination.js';
-import { DESTINATIONS } from '../../../../data/state.js';
+import { DESTINATIONS, DOCUMENT_ID } from '../../../../data/state.js';
 import {
 	INNER_ITINERARY,
 	afterDragInnerItinerary,
@@ -31,7 +33,7 @@ import {
 	hasItineraryItems,
 } from './inner-itinerary/auto-populate.js';
 import { updateActiveDestinationsCardsHTML } from '../destination.js';
-import { DATAS } from '../../new-trip.js';
+import { DATAS, loadItinerarySchedule } from '../../new-trip.js';
 
 export var FIRESTORE_ITINERARY_DATA = {};
 export function setItineraryData(val) {
@@ -271,6 +273,122 @@ export function reloadItinerary() {
 			const index = originalDataInputs.indexOf(data);
 			const orig = originalData[index];
 			applyLoadedItineraryData(j, orig);
+		}
+		j++;
+	}
+	updateActiveDestinationsCardsHTML('itinerary');
+}
+
+// ======= Duration change: adapt the day tabs & park removed days =======
+
+const ITINERARY_STASH_PREFIX = 'tripviewer:itinerary-stash:';
+
+/** localStorage key scoping parked days to the trip being edited ('new' = unsaved new trip). */
+function getItineraryStashKey(): string {
+	return `${ITINERARY_STASH_PREFIX}${DOCUMENT_ID || 'new'}`;
+}
+
+function readItineraryStash(): Record<string, any> {
+	try {
+		const raw = window.localStorage.getItem(getItineraryStashKey());
+		return raw ? JSON.parse(raw) : {};
+	} catch {
+		return {};
+	}
+}
+
+function writeItineraryStash(stash: Record<string, any>): void {
+	try {
+		const key = getItineraryStashKey();
+		if (Object.keys(stash).length === 0) {
+			window.localStorage.removeItem(key);
+		} else {
+			window.localStorage.setItem(key, JSON.stringify(stash));
+		}
+	} catch {
+		// Storage full/unavailable — the edit session keeps working without parking.
+	}
+}
+
+/**
+ * Drop parked days for the trip being edited. Called on a fresh page load and
+ * after a successful save so parked days never survive a save/reload boundary
+ * ("once saved, what is lost is lost").
+ */
+export function clearItineraryDurationStash(): void {
+	try {
+		window.localStorage.removeItem(getItineraryStashKey());
+	} catch {
+		// ignore
+	}
+}
+
+/** Whether a captured day carries content worth parking across a shrink. */
+function hasDayContent(day: any): boolean {
+	if (!day) return false;
+	if (day.destinationIds?.length) return true;
+	const title = day.title;
+	if (title && (typeof title === 'string' ? title : title.value)) return true;
+	return hasItineraryItems([day]);
+}
+
+/**
+ * Rebuild the itinerary schedule to match the trip's current start/end after a
+ * duration change, keeping each day's content aligned by date:
+ *
+ *  - days kept inside the range are re-applied as they were;
+ *  - days pushed outside the range are parked in localStorage (not deleted) so
+ *    extending the trip again before saving brings them back seamlessly;
+ *  - newly-added days start empty, except when their date was removed earlier
+ *    in this same editing session — then the parked content is restored.
+ */
+export function adaptItineraryToDuration(): void {
+	const start = getID('start')?.value;
+	const end = getID('end')?.value;
+	if (!start || !end) return;
+
+	// Snapshot the live content of the currently-rendered (old-range) days,
+	// keyed by date, before the DOM is rebuilt.
+	const previousDates = DATAS.map((d) => jsDateToKey(d));
+	const liveByKey: Record<string, any> = {};
+	const liveDays = getItineraryArray() || [];
+	for (let i = 0; i < previousDates.length; i++) {
+		if (liveDays[i]) liveByKey[previousDates[i]] = liveDays[i];
+	}
+
+	const newDates = getArrayOfDates(formattedDateToDate(start), formattedDateToDate(end)).map(
+		(d) => jsDateToKey(d),
+	);
+	const newKeySet = new Set(newDates);
+
+	// Decide which days keep content, and park the removed ones.
+	const stash = readItineraryStash();
+	const toRestore: Record<string, any> = {};
+
+	for (const key of newDates) {
+		if (liveByKey[key]) {
+			toRestore[key] = liveByKey[key];
+		} else if (stash[key]) {
+			// A date removed earlier in this session is coming back → restore it.
+			toRestore[key] = stash[key];
+			delete stash[key];
+		}
+	}
+	for (const key of previousDates) {
+		if (!newKeySet.has(key) && hasDayContent(liveByKey[key])) {
+			stash[key] = liveByKey[key];
+		}
+	}
+	writeItineraryStash(stash);
+
+	// Rebuild the day tabs for the new range (loadItinerarySchedule resets DATAS).
+	loadItinerarySchedule();
+
+	// Re-apply content to the days that keep it (surviving or restored).
+	let j = 1;
+	for (const key of newDates) {
+		if (toRestore[key]) {
+			applyLoadedItineraryData(j, toRestore[key]);
 		}
 		j++;
 	}

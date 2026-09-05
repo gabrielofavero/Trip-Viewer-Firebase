@@ -1,5 +1,34 @@
 # Changelog
 
+## [2.28.5] - 2026-09-05
+
+- 🐞 **B215:** Fix logo text offset
+- 📈 **M234:** Index: animated skeleton cards while loading from Firestore
+- 📈 **M235:** Index card images: shimmer loading + failure fallback
+- 🏆 **F202:** Edit destination: prompt to clear “Recently added” marks
+- 🐞 **B216:** Split conmbined comma/semicolon region values
+- 📈 **M236:** Reject image links that don't load
+- 🏆 **F203:** Edit destination: item filter and subfilter control
+
+## [2.28.4] - 2026-09-05
+
+- 🐞 **B212:** Edit trip duration doesn't update itinerary days
+- 🐞 **B213:** Expenses empty category header keeps showing
+- 🐞 **B214:** Transport delete wrongly disables enabled toggle
+- 🏆 **F201:** Edit destination: wallpaper picker from saved destination images
+- 📈 **M232:** Edit destination: re-sort on accordion close
+- 📈 **M233:** Minor visual adjustments on expenses page
+- 📈 **M231:** Adjust logo on top bar
+
+## [2.28.3] - 2026-09-04
+
+- 📈 **M226:** View page: remove leftover shadows, dest box bg
+- 📈 **M227:** Edit destination: improve region UI spacing
+- 📈 **M228:** Edit destination: My Maps preview and open link
+- 🐞 **B211:** View: destination detail empty on reopen
+- 📈 **M229:** Cache destination data on view reopen
+- 📈 **M230:** Destination dialog: corner zoom hover and edit top-right
+
 ## [2.28.2] - 2026-09-03
 
 - 📈 **M223:** My Maps repeated names dialog close button
@@ -27,8 +56,8 @@
 
 ## [2.28.0] - 2026-08-29
 
-- 🐞 **B201:** Hide the "Import Account" settings button on production (real Firebase — deployed or `dev:prd`); it stays available while connected to the local emulators
-- 🐞 **B202:** Fix export triggering a spurious "Leave site?" prompt — suspend the refresh/close guard during the programmatic download click (Chrome fires `beforeunload` on download init), while keeping it active during the actual data loading
+- 🐞 **B201:** Hide the "Import Account" settings button on production
+- 🐞 **B202:** Fix export triggering a spurious "Leave site?" prompt
 - ⚔️ **E053:** Maps import/enrichment overhaul
 
 ## [2.27.1] - 2026-08-26

@@ -70,7 +70,7 @@
 			"warning": "⚠️ The exported package contains your document data in plain text, including any protected information (reservation codes, booking links). Anyone with access to the files can read this data. Store the exported files securely and delete them when no longer needed.",
 			"select_type": "Choose what to export",
 			"select_document": "Select a document",
-			"search_placeholder": "Search documents...",
+			"search_placeholder": "Search",
 			"no_matches": "No documents match your search.",
 			"select_mode": "Select fidelity mode",
 			"mode_light": "Light",
@@ -251,9 +251,9 @@
 				"label": "Reuse a stay",
 				"button": "Import from trip",
 				"title": "Import accommodation",
-				"loading": "Loading accommodations...",
-				"loading_trips": "Loading trips...",
-				"search_placeholder": "Search trips...",
+				"loading": "Loading accommodations",
+				"loading_trips": "Loading trips",
+				"search_placeholder": "Search trips",
 				"no_matches": "No trips match your search.",
 				"no_trips": "No other trips with accommodations are available.",
 				"no_accommodations": "This trip has no accommodations to import.",
@@ -263,7 +263,7 @@
 		"itinerary": {
 			"title": "Itinerary",
 			"subtitle": "Add your day-to-day schedule here",
-			"placeholder": "Go to...",
+			"placeholder": "Go to",
 			"swap_title": "Swap Itinerary",
 			"todays_itinerary": "Today's Itinerary",
 			"no_itinerary": "Nothing planned here! ☹️",
@@ -317,6 +317,14 @@
 		"basic_information": "Add the main information about your destination here",
 		"undefined": "Undefined destination",
 		"recent": "Recently added",
+		"recentSavePrompt": {
+			"title": "Clear “Recently added” marks?",
+			"message": "{{count}} place(s) were saved earlier and are still marked as “Recently added”. Now that you’re saving again, do you want to clear that mark?",
+			"keep": "Keep the mark",
+			"keep_hint": "Places stay “Recently added”",
+			"clear": "Clear the mark",
+			"clear_hint": "No longer show as “Recently added”"
+		},
 		"location_placeholder": "Chicago",
 		"image_description_placeholder": "A photo of the destination",
 		"delete": {
@@ -469,6 +477,7 @@
 		"filter": {
 			"title": "Filter",
 			"show_everything": "Show everything",
+			"custom": "Custom",
 			"planned": {
 				"title": "Planning",
 				"planned": "Planned destinations",
@@ -581,7 +590,7 @@
 			"this_week": "This week",
 			"this_month": "This month",
 			"clear": "Clear",
-			"select_dates": "Select dates...",
+			"select_dates": "Select dates",
 			"cancel": "Cancel",
 			"apply": "Apply",
 			"pick_start_date": "Pick start date",
@@ -747,6 +756,10 @@
 			"media_link": {
 				"title": "Invalid Media Link {{icon}}",
 				"message": "The provided media link is not valid. Make sure the link starts with \"http://\" or \"https://\" and that it is from YouTube {{youtubeIcon}}, TikTok {{tiktokIcon}} or Instagram Reels {{instagramIcon}}"
+			},
+			"image_link": {
+				"title": "Invalid Image Link {{icon}}",
+				"message": "The provided link could not be loaded as an image. Make sure it points directly to an image (not to a page) and that the image is publicly accessible"
 			}
 		}
 	},
@@ -838,8 +851,10 @@
 				"subtitle": "Add a wallpaper and a logo",
 				"background_subtitle": "Add a background image",
 				"import_from_trip": "Trip",
-				"import_loading": "Loading trip images...",
+				"import_loading": "Loading trip images",
 				"no_trip_images": "No images found in this trip yet",
+				"no_destination_images": "No images saved for this destination yet",
+				"destination_loading": "Loading destination images",
 				"imported_from": "Wallpaper imported from {{name}}",
 				"custom": "Custom",
 				"add_image": "Add image",
@@ -977,7 +992,7 @@
 		"active_trips": "Active trips",
 		"upcoming_trips": "Upcoming trips",
 		"finished_trips": "Finished trips",
-		"search_placeholder": "Search by title...",
+		"search_placeholder": "Search",
 		"days": "days",
 		"day": "day",
 		"modules_active": "Active modules",
@@ -1010,7 +1025,7 @@
 		},
 		"search": {
 			"title": "Search",
-			"placeholder": "Search for a place...",
+			"placeholder": "Search for a place",
 			"button": "Search",
 			"noResults": "No results found",
 			"error": "An error occurred while searching. Please try again",
@@ -1053,11 +1068,11 @@
 			"label": "[Closed]"
 		},
 		"loading": {
-			"search": "Searching...",
-			"scraping": "Scraping place information...",
-			"fetching": "Fetching place information...",
-			"importing": "Importing photos...",
-			"applying": "Applying place information..."
+			"search": "Searching",
+			"scraping": "Scraping place information",
+			"fetching": "Fetching place information",
+			"importing": "Importing photos",
+			"applying": "Applying place information"
 		},
 		"apply": {
 			"title": "Apply information",
@@ -1115,7 +1130,7 @@
 		},
 		"pending": {
 			"title": "Enrich pending items",
-			"searching": "Searching for Google Places...",
+			"searching": "Searching for Google Places",
 			"none": "No items need enrichment",
 			"noMatch": "No items could be matched",
 			"review": {
@@ -1123,7 +1138,7 @@
 				"message": "Some items need your input before applying",
 				"multi": "Multiple matches found",
 				"none": "Could not be matched",
-				"placeholder": "Select a result...",
+				"placeholder": "Select a result",
 				"skip": "No match / skip",
 				"continue": "Continue"
 			},
@@ -1171,7 +1186,7 @@
 		"reimportNone": "No new places found — everything was already imported",
 		"summary": "Found {{count}} placemark(s) in this map",
 		"unmapped": "Couldn't map {{count}} placemark(s). Pick a category to import them, or leave them unchecked to skip.",
-		"fetching": "Fetching your My Maps map...",
+		"fetching": "Fetching your My Maps map",
 		"fetchFailed": "Couldn't fetch this map automatically. You can import the exported file instead.",
 		"upload": "Choose a .kml / .kmz file",
 		"uploadHint": "Export the map from My Maps (⋮ → Export to KML/KMZ) and pick the file here.",
@@ -1186,7 +1201,7 @@
 			"failed": "No match"
 		},
 		"enrich": "Enrich with Places API",
-		"enriching": "Resolving places... {{done}}/{{total}}",
+		"enriching": "Resolving places {{done}}/{{total}}",
 		"importAction": "Import {{count}} placemark(s)",
 		"skipUncategorized": "{{count}} placemark(s) have no category and will be skipped",
 		"noCategoryHint": "Unassigned placemarks are not imported. Pick a category for them to include them.",
