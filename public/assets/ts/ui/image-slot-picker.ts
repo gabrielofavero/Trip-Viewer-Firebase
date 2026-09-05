@@ -128,6 +128,13 @@ let CURRENT_DIALOG_OPTIONS: ImageSlotPickerOptions | null = null;
 let CURRENT_DIALOG_INDEX = -1;
 let CURRENT_DIALOG_REMOVE = false;
 
+// Image link verification state for the open dialog (see verifySlotLink). The
+// change handler and the Apply action share one check so an invalid link is
+// rejected exactly once (value cleared + toast).
+let SLOT_LAST_GOOD_LINK = '';
+let SLOT_VERIFY_PENDING: Promise<boolean> | null = null;
+let SLOT_VERIFY_PENDING_URL = '';
+
 /** Open the slot dialog for `index` (images.length = add new). */
 export function openImageSlotDialog(options: ImageSlotPickerOptions, index: number): void {
 	const images = options.images || [];
@@ -229,10 +236,20 @@ function getDialogContent(isNew: boolean, current: ImageSlot | null): string {
 function loadDialogListeners(isNew: boolean, current: ImageSlot | null): void {
 	const options = CURRENT_DIALOG_OPTIONS!;
 
-	// Link validation + confirm state.
+	// Image link validation on change: whenever the user commits a link we
+	// actually try to load it, rejecting (clearing + toasting) values that
+	// don't decode as an image. The Apply action reuses the same check (see
+	// verifySlotLink), so a bad link can't be added even without a change event.
 	const linkInput = getID('image-slot-link') as HTMLInputElement | null;
-	linkInput?.addEventListener('change', () => validateImageLink('image-slot-link'));
-	linkInput?.addEventListener('input', updateDialogConfirmState);
+	if (linkInput) {
+		// A pre-existing stored link (editing a saved photo) is trusted as-is;
+		// only new/edited values get re-verified.
+		SLOT_LAST_GOOD_LINK = linkInput.value.trim();
+		SLOT_VERIFY_PENDING = null;
+		SLOT_VERIFY_PENDING_URL = '';
+		linkInput.addEventListener('input', updateDialogConfirmState);
+		linkInput.addEventListener('change', () => void verifySlotLink());
+	}
 	const uploadInput = getID('image-slot-upload') as HTMLInputElement | null;
 	uploadInput?.addEventListener('change', updateDialogConfirmState);
 
@@ -251,6 +268,34 @@ function loadDialogListeners(isNew: boolean, current: ImageSlot | null): void {
 	}
 
 	updateDialogConfirmState();
+}
+
+/**
+ * Verify the current link actually loads as an image. Used by both the change
+ * listener and before applying, so an invalid link is rejected exactly once
+ * (validateImageLink clears the value + toasts) however the user confirms.
+ */
+async function verifySlotLink(): Promise<void> {
+	const input = getID('image-slot-link') as HTMLInputElement | null;
+	if (!input) return;
+	const value = input.value.trim();
+
+	// Nothing new to check (empty or already verified as a loadable image).
+	if (!value || value === SLOT_LAST_GOOD_LINK) return;
+
+	// Reuse an in-flight check for the same value so rejection happens once.
+	if (SLOT_VERIFY_PENDING && SLOT_VERIFY_PENDING_URL === value) {
+		await SLOT_VERIFY_PENDING;
+		return;
+	}
+
+	const pending = validateImageLink('image-slot-link');
+	SLOT_VERIFY_PENDING = pending;
+	SLOT_VERIFY_PENDING_URL = value;
+	const ok = await pending;
+	SLOT_VERIFY_PENDING = null;
+	SLOT_VERIFY_PENDING_URL = '';
+	if (ok && input.value.trim() === value) SLOT_LAST_GOOD_LINK = value;
 }
 
 /** Enable the confirm only when a link or an upload file is present. */
@@ -320,6 +365,14 @@ function applySlotDialog(): void {
 		if (!link) {
 			closeMessage();
 			return;
+		}
+
+		// Never add a typed link that doesn't actually load as an image. The
+		// shared verifySlotLink check rejects it once (value cleared + toast)
+		// and we keep the dialog open for a corrected link.
+		if (!file && link) {
+			await verifySlotLink();
+			if ((linkInput?.value?.trim() || '') !== link) return; // rejected
 		}
 
 		const description =

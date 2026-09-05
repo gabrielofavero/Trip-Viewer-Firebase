@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.28.5] - 2026-09-05
+
+- 🐞 **B215:** Fix logo text offset
+- 📈 **M234:** Index: animated skeleton cards while loading from Firestore
+- 📈 **M235:** Index card images: shimmer loading + failure fallback
+- 🏆 **F202:** Edit destination: prompt to clear “Recently added” marks
+- 🐞 **B216:** Split conmbined comma/semicolon region values
+- 📈 **M236:** Reject image links that don't load
+- 🏆 **F203:** Edit destination: item filter and subfilter control
+
 ## [2.28.4] - 2026-09-05
 
 - 🐞 **B212:** Edit trip duration doesn't update itinerary days
@@ -46,8 +56,8 @@
 
 ## [2.28.0] - 2026-08-29
 
-- 🐞 **B201:** Hide the "Import Account" settings button on production (real Firebase — deployed or `dev:prd`); it stays available while connected to the local emulators
-- 🐞 **B202:** Fix export triggering a spurious "Leave site?" prompt — suspend the refresh/close guard during the programmatic download click (Chrome fires `beforeunload` on download init), while keeping it active during the actual data loading
+- 🐞 **B201:** Hide the "Import Account" settings button on production
+- 🐞 **B202:** Fix export triggering a spurious "Leave site?" prompt
 - ⚔️ **E053:** Maps import/enrichment overhaul
 
 ## [2.27.1] - 2026-08-26

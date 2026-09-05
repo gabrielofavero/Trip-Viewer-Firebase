@@ -317,6 +317,14 @@
 		"basic_information": "Adicione aqui as principais informações do seu destino",
 		"undefined": "Destino não definido",
 		"recent": "Adicionado recentemente",
+		"recentSavePrompt": {
+			"title": "Limpar a marca de “Adicionado recentemente”?",
+			"message": "{{count}} lugar(es) foram salvos anteriormente e ainda estão marcados como “Adicionado recentemente”. Já que você está salvando novamente, deseja limpar essa marca?",
+			"keep": "Manter a marca",
+			"keep_hint": "Os lugares continuam “Adicionado recentemente”",
+			"clear": "Limpar a marca",
+			"clear_hint": "Não aparecem mais como “Adicionado recentemente”"
+		},
 		"location_placeholder": "São Paulo",
 		"image_description_placeholder": "Uma foto do destino",
 		"delete": {
@@ -469,6 +477,7 @@
 		"filter": {
 			"title": "Filtrar",
 			"show_everything": "Mostrar tudo",
+			"custom": "Personalizado",
 			"planned": {
 				"title": "Planejamento",
 				"planned": "Destinos incluídos no planejamento",
@@ -747,6 +756,10 @@
 			"media_link": {
 				"title": "Link de Mídia Inválido {{icon}}",
 				"message": "O link de mídia fornecido não é válido. Certifique-se de que o link comece com \"http://\" ou \"https://\" e que seja do YouTube {{youtubeIcon}}, TikTok {{tiktokIcon}} ou Instagram Reels {{instagramIcon}}"
+			},
+			"image_link": {
+				"title": "Link de Imagem Inválido {{icon}}",
+				"message": "O link fornecido não pôde ser carregado como uma imagem. Certifique-se de que ele aponte diretamente para uma imagem (não para uma página) e que a imagem esteja publicamente acessível"
 			}
 		}
 	},

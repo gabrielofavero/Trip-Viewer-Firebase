@@ -317,6 +317,14 @@
 		"basic_information": "Add the main information about your destination here",
 		"undefined": "Undefined destination",
 		"recent": "Recently added",
+		"recentSavePrompt": {
+			"title": "Clear “Recently added” marks?",
+			"message": "{{count}} place(s) were saved earlier and are still marked as “Recently added”. Now that you’re saving again, do you want to clear that mark?",
+			"keep": "Keep the mark",
+			"keep_hint": "Places stay “Recently added”",
+			"clear": "Clear the mark",
+			"clear_hint": "No longer show as “Recently added”"
+		},
 		"location_placeholder": "Chicago",
 		"image_description_placeholder": "A photo of the destination",
 		"delete": {
@@ -469,6 +477,7 @@
 		"filter": {
 			"title": "Filter",
 			"show_everything": "Show everything",
+			"custom": "Custom",
 			"planned": {
 				"title": "Planning",
 				"planned": "Planned destinations",
@@ -747,6 +756,10 @@
 			"media_link": {
 				"title": "Invalid Media Link {{icon}}",
 				"message": "The provided media link is not valid. Make sure the link starts with \"http://\" or \"https://\" and that it is from YouTube {{youtubeIcon}}, TikTok {{tiktokIcon}} or Instagram Reels {{instagramIcon}}"
+			},
+			"image_link": {
+				"title": "Invalid Image Link {{icon}}",
+				"message": "The provided link could not be loaded as an image. Make sure it points directly to an image (not to a page) and that the image is publicly accessible"
 			}
 		}
 	},

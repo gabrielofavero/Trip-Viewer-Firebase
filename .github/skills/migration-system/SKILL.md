@@ -58,6 +58,7 @@ npm run migrations -- --project dev
 | **19** | **`migrateDestinationRegions`** | **Destination entry region → regions: convert the legacy single `region` string into a `regions` array** |
 | **20** | **`migrateExpenseFields`** | **Expense multi-person fields: add `link` + `people` to every expense entry in preTrip/duringTrip (public + protected)** |
 | **21** | **`migrateAccommodationPaymentStatus`** | **Accommodation payment status (F065): add `paymentStatus: ""` to every accommodation sub-document (`trips/{id}/accommodations/{accId}`)** |
+| **22** | **`migrateDestinationRegionsSplit`** | **Split combined region values on destination entries: expand `regions` elements (and any leftover legacy `region`) separated by comma/semicolon into separate array items** |
 
 **Migrations 1–17 are legacy / manual-only** — already applied in production (1–12) or kept for reference (13–17). They are NOT registered in the current `functions/src/index.ts`, so the deploy script cannot offer them.
 
@@ -330,6 +331,29 @@ Adds the `paymentStatus` field to every accommodation sub-document so the UI can
 ```bash
 curl "http://localhost:5001/trip-viewer-prd/us-central1/migrateAccommodationPaymentStatus?dryRun=true"
 curl "http://localhost:5001/trip-viewer-prd/us-central1/migrateAccommodationPaymentStatus"
+```
+
+---
+
+## Migration 22: Split combined region values (`migrateDestinationRegionsSplit`)
+
+**File:** `functions/src/migrations/22-migrate-destination-regions-split.ts`
+
+Some destination entries were created while the region input was a single free-text box, so several neighborhoods ended up packed into ONE `regions` element (or a leftover legacy `region` string) separated by a comma or semicolon, e.g. `regions: ["Jardins, Pinheiros"]`. This migration splits those into separate array items so the multi-region UI (F063) can render/filter them individually.
+
+### Operations:
+1. Scans all `destinations` documents.
+2. For each category (`restaurants`, `snacks`, `nightlife`, `tourism`, `shopping`) and entry, expands every `regions` element that contains `,` or `;` into separate trimmed, de-duplicated items:
+   - `["Jardins, Pinheiros"]` → `["Jardins", "Pinheiros"]`
+   - `["Jardins; Pinheiros"]` → `["Jardins", "Pinheiros"]`
+   - `["Shopping Morumbi, Shopping Pátio Paulista", "Itaim Bibi"]` → 3 items (multi-word names without separators are kept whole)
+3. **Legacy `region` handling:** if a leftover single-string `region` exists alongside `regions`, it is deleted (the array is authoritative). If an entry has only a legacy `region`, it is split into a `regions` array and the legacy field is deleted (mirrors migration 19).
+4. **Idempotency check:** entries whose `regions` already have no separators (and no legacy `region`) are skipped — re-runs are no-ops.
+
+### Run it:
+```bash
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migrateDestinationRegionsSplit?dryRun=true"
+curl "http://localhost:5001/trip-viewer-prd/us-central1/migrateDestinationRegionsSplit"
 ```
 
 ---

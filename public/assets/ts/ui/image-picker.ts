@@ -20,6 +20,7 @@ import {
 import { IMAGE_UPLOAD_ENABLED, PERMISSIONS, uploadImage } from '../data/firebase/storage.js';
 import { DOCUMENT_ID } from '../data/state.js';
 import { getHTMLpage } from '../app/main.js';
+import { validateImageLink } from './fields.js';
 
 /** A single selectable image inside the "source" tab. */
 export interface TripImageOption {
@@ -95,6 +96,13 @@ let CURRENT_IMAGE_PICKER_TYPE: string | null = null;
 
 /** Active tab in the open dialog. */
 let CURRENT_PICKER_MODE: 'trip' | 'custom' = 'custom';
+
+// Custom-tab image link verification state (see verifyCustomLink). The change
+// handler and the Apply action share one check so an invalid link is rejected
+// exactly once (value cleared + toast).
+let CUSTOM_LAST_GOOD_LINK = '';
+let CUSTOM_VERIFY_PENDING: Promise<boolean> | null = null;
+let CUSTOM_VERIFY_PENDING_URL = '';
 
 /** Option currently selected (active) in the source tab. */
 let SELECTED_OPTION_ID: string | null = null;
@@ -338,10 +346,19 @@ function loadImagePickerListeners({ canImportSource }) {
 		void loadTripOptions();
 	}
 
-	// Custom panel: the confirm stays disabled until a link is provided or a
-	// file is chosen.
+	// Custom panel: validate a typed image link on change. The Apply action
+	// reuses the same check (see verifyCustomLink), so a link that doesn't
+	// actually load as an image is rejected (value cleared + toast).
 	const linkInput = getID('image-picker-link') as HTMLInputElement | null;
-	linkInput?.addEventListener('input', updateConfirmState);
+	if (linkInput) {
+		// A pre-existing stored image is trusted as-is; only new/edited values
+		// get re-verified.
+		CUSTOM_LAST_GOOD_LINK = linkInput.value.trim();
+		CUSTOM_VERIFY_PENDING = null;
+		CUSTOM_VERIFY_PENDING_URL = '';
+		linkInput.addEventListener('input', updateConfirmState);
+		linkInput.addEventListener('change', () => void verifyCustomLink());
+	}
 	const uploadInput = getID('image-picker-upload') as HTMLInputElement | null;
 	uploadInput?.addEventListener('change', updateConfirmState);
 
@@ -371,6 +388,34 @@ function updateConfirmState() {
 		enabled = linkValue !== '' || fileChosen;
 	}
 	confirm.disabled = !enabled;
+}
+
+/**
+ * Verify the current custom link actually loads as an image. Used by both the
+ * change listener and before applying, so an invalid link is rejected exactly
+ * once (validateImageLink clears the value + toasts) however the user confirms.
+ */
+async function verifyCustomLink(): Promise<void> {
+	const input = getID('image-picker-link') as HTMLInputElement | null;
+	if (!input) return;
+	const value = input.value.trim();
+
+	// Nothing new to check (empty or already verified as a loadable image).
+	if (!value || value === CUSTOM_LAST_GOOD_LINK) return;
+
+	// Reuse an in-flight check for the same value so rejection happens once.
+	if (CUSTOM_VERIFY_PENDING && CUSTOM_VERIFY_PENDING_URL === value) {
+		await CUSTOM_VERIFY_PENDING;
+		return;
+	}
+
+	const pending = validateImageLink('image-picker-link');
+	CUSTOM_VERIFY_PENDING = pending;
+	CUSTOM_VERIFY_PENDING_URL = value;
+	const ok = await pending;
+	CUSTOM_VERIFY_PENDING = null;
+	CUSTOM_VERIFY_PENDING_URL = '';
+	if (ok && input.value.trim() === value) CUSTOM_LAST_GOOD_LINK = value;
 }
 
 /** Lazily load the trip image groups through the registered provider. */
@@ -516,6 +561,17 @@ async function applyCustomFromDialog() {
 			return;
 		}
 		finalLink = result.link;
+	}
+
+	// Never apply a typed link that doesn't actually load as an image. The
+	// shared verifyCustomLink check rejects it once (value cleared + toast)
+	// and we keep the dialog open for a corrected link.
+	if (!file && finalLink) {
+		await verifyCustomLink();
+		if ((getID('image-picker-link') as HTMLInputElement | null)?.value?.trim() !== finalLink) {
+			updateConfirmState();
+			return; // rejected — do not apply
+		}
 	}
 
 	const oldValue = linkInput.value;

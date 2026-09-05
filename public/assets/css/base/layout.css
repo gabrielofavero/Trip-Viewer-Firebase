@@ -43,10 +43,7 @@
 	font-family: Chelos;
 	color: var(--theme-color);
 	letter-spacing: -0.5px;
-	/* Lower the wordmark 25px inside the 60px bar without growing the bar.
-	   Flexbox already centers the text; translate shifts it purely visually,
-	   so the icon stays centered and the bar keeps its fixed height. */
-	transform: translateY(25px);
+	transform: translateY(3px);
 }
 
 .icons-box {

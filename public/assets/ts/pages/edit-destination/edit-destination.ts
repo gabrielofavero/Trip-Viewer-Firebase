@@ -9,6 +9,7 @@ import { getTodayFormatted, getTomorrowFormatted } from '../../utils/dates.js';
 import {
 	cloneObject,
 	firstCharToUpperCase,
+	getChildIDs,
 	getID,
 	getJ,
 	getLastJ,
@@ -409,6 +410,205 @@ function initSortOnAccordionClose(): void {
 	});
 }
 
+// ============================================================
+// Item filtering (edit destination page) — VISUAL ONLY.
+// Unlike the sort control, the filter is NOT persisted: every
+// page load starts at "none" (all items shown, no value select),
+// and each category keeps an independent filter that only affects
+// its own accordion box. Toggling item visibility never changes
+// the saved document — set-destination.ts always reads the full box.
+// ============================================================
+
+/** Standard price tiers — the values stored in an entry's `price`. */
+const DESTINATION_PRICE_TIERS = ['$', '$$', '$$$', '$$$$'];
+
+/** Read an entry's stored price the same way set-destination.ts does. */
+function getEntryStoredPrice(category: string, j: number): string {
+	const priceSelect = getID<HTMLSelectElement>(`${category}-price-${j}`);
+	if (!priceSelect) return '';
+	return priceSelect.innerHTML && priceSelect.value !== 'other'
+		? priceSelect.value
+		: (getID<HTMLInputElement>(`${category}-other-price-${j}`)?.value ?? '');
+}
+
+/** The cost bucket an entry's stored price falls into (matches the options). */
+function getPriceFilterBucket(raw: string): string {
+	if (raw === '' || raw === 'default') return 'unknown';
+	if (raw === '-' || raw === 'free') return 'free';
+	if (DESTINATION_PRICE_TIERS.includes(raw)) return raw;
+	return 'custom';
+}
+
+/** Whether `item` should stay visible under the category's current filter. */
+function entryMatchesDestinationFilter(
+	category: string,
+	item: HTMLElement,
+	mode: string,
+	value: string,
+): boolean {
+	if (mode === 'none' || value === '') return true;
+	const j = getJ(item.id);
+
+	switch (mode) {
+		case 'region':
+			return getRegionPills(`${category}-regions-${j}`).includes(value);
+		case 'cost':
+			return getPriceFilterBucket(getEntryStoredPrice(category, j)) === value;
+		case 'priority': {
+			// The form stores "priority not set" as '?' (or '' on legacy items).
+			const rating = getID<HTMLSelectElement>(`${category}-rating-${j}`)?.value ?? '';
+			return rating === value || (value === '?' && rating === '');
+		}
+		default:
+			return true;
+	}
+}
+
+/** Show/hide a category's items according to its filter selects. */
+function applyDestinationCategoryFilter(category: string): void {
+	const box = getID(`${category}-box`);
+	const filterSelect = getID<HTMLSelectElement>(`${category}-filter`);
+	const valueSelect = getID<HTMLSelectElement>(`${category}-filter-value`);
+	if (!box || !filterSelect) return;
+
+	const mode = filterSelect.value;
+	const value = valueSelect?.value ?? '';
+
+	for (const item of Array.from(box.children) as HTMLElement[]) {
+		item.style.display = entryMatchesDestinationFilter(category, item, mode, value)
+			? ''
+			: 'none';
+	}
+}
+
+/** A single option for a category's filter value subselect. */
+type DestinationFilterOption = { value: string; label: string; disabled: boolean };
+
+/** Options for the value subselect of a category's current filter mode. */
+function buildDestinationFilterOptions(category: string): DestinationFilterOption[] {
+	const mode = getID<HTMLSelectElement>(`${category}-filter`)?.value ?? 'none';
+	const options: DestinationFilterOption[] = [
+		{ value: '', label: translate('labels.all'), disabled: false },
+	];
+
+	if (mode === 'region') {
+		// "All the possible options" = the distinct regions currently used by
+		// this category's items (source of truth: the region pills).
+		const regions = new Set<string>();
+		for (const item of getID(`${category}-box`)?.children ?? []) {
+			const j = getJ((item as HTMLElement).id);
+			for (const region of getRegionPills(`${category}-regions-${j}`)) {
+				if (region) regions.add(region);
+			}
+		}
+		if (regions.size === 0) {
+			options.push({
+				value: '',
+				label: translate('destination.filter.region.none'),
+				disabled: true,
+			});
+		}
+		for (const region of Array.from(regions).sort((a, b) => a.localeCompare(b))) {
+			options.push({ value: region, label: region, disabled: false });
+		}
+	} else if (mode === 'cost') {
+		// The standard tiers, plus Free / Unknown price and a Custom bucket
+		// that groups every other (free-text) price.
+		for (const tier of DESTINATION_PRICE_TIERS) {
+			options.push({ value: tier, label: tier, disabled: false });
+		}
+		options.push({
+			value: 'free',
+			label: translate('destination.price.free'),
+			disabled: false,
+		});
+		options.push({
+			value: 'unknown',
+			label: translate('destination.price.default'),
+			disabled: false,
+		});
+		options.push({
+			value: 'custom',
+			label: translate('destination.filter.custom'),
+			disabled: false,
+		});
+	} else if (mode === 'priority') {
+		for (const score of ['5', '4', '3', '2', '1']) {
+			options.push({
+				value: score,
+				label: `${score} - ${translate(`destination.scores.${score}`)}`,
+				disabled: false,
+			});
+		}
+		options.push({
+			value: '?',
+			label: translate('destination.scores.default'),
+			disabled: false,
+		});
+	}
+
+	return options;
+}
+
+/** Rebuild (and show/hide) the value subselect for a category. */
+function refreshDestinationFilterValue(category: string): void {
+	const filterSelect = getID<HTMLSelectElement>(`${category}-filter`);
+	const valueSelect = getID<HTMLSelectElement>(`${category}-filter-value`);
+	if (!filterSelect || !valueSelect) return;
+
+	const mode = filterSelect.value;
+	const previous = valueSelect.value;
+
+	valueSelect.innerHTML = '';
+	if (mode === 'none') {
+		valueSelect.style.display = 'none';
+		applyDestinationCategoryFilter(category);
+		return;
+	}
+
+	const options = buildDestinationFilterOptions(category);
+	for (const option of options) {
+		const el = document.createElement('option');
+		el.value = option.value;
+		el.textContent = option.label;
+		el.disabled = option.disabled;
+		valueSelect.appendChild(el);
+	}
+
+	// Preserve the previous choice when it's still a valid option (e.g. after
+	// an item was removed and the Region options were rebuilt); else "All".
+	if (options.some((option) => option.value === previous && !option.disabled)) {
+		valueSelect.value = previous;
+	}
+
+	valueSelect.style.display = '';
+	applyDestinationCategoryFilter(category);
+}
+
+/** Wire a category's filter selects (dimension + value). */
+function initCategoryFilterControl(category: string): void {
+	const filterSelect = getID<HTMLSelectElement>(`${category}-filter`);
+	const valueSelect = getID<HTMLSelectElement>(`${category}-filter-value`);
+	if (!filterSelect || !valueSelect) return;
+
+	filterSelect.addEventListener('change', () => refreshDestinationFilterValue(category));
+	valueSelect.addEventListener('change', () => applyDestinationCategoryFilter(category));
+
+	// Never persisted — every page load starts at "none" (all items visible).
+	filterSelect.value = 'none';
+	valueSelect.innerHTML = '';
+	valueSelect.style.display = 'none';
+	applyDestinationCategoryFilter(category);
+}
+
+/** Clear a category's filter (used when a brand-new item is added). */
+function resetCategoryDestinationFilter(category: string): void {
+	const filterSelect = getID<HTMLSelectElement>(`${category}-filter`);
+	if (!filterSelect || filterSelect.value === 'none') return;
+	filterSelect.value = 'none';
+	refreshDestinationFilterValue(category);
+}
+
 function loadEventListeners() {
 	getID('restaurants-add').addEventListener('click', () => {
 		closeAccordions('restaurants');
@@ -446,14 +646,10 @@ function loadEventListeners() {
 	});
 
 	// Image Validation in Customization module
-	getID('link-background').addEventListener('change', () => validateImageLink('link-background'));
+	getID('link-background').addEventListener('change', () => void validateImageLink('link-background'));
 
 	getID('save-btn').addEventListener('click', () => {
-		startLoadingScreen();
-		const type = 'destinations';
-		const dataBuildingFunctions = [buildDestinationObject, updateTikTokLinks];
-
-		setDocument({ type, dataBuildingFunctions });
+		void handleDestinationSave();
 	});
 
 	getID('cancel-btn').addEventListener('click', () => {
@@ -500,6 +696,157 @@ function loadEventListeners() {
 	// Keep the on-page order in sync when an entry's accordion is collapsed
 	// after an edit (name/priority/created date) — re-sorts that category.
 	initSortOnAccordionClose();
+
+	// Per-category filter controls (destination items) — independent per
+	// category and NOT persisted: every page load starts at "none" (shows
+	// everything, value subselect hidden). Items exist by now.
+	for (const category of SORTABLE_CATEGORIES) {
+		initCategoryFilterControl(category);
+	}
+
+	// Adding a brand-new entry should always reveal it, so clear that
+	// category's filter first (a fresh item can't match an active filter yet).
+	for (const category of SORTABLE_CATEGORIES) {
+		getID(`${category}-add`)?.addEventListener('click', () =>
+			resetCategoryDestinationFilter(category),
+		);
+	}
+}
+
+// ============================================================
+// "Recently added" save guard (existing destinations)
+// ============================================================
+
+/** A destination row flagged "Recently added" that pre-dates this edit. */
+type RecentlyAddedRef = { category: string; j: number };
+
+/** How the user answered the "Recently added" save prompt. */
+type RecentlyAddedChoice = 'keep' | 'clear';
+
+/**
+ * Ask whether to clear the "Recently added" mark on `count` previously-saved
+ * rows before this save. Resolves with the choice, or null when the user
+ * dismisses the dialog (X / Escape / Cancel) to abort the save entirely.
+ */
+function promptClearRecentlyAdded(count: number): Promise<RecentlyAddedChoice | null> {
+	return new Promise((resolve) => {
+		const properties = cloneObject(MESSAGE_PROPERTIES);
+		properties.title = translate('destination.recentSavePrompt.title');
+		properties.content = getRecentlyAddedPromptHTML(count);
+		properties.containers = getContainersInput();
+		// The X icon, the bottom Cancel button, and Escape all abort the save
+		// (resolve null), so the awaited flow never hangs on a bare close. The
+		// two option cards resolve with the chosen behavior.
+		properties.icons = [{ type: 'close', action: () => finish(null) }];
+		properties.buttons = [{ type: 'cancel', action: () => finish(null) }];
+		displayFullMessage(properties);
+
+		const finish = (choice: RecentlyAddedChoice | null) => () => {
+			closeMessage();
+			resolve(choice);
+		};
+		getID<HTMLButtonElement>('recent-save-keep')?.addEventListener('click', finish('keep'));
+		getID<HTMLButtonElement>('recent-save-clear')?.addEventListener('click', finish('clear'));
+	});
+}
+
+/** Content for the prompt — message plus the two option cards (keep vs clear). */
+function getRecentlyAddedPromptHTML(count: number): string {
+	return `
+	<div class="places-source">
+		<p class="places-linked-message">${escapeHtml(
+			translate('destination.recentSavePrompt.message', { count: String(count) }),
+		)}</p>
+		<div class="places-linked-options">
+			<button type="button" class="places-linked-option" id="recent-save-keep">
+				<span class="places-linked-option-title">${escapeHtml(
+					translate('destination.recentSavePrompt.keep'),
+				)}</span>
+				<span class="places-linked-option-caption">${escapeHtml(
+					translate('destination.recentSavePrompt.keep_hint'),
+				)}</span>
+			</button>
+			<button type="button" class="places-linked-option" id="recent-save-clear">
+				<span class="places-linked-option-title">${escapeHtml(
+					translate('destination.recentSavePrompt.clear'),
+				)}</span>
+				<span class="places-linked-option-caption">${escapeHtml(
+					translate('destination.recentSavePrompt.clear_hint'),
+				)}</span>
+			</button>
+		</div>
+	</div>`;
+}
+
+/**
+ * Rows that were already marked "Recently added" when the document loaded and
+ * are STILL checked in the form. Matched by Firestore id against the loaded
+ * document (`FIRESTORE_DESTINATIONS_DATA`), so rows the user flagged during
+ * this session — and brand-new, unsaved rows — are never treated as stale.
+ */
+function findPreviouslyNewRows(): RecentlyAddedRef[] {
+	const refs: RecentlyAddedRef[] = [];
+	if (!DOCUMENT_ID || !FIRESTORE_DESTINATIONS_DATA) return refs;
+
+	for (const category of SORTABLE_CATEGORIES) {
+		const loadedCategory = FIRESTORE_DESTINATIONS_DATA?.[category];
+		if (!loadedCategory) continue;
+
+		const childIDs = getChildIDs(`${category}-box`) || [];
+		for (const childID of childIDs) {
+			const j = getJ(childID);
+			const itemId = getID<HTMLInputElement>(`${category}-id-${j}`)?.value;
+			// Unsaved rows (no id yet) and rows that weren't flagged in the
+			// loaded document aren't "previously marked" — leave them alone.
+			if (!itemId || loadedCategory[itemId]?.isNew !== true) continue;
+			if (getID<HTMLInputElement>(`${category}-isNew-${j}`)?.checked) {
+				refs.push({ category, j });
+			}
+		}
+	}
+	return refs;
+}
+
+/**
+ * Uncheck the "Recently added" switch on the given rows and refresh their
+ * title icon. The switches themselves are NOT disabled — they stay fully
+ * interactive, so the user can re-flag a row after saving if they change
+ * their mind.
+ */
+function clearRecentlyAddedMarks(refs: RecentlyAddedRef[]): void {
+	for (const { category, j } of refs) {
+		const toggle = getID<HTMLInputElement>(`${category}-isNew-${j}`);
+		if (!toggle) continue;
+		toggle.checked = false;
+		updateDestinationsTitle(j, category);
+	}
+}
+
+/** Runs the actual document save (loading screen + data build + commit). */
+function runDestinationSave(): void {
+	startLoadingScreen();
+	const type = 'destinations';
+	const dataBuildingFunctions = [buildDestinationObject, updateTikTokLinks];
+
+	void setDocument({ type, dataBuildingFunctions });
+}
+
+/**
+ * Save entry point. On an existing destination whose previously-saved rows are
+ * still flagged "Recently added", ask whether to clear those old marks before
+ * committing — a fresh save is a natural point to stop showing them as new.
+ */
+async function handleDestinationSave(): Promise<void> {
+	if (DOCUMENT_ID) {
+		const previouslyNew = findPreviouslyNewRows();
+		if (previouslyNew.length > 0) {
+			const choice = await promptClearRecentlyAdded(previouslyNew.length);
+			if (choice === null) return; // dismissed — abort the save
+			if (choice === 'clear') clearRecentlyAddedMarks(previouslyNew);
+			// choice === 'keep' → save exactly as the form shows
+		}
+	}
+	runDestinationSave();
 }
 
 // ============================================================

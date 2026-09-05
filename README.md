@@ -47,9 +47,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 214   | 210  | 4         | 0       |
-| 🏆   | Feature     | F000 | 201   | 186  | 15        | 0       |
-| 📈   | Improvement | M000 | 233   | 211  | 22        | 0       |
+| 🐞   | Bug         | B000 | 216   | 212  | 4         | 0       |
+| 🏆   | Feature     | F000 | 203   | 188  | 15        | 0       |
+| 📈   | Improvement | M000 | 236   | 214  | 22        | 0       |
 | ⚔️   | Epic        | E000 | 53    | 44   | 7         | 2       |
 
 ## Backlog
@@ -89,6 +89,13 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M232:** Edit destination: re-sort on accordion close
 - 📈 **M233:** Minor visual adjustments on expenses page
 - 📈 **M231:** Adjust logo on top bar
+- 🐞 **B215:** Fix logo text offset
+- 📈 **M234:** Index: animated skeleton cards while loading from Firestore
+- 📈 **M235:** Index card images: shimmer loading + failure fallback
+- 🏆 **F202:** Edit destination: prompt to clear “Recently added” marks
+- 🐞 **B216:** Split combined comma/semicolon region values
+- 📈 **M236:** Reject image links that don't load
+- 🏆 **F203:** Edit destination: item filter and subfilter control
 
 ### August 2026
 

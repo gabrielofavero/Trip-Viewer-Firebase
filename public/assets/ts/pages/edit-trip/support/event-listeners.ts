@@ -145,9 +145,9 @@ export function loadEventListeners() {
 	);
 
 	// Image Validation in Customization module
-	getID('link-background').addEventListener('change', () => validateImageLink('link-background'));
-	getID('link-logo-light').addEventListener('change', () => validateImageLink('link-logo-light'));
-	getID('link-logo-dark').addEventListener('change', () => validateImageLink('link-logo-dark'));
+	getID('link-background').addEventListener('change', () => void validateImageLink('link-background'));
+	getID('link-logo-light').addEventListener('change', () => void validateImageLink('link-logo-light'));
+	getID('link-logo-dark').addEventListener('change', () => void validateImageLink('link-logo-dark'));
 
 	// Link Validation in Customization module
 	getID('link-attachments').addEventListener('change', () => validateLink('link-attachments'));
