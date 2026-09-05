@@ -5,7 +5,14 @@ import { disableScroll, getVisibility } from '../theme/visibility.js';
 import { getHTMLpage } from '../app/main.js';
 import { isStaticMode } from '../static-mode/static-mode.js';
 
-export let MESSAGE_MODAL_OPEN = false;
+// Use var (not let/const) to avoid TDZ errors from circular module
+// dependencies: loading.ts reads this flag inside startLoadingScreen(), which
+// some page entries (edit-trip, edit-destination, ...) call at module top
+// level before messages.ts's body has run (messages ↔ main ↔ loading cycle
+// defers it). A var binding is hoisted to `undefined` at link time, so an
+// early read sees falsy (no modal open yet) instead of throwing
+// "can't access lexical declaration 'MESSAGE_MODAL_OPEN' before initialization".
+export var MESSAGE_MODAL_OPEN = false;
 // Tracks whether the currently-open message modal can be dismissed via the X
 // close button / Escape. Mirrors `properties.closeButton`; kept as a module
 // var so handleMessageKeydown can enforce it without the modal properties.

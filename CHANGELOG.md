@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.28.7] - 2026-09-05
+
+- 🐞 **B221:** Edit-trip page ReferenceError on load
+
 ## [2.28.6] - 2026-09-05
 
 - 📈 **M237:** [DEV] Sync script: merge master instead of force
