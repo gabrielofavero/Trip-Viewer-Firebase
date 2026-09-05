@@ -317,7 +317,7 @@
 
 [data-theme="dark"] .category-tab.active {
 	background: rgba(var(--theme-color-rgb), 0.2);
-	color: var(--theme-color);
+	color: #dfdded;
 	font-weight: 700;
 }
 

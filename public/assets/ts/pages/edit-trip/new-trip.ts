@@ -42,6 +42,7 @@ import {
 	loadItineraryListeners,
 	updateItineraryTitle,
 	reloadItinerary,
+	clearItineraryDurationStash,
 } from './categories/itinerary-module/itinerary-module.js';
 import {
 	addAccommodationToItinerary,
@@ -62,6 +63,10 @@ import {
 
 export var DATAS = [];
 
+// Guard so re-rendering the schedule (page loads + trip-duration changes) does
+// not stack duplicate listeners on #itinerary-enabled.
+let itineraryToggleListenerAttached = false;
+
 const TODAY = getTodayFormatted();
 const TOMORROW = getTomorrowFormatted();
 
@@ -71,6 +76,9 @@ registerVisibilityExport('_addAccommodations', addAccommodations);
 registerVisibilityExport('_addDestinations', loadDestinations);
 registerVisibilityExport('_addItinerary', loadItinerarySchedule);
 export function loadNewTrip() {
+	// Fresh editing session — parked days from a previous unsaved new trip must
+	// not leak into this one.
+	clearItineraryDurationStash();
 	loadBasicFieldsNewTrip();
 	loadItinerarySchedule();
 	loadDestinations();
@@ -592,5 +600,8 @@ export function loadItinerarySchedule() {
 		loadItineraryListeners(j);
 	}
 
-	getID('itinerary-enabled').addEventListener('change', () => reloadItinerary());
+	if (!itineraryToggleListenerAttached) {
+		itineraryToggleListenerAttached = true;
+		getID('itinerary-enabled').addEventListener('change', () => reloadItinerary());
+	}
 }

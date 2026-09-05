@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.28.4] - 2026-09-05
+
+- 🐞 **B212:** Edit trip duration doesn't update itinerary days
+- 🐞 **B213:** Expenses empty category header keeps showing
+- 🐞 **B214:** Transport delete wrongly disables enabled toggle
+- 🏆 **F201:** Edit destination: wallpaper picker from saved destination images
+- 📈 **M232:** Edit destination: re-sort on accordion close
+- 📈 **M233:** Minor visual adjustments on expenses page
+- 📈 **M231:** Adjust logo on top bar
+
 ## [2.28.3] - 2026-09-04
 
 - 📈 **M226:** View page: remove leftover shadows, dest box bg

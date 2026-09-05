@@ -207,49 +207,127 @@ const DESTINATION_SORT_MODES = ['createdAsc', 'createdDesc', 'alpha', 'priority'
 /** Default sort mode — creation date, oldest first (matches load order). */
 const DESTINATION_SORT_DEFAULT = 'createdAsc';
 
+/** FLIP slide duration (ms) when items are re-sorted after an accordion closes. */
+const DESTINATION_SORT_FLIP_MS = 250;
+
 /** Priority rank for sorting — higher is more important; unset goes last. */
 function getPriorityRank(rating: string): number {
 	const value = parseInt(rating, 10);
 	return Number.isFinite(value) && value >= 1 && value <= 5 ? value : 0;
 }
 
-/** Numeric createdAt (ms) for an entry; 0 when missing. */
+/** Numeric createdAt (ms) for an entry; +Infinity when missing (unsaved = newest). */
 function getEntryDateValue(category: string, j: number): number {
 	const value = getID<HTMLInputElement>(`${category}-createdAt-${j}`)?.value;
-	return value ? new Date(value).getTime() : 0;
+	return value ? new Date(value).getTime() : Number.POSITIVE_INFINITY;
+}
+
+/** Compare two category items under the given sort mode. */
+function compareCategoryItems(category: string, a: HTMLElement, b: HTMLElement, mode: string): number {
+	const jA = getJ(a.id);
+	const jB = getJ(b.id);
+
+	switch (mode) {
+		case 'createdDesc':
+			return getEntryDateValue(category, jB) - getEntryDateValue(category, jA);
+		case 'createdAsc':
+			return getEntryDateValue(category, jA) - getEntryDateValue(category, jB);
+		case 'alpha': {
+			const nameA = getID<HTMLInputElement>(`${category}-name-${jA}`)?.value ?? '';
+			const nameB = getID<HTMLInputElement>(`${category}-name-${jB}`)?.value ?? '';
+			return nameA.localeCompare(nameB);
+		}
+		case 'priority':
+			return (
+				getPriorityRank(getID<HTMLSelectElement>(`${category}-rating-${jB}`)?.value ?? '') -
+				getPriorityRank(getID<HTMLSelectElement>(`${category}-rating-${jA}`)?.value ?? '')
+			);
+		default:
+			return 0;
+	}
+}
+
+/**
+ * FLIP reorder: reorder `box`'s accordion items by `mode`, then slide each
+ * item that changed position to its new spot. Used after an entry's accordion
+ * collapses so edits (renames, priorities) visibly fall into place. Skips the
+ * animation when the user prefers reduced motion.
+ */
+function reorderCategoryWithFlip(box: HTMLElement, category: string, mode: string): void {
+	const children = Array.from(box.children) as HTMLElement[];
+
+	// Clear any stale transform/transition from a previously interrupted FLIP.
+	for (const item of children) {
+		if (item.style.transform || item.style.transition) {
+			item.style.transform = '';
+			item.style.transition = '';
+		}
+	}
+
+	const ordered = [...children].sort((a, b) => compareCategoryItems(category, a, b, mode));
+
+	// Nothing moved — no animation needed.
+	const alreadyOrdered = ordered.every((item, index) => item === children[index]);
+	if (alreadyOrdered) return;
+
+	// Reduced motion: still reorder, just skip the slide.
+	if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		for (const item of ordered) box.appendChild(item);
+		return;
+	}
+
+	// First: snapshot where each item sits before the DOM reorder.
+	const boxTop = box.getBoundingClientRect().top;
+	const previousTops = new Map<HTMLElement, number>();
+	for (const item of children) {
+		previousTops.set(item, item.getBoundingClientRect().top - boxTop);
+	}
+
+	// Last: apply the reorder and measure the new positions.
+	for (const item of ordered) {
+		box.appendChild(item);
+	}
+
+	// Invert: translate each moved item back to its previous spot...
+	const moved: HTMLElement[] = [];
+	for (const item of ordered) {
+		const previousTop = previousTops.get(item) ?? 0;
+		const deltaY = previousTop - (item.getBoundingClientRect().top - boxTop);
+		if (Math.abs(deltaY) < 0.5) continue;
+		moved.push(item);
+		item.style.transition = 'none';
+		item.style.transform = `translateY(${deltaY}px)`;
+	}
+
+	if (!moved.length) return;
+
+	// ...force a reflow so the inverted transforms are committed first...
+	void box.offsetHeight;
+
+	// ...then Play: animate each item back to its natural position.
+	for (const item of moved) {
+		item.style.transition = `transform ${DESTINATION_SORT_FLIP_MS}ms ease`;
+		item.style.transform = '';
+		item.addEventListener('transitionend', function onReorderEnd(event) {
+			if (event.propertyName !== 'transform') return;
+			item.removeEventListener('transitionend', onReorderEnd);
+			item.style.transition = '';
+		});
+	}
 }
 
 /** Reorder a category's accordion items by the selected mode (visual only). */
-function sortDestinationCategory(category: string, mode: string): void {
+function sortDestinationCategory(category: string, mode: string, animate = false): void {
 	const box = getID(`${category}-box`);
 	if (!box) return;
+
+	if (animate) {
+		reorderCategoryWithFlip(box, category, mode);
+		return;
+	}
+
 	const items = Array.from(box.children) as HTMLElement[];
-
-	items.sort((a, b) => {
-		const jA = getJ(a.id);
-		const jB = getJ(b.id);
-
-		switch (mode) {
-			case 'createdDesc':
-				return getEntryDateValue(category, jB) - getEntryDateValue(category, jA);
-			case 'createdAsc':
-				return getEntryDateValue(category, jA) - getEntryDateValue(category, jB);
-			case 'alpha': {
-				const nameA = getID<HTMLInputElement>(`${category}-name-${jA}`)?.value ?? '';
-				const nameB = getID<HTMLInputElement>(`${category}-name-${jB}`)?.value ?? '';
-				return nameA.localeCompare(nameB);
-			}
-			case 'priority':
-				return (
-					getPriorityRank(
-						getID<HTMLSelectElement>(`${category}-rating-${jB}`)?.value ?? '',
-					) - getPriorityRank(getID<HTMLSelectElement>(`${category}-rating-${jA}`)?.value ?? '')
-				);
-			default:
-				return 0;
-		}
-	});
-
+	items.sort((a, b) => compareCategoryItems(category, a, b, mode));
 	for (const item of items) {
 		box.appendChild(item);
 	}
@@ -295,6 +373,40 @@ function initCategorySort(category: string): void {
 	const select = getID<HTMLSelectElement>(`${category}-sort`);
 	if (!select) return;
 	select.addEventListener('change', () => setDestinationSortMode(select.value));
+}
+
+/**
+ * Category of a collapsed element (`collapse-<category>-<j>`) when it belongs
+ * to a sortable destination box; '' otherwise.
+ */
+function getSortableCategoryFromCollapse(collapseEl: HTMLElement): string {
+	const match = /^collapse-(.+)-(\d+)$/.exec(collapseEl.id || '');
+	if (!match) return '';
+	return SORTABLE_CATEGORIES.includes(match[1]) ? match[1] : '';
+}
+
+/**
+ * Re-sort a category after one of its accordions collapses, so values edited
+ * while the entry was expanded (name, priority, creation date) fall into
+ * place. When the whole box is quiet (nothing else collapsing/expanding) the
+ * items slide to their new spots (FLIP); otherwise the reorder happens
+ * instantly to avoid fighting an in-progress collapse transition.
+ */
+function initSortOnAccordionClose(): void {
+	document.addEventListener('hidden.bs.collapse', (event) => {
+		const collapseEl = event.target as HTMLElement | null;
+		if (!collapseEl) return;
+		const category = getSortableCategoryFromCollapse(collapseEl);
+		if (!category) return;
+
+		const box = getID(`${category}-box`);
+		if (!box) return;
+
+		const mode =
+			getID<HTMLSelectElement>(`${category}-sort`)?.value || loadDestinationSortMode();
+		const animatingSibling = box.querySelector('.collapsing, .show');
+		sortDestinationCategory(category, mode, !animatingSibling);
+	});
 }
 
 function loadEventListeners() {
@@ -384,6 +496,10 @@ function loadEventListeners() {
 		initCategorySort(category);
 	}
 	applyDestinationSortMode(loadDestinationSortMode());
+
+	// Keep the on-page order in sync when an entry's accordion is collapsed
+	// after an edit (name/priority/created date) — re-sorts that category.
+	initSortOnAccordionClose();
 }
 
 // ============================================================

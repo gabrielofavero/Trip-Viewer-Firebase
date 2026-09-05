@@ -46,21 +46,32 @@ export async function loadExpenseCurrencies() {
 
 export function loadCurrenciesTab() {
 	const currencyTab = getID('tab-currencies');
+	const currencies = CURRENCIES.summary;
 	currencyTab.innerHTML = '';
-	currencyTab.style.display = CURRENCIES.summary.length > 1 ? '' : 'none';
+	currencyTab.style.display = currencies.length > 1 ? '' : 'none';
 
-	for (let j = 1; j <= CURRENCIES.summary.length; j++) {
-		const checked = CURRENCIES.summary[j - 1] === CURRENT_CURRENCY ? 'checked' : '';
+	for (let j = 1; j <= currencies.length; j++) {
+		const checked = currencies[j - 1] === CURRENT_CURRENCY ? 'checked' : '';
 		currencyTab.innerHTML += `<input type="radio" id="radio-currency-${j}" name="tabs-currencies" ${checked} />`;
-		currencyTab.innerHTML += `<label class="tab-mini" for="radio-currency-${j}">${CURRENCIES.summary[j - 1]}</label>`;
+		currencyTab.innerHTML += `<label class="tab" for="radio-currency-${j}">${currencies[j - 1]}</label>`;
 	}
 
-	currencyTab.innerHTML += '<span class="glider-mini"></span>';
+	currencyTab.innerHTML += '<span class="glider"></span>';
+
+	// Currency tabs render one .tab label per currency (equal flex columns), so
+	// the .glider width must match a single tab for the translateX(100%) steps
+	// to land exactly one tab; the count varies. #tab-currencies shares the
+	// unified pill styling of #tab-expenses (expenses.css).
+	setCSSRule(
+		'#tab-currencies .glider',
+		'width',
+		`calc((100% - 0.5rem) / ${currencies.length})`,
+	);
 
 	const childs = getChildIDs('tab-currencies');
 	for (let i = 0; i < childs.length; i++) {
 		setCSSRule(
-			`input[id="${childs[i]}"]:checked~.glider-mini`,
+			`#tab-currencies input[id="${childs[i]}"]:checked~.glider`,
 			'transform',
 			`translateX(${i * 100}%)`,
 		);

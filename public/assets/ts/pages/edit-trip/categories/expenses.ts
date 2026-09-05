@@ -651,7 +651,14 @@ function updateInnerExpenses() {
 }
 
 export function deleteInnerExpense(category, type, index) {
-	INNER_EXPENSES[category].find((typeObj) => typeObj.type === type).expenses.splice(index, 1);
+	const typeObj = INNER_EXPENSES[category]?.find((entry) => entry.type === type);
+	if (!typeObj) return;
+	typeObj.expenses.splice(index, 1);
+	// Drop the subgroup when its last item was removed so the category header
+	// (e.g. "Transportation") no longer shows as an empty $0,00 row.
+	if (typeObj.expenses.length === 0) {
+		INNER_EXPENSES[category] = INNER_EXPENSES[category].filter((entry) => entry !== typeObj);
+	}
 	loadExpensesHTML();
 	closeMessage();
 }

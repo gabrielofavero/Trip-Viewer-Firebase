@@ -6,6 +6,7 @@ import { setProtectedDataAndExpenses } from './categories/basic-data/set-protect
 import {
 	getState,
 	DOCUMENT_ID,
+	SUCCESSFUL_SAVE,
 	FIRESTORE_NEW_DATA,
 	setFirestoreNewData,
 } from '../../data/state.js';
@@ -15,7 +16,7 @@ import { getUID } from '../../data/firebase/auth.js';
 import { deleteUnusedImages } from '../../data/firebase/storage.js';
 import { translate } from '../../i18n/translation.js';
 import { getGalleryObject } from './categories/gallery.js';
-import { getItineraryArray } from './categories/itinerary-module/itinerary-module.js';
+import { getItineraryArray, clearItineraryDurationStash } from './categories/itinerary-module/itinerary-module.js';
 import { getDestinationsArray } from './categories/destination.js';
 import {
 	getAccommodationArray,
@@ -343,4 +344,10 @@ export async function setTripData() {
 	const batchFunctions = [setProtectedDataAndExpenses, writeTripSubcollections];
 
 	await setDocument({ type, checks, dataBuildingFunctions, batchFunctions });
+
+	// A successful save is the point of no return for trip-duration edits:
+	// parked (removed) itinerary days are now gone for good, so drop the stash.
+	if (SUCCESSFUL_SAVE) {
+		clearItineraryDurationStash();
+	}
 }
