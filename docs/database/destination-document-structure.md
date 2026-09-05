@@ -83,7 +83,9 @@ interface DestinationEntry {
   emoji:       string;   // emoji icon for the entry (e.g. "🍴", "🥙", "☕🧇")
   description: Description;  // multi-language description (see below)
   website:     string;   // official website URL, or empty string
-  map:         string;   // Google Maps URL
+  map:         string;   // single Google Maps URL (used when <2 regions or strategy is "single")
+  mapsPerRegion?: boolean;  // optional — "one map link per region" mode (2+ regions only)
+  regionMaps?:  Record<string, string>;  // optional — region name → Google Maps URL (per-region mode)
   placeAPI:    PlaceAPI;  // normalized Places API data (see below)
   instagram:   string;   // Instagram profile URL, or empty string
   regions:     string[]; // one or more neighborhoods/areas within the destination (e.g. ["Ipanema", "Botafogo"])
@@ -93,6 +95,15 @@ interface DestinationEntry {
   images:      EntryImage[];  // images attached to this place (see below)
 }
 ```
+
+> **Note — map links (F204):** A place keeps a **single** `map` link by default. When it has
+> **2+ regions**, the owner can instead choose **one map link per region**
+> (`mapsPerRegion: true`), storing each region's link in `regionMaps` (keyed by the
+> region value, only non-empty links; `map` then holds the first region's link for
+> backward compatibility). Viewer behavior: no links → no map action; exactly one
+> link (single mode, or per-region with a single region filled) → opens directly;
+> 2+ region links → the map action opens a small region picker. Existing documents
+> need no migration — the default single-link path is unchanged.
 
 > **Note:** The `placeAPI` field may be absent in entries created before August 2026. Always guard with `typeof entry.placeAPI?.id === 'string'` or optional chaining. Migration 17 backfills missing `placeAPI` with an empty template.
 >

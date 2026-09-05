@@ -1,5 +1,10 @@
 import { getID, getNextJ } from '../../utils/dom.js';
 import { registerRegionSelect } from '../../ui/region-select.js';
+import {
+	getEntryMapLinksRefs,
+	initMapLinksEditor,
+	MapLinksEditorState,
+} from '../../ui/map-links-editor.js';
 import { translate } from '../../i18n/translation.js';
 import { getNewSvg, GOOGLE_MAPS_ICON } from '../../theme/icons.js';
 import { PERMISSIONS } from '../../data/firebase/storage.js';
@@ -60,6 +65,32 @@ function hasLinkedPlace(category: string, j: number): boolean {
 	// "Linked" = refreshable: a Google Place id (Places API) OR a local scrape
 	// link (gmaps scraper import — may have a blank id but stays refreshable).
 	return Boolean(entry?.placeAPI?.id || entry?.placeAPI?.sourceUrl);
+}
+
+// ======= Map strategy + per-region map links (F204) =======
+
+/**
+ * Wire the "Map strategy" editor for an entry (single link vs one link per
+ * region). Called when an entry is added and again when an existing entry is
+ * loaded (init is idempotent — it unbinds/re-binds on the same key).
+ */
+export function initEntryMapLinks(category: string, j: number, initial: MapLinksEditorState = {}): void {
+	initMapLinksEditor(getEntryMapLinksRefs(category, j), initial);
+}
+
+/**
+ * Field order: Region sits right after Photos and before Map (F204). The
+ * region adder is rendered lower in the template, so on every entry build the
+ * region group is moved above the map group in the DOM.
+ */
+function placeRegionBeforeMap(category: string, j: number): void {
+	const regionGroup = getID(`${category}-regions-${j}`)?.closest('.nice-form-group');
+	const mapGroup = getID(`${category}-map-${j}`)?.closest('.nice-form-group');
+	if (!regionGroup || !mapGroup || regionGroup === mapGroup) return;
+	const parent = regionGroup.parentNode;
+	if (parent && parent === mapGroup.parentNode) {
+		parent.insertBefore(regionGroup, mapGroup);
+	}
 }
 
 // Adicionar
@@ -128,9 +159,29 @@ export function addRestaurants() {
 
           <div class="nice-form-group">
             <label>${translate('labels.customization.links.map')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <input id="restaurants-map-${j}" type="url" placeholder="${translate('destination.restaurants.placeholders.map')}" value=""
-              class="icon-right" />
-            <div class='caption'>${translate('destination.tooltips.map')}</div>
+            <div class="map-strategy-row" id="restaurants-map-strategy-row-${j}" style="display: none;">
+              <label class="map-strategy-row-label" for="restaurants-map-strategy-${j}">${translate('destination.mapStrategy.title')}</label>
+              <select id="restaurants-map-strategy-${j}" class="edit-select">
+                <option value="single">${translate('destination.mapStrategy.single')}</option>
+                <option value="per-region">${translate('destination.mapStrategy.perRegion')}</option>
+              </select>
+            </div>
+
+            <div id="restaurants-single-map-box-${j}">
+              <input id="restaurants-map-${j}" type="url" placeholder="${translate('destination.restaurants.placeholders.map')}" value=""
+                class="icon-right" />
+              <div class='caption'>${translate('destination.tooltips.map')}</div>
+            </div>
+
+            <div id="restaurants-per-region-map-box-${j}" class="per-region-map-box" style="display: none;">
+              <button type="button" id="restaurants-per-region-map-button-${j}" class="btn input-button">
+                <i class="iconify" data-icon="f7:map"></i>
+                <span>${translate('destination.mapStrategy.manageButton')}</span>
+              </button>
+              <div class="caption per-region-map-summary" id="restaurants-map-strategy-summary-${j}"></div>
+            </div>
+
+            <input type="hidden" id="restaurants-region-maps-${j}" />
           </div>
   
           <div class="nice-form-group">
@@ -208,6 +259,8 @@ export function addRestaurants() {
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	registerRegionSelect(`restaurants-region-select-${j}`, `restaurants-region-${j}`);
+	placeRegionBeforeMap(category, j);
+	initEntryMapLinks(category, j);
 }
 
 export function addSnacks() {
@@ -274,9 +327,29 @@ export function addSnacks() {
 
           <div class="nice-form-group">
             <label>${translate('labels.customization.links.map')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <input id="snacks-map-${j}" type="url" placeholder="${translate('destination.snacks.placeholders.map')}" value=""
-              class="icon-right" />
-            <div class='caption'>${translate('destination.tooltips.map')}</div>
+            <div class="map-strategy-row" id="snacks-map-strategy-row-${j}" style="display: none;">
+              <label class="map-strategy-row-label" for="snacks-map-strategy-${j}">${translate('destination.mapStrategy.title')}</label>
+              <select id="snacks-map-strategy-${j}" class="edit-select">
+                <option value="single">${translate('destination.mapStrategy.single')}</option>
+                <option value="per-region">${translate('destination.mapStrategy.perRegion')}</option>
+              </select>
+            </div>
+
+            <div id="snacks-single-map-box-${j}">
+              <input id="snacks-map-${j}" type="url" placeholder="${translate('destination.snacks.placeholders.map')}" value=""
+                class="icon-right" />
+              <div class='caption'>${translate('destination.tooltips.map')}</div>
+            </div>
+
+            <div id="snacks-per-region-map-box-${j}" class="per-region-map-box" style="display: none;">
+              <button type="button" id="snacks-per-region-map-button-${j}" class="btn input-button">
+                <i class="iconify" data-icon="f7:map"></i>
+                <span>${translate('destination.mapStrategy.manageButton')}</span>
+              </button>
+              <div class="caption per-region-map-summary" id="snacks-map-strategy-summary-${j}"></div>
+            </div>
+
+            <input type="hidden" id="snacks-region-maps-${j}" />
           </div>
 
           <div class="nice-form-group">
@@ -355,6 +428,8 @@ export function addSnacks() {
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	registerRegionSelect(`snacks-region-select-${j}`, `snacks-region-${j}`);
+	placeRegionBeforeMap(category, j);
+	initEntryMapLinks(category, j);
 }
 
 export function addNightlife() {
@@ -421,9 +496,29 @@ export function addNightlife() {
 
           <div class="nice-form-group">
             <label>${translate('labels.customization.links.map')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <input id="nightlife-map-${j}" type="url" placeholder="${translate('destination.nightlife.placeholders.map')}" value=""
-              class="icon-right" />
-            <div class='caption'>${translate('destination.tooltips.map')}</div>
+            <div class="map-strategy-row" id="nightlife-map-strategy-row-${j}" style="display: none;">
+              <label class="map-strategy-row-label" for="nightlife-map-strategy-${j}">${translate('destination.mapStrategy.title')}</label>
+              <select id="nightlife-map-strategy-${j}" class="edit-select">
+                <option value="single">${translate('destination.mapStrategy.single')}</option>
+                <option value="per-region">${translate('destination.mapStrategy.perRegion')}</option>
+              </select>
+            </div>
+
+            <div id="nightlife-single-map-box-${j}">
+              <input id="nightlife-map-${j}" type="url" placeholder="${translate('destination.nightlife.placeholders.map')}" value=""
+                class="icon-right" />
+              <div class='caption'>${translate('destination.tooltips.map')}</div>
+            </div>
+
+            <div id="nightlife-per-region-map-box-${j}" class="per-region-map-box" style="display: none;">
+              <button type="button" id="nightlife-per-region-map-button-${j}" class="btn input-button">
+                <i class="iconify" data-icon="f7:map"></i>
+                <span>${translate('destination.mapStrategy.manageButton')}</span>
+              </button>
+              <div class="caption per-region-map-summary" id="nightlife-map-strategy-summary-${j}"></div>
+            </div>
+
+            <input type="hidden" id="nightlife-region-maps-${j}" />
           </div>
   
           <div class="nice-form-group">
@@ -501,6 +596,8 @@ export function addNightlife() {
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	registerRegionSelect(`nightlife-region-select-${j}`, `nightlife-region-${j}`);
+	placeRegionBeforeMap(category, j);
+	initEntryMapLinks(category, j);
 }
 
 export function addTourism() {
@@ -567,9 +664,29 @@ export function addTourism() {
 
           <div class="nice-form-group">
             <label>${translate('labels.customization.links.map')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <input id="tourism-map-${j}" type="url" placeholder="${translate('destination.tourism.placeholders.map')}" value=""
-              class="icon-right" />
-            <div class='caption'>${translate('destination.tooltips.map')}</div>
+            <div class="map-strategy-row" id="tourism-map-strategy-row-${j}" style="display: none;">
+              <label class="map-strategy-row-label" for="tourism-map-strategy-${j}">${translate('destination.mapStrategy.title')}</label>
+              <select id="tourism-map-strategy-${j}" class="edit-select">
+                <option value="single">${translate('destination.mapStrategy.single')}</option>
+                <option value="per-region">${translate('destination.mapStrategy.perRegion')}</option>
+              </select>
+            </div>
+
+            <div id="tourism-single-map-box-${j}">
+              <input id="tourism-map-${j}" type="url" placeholder="${translate('destination.tourism.placeholders.map')}" value=""
+                class="icon-right" />
+              <div class='caption'>${translate('destination.tooltips.map')}</div>
+            </div>
+
+            <div id="tourism-per-region-map-box-${j}" class="per-region-map-box" style="display: none;">
+              <button type="button" id="tourism-per-region-map-button-${j}" class="btn input-button">
+                <i class="iconify" data-icon="f7:map"></i>
+                <span>${translate('destination.mapStrategy.manageButton')}</span>
+              </button>
+              <div class="caption per-region-map-summary" id="tourism-map-strategy-summary-${j}"></div>
+            </div>
+
+            <input type="hidden" id="tourism-region-maps-${j}" />
           </div>
   
           <div class="nice-form-group">
@@ -647,6 +764,8 @@ export function addTourism() {
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	registerRegionSelect(`tourism-region-select-${j}`, `tourism-region-${j}`);
+	placeRegionBeforeMap(category, j);
+	initEntryMapLinks(category, j);
 }
 
 export function addShopping() {
@@ -714,9 +833,29 @@ export function addShopping() {
 
           <div class="nice-form-group">
             <label>${translate('labels.customization.links.map')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <input id="shopping-map-${j}" type="url" placeholder="${translate('destination.shopping.placeholders.map')}" value=""
-              class="icon-right" />
-            <div class='caption'>${translate('destination.tooltips.map')}</div>
+            <div class="map-strategy-row" id="shopping-map-strategy-row-${j}" style="display: none;">
+              <label class="map-strategy-row-label" for="shopping-map-strategy-${j}">${translate('destination.mapStrategy.title')}</label>
+              <select id="shopping-map-strategy-${j}" class="edit-select">
+                <option value="single">${translate('destination.mapStrategy.single')}</option>
+                <option value="per-region">${translate('destination.mapStrategy.perRegion')}</option>
+              </select>
+            </div>
+
+            <div id="shopping-single-map-box-${j}">
+              <input id="shopping-map-${j}" type="url" placeholder="${translate('destination.shopping.placeholders.map')}" value=""
+                class="icon-right" />
+              <div class='caption'>${translate('destination.tooltips.map')}</div>
+            </div>
+
+            <div id="shopping-per-region-map-box-${j}" class="per-region-map-box" style="display: none;">
+              <button type="button" id="shopping-per-region-map-button-${j}" class="btn input-button">
+                <i class="iconify" data-icon="f7:map"></i>
+                <span>${translate('destination.mapStrategy.manageButton')}</span>
+              </button>
+              <div class="caption per-region-map-summary" id="shopping-map-strategy-summary-${j}"></div>
+            </div>
+
+            <input type="hidden" id="shopping-region-maps-${j}" />
           </div>
   
           <div class="nice-form-group">
@@ -795,6 +934,8 @@ export function addShopping() {
 	addDestinationsListeners(category, j);
 	addListenerToRemoveDestination(category, j);
 	registerRegionSelect(`shopping-region-select-${j}`, `shopping-region-${j}`);
+	placeRegionBeforeMap(category, j);
+	initEntryMapLinks(category, j);
 }
 
 function addCreatedDate(category, j) {

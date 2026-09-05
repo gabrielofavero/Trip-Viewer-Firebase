@@ -12,6 +12,7 @@ import {
 	animateDialogClose,
 	DIALOG_LEAVE_CLASS,
 } from '../../../utils/messages.js';
+import { destroyMapLinksEditor } from '../../../ui/map-links-editor.js';
 import { getPlanned } from '../categories.js';
 import { getDestinationID, getItem } from '../mount.js';
 import { getDestinationsAccordionBodyHTML, getEditHTML } from './content.js';
@@ -70,6 +71,8 @@ export function renderDialogView(): void {
 	const id = OPEN_ID;
 	const item = OPEN_ITEM;
 	const planned = getPlanned(id);
+	// The edit form (with its map-strategy controller) is gone — release it.
+	destroyMapLinksEditor(`edit-${j}`);
 	getID('destination-dialog-content').innerHTML = getDialogViewHTML({ j, id, item, planned });
 
 	// Restore the owner-only pencil (hidden while the edit form was open).
@@ -81,7 +84,10 @@ export function renderDialogView(): void {
 }
 
 export function closeDestinationDialog(): void {
-	if (OPEN_J != null) closeDialogMedia(OPEN_J);
+	if (OPEN_J != null) {
+		closeDialogMedia(OPEN_J);
+		destroyMapLinksEditor(`edit-${OPEN_J}`);
+	}
 
 	const dialog = getID('destination-dialog');
 	if (!dialog || dialog.style.display === 'none') {

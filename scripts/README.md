@@ -42,7 +42,7 @@ Utility scripts for the Trip Viewer Firebase project.
 | Script | Description |
 |--------|-------------|
 | `readme.py` | README.md maintenance. Analyzes task distribution, validates task IDs and emoji consistency, detects missing/duplicate tasks. |
-| `sync.py` | Force-syncs `master` branch to match `develop`. Shows confirmation before proceeding. |
+| `sync.py` | Merge-syncs `master` branch to match `develop`; on conflicts asks to force or resolve manually. |
 
 ### `export-maps-data/` — Place Data Export
 

@@ -20,6 +20,7 @@ import { addNightlife } from './new-destination.js';
 import { addTourism } from './new-destination.js';
 import { updatePlacesFetchButtonLabel } from './new-destination.js';
 import { updateRatingBadge } from './new-destination.js';
+import { initEntryMapLinks } from './new-destination.js';
 
 // Existing Destination
 export function populateExistingDestinationForm() {
@@ -172,6 +173,13 @@ export function addDestinationHTML(category, j, item) {
 
 	DESTINATION_IMAGES[`${category}-${j}`] = Array.isArray(item.images) ? item.images : [];
 	renderDestinationImageCarousel(category, j);
+
+	// Restore the map strategy (single link vs one link per region).
+	initEntryMapLinks(category, j, {
+		mapsPerRegion: item.mapsPerRegion,
+		regionMaps: item.regionMaps,
+		map: item.map || '',
+	});
 }
 
 function loadMapData() {

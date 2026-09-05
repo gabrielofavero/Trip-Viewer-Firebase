@@ -479,8 +479,20 @@ export interface PlaceItem {
 	rating: string;
 	/** was "valor" */
 	price: string;
-	/** was "mapa" */
+	/** was "mapa" — the single map link (used when <2 regions or strategy is single) */
 	map: string;
+	/**
+	 * Optional: "one map link per region" (F204). When true AND the entry has
+	 * 2+ regions, `regionMaps` holds one Google Maps URL per region and the
+	 * viewer shows a region picker next to the map action. Absent/false =
+	 * single `map` link (legacy/default behavior).
+	 */
+	mapsPerRegion?: boolean;
+	/**
+	 * Region name → Google Maps URL. Only populated when `mapsPerRegion` is
+	 * true; keys are the entry's current `regions` values.
+	 */
+	regionMaps?: Record<string, string>;
 	website: string;
 	/**
 	 * was "regiao" (string) — one or more neighborhoods/areas within the

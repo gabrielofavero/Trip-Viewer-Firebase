@@ -335,6 +335,16 @@
 			"map": "Google Maps or Apple Maps",
 			"video": "YouTube, TikTok or Instagram Reels"
 		},
+		"mapStrategy": {
+			"title": "Map strategy",
+			"single": "Use a single map link",
+			"perRegion": "One map link per region",
+			"manageButton": "Set map links per region",
+			"perRegionTitle": "Map links per region",
+			"perRegionCaption": "Set a different Google Maps link for each region.",
+			"urlPlaceholder": "Paste a Google Maps link",
+			"summary": "{{regions}} regions · {{links}} with a link"
+		},
 		"restaurants": {
 			"title": "Restaurants",
 			"title_singular": "Restaurant",

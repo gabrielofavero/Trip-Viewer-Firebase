@@ -59,6 +59,48 @@ export function getDescriptionValue(item: PlaceItem): string {
 	return item.description?.[lang] || ''; // was "descricao"
 }
 
+// ======= Map links (single vs one-per-region) =======
+
+export interface EntryMapLink {
+	/** Region label ('' when the entry has none). */
+	region: string;
+	/** Non-empty Google Maps URL. */
+	url: string;
+}
+
+/**
+ * The entry's map links for display (F204 — "multi maps links").
+ *
+ * - Single map link (`map`, default/legacy) → one link whose label is the
+ *   entry's first region (or blank when there are no regions).
+ * - One link per region (`mapsPerRegion` with 2+ regions) → one link per
+ *   entry region that actually has a non-empty `regionMaps[region]`.
+ *
+ * Returns 0, 1, or many links; the caller decides whether to show nothing,
+ * open the single link directly, or offer a region picker.
+ */
+export function getEntryMapLinks(item: PlaceItem | null | undefined): EntryMapLink[] {
+	if (!item) return [];
+	if (item.mapsPerRegion === true && Array.isArray(item.regions)) {
+		const links: EntryMapLink[] = [];
+		for (const region of item.regions) {
+			const url = (item.regionMaps?.[region] ?? '').trim();
+			if (!url) continue;
+			links.push({ region: region || '', url });
+		}
+		return links;
+	}
+	const single = (item.map ?? '').trim();
+	if (!single) return [];
+	return [
+		{
+			region:
+				Array.isArray(item.regions) && item.regions.length > 0 ? item.regions[0] : '',
+			url: single,
+		},
+	];
+}
+
 // ======= Price Bucket Logic =======
 
 export function getPriceBucket(value: number): string {

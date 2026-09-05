@@ -89,7 +89,23 @@ export function getEditHTML(j) {
             <div class="edit-double-container">
                 <i class="iconify color-icon edit" data-icon="f7:map"></i>
                 <div class="edit-column-container">
-                    <input id="edit-map-${j}" class="edit-input" type="text" placeholder="${translate('labels.customization.links.map')} (${translate('labels.optional')})" />
+                    <div id="edit-map-strategy-row-${j}" class="map-strategy-row edit-map-strategy-row" style="display: none;">
+                      <select id="edit-map-strategy-${j}" class="edit-input">
+                        <option value="single">${translate('destination.mapStrategy.single')}</option>
+                        <option value="per-region">${translate('destination.mapStrategy.perRegion')}</option>
+                      </select>
+                    </div>
+                    <div id="edit-single-map-box-${j}">
+                      <input id="edit-map-${j}" class="edit-input" type="text" placeholder="${translate('labels.customization.links.map')} (${translate('labels.optional')})" />
+                    </div>
+                    <div id="edit-per-region-map-box-${j}" class="per-region-map-box edit-per-region-map-box" style="display: none;">
+                      <button type="button" id="edit-per-region-map-button-${j}" class="map-region-manage-btn">
+                        <i class="iconify" data-icon="f7:map"></i>
+                        <span>${translate('destination.mapStrategy.manageButton')}</span>
+                      </button>
+                      <div class="caption per-region-map-summary" id="edit-map-strategy-summary-${j}"></div>
+                    </div>
+                    <input type="hidden" id="edit-region-maps-${j}" />
                 </div>
             </div>
             <div class="edit-double-container">

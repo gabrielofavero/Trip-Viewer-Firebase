@@ -83,6 +83,7 @@ export function openDialogMedia(j: number): void {
 			clickable: true,
 		},
 	});
+	wireHoverPause(j);
 }
 
 function pauseAutoplay(j: number): void {
@@ -91,6 +92,23 @@ function pauseAutoplay(j: number): void {
 
 function resumeAutoplay(j: number): void {
 	SWIPERS[j]?.autoplay?.start();
+}
+
+/**
+ * Freeze the carousel while the pointer sits on the image. Swiper's own
+ * `pauseOnMouseEnter` is unreliable here (Swiper 7), so pause/resume explicitly
+ * on the swiper host — otherwise the photo can rotate out from under the cursor
+ * while the user is aiming at the zoom button. If the pointer is already over
+ * the media when the dialog opens (e.g. the user just clicked the card), freeze
+ * it right away instead of waiting for a `mouseenter`.
+ */
+function wireHoverPause(j: number): void {
+	const swiperEl = getID(`dest-dialog-media-${j}-swiper`);
+	if (!swiperEl) return;
+
+	swiperEl.addEventListener('mouseenter', () => pauseAutoplay(j));
+	swiperEl.addEventListener('mouseleave', () => resumeAutoplay(j));
+	if (swiperEl.matches(':hover')) pauseAutoplay(j);
 }
 
 export function closeDialogMedia(j: number): void {

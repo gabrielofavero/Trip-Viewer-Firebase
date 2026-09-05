@@ -12,6 +12,7 @@ import { translate } from '../../i18n/translation.js';
 import { getDescription } from './categories/description.js';
 import { getDestinationImages } from './categories/image.js';
 import { getRegionPills } from '../../ui/region-select.js';
+import { getEntryMapLinksRefs, readMapLinksEditor } from '../../ui/map-links-editor.js';
 import {
 	FIRESTORE_DESTINATIONS_DATA,
 	FIRESTORE_DESTINATIONS_NEW_DATA,
@@ -94,7 +95,12 @@ function buildDestinationCategoryObject(category) {
 		item.website = getID(`${category}-website-${j}`).value;
 		item.instagram = getID(`${category}-instagram-${j}`).value;
 		item.regions = getRegionPills(`${category}-regions-${j}`);
-		item.map = getID(`${category}-map-${j}`).value;
+		const mapLinks = readMapLinksEditor(getEntryMapLinksRefs(category, j));
+		item.map = mapLinks.map;
+		if (mapLinks.mapsPerRegion) {
+			item.mapsPerRegion = true;
+			item.regionMaps = mapLinks.regionMaps || {};
+		}
 		item.media = getID(`${category}-media-${j}`).value;
 		item.rating = getID(`${category}-rating-${j}`).value;
 		item.images = getDestinationImages(category, j);

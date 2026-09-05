@@ -1,5 +1,3 @@
-we 
-
 ![alt text](https://i.imgur.com/vejNzOv.png)
 
 # Description
@@ -47,9 +45,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 216   | 212  | 4         | 0       |
-| 🏆   | Feature     | F000 | 203   | 188  | 15        | 0       |
-| 📈   | Improvement | M000 | 236   | 214  | 22        | 0       |
+| 🐞   | Bug         | B000 | 220   | 216  | 4         | 0       |
+| 🏆   | Feature     | F000 | 204   | 189  | 15        | 0       |
+| 📈   | Improvement | M000 | 237   | 215  | 22        | 0       |
 | ⚔️   | Epic        | E000 | 53    | 44   | 7         | 2       |
 
 ## Backlog
@@ -94,8 +92,14 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M235:** Index card images: shimmer loading + failure fallback
 - 🏆 **F202:** Edit destination: prompt to clear “Recently added” marks
 - 🐞 **B216:** Split combined comma/semicolon region values
+- 📈 **M237:** [DEV] Sync script: merge master instead of force
+- 🐞 **B217:** Prod version prompt shows on every refresh
 - 📈 **M236:** Reject image links that don't load
 - 🏆 **F203:** Edit destination: item filter and subfilter control
+- 🏆 **F204:** Map links per region for multi-region places
+- 🐞 **B218:** Save/export loading shows blurred dark backdrop
+- 🐞 **B219:** Destination dialog: carousel keeps rotating while hovering
+- 🐞 **B220:** Lightbox image must fill the slide width
 
 ### August 2026
 

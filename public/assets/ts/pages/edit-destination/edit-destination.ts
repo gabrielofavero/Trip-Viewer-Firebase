@@ -24,6 +24,7 @@ import {
 	resetRegionSelects,
 	unregisterRegionSelect,
 } from '../../ui/region-select.js';
+import { destroyMapLinksEditor } from '../../ui/map-links-editor.js';
 import {
 	hasStagedChanges,
 	hasUnsavedChanges,
@@ -550,7 +551,9 @@ function buildDestinationFilterOptions(category: string): DestinationFilterOptio
 	return options;
 }
 
-/** Rebuild (and show/hide) the value subselect for a category. */
+/** Rebuild the value subselect for a category. The subselect is never
+ *  hidden — when the dimension is "None" it just sits disabled with an
+ *  "All" placeholder so the toolbar layout doesn't shift. */
 function refreshDestinationFilterValue(category: string): void {
 	const filterSelect = getID<HTMLSelectElement>(`${category}-filter`);
 	const valueSelect = getID<HTMLSelectElement>(`${category}-filter-value`);
@@ -561,11 +564,17 @@ function refreshDestinationFilterValue(category: string): void {
 
 	valueSelect.innerHTML = '';
 	if (mode === 'none') {
-		valueSelect.style.display = 'none';
+		valueSelect.disabled = true;
+		const all = document.createElement('option');
+		all.value = '';
+		all.textContent = translate('labels.all');
+		all.disabled = true;
+		valueSelect.appendChild(all);
 		applyDestinationCategoryFilter(category);
 		return;
 	}
 
+	valueSelect.disabled = false;
 	const options = buildDestinationFilterOptions(category);
 	for (const option of options) {
 		const el = document.createElement('option');
@@ -581,7 +590,6 @@ function refreshDestinationFilterValue(category: string): void {
 		valueSelect.value = previous;
 	}
 
-	valueSelect.style.display = '';
 	applyDestinationCategoryFilter(category);
 }
 
@@ -594,11 +602,12 @@ function initCategoryFilterControl(category: string): void {
 	filterSelect.addEventListener('change', () => refreshDestinationFilterValue(category));
 	valueSelect.addEventListener('change', () => applyDestinationCategoryFilter(category));
 
-	// Never persisted — every page load starts at "none" (all items visible).
+	// Never persisted — every page load starts at "none": the dimension
+	// select shows "None" and the value select is present but disabled
+	// (see refreshDestinationFilterValue).
 	filterSelect.value = 'none';
-	valueSelect.innerHTML = '';
-	valueSelect.style.display = 'none';
-	applyDestinationCategoryFilter(category);
+	valueSelect.disabled = true;
+	refreshDestinationFilterValue(category);
 }
 
 /** Clear a category's filter (used when a brand-new item is added). */
@@ -1134,9 +1143,21 @@ registerActions({
 	},
 });
 
+/** Parse the hidden `{ region: url }` JSON of a per-region map field. */
+function parseHiddenRegionMaps(value?: string): Record<string, string> {
+	if (!value) return {};
+	try {
+		const parsed = JSON.parse(value);
+		return parsed && typeof parsed === 'object' ? parsed : {};
+	} catch {
+		return {};
+	}
+}
+
 export function addListenerToRemoveDestination(category, j) {
 	getID(`remove-${category}-${j}`).addEventListener('click', () => {
 		unregisterRegionSelect(`${category}-region-select-${j}`);
+		destroyMapLinksEditor(`${category}-${j}`);
 		removeChildWithValidation(category, j);
 		buildRegionSelects();
 		removeDestinationImages(category, j);
@@ -1298,6 +1319,8 @@ export function moveDestination(j, category) {
 			emoji: getID(`${category}-emoji-${j}`).value,
 			website: getID(`${category}-website-${j}`).value,
 			map: getID(`${category}-map-${j}`).value,
+			mapsPerRegion: getID(`${category}-map-strategy-${j}`)?.value === 'per-region',
+			regionMaps: parseHiddenRegionMaps(getID(`${category}-region-maps-${j}`)?.value),
 			instagram: getID(`${category}-instagram-${j}`).value,
 			regions: getRegionPills(`${category}-regions-${j}`),
 			price: getID(`${category}-price-${j}`).value,
@@ -1312,6 +1335,7 @@ export function moveDestination(j, category) {
 		addDestinationHTML(newCategory, newJ, destination);
 		setDescription(newCategory, newJ, description);
 		removeChildWithValidation(category, j);
+		destroyMapLinksEditor(`${category}-${j}`);
 
 		unregisterRegionSelect(`${category}-region-select-${j}`);
 		buildRegionSelects();

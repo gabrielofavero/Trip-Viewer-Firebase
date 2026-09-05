@@ -23,7 +23,7 @@ Reference for every `npm run <script>` command defined in the root `package.json
 | `format` | `npx biome format --write` | Format all code with Biome |
 | `lint` | `npx biome lint` | Lint with Biome |
 | `check` | `npx biome check` | Combined format + lint validation |
-| `sync` | `python scripts/utils/sync.py` | Force-sync `master` to `develop` |
+| `sync` | `python scripts/utils/sync.py` | Merge-sync `master` to `develop` (force only on conflict) |
 | `deploy` | `python scripts/build/deploy.py` | Versioned Firebase deployment |
 | `backup` | `node scripts/utils/backup.js` | Rotating emulator-data backups |
 | `functions` | Functions build + emulator | Run only the Functions emulator |
@@ -200,7 +200,7 @@ Maintains the `README.md` task backlog: analyzes task distribution, validates ta
 python scripts/utils/sync.py
 ```
 
-Force-syncs the `master` branch to match `develop`. Shows a confirmation prompt before proceeding (see the `git-workflow` skill).
+Merges `origin/develop` into `master` (fast-forwards when possible). Non-destructive by default; if the merge hits conflicts it asks whether to force `master` to match `develop` or leave the conflicts for manual resolution (see the `git-workflow` skill). Requires a clean tracked working tree.
 
 ### `npm run backup`
 

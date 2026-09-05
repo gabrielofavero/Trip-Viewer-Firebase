@@ -1370,12 +1370,20 @@
 # The select is styled to match the editor's `.nice-form-group`
 # inputs (same tokens: background, border, radius, focus ring).
 --------------------------------------------------------------*/
-.item-sort-control {
-	display: flex;
+.item-controls-table {
+	display: grid;
+	grid-template-columns: max-content minmax(0, 1fr);
 	align-items: center;
-	flex-wrap: wrap;
-	gap: 8px;
+	column-gap: 10px;
+	row-gap: 8px;
 	margin-bottom: 12px;
+}
+
+/* The two toolbar rows are flattened into the shared table above so
+   their labels (col 1) and selects (col 2) line up across rows. */
+.item-sort-control,
+.item-filter-control {
+	display: contents;
 }
 
 .item-sort-control label,
@@ -1390,9 +1398,6 @@
 .item-sort-select,
 .item-filter-select,
 .item-filter-value-select {
-	flex: 1 1 auto;
-	min-width: 180px;
-	max-width: 320px;
 	background: var(--bg-secondary);
 	font-family: inherit;
 	font-size: 0.9375rem;
@@ -1423,30 +1428,39 @@
 }
 
 /*--------------------------------------------------------------
-# Item filter control — label + filter dimension select + value
-# subselect above each editor box. Mirrors the sort control; the
-# value subselect is hidden until a dimension other than "None" is
-# picked and its options are rebuilt at runtime (data-driven for
-# Region). Visual only — it never affects the saved document.
+# Item filter control — the filter row (label + dimension + value
+# selects). Both toolbar rows share one invisible table (above), so
+# the sort select and the filter pair have the SAME control width;
+# the value select is disabled (never hidden) when the dimension is
+# "None", keeping the layout fixed. Visual only — never saved.
 --------------------------------------------------------------*/
-.item-filter-control {
+.item-filter-controls {
 	display: flex;
-	align-items: center;
-	flex-wrap: wrap;
 	gap: 8px;
-	margin: -4px 0 12px;
+	width: 100%;
+	max-width: 320px;
+	justify-self: start;
+}
+
+.item-sort-select {
+	width: 100%;
+	max-width: 320px;
+	justify-self: start;
 }
 
 .item-filter-select {
-	flex: 0 1 auto;
-	min-width: 140px;
-	max-width: 200px;
+	flex: 0 0 auto;
+	width: 136px;
 }
 
 .item-filter-value-select {
 	flex: 1 1 auto;
-	min-width: 180px;
-	max-width: 300px;
+	min-width: 0;
+}
+
+.item-filter-value-select:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
 }
 
 /*--------------------------------------------------------------

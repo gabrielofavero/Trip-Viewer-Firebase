@@ -24,6 +24,21 @@ export function startLoadingScreen({ useTimer = false, adjustLoadables = true } 
 		// closeMessage() → startLoadingScreen() transition can't wipe the
 		// re-shown preloader a moment later (mirrors displayFullMessage).
 		cancelAnimateOut(preloader.firstElementChild as HTMLElement | null);
+		// When no message modal is open this is a plain full-screen loading
+		// screen. A dialog that was closed just before this (e.g.
+		// closeMessage() → startLoadingScreen() on save/export flows) leaves
+		// its dialog DOM plus a translucent dark background + backdrop blur
+		// inline on #preloader — the pending close cleanup was cancelled above,
+		// so it never resets them. Clear all of it so the spinner sits on the
+		// clean solid preloader background (var(--bg-primary)) — the same
+		// light/dark look as the initial page load — instead of on top of the
+		// blurred dialog backdrop. Keep an actually-open modal intact.
+		if (!MESSAGE_MODAL_OPEN) {
+			preloader.innerHTML = '';
+			preloader.style.background = '';
+			preloader.style.backdropFilter = '';
+			(preloader.style as any).webkitBackdropFilter = '';
+		}
 		if (adjustLoadables) {
 			document.querySelectorAll('.loadable').forEach((el) => {
 				(el as HTMLElement).style.display = '';

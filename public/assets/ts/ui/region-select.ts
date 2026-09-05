@@ -30,6 +30,43 @@ interface RegionSelectBinding {
 const BINDINGS: RegionSelectBinding[] = [];
 let KNOWN_VALUES: Set<string> = new Set();
 
+/**
+ * Per-container listeners notified whenever that container's pills change
+ * (a pill added or removed). Lets dependent UI (e.g. the per-region map
+ * "Map strategy" control) re-sync when the region count crosses thresholds.
+ * Keyed by the pills container id (e.g. "restaurants-regions-0").
+ */
+const CHANGE_LISTENERS = new Map<string, Set<() => void>>();
+
+/** Subscribe to pill changes on a pills container. Returns an unsubscribe fn. */
+export function registerRegionChangeListener(
+	containerId: string,
+	listener: () => void,
+): () => void {
+	let set = CHANGE_LISTENERS.get(containerId);
+	if (!set) {
+		set = new Set();
+		CHANGE_LISTENERS.set(containerId, set);
+	}
+	set.add(listener);
+	return () => {
+		set.delete(listener);
+		if (set.size === 0) CHANGE_LISTENERS.delete(containerId);
+	};
+}
+
+function notifyRegionChange(containerId: string): void {
+	const set = CHANGE_LISTENERS.get(containerId);
+	if (!set) return;
+	for (const listener of set) {
+		try {
+			listener();
+		} catch (error) {
+			console.error('[region-select] change listener failed:', error);
+		}
+	}
+}
+
 /** Select value that opens the free-text input. */
 const OTHER_VALUE = 'other';
 
@@ -223,11 +260,13 @@ export function addRegionPill(containerId: string, value: string): string[] {
 	const trimmed = (value || '').trim();
 	if (trimmed && !regions.includes(trimmed)) regions.push(trimmed);
 	renderRegionPills(containerId, regions);
+	notifyRegionChange(containerId);
 	return regions;
 }
 
 export function removeRegionPill(containerId: string, value: string): string[] {
 	const regions = getRegionPills(containerId).filter((region) => region !== value);
 	renderRegionPills(containerId, regions);
+	notifyRegionChange(containerId);
 	return regions;
 }

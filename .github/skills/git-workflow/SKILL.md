@@ -6,7 +6,7 @@ applyTo: 'scripts/utils/sync.py'
 
 # Git Workflow
 
-TripViewer uses a **develop → master** branching strategy with task-ID-based commit messages. All work happens on `develop`; `master` mirrors it via force-sync.
+TripViewer uses a **develop → master** branching strategy with task-ID-based commit messages. All work happens on `develop`; `master` mirrors it by merging in `develop` (fast-forward when possible) via `npm run sync`.
 
 > 🚫 **AUTHORIZATION GATE (user rule):** Never run `git commit`, `git push`, `npm run sync`, or any deploy automatically. Always ask the user for explicit authorization first — propose the exact command(s) and wait for approval before executing.
 
@@ -16,7 +16,7 @@ TripViewer uses a **develop → master** branching strategy with task-ID-based c
 
 ```
 develop  ← All commits go here (active development)
-master   ← Force-synced from develop (production mirror)
+master   ← Synced from develop (merge / fast-forward mirror)
 ```
 
 - **No feature branches** — work directly on `develop`
@@ -76,16 +76,22 @@ npm run sync
 ### What it does:
 ```
 1. git fetch                    # Get latest refs
-2. git checkout master          # Switch to master
-3. git reset --hard origin/develop  # Force master = develop
-4. git checkout develop         # Switch back to develop
+2. Require a clean tracked working tree
+3. git checkout master          # Switch to master
+4. git merge origin/develop     # Fast-forward when possible, else 3-way merge
+5. git checkout <original>      # Return to the branch you started on
 ```
+
+### Conflict handling:
+- A merge that hits conflicts does NOT force anything. It stops and asks:
+  - **[1] Force** — `git reset --hard origin/develop` (old force behavior)
+  - **[2] Resolve manually** — stays on `master` with the merge in progress so you can fix conflicts and commit (or `git merge --abort`)
+- Normal runs are non-destructive (fast-forward / clean merge) — no `(y/n)` prompt.
 
 ### When to use:
 - After deploying to production
 - When master has diverged and needs to match develop
-- **Interactive confirmation** — prompts `(y/n)` before proceeding
-- **WARNING:** Uncommitted changes on master will be lost
+- **Requires a clean tracked working tree** — uncommitted changes abort the run
 
 ---
 
@@ -149,7 +155,7 @@ The typical development cycle:
    └─ Firebase Hosting deploys dist/
 
 5. Sync master
-   └─ npm run sync        (force master = develop)
+   └─ npm run sync        (merge master = develop)
 ```
 
 ---
@@ -198,6 +204,6 @@ git push --force-with-lease origin develop
 ## Important Notes
 
 - **No merge commits** — the history is mostly linear on `develop`
-- **No rebase workflow** — `sync.py` uses `reset --hard`, not merge or rebase
+- **No rebase workflow** — `sync.py` merges `origin/develop` into `master` (fast-forward when possible); `reset --hard` only runs if the user chooses Force on a conflict
 - **Task IDs are the source of truth** — commit messages reference them, README tracks them
 - **Version is automatic** — never manually edit the version in `package.json`; it's derived from completed tasks

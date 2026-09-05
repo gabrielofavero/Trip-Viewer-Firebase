@@ -23,6 +23,12 @@ import {
 	renderRegionPills,
 	unregisterRegionSelect,
 } from '../../ui/region-select.js';
+import {
+	destroyMapLinksEditor,
+	getEntryMapLinksRefs,
+	initMapLinksEditor,
+	readMapLinksEditor,
+} from '../../ui/map-links-editor.js';
 import { FILTER_SORT_DATA } from './support/sort-and-filter/sort-and-filter.js';
 import {
 	ACTIVE_CATEGORY,
@@ -63,6 +69,11 @@ export async function edit(j: number): Promise<void> {
 	openDestinationEditor({ j, id, item });
 	populateEditFields(j, item);
 	setEditListeners(j);
+	initMapLinksEditor(getEntryMapLinksRefs('edit', j), {
+		mapsPerRegion: item.mapsPerRegion,
+		regionMaps: item.regionMaps,
+		map: item.map || '',
+	});
 
 	function populateEditFields(j, item) {
 		getID(`edit-name-${j}`).value = item.name || '';
@@ -137,6 +148,7 @@ export async function add(): Promise<void> {
 	getID(`edit-delete-${j}`).style.visibility = 'hidden';
 	applyDescriptionLanguage(j);
 	setAddListeners(j);
+	initMapLinksEditor(getEntryMapLinksRefs('edit', j), {});
 }
 
 // Visibility
@@ -262,6 +274,7 @@ async function saveEdit(j, isNew = false) {
 	startLoadingScreen();
 	const id = getOpenId();
 	const originalItem = isNew ? {} : getItem(id);
+	const mapLinks = readMapLinksEditor(getEntryMapLinksRefs('edit', j));
 	const item = {
 		createdAt: originalItem?.createdAt || new Date().toISOString(),
 		description: {
@@ -270,7 +283,7 @@ async function saveEdit(j, isNew = false) {
 		},
 		emoji: getID(`edit-emoji-${j}`).value,
 		instagram: getID(`edit-instagram-${j}`).value,
-		map: getID(`edit-map-${j}`).value,
+		map: mapLinks.map,
 		media: getID(`edit-media-${j}`).value,
 		name: getID(`edit-name-${j}`).value,
 		rating: getID(`edit-rating-${j}`).value,
@@ -279,6 +292,11 @@ async function saveEdit(j, isNew = false) {
 		price: getValue('price', j),
 		website: getID(`edit-website-${j}`).value,
 	};
+
+	if (mapLinks.mapsPerRegion) {
+		(item as any).mapsPerRegion = true;
+		(item as any).regionMaps = mapLinks.regionMaps || {};
+	}
 
 	if (!item.name) {
 		stopLoadingScreen();

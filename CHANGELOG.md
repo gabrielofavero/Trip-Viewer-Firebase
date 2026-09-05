@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.28.6] - 2026-09-05
+
+- 📈 **M237:** [DEV] Sync script: merge master instead of force
+- 🐞 **B217:** Prod version prompt shows on every refresh
+- 📈 **M236:** Reject image links that don't load
+- 🏆 **F203:** Edit destination: item filter and subfilter control
+- 🏆 **F204:** Map links per region for multi-region places
+- 🐞 **B218:** Save/export loading shows blurred dark backdrop
+- 🐞 **B219:** Destination dialog: carousel keeps rotating while hovering
+- 🐞 **B220:** Lightbox image must fill the slide width
+
 ## [2.28.5] - 2026-09-05
 
 - 🐞 **B215:** Fix logo text offset
