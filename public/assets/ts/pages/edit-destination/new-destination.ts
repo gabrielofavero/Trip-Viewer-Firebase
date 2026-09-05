@@ -167,7 +167,7 @@ export function addRestaurants() {
               </select>
             </div>
 
-            <div id="restaurants-single-map-box-${j}">
+            <div id="restaurants-single-map-box-${j}" class="single-map-box">
               <input id="restaurants-map-${j}" type="url" placeholder="${translate('destination.restaurants.placeholders.map')}" value=""
                 class="icon-right" />
               <div class='caption'>${translate('destination.tooltips.map')}</div>
@@ -335,7 +335,7 @@ export function addSnacks() {
               </select>
             </div>
 
-            <div id="snacks-single-map-box-${j}">
+            <div id="snacks-single-map-box-${j}" class="single-map-box">
               <input id="snacks-map-${j}" type="url" placeholder="${translate('destination.snacks.placeholders.map')}" value=""
                 class="icon-right" />
               <div class='caption'>${translate('destination.tooltips.map')}</div>
@@ -504,7 +504,7 @@ export function addNightlife() {
               </select>
             </div>
 
-            <div id="nightlife-single-map-box-${j}">
+            <div id="nightlife-single-map-box-${j}" class="single-map-box">
               <input id="nightlife-map-${j}" type="url" placeholder="${translate('destination.nightlife.placeholders.map')}" value=""
                 class="icon-right" />
               <div class='caption'>${translate('destination.tooltips.map')}</div>
@@ -672,7 +672,7 @@ export function addTourism() {
               </select>
             </div>
 
-            <div id="tourism-single-map-box-${j}">
+            <div id="tourism-single-map-box-${j}" class="single-map-box">
               <input id="tourism-map-${j}" type="url" placeholder="${translate('destination.tourism.placeholders.map')}" value=""
                 class="icon-right" />
               <div class='caption'>${translate('destination.tooltips.map')}</div>
@@ -841,7 +841,7 @@ export function addShopping() {
               </select>
             </div>
 
-            <div id="shopping-single-map-box-${j}">
+            <div id="shopping-single-map-box-${j}" class="single-map-box">
               <input id="shopping-map-${j}" type="url" placeholder="${translate('destination.shopping.placeholders.map')}" value=""
                 class="icon-right" />
               <div class='caption'>${translate('destination.tooltips.map')}</div>

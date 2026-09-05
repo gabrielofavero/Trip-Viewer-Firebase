@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.28.8] - 2026-09-05
+
+- 🐞 **B222:** General fixes for destinations
+
 ## [2.28.7] - 2026-09-05
 
 - 🐞 **B221:** Edit-trip page ReferenceError on load

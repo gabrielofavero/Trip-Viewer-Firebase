@@ -787,6 +787,68 @@
 	padding-right: 36px;
 }
 
+/*--------------------------------------------------------------
+# Map Strategy fields (F204) — the Map link input and the strategy
+# select sit inside toggle boxes (`.single-map-box` / `.map-strategy-row`)
+# so the direct-child rules above can't reach them. Restore the same
+# `.nice-form-group` field look for those nested controls.
+--------------------------------------------------------------*/
+.nice-form-group > .single-map-box > input[type="url"],
+.nice-form-group > .map-strategy-row > select {
+	background: var(--nf-input-background-color);
+	font-family: var(--nf-input-font-family);
+	font-size: var(--nf-input-font-size);
+	box-shadow: none;
+	border-radius: var(--nf-input-border-radius);
+	border: var(--nf-input-border-width) var(--nf-input-border-style) var(--nf-input-border-color);
+	color: var(--nf-input-color);
+	width: 100%;
+	padding: 12px 16px;
+	height: auto;
+	min-height: 48px;
+	line-height: normal;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	transition:
+		border var(--transition-fast),
+		box-shadow var(--transition-fast);
+	outline: none;
+}
+
+.nice-form-group > .single-map-box > input[type="url"]:focus,
+.nice-form-group > .map-strategy-row > select:focus {
+	outline: none;
+	border-color: var(--nf-input-focus-border-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+/* Strategy select: chevron + flex layout alongside its row label */
+.nice-form-group > .map-strategy-row > select {
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+	background-position: right 12px bottom 50%;
+	background-repeat: no-repeat;
+	background-size: var(--nf-input-size);
+	padding-right: 36px;
+	min-width: 0;
+	flex: 1 1 auto;
+}
+
+/* Single map link input: keep the shared "link" icon on the right */
+.nice-form-group > .single-map-box > input[type="url"][class^="icon"] {
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-link'%3E%3Cpath d='M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71'/%3E%3Cpath d='M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71'/%3E%3C/svg%3E");
+	background-position: right 12px bottom 50%;
+	background-repeat: no-repeat;
+	background-size: var(--nf-input-size);
+	padding-right: 36px;
+}
+
+/* Placeholder color matches other `.nice-form-group` fields */
+.nice-form-group > .single-map-box > input[type="url"]::placeholder {
+	color: var(--nf-input-placeholder-color);
+	opacity: 1;
+}
+
 /* Date / Time */
 .nice-form-group > input[type="date"],
 .nice-form-group > input[type="month"],
@@ -1821,6 +1883,17 @@
 .button-box-formatted .btn,
 .button-box-right-formatted .btn {
 	min-height: 40px;
+}
+
+/*
+ * Action rows that sit directly inside the accordion collapse (outside the
+ * padded .accordion-body) — e.g. the destination entry move/remove buttons and
+ * the trip transportation/accommodation remove buttons. Give them the same
+ * right/bottom inset as the body so they don't hug the card edge.
+ */
+.accordion-collapse > .button-box-right-formatted {
+	padding-right: 16px;
+	padding-bottom: 16px;
 }
 
 /*--------------------------------------------------------------

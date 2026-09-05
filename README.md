@@ -45,7 +45,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 221   | 217  | 4         | 0       |
+| 🐞   | Bug         | B000 | 222   | 218  | 4         | 0       |
 | 🏆   | Feature     | F000 | 204   | 189  | 15        | 0       |
 | 📈   | Improvement | M000 | 237   | 215  | 22        | 0       |
 | ⚔️   | Epic        | E000 | 53    | 44   | 7         | 2       |
@@ -101,6 +101,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B219:** Destination dialog: carousel keeps rotating while hovering
 - 🐞 **B220:** Lightbox image must fill the slide width
 - 🐞 **B221:** Edit-trip page ReferenceError on load
+- 🐞 **B222:** General fixes for destinations
 
 ### August 2026
 

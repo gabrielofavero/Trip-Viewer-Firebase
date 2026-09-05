@@ -18,6 +18,17 @@ import { ACTIVE_CATEGORY } from '../categories.js';
 /** Live Swiper instances keyed by card index — destroyed on dialog close. */
 const SWIPERS: Record<number, any> = {};
 
+/**
+ * Self-managed rotation timers per card. We deliberately do NOT use Swiper's
+ * autoplay module: Swiper 7's destroy() wipes `swiper.params`, and a pending
+ * autoplay timeout then throws ("can't access property autoplay, e.params is
+ * undefined"). Driving `slideNext` from our own interval gives full control, so
+ * the timer is always cleared before the instance is destroyed.
+ */
+const AUTOPLAY_DELAY = 5000;
+const AUTOPLAY_SPEED = 600;
+const AUTOPLAY_TIMERS: Record<number, number> = {};
+
 /** Card image: first entry image (static background) or category icon+color. */
 export function getCardImageHTML(item) {
 	const images = (Array.isArray(item?.images) ? item.images : []).filter((img) => img?.link);
@@ -68,13 +79,8 @@ export function openDialogMedia(j: number): void {
 	if (!swiperEl || SWIPERS[j]) return;
 
 	SWIPERS[j] = new Swiper(swiperEl, {
-		speed: 600,
+		speed: AUTOPLAY_SPEED,
 		loop: true,
-		autoplay: {
-			delay: 5000,
-			disableOnInteraction: false,
-			pauseOnMouseEnter: true,
-		},
 		observer: true,
 		observeParents: true,
 		pagination: {
@@ -83,24 +89,38 @@ export function openDialogMedia(j: number): void {
 			clickable: true,
 		},
 	});
+
 	wireHoverPause(j);
+	// Rotate from the start, unless the pointer is already over the media
+	// (e.g. the user just clicked the card and the cursor lands on the image).
+	if (!swiperEl.matches(':hover')) resumeAutoplay(j);
 }
 
+/** Stop the card's rotation timer (hover, lightbox open, dialog close). */
 function pauseAutoplay(j: number): void {
-	SWIPERS[j]?.autoplay?.stop();
+	const timer = AUTOPLAY_TIMERS[j];
+	if (timer != null) {
+		window.clearInterval(timer);
+		delete AUTOPLAY_TIMERS[j];
+	}
 }
 
+/** (Re)start the card's rotation timer, unless one is already running. */
 function resumeAutoplay(j: number): void {
-	SWIPERS[j]?.autoplay?.start();
+	if (AUTOPLAY_TIMERS[j] != null) return;
+	const swiper = SWIPERS[j];
+	if (!swiper) return;
+	AUTOPLAY_TIMERS[j] = window.setInterval(
+		() => swiper.slideNext(AUTOPLAY_SPEED),
+		AUTOPLAY_DELAY,
+	);
 }
 
 /**
- * Freeze the carousel while the pointer sits on the image. Swiper's own
- * `pauseOnMouseEnter` is unreliable here (Swiper 7), so pause/resume explicitly
- * on the swiper host — otherwise the photo can rotate out from under the cursor
- * while the user is aiming at the zoom button. If the pointer is already over
- * the media when the dialog opens (e.g. the user just clicked the card), freeze
- * it right away instead of waiting for a `mouseenter`.
+ * Freeze the carousel while the pointer sits on the image — otherwise the photo
+ * can rotate out from under the cursor while the user is aiming at the zoom
+ * button. Rotation pauses on `mouseenter` and resumes on `mouseleave` of the
+ * swiper host.
  */
 function wireHoverPause(j: number): void {
 	const swiperEl = getID(`dest-dialog-media-${j}-swiper`);
@@ -108,20 +128,14 @@ function wireHoverPause(j: number): void {
 
 	swiperEl.addEventListener('mouseenter', () => pauseAutoplay(j));
 	swiperEl.addEventListener('mouseleave', () => resumeAutoplay(j));
-	if (swiperEl.matches(':hover')) pauseAutoplay(j);
 }
 
 export function closeDialogMedia(j: number): void {
+	// Clear our rotation timer first so no tick can ever fire on a destroyed
+	// Swiper (the reason the vendor autoplay module is not used).
+	pauseAutoplay(j);
 	const swiper = SWIPERS[j];
 	if (swiper) {
-		// Stop autoplay before destroying: Swiper 7's destroy() deletes
-		// `swiper.params`, and a still-pending autoplay timeout then throws
-		// ("can't access property autoplay, e.params is undefined").
-		try {
-			swiper.autoplay?.stop();
-		} catch {
-			// noop — autoplay may not be initialized on this instance
-		}
 		swiper.destroy(true, true);
 		delete SWIPERS[j];
 	}
@@ -164,7 +178,7 @@ function getPortfolioWrapHTML(image, j) {
         <div class="portfolio-wrap dialog-media-frame" style="background-image: url('${link}'); background-size: cover; background-position: center;">
             <div class="portfolio-info">
                 <div class="portfolio-links">
-                    <a href="${link}" data-gallery="dest-gallery-${j}" class="portfolio-lightbox gallery dest-gallery-${j}" title="${description}"><i class="bx bx-zoom-in"></i></a>
+                    <a href="${link}" data-type="image" data-gallery="dest-gallery-${j}" class="portfolio-lightbox gallery dest-gallery-${j}" title="${description}"><i class="bx bx-zoom-in"></i></a>
                 </div>
             </div>
         </div>`;

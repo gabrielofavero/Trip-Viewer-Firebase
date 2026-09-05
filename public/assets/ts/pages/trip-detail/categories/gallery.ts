@@ -49,7 +49,7 @@ function loadGaleriaBody(gallery) {
                     <h4>${title}</h4>
                     <p>${description}</p>
                     <div class="portfolio-links">
-                        <a href="${link}" data-gallery="portfolioGallery" class="portfolio-lightbox gallery" title="${description}"><i class="bx bx-zoom-in"></i></a>
+                        <a href="${link}" data-type="image" data-gallery="portfolioGallery" class="portfolio-lightbox gallery" title="${description}"><i class="bx bx-zoom-in"></i></a>
                     </div>
                 </div>
             </div>

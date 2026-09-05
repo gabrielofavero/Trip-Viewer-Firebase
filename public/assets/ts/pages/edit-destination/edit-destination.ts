@@ -12,7 +12,7 @@ import {
 	getChildIDs,
 	getID,
 	getJ,
-	getLastJ,
+	getNextJ,
 	getURLParam,
 	removeChildWithValidation,
 	removeRequired,
@@ -1329,7 +1329,12 @@ export function moveDestination(j, category) {
 			images: DESTINATION_IMAGES[`${category}-${j}`] || [],
 		};
 
-		const newJ = getLastJ(`${newCategory}-box`) + 1;
+		// `addDestination()` appends a fresh blank entry and numbers it with
+		// `getNextJ()` (max index + 1). Reuse that same index here so we always
+		// fill the entry we just created. Using `getLastJ() + 1` drifted when
+		// the target box was re-sorted (visual-only sort reorders the DOM) or
+		// had index gaps, which left a stray blank entry behind.
+		const newJ = getNextJ(`${newCategory}-box`);
 
 		addDestination(newCategory);
 		addDestinationHTML(newCategory, newJ, destination);

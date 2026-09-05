@@ -71,7 +71,7 @@ export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
 
 	for (let i = 0; i < images.length; i++) {
 		const image = images[i];
-		galeriaItems += `<a href="${image.link}" data-gallery="portfolioGallery" class="portfolio-lightbox ${galeriaId}" title="${image.description}">${i == 0 ? '<i class="bx bx-zoom-in"></i>' : ''}</a>`;
+		galeriaItems += `<a href="${image.link}" data-type="image" data-gallery="portfolioGallery" class="portfolio-lightbox ${galeriaId}" title="${image.description}">${i == 0 ? '<i class="bx bx-zoom-in"></i>' : ''}</a>`;
 	}
 
 	return `<div class="hotel-box${innerItinerary ? '-inner inner-itinerary-item' : ''}" id="accommodations-box-${j}${innerItinerary ? '-inner' : ''}">

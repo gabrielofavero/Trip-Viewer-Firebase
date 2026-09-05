@@ -29,11 +29,13 @@ export function startLoadingScreen({ useTimer = false, adjustLoadables = true } 
 		// closeMessage() → startLoadingScreen() on save/export flows) leaves
 		// its dialog DOM plus a translucent dark background + backdrop blur
 		// inline on #preloader — the pending close cleanup was cancelled above,
-		// so it never resets them. Clear all of it so the spinner sits on the
-		// clean solid preloader background (var(--bg-primary)) — the same
-		// light/dark look as the initial page load — instead of on top of the
-		// blurred dialog backdrop. Keep an actually-open modal intact.
-		if (!MESSAGE_MODAL_OPEN) {
+		// so it never resets them. Only clear that stale dialog when its scrim
+		// is actually present (inline background set by displayFullMessage):
+		// other preloader content must survive, e.g. the #progress-loading bar
+		// built by startProgressLoading(), which clears the scrim itself
+		// before calling back into this function. Keep an actually-open modal
+		// (MESSAGE_MODAL_OPEN) intact.
+		if (!MESSAGE_MODAL_OPEN && preloader.style.background) {
 			preloader.innerHTML = '';
 			preloader.style.background = '';
 			preloader.style.backdropFilter = '';
