@@ -63,9 +63,9 @@ function arrayToRecord<T extends { id: string }>(arr: T[]): Record<string, Omit<
 }
 
 export async function loadUserIndex() {
-	try {
-		firebase.auth().onAuthStateChanged(async (user) => {
-			if (user) {
+	firebase.auth().onAuthStateChanged(async (user) => {
+		if (user) {
+			try {
 				// registerIfUserNotPresent() reads users/{uid} (creating it if
 				// missing) and returns that document, so reuse it here instead of
 				// calling getUserData() again (avoids a duplicate read).
@@ -147,15 +147,18 @@ export async function loadUserIndex() {
 					dev.page.SELECTED_TRIP_ID = SELECTED_TRIP_ID;
 					dev.page.USER_DATA = USER_DATA;
 				}
-			} else {
-				showUnloggedView();
+			} catch (error) {
+				// An error here (e.g. Firestore is offline right after the stored
+				// auth session is restored) must never leave the page stuck on
+				// skeleton placeholders or bubble up as an unhandled rejection.
+				clearCardSkeletons();
+				stopLoadingScreen();
+				displayError(error, true);
 			}
-		});
-	} catch (error) {
-		stopLoadingScreen();
-		displayError(error);
-		throw error;
-	}
+		} else {
+			showUnloggedView();
+		}
+	});
 	stopLoadingScreen();
 }
 

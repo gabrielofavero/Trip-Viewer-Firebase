@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.28.9] - 2026-09-05
+
+- 🐞 **B223:** Version prompt still shows on every refresh
+- 🐞 **B224:** Index unloadable offline with stored session
+
 ## [2.28.8] - 2026-09-05
 
 - 🐞 **B222:** General fixes for destinations

@@ -30,6 +30,11 @@ import { translate } from '../i18n/translation.js';
 import { isStaticMode } from '../static-mode/static-mode.js';
 
 const STORAGE_KEY = 'tripviewer:lastVersion';
+// Build number the user already acknowledged (clicked Refresh on the update
+// dialog) this tab session. Survives window.location.reload() so the dialog
+// isn't re-shown for the same build after the refresh — only a genuinely
+// NEWER build re-prompts.
+const ACKED_BUILD_KEY = 'tripviewer:ackedBuild';
 // Stable, un-hashed endpoint excluded from content-hashing (hash-assets.js)
 // and served `no-store` (firebase.json), so every fetch reflects the latest
 // deploy instead of a year-long immutable cache.
@@ -139,8 +144,14 @@ async function checkForLiveUpdate() {
 
 	const liveBuild = typeof live?.build === 'number' ? live.build : 0;
 	if (liveBuild <= loadedBuild) return;
+	// Already acknowledged this build this tab session (the user clicked
+	// Refresh once). Reload may still briefly run the older build, so without
+	// this guard the dialog would loop on every reload. Only a genuinely newer
+	// build re-prompts.
+	if (liveBuild <= readAckedBuild()) return;
 
 	updatePrompted = true;
+	writeAckedBuild(liveBuild);
 	const liveVersion =
 		live?.projects?.[loadedProjectId]?.version?.system || loadedVersion;
 	promptRefresh(liveVersion);
@@ -193,5 +204,25 @@ function writeStoredVersion(version: string, build: number) {
 		);
 	} catch {
 		// Ignore storage failures — worst case we re-check on the next page.
+	}
+}
+
+function readAckedBuild(): number {
+	try {
+		const raw = window.sessionStorage.getItem(ACKED_BUILD_KEY);
+		if (raw === null) return 0;
+		const n = Number(raw);
+		return Number.isFinite(n) ? n : 0;
+	} catch {
+		// Storage unavailable — fall through to the normal prompt.
+		return 0;
+	}
+}
+
+function writeAckedBuild(build: number) {
+	try {
+		window.sessionStorage.setItem(ACKED_BUILD_KEY, String(build));
+	} catch {
+		// Ignore storage failures — worst case we re-prompt after a reload.
 	}
 }

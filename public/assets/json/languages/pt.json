@@ -685,6 +685,7 @@
 			"contact_admin": "Entre em contato com o administrador do sistema",
 			"to_report": "para reportar o problema",
 			"unauthenticated": "Não foi possível carregar o documento pois o usuário não está logado",
+			"offline": "Parece que você está offline. Verifique sua conexão com a internet e tente novamente.",
 			"unknown_directory": "Pasta Desconhecida",
 			"no_upload_permission": "Você não possui permissão para fazer upload de arquivos",
 			"upload_error": "Erro ao fazer upload de arquivos",

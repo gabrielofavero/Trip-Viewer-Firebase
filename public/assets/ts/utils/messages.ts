@@ -392,6 +392,14 @@ export function getErrorMessage(error) {
 	const isError = error && error instanceof Error;
 	const contact = `<a href=\"mailto:gabriel.o.favero@live.com\">${translate('messages.errors.contact_admin')}</a> ${translate('messages.errors.to_report')}`;
 
+	// Firestore reports `code: 'unavailable'` with a message like "Failed to
+	// get document because the client is offline." when the client has no
+	// network. Treat that as an offline state, never as a system fault that
+	// asks the user to contact the administrator.
+	if (isError && ((error as any)?.code === 'unavailable' || /offline/i.test(error.message))) {
+		return translate('messages.errors.offline');
+	}
+
 	if (!error || (isError && !error.message)) {
 		return `${translate('messages.errors.unknown')}. ${contact}`;
 	} else if (isError) {

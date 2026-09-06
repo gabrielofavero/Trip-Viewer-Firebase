@@ -79,7 +79,11 @@ export async function registerIfUserNotPresent() {
 		return;
 	}
 
-	const userDoc = await get(`${COLLECTION.USERS}/${user.uid}`);
+	// Read with treatError=false so a network/offline failure THROWS instead of
+	// being swallowed into `undefined`. A swallowed offline read would be
+	// misread below as "user document does not exist" and wrongly sign the user
+	// out with the "too early" message (or show a bogus registration error).
+	const userDoc = await get(`${COLLECTION.USERS}/${user.uid}`, false);
 	const systemData = await getSystemData();
 	const registrationOpen = systemData?.registrationOpen == true;
 
