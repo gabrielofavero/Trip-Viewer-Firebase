@@ -964,6 +964,15 @@ section {
 /*--------------------------------------------------------------
 # Services - Todos os Destinos
 --------------------------------------------------------------*/
+/* The destination boxes are injected into a single wrapping Bootstrap
+   `.row` (#destinationsBox). Bootstrap's default gutter only spaces
+   columns side-by-side (horizontal); rows that wrap stack flush. Match
+   the horizontal gutter (1.5rem) in the vertical direction so boxes
+   stacked top-to-bottom are spaced equally. */
+#destinationsBox {
+	--bs-gutter-y: 1.5rem;
+}
+
 .services .icon-box {
 	text-align: center;
 	padding: 70px 20px 80px 20px;

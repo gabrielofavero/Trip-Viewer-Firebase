@@ -54,6 +54,17 @@ export function loadListenersIndex() {
 		signInWithEmailAndPassword();
 	});
 
+	// Hide the inline login error as soon as the user starts editing the fields.
+	['login-email', 'login-password'].forEach((id) => {
+		const field = getID(id);
+		if (field) {
+			field.addEventListener('input', () => {
+				const loginError = getID('login-error');
+				if (loginError && !loginError.hidden) loginError.hidden = true;
+			});
+		}
+	});
+
 	// Category tabs
 	const tabs = document.querySelectorAll('.category-tab');
 	tabs.forEach((tab) => {

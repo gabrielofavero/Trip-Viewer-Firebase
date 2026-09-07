@@ -45,9 +45,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 224   | 220  | 4         | 0       |
+| 🐞   | Bug         | B000 | 225   | 221  | 4         | 0       |
 | 🏆   | Feature     | F000 | 204   | 189  | 15        | 0       |
-| 📈   | Improvement | M000 | 237   | 215  | 22        | 0       |
+| 📈   | Improvement | M000 | 238   | 216  | 22        | 0       |
 | ⚔️   | Epic        | E000 | 53    | 44   | 7         | 2       |
 
 ## Backlog
@@ -104,6 +104,8 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B222:** General fixes for destinations
 - 🐞 **B223:** Version prompt still shows on every refresh
 - 🐞 **B224:** Index unloadable offline with stored session
+- 📈 **M238:** Error dialog: copy details + consistent admin label
+- 🐞 **B225:** View: spacing between stacked destination boxes
 
 ### August 2026
 

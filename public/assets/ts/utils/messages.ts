@@ -300,6 +300,12 @@ export function displayFullMessage(properties = cloneObject(MESSAGE_PROPERTIES))
 		textDiv.appendChild(errorElement);
 	}
 
+	// Genuine system-fault dialogs get a "copy error details" control under the
+	// message so the user can send the stack trace to the administrator.
+	if (properties.errorDetails instanceof Error) {
+		textDiv.appendChild(buildErrorDetailsRow(properties.errorDetails));
+	}
+
 	// Buttons
 	if (properties.buttons && properties.buttons.length > 0) {
 		const buttonBox = document.createElement('div');
@@ -362,6 +368,14 @@ export function displayError(error, tryAgain = false, blocking = true) {
 	properties.content = getErrorMessage(error);
 	properties.localizacao = false; // Disabled. No point in showing to the user.
 
+	// Genuine system faults (thrown Errors that are not a user-correctable
+	// condition such as being offline) are the ones the user should report to
+	// the administrator. When one is captured, the dialog exposes a "copy error
+	// details" control so the user can send the message + stack trace along.
+	if (isSystemFault(error)) {
+		properties.errorDetails = error;
+	}
+
 	const buttons = tryAgain ? [{ type: 'try-again' }] : [];
 	// Static exports have no index.html home page, so never offer the Home
 	// button there (it would navigate to a non-existent page).
@@ -388,29 +402,155 @@ export function displayError(error, tryAgain = false, blocking = true) {
 	displayFullMessage(properties);
 }
 
+/**
+ * True when `error` represents a genuine, unexpected system fault — a thrown
+ * Error that is not a user-correctable condition (e.g. the client being
+ * offline). Only these dialogs carry the "contact the administrator" note and
+ * the "copy error details" control. User-facing conditions (invalid
+ * credentials, unauthenticated, permission denied, ...) are passed to the
+ * dialogs as plain strings and never reach this branch.
+ */
+export function isSystemFault(error): boolean {
+	return error instanceof Error && !isOfflineError(error);
+}
+
+/**
+ * Recognizes offline / no-network errors across Firebase products so they are
+ * never treated as system faults ("contact the administrator") — a missing
+ * connection is something the user can fix, not a bug to report.
+ *   - Firestore reports `code: 'unavailable'` with a message like "Failed to
+ *     get document because the client is offline."
+ *   - Firebase Auth reports `code: 'auth/network-request-failed'`.
+ */
+export function isOfflineError(error): boolean {
+	if (!error || !(error instanceof Error)) return false;
+	const code: string = (error as any)?.code || '';
+	const message: string = error.message || '';
+	return (
+		code === 'unavailable' ||
+		code === 'auth/network-request-failed' ||
+		/offline|network error|unreachable host/i.test(message)
+	);
+}
+
 export function getErrorMessage(error) {
-	const isError = error && error instanceof Error;
 	const contact = `<a href=\"mailto:gabriel.o.favero@live.com\">${translate('messages.errors.contact_admin')}</a> ${translate('messages.errors.to_report')}`;
 
-	// Firestore reports `code: 'unavailable'` with a message like "Failed to
-	// get document because the client is offline." when the client has no
-	// network. Treat that as an offline state, never as a system fault that
-	// asks the user to contact the administrator.
-	if (isError && ((error as any)?.code === 'unavailable' || /offline/i.test(error.message))) {
+	// Offline / no network: never a system fault.
+	if (isOfflineError(error)) {
 		return translate('messages.errors.offline');
 	}
 
-	if (!error || (isError && !error.message)) {
-		return `${translate('messages.errors.unknown')}. ${contact}`;
-	} else if (isError) {
+	if (error instanceof Error) {
 		let msg = error.message;
+		if (!msg) {
+			return `${translate('messages.errors.unknown')}. ${contact}`;
+		}
 		if (msg[msg.length - 1] === '.') {
 			msg = msg.substring(0, msg.length - 1);
 		}
 		return `${msg}. ${contact}`;
-	} else {
+	}
+
+	// Non-Error values are caller-supplied — usually already-friendly strings.
+	if (typeof error === 'string' && error) {
 		return error;
 	}
+
+	// Any other thrown value (plain object, etc.) → normalize it.
+	if (error?.message) {
+		return String(error.message);
+	}
+	return `${translate('messages.errors.unknown')}. ${contact}`;
+}
+
+/**
+ * Serializes an Error into a clipboard-friendly block the user can paste when
+ * reporting the issue to the administrator (message, code, stack, page).
+ */
+export function serializeErrorDetails(error: Error): string {
+	const err = error as any;
+	const lines: string[] = ['TripViewer error details'];
+	lines.push(`Page: ${window.location.href}`);
+	lines.push(`Type: ${error.name || 'Error'}`);
+	if (error.message) lines.push(`Message: ${error.message}`);
+	if (err?.code) lines.push(`Code: ${err.code}`);
+	if (error.stack) lines.push(`Stack:\n${error.stack}`);
+	return lines.join('\n');
+}
+
+/**
+ * Copies `text` to the clipboard using the async Clipboard API when available,
+ * falling back to the legacy execCommand approach. Resolves with whether the
+ * copy succeeded.
+ */
+export async function copyTextToClipboard(text: string): Promise<boolean> {
+	try {
+		if (navigator.clipboard?.writeText) {
+			await navigator.clipboard.writeText(text);
+			return true;
+		}
+	} catch (err) {
+		// Fall through to the legacy path (e.g. clipboard permission denied).
+	}
+	try {
+		const textArea = document.createElement('textarea');
+		textArea.value = text;
+		// Keep it off-screen so the user never sees the helper jump in.
+		textArea.style.position = 'fixed';
+		textArea.style.top = '-1000px';
+		textArea.style.opacity = '0';
+		document.body.appendChild(textArea);
+		textArea.focus();
+		textArea.select();
+		const ok = document.execCommand('copy');
+		document.body.removeChild(textArea);
+		return ok;
+	} catch (err) {
+		return false;
+	}
+}
+
+/**
+ * Builds the "copy error details" row shown on genuine system-fault dialogs.
+ * Copies the serialized error (message + code + stack) to the clipboard and
+ * briefly swaps the label to a "copied" confirmation.
+ */
+function buildErrorDetailsRow(error: Error): HTMLElement {
+	const row = document.createElement('button');
+	row.type = 'button';
+	row.className = 'error-details-row';
+	row.id = 'message-error-copy';
+	row.setAttribute('aria-label', translate('messages.errors.copy_details'));
+	row.innerHTML = `<i class="iconify" data-icon="mdi:content-copy"></i><span>${translate('messages.errors.copy_details')}</span>`;
+
+	let resetTimer: ReturnType<typeof setTimeout> | undefined;
+
+	const copy = async () => {
+		const text = serializeErrorDetails(error);
+		const ok = await copyTextToClipboard(text);
+		const span = row.querySelector('span');
+		if (!span) return;
+		if (ok) {
+			span.textContent = translate('messages.errors.details_copied');
+			if (resetTimer) clearTimeout(resetTimer);
+			resetTimer = setTimeout(() => {
+				span.textContent = translate('messages.errors.copy_details');
+			}, 2000);
+		} else {
+			// Last-resort fallback: surface the details in a selectable prompt.
+			window.prompt(translate('messages.errors.copy_manual'), text);
+		}
+	};
+
+	row.addEventListener('click', copy);
+	row.addEventListener('keydown', (e) => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault();
+			copy();
+		}
+	});
+	return row;
 }
 
 // Unauthorized Message

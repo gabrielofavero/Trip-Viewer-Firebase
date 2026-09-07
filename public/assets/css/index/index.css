@@ -69,6 +69,17 @@
 .login-item::placeholder {
 	color: var(--text-muted);
 }
+.login-error {
+	max-width: 280px;
+	width: 100%;
+	color: var(--text-secondary);
+	font-size: 13px;
+	line-height: 1.4;
+	text-align: center;
+}
+.login-error[hidden] {
+	display: none;
+}
 
 /*--------------------------------------------------------------
 # Buttons

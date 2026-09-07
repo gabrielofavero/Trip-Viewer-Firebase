@@ -47,7 +47,7 @@ export async function main(pageLoaders: Record<string, () => void> = {}) {
 		loadLangSelectorSelect();
 		loadPage(pageLoaders);
 	} catch (error) {
-		displayError('Initialization Error:' + error.message);
+		displayError(error instanceof Error ? error : new Error(String(error)));
 	}
 }
 
@@ -79,7 +79,7 @@ function loadPage(pageLoaders: Record<string, () => void> = {}) {
 			pageLoaders.itinerary();
 			return;
 		default:
-			displayError(`Page "${getHTMLpage()}" not found.`);
+			displayError(new Error(`Page "${getHTMLpage()}" not found.`));
 			break;
 	}
 }
@@ -170,12 +170,24 @@ export function setPageName(pageName?) {
 // Global error handlers - catches all unhandled errors
 window.addEventListener('unhandledrejection', function (event) {
 	console.error('Unhandled promise rejection:', event.reason);
-	displayError(event.reason?.message || event.reason || translate('messages.errors.unknown'), false, false);
+	const reason = event.reason;
+	displayError(
+		reason instanceof Error
+			? reason
+			: new Error(
+					typeof reason === 'string'
+						? reason
+						: reason?.message || translate('messages.errors.unknown'),
+				),
+		false,
+		false,
+	);
 	event.preventDefault(); // Prevent default browser error handling
 });
 
 window.addEventListener('error', function (event) {
 	console.error('Global error:', event.error || event.message);
-	displayError(event.error?.message || event.message || translate('messages.errors.unknown'), false, false);
+	const error = event.error || (event.message ? new Error(event.message) : null);
+	displayError(error || new Error(translate('messages.errors.unknown')), false, false);
 	event.preventDefault(); // Prevent default browser error handling
 });

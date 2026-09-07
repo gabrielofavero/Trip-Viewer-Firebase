@@ -286,7 +286,11 @@ async function loadExpenses(
 			return;
 		}
 		console.error(error);
-		displayError(translate('messages.errors.unknown'), false, false);
+		displayError(
+			error instanceof Error ? error : new Error(translate('messages.errors.unknown')),
+			false,
+			false,
+		);
 		hideLoading();
 	}
 }

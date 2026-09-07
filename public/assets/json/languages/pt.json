@@ -694,7 +694,15 @@
 			"loading_timeout": "O carregamento demorou mais que o esperado. Tente novamente mais tarde",
 			"missing_data": "Não foi possível carregar este documento. Parece que informações obrigatórias estão faltando",
 			"with_location": "Erro \"{{message}}\" localizado em {{location}}",
-			"without_location": "Erro \"{{message}}\""
+			"without_location": "Erro \"{{message}}\"",
+			"copy_details": "Copiar detalhes do erro",
+			"details_copied": "Detalhes do erro copiados",
+			"copy_manual": "Selecione o texto abaixo e pressione Ctrl+C para copiar"
+		},
+		"login": {
+			"invalid_credentials": "E-mail ou senha inválidos",
+			"too_many_attempts": "Muitas tentativas. Tente novamente mais tarde",
+			"account_disabled": "Esta conta foi desativada"
 		},
 		"too_early": {
 			"title": "Você chegou muito cedo! 😅",

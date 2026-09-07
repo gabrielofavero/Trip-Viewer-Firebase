@@ -108,7 +108,12 @@ async function restoreAccountData(restore) {
 	} catch (err) {
 		console.error('Restoration failed:', err);
 		stopProgressLoading();
-		displayError(err.message || translate('account.restore.error_title'));
+		const message = typeof err === 'string' ? err : err?.message;
+		displayError(
+			err instanceof Error && err.message
+				? err
+				: new Error(message || translate('account.restore.error_title')),
+		);
 	} finally {
 		endOperation();
 	}

@@ -32,9 +32,67 @@ export function unloadPageUserFunctions() {
 	}
 }
 
+// Firebase Auth error codes that represent user-correctable conditions (NOT
+// system faults). These are shown as friendly inline messages on the login
+// form — never through the system-error dialog (no "contact the system
+// administrator" note / no stacktrace copy).
+const LOGIN_USER_ERROR_CODES = [
+	'auth/wrong-password',
+	'auth/user-not-found',
+	'auth/invalid-email',
+	'auth/invalid-credential',
+	'auth/invalid-login-credentials', // newer Firebase Auth SDKs
+];
+
+function clearLoginError() {
+	const loginError = getID('login-error');
+	if (loginError) {
+		loginError.textContent = '';
+		loginError.hidden = true;
+	}
+}
+
+function showLoginError(message: string) {
+	const loginError = getID('login-error');
+	if (loginError) {
+		loginError.textContent = message;
+		loginError.hidden = false;
+	} else {
+		// Fallback (login box not present on this page): friendly modal — still
+		// not a system error.
+		displayMessage('', message);
+	}
+}
+
+/**
+ * Maps a failed-sign-in Firebase Auth error to a friendly inline message, or
+ * returns `null` when the error is an unexpected system fault (which should go
+ * through the system-error dialog instead).
+ */
+function getLoginErrorMessage(error): string | null {
+	const code = error?.code || '';
+	if (LOGIN_USER_ERROR_CODES.includes(code)) {
+		return translate('messages.login.invalid_credentials');
+	}
+	if (code === 'auth/too-many-requests') {
+		return translate('messages.login.too_many_attempts');
+	}
+	if (code === 'auth/user-disabled') {
+		return translate('messages.login.account_disabled');
+	}
+	if (code === 'auth/network-request-failed') {
+		// Offline / no network — a condition the user can fix, not a system fault.
+		return translate('messages.errors.offline');
+	}
+	return null;
+}
+
 export async function signInWithEmailAndPassword() {
 	const email = getID('login-email').value;
 	const password = getID('login-password').value;
+
+	// Clear any previous inline error before the new attempt.
+	clearLoginError();
 
 	try {
 		// Set persistence to LOCAL
@@ -49,8 +107,20 @@ export async function signInWithEmailAndPassword() {
 
 		return user; // Optionally return the user for further use
 	} catch (error) {
-		console.error('Error signing in:', error.message);
-		displayError(error, false, false);
+		console.error('Error signing in:', error?.message || error);
+		const loginMessage = getLoginErrorMessage(error);
+		if (loginMessage) {
+			// User-correctable (e.g. wrong password, offline): friendly inline
+			// error on the login form — never a "system error" dialog.
+			showLoginError(loginMessage);
+			return;
+		}
+		// Unexpected failure → genuine system-error dialog (contact admin + copy).
+		displayError(
+			error instanceof Error ? error : new Error(String(error?.message || error)),
+			false,
+			false,
+		);
 	}
 }
 

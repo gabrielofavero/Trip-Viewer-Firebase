@@ -349,7 +349,10 @@ export function getStorageErrorMessage(error) {
 	if (error.code == 'storage/unauthorized') {
 		return translate('messages.errors.no_upload_permission');
 	} else {
-		return `${translate('messages.errors.upload_error')}: '${error.code}'. ${translate('messages.error.contact_admin')}`;
+		// Fix: the key is `messages.errors.contact_admin` (not the broken
+		// `messages.error.contact_admin`), and it reads as a full sentence when
+		// paired with "to report the issue".
+		return `${translate('messages.errors.upload_error')}: '${error.code}'. ${translate('messages.errors.contact_admin')} ${translate('messages.errors.to_report')}`;
 	}
 }
 

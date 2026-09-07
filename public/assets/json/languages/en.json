@@ -694,7 +694,15 @@
 			"loading_timeout": "The request took too long to respond. Please try again later",
 			"missing_data": "We weren't able to load this document. It looks like some required information is missing",
 			"with_location": "Error \"{{message}}\" located at {{location}}",
-			"without_location": "Error \"{{message}}\""
+			"without_location": "Error \"{{message}}\"",
+			"copy_details": "Copy error details",
+			"details_copied": "Error details copied",
+			"copy_manual": "Select the text below and press Ctrl+C to copy"
+		},
+		"login": {
+			"invalid_credentials": "Invalid email or password",
+			"too_many_attempts": "Too many attempts. Please try again later",
+			"account_disabled": "This account has been disabled"
 		},
 		"too_early": {
 			"title": "You're a bit early! 😅",
