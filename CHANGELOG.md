@@ -1,5 +1,24 @@
 # Changelog
 
+## [2.28.10] - 2026-09-19
+
+- 📈 **M238:** Error dialog: copy details + consistent admin label
+- 🐞 **B225:** View: spacing between stacked destination boxes
+- 🐞 **B226:** Edit trip: itinerary days fail to load/save
+- 🐞 **B227:** Date picker swallows change after clearing
+- 🐞 **B228:** Mobile destination sort/filter drawer unscrollable
+- 📈 **M239:** Remove dead end-date change listener
+- 🐞 **B229:** Restore Today's Itinerary button styling
+- 🐞 **B230:** View: map box opens My Maps link
+- 🏆 **F205:** Back-to-top arrow on index, destination, itinerary
+- 🐞 **B231:** Calendar nav disabled state on dark mode
+- 📈 **M240:** Expenses: redesign currency switcher placement
+- 📈 **M241:** Expenses: equal card heights on desktop
+- 📈 **M242:** Destination card images: shimmer loading skeleton
+- 🐞 **B232:** Restore planned destination indicator
+- 🏆 **F206:** Edit trip: destination picker when linking itinerary
+- 🏆 **F207:** Itinerary destination item info screen
+
 ## [2.28.9] - 2026-09-05
 
 - 🐞 **B223:** Version prompt still shows on every refresh

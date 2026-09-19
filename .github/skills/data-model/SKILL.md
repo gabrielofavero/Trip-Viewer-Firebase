@@ -97,6 +97,7 @@ links            { maps, attachments, active, drive, pdf, ppt, sheet, vaccine: s
 gallery          { categories[], descriptions[], images[], titles[] }
 destinationRefs  { id, title?, image?, categories?, version? }[]   Denormalized destination metadata (migration 18 + trip save) — see below
 image            { dark, light, background: string, active: bool }
+itineraryAutoExcluded  string[]         Source keys of auto-added itinerary entries the user deleted by hand — see below
 ```
 
 ### DateObject
@@ -177,9 +178,30 @@ Also has a `_settings` document: `{ viewMode: "simple" | "leg" }`.
 // PeriodItem:
 { label: string, start: "HH:MM", end: "HH:MM",
   travelers: { id, name: string, isPresent: bool }[],
-  item: { type: "destination"|"transportation"|"accommodation"|"", id, category, location: string }
+  item: { type: "destination"|"transportation"|"accommodation"|"", id, category, location: string },
+  auto?: string   // "transportation:{legId}" | "accommodations:{accId}:checkIn" | "accommodations:{accId}:checkOut"
 }
 ```
+
+### Auto-populated itinerary items (Sep 2026)
+
+When the itinerary module is enabled, each transportation leg is scheduled on its departure
+date/period and each accommodation contributes a check-in and a check-out entry (from the
+`check-in-time-*` / `check-out-time-*` fields; afternoon/morning when no time is set). The entry
+carries `auto` with its source key so it can be re-synced when that source is edited.
+
+- `auto` is absent on hand-made entries — only the engine writes it, and it never touches items
+  it doesn't own (see `inner-itinerary/auto-populate.ts`).
+- Deleting such an entry records its source key in `Trip.itineraryAutoExcluded`
+  (`inner-itinerary/auto-excluded.ts`), so it is never re-added — on this device or any other.
+- Editing an owned entry keeps `auto` while it still links the same leg/stay, so a later source
+  edit moves and refreshes it (the source owns `label`/`start`/`end`/link; travelers and notes are
+  kept). Re-purposing it to link something else drops `auto` and records the old source key as
+  excluded, so the source is not re-added next to the entry the user built from it.
+
+Sync entry points: trip load (`pages/edit-trip/existing-trip.ts`), enabling/changing the module
+(`categories/itinerary-module/itinerary-module.ts`), leg/stay field edits and creation/import
+(`categories/transportation`, `categories/accommodation`).
 
 ---
 

@@ -17,6 +17,7 @@ import {
 } from '../../../utils/messages.js';
 import { markStagedChanges } from '../../../ui/fields.js';
 import { ACCOMMODATION_IMAGES, renderAccommodationImageCarousel } from './accommodation.js';
+import { syncAccommodationItinerary } from './itinerary-module/inner-itinerary/auto-populate.js';
 
 let TARGET_INDEX = 0;
 let SOURCE_ACCOMMODATIONS: Record<string, any> = {};
@@ -297,6 +298,7 @@ function applyAccommodationImport() {
 	ACCOMMODATION_IMAGES[index] = cloneObject(source.images || []);
 	renderAccommodationImageCarousel(index);
 	markStagedChanges();
+	syncAccommodationItinerary(index);
 	closeMessage();
 }
 

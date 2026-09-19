@@ -13,6 +13,7 @@ import {
 	openToast,
 } from '../../../utils/messages.js';
 import { getTransportationPicker } from '../new-trip.js';
+import { syncTransportationItinerary } from './itinerary-module/inner-itinerary/auto-populate.js';
 import { loadTransportationVisibility, updateTransportationTitle } from './transportation.js';
 
 let TARGET_INDEX = 0;
@@ -154,6 +155,8 @@ function copyTransportation(target: number, source: number) {
 	updateTransportationTitle(target);
 	markStagedChanges();
 	refreshTransportationImportButtons();
+	// The imported route, date and times replace the leg's itinerary item.
+	syncTransportationItinerary(target);
 }
 
 function copyCompany(target: number, source: number) {

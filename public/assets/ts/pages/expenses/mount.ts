@@ -243,8 +243,8 @@ async function loadExpenses(
 			await loadExpenseCurrencies();
 			loadConvertedExpenses();
 			applyExpenses();
-			const conversion = getID('conversion');
-			if (conversion) conversion.innerText = getConversionText();
+			const conversionText = getID('conversion-text');
+			if (conversionText) conversionText.innerText = getConversionText();
 			setTabListeners();
 			if (opts.embedMode) {
 				for (const card of document.querySelectorAll('.expenses-card')) {
@@ -442,8 +442,8 @@ function loadTravelerViewSelector() {
 		loadConvertedExpenses();
 		applyExpenses();
 		setTabListeners();
-		const conversion = getID('conversion');
-		if (conversion) conversion.innerText = getConversionText();
+		const conversionText = getID('conversion-text');
+		if (conversionText) conversionText.innerText = getConversionText();
 	};
 }
 

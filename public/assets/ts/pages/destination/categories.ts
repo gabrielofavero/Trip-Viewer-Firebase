@@ -118,11 +118,17 @@ export function getPlanned(id) {
 		}
 
 		const plannedItem = plannedItems[0];
+		// Entries without a date are ignored — the card badge asks for the
+		// planned label of every destination.
+		if (!plannedItem?.data) {
+			return '';
+		}
+
 		const date = convertFromDateObject(plannedItem.data);
 		const weekday = getWeekday(date.getUTCDay());
 		const day = plannedItem.data.day;
 		const month = getMonth(plannedItem.data.month - 1).toLowerCase();
-		const period = getPeriod(plannedItem.period).toLowerCase();
+		const period = (getPeriod(plannedItem.period) || '').toLowerCase();
 		const periodLabel = period ? ` (${period})` : '';
 		return `${translate('labels.planned.title')}: ${weekday}, ${translate('datetime.titles.day_month', { day, month })}${periodLabel}`;
 	}

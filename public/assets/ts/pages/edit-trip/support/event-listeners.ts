@@ -6,7 +6,7 @@ import {
 import { hasUnsavedChanges, validateImageLink, validateLink } from '../../../ui/fields.js';
 import { hideContent, searchDestinationsListenerAction } from '../../../theme/visibility.js';
 import { translate } from '../../../i18n/translation.js';
-import { getNextInputDay, getPreviousInputDay, inputDateToJsDate } from '../../../utils/dates.js';
+import { getNextInputDay, inputDateToJsDate } from '../../../utils/dates.js';
 import { registerActions } from '../../../ui/actions.js';
 import { registerActions as registerMessageActions } from '../../../utils/messages.js';
 import { openTravelersInfo, saveTravelersInfo } from '../categories/travelers.js';
@@ -39,6 +39,10 @@ import {
 	openInnerItinerarySwap,
 	closeInnerItinerary,
 	innerItineraryConfirmAction,
+	pickInnerItineraryDestination,
+	selectInnerItineraryDestinationCategory,
+	openInnerItineraryDestinationDetail,
+	selectInnerItineraryDestinationImage,
 } from '../categories/itinerary-module/inner-itinerary/inner-itinerary.js';
 import { setTripData } from '../set-trip.js';
 import { autoFillDarkColor } from '../categories/customization.js';
@@ -97,6 +101,29 @@ export function loadEventListeners() {
 			if (!isNaN(index)) openInnerItineraryItem(index);
 		},
 		'open-inner-itinerary-swap': () => openInnerItinerarySwap(),
+		'pick-itinerary-destination': (target) => {
+			const id = target.getAttribute('data-id');
+			const category = target.getAttribute('data-category');
+			if (id) pickInnerItineraryDestination(id, category);
+		},
+		'select-itinerary-destination-category': (target) => {
+			const category = target.getAttribute('data-category');
+			if (category) selectInnerItineraryDestinationCategory(category);
+		},
+		// See the saved info of a destination card before picking it
+		'open-itinerary-item-info': (target) => {
+			const id = target.getAttribute('data-id');
+			const category = target.getAttribute('data-category');
+			if (id) openInnerItineraryDestinationDetail(id, category);
+		},
+		'select-itinerary-item-image': (target) => {
+			const index = parseInt(target.getAttribute('data-index'));
+			if (!isNaN(index)) selectInnerItineraryDestinationImage(index);
+		},
+		'open-link': (target) => {
+			const url = target.getAttribute('data-url');
+			if (url) window.open(url, '_blank');
+		},
 		'delete-inner-itinerary': (target) => {
 			const j = parseInt(target.getAttribute('data-j'));
 			const k = parseInt(target.getAttribute('data-k'));
@@ -118,7 +145,6 @@ export function loadEventListeners() {
 
 	// Inputs
 	getID('start').addEventListener('change', () => startListenerAction());
-	getID('end').addEventListener('change', () => endListenerAction());
 
 	// Buttons
 	getID('save-btn').addEventListener('click', () => setTripData());
@@ -190,20 +216,6 @@ function startListenerAction() {
 
 	if (NEW_TRIP || !end || inputDateToJsDate(end).getTime() < inputDateToJsDate(start).getTime()) {
 		endDiv.value = getNextInputDay(start);
-	}
-
-	adaptItineraryToDuration();
-}
-
-function endListenerAction() {
-	const startDiv = getID('start');
-	const endDiv = getID('end');
-
-	const start = startDiv.value;
-	const end = endDiv.value;
-
-	if (!start || inputDateToJsDate(end).getTime() < inputDateToJsDate(start).getTime()) {
-		startDiv.value = getPreviousInputDay(end);
 	}
 
 	adaptItineraryToDuration();

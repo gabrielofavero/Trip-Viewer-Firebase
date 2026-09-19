@@ -79,7 +79,7 @@ export function getEditHTML(j) {
                 <div class="edit-column-container">
                     <select class="edit-input" id="edit-planned-select-data-${j}"></select>
                     <select class="edit-input" id="edit-planned-select-period-${j}">
-                        <option value="early_morning">${getPeriod('early_morning')}</option>
+                        <option value="earlyMorning">${getPeriod('earlyMorning')}</option>
                         <option value="morning">${getPeriod('morning')}</option>
                         <option value="afternoon">${getPeriod('afternoon')}</option>
                         <option value="night">${getPeriod('night')}</option>

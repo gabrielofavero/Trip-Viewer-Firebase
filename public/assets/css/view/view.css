@@ -31,7 +31,7 @@
 	color: #4f5051;
 }
 
-#itinerary-today {
+#todays-itinerary-btn {
 	width: fit-content;
 	font-size: 18px;
 	padding: 12px;
@@ -59,7 +59,7 @@
 	color: #6fa8dc;
 }
 
-#itinerary-today:hover {
+#todays-itinerary-btn:hover {
 	background-color: rgba(78, 79, 80, 0.03);
 }
 
@@ -968,9 +968,11 @@ section {
    `.row` (#destinationsBox). Bootstrap's default gutter only spaces
    columns side-by-side (horizontal); rows that wrap stack flush. Match
    the horizontal gutter (1.5rem) in the vertical direction so boxes
-   stacked top-to-bottom are spaced equally. */
+   stacked top-to-bottom are spaced equally. `row-gap` is used instead of
+   the `--bs-gutter-y` variable so the vertical spacing does not depend on
+   Bootstrap's gutter chain. */
 #destinationsBox {
-	--bs-gutter-y: 1.5rem;
+	row-gap: 1.5rem;
 }
 
 .services .icon-box {
@@ -1942,8 +1944,8 @@ body.lightbox-open {
 }
 
 .calendar-navigation.disabled {
-	background-color: #f6f6f6;
-	color: #b0b0b0;
+	background-color: var(--box-color);
+	color: var(--text-muted);
 	cursor: default;
 }
 
@@ -2643,9 +2645,10 @@ input[type="radio"] {
 	transition: color 0.15s ease-in;
 }
 
-/* Currency tabs (#tab-currencies in the expenses embed) render .tab labels
-   and a .glider, exactly like #tab-expenses/#tab-transportation — see
-   expenses/support/currency.ts (glider width set at runtime for the count). */
+/* Active tab label (main tabs, #tab-transportation and the expenses currency
+   chips) is bold. #tab-currencies is the one exception to the shared tab look:
+   it renders inside the expenses conversion bar as a compact chip row without
+   a glider — see #tab-currencies in expenses/expenses.css. */
 .tabs-container input[type="radio"]:checked + label {
 	font-weight: bold;
 }

@@ -138,6 +138,19 @@ export function getInnerItineraryContent(j, k, period, selects, isNew = false) {
 
                 </div>
 
+                <div id="inner-itinerary-destination-picker" class="inner-itinerary" style="display: none;">
+                    <div class="nice-form-group">
+                        <label>${translate('trip.itinerary.pick_destination')}</label>
+                        <div class="category-tabs" id="inner-itinerary-destination-picker-tabs"></div>
+                    </div>
+
+                    <div class="destination-picker-grid" id="inner-itinerary-destination-picker-grid"></div>
+                </div>
+
+                <div id="inner-itinerary-destination-detail" class="inner-itinerary" style="display: none;">
+                    <div id="inner-itinerary-destination-detail-body"></div>
+                </div>
+
                 <div id="inner-itinerary-swap-item" class="inner-itinerary" style="display: none;">
                     <div class="nice-form-group">
                         <label>${translate('labels.date')}</label>

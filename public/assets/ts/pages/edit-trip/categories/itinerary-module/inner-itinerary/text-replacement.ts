@@ -181,7 +181,7 @@ function processAccomodationReplacement(labelValue, itineraryJ) {
 	const treatedLabel = `${translate(labelKey)}: ${labelValue}`;
 
 	const itineraries = INNER_ITINERARY[inputDateToKey(inputDate)];
-	const allEntries = Object.values(itineraries).flat();
+	const allEntries = itineraries ? Object.values(itineraries).flat() : [];
 	const hasTreatedLabel = allEntries.some((entry: any) => entry.label === treatedLabel);
 	const alreadyIncluded = allEntries.some((entry: any) => entry.label.includes(labelValue));
 	const labelKeyMentioned = allEntries.some((entry: any) => entry.label.includes(labelKey));

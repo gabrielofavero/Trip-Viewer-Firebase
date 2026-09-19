@@ -1613,6 +1613,252 @@
 	padding-right: 4px;
 }
 
+/*--------------------------------------------------------------
+# Inner Itinerary Destination Picker
+# Focused destination-item grid inside the link-item modal. Mirrors
+# the destination page cards (icon category bar + card badges) on top
+# of the shared .image-picker-* / .rating-* styles.
+--------------------------------------------------------------*/
+.destination-picker-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+	gap: 12px;
+}
+
+.destination-picker-card {
+	/* Overrides .image-picker-card's single-column max-width */
+	position: relative;
+	max-width: none;
+	font-family: inherit;
+	color: var(--text-primary);
+}
+
+.destination-picker-thumb {
+	height: 90px;
+}
+
+.destination-picker-card.is-current {
+	border-color: var(--theme-color);
+	box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.35);
+}
+
+/* Badges overlaid on the top-right of the thumb: linked check, then priority. */
+.destination-picker-badges {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	z-index: 2;
+}
+
+.destination-picker-check,
+.destination-picker-score {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	flex-shrink: 0;
+	font-size: 12px;
+	font-weight: 700;
+	color: #1f2937;
+}
+
+/* White circle with a theme-colored check — same contrast reasoning as the
+   destination page's .dest-card-planned badge. */
+.destination-picker-check {
+	background: rgba(255, 255, 255, 0.95);
+	color: var(--theme-color);
+	border: 1px solid rgba(var(--theme-color-rgb), 0.35);
+	box-shadow: var(--shadow-sm);
+}
+
+.destination-picker-check .iconify {
+	font-size: 15px;
+}
+
+.destination-picker-empty {
+	margin: 0;
+	padding: 24px 8px;
+	text-align: center;
+	color: var(--text-secondary);
+}
+
+/* The info button is a sibling of the card (buttons cannot be nested), so each
+   card gets a positioned box that stretches it back to full width. */
+.destination-picker-card-box {
+	position: relative;
+	display: flex;
+	min-width: 0;
+}
+
+.destination-picker-card-box .destination-picker-card {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+/* Top-left corner of the thumb, mirroring the badges on the top-right: tap the
+   card to pick it, tap this to read the saved info first. */
+.destination-picker-info {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	padding: 0;
+	border: 1px solid rgba(var(--theme-color-rgb), 0.35);
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.95);
+	color: var(--theme-color);
+	box-shadow: var(--shadow-sm);
+	cursor: pointer;
+	z-index: 3;
+	transition: transform var(--transition-fast);
+}
+
+.destination-picker-info:hover {
+	transform: scale(1.08);
+}
+
+.destination-picker-info .iconify {
+	font-size: 16px;
+}
+
+/*--------------------------------------------------------------
+# Inner Itinerary Destination Detail
+# Saved info of a single card, opened on demand from its info button.
+--------------------------------------------------------------*/
+.destination-detail-photo {
+	display: block;
+	width: 100%;
+	height: 190px;
+	object-fit: cover;
+	border-radius: var(--radius-md);
+	background: var(--bg-tertiary);
+}
+
+.destination-detail-photo.placeholder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 40px;
+	color: var(--text-muted);
+}
+
+.destination-detail-thumbs {
+	display: flex;
+	gap: 8px;
+	margin-top: 8px;
+	padding-bottom: 2px;
+	overflow-x: auto;
+}
+
+.destination-detail-thumb {
+	flex: 0 0 auto;
+	width: 54px;
+	height: 40px;
+	padding: 0;
+	border: 2px solid transparent;
+	border-radius: var(--radius-sm);
+	background-color: var(--bg-tertiary);
+	background-size: cover;
+	background-position: center;
+	cursor: pointer;
+	opacity: 0.7;
+	transition: opacity var(--transition-fast);
+}
+
+.destination-detail-thumb.is-active {
+	border-color: var(--theme-color);
+	opacity: 1;
+}
+
+.destination-detail-header {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 16px 0 8px;
+}
+
+.destination-detail-title {
+	flex: 1 1 auto;
+	min-width: 0;
+	margin: 0;
+	font-size: 1.0625rem;
+	font-weight: 700;
+	color: var(--text-primary);
+}
+
+/* Priority circle + its label, as on the trip page's item dialog. */
+.destination-detail-score {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	flex-shrink: 0;
+}
+
+.destination-detail-score-text {
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--text-secondary);
+}
+
+.destination-detail-facts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 18px;
+	margin: 0 0 12px;
+	padding: 0;
+	list-style: none;
+}
+
+.destination-detail-facts li {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	font-size: 0.875rem;
+	color: var(--text-secondary);
+}
+
+.destination-detail-facts li > i {
+	flex-shrink: 0;
+	margin-top: 1px;
+	font-size: 18px;
+	color: var(--theme-color);
+}
+
+.destination-detail-facts .destination-detail-value {
+	display: inline-flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 6px;
+	min-width: 0;
+}
+
+.destination-detail-description {
+	margin: 0 0 16px;
+	font-size: 0.875rem;
+	line-height: 1.6;
+	color: var(--text-secondary);
+	white-space: pre-line;
+}
+
+.destination-detail-note {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 12px;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--theme-color);
+}
+
 /* Image editor modal screens — auto-scroll when content is taller than the viewport */
 .image-editor-box > .image-editor-screen {
 	max-height: 70vh;

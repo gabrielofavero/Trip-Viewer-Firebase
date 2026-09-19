@@ -29,7 +29,9 @@ const AUTOPLAY_DELAY = 5000;
 const AUTOPLAY_SPEED = 600;
 const AUTOPLAY_TIMERS: Record<number, number> = {};
 
-/** Card image: first entry image (static background) or category icon+color. */
+/** Card image: first entry image or the category icon when the entry has none.
+ *  Backed by a real <img> so the browser reports load/error — the card shows the
+ *  shimmer skeleton until then (see bindCardImageHandlers). */
 export function getCardImageHTML(item) {
 	const images = (Array.isArray(item?.images) ? item.images : []).filter((img) => img?.link);
 
@@ -38,7 +40,41 @@ export function getCardImageHTML(item) {
 	}
 
 	const link = images[0].link || '';
-	return `<div class="dest-card-image" style="background-image: url('${link}')"></div>`;
+	return `
+        <div class="dest-card-image is-loading">
+            <img class="card-image-img" src="${link}" alt="" loading="lazy" decoding="async">
+            ${getCategoryIconMarkup()}
+        </div>`;
+}
+
+/** Containers already wired for card image load/error events. */
+const CARD_IMAGE_BOUND = new WeakSet<HTMLElement>();
+
+/** img load/error events don't bubble, so listen on the capture phase from the
+ *  grid container — this also covers re-renders and lazy-loaded batches. */
+export function bindCardImageHandlers(container: HTMLElement | null): void {
+	if (!container || CARD_IMAGE_BOUND.has(container)) return;
+	CARD_IMAGE_BOUND.add(container);
+	container.addEventListener('load', (e) => handleCardImageEvent(e, false), true);
+	container.addEventListener('error', (e) => handleCardImageEvent(e, true), true);
+}
+
+function handleCardImageEvent(e: Event, failed: boolean): void {
+	const target = e.target as HTMLElement | null;
+	if (!(target instanceof HTMLImageElement)) return;
+	if (!target.classList.contains('card-image-img')) return;
+	const box = target.closest<HTMLElement>('.dest-card-image');
+	if (!box) return;
+
+	box.classList.remove('is-loading');
+	if (failed) {
+		// Broken/unavailable external link: fall back to the category icon
+		// instead of showing a broken image.
+		box.classList.add('no-image');
+		target.remove();
+	} else {
+		box.classList.add('is-loaded');
+	}
 }
 
 /** Dialog media: full carousel/single-image/fallback for the detail dialog. */
@@ -186,13 +222,19 @@ function getPortfolioWrapHTML(image, j) {
 
 /** Category icon on the neutral no-image placeholder background. */
 function getCategoryIconHTML(extraClass = '') {
-	const config = getDestinations();
-	const type = ACTIVE_CATEGORY === 'myMaps' ? 'map' : ACTIVE_CATEGORY;
-	const icon = config.icons[type] || config.icons['map'] || 'bx bx-map-alt';
 	const extra = extraClass ? ` ${extraClass}` : '';
 
 	return `
         <div class="dest-card-image no-image${extra}">
-            <i class="${icon}"></i>
+            ${getCategoryIconMarkup()}
         </div>`;
+}
+
+/** Font-icon markup for the active category (also the card image error fallback). */
+function getCategoryIconMarkup(): string {
+	const config = getDestinations();
+	const type = ACTIVE_CATEGORY === 'myMaps' ? 'map' : ACTIVE_CATEGORY;
+	const icon = config.icons[type] || config.icons['map'] || 'bx bx-map-alt';
+
+	return `<i class="${icon}"></i>`;
 }

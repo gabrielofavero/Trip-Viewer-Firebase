@@ -21,9 +21,10 @@ import {
 import { getID, getErrorFromGetRequestMessage } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
 import { stopLoadingScreen } from '../../utils/loading.js';
-import { loadActiveCategory, ACTIVE_CATEGORY } from './categories.js';
+import { loadActiveCategory, ACTIVE_CATEGORY, getPlanned } from './categories.js';
 import { adjustEditVisibility } from './edit-destination.js';
 import { getDestinationCardHTML } from './support/card.js';
+import { bindCardImageHandlers } from './support/card-media.js';
 import { filter } from './support/sort-and-filter/filter.js';
 import { sort } from './support/sort-and-filter/sort.js';
 import { loadSortAndFilter } from './support/sort-and-filter/sort-and-filter.js';
@@ -252,10 +253,19 @@ function getGrid(): LazyGrid | null {
 	GRID = new LazyGrid(
 		content,
 		sentinel,
-		(entry) => getDestinationCardHTML({ id: entry.id, item: entry.item, j: entry.j }),
+		(entry) =>
+			getDestinationCardHTML({
+				id: entry.id,
+				item: entry.item,
+				j: entry.j,
+				planned: getPlanned(entry.id),
+			}),
 		8,
 		(entry) => entry.item?.name || '',
 	);
+	// Card images are real <img>s; bind their load/error listeners once per
+	// container (capture phase) so every rendered + lazy-loaded card is covered.
+	bindCardImageHandlers(content);
 	return GRID;
 }
 
@@ -316,5 +326,8 @@ export async function refreshDestination() {
 	// (view.html lightbox) shows the updated document instead of the old copy.
 	DESTINATION_CACHE.set(DOCUMENT_ID, data);
 	setFirestoreDestinationsData(data);
+	// The planned state may have just changed, which adds/removes drawer
+	// options — force them to be rebuilt instead of reusing the cache.
 	loadDestinationByType(ACTIVE_CATEGORY);
+	loadSortAndFilter(true);
 }

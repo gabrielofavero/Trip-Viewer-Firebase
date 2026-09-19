@@ -16,6 +16,7 @@ import {
 	loadLangSelectorSelect,
 } from '../i18n/translation.js';
 import { initActions } from '../ui/actions.js';
+import { initBackToTop } from '../ui/back-to-top.js';
 import { initUrlInputOpenLink } from '../ui/url-input-open-link.js';
 import { initDev } from '../utils/dev.js';
 import { isStaticMode, loadStaticData } from '../static-mode/static-mode.js';
@@ -131,6 +132,9 @@ function initializeApp() {
 
 	// Initialize the centralized delegated click handler (replaces all inline onclick)
 	initActions();
+
+	// Floating "back to top" arrow (pages that render .back-to-top)
+	initBackToTop();
 
 	// Add "open link in new tab" helpers to url inputs on the edit forms
 	initUrlInputOpenLink();

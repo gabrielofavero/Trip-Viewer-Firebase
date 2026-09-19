@@ -1,5 +1,4 @@
-import { getChildIDs, getID } from '../../../utils/dom.js';
-import { setCSSRule } from '../../../theme/stylesheets.js';
+import { getID } from '../../../utils/dom.js';
 import { loadCurrenciesObject } from '../../../models/expense.model.js';
 import {
 	CURRENCY_CONVERSION,
@@ -50,32 +49,17 @@ export function loadCurrenciesTab() {
 	currencyTab.innerHTML = '';
 	currencyTab.style.display = currencies.length > 1 ? '' : 'none';
 
+	// One .tab chip per currency, inside #tab-currencies, which sits in the
+	// conversion bar (#conversion) next to the rate it changes. Chips auto-size
+	// to their label and the active one is a raised chip (expenses.css) — no
+	// glider here, unlike the equal-width main tabs.
 	for (let j = 1; j <= currencies.length; j++) {
 		const checked = currencies[j - 1] === CURRENT_CURRENCY ? 'checked' : '';
 		currencyTab.innerHTML += `<input type="radio" id="radio-currency-${j}" name="tabs-currencies" ${checked} />`;
 		currencyTab.innerHTML += `<label class="tab" for="radio-currency-${j}">${currencies[j - 1]}</label>`;
 	}
 
-	currencyTab.innerHTML += '<span class="glider"></span>';
-
-	// Currency tabs render one .tab label per currency (equal flex columns), so
-	// the .glider width must match a single tab for the translateX(100%) steps
-	// to land exactly one tab; the count varies. #tab-currencies shares the
-	// unified pill styling of #tab-expenses (expenses.css).
-	setCSSRule(
-		'#tab-currencies .glider',
-		'width',
-		`calc((100% - 0.5rem) / ${currencies.length})`,
-	);
-
-	const childs = getChildIDs('tab-currencies');
-	for (let i = 0; i < childs.length; i++) {
-		setCSSRule(
-			`#tab-currencies input[id="${childs[i]}"]:checked~.glider`,
-			'transform',
-			`translateX(${i * 100}%)`,
-		);
-
+	for (let i = 0; i < currencies.length; i++) {
 		const radio = getID(`radio-currency-${i + 1}`);
 		radio.addEventListener('change', () => {
 			if (radio.checked) {

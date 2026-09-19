@@ -45,9 +45,9 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 225   | 221  | 4         | 0       |
-| 🏆   | Feature     | F000 | 204   | 189  | 15        | 0       |
-| 📈   | Improvement | M000 | 238   | 216  | 22        | 0       |
+| 🐞   | Bug         | B000 | 232   | 228  | 4         | 0       |
+| 🏆   | Feature     | F000 | 207   | 192  | 15        | 0       |
+| 📈   | Improvement | M000 | 243   | 221  | 22        | 0       |
 | ⚔️   | Epic        | E000 | 53    | 44   | 7         | 2       |
 
 ## Backlog
@@ -106,6 +106,21 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B224:** Index unloadable offline with stored session
 - 📈 **M238:** Error dialog: copy details + consistent admin label
 - 🐞 **B225:** View: spacing between stacked destination boxes
+- 🐞 **B226:** Edit trip: itinerary days fail to load/save
+- 🐞 **B227:** Date picker swallows change after clearing
+- 🐞 **B228:** Mobile destination sort/filter drawer unscrollable
+- 📈 **M239:** Remove dead end-date change listener
+- 🐞 **B229:** Restore Today's Itinerary button styling
+- 🐞 **B230:** View: map box opens My Maps link
+- 🏆 **F205:** Back-to-top arrow on index, destination, itinerary
+- 🐞 **B231:** Calendar nav disabled state on dark mode
+- 📈 **M240:** Expenses: redesign currency switcher placement
+- 📈 **M241:** Expenses: equal card heights on desktop
+- 📈 **M242:** Destination card images: shimmer loading skeleton
+- 🐞 **B232:** Restore planned destination indicator
+- 🏆 **F206:** Edit trip: destination picker when linking itinerary
+- 🏆 **F207:** Itinerary destination item info screen
+- 📈 **M243:** [DEV] Restore deploy tooling on a new PC
 
 ### August 2026
 

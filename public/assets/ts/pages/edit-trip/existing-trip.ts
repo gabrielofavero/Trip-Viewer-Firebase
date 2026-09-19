@@ -16,6 +16,7 @@ import {
 	getTransportationPicker,
 	loadDestinations,
 	loadItinerarySchedule,
+	DATAS,
 } from './new-trip.js';
 import { GALLERY_ITEMS, renderGalleryCarousel } from './categories/gallery.js';
 import {
@@ -40,15 +41,19 @@ import {
 	getItineraryArray,
 	clearItineraryDurationStash,
 } from './categories/itinerary-module/itinerary-module.js';
-import {
-	autoPopulateItineraryFromTrip,
-	hasItineraryItems,
-} from './categories/itinerary-module/inner-itinerary/auto-populate.js';
+import { autoPopulateItineraryFromTrip } from './categories/itinerary-module/inner-itinerary/auto-populate.js';
+import { loadExcludedAutoKeys } from './categories/itinerary-module/inner-itinerary/auto-excluded.js';
 import { displayError } from '../../utils/messages.js';
 import { translate } from '../../i18n/translation.js';
 import { getState } from '../../data/state.js';
 import { cloneObject, getID, getOptionsFromSelect } from '../../utils/dom.js';
-import { convertFromDateObject, getDateString, getTimeStringFromDate } from '../../utils/dates.js';
+import {
+	convertFromDateObject,
+	dateObjectToKey,
+	getDateString,
+	getTimeStringFromDate,
+	jsDateToKey,
+} from '../../utils/dates.js';
 import { validateTravelersObject } from '../../models/traveler.model.js';
 import { haveErrorFromGetRequest, get } from '../../data/firebase/database.js';
 import { ERROR_FROM_GET_REQUEST } from '../../data/state.js';
@@ -316,24 +321,76 @@ export function loadItineraryData() {
 	}
 
 	loadItinerarySchedule();
-
-	let j = 1;
-	while (getID(`itinerary-title-${j}`)) {
-		const data = getState().itinerary[j - 1];
-		if (data?.date) {
-			applyLoadedItineraryData(j, data);
-		}
-		j++;
-	}
+	applyStoredItineraryDays();
 	updateActiveDestinationsCardsHTML('itinerary');
 
 	// Pre-fill from transportations/accommodations when the itinerary is
-	// enabled but has no scheduled items yet.
-	if (getID('itinerary-enabled')?.checked && !hasItineraryItems(getItineraryArray() || [])) {
+	// enabled: the items it already has are kept, and the sources whose item
+	// was deleted by hand stay out.
+	loadExcludedAutoKeys(getState().itineraryAutoExcluded);
+	if (getID('itinerary-enabled')?.checked) {
 		autoPopulateItineraryFromTrip();
 	}
 
 	setItineraryData(cloneObject(getState().itinerary));
+}
+
+/**
+ * YYYYMMDD key of a stored itinerary day, taken from its date and falling back
+ * to its document id, which is itself built from that date. Returns null when
+ * the document carries no usable date.
+ */
+function getStoredDayKey(day) {
+	if (day?.date?.year > 0 && day.date.month > 0 && day.date.day > 0) {
+		return dateObjectToKey(day.date);
+	}
+	const id = String(day?.id || '');
+	return /^\d{8}/.test(id) ? id.slice(0, 8) : null;
+}
+
+/**
+ * Apply the trip's stored days to the rendered day tabs.
+ *
+ * Days are matched by DATE, never by array position: on a trip whose stored days
+ * don't fill every day of its range (legacy documents, a changed duration), a
+ * positional match shifts every day after a gap onto the wrong tab — the day's
+ * items go missing from the tab that should show them and its title/destination
+ * selection is copied onto another day, which the following save then persists.
+ * Documents without a usable date fall back to their `day-N` id and finally to
+ * their original order.
+ */
+function applyStoredItineraryDays() {
+	const byDate = {};
+	const byPosition = {};
+	const undated = [];
+
+	for (const day of getState().itinerary || []) {
+		const key = getStoredDayKey(day);
+		const position = /^day-(\d+)$/.exec(String(day?.id || ''));
+
+		if (key) {
+			if (!byDate[key]) byDate[key] = day;
+		} else if (position) {
+			byPosition[Number(position[1])] = day;
+		} else {
+			undated.push(day);
+		}
+	}
+
+	let undatedIndex = 0;
+	let j = 1;
+	while (getID(`itinerary-title-${j}`)) {
+		const dateKey = DATAS[j - 1] ? jsDateToKey(DATAS[j - 1]) : null;
+		let data = (dateKey && byDate[dateKey]) || byPosition[j];
+
+		if (!data && undatedIndex < undated.length) {
+			data = undated[undatedIndex++];
+		}
+		if (data) {
+			applyLoadedItineraryData(j, data);
+		}
+		j++;
+	}
 }
 
 function loadGalleryData() {

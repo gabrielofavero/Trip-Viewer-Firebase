@@ -16,6 +16,7 @@ import { initializeSortableForGroup } from '../../../ui/sortable.js';
 import { TRAVELERS } from '../../../data/state.js';
 import { getTravelerOptionsHTML } from './travelers.js';
 import { addTransportation } from '../new-trip.js';
+import { syncTransportationItinerary } from './itinerary-module/inner-itinerary/auto-populate.js';
 
 const TRANSPORTATION_DIRECTION_KEYS = ['departure', 'during', 'return'] as const;
 
@@ -263,6 +264,17 @@ export function loadTransportationListeners(j) {
 	getID(`transportation-link-${j}`).addEventListener('change', () =>
 		validateLink(`transportation-link-${j}`),
 	);
+
+	// Keep the itinerary item of this leg in sync with its route, date and time.
+	for (const field of [
+		`transportation-departure-date-${j}`,
+		`departure-time-${j}`,
+		`arrival-time-${j}`,
+		`departure-point-${j}`,
+		`arrival-point-${j}`,
+	]) {
+		getID(field)?.addEventListener('change', () => syncTransportationItinerary(j));
+	}
 }
 
 export function transportationAddListenerAction() {

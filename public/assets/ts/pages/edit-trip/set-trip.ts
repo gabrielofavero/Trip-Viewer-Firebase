@@ -17,6 +17,7 @@ import { deleteUnusedImages } from '../../data/firebase/storage.js';
 import { translate } from '../../i18n/translation.js';
 import { getGalleryObject } from './categories/gallery.js';
 import { getItineraryArray, clearItineraryDurationStash } from './categories/itinerary-module/itinerary-module.js';
+import { getExcludedAutoKeys } from './categories/itinerary-module/inner-itinerary/auto-excluded.js';
 import { getDestinationsArray } from './categories/destination.js';
 import {
 	getAccommodationArray,
@@ -96,6 +97,7 @@ async function getUnprotectedTripObject() {
 		},
 		visibility: getVisibilityObject(),
 		pin: getCurrentPreferencePIN(),
+		itineraryAutoExcluded: getExcludedAutoKeys(),
 	};
 }
 
@@ -136,6 +138,7 @@ async function getTripObjectFull(protectedReservationCodes = false) {
 		},
 		visibility: getVisibilityObject(),
 		pin: getCurrentPreferencePIN(),
+		itineraryAutoExcluded: getExcludedAutoKeys(),
 	};
 }
 

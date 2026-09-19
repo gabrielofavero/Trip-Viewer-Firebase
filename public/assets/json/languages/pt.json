@@ -272,6 +272,11 @@
 			"linked_item": "Item vinculado",
 			"link_item": "Vincular item à programação",
 			"linked_destination": "Dado de destino",
+			"pick_destination": "Escolha um item de destino",
+			"item_info": "Informações do destino",
+			"see_item_info": "Ver informações",
+			"choose_item": "Escolher este item",
+			"already_linked": "Já vinculado a outro item da programação",
 			"media_button": {
 				"video": "Visualizar Vídeo",
 				"playlist": "Visualizar Playlist"
@@ -817,6 +822,7 @@
 		"delete": "Excluir",
 		"understood": "Entendi",
 		"confirm": "Confirmar",
+		"next": "Próximo",
 		"enabled": "Habilitado",
 		"disabled": "Desabilitado",
 		"add": "Adicionar",

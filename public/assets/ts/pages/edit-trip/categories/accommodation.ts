@@ -16,6 +16,7 @@ import { translate } from '../../../i18n/translation.js';
 import { renderImageSlotCarousel } from '../../../ui/image-slot-picker.js';
 import type { ImageSlot } from '../../../ui/image-slot-picker.js';
 import { addAccommodations } from '../new-trip.js';
+import { syncAccommodationItinerary } from './itinerary-module/inner-itinerary/auto-populate.js';
 
 export var ACCOMMODATION_IMAGES: Record<number, ImageSlot[]> = {};
 
@@ -96,6 +97,18 @@ export function loadAccommodationListeners(j) {
 			getID(`accommodations-title-${j}`).innerText = getID(`accommodations-name-${j}`).value;
 		}
 	});
+
+	// Keep the check-in/check-out itinerary items of this stay in sync with its
+	// name, dates and times.
+	for (const field of [
+		`accommodations-name-${j}`,
+		`check-in-${j}`,
+		`check-out-${j}`,
+		`check-in-time-${j}`,
+		`check-out-time-${j}`,
+	]) {
+		getID(field)?.addEventListener('change', () => syncAccommodationItinerary(j));
+	}
 }
 
 export function accommodationsAddListenerAction() {

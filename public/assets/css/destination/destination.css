@@ -509,6 +509,11 @@ h1::after {
 		right: 0;
 		bottom: 0;
 		width: 100%;
+		/* Cap the sheet to the viewport so `.drawer-body` scrolls. Without a cap the
+		   panel grew to fit its content, pushing the header + first options above
+		   the top of the screen where they could not be reached. */
+		max-height: 85vh;
+		max-height: 85dvh;
 		border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 		transform: translateY(105%);
 		transition: transform 0.28s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -542,7 +547,16 @@ h1::after {
 	display: flex !important;
 	flex-direction: column;
 	gap: 2em;
+	flex: 1 1 auto;
+	min-height: 0;
 	overflow-y: auto;
+}
+
+@media (max-width: 640px) {
+	.drawer-body {
+		/* Keep the last options clear of the iOS home indicator. */
+		padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+	}
 }
 
 .option-btn {
@@ -783,6 +797,45 @@ h1::after {
 	background-position: center;
 	position: relative;
 	flex-shrink: 0;
+	overflow: hidden;
+}
+
+/* Card images are backed by a real <img> (fires load/error): the photo fades in
+   once it's ready and the category icon takes over when it fails. */
+.dest-card-image > img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	opacity: 0;
+	transition: opacity var(--transition-normal);
+}
+
+.dest-card-image.is-loaded > img {
+	opacity: 1;
+}
+
+/* While the external image is still loading, show the shimmer skeleton on the
+   card image area (mirrors the index page cards). */
+.dest-card-image.is-loading {
+	background-image: linear-gradient(
+		90deg,
+		var(--skeleton-base) 25%,
+		var(--skeleton-highlight) 50%,
+		var(--skeleton-base) 75%
+	);
+	background-size: 200% 100%;
+	animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* The fallback icon only shows in the .no-image (absent/failed) state. */
+.dest-card-image > i {
+	display: none;
+}
+
+.dest-card-image.no-image > i {
+	display: inline-flex;
 }
 
 .dest-card-image::after {
@@ -793,6 +846,11 @@ h1::after {
 	right: 0;
 	height: 60px;
 	background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+}
+
+/* No bottom overlay until the image is actually on screen. */
+.dest-card-image.is-loading::after {
+	display: none;
 }
 
 .dest-card-image.no-image {
@@ -811,11 +869,37 @@ h1::after {
 	color: var(--text-muted);
 }
 
-/* Score badge — circle only (top-right of the card image) */
-.dest-card-score {
+@keyframes skeleton-shimmer {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.dest-card-image.is-loading {
+		animation: none;
+		background-image: none;
+		background-color: var(--skeleton-base);
+	}
+}
+
+/* Card badges — overlaid on the top-right of the card image: the planned
+   check (when the destination is planned for the trip) then the priority. */
+.dest-card-badges {
 	position: absolute;
 	top: 10px;
 	right: 10px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	z-index: 2;
+}
+
+/* Score badge — circle only (top-right of the card image) */
+.dest-card-score {
 	width: 32px;
 	height: 32px;
 	border-radius: 50%;
@@ -825,10 +909,31 @@ h1::after {
 	font-size: 14px;
 	font-weight: 700;
 	color: #1f2937;
-	z-index: 2;
+	flex-shrink: 0;
 }
 
 .dest-card-score .iconify {
+	font-size: 18px;
+}
+
+/* Planned badge — check in a circle, next to the priority circle. Kept white
+   with a theme-colored check: trip colors include very light values, so the
+   reverse combination would not always be readable. */
+.dest-card-planned {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	background: rgba(255, 255, 255, 0.95);
+	color: var(--theme-color);
+	border: 1px solid rgba(var(--theme-color-rgb), 0.35);
+	box-shadow: var(--shadow-sm);
+}
+
+.dest-card-planned .iconify {
 	font-size: 18px;
 }
 
@@ -852,7 +957,6 @@ h1::after {
 }
 
 .dialog-score-badge .dest-card-score {
-	position: static;
 	width: 30px;
 	height: 30px;
 }

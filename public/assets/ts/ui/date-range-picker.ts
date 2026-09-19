@@ -192,6 +192,12 @@ export class DateRangePicker {
 				[this.startDate, this.endDate] = [this.endDate, this.startDate];
 			}
 			this.updateDisplay();
+		} else {
+			// A half-finished pick is not a range: drop it and restore whatever is
+			// actually committed, so the calendar can never keep showing a
+			// selection that was not applied.
+			this.startDate = this.startInput.value ? new Date(this.startInput.value + 'T00:00:00') : null;
+			this.endDate = this.endInput.value ? new Date(this.endInput.value + 'T00:00:00') : null;
 		}
 		this.closeCalendar();
 	}
@@ -206,6 +212,14 @@ export class DateRangePicker {
 
 	private previousStartValue = '';
 	private previousEndValue = '';
+	/**
+	 * Whether a range was ever committed. Tracked separately from
+	 * `previousStartValue` because an empty previous value (start of life, or
+	 * after a clear) would otherwise mark the NEXT change as the initial render
+	 * and swallow its `change` event, leaving everything downstream — the
+	 * itinerary days and the auto durations — on the old range.
+	 */
+	private hasCommittedRange = false;
 
 	private updateDisplay(): void {
 		const hasValue = this.startDate && this.endDate;
@@ -235,14 +249,16 @@ export class DateRangePicker {
 			this.startInput.value = newStart;
 			this.endInput.value = newEnd;
 
-			if (changed && this.previousStartValue !== '' /* not initial render */) {
+			if (changed) {
+				// Only the very first render is silent; every later change —
+				// including the first one after a clear — must notify consumers.
+				const notify = this.hasCommittedRange;
+				this.hasCommittedRange = true;
 				this.previousStartValue = newStart;
 				this.previousEndValue = newEnd;
-				this.startInput.dispatchEvent(new Event('change', { bubbles: true }));
-			} else if (this.previousStartValue === '') {
-				// Track initial values without firing events
-				this.previousStartValue = newStart;
-				this.previousEndValue = newEnd;
+				if (notify) {
+					this.startInput.dispatchEvent(new Event('change', { bubbles: true }));
+				}
 			}
 		} else {
 			this.textEl.textContent = translate('datetime.datepicker.select_dates');

@@ -9,10 +9,14 @@ import { CUSTOM_SELECTS } from '../../../ui/custom-select.js';
 import { END_DATE } from '../view.js';
 import { START_DATE } from '../view.js';
 import { SCHEDULE_DESTINATIONS } from './itinerary-module/itinerary-module.js';
+import { get } from '../../../data/firebase/database.js';
 
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var ACTIVE_DESTINATION;
+// The destination entry the rendered boxes were built from — a metadata-only
+// ref in trip mode, the full document in destination-exclusive mode.
+var ACTIVE_DESTINATION_DATA: any;
 export function setActiveDestination(val: any) {
 	ACTIVE_DESTINATION = val;
 }
@@ -140,6 +144,7 @@ export function loadDestinationsCustomSelect() {
 }
 
 export function loadDestinationsHTML(destination) {
+	ACTIVE_DESTINATION_DATA = destination;
 	let text = '';
 	const destinationsConfig = getDestinations();
 	const types = destinationsConfig.categories.general;
@@ -197,7 +202,57 @@ function shouldShowDestinationCategory(destination, type): boolean {
 }
 
 export function loadAndOpenDestino(code) {
-	openDestinationLightbox(ACTIVE_DESTINATION, code.toLowerCase());
+	const type = (code || '').toLowerCase();
+
+	// The `map` box has no category behind it — it links out to the
+	// destination's Google My Maps page instead of opening the lightbox.
+	if (type === 'map') {
+		openMyMapsLink();
+		return;
+	}
+
+	openDestinationLightbox(ACTIVE_DESTINATION, type);
+}
+
+/**
+ * Open the active destination's My Maps link in a new tab.
+ *
+ * A trip only loads metadata-only destination refs (`DestinationRef` has no
+ * `myMaps`), so outside destination-exclusive mode the link can only be
+ * resolved with a lazy read of the destination document. That read makes the
+ * link available after the click handler returns, and a `window.open` issued
+ * that late is no longer part of the click gesture (the browser blocks it as
+ * an unrequested popup) — hence the blank tab is opened up front and pointed
+ * at the link once it resolves.
+ */
+async function openMyMapsLink() {
+	const knownLink = ACTIVE_DESTINATION_DATA?.destinations?.myMaps;
+	if (knownLink) {
+		window.open(knownLink, '_blank', 'noopener');
+		return;
+	}
+
+	const destinationId =
+		ACTIVE_DESTINATION_DATA?.id || ACTIVE_DESTINATION_DATA?.destinationId || ACTIVE_DESTINATION;
+	if (!destinationId) return;
+
+	const tab = window.open('', '_blank');
+	if (tab) tab.opener = null;
+
+	const destination = await get(`destinations/${destinationId}`);
+	const link = destination?.myMaps;
+
+	if (!link) {
+		tab?.close();
+		console.warn(`[destination] No My Maps link on destination "${destinationId}".`);
+		return;
+	}
+
+	if (tab) {
+		tab.location.href = link;
+	} else {
+		window.open(link, '_blank', 'noopener');
+	}
 }
 
 function getDestinationsBoxesIndex(i) {

@@ -272,6 +272,11 @@
 			"linked_item": "Linked item",
 			"link_item": "Link an item to the itinerary",
 			"linked_destination": "Destination data",
+			"pick_destination": "Pick a destination item",
+			"item_info": "Destination info",
+			"see_item_info": "See info",
+			"choose_item": "Choose this item",
+			"already_linked": "Already linked to another itinerary item",
 			"media_button": {
 				"video": "Watch Video",
 				"playlist": "View Playlist"
@@ -816,6 +821,7 @@
 		"delete": "Delete",
 		"understood": "Understood",
 		"confirm": "Confirm",
+		"next": "Next",
 		"refresh": "Refresh",
 		"enabled": "Enabled",
 		"disabled": "Disabled",

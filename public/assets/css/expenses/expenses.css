@@ -18,8 +18,7 @@
 	justify-content: center;
 }
 
-#tabs-container-expenses,
-#tabs-container-currencies {
+#tabs-container-expenses {
 	padding: 0 0.75rem;
 }
 
@@ -45,14 +44,15 @@ input[type="radio"] {
 	display: none;
 }
 
-/* Main tab bars (#tab-expenses, #tab-currencies) — one consistent look at
-   every breakpoint: the mobile "pill" visuals (subtle gray container, muted
-   labels, theme-colored active pill) combined with the desktop slide
-   animation (the .glider slides between tabs instead of being hidden).
+/* Main tab bar (#tab-expenses) — one consistent look at every breakpoint: the
+   mobile "pill" visuals (subtle gray container, muted labels, theme-colored
+   active pill) combined with the desktop slide animation (the .glider slides
+   between tabs instead of being hidden).
    #tab-transportation (view.css) shares this treatment so the .tab component
-   renders identically across pages. */
-#tab-expenses,
-#tab-currencies {
+   renders identically across pages. The currency switcher (#tab-currencies)
+   deliberately does NOT: it is a compact chip row in the conversion bar, see
+   its own block below. */
+#tab-expenses {
 	display: flex;
 	flex-wrap: nowrap;
 	justify-content: center;
@@ -88,9 +88,52 @@ input[type="radio"]:checked + label {
 	font-weight: bold;
 }
 
-#tab-expenses input[type="radio"]:checked + label,
-#tab-currencies input[type="radio"]:checked + label {
+#tab-expenses input[type="radio"]:checked + label {
 	color: #fff;
+}
+
+/* Currency switcher — a compact, quiet segmented control that lives in the
+   conversion bar (#conversion) right next to the rate it changes, instead of
+   sitting flush above the main tabs. It stays deliberately low-key: the track
+   is the same subtle gray as the tab pills and the active currency is a raised
+   surface-colored chip (not the loud solid theme-color pill used by the main
+   tabs), so the switcher reads as a secondary control. */
+#tab-currencies {
+	display: inline-flex;
+	flex-wrap: nowrap;
+	justify-content: center;
+	width: auto;
+	max-width: none;
+	gap: 0.125rem;
+	padding: 0.125rem;
+	background-color: var(--box-color);
+	border: 1px solid var(--border-color);
+	border-radius: 99px;
+	box-shadow: none;
+	transform: none;
+}
+
+#tab-currencies .tab {
+	flex: 0 0 auto;
+	height: 1.5rem;
+	padding: 0 0.75rem;
+	font-size: 0.7rem;
+	letter-spacing: 0.03em;
+	border-radius: 99px;
+	transition:
+		color 0.15s ease-in,
+		background-color 0.15s ease-in,
+		box-shadow 0.15s ease-in;
+}
+
+#tab-currencies .tab:hover {
+	color: var(--text-secondary);
+}
+
+#tab-currencies input[type="radio"]:checked + label {
+	color: var(--text-primary);
+	background-color: var(--bg-primary);
+	box-shadow: var(--shadow-sm);
 }
 
 input[type="radio"]:checked + label > .notification {
@@ -197,7 +240,15 @@ section {
 	}
 }
 
+/* Conversion bar — the rate text and the currency switcher share one
+   right-aligned row, so the switcher sits next to the value it changes. */
 #conversion {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 0.5rem 0.75rem;
+	margin-bottom: 0.75rem;
 	color: var(--subtitle);
 	padding-right: 2rem;
 	padding-left: 2rem;
@@ -235,12 +286,21 @@ section {
 	width: 100%;
 }
 
+/* Receipt cards. The card itself is intentionally NOT height-capped: on desktop
+   the cards of a flex row stretch to the tallest sibling (usually the chart
+   card), and a max-height here would clamp a receipt below its row height and
+   give side-by-side cards different heights. Only the body scrolls when a
+   category has many items, which also keeps the title visible while scrolling. */
 .expenses-receipt {
+	display: flex;
+	flex-direction: column;
 	grid-column: span 12;
 	border-radius: 0.5rem;
 	padding: 1.5rem;
-	/* The page expands to fit all boxes; a single box scrolls internally when
-	   its category has many items. */
+}
+
+.expenses-receipt > .expenses-card-body {
+	flex: 1 1 auto;
 	max-height: 60vh;
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -283,6 +343,10 @@ section {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
+		/* Cards of the same row must match in height: stretch lets the shorter
+		   cards (receipts) grow to the row's tallest item (the chart card). This
+		   only works because no card has a max-height — see .expenses-receipt. */
+		align-items: stretch;
 	}
 
 	.expenses-container > .expenses-card {

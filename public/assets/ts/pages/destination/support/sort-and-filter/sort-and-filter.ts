@@ -108,11 +108,8 @@ export function shouldDisplayRegions() {
 }
 
 export function shouldDisplayPlanned() {
-	const item = PLANNED_DESTINATION[ACTIVE_CATEGORY];
-	if (!item || Object.keys(PLANNED_DESTINATION[ACTIVE_CATEGORY]).length <= 1) {
-		return false;
-	}
-	return true;
+	const planned = PLANNED_DESTINATION[ACTIVE_CATEGORY];
+	return !!planned && Object.keys(planned).length > 0;
 }
 
 export function shouldDisplayScores() {

@@ -113,10 +113,14 @@ function setTableCategoria(type) {
 
 		recibo.appendChild(titleRow);
 
+		const cardBody = document.createElement('div');
+		cardBody.className = 'expenses-card-body';
+		recibo.appendChild(cardBody);
+
 		const tableEl = document.createElement('table');
 		tableEl.className = 'card-full-size';
 		tableEl.id = `${id}-table`;
-		recibo.appendChild(tableEl);
+		cardBody.appendChild(tableEl);
 
 		container.appendChild(recibo);
 

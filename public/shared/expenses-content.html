@@ -6,10 +6,6 @@
   mountExpenses() fills this skeleton; it must already exist in the DOM.
 -->
 <div id="expenses-container">
-  <div class="tabs-container" id="tabs-container-currencies">
-    <div class="tabs" id="tab-currencies" style="display: none;">
-    </div>
-  </div>
   <div id="traveler-view" class="expense-view-selector" style="display: none;">
     <label data-translate="trip.expenses.view_by"></label>
     <select id="expense-view-traveler" class="edit-select"></select>
@@ -28,7 +24,12 @@
 </div>
 
 <div>
-  <div id="conversion"></div>
+  <!-- Conversion bar: the rate text plus the currency switcher, which lives
+       here (next to the value it changes) instead of above the main tabs. -->
+  <div id="conversion">
+    <span id="conversion-text"></span>
+    <div class="tabs" id="tab-currencies" style="display: none;"></div>
+  </div>
   <div id="summary" class="main-container">
     <div id="summary-container" class="expenses-container">
       <div class="expenses-card grafico">
@@ -39,20 +40,26 @@
 
       <div id="summary-preTrip" class="expenses-card expenses-receipt" style="display: none;">
         <h2 class="expenses-title" id="summary-preTrip-title" data-translate="trip.expenses.pre_trip"></h2>
-        <table id="summary-preTrip-table" class="card-full-size">
-        </table>
+        <div class="expenses-card-body">
+          <table id="summary-preTrip-table" class="card-full-size">
+          </table>
+        </div>
       </div>
 
       <div id="summary-duringTrip" class="expenses-card expenses-receipt" style="display: none;">
         <h2 class="expenses-title" id="summary-duringTrip-title" data-translate="trip.expenses.during_trip"></h2>
-        <table id="summary-duringTrip-table" class="card-full-size">
-        </table>
+        <div class="expenses-card-body">
+          <table id="summary-duringTrip-table" class="card-full-size">
+          </table>
+        </div>
       </div>
 
       <div id="summary-expensesTravelers" class="expenses-card expenses-receipt" style="display: none;">
         <h2 class="expenses-title" id="summary-expensesTravelers-title" data-translate="trip.travelers.title"></h2>
-        <table id="summary-expensesTravelers-table" class="card-full-size">
-        </table>
+        <div class="expenses-card-body">
+          <table id="summary-expensesTravelers-table" class="card-full-size">
+          </table>
+        </div>
       </div>
     </div>
   </div>

@@ -681,15 +681,13 @@
 	color: var(--font-color);
 }
 
-[data-theme="dark"] #programacao-hoje,
-[data-theme="dark"] #itinerary-today {
+[data-theme="dark"] #todays-itinerary-btn {
 	background-color: rgba(255, 255, 255, 0.05);
 	border: 3px solid rgba(255, 255, 255, 0.05);
 	color: var(--font-color);
 }
 
-[data-theme="dark"] #programacao-hoje:hover,
-[data-theme="dark"] #itinerary-today:hover {
+[data-theme="dark"] #todays-itinerary-btn:hover {
 	background-color: rgba(255, 255, 255, 0.07);
 }
 

@@ -109,6 +109,13 @@ export interface Trip {
 
 	/** Header/hero image configuration */
 	image?: TripImage;
+
+	/**
+	 * Auto-itinerary sources (transportation legs, accommodation check-ins and
+	 * check-outs) whose itinerary entry was deleted by hand. They are never
+	 * auto-added again.
+	 */
+	itineraryAutoExcluded?: string[];
 }
 
 /** was "versao" */
@@ -377,6 +384,12 @@ export interface PeriodItem {
 	travelers: PeriodTraveler[];
 	/** was "item" */
 	item: ItineraryItemRef;
+	/**
+	 * Source key of the transportation leg / accommodation this entry was
+	 * auto-added from ("transportation:{id}", "accommodations:{id}:checkIn"
+	 * or "accommodations:{id}:checkOut"). Absent on hand-made entries.
+	 */
+	auto?: string;
 }
 
 /** was "pessoas[i]" inside an itinerary entry */

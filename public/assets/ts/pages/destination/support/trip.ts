@@ -1,4 +1,3 @@
-import { getItinerary } from '../../../app/config.js';
 import { getState, setState, DOCUMENT_ID } from '../../../data/state.js';
 import { cloneObject, getID } from '../../../utils/dom.js';
 import {
@@ -6,10 +5,13 @@ import {
 	dateObjectToInputDate,
 	getDateTitle,
 } from '../../../utils/dates.js';
-import { get, update } from '../../../data/firebase/database.js';
+import { get, getItinerary, update } from '../../../data/firebase/database.js';
 import { translate } from '../../../i18n/translation.js';
 import { jsDateToInputDate } from '../../../utils/dates.js';
 import { ACTIVE_CATEGORY } from '../destination.js';
+
+// Time-of-day keys of an itinerary day (mirrors assets/json/itinerary.json).
+const PERIODS = ['earlyMorning', 'morning', 'afternoon', 'night'];
 
 var TRIP_ID;
 export var PLANNED_DESTINATION = {};
@@ -18,45 +20,87 @@ export function resetActivePlannedDestination() {
 	ACTIVE_PLANNED_DESTINATION = [];
 }
 
+/**
+ * Trip document plus its itinerary. The itinerary lives in the
+ * `trips/{tripId}/itinerary/{dayId}` subcollection (it was an embedded array in
+ * older documents), so it is read separately — the destination page can only
+ * tell what is planned for the trip when it has it in state.
+ */
 export async function getTripData(tripID) {
 	if (!tripID) return;
 	TRIP_ID = tripID;
-	return await get(`trips/${tripID}`);
+	const [tripData, itinerary] = await Promise.all([
+		get(`trips/${tripID}`),
+		getItinerary(tripID).catch((error) => {
+			console.warn('[destination] Could not load the trip itinerary:', error);
+			return [] as any[];
+		}),
+	]);
+	if (!tripData) return tripData;
+	return itinerary?.length ? { ...tripData, itinerary } : tripData;
 }
 
 export async function refreshTripData() {
 	if (!TRIP_ID) return;
 	ACTIVE_PLANNED_DESTINATION = [];
-	PLANNED_DESTINATION = {};
-	setState(await get(`trips/${TRIP_ID}`));
+	setState(await getTripData(TRIP_ID));
 	loadPlannedDestination();
 }
 
 // Planned Destination
 export function loadPlannedDestination() {
+	// Rebuilt from scratch: the destination component can be mounted more than
+	// once per page session (view.html lightbox) and the trip data changes.
+	PLANNED_DESTINATION = {};
+
 	const schedules = getState()?.itinerary || [];
 	for (const day of schedules) {
-		const data = day.data;
-		for (const period of getItinerary().timeOfDay) {
+		const data = getDayDate(day);
+		if (!data) continue;
+
+		for (const period of PERIODS) {
 			const periods = day[period];
-			if (!periods) continue;
+			if (!Array.isArray(periods)) continue;
 
 			for (const schedule of periods) {
 				const item = schedule?.item;
-				if (!item || item.type !== 'destinations') continue;
-				addPlannedDestination(item, data, period);
+				if (!isDestinationItem(item) || item.location !== DOCUMENT_ID) continue;
+				if (!item.category || !item.id) continue;
+
+				PLANNED_DESTINATION[item.category] ??= {};
+				PLANNED_DESTINATION[item.category][item.id] ??= [];
+				PLANNED_DESTINATION[item.category][item.id].push({ data, period });
 			}
 		}
 	}
+}
 
-	function addPlannedDestination(item, data, period) {
-		const destination = (getState().destinations || getState().destinationRefs).find((d) => d.destinationId === item.location);
-		if (!destination || destination.destinationId != DOCUMENT_ID) return;
+/** Day date — `date` on current documents, `data` on legacy ones. */
+function getDayDate(day) {
+	return day?.date || day?.data;
+}
 
-		PLANNED_DESTINATION[item.category] ??= {};
-		PLANNED_DESTINATION[item.category][item.id] ??= [];
-		PLANNED_DESTINATION[item.category][item.id].push({ data, period });
-	}
+/**
+ * Itinerary entries reference destinations with the plural type
+ * (`destinations`); the singular form is kept for legacy documents.
+ */
+function isDestinationItem(item) {
+	return item?.type === 'destinations' || item?.type === 'destination';
+}
+
+/** Destination ids referenced by a day — plain ids or `{ id, title }` refs. */
+function getDestinationRefIds(day) {
+	return (day?.destinationIds || [])
+		.map((ref) => (typeof ref === 'string' ? ref : ref?.id || ref?.destinationId))
+		.filter(Boolean);
+}
+
+/** First itinerary day whose date matches an `yyyy-mm-dd` input value. */
+function findDayByInputDate(schedules, inputDate) {
+	return schedules.find((day) => {
+		const date = getDayDate(day);
+		return !!date && dateObjectToInputDate(date) === inputDate;
+	});
 }
 
 export function getPlannedDestinations(id) {
@@ -116,17 +160,13 @@ function loadPlannedDestinationEditFieldHTML(j) {
 	}
 
 	function loadAllOptions() {
-		const itinerary = getState().itinerary;
-		if (!itinerary) return;
+		const itinerary = getState()?.itinerary || [];
 		for (const schedule of itinerary) {
-			const ids = schedule.destinationIds.map((destination) => destination.destinationId);
-
-			if (!ids.includes(DOCUMENT_ID)) {
+			if (!getDestinationRefIds(schedule).includes(DOCUMENT_ID)) {
 				continue;
 			}
 
-			const date = schedule.data;
-			const jsDate = convertFromDateObject(date);
+			const jsDate = convertFromDateObject(getDayDate(schedule));
 			const label = getDateTitle(jsDate, 'weekday_day_month');
 			options += `<option value="${jsDateToInputDate(jsDate)}">${label}</option>`;
 		}
@@ -157,41 +197,38 @@ export async function setPlannedDestination(id, j) {
 		return false;
 	}
 
-	const updatedSchedules = getUpdatedSchedules();
-	await update(`trips/${TRIP_ID}`, {
-		itinerary: updatedSchedules,
-	});
+	const currentSchedules = getState()?.itinerary || [];
+	const updatedSchedules = getUpdatedSchedules(cloneObject(currentSchedules));
 
-	return true;
+	return await persistItinerary(currentSchedules, updatedSchedules);
 
-	function getUpdatedSchedules() {
+	function getUpdatedSchedules(schedules) {
 		if (!newData && currentData) {
-			return removeDestinationReferences();
+			return removeDestinationReferences(schedules);
 		}
 
 		if (newData && !currentData) {
-			return addToLastPosition();
+			return addToLastPosition(schedules);
 		}
 
 		if (newData !== currentInputDate || newPeriod !== currentPeriod) {
-			return changeOrder();
+			return changeOrder(schedules);
 		}
 
-		return getState().itinerary;
+		return schedules;
 	}
 
 	// ---------- helpers ----------
 
-	function removeDestinationReferences() {
-		const schedules = cloneObject(getState().itinerary);
-
+	function removeDestinationReferences(schedules) {
 		for (const day of schedules) {
-			for (const period of ['morning', 'afternoon', 'night', 'earlyMorning']) {
+			for (const period of PERIODS) {
+				if (!Array.isArray(day[period])) continue;
+
 				day[period] = day[period].filter((p) => {
 					const item = p?.item;
 					return !(
-						item &&
-						item.type === 'destinations' &&
+						isDestinationItem(item) &&
 						item.location === DOCUMENT_ID &&
 						item.id === id
 					);
@@ -202,50 +239,84 @@ export async function setPlannedDestination(id, j) {
 		return schedules;
 	}
 
-	function addToLastPosition() {
-		const schedules = cloneObject(getState().itinerary);
-
-		const targetDay = schedules.find((p) => dateObjectToInputDate(p.data) === newData);
+	function addToLastPosition(schedules) {
+		const targetDay = findDayByInputDate(schedules, newData);
 
 		if (!targetDay) {
 			return schedules;
 		}
 
+		targetDay[newPeriod] ??= [];
 		targetDay[newPeriod].push(buildPlannedDestination());
 
 		return schedules;
 	}
 
-	function changeOrder() {
-		let schedules = removeDestinationReferences();
-
-		const targetDay = schedules.find((p) => dateObjectToInputDate(p.data) === newData);
-
-		if (!targetDay) {
-			return schedules;
-		}
-
-		targetDay[newPeriod].push(buildPlannedDestination());
-
-		return schedules;
+	function changeOrder(schedules) {
+		return addToLastPosition(removeDestinationReferences(schedules));
 	}
 
 	function buildPlannedDestination() {
-		const people = cloneObject(getState().travelers);
-		for (const person of people) {
-			person.isPresent = true;
-		}
+		const travelers = cloneObject(getState()?.travelers || []).map((traveler) => ({
+			id: traveler.id,
+			name: traveler.name,
+			isPresent: true,
+		}));
+
 		return {
-			itinerary: getID(`edit-name-${j}`).value,
+			label: getID(`edit-name-${j}`).value,
+			travelers,
+			start: '',
+			end: '',
 			item: {
 				type: 'destinations',
 				category: ACTIVE_CATEGORY,
 				location: DOCUMENT_ID,
-				id: id,
+				id,
 			},
-			end: '',
-			people: people || [],
-			start: '',
 		};
 	}
+}
+
+/**
+ * Persist the updated itinerary days. Days carrying a document id are written
+ * back to `trips/{tripId}/itinerary/{dayId}` — only the four period arrays (the
+ * rest of the document is left alone) and only for the days that changed.
+ * Legacy embedded days (no id) are written back to the trip document.
+ *
+ * @returns whether anything was written.
+ */
+async function persistItinerary(currentSchedules, updatedSchedules) {
+	if (!updatedSchedules?.length) return false;
+
+	if (updatedSchedules.some((day) => !day?.id)) {
+		await update(`trips/${TRIP_ID}`, { itinerary: updatedSchedules });
+		return true;
+	}
+
+	const changedDays = updatedSchedules.filter(
+		(day, index) => !hasSamePeriods(currentSchedules[index], day),
+	);
+	if (changedDays.length === 0) return false;
+
+	await Promise.all(
+		changedDays.map((day) => update(`trips/${TRIP_ID}/itinerary/${day.id}`, pickPeriods(day))),
+	);
+
+	return true;
+}
+
+function hasSamePeriods(previousDay, day) {
+	return PERIODS.every(
+		(period) =>
+			JSON.stringify(previousDay?.[period] || []) === JSON.stringify(day?.[period] || []),
+	);
+}
+
+function pickPeriods(day) {
+	const periods: Record<string, any[]> = {};
+	for (const period of PERIODS) {
+		periods[period] = day?.[period] || [];
+	}
+	return periods;
 }

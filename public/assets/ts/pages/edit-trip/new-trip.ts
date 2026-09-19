@@ -45,8 +45,8 @@ import {
 	clearItineraryDurationStash,
 } from './categories/itinerary-module/itinerary-module.js';
 import {
-	addAccommodationToItinerary,
-	addTransportationToItinerary,
+	syncAccommodationItinerary,
+	syncTransportationItinerary,
 } from './categories/itinerary-module/inner-itinerary/auto-populate.js';
 import {
 	countItineraryDestinationLinks,
@@ -257,9 +257,7 @@ export function addTransportation() {
 	addRemoveTransportationListener(j);
 
 	// Auto-add the new leg to the itinerary when the module is enabled.
-	if (getID('itinerary-enabled')?.checked) {
-		addTransportationToItinerary(j);
-	}
+	syncTransportationItinerary(j);
 
 	function getTypeOptions() {
 		let result = '';
@@ -398,9 +396,7 @@ export function addAccommodations() {
 	renderAccommodationImageCarousel(j);
 
 	// Auto-add check-in/check-out to the itinerary when the module is enabled.
-	if (getID('itinerary-enabled')?.checked) {
-		addAccommodationToItinerary(j);
-	}
+	syncAccommodationItinerary(j);
 }
 
 export function loadDestinations() {

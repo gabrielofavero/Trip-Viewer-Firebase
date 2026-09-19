@@ -94,7 +94,16 @@ export function getItineraryArray() {
 }
 
 export function applyLoadedItineraryData(j, data) {
-	const jsDate = convertFromDateObject(data.date);
+	if (!data) return;
+
+	// Content is keyed by the day tab it is rendered on, not by the stored
+	// document's own date: on a trip whose stored days don't line up with its
+	// rendered range, the stored date parks the items on a key no day tab reads,
+	// so the day shows nothing and the next save writes it back empty.
+	const renderedKey = DATAS[j - 1] ? jsDateToKey(DATAS[j - 1]) : null;
+	const storedKey = data.date ? jsDateToKey(convertFromDateObject(data.date)) : null;
+	const key = renderedKey || storedKey;
+	if (!key) return;
 
 	const destinationIdsObject = data.destinationIds;
 	let destinationIds = [];
@@ -121,7 +130,7 @@ export function applyLoadedItineraryData(j, data) {
 		}
 	}
 
-	INNER_ITINERARY[jsDateToKey(jsDate)] = {
+	INNER_ITINERARY[key] = {
 		earlyMorning: data.earlyMorning || [],
 		morning: data.morning || [],
 		afternoon: data.afternoon || [],
@@ -259,11 +268,11 @@ function getItineraryTitle(dataFormatada, title = '') {
 
 export function reloadItinerary() {
 	if (!getID('itinerary-enabled').checked) return;
-	// When enabling the itinerary with no scheduled items yet, pre-fill the
-	// days with the trip's transportations and accommodation check-in/out.
-	if (!hasItineraryItems(getItineraryArray() || [])) {
-		autoPopulateItineraryFromTrip();
-	}
+	// Pre-fill the days with the trip's transportations and accommodation
+	// check-in/out — including when the itinerary already has items, so a source
+	// that was added while the module was off lands here, while the items
+	// already scheduled stay untouched.
+	autoPopulateItineraryFromTrip();
 	const originalData = getItineraryArray() || [];
 	const originalDataInputs = originalData.map((data) => dateObjectToKey(data.date));
 
@@ -392,6 +401,10 @@ export function adaptItineraryToDuration(): void {
 		}
 		j++;
 	}
+
+	// A longer trip can finally reach transportations/accommodations whose date
+	// used to fall outside the range.
+	autoPopulateItineraryFromTrip();
 	updateActiveDestinationsCardsHTML('itinerary');
 }
 
