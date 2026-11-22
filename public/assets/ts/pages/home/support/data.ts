@@ -37,6 +37,14 @@ import {
 import { isOnDarkMode } from '../../../theme/visibility.js';
 import { getDarkerColor, getLighterColor, hexToRgb } from '../../../theme/colors.js';
 import { LazyGrid } from '../../../ui/lazy-grid.js';
+import {
+	getCachedDestinationFolders,
+	seedDestinationFolders,
+	saveDestinationFolders,
+	createDestinationFolderId,
+	groupDestinationsByFolder,
+	type DestinationFolder,
+} from '../../../data/services/destination-folders.service.js';
 
 var INDEX_DATA: Record<string, any> = {};
 var CURRENT_TRIPS: any[] = [];
@@ -51,6 +59,18 @@ var DEST_GRID: LazyGrid | null = null;
 var LIST_GRID: LazyGrid | null = null;
 var GRIDS_INITIALIZED = false;
 var SEARCH_QUERY = '';
+// Destination folder ids the user expanded on the index (session-only state).
+var EXPANDED_DEST_FOLDERS = new Set<string>();
+
+/** Escape text before interpolating it into HTML (folder names are user input). */
+function escapeHTML(value: string): string {
+	return String(value ?? '')
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;');
+}
 
 /** Convert an array of { id, ...data } to a Record<string, data> for compatibility with legacy helpers */
 function arrayToRecord<T extends { id: string }>(arr: T[]): Record<string, Omit<T, 'id'>> {
@@ -71,6 +91,8 @@ export async function loadUserIndex() {
 				// calling getUserData() again (avoids a duplicate read).
 				const userData = await registerIfUserNotPresent();
 				setUserData(userData);
+				// Folder organization lives in the user document.
+				seedDestinationFolders(userData?.destinationFolders);
 				showLoggedView();
 
 				// Read profile fields from the Firestore user document first,
@@ -582,13 +604,322 @@ function loadDestinationsTab() {
 
 	if (destinations.length === 0) {
 		DEST_GRID?.setItems([]);
+		renderDestinationFolders([]);
+		updateLooseDestinationsHeader(0, 0);
 		empty.style.display = 'block';
 		count.textContent = '';
 		return;
 	}
 	empty.style.display = 'none';
 	count.textContent = destCountLabel(destinations.length);
-	DEST_GRID?.setItems(destinations);
+	renderDestinationsTab();
+}
+
+/**
+ * Render the destinations tab: folder sections first (folders are collapsed
+ * unless the user expanded them or a search is active), then the loose
+ * destinations that are not filed in any folder.
+ */
+function renderDestinationsTab() {
+	const destinations = getOrderedDocumentByUpdateDate(INDEX_DATA.destinations);
+	const { groups, loose } = groupDestinationsByFolder(
+		destinations,
+		getCachedDestinationFolders(),
+	);
+
+	const query = SEARCH_QUERY.trim().toLowerCase();
+	const matches = (destination) =>
+		!query || String(destination.title || '').toLowerCase().includes(query);
+
+	const visibleGroups = groups
+		.map((group) => ({ ...group, items: group.items.filter(matches) }))
+		.filter((group) => !query || group.items.length > 0);
+	const visibleLoose = loose.filter(matches);
+
+	renderDestinationFolders(visibleGroups);
+	DEST_GRID?.setItems(visibleLoose);
+	updateLooseDestinationsHeader(visibleGroups.length, visibleLoose.length);
+}
+
+function updateLooseDestinationsHeader(folderCount: number, looseCount: number) {
+	const title = getID('dest-loose-title');
+	const count = getID('dest-loose-count');
+	if (!title || !count) return;
+	// Only label the loose group when folders exist — otherwise the grid is
+	// simply the destination list.
+	const show = folderCount > 0 && looseCount > 0;
+	title.style.display = show ? 'flex' : 'none';
+	count.textContent = show ? String(looseCount) : '';
+}
+
+function renderDestinationFolders(groups) {
+	const container = getID('dest-folders');
+	if (!container) return;
+
+	if (!groups.length) {
+		container.innerHTML = '';
+		container.style.display = 'none';
+		return;
+	}
+	container.style.display = 'flex';
+
+	// While a search is active, matching cards must be visible without an
+	// extra click — the stored expand/collapse state is kept untouched.
+	const searching = SEARCH_QUERY.trim().length > 0;
+
+	container.innerHTML = groups
+		.map(({ folder, items }) => {
+			const expanded = searching || EXPANDED_DEST_FOLDERS.has(folder.id);
+			return `
+				<div class="dest-folder${expanded ? ' expanded' : ''}" data-folder-id="${escapeHTML(folder.id)}">
+					<button type="button" class="dest-folder-header" data-action="toggle-dest-folder"
+						data-folder-id="${escapeHTML(folder.id)}" aria-expanded="${expanded}">
+						<span class="dest-folder-icon">
+							<i class="iconify" data-icon="material-symbols:folder"></i>
+						</span>
+						<span class="dest-folder-name">${escapeHTML(folder.name)}</span>
+						<span class="dest-folder-count">${items.length}</span>
+						<i class="iconify dest-folder-chevron" data-icon="material-symbols:expand-more"></i>
+					</button>
+					<div class="dest-folder-body" style="display:${expanded ? 'block' : 'none'}">
+						<div class="dest-grid">
+							${items.map((item) => buildDestCardHTML(item)).join('')}
+						</div>
+					</div>
+				</div>`;
+		})
+		.join('');
+}
+
+/** Expand/collapse a folder section on the destinations tab (DOM-only toggle). */
+export function toggleDestinationFolder(folderId: string | null) {
+	if (!folderId) return;
+	const section = document.querySelector<HTMLElement>(
+		`#dest-folders .dest-folder[data-folder-id="${folderId}"]`,
+	);
+	if (!section) return;
+
+	const expanded = !section.classList.contains('expanded');
+	section.classList.toggle('expanded', expanded);
+	const body = section.querySelector<HTMLElement>('.dest-folder-body');
+	if (body) body.style.display = expanded ? 'block' : 'none';
+	const header = section.querySelector<HTMLElement>('.dest-folder-header');
+	if (header) header.setAttribute('aria-expanded', String(expanded));
+
+	if (expanded) EXPANDED_DEST_FOLDERS.add(folderId);
+	else EXPANDED_DEST_FOLDERS.delete(folderId);
+}
+
+/*--------------------------------------------------------------
+# Destination Folders Dialog
+--------------------------------------------------------------*/
+export function openFoldersDialog() {
+	renderFoldersDialog();
+	animateDialogOpen(getID('folders-dialog'), 'flex');
+	const card = getID('folders-dialog')?.querySelector<HTMLElement>('.dialog-card');
+	if (card) animateDialogOpen(card);
+	document.body.classList.add('dialog-open');
+}
+
+export function closeFoldersDialog() {
+	closeIndexDialog('folders-dialog', () => {
+		document.body.classList.remove('dialog-open');
+	});
+}
+
+function renderFoldersDialog() {
+	const list = getID('folders-dialog-list');
+	if (!list) return;
+
+	// Re-rendering (rename/create/delete) keeps the list scroll position.
+	const scrollTop = list.scrollTop;
+
+	const destinations = getOrderedDocumentByUpdateDate(INDEX_DATA.destinations);
+	const folders = getCachedDestinationFolders();
+
+	if (!destinations.length) {
+		list.innerHTML = `<p class="folders-dialog-empty">${translate('index.no_destinations')}</p>`;
+		return;
+	}
+
+	if (!folders.length) {
+		list.innerHTML = `<p class="folders-dialog-empty">${translate('index.folders.empty')}</p>`;
+		return;
+	}
+
+	const destinationIds = new Set(destinations.map((destination) => destination.id));
+
+	list.innerHTML = folders
+		.map((folder) => {
+			const count = folder.destinationIds.filter((id) => destinationIds.has(id)).length;
+			const items = destinations
+				.map((destination) => {
+					const checked = folder.destinationIds.includes(destination.id);
+					return `
+						<label class="folder-editor-item${checked ? ' selected' : ''}">
+							<input type="checkbox" data-folder-id="${escapeHTML(folder.id)}"
+								data-dest-id="${escapeHTML(destination.id)}"${checked ? ' checked' : ''}>
+							<span>${escapeHTML(destination.title || translate('labels.no_title'))}</span>
+						</label>`;
+				})
+				.join('');
+
+			return `
+				<div class="folder-editor" data-folder-id="${escapeHTML(folder.id)}">
+					<div class="folder-editor-header">
+						<i class="iconify folder-editor-icon" data-icon="material-symbols:folder"></i>
+						<input type="text" class="folder-editor-name" maxlength="60"
+							data-folder-id="${escapeHTML(folder.id)}" value="${escapeHTML(folder.name)}"
+							aria-label="${escapeHTML(translate('index.folders.rename'))}">
+						<span class="folder-editor-count">${count}</span>
+						<button type="button" class="folder-editor-remove" data-action="delete-folder"
+							data-folder-id="${escapeHTML(folder.id)}"
+							title="${escapeHTML(translate('index.folders.delete'))}">
+							<i class="iconify" data-icon="material-symbols:delete-outline"></i>
+						</button>
+					</div>
+					<div class="folder-editor-items">${items}</div>
+				</div>`;
+		})
+		.join('');
+
+	list.scrollTop = scrollTop;
+	bindFolderEditorListeners();
+}
+
+function bindFolderEditorListeners() {
+	const list = getID('folders-dialog-list');
+	if (!list) return;
+
+	for (const input of list.querySelectorAll<HTMLInputElement>('.folder-editor-name')) {
+		const folderId = input.getAttribute('data-folder-id') || '';
+		input.addEventListener('change', () => renameDestinationFolder(folderId, input.value));
+		input.addEventListener('keydown', (event) => {
+			if (event.key === 'Enter') {
+				event.preventDefault();
+				input.blur();
+			}
+		});
+	}
+
+	for (const checkbox of list.querySelectorAll<HTMLInputElement>(
+		'input[type="checkbox"][data-dest-id]',
+	)) {
+		const folderId = checkbox.getAttribute('data-folder-id') || '';
+		const destinationId = checkbox.getAttribute('data-dest-id') || '';
+		checkbox.addEventListener('change', () =>
+			setDestinationFolderMembership(folderId, destinationId, checkbox.checked),
+		);
+	}
+}
+
+function cloneFolders(folders: DestinationFolder[]): DestinationFolder[] {
+	return folders.map((folder) => ({ ...folder, destinationIds: [...folder.destinationIds] }));
+}
+
+async function renameDestinationFolder(folderId: string, rawName: string) {
+	const name = rawName.trim();
+	const folders = cloneFolders(getCachedDestinationFolders());
+	const folder = folders.find((item) => item.id === folderId);
+	if (!folder) return;
+
+	if (!name) {
+		// Folder names cannot be empty — restore the previous value.
+		renderFoldersDialog();
+		return;
+	}
+	if (folder.name === name) return;
+
+	folder.name = name;
+	await persistFolders(folders);
+}
+
+/**
+ * A destination belongs to at most one folder: checking it in one folder
+ * removes it from any other folder; unchecking leaves it loose.
+ */
+async function setDestinationFolderMembership(
+	folderId: string,
+	destinationId: string,
+	checked: boolean,
+) {
+	if (!destinationId) return;
+	const folders = cloneFolders(getCachedDestinationFolders());
+	for (const folder of folders) {
+		folder.destinationIds = folder.destinationIds.filter((id) => id !== destinationId);
+	}
+	if (checked) {
+		const target = folders.find((folder) => folder.id === folderId);
+		if (target) target.destinationIds.push(destinationId);
+	}
+	// Update the editors in place instead of re-rendering the whole list, so
+	// the scroll position is kept while filing several destinations.
+	const saved = await persistFolders(folders, false);
+	if (saved) syncFolderEditorSelection(destinationId, checked ? folderId : null);
+}
+
+/**
+ * Reflect the new folder membership in the open dialog without rebuilding it:
+ * only the edited destination moves between folders, so uncheck it everywhere
+ * else and refresh every folder's selected count.
+ */
+function syncFolderEditorSelection(destinationId: string, selectedFolderId: string | null) {
+	const list = getID('folders-dialog-list');
+	if (!list) return;
+
+	for (const editor of list.querySelectorAll<HTMLElement>('.folder-editor')) {
+		const folderId = editor.getAttribute('data-folder-id') || '';
+		const checked = folderId === selectedFolderId;
+		const checkbox = editor.querySelector<HTMLInputElement>(
+			`input[data-dest-id="${destinationId}"]`,
+		);
+		if (checkbox) {
+			checkbox.checked = checked;
+			const item = checkbox.closest('.folder-editor-item');
+			if (item) item.classList.toggle('selected', checked);
+		}
+
+		const count = editor.querySelector('.folder-editor-count');
+		if (count) {
+			count.textContent = String(
+				editor.querySelectorAll<HTMLInputElement>('input[data-dest-id]:checked').length,
+			);
+		}
+	}
+}
+
+export async function createDestinationFolderFromInput() {
+	const input = getID('folder-new-name') as HTMLInputElement | null;
+	const name = input?.value.trim() || '';
+	if (!name) {
+		input?.focus();
+		return;
+	}
+
+	const folders = cloneFolders(getCachedDestinationFolders());
+	folders.push({ id: createDestinationFolderId(), name, destinationIds: [] });
+	if (input) input.value = '';
+	await persistFolders(folders);
+}
+
+export async function deleteDestinationFolderById(folderId: string | null) {
+	if (!folderId) return;
+	const folders = cloneFolders(getCachedDestinationFolders()).filter(
+		(folder) => folder.id !== folderId,
+	);
+	EXPANDED_DEST_FOLDERS.delete(folderId);
+	await persistFolders(folders);
+}
+
+async function persistFolders(folders: DestinationFolder[], rerender = true): Promise<boolean> {
+	const saved = await saveDestinationFolders(folders);
+	if (!saved) {
+		displayError(new Error(translate('index.folders.save_error')));
+		return false;
+	}
+	if (rerender) renderFoldersDialog();
+	renderDestinationsTab();
+	return true;
 }
 
 function buildDestCardHTML(dest): string {
@@ -773,6 +1104,7 @@ document.addEventListener('click', function (e: MouseEvent) {
 		if (target.id === 'trip-dialog') closeTripDialog();
 		if (target.id === 'dest-dialog') closeDestDialog();
 		if (target.id === 'list-dialog') closeListDialog();
+		if (target.id === 'folders-dialog') closeFoldersDialog();
 	}
 });
 
@@ -781,6 +1113,7 @@ document.addEventListener('keydown', function (e) {
 		if (getID('trip-dialog').style.display === 'flex') closeTripDialog();
 		if (getID('dest-dialog').style.display === 'flex') closeDestDialog();
 		if (getID('list-dialog').style.display === 'flex') closeListDialog();
+		if (getID('folders-dialog').style.display === 'flex') closeFoldersDialog();
 	}
 });
 
@@ -815,7 +1148,7 @@ export function applySearch(query: string) {
 			updateTripSectionCounts();
 			break;
 		case 'destinations':
-			DEST_GRID?.setQuery(SEARCH_QUERY);
+			renderDestinationsTab();
 			break;
 		case 'lists':
 			LIST_GRID?.setQuery(SEARCH_QUERY);

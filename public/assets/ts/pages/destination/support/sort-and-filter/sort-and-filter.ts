@@ -1,13 +1,11 @@
 import { getID } from '../../../../utils/dom.js';
-import { CONTENT, getDataSet, ACTIVE_CATEGORY } from '../../destination.js';
+import { ACTIVE_CATEGORY, CONTENT, getDataSet } from '../../destination.js';
 import { PLANNED_DESTINATION } from '../trip.js';
 import { loadFilterOptions } from './filter.js';
 import { loadSortOptions } from './sort.js';
-import { closeDrawer } from './support/drawer.js';
-import { isDrawerOpen } from './support/drawer.js';
-import { openDrawer } from './support/drawer.js';
-import { getPriceBuckets } from './support/price-bucket.js';
-import { getPrices } from './support/price-bucket.js';
+import { closeDrawer, isDrawerOpen, openDrawer } from './support/drawer.js';
+import { getPriceBuckets, getPrices } from './support/price-bucket.js';
+import { hasEntriesWithoutRegion } from './support/regions.js';
 
 export const FILTER_SORT_KEYS_ORDER = {
 	planned: ['planned', 'not_planned'],
@@ -104,7 +102,10 @@ export function openFilterSortDrawer({ triggerId, getInnerHTML, clickAction, loa
 export function shouldDisplayRegions() {
 	const REGIONS = getDataSet('regions');
 	REGIONS.delete('');
-	return REGIONS.size > 1;
+	// Show the region section when there is something it can actually filter:
+	// more than one region, or at least one entry with no region defined (the
+	// "no region defined" option).
+	return REGIONS.size > 0 && (REGIONS.size > 1 || hasEntriesWithoutRegion(CONTENT));
 }
 
 export function shouldDisplayPlanned() {

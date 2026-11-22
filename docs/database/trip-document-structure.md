@@ -3,6 +3,8 @@
 > **Collection path:** `trips/{tripId}`
 >
 > This document contains all **non-sensitive** trip data. Sensitive fields (`reservation` codes, `link` URLs on accommodations and transport legs) are stored empty here and mirrored in the protected subcollection at `trips/protected/{pin}/{tripId}`.
+>
+> **Indexed copy:** the home page reads `users/{sharing.owner}/tripSummaries/{tripId}` (`title`, `start`, `end`, `colors`, `image`, `modules`, `pin`, `version`). Any direct data edit that changes those fields must patch the summary with the same values (including `version.lastUpdated`).
 
 ---
 

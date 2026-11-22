@@ -60,6 +60,10 @@ import {
 	updateActiveDestinationsHTMLs,
 	reorganizeDestinationsCheckbox,
 } from './categories/destination.js';
+import {
+	getCachedDestinationFolders,
+	groupDestinationsByFolder,
+} from '../../data/services/destination-folders.service.js';
 
 export var DATAS = [];
 
@@ -410,18 +414,99 @@ export function loadDestinations() {
 
 	const container = getID('destinations-checkboxes');
 	container.innerHTML = '';
-	for (const destination of destinations) {
-		container.innerHTML += getDestinationsItemCard(destination.id, destination.title);
+
+	// Folders first (collapsed by default), then the destinations that are
+	// not filed in any folder.
+	const { groups, loose } = groupDestinationsByFolder(
+		destinations,
+		getCachedDestinationFolders(),
+	);
+
+	// Empty folders add nothing to the picker — only show the ones that
+	// actually hold selectable destinations.
+	const visibleGroups = groups.filter((group) => group.items.length > 0);
+
+	for (const { folder, items } of visibleGroups) {
+		container.insertAdjacentHTML('beforeend', getDestinationFolderGroupHTML(folder, items));
 	}
 
-	// Card click: toggle selected, move to top of selected group.
+	if (visibleGroups.length && loose.length) {
+		container.insertAdjacentHTML(
+			'beforeend',
+			`<div class="destinations-loose-label">
+				<i class="iconify" data-icon="material-symbols:label"></i>
+				<span>${translate('index.folders.loose')}</span>
+			</div>`,
+		);
+	}
+	for (const destination of loose) {
+		container.insertAdjacentHTML(
+			'beforeend',
+			getDestinationsItemCard(destination.id, destination.title),
+		);
+	}
+
+	// Folder headers expand/collapse their group.
+	for (const header of container.querySelectorAll('.destinations-folder-header')) {
+		header.addEventListener('click', () => toggleDestinationFolderGroup(header));
+	}
+
+	// Card click: toggle selected, move to top of the selected group.
 	// Unselecting a destination linked to itinerary items or used as the
 	// wallpaper prompts the user before those links are removed.
 	for (const card of container.querySelectorAll('.destination-card')) {
-		card.addEventListener('click', () => handleDestinationCardClick(card, container));
+		card.addEventListener('click', () => handleDestinationCardClick(card));
 	}
 
 	getID('destinations-enabled')?.addEventListener('change', () => updateActiveDestinationsHTMLs());
+}
+
+/** Escape text before interpolating it into HTML (folder names are user input). */
+function escapeFolderHTML(value: string): string {
+	return String(value ?? '')
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;');
+}
+
+/** Collapsible folder group for the trip destination picker. */
+function getDestinationFolderGroupHTML(folder: { id: string; name: string }, items) {
+	return `<div class="destinations-folder" data-folder-id="${escapeFolderHTML(folder.id)}">
+		<button type="button" class="destinations-folder-header" aria-expanded="false">
+			<i class="iconify" data-icon="material-symbols:folder"></i>
+			<span class="destinations-folder-name">${escapeFolderHTML(folder.name)}</span>
+			<span class="destinations-folder-count">${items.length}</span>
+			<i class="iconify destinations-folder-chevron" data-icon="material-symbols:expand-more"></i>
+		</button>
+		<div class="destinations-folder-body">
+			${items
+				.map((destination) => getDestinationsItemCard(destination.id, destination.title))
+				.join('')}
+		</div>
+	</div>`;
+}
+
+function toggleDestinationFolderGroup(header: Element) {
+	const group = header.closest('.destinations-folder');
+	if (!group) return;
+	const expanded = !group.classList.contains('expanded');
+	group.classList.toggle('expanded', expanded);
+	header.setAttribute('aria-expanded', String(expanded));
+}
+
+/** Expand every folder that contains a selected destination (trip load). */
+export function expandDestinationFoldersWithSelection() {
+	const container = getID('destinations-checkboxes');
+	if (!container) return;
+	for (const group of container.querySelectorAll('.destinations-folder')) {
+		if (!group.querySelector('.destination-card.selected')) continue;
+		group.classList.add('expanded');
+		group
+			.querySelector('.destinations-folder-header')
+			?.setAttribute('aria-expanded', 'true');
+	}
 }
 
 /**
@@ -429,7 +514,7 @@ export function loadDestinations() {
  * that is linked to itinerary items or used as the wallpaper asks the user for
  * confirmation before removing those links.
  */
-async function handleDestinationCardClick(card: Element, container: HTMLElement) {
+async function handleDestinationCardClick(card: Element) {
 	const destinationId = card.getAttribute('data-destination-id') || '';
 	const wasSelected = card.classList.contains('selected');
 
@@ -444,7 +529,10 @@ async function handleDestinationCardClick(card: Element, container: HTMLElement)
 
 	card.classList.toggle('selected');
 	if (card.classList.contains('selected')) {
-		container.prepend(card);
+		// Move to the top of its own group (folder body or the loose list) —
+		// the folder organization is never changed by a selection.
+		const parent = card.parentElement;
+		if (parent) parent.prepend(card);
 	}
 	reorganizeDestinationsCheckbox();
 	updateActiveDestinationsHTMLs();

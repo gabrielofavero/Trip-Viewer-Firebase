@@ -4,7 +4,10 @@ import { getID } from '../../utils/dom.js';
 import { setPageName, getHTMLpage } from '../../app/main.js';
 import { translate } from '../../i18n/translation.js';
 import { loadDestinations } from '../edit-trip/new-trip.js';
-import { loadActiveDestinations } from '../edit-trip/categories/destination.js';
+import {
+	loadActiveDestinations,
+	reorganizeDestinationsCheckbox,
+} from '../edit-trip/categories/destination.js';
 import { loadCustomizationData } from '../edit-trip/existing-trip.js';
 
 // Listagem Existente
@@ -41,12 +44,11 @@ async function loadDestinationsData() {
 		for (const card of cards) {
 			if (card.getAttribute('data-destination-id') === id) {
 				card.classList.add('selected');
-				const container = getID('destinations-checkboxes');
-				container.prepend(card);
 				break;
 			}
 		}
 	}
+	reorganizeDestinationsCheckbox();
 	await loadActiveDestinations();
 }
 

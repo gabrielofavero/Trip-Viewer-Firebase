@@ -1,5 +1,6 @@
-import { getPriceLabel, isPriceInBucketRange } from '../../../../models/destination.model.js';
 import { translate } from '../../../../i18n/translation.js';
+import { getPriceLabel, isPriceInBucketRange } from '../../../../models/destination.model.js';
+import { ACTIVE_CATEGORY, CONTENT, isPlanned } from '../../destination.js';
 import {
 	FILTER_SORT_DATA,
 	loadFilterSortingData,
@@ -9,12 +10,14 @@ import {
 	shouldDisplayRegions,
 	shouldDisplayScores,
 } from './sort-and-filter.js';
-import { filterDrawerOptionClickAction } from './support/drawer.js';
-import { filterDrawerOptionLoadAction } from './support/drawer.js';
-import { getFilterDrawerInnerHTML } from './support/drawer.js';
-import { ACTIVE_CATEGORY, CONTENT, isPlanned } from '../../destination.js';
+import {
+	filterDrawerOptionClickAction,
+	filterDrawerOptionLoadAction,
+	getFilterDrawerInnerHTML,
+} from './support/drawer.js';
 import { getFilterPreferences } from './support/preferences.js';
 import { getPrices } from './support/price-bucket.js';
+import { getEntryRegions, hasEntriesWithoutRegion } from './support/regions.js';
 
 export const FILTER_OPTIONS: Record<string, Record<string, Record<string, string>>> = {};
 
@@ -24,10 +27,13 @@ export function filter(entries = CONTENT) {
 	const isPlannedEnabled = shouldDisplayPlanned() && preferences.planned !== 'everything';
 	const isPricesEnabled = shouldDisplayPrices() && preferences.prices !== 'everything';
 	const isScoresEnabled = shouldDisplayScores() && preferences.scores !== 'everything';
+	// `none` is not a real region — it is the "no region defined" option, so it
+	// cannot be validated against the set of known region names.
 	const isRegionsEnabled =
 		shouldDisplayRegions() &&
 		preferences.region !== 'everything' &&
-		FILTER_SORT_DATA[ACTIVE_CATEGORY].region.has(preferences.region);
+		(preferences.region === 'none' ||
+			FILTER_SORT_DATA[ACTIVE_CATEGORY].region.has(preferences.region));
 
 	return entries.filter((entry) => {
 		const item = entry.item;
@@ -75,13 +81,11 @@ export function filter(entries = CONTENT) {
 	}
 
 	function shouldFilterByRegions(item) {
-		const value = Array.isArray(item.regions)
-			? item.regions
-			: item.region
-				? [item.region]
-				: [];
-		if (value.length === 0) {
-			return true;
+		const value = getEntryRegions(item);
+		// "No region defined" keeps the entries that have NO region and hides
+		// the ones that do.
+		if (preferences.region === 'none') {
+			return value.length > 0;
 		}
 		return !value.includes(preferences.region);
 	}
@@ -122,9 +126,12 @@ export function loadFilterOptions(force = false) {
 				.filter(Boolean)
 				.sort((a, b) => a.localeCompare(b)),
 		);
-		options.region = {
-			none: translate('destination.filter.region.none'),
-		};
+		options.region = {};
+		// Only offer "no region defined" when there is at least one entry that
+		// would match it — otherwise it would just empty the grid.
+		if (hasEntriesWithoutRegion(CONTENT)) {
+			options.region.none = translate('destination.filter.region.none');
+		}
 		for (const region of regions) {
 			options.region[region] = region;
 		}

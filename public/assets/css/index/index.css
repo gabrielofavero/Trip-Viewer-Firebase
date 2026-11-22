@@ -307,6 +307,91 @@
 	height: 1px;
 }
 
+/*--------------------------------------------------------------
+# Destination Folders (index destinations tab)
+# Folders are shown first, collapsed by default; the loose
+# destinations (not filed in any folder) render below them.
+--------------------------------------------------------------*/
+.dest-folders {
+	display: none;
+	flex-direction: column;
+	gap: 12px;
+	margin-bottom: 20px;
+}
+.dest-folder {
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-lg);
+	background: rgba(255, 255, 255, 0.7);
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+	overflow: hidden;
+	transition: border-color var(--transition-fast);
+}
+.dest-folder:hover {
+	border-color: rgba(var(--theme-color-rgb), 0.3);
+}
+.dest-folder-header {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+	padding: 14px 16px;
+	border: none;
+	background: transparent;
+	color: var(--text-primary);
+	font-family: inherit;
+	font-size: 15px;
+	font-weight: 600;
+	text-align: left;
+	cursor: pointer;
+	transition: background var(--transition-fast);
+}
+.dest-folder-header:hover {
+	background: rgba(var(--theme-color-rgb), 0.06);
+}
+.dest-folder-icon {
+	display: inline-flex;
+	align-items: center;
+	font-size: 20px;
+	color: var(--theme-color);
+}
+.dest-folder-name {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.dest-folder-count {
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--text-muted);
+}
+.dest-folder-chevron {
+	font-size: 22px;
+	color: var(--text-muted);
+	transition: transform var(--transition-fast);
+}
+.dest-folder.expanded .dest-folder-chevron {
+	transform: rotate(180deg);
+}
+.dest-folder-body {
+	padding: 0 16px 16px;
+}
+.dest-folder-body .dest-grid {
+	margin-bottom: 0;
+}
+
+/*--------------------------------------------------------------
+# Tab Header Actions (destinations tab: folders + new destination)
+--------------------------------------------------------------*/
+.tab-header-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
 .trip-card,
 .dest-card,
 .list-card {
@@ -627,6 +712,159 @@
 	color: var(--trip-dialog-accent);
 	border-color: var(--trip-dialog-accent);
 	background: var(--trip-dialog-accent-soft);
+}
+
+/*--------------------------------------------------------------
+# Destination Folders Dialog
+--------------------------------------------------------------*/
+.dialog-card-folders {
+	max-width: 640px;
+}
+.folders-dialog-hint {
+	font-size: 13px;
+	color: var(--text-muted);
+	margin: 0 0 14px;
+	line-height: 1.4;
+}
+.folders-dialog-list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	max-height: 46vh;
+	overflow-y: auto;
+	padding-right: 4px;
+}
+.folders-dialog-empty {
+	font-size: 14px;
+	color: var(--text-muted);
+	padding: 10px 0;
+}
+.folder-editor {
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md);
+	background: var(--bg-secondary);
+	overflow: hidden;
+}
+.folder-editor-header {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 12px;
+	background: var(--bg-tertiary);
+}
+.folder-editor-icon {
+	font-size: 20px;
+	color: var(--theme-color);
+}
+.folder-editor-name {
+	flex: 1;
+	min-width: 0;
+	padding: 8px 10px;
+	border: 1.5px solid var(--border-color);
+	border-radius: var(--radius-sm);
+	background: var(--bg-primary);
+	color: var(--text-primary);
+	font-family: inherit;
+	font-size: 14px;
+	outline: none;
+	transition:
+		border var(--transition-fast),
+		box-shadow var(--transition-fast);
+}
+.folder-editor-name:focus {
+	border-color: var(--theme-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+.folder-editor-count {
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--text-muted);
+}
+.folder-editor-remove {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-sm);
+	background: var(--bg-primary);
+	color: var(--text-muted);
+	cursor: pointer;
+	transition:
+		color var(--transition-fast),
+		border-color var(--transition-fast);
+}
+.folder-editor-remove:hover {
+	color: var(--theme-color);
+	border-color: var(--theme-color);
+}
+.folder-editor-items {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 2px;
+	padding: 8px;
+	max-height: 220px;
+	overflow-y: auto;
+}
+@media (min-width: 640px) {
+	.folder-editor-items {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+.folder-editor-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 7px 8px;
+	border-radius: var(--radius-sm);
+	font-size: 13px;
+	color: var(--text-primary);
+	cursor: pointer;
+	transition: background var(--transition-fast);
+}
+.folder-editor-item:hover {
+	background: var(--bg-tertiary);
+}
+.folder-editor-item.selected {
+	background: rgba(var(--theme-color-rgb), 0.08);
+	color: var(--theme-color);
+	font-weight: 600;
+}
+.folder-editor-item input {
+	margin: 0;
+	accent-color: var(--theme-color);
+	flex-shrink: 0;
+}
+.folder-editor-item span {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.folders-dialog-new {
+	display: flex;
+	gap: 8px;
+	margin-top: 14px;
+}
+.folders-dialog-input {
+	flex: 1;
+	min-width: 0;
+	padding: 10px 12px;
+	border: 1.5px solid var(--border-color);
+	border-radius: var(--radius-md);
+	background: var(--bg-secondary);
+	color: var(--text-primary);
+	font-family: inherit;
+	font-size: 14px;
+	outline: none;
+	transition:
+		border var(--transition-fast),
+		box-shadow var(--transition-fast);
+}
+.folders-dialog-input:focus {
+	border-color: var(--theme-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
 }
 
 /*--------------------------------------------------------------

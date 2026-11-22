@@ -18,6 +18,11 @@ import {
 	closeDestDialog,
 	openListDialog,
 	closeListDialog,
+	openFoldersDialog,
+	closeFoldersDialog,
+	toggleDestinationFolder,
+	createDestinationFolderFromInput,
+	deleteDestinationFolderById,
 	onSearchInput,
 	clearSearch,
 	onTabChanged,
@@ -114,6 +119,17 @@ export function loadListenersIndex() {
 		clearSearch();
 	});
 
+	// Destination folders — Enter in the new-folder field creates the folder.
+	const folderNewName = getID('folder-new-name') as HTMLInputElement | null;
+	if (folderNewName) {
+		folderNewName.addEventListener('keydown', function (event) {
+			if ((event as KeyboardEvent).key === 'Enter') {
+				event.preventDefault();
+				createDestinationFolderFromInput();
+			}
+		});
+	}
+
 	// Delete account
 	getID('delete-btn').addEventListener('click', async function () {
 		startLoadingScreen();
@@ -160,6 +176,13 @@ export function loadListenersIndex() {
 			const listId = target.getAttribute('data-list-id');
 			if (listId) openListDialog(listId);
 		},
+		'open-folders-dialog': () => openFoldersDialog(),
+		'close-folders-dialog': () => closeFoldersDialog(),
+		'toggle-dest-folder': (target) =>
+			toggleDestinationFolder(target.getAttribute('data-folder-id')),
+		'create-folder': () => createDestinationFolderFromInput(),
+		'delete-folder': (target) =>
+			deleteDestinationFolderById(target.getAttribute('data-folder-id')),
 	});
 }
 

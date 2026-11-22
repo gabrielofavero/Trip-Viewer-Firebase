@@ -15,6 +15,7 @@ import {
 	addAccommodations,
 	getTransportationPicker,
 	loadDestinations,
+	expandDestinationFoldersWithSelection,
 	loadItinerarySchedule,
 	DATAS,
 } from './new-trip.js';
@@ -33,6 +34,7 @@ import {
 } from './categories/accommodation.js';
 import {
 	loadActiveDestinations,
+	reorganizeDestinationsCheckbox,
 	updateActiveDestinationsCardsHTML,
 } from './categories/destination.js';
 import {
@@ -300,13 +302,14 @@ async function loadDestinationsData() {
 		for (const card of cards) {
 			if (card.getAttribute('data-destination-id') === id) {
 				card.classList.add('selected');
-				// Move to top of selected group
-				const container = getID('destinations-checkboxes');
-				container.prepend(card);
 				break;
 			}
 		}
 	}
+	// Order the selected cards inside their own group and reveal the folders
+	// that hold destinations of this trip.
+	reorganizeDestinationsCheckbox();
+	expandDestinationFoldersWithSelection();
 	await loadActiveDestinations();
 }
 

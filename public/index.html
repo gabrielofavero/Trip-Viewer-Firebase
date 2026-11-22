@@ -141,11 +141,25 @@
         <div class="tab-content" id="tab-destinations">
           <div class="tab-header">
             <span class="tab-header-count" id="dests-count"></span>
-            <button id="new-dest-btn" class="btn btn-primary-theme btn-sm">
-              <i class="iconify" data-icon="gridicons:add-outline"></i>
-              <span data-translate="destination.new"></span>
-            </button>
+            <div class="tab-header-actions">
+              <button id="folders-btn" class="btn btn-secondary-theme btn-sm" data-action="open-folders-dialog">
+                <i class="iconify" data-icon="material-symbols:create-new-folder"></i>
+                <span data-translate="index.folders.edit"></span>
+              </button>
+              <button id="new-dest-btn" class="btn btn-primary-theme btn-sm">
+                <i class="iconify" data-icon="gridicons:add-outline"></i>
+                <span data-translate="destination.new"></span>
+              </button>
+            </div>
           </div>
+          <!-- Destination folders (folders first, then the loose destinations) -->
+          <div class="dest-folders" id="dest-folders">
+            <!-- Folder sections rendered by JS -->
+          </div>
+          <h3 class="trip-section-title" id="dest-loose-title" style="display:none">
+            <span data-translate="index.folders.loose"></span>
+            <span class="trip-section-count" id="dest-loose-count"></span>
+          </h3>
           <div class="dest-grid" id="dest-grid">
             <!-- Destination cards rendered by JS -->
           </div>
@@ -341,6 +355,37 @@
               <button class="btn btn-outline-theme dialog-action-btn" id="list-dialog-edit">
                 <i class="iconify" data-icon="tabler:edit"></i>
                 <span data-translate="labels.edit"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Destination Folders Dialog -->
+      <div id="folders-dialog" class="dialog-overlay" style="display:none">
+        <div class="dialog-card dialog-card-folders">
+          <a class="dialog-close" data-action="close-folders-dialog">
+            <i class="iconify" data-icon="material-symbols:close"></i>
+          </a>
+          <div class="dialog-body">
+            <div class="dialog-header">
+              <h2 class="dialog-title" data-translate="index.folders.title"></h2>
+            </div>
+            <p class="folders-dialog-hint" data-translate="index.folders.hint"></p>
+            <div class="folders-dialog-list" id="folders-dialog-list">
+              <!-- Folder editors rendered by JS -->
+            </div>
+            <div class="folders-dialog-new">
+              <input type="text" id="folder-new-name" class="folders-dialog-input" maxlength="60"
+                data-translate="index.folders.name_placeholder">
+              <button class="btn btn-primary-theme btn-sm" id="folder-create-btn" data-action="create-folder">
+                <i class="iconify" data-icon="gridicons:add-outline"></i>
+                <span data-translate="index.folders.create"></span>
+              </button>
+            </div>
+            <div class="dialog-actions">
+              <button class="btn btn-outline-theme dialog-action-btn" data-action="close-folders-dialog">
+                <span data-translate="index.folders.done"></span>
               </button>
             </div>
           </div>

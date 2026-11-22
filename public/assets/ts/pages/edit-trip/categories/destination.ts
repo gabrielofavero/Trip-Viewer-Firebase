@@ -41,9 +41,9 @@ export async function loadActiveDestinations(firstBoot = true) {
 
 	let result = [];
 	const container = getID('destinations-checkboxes');
-	for (const card of container.children) {
-		if (!card.classList.contains('selected')) continue;
-
+	// Cards may be nested inside destination-folder groups, so look for every
+	// selected card in the container instead of only its direct children.
+	for (const card of container.querySelectorAll('.destination-card.selected')) {
 		const title = card.querySelector('.destination-card-name')?.textContent?.trim() || '';
 		const destinationId = card.getAttribute('data-destination-id') || '';
 
@@ -230,31 +230,46 @@ export function addValuesForActiveDestinationsCards(type: string, j: number, val
 	}
 }
 
+/**
+ * Reorder the destination picker cards: inside every group (each destination
+ * folder body, plus the container itself for the loose destinations) selected
+ * cards come first in click order, followed by the unselected cards sorted
+ * alphabetically. Group wrappers are never moved, so a card always stays in
+ * its folder.
+ */
 function reorganizeDestinationsCheckbox() {
-	const fieldset = document.getElementById('destinations-checkboxes');
-	const cards = Array.from(fieldset.querySelectorAll('.destination-card'));
+	const container = document.getElementById('destinations-checkboxes');
+	if (!container) return;
 
-	const selected: { element: Element; label: string }[] = [];
-	const unselected: { element: Element; label: string }[] = [];
+	const groups: HTMLElement[] = [];
+	for (const child of Array.from(container.children)) {
+		if (!child.classList.contains('destinations-folder')) continue;
+		const body = child.querySelector<HTMLElement>('.destinations-folder-body');
+		if (body) groups.push(body);
+	}
+	// Loose destination cards are direct children of the container.
+	groups.push(container);
 
-	cards.forEach((card) => {
-		const nameEl = card.querySelector('.destination-card-name');
-		const labelText = nameEl?.textContent?.trim() || '';
+	for (const group of groups) {
+		const cards = Array.from(group.children).filter(
+			(child): child is HTMLElement => child.classList.contains('destination-card'),
+		);
+		if (!cards.length) continue;
 
-		if (card.classList.contains('selected')) {
-			selected.push({ element: card, label: labelText.toLowerCase() });
-		} else {
-			unselected.push({ element: card, label: labelText.toLowerCase() });
+		const selected: HTMLElement[] = [];
+		const unselected: HTMLElement[] = [];
+		for (const card of cards) {
+			if (card.classList.contains('selected')) selected.push(card);
+			else unselected.push(card);
 		}
-	});
 
-	unselected.sort((a, b) => a.label.localeCompare(b.label));
+		const labelOf = (card: HTMLElement) =>
+			card.querySelector('.destination-card-name')?.textContent?.trim().toLowerCase() || '';
+		unselected.sort((a, b) => labelOf(a).localeCompare(labelOf(b)));
 
-	// Selected cards stay in their clicked order (already in DOM order = click order)
-	// Re-append: selected first, then unselected alphabetically
-	[...selected, ...unselected].forEach((item) => {
-		fieldset.appendChild(item.element);
-	});
+		// Selected cards stay in their clicked order (current DOM order = click order)
+		for (const card of [...selected, ...unselected]) group.appendChild(card);
+	}
 }
 
 export { reorganizeDestinationsCheckbox };

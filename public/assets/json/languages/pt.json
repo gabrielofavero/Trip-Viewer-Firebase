@@ -609,7 +609,9 @@
 			"cancel": "Cancelar",
 			"apply": "Aplicar",
 			"pick_start_date": "Selecionar data inicial",
-			"start_pick_end": "Início: {{start}} — selecionar data final"
+			"start_pick_end": "Início: {{start}} — selecionar data final",
+			"previous_month": "Mês anterior",
+			"next_month": "Próximo mês"
 		},
 		"titles": {
 			"day_month": "{{day}} de {{month}}",
@@ -1023,7 +1025,20 @@
 		"modules_active": "Módulos ativos",
 		"trip_destinations": "Destinos da Viagem",
 		"view_trip": "Ver Viagem",
-		"edit_trip": "Editar Viagem"
+		"edit_trip": "Editar Viagem",
+		"folders": {
+			"edit": "Editar pastas",
+			"title": "Pastas de destino",
+			"hint": "Crie pastas e escolha quais destinos ficam em cada uma. Destinos sem pasta são listados separadamente.",
+			"name_placeholder": "Nome da pasta",
+			"create": "Criar pasta",
+			"empty": "Nenhuma pasta ainda. Crie a primeira abaixo.",
+			"loose": "Outros destinos",
+			"done": "Concluir",
+			"rename": "Nome da pasta",
+			"delete": "Excluir pasta",
+			"save_error": "Não foi possível salvar as pastas de destino."
+		}
 	},
 	"placesApi": {
 		"fetchInfo": "Buscar Informações com Maps",

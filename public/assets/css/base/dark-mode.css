@@ -267,6 +267,11 @@
 	border-color: var(--border-color);
 }
 
+[data-theme="dark"] .dest-folder {
+	background: rgba(44, 44, 46, 0.7);
+	border-color: var(--border-color);
+}
+
 [data-theme="dark"] .trip-card:hover,
 [data-theme="dark"] .dest-card:hover,
 [data-theme="dark"] .list-card:hover {

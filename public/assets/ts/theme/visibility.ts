@@ -367,10 +367,35 @@ export function toggleFadingVisibility(id = 'copy-msg') {
 export function searchDestinationsListenerAction() {
 	const search = getID('destinations-search').value.toLowerCase();
 	const container = getID('destinations-checkboxes');
+	if (!container) return;
 
 	for (const card of container.querySelectorAll('.destination-card')) {
 		const name = card.querySelector('.destination-card-name')?.textContent?.toLowerCase() || '';
 		(card as HTMLElement).style.display = name.includes(search) ? '' : 'none';
+	}
+
+	// Folder groups follow their cards: hide a folder whose cards are all
+	// filtered out, and auto-reveal matching folders while searching. The
+	// user's manual expand/collapse state lives in `.expanded` and is kept.
+	for (const group of container.querySelectorAll('.destinations-folder')) {
+		const cards = Array.from(group.querySelectorAll('.destination-card'));
+		const hasVisible = cards.some((card) => (card as HTMLElement).style.display !== 'none');
+		(group as HTMLElement).style.display = hasVisible || !search ? '' : 'none';
+		if (!search) group.classList.remove('search-expanded');
+		else group.classList.toggle('search-expanded', hasVisible);
+	}
+
+	// The loose-destinations label follows the loose cards (direct children of
+	// the container) and only shows when there are folders above them.
+	const looseCards = Array.from(container.children).filter((child) =>
+		child.classList.contains('destination-card'),
+	);
+	const hasVisibleLoose = looseCards.some(
+		(card) => (card as HTMLElement).style.display !== 'none',
+	);
+	const hasFolders = container.querySelector('.destinations-folder') !== null;
+	for (const label of container.querySelectorAll('.destinations-loose-label')) {
+		(label as HTMLElement).style.display = hasVisibleLoose && hasFolders ? '' : 'none';
 	}
 }
 

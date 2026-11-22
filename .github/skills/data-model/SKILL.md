@@ -25,6 +25,8 @@ TripViewer uses Firebase Firestore with a **two-tier PIN-protected architecture*
 | `expenses/protected/{pin}/{tripId}` | — | Protected expenses for PIN-enabled trips |
 | `destinations` | `{destId}` | Destination documents (self-contained, no subcollections) |
 | `users/{uid}/destinationSummaries` | `{destId}` | Lightweight destination summary for index cards |
+| `users/{uid}/tripSummaries` | `{tripId}` | Lightweight trip summary for index cards |
+| `users/{uid}/listingSummaries` | `{listingId}` | Lightweight listing summary for index cards |
 | `listings` | `{listingId}` | Listing documents |
 | `protected` | `{tripId}` | PIN lookup (`{ pin: string, sharing: { owner, active, editors } }`) |\n| `protected` | `_placeholder` | Placeholder document to ensure collection exists |
 | `admin/permissions` | `{userId}` | Per-user permission flags (existence = granted) |
@@ -53,9 +55,34 @@ Granting = creating the doc (e.g. `{ _created: <server timestamp> }`) at `admin/
   trips:    []       // embedded arrays (legacy; kept empty, summaries live in subcollections)
   destinations: []
   listings: []
+  destinationFolders?: DestinationFolder[]   // destination organization (F210)
   // + subcollections: tripSummaries, destinationSummaries, listingSummaries
 }
 ```
+
+### Destination Folders (`destinationFolders`, Nov 2026 — F210)
+
+Optional array stored on the user document. It organizes **destinations only** (trips and
+listings are never filed):
+
+```ts
+interface DestinationFolder {
+  id: string               // generated: 'f' + base36 timestamp + random suffix
+  name: string             // user-facing folder name
+  destinationIds: string[] // destination doc IDs, in display order
+}
+```
+
+- A destination belongs to **at most one** folder (checking it in one folder removes it from
+  the others). Destinations not listed in any folder are the "loose" ones.
+- Folder array order is the display order. Stale destination IDs are ignored when rendering.
+- Read through `data/services/destination-folders.service.ts`
+  (`loadDestinationFolders`, `getCachedDestinationFolders`, `groupDestinationsByFolder`,
+  `saveDestinationFolders` → owner `update` of `users/{uid}.{destinationFolders}`).
+- Rendered on the index destinations tab (folders first, loose destinations after) and in the
+  trip editor's destination picker (folders first, collapsible groups). The edit-listing page
+  stays flat (folders are never seeded there).
+- Account backup/restore does **not** carry folder data.
 
 The profile fields (`name`, `email`, `photoURL`) were added in **August 2026** (Migration 16) and are sourced from the matching Firebase Auth user record (`displayName`, `email`, `photoURL`).
 
@@ -74,6 +101,18 @@ The app reads profile fields **from Firestore first**, and only falls back to th
 - Migration 16 backfills existing user documents from Auth so the DB copy is complete.
 
 > **Why:** the Firestore user document is the source of truth for the UI; Auth is only a fallback for users whose doc predates Migration 16 or lacks a field.
+
+### Summary Mirrors (indexed copies — `users/{uid}/*Summaries`)
+
+Index pages read **summaries**, not the full documents. The app keeps them in sync on save (`public/assets/ts/utils/set.ts` → `getSummaryKeys()` / `getSingleUserData()`), but **direct writes bypass that** — REST patches, migrations, bulk scripts and manual/agent data edits must update the copy themselves.
+
+| Source document | Summary doc | Fields mirrored |
+|---|---|---|
+| `trips/{tripId}` | `users/{sharing.owner}/tripSummaries/{tripId}` | `title`, `start`, `end`, `colors`, `image`, `modules`, `pin`, `version` |
+| `destinations/{destId}` | `users/{sharing.owner}/destinationSummaries/{destId}` | `title`, `currency`, `image`, `version` |
+| `listings/{listingId}` | `users/{sharing.owner}/listingSummaries/{listingId}` | `title`, `subtitle`, `description`, `colors`, `image`, `version` |
+
+> Always copy the **same values**, including the new `version.lastUpdated` (it invalidates client caches). A lagging summary shows stale titles/images/colors on the home page.
 
 ---
 

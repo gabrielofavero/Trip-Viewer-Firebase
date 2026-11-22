@@ -2074,6 +2074,93 @@
 	flex: 1;
 }
 
+/*--------------------------------------------------------------
+# Destination Folders (trip destination picker)
+# Folders render first (collapsed by default), then the loose
+# destinations. Cards keep the existing .destination-card style.
+--------------------------------------------------------------*/
+.destinations-folder {
+	grid-column: 1 / -1;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md);
+	overflow: hidden;
+	background: var(--bg-secondary);
+}
+.destinations-folder-header {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: 100%;
+	padding: 10px 12px;
+	border: none;
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
+	font-family: inherit;
+	font-size: 0.875rem;
+	font-weight: 600;
+	text-align: left;
+	cursor: pointer;
+	transition: background var(--transition-fast);
+}
+.destinations-folder-header:hover {
+	background: rgba(var(--theme-color-rgb), 0.08);
+}
+.destinations-folder-header > .iconify:first-child {
+	font-size: 18px;
+	color: var(--theme-color);
+}
+.destinations-folder-name {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.destinations-folder-count {
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--text-muted);
+}
+.destinations-folder-chevron {
+	font-size: 20px;
+	color: var(--text-muted);
+	transition: transform var(--transition-fast);
+}
+.destinations-folder.expanded .destinations-folder-chevron {
+	transform: rotate(180deg);
+}
+.destinations-folder-body {
+	display: none;
+	padding: 6px;
+}
+.destinations-folder.expanded .destinations-folder-body,
+.destinations-folder.search-expanded .destinations-folder-body {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 4px;
+}
+@media (min-width: 640px) {
+	.destinations-folder.expanded .destinations-folder-body,
+	.destinations-folder.search-expanded .destinations-folder-body {
+		grid-template-columns: 1fr 1fr;
+		gap: 6px;
+	}
+}
+.destinations-loose-label {
+	grid-column: 1 / -1;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 10px 4px 4px;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--text-secondary);
+}
+.destinations-loose-label .iconify {
+	font-size: 16px;
+	color: var(--theme-color);
+}
+
 /* Wider screens: 2-column grid layout */
 @media (min-width: 640px) {
 	.destinations-cards {
@@ -3069,11 +3156,6 @@ details summary::-webkit-details-marker {
 	border: 1px solid var(--border-color);
 }
 
-/* Sections containing overlays (date picker, etc.) need elevated stacking */
-.edit-page-content section:has(.date-range-picker) {
-	z-index: 11;
-}
-
 .modern-radio-group .nice-form-group {
 	margin-top: 0;
 	flex: 1;
@@ -3288,12 +3370,15 @@ fieldset.modern-radio-group {
 	display: flex;
 }
 
-/* Calendar dropdown */
+/* Calendar dropdown — rendered on <body> with fixed positioning so no
+   accordion/overflow/backdrop-filter ancestor can clip it. The z-index sits
+   above every page layer (sections, custom selects, dialogs) and below only
+   the global toast/preloader overlays (9999+). JS sets left/top on open. */
 .date-range-calendar {
-	position: absolute;
-	top: calc(100% + 8px);
+	position: fixed;
+	top: 0;
 	left: 0;
-	z-index: 1000;
+	z-index: 9995;
 	background: rgba(255, 255, 255, 0.97);
 	backdrop-filter: blur(20px);
 	-webkit-backdrop-filter: blur(20px);
@@ -3302,8 +3387,11 @@ fieldset.modern-radio-group {
 	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 	padding: 16px;
 	display: none;
-	min-width: 320px;
+	min-width: min(320px, calc(100vw - 16px));
 	width: max-content;
+	max-width: calc(100vw - 16px);
+	max-height: calc(100vh - 16px);
+	overflow-y: auto;
 }
 
 [data-theme="dark"] .date-range-calendar {
@@ -3398,8 +3486,6 @@ fieldset.modern-radio-group {
 .cal-day.other-month {
 	color: var(--text-muted);
 	opacity: 0.4;
-	cursor: default;
-	pointer-events: none;
 }
 
 .cal-day.today {
@@ -3428,6 +3514,15 @@ fieldset.modern-radio-group {
 
 .cal-day.range-start.range-end {
 	border-radius: var(--radius-sm);
+}
+
+.cal-day:focus-visible {
+	outline: 2px solid var(--theme-color);
+	outline-offset: 1px;
+}
+
+.cal-day.in-range:hover {
+	background: rgba(var(--theme-color-rgb), 0.16);
 }
 
 /* Quick shortcuts below calendar */
@@ -3524,13 +3619,18 @@ fieldset.modern-radio-group {
 	box-shadow: 0 4px 16px rgba(var(--theme-color-rgb), 0.4);
 }
 
+.cal-apply-btn:disabled,
+.cal-apply-btn:disabled:hover {
+	opacity: 0.45;
+	cursor: not-allowed;
+	box-shadow: none;
+}
+
 /* Calendar responsive */
 @media (max-width: 400px) {
 	.date-range-calendar {
-		left: -8px;
-		right: auto;
 		min-width: auto;
-		width: calc(100vw - 32px);
+		width: calc(100vw - 16px);
 	}
 	.cal-day {
 		height: 32px;

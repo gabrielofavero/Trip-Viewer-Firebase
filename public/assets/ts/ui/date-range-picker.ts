@@ -11,6 +11,53 @@
  */
 import { translate, getLanguagePackName } from '../i18n/translation.js';
 
+/**
+ * Every picker shares ONE popup element appended to <body>. Living outside the
+ * picker's container — and outside the page sections, which use
+ * `backdrop-filter` and `overflow: hidden` — means no accordion, scrolling box
+ * or transformed/filtered ancestor can clip it. Sharing a single element also
+ * avoids leaking DOM nodes when dynamic rows are added/removed.
+ */
+let sharedCalendar: HTMLElement | null = null;
+let activePicker: DateRangePicker | null = null;
+let globalListenersBound = false;
+
+function getSharedCalendar(): HTMLElement {
+	if (!sharedCalendar) {
+		sharedCalendar = document.createElement('div');
+		sharedCalendar.className = 'date-range-calendar';
+		sharedCalendar.setAttribute('role', 'dialog');
+		document.body.appendChild(sharedCalendar);
+	}
+
+	if (!globalListenersBound) {
+		globalListenersBound = true;
+
+		// Close on any pointer interaction outside the active picker.
+		document.addEventListener(
+			'pointerdown',
+			(e) => {
+				if (!activePicker) return;
+				if (activePicker.containsTarget(e.target as Node)) return;
+				activePicker.closeCalendar();
+			},
+			true,
+		);
+
+		// Escape always closes the open picker.
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') activePicker?.closeCalendar();
+		});
+
+		// A fixed popup must follow its input when the page scrolls or resizes.
+		const reposition = () => activePicker?.positionCalendar();
+		window.addEventListener('resize', reposition);
+		window.addEventListener('scroll', reposition, true);
+	}
+
+	return sharedCalendar;
+}
+
 export class DateRangePicker {
 	private container: HTMLElement;
 	private startInput: HTMLInputElement;
@@ -62,18 +109,22 @@ export class DateRangePicker {
 	private getShortcuts() {
 		return [
 			{
+				id: 'today',
 				label: translate('datetime.datepicker.today'),
 				get: () => this.shortcutToday(),
 			},
 			{
+				id: 'this-week',
 				label: translate('datetime.datepicker.this_week'),
 				get: () => this.shortcutThisWeek(),
 			},
 			{
+				id: 'this-month',
 				label: translate('datetime.datepicker.this_month'),
 				get: () => this.shortcutThisMonth(),
 			},
 			{
+				id: 'clear',
 				label: translate('datetime.datepicker.clear'),
 				get: () => this.clear(),
 			},
@@ -116,7 +167,7 @@ export class DateRangePicker {
 				<line x1="3" y1="10" x2="21" y2="10"/>
 			</svg>
 			<span class="date-text placeholder">${translate('datetime.datepicker.select_dates')}</span>
-			<button class="date-clear" type="button" tabindex="-1">
+			<button class="date-clear" type="button" tabindex="-1" aria-label="${translate('datetime.datepicker.clear')}">
 				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 					<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
 				</svg>
@@ -127,10 +178,8 @@ export class DateRangePicker {
 		this.textEl = this.displayInput.querySelector('.date-text')!;
 		this.clearBtn = this.displayInput.querySelector('.date-clear')!;
 
-		// Calendar dropdown — append after the hidden inputs
-		this.calendar = document.createElement('div');
-		this.calendar.className = 'date-range-calendar';
-		this.container.appendChild(this.calendar);
+		// Calendar dropdown — shared, appended to <body> so it is never clipped.
+		this.calendar = getSharedCalendar();
 	}
 
 	private bindEvents(): void {
@@ -146,23 +195,20 @@ export class DateRangePicker {
 			this.clear();
 		});
 
-		// Close calendar when clicking outside
-		document.addEventListener('click', (e) => {
-			if (!this.container.contains(e.target as Node)) {
-				this.closeCalendar();
-			}
-		});
-
-		// Keyboard: Escape to close
-		document.addEventListener('keydown', (e) => {
-			if (e.key === 'Escape' && this.calendar.classList.contains('open')) {
-				this.closeCalendar();
+		// Keyboard: Enter/Space opens the calendar (Escape is handled globally).
+		this.displayInput.addEventListener('keydown', (e) => {
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault();
+				e.stopPropagation();
+				this.toggleCalendar();
 			}
 		});
 	}
 
 	private toggleCalendar(): void {
-		if (this.calendar.classList.contains('open')) {
+		// Compare with the active picker, not the shared popup's class: the popup
+		// may be open for another picker (e.g. when opened via keyboard).
+		if (activePicker === this) {
 			this.closeCalendar();
 		} else {
 			this.openCalendar();
@@ -170,32 +216,80 @@ export class DateRangePicker {
 	}
 
 	private openCalendar(): void {
-		// Keep existing selection, or default to current month
-		this.currentMonth = this.startDate ? this.startDate.getMonth() : new Date().getMonth();
-		this.currentYear = this.startDate ? this.startDate.getFullYear() : new Date().getFullYear();
-		// Reset picking state — user starts fresh each time calendar opens
-		this.selecting = this.startDate && this.endDate ? 'start' : 'start';
+		// Only one picker can be open — the popup element is shared.
+		if (activePicker && activePicker !== this) activePicker.closeCalendar();
+
+		const anchor = this.startDate ?? new Date();
+		this.currentMonth = anchor.getMonth();
+		this.currentYear = anchor.getFullYear();
+
+		// Every open starts a fresh pick. The first click sets BOTH ends to the
+		// clicked day (a 1-day period), so a single click is already a valid
+		// range; a second click expands it into a multi-day range.
+		this.selecting = 'start';
+		this.hoverDate = null;
+		activePicker = this;
+
 		this.renderCalendar();
 		this.calendar.classList.add('open');
 		this.displayInput.classList.add('active');
+		this.positionCalendar();
 	}
 
-	private closeCalendar(): void {
+	closeCalendar(): void {
 		this.calendar.classList.remove('open');
 		this.displayInput.classList.remove('active');
-		// Don't call updateDisplay here — keep whatever was previously set
+		this.hoverDate = null;
+		if (activePicker === this) activePicker = null;
+	}
+
+	/** Whether a DOM node belongs to this picker (input bar or shared popup). */
+	containsTarget(target: Node): boolean {
+		return this.container.contains(target) || this.calendar.contains(target);
+	}
+
+	/**
+	 * Anchors the fixed popup under the input, flipping above when there is no
+	 * room below and clamping to the viewport so it is never cut off.
+	 */
+	positionCalendar(): void {
+		if (!this.calendar.classList.contains('open')) return;
+
+		const margin = 8;
+		const rect = this.displayInput.getBoundingClientRect();
+		const width = this.calendar.offsetWidth;
+		const height = this.calendar.offsetHeight;
+		const viewportWidth = window.innerWidth;
+		const viewportHeight = window.innerHeight;
+
+		let left = rect.left;
+		if (left + width > viewportWidth - margin) {
+			left = viewportWidth - margin - width;
+		}
+		left = Math.max(margin, left);
+
+		const roomBelow = viewportHeight - rect.bottom - margin;
+		const roomAbove = rect.top - margin;
+		let top = rect.bottom + margin;
+		if (height > roomBelow && roomAbove > roomBelow) {
+			top = rect.top - margin - height;
+		}
+		top = Math.max(margin, Math.min(top, viewportHeight - margin - height));
+
+		this.calendar.style.left = `${Math.round(left)}px`;
+		this.calendar.style.top = `${Math.round(top)}px`;
 	}
 
 	private applyRange(): void {
-		if (this.startDate && this.endDate) {
+		if (this.startDate) {
+			// A single click already produced a complete 1-day range.
+			if (!this.endDate) this.endDate = this.startDate;
 			if (this.startDate > this.endDate) {
 				[this.startDate, this.endDate] = [this.endDate, this.startDate];
 			}
 			this.updateDisplay();
 		} else {
-			// A half-finished pick is not a range: drop it and restore whatever is
-			// actually committed, so the calendar can never keep showing a
-			// selection that was not applied.
+			// Nothing picked: restore whatever is actually committed.
 			this.startDate = this.startInput.value ? new Date(this.startInput.value + 'T00:00:00') : null;
 			this.endDate = this.endInput.value ? new Date(this.endInput.value + 'T00:00:00') : null;
 		}
@@ -224,14 +318,13 @@ export class DateRangePicker {
 	private updateDisplay(): void {
 		const hasValue = this.startDate && this.endDate;
 		if (hasValue) {
-			const locale = getLanguagePackName() === 'pt' ? 'pt-BR' : 'en-US';
-			const fmt = (d: Date) =>
-				d.toLocaleDateString(locale, {
-					month: 'short',
-					day: 'numeric',
-					year: 'numeric',
-				});
-			this.textEl.textContent = `${fmt(this.startDate!)} – ${fmt(this.endDate!)}`;
+			// Intl.formatRange collapses a same-day range into a single date and
+			// shares the month/year ("18 – 20 de mar. de 2027").
+			this.textEl.textContent = this.formatRange(this.startDate!, this.endDate!, {
+				month: 'short',
+				day: 'numeric',
+				year: 'numeric',
+			});
 			this.textEl.classList.remove('placeholder');
 			this.displayInput.classList.add('has-value');
 
@@ -278,19 +371,17 @@ export class DateRangePicker {
 		const firstDay = new Date(year, month, 1).getDay();
 		const daysInMonth = new Date(year, month + 1, 0).getDate();
 		const daysInPrevMonth = new Date(year, month, 0).getDate();
-		const today = new Date();
-		today.setHours(0, 0, 0, 0);
-
-		let html = '';
 
 		const months = this.getMonths();
 		const weekDays = this.getWeekDays();
 
+		let html = '';
+
 		// Header
 		html += `<div class="cal-header">
-			<button class="cal-nav-btn" data-action="prev">&larr;</button>
+			<button type="button" class="cal-nav-btn" data-action="prev" aria-label="${translate('datetime.datepicker.previous_month')}">&larr;</button>
 			<span class="cal-month-label">${months[month]} ${year}</span>
-			<button class="cal-nav-btn" data-action="next">&rarr;</button>
+			<button type="button" class="cal-nav-btn" data-action="next" aria-label="${translate('datetime.datepicker.next_month')}">&rarr;</button>
 		</div>`;
 
 		// Weekday labels
@@ -300,72 +391,37 @@ export class DateRangePicker {
 		}
 		html += '</div>';
 
-		// Days grid
+		// Days grid — adjacent-month days are clickable too, so picking a range
+		// that crosses a month boundary does not require navigating first.
 		html += '<div class="cal-days">';
-
-		// Previous month days
 		for (let i = firstDay - 1; i >= 0; i--) {
-			const d = daysInPrevMonth - i;
-			html += `<button class="cal-day other-month" disabled>${d}</button>`;
+			const day = daysInPrevMonth - i;
+			html += this.dayButtonHTML(new Date(year, month - 1, day), day, true);
 		}
-
-		// Current month days
-		for (let d = 1; d <= daysInMonth; d++) {
-			const date = new Date(year, month, d);
-			const classes = ['cal-day'];
-
-			if (date.getTime() === today.getTime()) {
-				classes.push('today');
-			}
-
-			// Check if date is in range
-			if (this.startDate && this.endDate && date > this.startDate && date < this.endDate) {
-				classes.push('in-range');
-			}
-
-			// Check if date is range start or end
-			if (this.startDate && date.getTime() === this.startDate.getTime()) {
-				classes.push('range-start');
-			}
-			if (this.endDate && date.getTime() === this.endDate.getTime()) {
-				classes.push('range-end');
-			}
-
-			html += `<button class="${classes.join(' ')}" data-date="${year}-${month}-${d}">${d}</button>`;
+		for (let day = 1; day <= daysInMonth; day++) {
+			html += this.dayButtonHTML(new Date(year, month, day), day, false);
 		}
-
-		// Next month days to fill row
 		const totalCells = firstDay + daysInMonth;
 		const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
-		for (let d = 1; d <= remaining; d++) {
-			html += `<button class="cal-day other-month" disabled>${d}</button>`;
+		for (let day = 1; day <= remaining; day++) {
+			html += this.dayButtonHTML(new Date(year, month + 1, day), day, true);
 		}
-
 		html += '</div>';
 
 		// Shortcuts
-		const shortcuts = this.getShortcuts();
 		html += '<div class="cal-shortcuts">';
-		for (const s of shortcuts) {
-			html += `<button class="cal-shortcut-btn" data-shortcut="${s.label}">${s.label}</button>`;
+		for (const s of this.getShortcuts()) {
+			html += `<button type="button" class="cal-shortcut-btn" data-shortcut="${s.id}">${s.label}</button>`;
 		}
 		html += '</div>';
 
 		// Footer
-		const rangeLabel =
-			this.startDate && this.endDate
-				? `${this.fmtShort(this.startDate)} – ${this.fmtShort(this.endDate)}`
-				: this.startDate
-					? translate('datetime.datepicker.start_pick_end', {
-							start: this.fmtShort(this.startDate),
-						})
-					: translate('datetime.datepicker.pick_start_date');
-
+		const canApply = !!this.startDate;
 		html += `<div class="cal-footer">
-			<span class="cal-range-label">${rangeLabel}</span>
+			<span class="cal-range-label">${this.getSelectionLabel()}</span>
 			<div class="cal-footer-buttons">
-				<button class="cal-cancel-btn" data-action="cancel">${translate('datetime.datepicker.cancel')}</button>
-				<button class="cal-apply-btn" data-action="apply">${translate('datetime.datepicker.apply')}</button>
+				<button type="button" class="cal-cancel-btn" data-action="cancel">${translate('datetime.datepicker.cancel')}</button>
+				<button type="button" class="cal-apply-btn" data-action="apply"${canApply ? '' : ' disabled'}>${translate('datetime.datepicker.apply')}</button>
 			</div>
 		</div>`;
 
@@ -380,57 +436,47 @@ export class DateRangePicker {
 		this.calendar.querySelectorAll('.cal-nav-btn').forEach((btn) => {
 			btn.addEventListener('click', (e) => {
 				e.stopPropagation();
-				const action = (btn as HTMLElement).dataset.action;
-				if (action === 'prev') {
-					this.currentMonth--;
-					if (this.currentMonth < 0) {
-						this.currentMonth = 11;
-						this.currentYear--;
-					}
-				} else if (action === 'next') {
-					this.currentMonth++;
-					if (this.currentMonth > 11) {
-						this.currentMonth = 0;
-						this.currentYear++;
-					}
-				}
-				this.renderCalendar();
+				this.shiftMonth((btn as HTMLElement).dataset.action === 'prev' ? -1 : 1);
 			});
 		});
 
-		// Day clicks
-		this.calendar.querySelectorAll('.cal-day:not(.other-month)').forEach((btn) => {
+		// Day hover/click. Once the first click set the anchor, hovering paints
+		// the range a second click would create.
+		this.calendar.querySelectorAll<HTMLElement>('.cal-day[data-date]').forEach((btn) => {
+			btn.addEventListener('pointerenter', () => {
+				if (this.selecting !== 'end') return;
+				this.hoverDate = this.parseISODate(btn.dataset.date!);
+				this.updateDayClasses();
+			});
+
 			btn.addEventListener('click', (e) => {
 				e.stopPropagation();
-				const ds = (btn as HTMLElement).dataset.date!;
-				const [y, m, d] = ds.split('-').map(Number);
-				const clickedDate = new Date(y, m, d);
-
-				if (this.selecting === 'start') {
-					this.startDate = clickedDate;
-					this.endDate = null;
-					this.selecting = 'end';
-				} else {
-					if (clickedDate < this.startDate!) {
-						this.endDate = this.startDate;
-						this.startDate = clickedDate;
-					} else {
-						this.endDate = clickedDate;
-					}
-					this.selecting = 'start';
-				}
-				this.renderCalendar();
+				this.handleDayClick(this.parseISODate(btn.dataset.date!));
 			});
+		});
+
+		// Clear the preview when the pointer leaves the whole grid (not between
+		// days, which would flicker the highlight).
+		this.calendar.querySelector('.cal-days')?.addEventListener('pointerleave', () => {
+			if (!this.hoverDate) return;
+			this.hoverDate = null;
+			this.updateDayClasses();
 		});
 
 		// Shortcuts
 		this.calendar.querySelectorAll('.cal-shortcut-btn').forEach((btn) => {
 			btn.addEventListener('click', (e) => {
 				e.stopPropagation();
-				const label = (btn as HTMLElement).dataset.shortcut!;
-				const shortcut = this.getShortcuts().find((s) => s.label === label);
-				if (shortcut) shortcut.get();
+				const id = (btn as HTMLElement).dataset.shortcut;
+				this.getShortcuts()
+					.find((s) => s.id === id)
+					?.get();
+				// Follow the shortcut to its month so the highlight is visible.
+				const anchor = this.startDate ?? new Date();
+				this.currentMonth = anchor.getMonth();
+				this.currentYear = anchor.getFullYear();
 				this.renderCalendar();
+				this.positionCalendar();
 			});
 		});
 
@@ -446,12 +492,144 @@ export class DateRangePicker {
 		});
 	}
 
+	private handleDayClick(clicked: Date): void {
+		if (this.selecting === 'start' || !this.startDate) {
+			// One click is already a complete period: start === end === clicked.
+			this.startDate = clicked;
+			this.endDate = clicked;
+			this.selecting = 'end';
+		} else {
+			// Second click expands the range; clicking before the anchor just
+			// swaps the ends.
+			if (clicked < this.startDate) {
+				this.endDate = this.startDate;
+				this.startDate = clicked;
+			} else {
+				this.endDate = clicked;
+			}
+			this.selecting = 'start';
+			this.hoverDate = null;
+		}
+
+		// If the clicked day lives in an adjacent month, follow it.
+		this.currentMonth = clicked.getMonth();
+		this.currentYear = clicked.getFullYear();
+
+		this.renderCalendar();
+		this.positionCalendar();
+	}
+
+	private shiftMonth(delta: number): void {
+		this.currentMonth += delta;
+		if (this.currentMonth < 0) {
+			this.currentMonth = 11;
+			this.currentYear--;
+		} else if (this.currentMonth > 11) {
+			this.currentMonth = 0;
+			this.currentYear++;
+		}
+		this.renderCalendar();
+		this.positionCalendar();
+	}
+
+	/** The range to paint, including the hover preview while picking the end. */
+	private getDisplayRange(): { start: Date; end: Date } | null {
+		if (!this.startDate) return null;
+
+		let start = this.startDate;
+		let end = this.endDate ?? this.startDate;
+
+		if (this.selecting === 'end' && this.hoverDate) {
+			if (this.hoverDate < start) {
+				end = start;
+				start = this.hoverDate;
+			} else {
+				end = this.hoverDate;
+			}
+		}
+
+		return { start, end };
+	}
+
+	private dayButtonHTML(date: Date, label: number, outsideMonth: boolean): string {
+		const classes = ['cal-day'];
+		if (outsideMonth) classes.push('other-month');
+
+		const today = new Date();
+		today.setHours(0, 0, 0, 0);
+		const isToday = date.getTime() === today.getTime();
+		if (isToday) classes.push('today');
+
+		const range = this.getDisplayRange();
+		let selected = false;
+		if (range) {
+			if (date > range.start && date < range.end) classes.push('in-range');
+			if (date.getTime() === range.start.getTime()) classes.push('range-start');
+			if (date.getTime() === range.end.getTime()) classes.push('range-end');
+			selected = date >= range.start && date <= range.end;
+		}
+
+		const ariaLabel = date.toLocaleDateString(this.getLocale(), {
+			day: 'numeric',
+			month: 'long',
+			year: 'numeric',
+		});
+
+		return `<button type="button" class="${classes.join(' ')}" data-date="${this.toISODate(date)}" aria-label="${ariaLabel}" aria-pressed="${selected}"${isToday ? ' aria-current="date"' : ''}>${label}</button>`;
+	}
+
+	/** Repaint range classes from state — used by the hover preview. */
+	private updateDayClasses(): void {
+		const range = this.getDisplayRange();
+		this.calendar.querySelectorAll<HTMLElement>('.cal-day[data-date]').forEach((btn) => {
+			const date = this.parseISODate(btn.dataset.date!);
+			btn.classList.remove('in-range', 'range-start', 'range-end');
+
+			let selected = false;
+			if (range) {
+				if (date > range.start && date < range.end) btn.classList.add('in-range');
+				if (date.getTime() === range.start.getTime()) btn.classList.add('range-start');
+				if (date.getTime() === range.end.getTime()) btn.classList.add('range-end');
+				selected = date >= range.start && date <= range.end;
+			}
+			btn.setAttribute('aria-pressed', String(selected));
+		});
+	}
+
+	private toISODate(date: Date): string {
+		const y = date.getFullYear();
+		const m = String(date.getMonth() + 1).padStart(2, '0');
+		const d = String(date.getDate()).padStart(2, '0');
+		return `${y}-${m}-${d}`;
+	}
+
+	private parseISODate(value: string): Date {
+		const [y, m, d] = value.split('-').map(Number);
+		return new Date(y, m - 1, d);
+	}
+
+	private getSelectionLabel(): string {
+		if (this.startDate && this.endDate) {
+			return this.formatRange(this.startDate, this.endDate, {
+				month: 'short',
+				day: 'numeric',
+			});
+		}
+		if (this.startDate) {
+			return translate('datetime.datepicker.start_pick_end', {
+				start: this.fmtShort(this.startDate),
+			});
+		}
+		return translate('datetime.datepicker.pick_start_date');
+	}
+
 	private shortcutToday(): void {
 		const today = new Date();
 		today.setHours(0, 0, 0, 0);
 		this.startDate = today;
 		this.endDate = today;
 		this.selecting = 'start';
+		this.hoverDate = null;
 	}
 
 	private shortcutThisWeek(): void {
@@ -465,6 +643,7 @@ export class DateRangePicker {
 		this.startDate = start;
 		this.endDate = end;
 		this.selecting = 'start';
+		this.hoverDate = null;
 	}
 
 	private shortcutThisMonth(): void {
@@ -472,11 +651,38 @@ export class DateRangePicker {
 		this.startDate = new Date(now.getFullYear(), now.getMonth(), 1);
 		this.endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 		this.selecting = 'start';
+		this.hoverDate = null;
+	}
+
+	private getLocale(): string {
+		return getLanguagePackName() === 'pt' ? 'pt-BR' : 'en-US';
 	}
 
 	private fmtShort(d: Date): string {
-		const locale = getLanguagePackName() === 'pt' ? 'pt-BR' : 'en-US';
-		return d.toLocaleDateString(locale, { month: 'short', day: 'numeric' });
+		return d.toLocaleDateString(this.getLocale(), { month: 'short', day: 'numeric' });
+	}
+
+	/**
+	 * Locale-aware range label. Intl.formatRange already collapses identical
+	 * days into a single date and shares the month/year, so a 1-day selection
+	 * reads as just "18 de mar. de 2027" instead of repeating the date twice.
+	 */
+	private formatRange(start: Date, end: Date, options: Intl.DateTimeFormatOptions): string {
+		const locale = this.getLocale();
+		const formatter = new Intl.DateTimeFormat(locale, options);
+		const formatRange = (
+			formatter as Intl.DateTimeFormat & {
+				formatRange?: (from: Date, to: Date) => string;
+			}
+		).formatRange;
+
+		if (typeof formatRange === 'function') {
+			return formatRange.call(formatter, start, end);
+		}
+
+		// Fallback for engines without formatRange.
+		const fmt = (d: Date) => d.toLocaleDateString(locale, options);
+		return start.getTime() === end.getTime() ? fmt(start) : `${fmt(start)} – ${fmt(end)}`;
 	}
 
 	/** Get current range as {start: Date, end: Date} or null */

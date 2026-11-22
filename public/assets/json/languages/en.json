@@ -609,7 +609,9 @@
 			"cancel": "Cancel",
 			"apply": "Apply",
 			"pick_start_date": "Pick start date",
-			"start_pick_end": "Start: {{start}} — pick end date"
+			"start_pick_end": "Start: {{start}} — pick end date",
+			"previous_month": "Previous month",
+			"next_month": "Next month"
 		},
 		"titles": {
 			"day_month": "{{month}} {{day}}",
@@ -1023,7 +1025,20 @@
 		"modules_active": "Active modules",
 		"trip_destinations": "Trip Destinations",
 		"view_trip": "View Trip",
-		"edit_trip": "Edit Trip"
+		"edit_trip": "Edit Trip",
+		"folders": {
+			"edit": "Edit folders",
+			"title": "Destination folders",
+			"hint": "Create folders and choose which destinations belong to each one. Destinations not filed in a folder are listed separately.",
+			"name_placeholder": "Folder name",
+			"create": "Create folder",
+			"empty": "No folders yet. Create the first one below.",
+			"loose": "Other destinations",
+			"done": "Done",
+			"rename": "Folder name",
+			"delete": "Delete folder",
+			"save_error": "Could not save the destination folders."
+		}
 	},
 	"placesApi": {
 		"fetchInfo": "Fetch Info With Maps",

@@ -16,7 +16,7 @@ import {
 	reconfirmPin,
 	validatePin,
 } from '../categories/basic-data/protected-data.js';
-import { deleteTrip, deleteTripAction, NEW_TRIP } from '../edit-trip.js';
+import { deleteTrip, deleteTripAction } from '../edit-trip.js';
 import { SUCCESSFUL_SAVE } from '../../../data/state.js';
 import { openInnerExpense, deleteInnerExpense, saveInnerExpense } from '../categories/expenses.js';
 import { openAttributions } from '../../../utils/attributions.js';
@@ -214,7 +214,10 @@ function startListenerAction() {
 	const start = startDiv.value;
 	const end = endDiv.value;
 
-	if (NEW_TRIP || !end || inputDateToJsDate(end).getTime() < inputDateToJsDate(start).getTime()) {
+	// The date range picker commits start AND end together, and a same-day
+	// range is valid (one click = a 1-day trip). Only repair a missing or
+	// inverted end; never overwrite a valid explicit range.
+	if (!end || inputDateToJsDate(end).getTime() < inputDateToJsDate(start).getTime()) {
 		endDiv.value = getNextInputDay(start);
 	}
 

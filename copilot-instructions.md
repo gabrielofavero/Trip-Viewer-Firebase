@@ -102,6 +102,22 @@ node scripts/dev/query-firestore.js --list-collections   # Query emulator
 7. Test locally with `npm run dev` before deploying
 8. Use only theme or neutral colors (see `css-ui-patterns` skill) — never introduce ad-hoc hex/rgb colors into CSS or inline styles. If a non-theme/non-neutral color is needed, request user authorization first; never add one silently
 
+## Indexed copies in user data (summary sync — never skip)
+
+Some documents are **mirrored** (denormalized) into the owner's user data so the home/index pages render without reading the full document. The app's save flow keeps the copies in sync, but **direct writes bypass it** — REST scripts, migrations, bulk ops and agent data edits must update the copy themselves.
+
+| Document | Indexed copy | Mirrored fields |
+|---|---|---|
+| `trips/{tripId}` | `users/{sharing.owner}/tripSummaries/{tripId}` | `title`, `start`, `end`, `colors`, `image`, `modules`, `pin`, `version` |
+| `destinations/{destId}` | `users/{sharing.owner}/destinationSummaries/{destId}` | `title`, `currency`, `image`, `version` |
+| `listings/{listingId}` | `users/{sharing.owner}/listingSummaries/{listingId}` | `title`, `subtitle`, `description`, `colors`, `image`, `version` |
+
+Rules:
+1. Any data edit that touches a mirrored field must patch the summary with the **same values**, including the new `version.lastUpdated` (it invalidates client caches).
+2. Treat a missing summary as a bug: recreate the full summary object from the document — never patch only `version`.
+3. Reference implementation (what the app writes): `public/assets/ts/utils/set.ts` → `getSummaryKeys()` / `getSingleUserData()`.
+4. When reporting the task, state that the summary was synced (or why it did not apply).
+
 ## Feature Validation
 
 After implementing a feature request, before wrapping up, confirm how it should be validated — don't assume:

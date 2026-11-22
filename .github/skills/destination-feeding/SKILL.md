@@ -177,6 +177,8 @@ destinations/{destId} = {
    { title, currency, image, version: { lastUpdated } }
    ```
    Patch at least `version.lastUpdated` (and `title`/`image`/`currency` if they changed).
+
+   > This applies to **any indexed document**, not just destinations: `trips/{id}` → `users/{sharing.owner}/tripSummaries/{id}` (`title`, `start`, `end`, `colors`, `image`, `modules`, `pin`, `version`) and `listings/{id}` → `users/{sharing.owner}/listingSummaries/{id}` (`title`, `subtitle`, `description`, `colors`, `image`, `version`). Direct REST writes bypass the app's automatic summary update (`public/assets/ts/utils/set.ts`), so always mirror the changed values.
 6. **Verify** by re-reading the document and counting entries per category; check `modules` flags are `true` for every populated category.
 7. **Notify** via the `ntfy-notifications` skill. **No backlog ticket** — feeding data is a data-only operation (see the scope gate in `backlog-management`). Create one only if the same request also changed project code, skills or docs.
 
@@ -413,7 +415,7 @@ Scripts read the project from `--project` (default `trip-viewer-prd`) and honour
 - [ ] Prices are `-`/`$$`/free text or `""` — never invented
 - [ ] Links validated (HTTP) before writing
 - [ ] Merge-only PATCH **per entry** (`<category>.<entryId>`), never a partial category map
-- [ ] `destinationSummaries` version synced
+- [ ] Summary mirror synced (`destinationSummaries`, or `tripSummaries`/`listingSummaries` for other document types)
 - [ ] Re-read and counted (entry count must not drop); `U+FFFD` scan clean
 - [ ] Images resolved per tier, validated, ≤ 5 per entry
 - [ ] Bulk runs use `scripts/images-backfill.mjs` (resume + backup + integrity check) and leave **no orphan Docker containers**
