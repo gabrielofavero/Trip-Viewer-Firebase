@@ -6,17 +6,19 @@ All project-specific skills are located in `.github/skills/` and must be discove
 
 | Skill | Use when |
 |---|---|
-| `backlog-management` | MANDATORY end-of-task check: after every completed request, find/create its ticket in the backlog and move it to `Done`. Also covers updating or interpreting `README.md` tasks, IDs, counts, versions, or `readme.py` |
+| `backlog-management` | MANDATORY end-of-task check **for project changes only** (core code, workers/functions, scripts, skills, docs, config, authored migrations): find/create the ticket and move it to `Done`. Data-only Firestore work (feeding/editing documents, backfills, running existing migrations, `tmp/` scratch scripts) gets **no ticket**. Also covers updating or interpreting `README.md` tasks, IDs, counts, versions, or `readme.py` |
 | `backup-restore` | Working on account/document backup or restore flows |
 | `browser-navigation` | Building app URLs, browser/emulator sign-in, load-state diagnosis, or browser validation |
 | `build-pipeline` | Building, watching, diagnosing build issues, or editing build configuration |
 | `css-ui-patterns` | Editing CSS, UI components, themes, or visual patterns |
 | `data-model` | Working with Firestore schemas, protected storage, security rules, or data access |
+| `destination-feeding` | Populating/refreshing a destination with real data (places, descriptions, prices, images) — auth, write safety, and the no-API image pipeline |
 | `firebase-emulators` | Managing, seeding, inspecting, exporting, or importing Firebase emulators |
 | `git-workflow` | Performing Git operations or creating commit messages |
 | `i18n-system` | Editing translations, language packs, language switching, or translation resolution |
 | `implementation-plans` | Writing/updating/executing a proposal in `docs/implementation-plans/` — before starting, prompt each unanswered open question |
 | `migration-system` | Creating, running, or debugging Firestore migrations — new migrations (18+) must be registered in `scripts/build/migrations-config.json` |
+| `mymaps-editing` | Adding/removing/renaming places in the Google My Maps map linked from a destination — fetch KML, edit, validate, hand back an import-ready file with instructions |
 | `ntfy-notifications` | Every task; send the required ntfy notification before ending a completed, blocked, or input-seeking turn |
 | `query-firestore` | Reading current local Firestore emulator data |
 | `static-export` | Working on offline/static web export, manifests, bundled assets, or image-proxy integration |

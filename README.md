@@ -46,8 +46,8 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 232   | 228  | 4         | 0       |
-| 🏆   | Feature     | F000 | 207   | 192  | 15        | 0       |
-| 📈   | Improvement | M000 | 243   | 221  | 22        | 0       |
+| 🏆   | Feature     | F000 | 209   | 194  | 15        | 0       |
+| 📈   | Improvement | M000 | 244   | 222  | 22        | 0       |
 | ⚔️   | Epic        | E000 | 53    | 44   | 7         | 2       |
 
 ## Backlog
@@ -62,6 +62,12 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
 
 ## Done
+
+### November 2026
+
+- 🏆 **F208:** Add destination-feeding skill with image pipeline
+- 📈 **M244:** Limit backlog tickets to project changes
+- 🏆 **F209:** Add My Maps editing skill
 
 ### September 2026
 

@@ -9,7 +9,7 @@ This is **TripViewer** — a vanilla TypeScript/JavaScript single-page applicati
 
 ## Skills
 
-This workspace has **15 domain-specific agent skills** in `.github/skills/`. These are registered skills that Copilot discovers automatically — you do NOT need the user to invoke them with `/`. Load them proactively:
+This workspace has **16 domain-specific agent skills** in `.github/skills/`. These are registered skills that Copilot discovers automatically — you do NOT need the user to invoke them with `/`. Load them proactively:
 
 | Skill | When to Read |
 |---|---|
@@ -19,13 +19,14 @@ This workspace has **15 domain-specific agent skills** in `.github/skills/`. The
 | `build-pipeline` | Building, watching, debugging the build process |
 | `firebase-emulators` | Starting/stopping emulators, seeding data |
 | `migration-system` | Running/creating Firestore data migrations — new migrations (18+) must be registered in `scripts/build/migrations-config.json` |
+| `mymaps-editing` | Editing the Google My Maps map linked from a destination — fetch KML, edit, validate, return an import-ready file with steps |
 | `css-ui-patterns` | CSS architecture, dark mode, component styles |
 | `typescript-conventions` | Module organization, page routing, service layer, coding conventions |
 | `i18n-system` | Translations, language switching, JSON language packs |
 | `implementation-plans` | Writing/updating/executing implementation plans — prompt every unanswered open question before starting |
 | `backup-restore` | Account backup/restore, document export/import |
 | `static-export` | Offline/static web export, export manifests, self-hosted assets, and image-proxy integration |
-| `backlog-management` | README task IDs, readme.py script |
+| `backlog-management` | README task IDs, readme.py script — end-of-task ticket **only for project changes**; data-only Firestore work gets none |
 | `git-workflow` | Branch strategy, commit conventions, sync/deploy flow |
 | `ntfy-notifications` | **ALWAYS** — see "**Notifications (do not skip)**" section below. Send an ntfy.sh notification (topic `DeepSeek`) via `scripts/dev/ntfy.mjs` when a task/milestone finishes, on long work, or before prompting the user |
 

@@ -1,6 +1,6 @@
 ---
 name: backlog-management
-description: "Use for anything involving the README.md task backlog: navigate its sections, add or move tasks (Done = newest month first, tasks old→new down each month), interpret task IDs and emoji types, calculate counts/version/next IDs, or run `npm run readme` (scripts/utils/readme.py)."
+description: "Use for anything involving the README.md task backlog: the end-of-task check (only when the project itself changed — data-only Firestore work is exempt), navigating sections, adding or moving tasks (Done = newest month first, tasks old→new down each month), task IDs and emoji types, counts/version/next IDs, or `npm run readme` (scripts/utils/readme.py)."
 ---
 
 # Canonical project guide

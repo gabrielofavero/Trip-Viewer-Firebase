@@ -1,6 +1,6 @@
 ---
 name: backlog-management
-description: 'Use for anything involving the README.md task backlog — including the MANDATORY end-of-task check: after every completed request, find its ticket in the backlog (or create one) and move it to Done. Also covers: navigating sections, adding/moving tasks (Done = newest month first, tasks old→new down each month), task IDs and emoji types, counts/version/next IDs, and `npm run readme` (scripts/utils/readme.py).'
+description: 'Use for anything involving the README.md task backlog — including the MANDATORY end-of-task check, which applies ONLY when the project itself changed (core code, workers/functions, scripts, skills, docs, config, authored migrations); data-only Firestore work is exempt. Also covers: navigating sections, adding/moving tasks (Done = newest month first, tasks old→new down each month), task IDs and emoji types, counts/version/next IDs, and `npm run readme` (scripts/utils/readme.py).'
 applyTo: '*'
 ---
 
@@ -10,9 +10,25 @@ TripViewer tracks all work in `README.md` using a structured task system with ID
 
 ---
 
-## End-of-Task Backlog Check (MANDATORY)
+## End-of-Task Backlog Check (MANDATORY — project changes only)
 
-**Run this at the end of every completed request** — not only backlog-focused work. The README is the single source of truth for all project work, so any task you complete must end up in `## Done` before you end your turn.
+**Run this at the end of every request that changed the project itself.** Tickets record how the project evolves — not operational data edits. Run the scope gate below first; if the work is exempt, skip the backlog entirely (no ticket, no `npm run readme`).
+
+### Scope gate — does this work need a ticket?
+
+| Work done | Ticket? |
+|---|---|
+| Core app code (`public/`, TS modules, HTML partials, CSS) | ✅ Yes |
+| `functions/`, `workers/`, build & repo tooling (`scripts/build/`, `scripts/utils/`, `scripts/dev/`) | ✅ Yes |
+| Skills and agent instructions (`.github/skills/`, `.codex/skills/`, instruction files) | ✅ Yes |
+| Docs, plans and config (`docs/`, `README.md` documentation, `firebase.json`, rules) | ✅ Yes |
+| Authoring a new/changed migration (code + registration in `migrations-config.json`) | ✅ Yes |
+| **Data-only** Firestore work: feeding/editing destination, trip, expense or user documents, backfills, image resolution, summary/version sync | 🚫 No |
+| Running an existing migration, backfill or seed against emulator/prod | 🚫 No |
+| Scratch/one-off scripts in `tmp/`, throwaway probes, ad-hoc queries | 🚫 No |
+| Read-only analysis, investigation, answering a question | 🚫 No |
+
+Rule of thumb: **would a tracked project file change?** If yes → ticket. If the only changes are database contents or untracked scratch files → no ticket.
 
 ### Workflow
 
@@ -33,7 +49,7 @@ TripViewer tracks all work in `README.md` using a structured task system with ID
    - **Do not re-add a ticket you created earlier this session** — if a ticket you created in a previous request of this same session is missing when you search again, assume the user manually excluded/removed it. Leave it gone; never re-create it.
 4. **Run `npm run readme`** to refresh the summary table and check consistency.
 
-> Skip only when no work was completed (e.g. a pure read-only answer or a question answered without making any changes). If in doubt, do the check.
+> Skip when the scope gate says **No** — data-only work, scratch scripts, or read-only answers. When the project itself changed, never skip: the work must end up in `## Done` before you end your turn.
 
 ---
 
@@ -207,6 +223,7 @@ Everything is derived from the README by `readme.py` — nothing is hand-maintai
 
 ### Step-by-step
 
+0. **Check the scope gate** above — data-only or scratch work gets **no ticket at all**.
 1. **Pick the next ID** for the task type (see *Task ID Selection Rules* below).
 2. **Add the task in the right place:**
    - **Just completed it** → `## Done`, **append to the bottom** of the current month's list (old on top, new at the bottom). If the month section doesn't exist yet, create `### <Month Year>` at the top of `## Done` first.
