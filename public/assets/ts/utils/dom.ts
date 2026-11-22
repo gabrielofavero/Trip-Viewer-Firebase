@@ -16,6 +16,7 @@ import {
 	getTodayDateObject,
 } from './dates.js';
 import { translate } from '../i18n/translation.js';
+import { getPeopleAvatarStackHTML } from './people-avatars.js';
 import { hideContent } from '../theme/visibility.js';
 import { getFlightBoxHTML } from '../pages/trip-detail/categories/transportation-module.js';
 import {
@@ -610,9 +611,25 @@ export function getInnerItineraryTitle(dado: Record<string, any>, viajantes = TR
 
 export function getInnerItineraryTitleHTML(dado, spanClass) {
 	const titleObj = getInnerItineraryTitle(dado);
+	const avatars = getItineraryTravelerAvatarsHTML(dado);
+	const prefix = avatars ? `${avatars} ` : '';
+
 	return titleObj.title
-		? `<span class="${spanClass}">${titleObj.title}:</span> ${titleObj.content}`
-		: titleObj.content;
+		? `${prefix}<span class="${spanClass}">${titleObj.title}:</span> ${titleObj.content}`
+		: `${prefix}${titleObj.content}`;
+}
+
+/**
+ * Photo circles for the travelers present on an itinerary entry. Only people
+ * registered with a photo render — unregistered names stay text-only.
+ */
+function getItineraryTravelerAvatarsHTML(dado, viajantes = TRAVELERS) {
+	const present = (dado?.travelers || []).filter((traveler) => traveler?.isPresent);
+	const withPhoto = present
+		.map((traveler) => viajantes.find((t) => t.id === traveler.id || t.name === traveler.name))
+		.filter(Boolean);
+
+	return getPeopleAvatarStackHTML(withPhoto, 'itinerary-people-stack');
 }
 
 export function getInnerItinerary(item, destinations) {

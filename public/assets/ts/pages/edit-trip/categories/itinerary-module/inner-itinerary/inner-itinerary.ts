@@ -31,6 +31,7 @@ import { getCheckedTravelersIDs } from '../../travelers.js';
 import { updateTravelersFieldset } from '../../travelers.js';
 import { validateTravelersFieldset } from '../../travelers.js';
 import { getDataSelectOptions } from '../../../edit-trip.js';
+import { initPeopleWheel } from '../../../../../ui/people-wheel.js';
 import {
 	excludeAutoKey,
 	getAutoKeysForEntry,
@@ -127,6 +128,7 @@ export async function openInnerItinerary(j, k?, period?) {
 	];
 
 	displayFullMessage(properties);
+	initPeopleWheel('inner-itinerary-travelers-wheel');
 
 	const activeDestinations = getActiveDestinations(j);
 	if (activeDestinations.length === 1) {

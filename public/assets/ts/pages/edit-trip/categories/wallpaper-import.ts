@@ -277,6 +277,15 @@ export function getWallpaperSourceDestination(): string | null {
 }
 
 /**
+ * Forget where the wallpaper came from. Used when the wallpaper is replaced
+ * by something that is not a trip image (e.g. a template), so the picker card
+ * renders it as a custom image instead of a stale import source.
+ */
+export function clearWallpaperSource(): void {
+	WALLPAPER_SOURCE = null;
+}
+
+/**
  * If `destId` is the wallpaper's source destination, keep the wallpaper (it is
  * already a plain URL) but treat it as a custom image. Returns true when it was
  * the source.

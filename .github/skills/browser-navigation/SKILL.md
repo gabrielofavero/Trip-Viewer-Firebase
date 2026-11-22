@@ -50,7 +50,7 @@ If a task could be checked in the browser but the user hasn't approved it, **ask
 ## Environment
 
 - **Dev (recommended):** `npm run dev` → app at `http://localhost:5000`, emulators Firestore `8085` / Auth `9099` / Functions `5001` / Emulator UI `4000`. Data persists in `.emulator-data/`. **`npm run dev` is almost always already running** — verify `http://localhost:5000` is up and proceed; only start it if unreachable (lifecycle → `firebase-emulators` skill).
-- **Production:** `https://trip-viewer.com` (project `trip-viewer-prd`) — emulator creds never work here.
+- **Production:** `https://trip-viewer-prd.firebaseapp.com` (project `trip-viewer-prd`) — the only deployed domain; there is no dev/alias host. Emulator creds never work here.
 - **Dev console helper (localhost only):** global `dev` object — `dev.firestore.get("path")`, `dev.firestore.set("path", {})`, `dev.help()`. Read DB state in-app without leaving the page.
 
 ## Page & Route Reference

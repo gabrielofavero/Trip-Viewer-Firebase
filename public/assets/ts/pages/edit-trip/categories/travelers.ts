@@ -1,7 +1,13 @@
 // ======= Travelers =======
 // Traveler functions moved to models/traveler.model.js — imported here for backward compat
+//
+// The trip editor renders the account's people registry as an inline wheel in
+// the basic-information form: tap a circle to include that person on the trip,
+// or the trailing "+" to create a trip-only person (name + optional photo).
+// People created here are registered for future trips only when the "save for
+// future trips" checkbox is checked — and only once the trip itself is saved.
 
-import { cloneObject, getID, getReadableArray, getRandomID } from '../../../utils/dom.js';
+import { cloneObject, getID } from '../../../utils/dom.js';
 import { translate } from '../../../i18n/translation.js';
 import {
 	closeMessage,
@@ -9,14 +15,22 @@ import {
 	getContainersInput,
 	MESSAGE_PROPERTIES,
 } from '../../../utils/messages.js';
-import {
-	getNewTravelerID,
-	hasDuplicateTravelerNames,
-	validateTravelersObject,
-} from '../../../models/traveler.model.js';
-import { loadItineraryData } from '../existing-trip.js';
-import { TRAVELERS, DOCUMENT_ID, setTravelersFn } from '../../../data/state.js';
+import { isHttp, markStagedChanges } from '../../../ui/fields.js';
+import { TRAVELERS, setTravelersFn } from '../../../data/state.js';
 import { refreshTransportationPersonSelects } from './transportation.js';
+import {
+	createPersonId,
+	getCachedPeople,
+	queuePersonRegistration,
+	type Person,
+} from '../../../data/services/people.service.js';
+import {
+	getPeopleWheelHTML,
+	getPeopleWheelSelectedIDs,
+	getPersonAvatarHTML,
+	initPeopleWheel,
+} from '../../../ui/people-wheel.js';
+import { escapePeopleHTML } from '../../../utils/people-avatars.js';
 
 export function setTravelers(val) {
 	setTravelersFn(val);
@@ -24,169 +38,237 @@ export function setTravelers(val) {
 const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the fieldset
 let TRAVELER_SELECT_OPTIONS = '';
 
-export function openTravelersInfo() {
+const WHEEL_ID = 'trip-travelers-wheel';
+const WHEEL_CONTAINER_ID = 'trip-travelers-container';
+
+/** People currently rendered in the editor wheel (registry + trip-only people). */
+let WHEEL_PEOPLE: Person[] = [];
+/** Trip-only people created in this session (kept selectable even when unchecked). */
+const EXTRA_PEOPLE: Person[] = [];
+
+/*--------------------------------------------------------------
+# Inline wheel (basic information)
+--------------------------------------------------------------*/
+
+/**
+ * Render (or re-render) the travelers wheel in the basic-information form.
+ * Selection is mirrored into `TRAVELERS` on every change; `selectedIds`
+ * defaults to what the wheel currently shows.
+ */
+export function renderTripTravelersWheel(selectedIds?: string[]): void {
+	const container = getID(WHEEL_CONTAINER_ID);
+	if (!container) return;
+
+	const selected = selectedIds ?? getWheelSelection();
+	WHEEL_PEOPLE = buildWheelPeople();
+
+	container.innerHTML = getPeopleWheelHTML(WHEEL_ID, WHEEL_PEOPLE, selected, true, {
+		label: translate('labels.add'),
+		action: 'add-trip-person',
+	});
+
+	initPeopleWheel(WHEEL_ID);
+	getID(WHEEL_ID)
+		?.querySelector<HTMLElement>('[data-wheel-track]')
+		?.addEventListener('change', syncTravelersFromWheel);
+}
+
+/** Selection currently shown in the wheel (falls back to the trip's travelers). */
+function getWheelSelection(): string[] {
+	if (!getID(WHEEL_ID)) return TRAVELERS.map((traveler) => traveler.id);
+	return getPeopleWheelSelectedIDs(WHEEL_ID);
+}
+
+/**
+ * People to render: the account registry first, then trip-only people. Names
+ * already on the trip but missing from the registry stay selectable instead of
+ * silently disappearing from the editor.
+ */
+function buildWheelPeople(): Person[] {
+	const people: Person[] = [...getCachedPeople()];
+	const known = new Set(people.map((person) => person.id));
+
+	for (const person of EXTRA_PEOPLE) {
+		if (known.has(person.id)) continue;
+		known.add(person.id);
+		people.push(person);
+	}
+
+	for (const traveler of TRAVELERS) {
+		if (!traveler?.id || !traveler.name || known.has(traveler.id)) continue;
+		known.add(traveler.id);
+		const person: Person = {
+			id: traveler.id,
+			name: traveler.name,
+			photo: traveler.photo || '',
+		};
+		EXTRA_PEOPLE.push(person);
+		people.push(person);
+	}
+
+	return people;
+}
+
+/** Mirror the wheel's checked circles into the trip's traveler list. */
+function syncTravelersFromWheel(): void {
+	const selected = new Set(getPeopleWheelSelectedIDs(WHEEL_ID));
+	const travelers = WHEEL_PEOPLE.filter((person) => selected.has(person.id)).map((person) => {
+		const entry: { id: string; name: string; photo?: string } = {
+			id: person.id,
+			name: person.name,
+		};
+		if (person.photo) entry.photo = person.photo;
+		return entry;
+	});
+
+	setTravelersFn(travelers);
+	TRAVELER_SELECT_OPTIONS = '';
+	// Travelers live in JS state, outside the tracked form fields.
+	markStagedChanges();
+	refreshTransportationPersonSelects();
+}
+
+/** Open the person dialog used by the wheel's trailing "+" item. */
+export function openAddTripPerson(): void {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = translate('trip.travelers.info');
+	properties.title = translate('account.people.new_title');
 	properties.containers = getContainersInput();
 	properties.fullscreen = true;
-	properties.content = getTravelersInfoContent();
+	properties.content = getNewTripPersonContent();
 	properties.buttons = [
-		{
-			type: 'cancel',
-		},
-		{
-			type: 'confirm',
-			action: `saveTravelersInfo()`,
-		},
+		{ type: 'cancel' },
+		{ type: 'confirm', action: () => addTripPerson() },
 	];
 
 	displayFullMessage(properties);
-	loadTravelersModalListeners();
+	loadNewTripPersonListeners();
 }
 
-/**
- * Traveler modal — dynamic list UX.
- * One row per traveler (name input + remove button) plus an explicit
- * "Add traveler" button. Replaces the old "number of travelers" spinner,
- * which wiped entered names every time the count changed.
- */
-function getTravelersInfoContent() {
-	const rows = TRAVELERS.length
-		? TRAVELERS.map((traveler, i) => getTravelerRowHTML(i, traveler)).join('')
-		: getTravelerRowHTML(0);
-
+function getNewTripPersonContent(): string {
 	return `
-    <div class="travelers-list" id="travelers-list">
-        ${rows}
-    </div>
-    <button type="button" class="btn input-button travelers-add" id="add-traveler">
-        <span>+ ${translate('trip.travelers.add_traveler')}</span>
-    </button>
-    <div class="nice-form-group" id="travelers-names-unique" style="display: none">
-        <span class="red">${translate('trip.travelers.unique')}</span>
-    </div>
-    `;
+		<div class="people-editor-person">
+			<span class="people-editor-avatar-slot" id="trip-person-avatar-slot">${getPersonAvatarHTML(
+				{ photo: '' },
+				'people-avatar people-editor-person-avatar',
+			)}</span>
+			<div class="people-editor-fields">
+				<input type="text" class="people-editor-name" id="trip-person-name" maxlength="20"
+					autocomplete="off"
+					placeholder="${escapePeopleHTML(translate('account.people.name_placeholder'))}" />
+				<input type="url" class="people-editor-photo" id="trip-person-photo"
+					autocomplete="off"
+					placeholder="${escapePeopleHTML(translate('account.people.photo_placeholder'))}" />
+			</div>
+		</div>
+		<div class="nice-form-group travelers-save-future">
+			<input type="checkbox" id="trip-person-save-future" />
+			<label for="trip-person-save-future">${escapePeopleHTML(
+				translate('trip.travelers.save_future'),
+			)}</label>
+			<p class="people-editor-hint">${escapePeopleHTML(
+				translate('trip.travelers.save_future_hint'),
+			)}</p>
+		</div>
+		<div class="nice-form-group" id="trip-person-error" style="display: none">
+			<span class="red" id="trip-person-error-text"></span>
+		</div>
+	`;
 }
 
-function getTravelerRowHTML(index: number, traveler?: { id?: string; name?: string }) {
-	const nameLabel = translate('labels.name');
-	const id = traveler?.id || getNewTravelerID();
-	const name = traveler?.name || '';
-	return `
-        <div class="travelers-row" data-index="${index}">
-            <div class="nice-form-group travelers-name-group">
-                <label class="travelers-row-label">${nameLabel} ${index + 1}</label>
-                <input type="hidden" class="travelers-id-input" id="traveler-id-${index}" value="${id}" />
-                <input class="travelers-name-input" id="traveler-name-${index}" type="text" maxlength="10"
-                    placeholder="${nameLabel}" ${name ? `value="${name}"` : ''} />
-            </div>
-            <button type="button" class="travelers-remove" data-index="${index}"
-                aria-label="${translate('labels.delete')}" title="${translate('labels.delete')}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path fill="currentColor" fill-rule="evenodd"
-                        d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                        clip-rule="evenodd"></path>
-                </svg>
-            </button>
-        </div>
-    `;
-}
+function loadNewTripPersonListeners(): void {
+	const nameInput = getID<HTMLInputElement>('trip-person-name');
+	const photoInput = getID<HTMLInputElement>('trip-person-photo');
+	const avatarSlot = getID('trip-person-avatar-slot');
+	if (!nameInput || !photoInput) return;
 
-function loadTravelersModalListeners() {
-	const list = getID('travelers-list');
-	if (!list) return;
-
-	getID('add-traveler').addEventListener('click', addTravelerRow);
-
-	// Event delegation so remove buttons work on every row, including new ones.
-	list.addEventListener('click', (event) => {
-		const button = (event.target as Element).closest<HTMLElement>('.travelers-remove');
-		if (!button) return;
-		button.closest<HTMLElement>('.travelers-row')?.remove();
-		reindexTravelersRows();
-		hideTravelersUniqueWarning();
+	// Live avatar preview while the photo link is typed.
+	photoInput.addEventListener('input', () => {
+		if (!avatarSlot) return;
+		avatarSlot.innerHTML = getPersonAvatarHTML(
+			{ photo: photoInput.value.trim() },
+			'people-avatar people-editor-person-avatar',
+		);
 	});
+
+	nameInput.focus();
 }
 
-function addTravelerRow() {
-	const list = getID('travelers-list');
-	if (!list) return;
-	const index = list.children.length;
-	list.insertAdjacentHTML('beforeend', getTravelerRowHTML(index, { id: getNewTravelerIDForModal(list) }));
-	hideTravelersUniqueWarning();
-	getID(`traveler-name-${index}`)?.focus();
-}
+/** Validate the new person and add them to the wheel (selected). */
+function addTripPerson(): void {
+	const nameInput = getID<HTMLInputElement>('trip-person-name');
+	const photoInput = getID<HTMLInputElement>('trip-person-photo');
+	if (!nameInput || !photoInput) return;
 
-/**
- * Generates a traveler ID unique against both the saved travelers and the rows
- * already present in the open modal (avoids collisions when several rows are
- * added in a single session).
- */
-function getNewTravelerIDForModal(list: HTMLElement): string {
-	const usedIDs = [
-		...TRAVELERS.map((t) => t.id),
-		...Array.from(list.querySelectorAll<HTMLInputElement>('.travelers-id-input')).map((input) => input.value),
-	];
-	return getRandomID({ pool: usedIDs });
-}
+	const name = nameInput.value.trim();
+	const photo = photoInput.value.trim();
+	const saveForFuture = getID<HTMLInputElement>('trip-person-save-future')?.checked === true;
 
-/** Renumbers row labels / input ids after a row is removed. */
-function reindexTravelersRows() {
-	const list = getID('travelers-list');
-	if (!list) return;
-	const nameLabel = translate('labels.name');
-	Array.from(list.children).forEach((row, i) => {
-		const rowEl = row as HTMLElement;
-		rowEl.dataset.index = String(i);
-		const idInput = rowEl.querySelector<HTMLInputElement>('.travelers-id-input');
-		const nameInput = rowEl.querySelector<HTMLInputElement>('.travelers-name-input');
-		if (idInput) idInput.id = `traveler-id-${i}`;
-		if (nameInput) nameInput.id = `traveler-name-${i}`;
-		const label = rowEl.querySelector('.travelers-row-label');
-		if (label) label.textContent = `${nameLabel} ${i + 1}`;
-		const removeBtn = rowEl.querySelector<HTMLElement>('.travelers-remove');
-		if (removeBtn) removeBtn.dataset.index = String(i);
-	});
-}
-
-function hideTravelersUniqueWarning() {
-	const warning = getID('travelers-names-unique');
-	if (warning) warning.style.display = 'none';
-}
-
-export function saveTravelersInfo() {
-	const list = getID('travelers-list');
-	if (!list) return;
-
-	const travelers = [];
-	for (const row of list.querySelectorAll<HTMLElement>('.travelers-row')) {
-		const name = row.querySelector<HTMLInputElement>('.travelers-name-input')?.value.trim() || '';
-		if (!name) {
-			continue; // Skip empty rows
-		}
-		travelers.push({
-			id: row.querySelector<HTMLInputElement>('.travelers-id-input')?.value || getNewTravelerID(),
-			name,
-		});
+	if (!name) {
+		showTripPersonError(translate('account.people.name_required'));
+		nameInput.focus();
+		return;
 	}
-
-	const names = travelers.map((t) => t.name);
-	const hasRepetitions = names.some((name, index) => {
-		return names.indexOf(name) !== index;
-	});
-
-	if (hasRepetitions) {
-		getID('travelers-names-unique').style.display = 'block';
+	if (photo && !isHttp(photo)) {
+		showTripPersonError(translate('account.people.photo_invalid'));
+		photoInput.focus();
+		return;
+	}
+	if (isTripPersonNameTaken(name)) {
+		showTripPersonError(translate('account.people.duplicate'));
+		nameInput.focus();
 		return;
 	}
 
-	setTravelersFn(travelers);
-	closeMessage();
-	updateTravelersButtonLabel();
-	refreshTransportationPersonSelects();
-	if (DOCUMENT_ID) {
-		loadItineraryData();
+	const person: Person = { id: createTripPersonId(), name, photo };
+	EXTRA_PEOPLE.push(person);
+	if (saveForFuture) {
+		// Registered by the save flow once the trip write succeeds.
+		queuePersonRegistration(person);
 	}
+
+	closeMessage();
+
+	const selected = getPeopleWheelSelectedIDs(WHEEL_ID);
+	selected.push(person.id);
+	renderTripTravelersWheel(selected);
+	scrollWheelToEnd();
+	syncTravelersFromWheel();
+}
+
+/** Names must stay unique across the wheel (registry + trip-only people). */
+function isTripPersonNameTaken(name: string): boolean {
+	const normalized = name.toLowerCase();
+	const names = [...getCachedPeople(), ...EXTRA_PEOPLE, ...WHEEL_PEOPLE].map((person) =>
+		person.name.toLowerCase(),
+	);
+	return names.includes(normalized);
+}
+
+/** Person id unique against the registry and everyone already in the wheel. */
+function createTripPersonId(): string {
+	const used = new Set([
+		...getCachedPeople().map((person) => person.id),
+		...EXTRA_PEOPLE.map((person) => person.id),
+	]);
+	let id = createPersonId();
+	while (used.has(id)) {
+		id = createPersonId();
+	}
+	return id;
+}
+
+function showTripPersonError(message: string): void {
+	const container = getID('trip-person-error');
+	const text = getID('trip-person-error-text');
+	if (text) text.textContent = message;
+	if (container) container.style.display = 'block';
+}
+
+/** Bring the newly added person's circle into view. */
+function scrollWheelToEnd(): void {
+	const track = getID(WHEEL_ID)?.querySelector<HTMLElement>('[data-wheel-track]');
+	if (!track) return;
+	requestAnimationFrame(() => track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' }));
 }
 
 export function getTravelersFieldset(id, _defaultValue?) {
@@ -208,41 +290,57 @@ export function getTravelersFieldset(id, _defaultValue?) {
 	titleLabel.appendChild(mandatory);
 	result.appendChild(titleLabel);
 
-	const fieldset = document.createElement('fieldset');
-	fieldset.className = 'double-fieldset';
+	const validTravelers = TRAVELERS.filter((traveler) => traveler?.name);
 	let travelers = 0;
 
-	for (let j = 1; j <= TRAVELERS.length; j++) {
-		const traveler = TRAVELERS[j - 1];
+	if (getCachedPeople().length > 0) {
+		// Registered people: circular wheel instead of checkboxes.
+		result.insertAdjacentHTML(
+			'beforeend',
+			getPeopleWheelHTML(
+				`${id}-wheel`,
+				validTravelers,
+				validTravelers.map((traveler) => traveler.id),
+			),
+		);
+		travelers = validTravelers.length;
+	} else {
+		const fieldset = document.createElement('fieldset');
+		fieldset.className = 'double-fieldset';
 
-		if (!traveler.name) {
-			continue; // Skip if no name is provided
+		for (let j = 1; j <= TRAVELERS.length; j++) {
+			const traveler = TRAVELERS[j - 1];
+
+			if (!traveler.name) {
+				continue; // Skip if no name is provided
+			}
+
+			const div = document.createElement('div');
+			div.id = `checkbox-${j}`;
+			div.className = 'nice-form-group';
+			div.style.marginTop = '0px';
+
+			const input = document.createElement('input');
+			input.type = 'checkbox';
+			input.id = `${id}-${j}`;
+			input.value = traveler.id;
+			input.setAttribute('data-name', traveler.name);
+			input.checked = true;
+
+			const label = document.createElement('label');
+			label.id = `${id}-label-${j}`;
+			label.className = 'checkbox-label';
+			label.setAttribute('for', input.id);
+			label.textContent = traveler.name;
+
+			div.appendChild(input);
+			div.appendChild(label);
+			fieldset.appendChild(div);
+			travelers++;
 		}
 
-		const div = document.createElement('div');
-		div.id = `checkbox-${j}`;
-		div.className = 'nice-form-group';
-		div.style.marginTop = '0px';
-
-		const input = document.createElement('input');
-		input.type = 'checkbox';
-		input.id = `${id}-${j}`;
-		input.value = traveler.id;
-		input.checked = true;
-
-		const label = document.createElement('label');
-		label.id = `${id}-label-${j}`;
-		label.className = 'checkbox-label';
-		label.setAttribute('for', input.id);
-		label.textContent = traveler.name;
-
-		div.appendChild(input);
-		div.appendChild(label);
-		fieldset.appendChild(div);
-		travelers++;
+		result.appendChild(fieldset);
 	}
-
-	result.appendChild(fieldset);
 
 	return travelers > 1 ? result.outerHTML : '';
 }
@@ -255,17 +353,20 @@ export function enableAllTravelersFieldset(id) {
 	updateTravelersFieldset(id, checkedData);
 }
 
+/** Select/deselect travelers inside either the wheel or the legacy checkboxes. */
 export function updateTravelersFieldset(id, checkedData = []) {
-	let j = 1;
-	while (getID(`${id}-${j}`)) {
-		const checkbox = getID(`${id}-${j}`);
-		const value = checkbox.value;
-		const traveler = checkedData.find((t) => t.id === value);
+	const container = getID(id);
+	if (!container) return;
+
+	container.querySelectorAll<HTMLInputElement>('input[type="checkbox"]').forEach((checkbox) => {
+		const traveler = checkedData.find((t) => t.id === checkbox.value);
 
 		checkbox.checked =
 			traveler?.isPresent === undefined ? INCLUDE_LATE_TRAVELERS : traveler.isPresent;
-		j++;
-	}
+		checkbox
+			.closest<HTMLElement>('.people-wheel-item')
+			?.classList.toggle('selected', checkbox.checked);
+	});
 }
 
 export function getCheckedTravelersIDs(containerID) {
@@ -274,17 +375,17 @@ export function getCheckedTravelersIDs(containerID) {
 		return [];
 	}
 	const result = [];
-	const fieldset = container.querySelector('fieldset');
 
-	for (const checkBoxContainer of fieldset.children) {
-		const label = checkBoxContainer.querySelector('label');
-		const checkbox = checkBoxContainer.querySelector('input');
+	container.querySelectorAll<HTMLInputElement>('input[type="checkbox"]').forEach((checkbox) => {
+		const label = checkbox
+			.closest('.nice-form-group')
+			?.querySelector<HTMLElement>('label.checkbox-label')?.innerText;
 		result.push({
 			id: checkbox.value,
-			name: label.innerText,
+			name: checkbox.getAttribute('data-name') || label || '',
 			isPresent: checkbox.checked,
 		});
-	}
+	});
 
 	const missingNames = TRAVELERS.filter((t) => !result.some((r) => r.name === t.name));
 	for (const missing of missingNames) {
@@ -303,33 +404,19 @@ export function validateTravelersFieldset(id) {
 	if (!mandatory) {
 		return true;
 	}
-	let isValid = false;
-	let j = 1;
-	while (getID(`${id}-${j}`)) {
-		const checkbox = getID(`${id}-${j}`);
-		if (checkbox.checked) {
-			isValid = true;
-			break;
-		}
-		j++;
-	}
+
+	const container = getID(id);
+	const isValid = container
+		? Array.from(container.querySelectorAll<HTMLInputElement>('input[type="checkbox"]')).some(
+				(checkbox) => checkbox.checked,
+			)
+		: false;
+
 	if (!isValid) {
 		mandatory.style.display = 'inline';
 	}
 
 	return isValid;
-}
-
-export function updateTravelersButtonLabel() {
-	const el = getID('travelers-info');
-
-	if (TRAVELERS.length === 0) {
-		el.textContent = translate('trip.travelers.add');
-		return;
-	}
-
-	const names = TRAVELERS.map((t) => t.name).filter((n) => n);
-	el.textContent = getReadableArray(names);
 }
 
 export function getTravelersSelectOptionsHTML() {

@@ -8,7 +8,7 @@ import { setExpensesData } from './edit-trip.js';
 import { loadExpenses } from './categories/expenses.js';
 import { DOCUMENT_ID } from '../../data/state.js';
 import { setCurrentPreferencePIN } from './categories/basic-data/set-protected-data.js';
-import { setTravelers, updateTravelersButtonLabel } from './categories/travelers.js';
+import { setTravelers, renderTripTravelersWheel } from './categories/travelers.js';
 import { loadCustomizationImageData, setCurrentLight } from './categories/customization.js';
 import {
 	addTransportation,
@@ -57,6 +57,7 @@ import {
 	jsDateToKey,
 } from '../../utils/dates.js';
 import { validateTravelersObject } from '../../models/traveler.model.js';
+import { applyPeopleToTravelers } from '../../data/services/people.service.js';
 import { haveErrorFromGetRequest, get } from '../../data/firebase/database.js';
 import { ERROR_FROM_GET_REQUEST } from '../../data/state.js';
 import { getHTMLpage, setPageName } from '../../app/main.js';
@@ -89,9 +90,11 @@ function loadBasicTripData() {
 	getID('start').value = getDateString(start, 'yyyy-mm-dd');
 	getID('end').value = getDateString(end, 'yyyy-mm-dd');
 
-	setTravelers(cloneObject(getState().travelers));
+	// Refresh registered names/photos from the people registry before the
+	// travelers UI renders (also strips photos from unregistered people).
+	setTravelers(applyPeopleToTravelers(cloneObject(getState().travelers)));
 	validateTravelersObject();
-	updateTravelersButtonLabel();
+	renderTripTravelersWheel();
 	setCurrentPreferencePIN(getState().pin);
 	switchPinVisibility();
 	switchPinLabel();

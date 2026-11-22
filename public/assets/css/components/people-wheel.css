@@ -1,0 +1,493 @@
+/*--------------------------------------------------------------
+# People Wheel
+# Circular avatar selector shared by the trip editor's travelers
+# dialog and the itinerary entry dialog. Selection is backed by
+# native checkboxes (see ui/people-wheel.ts).
+--------------------------------------------------------------*/
+
+.people-wheel {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	max-width: 100%;
+}
+
+.people-wheel-track {
+	display: flex;
+	gap: 14px;
+	flex: 1;
+	min-width: 0;
+	overflow-x: auto;
+	padding: 6px 2px 8px;
+	scroll-snap-type: x proximity;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	-webkit-overflow-scrolling: touch;
+}
+
+.people-wheel-track::-webkit-scrollbar {
+	display: none;
+}
+
+.people-wheel-item {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	flex: 0 0 auto;
+	width: 70px;
+	cursor: pointer;
+	scroll-snap-align: center;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.people-wheel-item input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.people-wheel-item:focus-within .people-wheel-avatar {
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.22);
+}
+
+.people-wheel-avatar,
+.people-avatar {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--people-avatar-size, 40px);
+	height: var(--people-avatar-size, 40px);
+	border: 1.5px solid var(--border-color);
+	border-radius: 50%;
+	background-color: var(--bg-tertiary);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	overflow: hidden;
+}
+
+.people-wheel-avatar:not(.has-photo),
+.people-avatar:not(.has-photo) {
+	background-image:
+		url("../../img/default-avatar.svg"),
+		linear-gradient(135deg, var(--theme-color), var(--theme-color-hover));
+	background-position: center, center;
+	background-repeat: no-repeat, no-repeat;
+	background-size: 62% 62%, cover;
+}
+
+.people-wheel-avatar {
+	--people-avatar-size: 54px;
+	position: relative;
+	/* Photos and the default avatar are background images, so nothing needs
+	   clipping. Overflow must stay visible or the selected check badge (which
+	   overhangs the circle) is cut off by the border-radius. */
+	overflow: visible;
+	transition:
+		transform var(--transition-fast),
+		border-color var(--transition-fast),
+		box-shadow var(--transition-fast);
+}
+
+.people-wheel-item:hover .people-wheel-avatar {
+	transform: translateY(-2px) scale(1.04);
+}
+
+.people-wheel-item.selected .people-wheel-avatar {
+	border-color: var(--theme-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.18);
+}
+
+.people-wheel-check {
+	position: absolute;
+	right: -3px;
+	bottom: -3px;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	border: 2px solid var(--bg-primary);
+	background: var(--theme-color);
+	color: #fff;
+	font-size: 10px;
+}
+
+.people-wheel-check .iconify {
+	width: 11px;
+	height: 11px;
+}
+
+.people-wheel-item.selected .people-wheel-check {
+	display: inline-flex;
+}
+
+.people-wheel-name {
+	max-width: 68px;
+	overflow: hidden;
+	font-size: 11px;
+	line-height: 1.2;
+	color: var(--text-secondary);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.people-wheel-item.selected .people-wheel-name {
+	color: var(--text-primary);
+	font-weight: 600;
+}
+
+/* Trailing "+" circle — creates a trip-only person in the trip editor. */
+.people-wheel-add {
+	--people-avatar-size: 54px;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font-family: inherit;
+}
+
+.people-wheel-add:focus-visible {
+	outline: none;
+}
+
+.people-wheel-add-circle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--people-avatar-size, 54px);
+	height: var(--people-avatar-size, 54px);
+	border: 2px dashed var(--border-color);
+	border-radius: 50%;
+	color: var(--text-muted);
+	transition:
+		border-color var(--transition-fast),
+		color var(--transition-fast),
+		background var(--transition-fast);
+}
+
+.people-wheel-add:hover .people-wheel-add-circle,
+.people-wheel-add:focus-visible .people-wheel-add-circle {
+	border-color: var(--theme-color);
+	background: rgba(var(--theme-color-rgb), 0.08);
+	color: var(--theme-color);
+}
+
+.people-wheel-add-circle .iconify {
+	width: 24px;
+	height: 24px;
+}
+
+.people-wheel-spin {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	width: 30px;
+	height: 30px;
+	padding: 0;
+	border: 1px solid var(--border-color);
+	border-radius: 50%;
+	background: var(--bg-secondary);
+	color: var(--text-secondary);
+	cursor: pointer;
+	transition:
+		color var(--transition-fast),
+		border-color var(--transition-fast),
+		background var(--transition-fast);
+}
+
+.people-wheel-spin:hover:not(:disabled) {
+	border-color: var(--theme-color);
+	color: var(--theme-color);
+	background: var(--bg-tertiary);
+}
+
+.people-wheel-spin:disabled {
+	opacity: 0.35;
+	cursor: default;
+}
+
+.people-wheel-spin .iconify {
+	width: 18px;
+	height: 18px;
+}
+
+.people-wheel-empty {
+	font-size: 13px;
+	color: var(--text-muted);
+}
+
+/*--------------------------------------------------------------
+# Avatar Stack
+# Overlapping circles used in the itinerary and in Highlights.
+--------------------------------------------------------------*/
+
+.people-avatar-stack {
+	display: inline-flex;
+	align-items: center;
+	vertical-align: middle;
+}
+
+.people-avatar-stack .people-avatar {
+	--people-avatar-size: 22px;
+	margin-left: -7px;
+	border: 2px solid var(--bg-primary);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.people-avatar-stack .people-avatar:first-child {
+	margin-left: 0;
+}
+
+.itinerary-people-stack {
+	margin-right: 4px;
+	vertical-align: middle;
+}
+
+/*--------------------------------------------------------------
+# People Manager (Settings)
+# Circular avatar grid: tap a person to edit it, or the "+" circle
+# at the end to register a new one (each is saved individually).
+--------------------------------------------------------------*/
+
+.people-editor-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px 10px;
+	margin-bottom: 16px;
+}
+
+/* Inline wheel inside the Settings people section */
+.settings-people-grid {
+	margin-bottom: 0;
+}
+
+.people-editor-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	width: 78px;
+	padding: 8px 4px;
+	border: 0;
+	border-radius: var(--radius-md);
+	background: none;
+	color: inherit;
+	font-family: inherit;
+	cursor: pointer;
+	transition: background var(--transition-fast);
+}
+
+.people-editor-card:hover {
+	background: var(--bg-secondary);
+}
+
+.people-editor-card:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.22);
+}
+
+.people-editor-avatar {
+	--people-avatar-size: 62px;
+	border-width: 3px;
+	transition:
+		transform var(--transition-fast),
+		border-color var(--transition-fast),
+		box-shadow var(--transition-fast);
+}
+
+.people-editor-card:hover .people-editor-avatar {
+	transform: translateY(-2px) scale(1.04);
+	border-color: var(--theme-color);
+}
+
+.people-editor-card-name {
+	max-width: 74px;
+	overflow: hidden;
+	font-size: 12px;
+	line-height: 1.2;
+	color: var(--text-secondary);
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.people-editor-add-circle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 62px;
+	height: 62px;
+	border: 2px dashed var(--border-color);
+	border-radius: 50%;
+	color: var(--text-muted);
+	transition:
+		border-color var(--transition-fast),
+		color var(--transition-fast),
+		background var(--transition-fast);
+}
+
+.people-editor-add:hover .people-editor-add-circle {
+	border-color: var(--theme-color);
+	background: rgba(var(--theme-color-rgb), 0.08);
+	color: var(--theme-color);
+}
+
+.people-editor-add-circle .iconify {
+	width: 26px;
+	height: 26px;
+}
+
+/* Single-person editor screen */
+.people-editor-person {
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
+	margin-bottom: 14px;
+}
+
+.people-editor-avatar-slot {
+	display: inline-flex;
+	flex: 0 0 auto;
+}
+
+.people-editor-person-avatar {
+	--people-avatar-size: 72px;
+}
+
+.people-editor-fields {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 8px;
+	min-width: 0;
+}
+
+.people-editor-fields input {
+	width: 100%;
+	padding: 10px 12px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-sm);
+	background: var(--bg-primary);
+	color: var(--text-primary);
+	font-family: inherit;
+	font-size: 14px;
+	transition:
+		border-color var(--transition-fast),
+		box-shadow var(--transition-fast);
+}
+
+.people-editor-fields input:focus {
+	outline: none;
+	border-color: var(--theme-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+/* Square icon button shared by the templates manager rows (it adds the
+   `templates-manager-remove` class on top of this one). */
+.people-editor-remove {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 1.5px solid var(--border-color);
+	border-radius: var(--radius-md);
+	background: var(--bg-primary);
+	color: var(--text-muted);
+	cursor: pointer;
+	transition:
+		color var(--transition-fast),
+		border-color var(--transition-fast),
+		background var(--transition-fast);
+}
+
+.people-editor-remove:hover {
+	border-color: var(--text-secondary);
+	color: var(--text-primary);
+	background: var(--bg-tertiary);
+}
+
+.people-editor-remove svg {
+	width: 18px;
+	height: 18px;
+}
+
+.people-editor-hint {
+	margin-top: 6px;
+	font-size: 12px;
+	color: var(--text-muted);
+}
+
+/*--------------------------------------------------------------
+# Travelers inline wheel (trip editor basic information)
+--------------------------------------------------------------*/
+
+.travelers-inline {
+	margin-top: 2px;
+}
+
+.travelers-save-future {
+	margin-top: 4px;
+}
+
+.travelers-save-future label {
+	font-weight: 600;
+}
+
+/*--------------------------------------------------------------
+# Responsive
+--------------------------------------------------------------*/
+
+@media (max-width: 600px) {
+	.people-wheel-avatar {
+		--people-avatar-size: 46px;
+	}
+
+	.people-wheel-add {
+		--people-avatar-size: 46px;
+	}
+
+	.people-wheel-item {
+		width: 62px;
+	}
+
+	.people-wheel-name {
+		max-width: 60px;
+		font-size: 10px;
+	}
+
+	.people-wheel-spin {
+		width: 26px;
+		height: 26px;
+	}
+
+	.people-editor-card {
+		width: 68px;
+	}
+
+	.people-editor-avatar,
+	.people-editor-add-circle {
+		--people-avatar-size: 54px;
+		width: 54px;
+		height: 54px;
+	}
+
+	.people-editor-person-avatar {
+		--people-avatar-size: 60px;
+	}
+
+	.people-editor-remove {
+		width: 38px;
+		height: 38px;
+	}
+}

@@ -9,7 +9,7 @@ import { translate } from '../../../i18n/translation.js';
 import { getNextInputDay, inputDateToJsDate } from '../../../utils/dates.js';
 import { registerActions } from '../../../ui/actions.js';
 import { registerActions as registerMessageActions } from '../../../utils/messages.js';
-import { openTravelersInfo, saveTravelersInfo } from '../categories/travelers.js';
+import { openAddTripPerson } from '../categories/travelers.js';
 import { openImagePicker, refreshImagePickers } from '../categories/wallpaper-import.js';
 import {
 	requestPinEditExpenses,
@@ -27,6 +27,11 @@ import {
 	openAccommodationImport,
 	refreshAccommodationImportButtons,
 } from '../categories/accommodation-import.js';
+import {
+	openAccommodationTemplatePicker,
+	openTripTemplatePicker,
+	refreshTemplateButtons,
+} from '../categories/trip-template.js';
 import {
 	openTransportationImport,
 	refreshTransportationImportButtons,
@@ -56,10 +61,9 @@ import {
 export function loadEventListeners() {
 	// Register data-action handlers via the shared delegated handler (ui/actions.js)
 	registerActions({
-		saveTravelersInfo,
 		reconfirmPin,
 		validatePin,
-		'open-travelers-info': () => openTravelersInfo(),
+		'add-trip-person': () => openAddTripPerson(),
 		'open-image-picker': (target) => {
 			const type = target.getAttribute('data-type');
 			if (type) openImagePicker(type);
@@ -75,6 +79,11 @@ export function loadEventListeners() {
 		'open-accommodation-import': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) openAccommodationImport(index);
+		},
+		'open-trip-template': () => openTripTemplatePicker(),
+		'open-accommodation-template': (target) => {
+			const index = parseInt(target.getAttribute('data-index'));
+			if (!isNaN(index)) openAccommodationTemplatePicker(index);
 		},
 		'open-transportation-import': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
@@ -134,7 +143,6 @@ export function loadEventListeners() {
 
 	// Register string-based button actions used in modals (via messages.js _actionRegistry)
 	registerMessageActions({
-		saveTravelersInfo,
 		reconfirmPin,
 		validatePin,
 		deleteTripAction,
@@ -156,6 +164,7 @@ export function loadEventListeners() {
 	getID('accommodation-add').addEventListener('click', () => {
 		accommodationsAddListenerAction();
 		void refreshAccommodationImportButtons();
+		refreshTemplateButtons();
 	});
 	getID('pin-disabled').addEventListener('click', switchPin);
 	getID('pin-sensitive-only').addEventListener('click', switchPin);
@@ -191,6 +200,7 @@ export function loadEventListeners() {
 	// trips; the destination-changed event handles mid-edit changes).
 	refreshImagePickers();
 	void refreshAccommodationImportButtons();
+	refreshTemplateButtons();
 	refreshTransportationImportButtons();
 
 	window.addEventListener('beforeunload', (event) => {

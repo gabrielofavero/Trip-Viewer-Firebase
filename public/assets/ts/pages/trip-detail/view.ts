@@ -3,12 +3,14 @@ import {
 	closeMessage,
 	displayError,
 	MESSAGE_MODAL_OPEN,
+	openToast,
 	registerActions,
 } from '../../utils/messages.js';
 import {
 	getState,
 	setState,
 	TRAVELERS,
+	setTravelers,
 	DOCUMENT_ID,
 	DESTINATIONS,
 	setDocumentId,
@@ -388,46 +390,30 @@ function loadModules() {
 
 	function loadSharingModule() {
 		const share = getID('share');
+		if (!share) return;
 		// A static export is a standalone page — the share button would share a
 		// local URL recipients can't open, so it stays hidden.
 		if (isStaticMode()) {
-			if (share) share.style.display = 'none';
+			share.style.display = 'none';
 			return;
 		}
-		if (navigator.share && window.location.hostname != 'localhost') {
-			share.addEventListener('click', () => {
-				shareTrip();
-			});
-		} else {
-			share.style.display = 'none';
+		share.addEventListener('click', sharePage);
+	}
+
+	/** Share the direct page link — no title/text labels in the share sheet. */
+	function sharePage() {
+		const url = getPageURL();
+
+		if (navigator.share) {
+			navigator.share({ url }).catch(() => {});
+			return;
 		}
 
-		function shareTrip() {
-			const title = getState().title || document.title;
-			const text = getSharingText();
-			const url = getPageURL();
-			navigator.share({ title, text, url });
-		}
-
-		function getSharingText() {
-			switch (TYPE) {
-				case 'listings':
-					return translate('listing.share', { name: getState().title });
-				case 'destinations':
-					return translate('destination.share', {
-						name: getState().title,
-					});
-				case 'trip':
-				case 'trips':
-					return translate('trip.share', {
-						name: getState().title,
-						start: START_DATE.text,
-						end: END_DATE.text,
-					});
-				default:
-					return translate('messages.share');
-			}
-		}
+		// Desktop browsers without the Web Share API: copy the link instead.
+		navigator.clipboard?.writeText(url).then(
+			() => openToast(translate('messages.link_copied')),
+			() => {}
+		);
 	}
 
 	function loadSummaryModule() {
@@ -580,6 +566,9 @@ function populateDevPage(rawFirestoreData?: any) {
 
 export function setFirestoreData(firestoreData, rawFirestoreData?: any) {
 	setState(firestoreData);
+	// Trip travelers (id/name/photo) drive the itinerary avatars. Set before
+	// the modules render, even when the Highlights module is disabled.
+	setTravelers(firestoreData.travelers || []);
 	populateDevPage(rawFirestoreData);
 	console.log('Firestore Database data loaded successfully');
 	loadDocumentData();

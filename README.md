@@ -1,4 +1,4 @@
-![alt text](https://i.imgur.com/vejNzOv.png)
+T![alt text](https://i.imgur.com/vejNzOv.png)
 
 # Description
 
@@ -43,23 +43,18 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 
 # Tasks
 
-| Icon | Title       | Code | Total | Done | Cancelled | Pending |
-| ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 233   | 229  | 4         | 0       |
-| 🏆   | Feature     | F000 | 210   | 195  | 15        | 0       |
-| 📈   | Improvement | M000 | 246   | 224  | 22        | 0       |
-| ⚔️   | Epic        | E000 | 53    | 44   | 7         | 2       |
+| Type           | Last | Done | Cancelled | Pending |
+| -------------- | ---- | ---- | --------- | ------- |
+| 🐞 Bug         | B233 | 229  | 4         | 0       |
+| 🏆 Feature     | F211 | 196  | 15        | 0       |
+| 📈 Improvement | M249 | 227  | 22        | 0       |
+| ⚔️ Epic      | E053 | 44   | 7         | 2       |
 
 ## Backlog
 
-### High Priority
-
-### Medium Priority
-
-### Low Priority
-
-- ⚔️ **E047:** [DEV] Implement Unit Tests
-- ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs
+| ID                  | Ticket                     | Priority |
+| ------------------- | -------------------------- | -------- |
+| **⚔️** E047 | [DEV] Implement Unit Tests | Low      |
 
 ## Done
 
@@ -72,6 +67,12 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M245:** Agent notes: sync user summary documents
 - 📈 **M246:** Improve date range picker usability and layering
 - 🐞 **B233:** Fix "no region" destination filter showing all
+- 📈 **M247:** People avatars: default image and border
+- 🏆 **F211:** Add trip and accommodation templates
+- 📈 **M248:** Queue gmaps scraper requests to avoid OOM
+- 🐞 **B234:** Fix destination folder hidden in trip picker
+- 📈 **M249:** Trip card badges show relative time
+- 🐞 **B235:** Fix view page share link
 
 ### September 2026
 
@@ -993,3 +994,4 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B172:** Fix error when switching a destination category
 - ⚔️ **E019:** [DEV] Implement Sonarqube
 - ⚔️ **E046:** [DEV] Implement Playwright
+- ⚔️ **E051:** Encryption-at-Rest for Firestore & Offline JSONs

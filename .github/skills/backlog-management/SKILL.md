@@ -1,6 +1,6 @@
 ---
 name: backlog-management
-description: 'Use for anything involving the README.md task backlog — including the MANDATORY end-of-task check, which applies ONLY when the project itself changed (core code, workers/functions, scripts, skills, docs, config, authored migrations); data-only Firestore work is exempt. Also covers: navigating sections, adding/moving tasks (Done = newest month first, tasks old→new down each month), task IDs and emoji types, counts/version/next IDs, and `npm run readme` (scripts/utils/readme.py).'
+description: 'Use for anything involving the README.md task backlog — including the MANDATORY end-of-task check, which applies ONLY when the project itself changed (core code, workers/functions, scripts, skills, docs, config, authored migrations); data-only Firestore work is exempt. Work inside an uncommitted/in-progress feature gets NO ticket of any type — no bugfix, no improvement, no follow-up idea (see *Uncommitted work — no ticket of any type*). Also covers: navigating sections, adding/moving tasks (Done = newest month first, tasks old→new down each month), task IDs and emoji types, counts/version/next IDs, and `npm run readme` (scripts/utils/readme.py).'
 applyTo: '*'
 ---
 
@@ -12,7 +12,7 @@ TripViewer tracks all work in `README.md` using a structured task system with ID
 
 ## End-of-Task Backlog Check (MANDATORY — project changes only)
 
-**Run this at the end of every request that changed the project itself.** Tickets record how the project evolves — not operational data edits. Run the scope gate below first; if the work is exempt, skip the backlog entirely (no ticket, no `npm run readme`).
+**Run this at the end of every request that changed the project itself.** Tickets record how the project evolves — not operational data edits, and not work that isn't committed yet. Run the scope gate below first; if the work is exempt, skip the backlog entirely (no ticket, no `npm run readme`).
 
 ### Scope gate — does this work need a ticket?
 
@@ -23,12 +23,26 @@ TripViewer tracks all work in `README.md` using a structured task system with ID
 | Skills and agent instructions (`.github/skills/`, `.codex/skills/`, instruction files) | ✅ Yes |
 | Docs, plans and config (`docs/`, `README.md` documentation, `firebase.json`, rules) | ✅ Yes |
 | Authoring a new/changed migration (code + registration in `migrations-config.json`) | ✅ Yes |
+| Anything added/fixed/improved **inside an uncommitted feature** (new files, staged or unstaged edits) — including follow-up ideas you suggest yourself | 🚫 No — no ticket of any type (see *Uncommitted work — no ticket of any type*) |
 | **Data-only** Firestore work: feeding/editing destination, trip, expense or user documents, backfills, image resolution, summary/version sync | 🚫 No |
 | Running an existing migration, backfill or seed against emulator/prod | 🚫 No |
 | Scratch/one-off scripts in `tmp/`, throwaway probes, ad-hoc queries | 🚫 No |
 | Read-only analysis, investigation, answering a question | 🚫 No |
 
-Rule of thumb: **would a tracked project file change?** If yes → ticket. If the only changes are database contents or untracked scratch files → no ticket.
+Rule of thumb: **would a tracked project file change, in code that is already committed?** If yes → ticket. If the only changes are database contents, untracked scratch files, or work still sitting in the uncommitted working tree → no ticket.
+
+### Uncommitted work — no ticket of any type
+
+**If the code involved is not committed yet, do NOT add anything to `## Backlog` or `## Done` — no 🐞 Bug, no 📈 Improvement, no 🏆 Feature, and no "future idea / follow-up" ticket.** Uncommitted code isn't part of the project yet: defects in it aren't project bugs, and polish or follow-up ideas about it are just the next step of building the feature. Logging them creates backlog noise the user has to clean up by hand.
+
+This includes **improvement suggestions you make yourself**: while finishing an uncommitted feature you may spot a better approach, a missing edge case, a polish item or a TODO. Do **not** open a Backlog ticket for it — either implement it now as part of the feature, or mention it in the chat reply only.
+
+- **How to tell:** run `git status` and `git log` / `git show HEAD:<file>`. If the affected file is untracked/new, or the affected lines only exist in staged/unstaged changes, the feature is in progress → **zero README changes**.
+- **What to do instead:** if the feature already has its own ticket, that ticket covers the work. If it has none (e.g. work requested directly in chat), just finish the work. Leftover ideas go in the response text, never in the backlog.
+- **Tickets are only for committed code:** a 🐞 Bug ticket needs the defect to exist in `git show HEAD:<file>`; an 📈 Improvement or follow-up ticket needs the code being improved to already be committed. Only then log it — even if the fix lands together with other uncommitted work.
+- **Clean up your own noise:** if you created a ticket earlier in this session for something that turned out to be part of the uncommitted feature, remove it instead of refining it.
+- **Scope of the rule:** it is about work *on* an in-progress feature. A skills/docs/tooling change you are delivering right now still gets its Done ticket per the scope gate, even if the commit only happens later in the same batch.
+- **No `npm run readme` either:** no ticket means no README edit at all.
 
 ### Workflow
 
@@ -41,6 +55,7 @@ Rule of thumb: **would a tracked project file change?** If yes → ticket. If th
    - Keep the same ID — never renumber or duplicate it.
    - Epic sub-task? Remove the indented bullet from under its parent epic; once an epic has no sub-tasks left, move the epic itself to Done too (keep it in Backlog until all sub-tasks are done — see *When an epic is completed*).
 3. **No ticket found → create one straight into Done:**
+   - **First check the feature is committed:** run `git status` / `git show HEAD:<file>`. If the change lives only in uncommitted work (new or still-in-progress feature), **create no ticket at all — not a bug, not an improvement, not a feature, not a follow-up idea** — see *Uncommitted work — no ticket of any type* above.
    - Assess the type: 🐞 **Bug** (defect/fix), 🏆 **Feature** (new capability), 📈 **Improvement** (polish/refactor/DEV tooling), ⚔️ **Epic** (large multi-part initiative).
    - Pick the **next available ID** for that type (see *Task ID Selection Rules*; fill any gaps reported by `npm run readme`).
    - Format exactly like existing entries with a **short, clear title** (see *Title style*): `- 🐞 **B177:** What was fixed`
@@ -113,6 +128,20 @@ Keep task titles **short** — hard limit **≤ 8 words**, readable at a glance.
 
 Good: `- 🏆 **F159:** Add AI skill for browsing pages`  (6 words)
 Bad:  `- 📈 **M200:** Settings (Advanced): block page refresh/close with a confirmation prompt while a backup, restore, document import/export, or static-export operation is in progress; ...`  (44 words)
+
+### `[DEV]` prefix — AI, infra and dev tooling tickets
+
+Tickets that are **developer-facing** start their title with `[DEV]`: AI tooling / agent instructions / skills, infrastructure, build & deploy pipeline, repo scripts, migrations tooling, environment setup, tests scaffolding.
+
+```markdown
+- 📈 **M237:** [DEV] Sync script: merge master instead of force
+- 📈 **M188:** [DEV] Add mandatory backlog check
+- ⚔️ **E047:** [DEV] Implement Unit Tests
+```
+
+- Applies to every type (🐞/🏆/📈/⚔️) when the change serves the developer/agent workflow rather than the user.
+- **User-facing** app behavior never gets `[DEV]`, even if the touched files are TypeScript/config.
+- `[DEV]` counts as one word toward the 8-word title limit.
 
 ---
 
@@ -223,15 +252,16 @@ Everything is derived from the README by `readme.py` — nothing is hand-maintai
 
 ### Step-by-step
 
-0. **Check the scope gate** above — data-only or scratch work gets **no ticket at all**.
+0. **Check the scope gate** above — data-only, scratch, or uncommitted-feature work gets **no ticket at all**.
 1. **Pick the next ID** for the task type (see *Task ID Selection Rules* below).
 2. **Add the task in the right place:**
    - **Just completed it** → `## Done`, **append to the bottom** of the current month's list (old on top, new at the bottom). If the month section doesn't exist yet, create `### <Month Year>` at the top of `## Done` first.
    - **Planning future work** → `## Backlog`, in the matching priority section (High/Medium/Low).
    - **Epic sub-task** → indented bullet under its parent epic.
-3. **Format** exactly like existing entries — use a **short, clear title**, not a full explanation (see *Title style*):
+3. **Format** exactly like existing entries — use a **short, clear title**, not a full explanation (see *Title style*), and add the **[DEV]** prefix for AI, infra and dev-tooling work (see *`[DEV]` prefix*):
    ```markdown
    - 🏆 **F172:** Short clear title of the feature
+   - 📈 **M250:** [DEV] Short clear title of the tooling change
    ```
 4. **Run `npm run readme`** to refresh the summary table and version. **Always run after adding/moving/removing tasks.**
 

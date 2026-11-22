@@ -533,6 +533,66 @@ section {
 	font-size: 14px;
 }
 
+/* Highlights — the floating badge holds the travelers' photos (equal size,
+   side by side); names show as a tooltip above the card. */
+.facts .count-box.has-people {
+	cursor: pointer;
+}
+
+.facts .count-box i.keypoint-people-badge {
+	gap: 2px;
+	overflow: hidden;
+	transition: transform var(--transition-normal);
+}
+
+.facts .count-box.has-people:hover i.keypoint-people-badge {
+	transform: translateX(-50%) scale(1.06);
+}
+
+.facts .count-box .keypoint-people-badge .people-avatar {
+	width: 20px;
+	height: 20px;
+	border: 0;
+	box-shadow: none;
+}
+
+.facts .count-box .keypoint-people-badge .people-avatar:only-child {
+	width: 36px;
+	height: 36px;
+}
+
+.facts .count-box .keypoint-people-names {
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 28px);
+	transform: translateX(-50%);
+	max-width: min(200px, 50vw);
+	width: max-content;
+	padding: 5px 9px;
+	border-radius: var(--radius-sm);
+	background: rgba(1, 20, 38, 0.94);
+	color: #fff;
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 1.3;
+	text-align: center;
+	white-space: normal;
+	pointer-events: none;
+	opacity: 0;
+	visibility: hidden;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	transition:
+		opacity var(--transition-normal),
+		visibility var(--transition-normal);
+	z-index: 3;
+}
+
+.facts .count-box.has-people:hover .keypoint-people-names,
+.facts .count-box.expanded .keypoint-people-names {
+	opacity: 1;
+	visibility: visible;
+}
+
 .logoBox {
 	height: 200px;
 	margin-bottom: 50px;

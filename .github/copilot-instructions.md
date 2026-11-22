@@ -6,7 +6,7 @@ All project-specific skills are located in `.github/skills/` and must be discove
 
 | Skill | Use when |
 |---|---|
-| `backlog-management` | MANDATORY end-of-task check **for project changes only** (core code, workers/functions, scripts, skills, docs, config, authored migrations): find/create the ticket and move it to `Done`. Data-only Firestore work (feeding/editing documents, backfills, running existing migrations, `tmp/` scratch scripts) gets **no ticket**. Also covers updating or interpreting `README.md` tasks, IDs, counts, versions, or `readme.py` |
+| `backlog-management` | MANDATORY end-of-task check **for project changes only** (core code, workers/functions, scripts, skills, docs, config, authored migrations): find/create the ticket and move it to `Done`. Data-only Firestore work (feeding/editing documents, backfills, running existing migrations, `tmp/` scratch scripts) gets **no ticket**, and anything inside a feature that is still **uncommitted** gets **no ticket of any type** — no bugfix, no improvement, no follow-up idea. AI/infra/dev-tooling tickets get a `[DEV]` prefix. Also covers updating or interpreting `README.md` tasks, IDs, counts, versions, or `readme.py` |
 | `backup-restore` | Working on account/document backup or restore flows |
 | `browser-navigation` | Building app URLs, browser/emulator sign-in, load-state diagnosis, or browser validation |
 | `build-pipeline` | Building, watching, diagnosing build issues, or editing build configuration |

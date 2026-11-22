@@ -18,7 +18,8 @@ import {
 	setRequired,
 } from '../../utils/dom.js';
 import { deleteUserObjectDB, deleteDocument, getPermissions, getSingleData, getUserDestinationSummaries, COLLECTION, SUBCOLLECTION } from '../../data/firebase/database.js';
-import { getUserData, getUID, setUserData, USER_DATA } from '../../data/firebase/auth.js';
+import { getUserData, getUID, setUserData } from '../../data/firebase/auth.js';
+import { seedDestinationFolders } from '../../data/services/destination-folders.service.js';
 import {
 	deleteUserObjectStorage,
 	loadImageSelector,
@@ -66,7 +67,11 @@ export async function loadEditListingPage() {
 	initEditTabs();
 	loadHabilitados();
 
-	setUserData(await getUserData());
+	const userData = await getUserData();
+	setUserData(userData);
+	// Folder organization lives in the user document — seed the cache so the
+	// destination picker groups destinations exactly like the trip editor does.
+	seedDestinationFolders(userData?.destinationFolders);
 	const destSummaries = await getUserDestinationSummaries(await getUID());
 	setDestinations(destSummaries.sort((a: any, b: any) => a.title.localeCompare(b.title)));
 

@@ -192,6 +192,26 @@
         <!-- Tab Content: Settings -->
         <div class="tab-content" id="tab-settings">
           <div class="settings-panel">
+            <!-- People -->
+            <div class="settings-section">
+              <h3 class="settings-section-title" data-translate="account.people.title"></h3>
+              <p class="settings-section-description" data-translate="account.people.description"></p>
+              <div class="people-editor-grid settings-people-grid" id="settings-people-grid"></div>
+            </div>
+
+            <!-- Templates -->
+            <div class="settings-section">
+              <h3 class="settings-section-title" data-translate="account.templates.title"></h3>
+              <p class="settings-section-description" data-translate="account.templates.description"></p>
+              <div class="settings-templates-preview" id="settings-templates-preview"></div>
+              <div class="settings-templates-empty" id="settings-templates-empty"
+                data-translate="account.templates.empty"></div>
+              <button class="btn btn-secondary-theme settings-action-btn" data-action="open-templates-manager">
+                <i class="iconify" data-icon="material-symbols:content-copy"></i>
+                <span data-translate="account.templates.manage"></span>
+              </button>
+            </div>
+
             <!-- Advanced Settings -->
             <div class="settings-section">
               <h3 class="settings-section-title" data-translate="labels.advanced"></h3>

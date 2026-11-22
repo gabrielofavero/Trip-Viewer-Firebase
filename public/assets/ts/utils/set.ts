@@ -348,7 +348,7 @@ function getSummaryKeys(type: string): string[] {
 		case 'listings':
 			return ['colors', 'description', 'image', 'subtitle', 'title', 'version'];
 		case 'trips':
-			return ['colors', 'end', 'image', 'start', 'modules', 'pin', 'title', 'version'];
+			return ['colors', 'end', 'image', 'start', 'modules', 'pin', 'title', 'version', 'travelers'];
 		default:
 			return [];
 	}
@@ -383,6 +383,9 @@ function getSingleUserData(type: string, data: Record<string, unknown>): Record<
 				pin: data.pin,
 				title: data.title,
 				version: data.version,
+				// Denormalized traveler list (id/name/photo) — the index cards show
+				// their photo circles without reading the trip document.
+				travelers: Array.isArray(data.travelers) ? data.travelers : [],
 			};
 		default:
 			return {};

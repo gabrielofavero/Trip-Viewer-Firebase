@@ -31,6 +31,7 @@ import { getExpensesObject } from './categories/expenses.js';
 import { setDocument, addSetResponse } from '../../utils/set.js';
 import { IMAGE_UPLOAD_STATUS } from '../../data/firebase/storage.js';
 import { TRAVELERS } from '../../data/state.js';
+import { flushQueuedPeople } from '../../data/services/people.service.js';
 import { computeArrayDiff } from '../../utils/diff.js';
 
 export var FIRESTORE_PROTECTED_NEW_DATA = {};
@@ -352,5 +353,10 @@ export async function setTripData() {
 	// parked (removed) itinerary days are now gone for good, so drop the stash.
 	if (SUCCESSFUL_SAVE) {
 		clearItineraryDurationStash();
+		// People created from the travelers wheel with "save for future trips"
+		// checked become part of the account's registry now that the trip exists.
+		if (!(await flushQueuedPeople())) {
+			console.warn('[people] Could not register the new people for future trips.');
+		}
 	}
 }

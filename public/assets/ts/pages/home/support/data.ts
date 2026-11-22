@@ -20,7 +20,7 @@ import {
 } from '../../../utils/dom.js';
 import { translate, translatePage } from '../../../i18n/translation.js';
 import { stopLoadingScreen } from '../../../utils/loading.js';
-import { dateObjectToString } from '../../../utils/dates.js';
+import { dateObjectToString, getDateNoTime } from '../../../utils/dates.js';
 import {
 	getUserTripSummaries,
 	getUserDestinationSummaries,
@@ -45,6 +45,11 @@ import {
 	groupDestinationsByFolder,
 	type DestinationFolder,
 } from '../../../data/services/destination-folders.service.js';
+import { seedPeople } from '../../../data/services/people.service.js';
+import { loadSettingsPeople } from './people.js';
+import { seedTripTemplates } from '../../../data/services/trip-templates.service.js';
+import { loadSettingsTemplates } from './templates.js';
+import { escapePeopleHTML, getPersonAvatarHTML } from '../../../utils/people-avatars.js';
 
 var INDEX_DATA: Record<string, any> = {};
 var CURRENT_TRIPS: any[] = [];
@@ -93,6 +98,12 @@ export async function loadUserIndex() {
 				setUserData(userData);
 				// Folder organization lives in the user document.
 				seedDestinationFolders(userData?.destinationFolders);
+				// People registry (name + photo) also lives in the user document.
+				seedPeople(userData?.people);
+				loadSettingsPeople();
+				// Trip / accommodation templates used by the trip editor.
+				seedTripTemplates(userData?.tripTemplates);
+				loadSettingsTemplates();
 				showLoggedView();
 
 				// Read profile fields from the Firestore user document first,
@@ -331,6 +342,10 @@ function initGrids() {
 	bindCardImageHandlers(getID('trip-finished-grid'));
 	bindCardImageHandlers(getID('dest-grid'));
 	bindCardImageHandlers(getID('list-grid'));
+	// Cards filed inside destination folders render in their own container, so
+	// the grid listener above never sees their image events — bind this too or
+	// the shimmer stays forever even after the image has loaded.
+	bindCardImageHandlers(getID('dest-folders'));
 }
 
 function loadTripsTab() {
@@ -407,18 +422,35 @@ function buildTripCardHTML(trip): string {
 		trip.category === 'current'
 			? translate('index.active')
 			: trip.category === 'next'
-				? translate('index.upcoming')
-				: translate('index.finished');
+				? getTripTimeBadgeLabel(trip.start, 'next')
+				: getTripTimeBadgeLabel(trip.end, 'past');
 	const dateStr = dateObjectToString(trip.start) + ' – ' + dateObjectToString(trip.end);
 
 	const imageHTML = bgImage
 		? cardImageHTML('trip', bgImage, 'tabler:plane-departure')
 		: `<div class="trip-card-image no-image"><i class="iconify card-image-icon" data-icon="tabler:plane-departure"></i></div>`;
 
+	// Travelers with a photo float over the image's bottom-right corner, slightly
+	// overlapping. The native title attribute lists their names on hover.
+	const travelers = Array.isArray(trip.travelers) ? trip.travelers : [];
+	const travelersWithPhoto = travelers.filter((traveler) => traveler?.photo);
+	const travelerNames = travelers
+		.map((traveler) => traveler?.name)
+		.filter(Boolean)
+		.join(', ');
+	const travelersHTML = travelersWithPhoto.length
+		? `<span class="trip-card-people" title="${escapePeopleHTML(travelerNames)}" aria-label="${escapePeopleHTML(travelerNames)}">${travelersWithPhoto
+				.map((traveler) => getPersonAvatarHTML(traveler, 'people-avatar trip-card-people-avatar'))
+				.join('')}</span>`
+		: '';
+
 	return `
 		<div class="trip-card" data-action="open-trip-dialog" data-trip-id="${trip.id}">
 			<span class="trip-card-badge ${badgeClass}">${badgeLabel}</span>
-			${imageHTML}
+			<div class="trip-card-media">
+				${imageHTML}
+				${travelersHTML}
+			</div>
 			<div class="trip-card-body">
 				<div class="trip-card-title">${trip.title || translate('labels.no_title')}</div>
 				<div class="trip-card-meta">
@@ -432,6 +464,47 @@ function buildTripCardHTML(trip): string {
 function getTripBackgroundImage(trip) {
 	if (!trip.image || !trip.image.active) return null;
 	return trip.image.background || trip.image.light || trip.image.dark || null;
+}
+
+/**
+ * Relative time shown on the trip card badge instead of a static status:
+ * "In 10 days" for upcoming trips (until the start) and "10 days ago" for
+ * finished ones (since the end). Up to 99 days shows days, up to 12 months
+ * shows months, anything longer shows years. Days are rounded up; months and
+ * years use normal rounding.
+ */
+function getTripTimeBadgeLabel(
+	dateObject: Record<string, any> | undefined,
+	direction: 'next' | 'past',
+): string {
+	if (!dateObject) {
+		return translate(direction === 'next' ? 'index.upcoming' : 'index.finished');
+	}
+
+	const MS_PER_DAY = 86400000;
+	const today = getDateNoTime(new Date());
+	const target = new Date(Date.UTC(dateObject.year, dateObject.month - 1, dateObject.day));
+	const rawDays =
+		direction === 'next'
+			? (target.getTime() - today.getTime()) / MS_PER_DAY
+			: (today.getTime() - target.getTime()) / MS_PER_DAY;
+	const days = Math.max(1, Math.ceil(rawDays));
+
+	let unit: 'day' | 'month' | 'year';
+	let value: number;
+	if (days <= 99) {
+		unit = 'day';
+		value = days;
+	} else if (days <= 365) {
+		unit = 'month';
+		value = Math.round(days / 30.4375);
+	} else {
+		unit = 'year';
+		value = Math.round(days / 365.25);
+	}
+
+	const key = `index.countdown.${direction}_${unit}` + (value === 1 ? '' : 's');
+	return translate(key, { value: String(value) });
 }
 
 /*--------------------------------------------------------------

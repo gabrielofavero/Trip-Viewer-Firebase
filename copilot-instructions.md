@@ -26,7 +26,7 @@ This workspace has **16 domain-specific agent skills** in `.github/skills/`. The
 | `implementation-plans` | Writing/updating/executing implementation plans — prompt every unanswered open question before starting |
 | `backup-restore` | Account backup/restore, document export/import |
 | `static-export` | Offline/static web export, export manifests, self-hosted assets, and image-proxy integration |
-| `backlog-management` | README task IDs, readme.py script — end-of-task ticket **only for project changes**; data-only Firestore work gets none |
+| `backlog-management` | README task IDs, readme.py script — end-of-task ticket **only for project changes**; data-only Firestore work gets none; anything inside an **uncommitted/in-progress** feature gets **no ticket of any type** (bug, improvement or follow-up idea); AI/infra/dev-tooling tickets use a `[DEV]` prefix |
 | `git-workflow` | Branch strategy, commit conventions, sync/deploy flow |
 | `ntfy-notifications` | **ALWAYS** — see "**Notifications (do not skip)**" section below. Send an ntfy.sh notification (topic `DeepSeek`) via `scripts/dev/ntfy.mjs` when a task/milestone finishes, on long work, or before prompting the user |
 
@@ -108,7 +108,7 @@ Some documents are **mirrored** (denormalized) into the owner's user data so the
 
 | Document | Indexed copy | Mirrored fields |
 |---|---|---|
-| `trips/{tripId}` | `users/{sharing.owner}/tripSummaries/{tripId}` | `title`, `start`, `end`, `colors`, `image`, `modules`, `pin`, `version` |
+| `trips/{tripId}` | `users/{sharing.owner}/tripSummaries/{tripId}` | `title`, `start`, `end`, `colors`, `image`, `modules`, `pin`, `version`, `travelers` |
 | `destinations/{destId}` | `users/{sharing.owner}/destinationSummaries/{destId}` | `title`, `currency`, `image`, `version` |
 | `listings/{listingId}` | `users/{sharing.owner}/listingSummaries/{listingId}` | `title`, `subtitle`, `description`, `colors`, `image`, `version` |
 

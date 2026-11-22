@@ -6,10 +6,7 @@
 
 const configPRD = {
 	apiKey: 'AIzaSyBZJeSANyiJi6ijzDadJOJXSLqzSgf9xfk',
-	authDomain:
-		window?.location?.hostname === 'trip-viewer-prd.firebaseapp.com'
-			? 'trip-viewer-prd.firebaseapp.com'
-			: 'trip-viewer.com',
+	authDomain: 'trip-viewer-prd.firebaseapp.com',
 	projectId: 'trip-viewer-prd',
 	storageBucket: 'trip-viewer-prd.appspot.com',
 	messagingSenderId: '1065119817152',

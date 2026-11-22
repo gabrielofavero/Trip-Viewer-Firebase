@@ -53,6 +53,14 @@ const SCRAPER_LANG = { en: LANG_EN, pt: LANG_PT };
 const LANG_DELAY_MS = Number(process.env.GMAPS_SCRAPER_LANG_DELAY_MS ?? 0);
 /** Concurrency for the scraper (-c). Kept low: high concurrency risks blocking. */
 const CONCURRENCY = Number(process.env.GMAPS_SCRAPER_CONCURRENCY ?? 2);
+/**
+ * How many /scrape requests may run at the same time. Each request already
+ * starts 1-2 containers (en + pt-BR) and every container runs its own Chromium,
+ * so parallelism here means containers compete for RAM and get OOM-killed
+ * (exit 137). One at a time is the safe default; raise it on a bigger machine
+ * with GMAPS_SCRAPER_PARALLEL.
+ */
+const MAX_PARALLEL_SCRAPES = Math.max(1, Number(process.env.GMAPS_SCRAPER_PARALLEL ?? 1));
 /** Working directory of this script (for the temp output folder). */
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 
@@ -407,6 +415,38 @@ async function runScrape(urls, lang) {
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// ------------------------------------------------------------
+// Scrape queue — one request at a time by default
+// ------------------------------------------------------------
+
+let activeScrapes = 0;
+const scrapeQueue = [];
+
+/** Runs `task` respecting MAX_PARALLEL_SCRAPES, preserving arrival order. */
+function enqueueScrape(task) {
+	return new Promise((resolve, reject) => {
+		scrapeQueue.push({ task, resolve, reject });
+		if (scrapeQueue.length > 1) {
+			console.log(`[gmaps-scraper] queued — ${scrapeQueue.length} request(s) waiting`);
+		}
+		drainScrapeQueue();
+	});
+}
+
+function drainScrapeQueue() {
+	while (activeScrapes < MAX_PARALLEL_SCRAPES && scrapeQueue.length > 0) {
+		const job = scrapeQueue.shift();
+		activeScrapes++;
+		Promise.resolve()
+			.then(job.task)
+			.then(job.resolve, job.reject)
+			.finally(() => {
+				activeScrapes--;
+				drainScrapeQueue();
+			});
+	}
+}
+
 /**
  * Best-effort secondary-language scrape: the primary run already proved the
  * URLs work, so a rate-limit here must never fail the whole import.
@@ -563,7 +603,7 @@ const server = http.createServer(async (req, res) => {
 				return;
 			}
 
-			const places = await runScrapeBoth(urls, lang);
+			const places = await enqueueScrape(() => runScrapeBoth(urls, lang));
 			sendJson(res, 200, { places });
 			return;
 		}

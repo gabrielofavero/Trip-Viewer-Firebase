@@ -166,6 +166,14 @@ per run — useful for debugging. The same URL-cleaning rule applies: strip
   twice (en + pt-BR). The second run is best-effort and skipped when no
   description exists; set `GMAPS_SCRAPER_LANG_DELAY_MS` if you hit rate limiting
   on it.
+- **Requests are queued (one at a time).** Every request starts its own Chromium
+  container, so parallel requests (e.g. the bulk "Update all" firing many at
+  once) used to exhaust RAM and get OOM-killed — the symptom was
+  `The scraper container exited with code 137.` The server now serializes
+  `/scrape` requests through an in-memory FIFO queue (default concurrency 1,
+  log line `queued — N request(s) waiting`). Raise it only on a machine with
+  plenty of RAM via `GMAPS_SCRAPER_PARALLEL`; lower the in-container worker
+  count with `GMAPS_SCRAPER_CONCURRENCY` if containers still die.
 - **Rate limiting / flakiness.** Google blocks or challenges scraping,
   especially when runs are back-to-back. A common symptom is
   `TypeError: Cannot read properties of null (reading 'scrollHeight')` on

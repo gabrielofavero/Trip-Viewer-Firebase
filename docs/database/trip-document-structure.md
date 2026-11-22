@@ -4,7 +4,7 @@
 >
 > This document contains all **non-sensitive** trip data. Sensitive fields (`reservation` codes, `link` URLs on accommodations and transport legs) are stored empty here and mirrored in the protected subcollection at `trips/protected/{pin}/{tripId}`.
 >
-> **Indexed copy:** the home page reads `users/{sharing.owner}/tripSummaries/{tripId}` (`title`, `start`, `end`, `colors`, `image`, `modules`, `pin`, `version`). Any direct data edit that changes those fields must patch the summary with the same values (including `version.lastUpdated`).
+> **Indexed copy:** the home page reads `users/{sharing.owner}/tripSummaries/{tripId}` (`title`, `start`, `end`, `colors`, `image`, `modules`, `pin`, `version`, `travelers`). Any direct data edit that changes those fields must patch the summary with the same values (including `version.lastUpdated`).
 
 ---
 
@@ -87,10 +87,17 @@ Feature toggles controlling which sections are visible in the trip viewer.
 ```ts
 /** A traveler/person on a trip. The `id` may be missing in legacy documents. */
 interface Traveler {
-  id?:  string;   // random alphanumeric ID (e.g. "LerZT") — may be absent in older docs
-  name: string;   // display name (e.g. "Bibs") — may be empty string
+  id?:   string;  // random alphanumeric ID (e.g. "LerZT") — may be absent in older docs
+  name:  string;  // display name (e.g. "Bibs") — may be empty string
+  photo?: string; // avatar URL denormalized from the people registry on save
 }
 ```
+
+`photo` only exists for people registered in `users/{uid}.people` at save time.
+People added straight from the trip editor (the wheel's "+") keep their photo on
+that trip even when they are not registered; when the "save for future trips"
+checkbox is used, the person is also appended to `users/{uid}.people` as part of
+the trip save.
 
 ### `links` — `TripLinks`
 External resource URLs, all stored as strings (empty string if not set).

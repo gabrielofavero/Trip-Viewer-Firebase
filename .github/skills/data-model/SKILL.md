@@ -56,9 +56,57 @@ Granting = creating the doc (e.g. `{ _created: <server timestamp> }`) at `admin/
   destinations: []
   listings: []
   destinationFolders?: DestinationFolder[]   // destination organization (F210)
+  people?: Person[]                          // people registry (name + photo)
+  tripTemplates?: TripTemplate[]             // trip / accommodation templates (F211)
   // + subcollections: tripSummaries, destinationSummaries, listingSummaries
 }
 ```
+
+### Trip & Accommodation Templates (`tripTemplates`, Nov 2026 — F211)
+
+Optional array stored on the user document. Every template is associated with **one
+destination**; the trip editor offers the templates of the destinations already linked to the
+trip (with a "show all" escape hatch that links the template's destination on demand).
+
+```ts
+type TripTemplate = TripSkeletonTemplate | AccommodationTemplate;
+
+interface TripTemplateBase {
+  id: string;             // 't' | 'a' + base36 timestamp + random
+  type: 'trip' | 'accommodation';
+  name: string;           // user-facing template name
+  destinationId: string;  // association used for filtering
+  sourceTripId: string;   // trip the template was created from
+  createdAt: string;      // ISO 8601
+}
+
+interface TripSkeletonTemplate extends TripTemplateBase {
+  type: 'trip';
+  colors:     { active: boolean; light: string; dark: string };
+  image:      { active: boolean; background: string; light: string; dark: string };
+  visibility: { light: boolean; dark: boolean };
+}
+
+interface AccommodationTemplate extends TripTemplateBase {
+  type: 'accommodation';
+  sourceAccommodationId: string;
+  accommodation: {
+    name: string;
+    address: string;
+    description: string;
+    times: { checkIn: string; checkOut: string };  // 'HH:MM'
+    images: { description: string; link: string }[];
+  };
+}
+```
+
+- Read/write through `data/services/trip-templates.service.ts`
+  (`loadTripTemplates`, `seedTripTemplates`, `getCachedTripTemplates`, `saveTripTemplates` →
+  owner `update` of `users/{uid}.tripTemplates`).
+- Applying a template is pure DOM (the editor's normal Save persists it); nothing is copied
+  between trips on the server.
+- Templates are private to the owner: shared viewers/editors cannot read the owner's user
+  document. Account backup/restore does **not** carry template data (same as folders).
 
 ### Destination Folders (`destinationFolders`, Nov 2026 — F210)
 
@@ -108,7 +156,7 @@ Index pages read **summaries**, not the full documents. The app keeps them in sy
 
 | Source document | Summary doc | Fields mirrored |
 |---|---|---|
-| `trips/{tripId}` | `users/{sharing.owner}/tripSummaries/{tripId}` | `title`, `start`, `end`, `colors`, `image`, `modules`, `pin`, `version` |
+| `trips/{tripId}` | `users/{sharing.owner}/tripSummaries/{tripId}` | `title`, `start`, `end`, `colors`, `image`, `modules`, `pin`, `version`, `travelers` |
 | `destinations/{destId}` | `users/{sharing.owner}/destinationSummaries/{destId}` | `title`, `currency`, `image`, `version` |
 | `listings/{listingId}` | `users/{sharing.owner}/listingSummaries/{listingId}` | `title`, `subtitle`, `description`, `colors`, `image`, `version` |
 
@@ -131,7 +179,7 @@ visibility       { light: bool, dark: bool }
 colors           { light: hex, dark: hex, active: bool }
 sharing          { owner: uid, active: bool, editors: uid[] }
 modules          { destinations, transportation, itinerary, gallery, summary, accommodations, expenses: bool, lineup?: bool }
-travelers        { id?: string, name: string }[]   // id may be missing in legacy docs
+travelers        { id?: string, name: string, photo?: string }[]   // id may be missing in legacy docs; photo is a denormalized avatar URL
 links            { maps, attachments, active, drive, pdf, ppt, sheet, vaccine: string }
 gallery          { categories[], descriptions[], images[], titles[] }
 destinationRefs  { id, title?, image?, categories?, version? }[]   Denormalized destination metadata (migration 18 + trip save) — see below

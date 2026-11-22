@@ -270,7 +270,7 @@ GET https://en.wikipedia.org/api/rest_v1/page/summary/<title>
 ```
 
 - Great coverage for temples, shrines, castles, parks, districts, stations.
-- **User-Agent matters:** Wikimedia answers **429** to generic browser UAs. Send a descriptive one (`TripViewerDestinations/1.0 (personal trip planner; https://trip-viewer.com)`), serialise the calls (~3 req/s) and retry honouring `Retry-After`. Verified 2026-11-22: Chrome UA → 429 on every call, descriptive UA → 200.
+- **User-Agent matters:** Wikimedia answers **429** to generic browser UAs. Send a descriptive one (`TripViewerDestinations/1.0 (personal trip planner; https://trip-viewer-prd.firebaseapp.com)`), serialise the calls (~3 req/s) and retry honouring `Retry-After`. Verified 2026-11-22: Chrome UA → 429 on every call, descriptive UA → 200.
 - Only use this tier for `tourism`/`shopping` by default: a restaurant or bar name often matches an unrelated article (a chain, a dish, a person). `--wiki-all` opts food categories back in.
 - Upgrade the thumbnail: `/330px-<file>` → `/1280px-<file>` (same filename, bigger width).
 - Strip the `?utm_*` query params Wikipedia appends.
@@ -397,7 +397,7 @@ Scripts read the project from `--project` (default `trip-viewer-prd`) and honour
 | Maps scraper returns empty places | Check the **input**, not the weather: a `?cid=…` link always fails (see §4.1) — use `"Name" City`. Genuine throttling shows the same symptom, so wait a few minutes and keep `-c 1` |
 | `playwright: … (reading 'scrollHeight')` | The input was a plain URL (usually `?cid=…`) that the scraper rewrote into a search page → send a text query instead |
 | Scraper returns a **different business / the city name** | The place is probably closed or renamed. Resolve its short link to coordinates with `fetch(link)` and read `@lat,lng` from the final URL, then search the name alone with `-geo lat,lng`; if Google still answers with neighbours, take the photo from the site's `og:image` or from Wikimedia (`…wiki/…/page/summary` → `originalimage.source`) and pass it as `"image"` in `--queries` |
-| Wikimedia photo rejected (`not usable`) | Wikimedia 4xx/403 for generic browser UAs → send a descriptive one (`TripViewerDestinations/1.0 (…; https://trip-viewer.com)`) when validating that URL |
+| Wikimedia photo rejected (`not usable`) | Wikimedia 4xx/403 for generic browser UAs → send a descriptive one (`TripViewerDestinations/1.0 (…; https://trip-viewer-prd.firebaseapp.com)`) when validating that URL |
 | Docker Desktop won't start / `docker version` fails | Stale WSL → `wsl --update`, reboot, restart Docker Desktop; `wsl --status` must show WSL 2 |
 | Scrape is very slow (~1 min/place) | Expected: the server runs `en` + `pt-BR` per place. Run it in the background and rely on the resume cache |
 | Maps scraper: `no place data` | Coordinate-only pin → use `search/<name>@lat,lng,15z` |

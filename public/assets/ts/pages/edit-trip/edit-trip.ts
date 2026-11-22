@@ -37,6 +37,8 @@ import {
 import { loadDraggablesWithAccordions } from '../../ui/sortable.js';
 import { getUserData, getUID, setUserData, USER_DATA } from '../../data/firebase/auth.js';
 import { seedDestinationFolders } from '../../data/services/destination-folders.service.js';
+import { seedPeople } from '../../data/services/people.service.js';
+import { seedTripTemplates } from '../../data/services/trip-templates.service.js';
 import {
 	deleteUserObjectStorage,
 	loadImageSelector,
@@ -113,6 +115,10 @@ export async function loadEditTripPage() {
 	// Folder organization lives in the user document — cache it for the
 	// destination picker (folders first, then the loose destinations).
 	seedDestinationFolders(userData?.destinationFolders);
+	// Registered people (name + photo) feed the travelers wheel.
+	seedPeople(userData?.people);
+	// Trip / accommodation templates registered in the account Settings.
+	seedTripTemplates(userData?.tripTemplates);
 	const destSummaries = await getUserDestinationSummaries(await getUID());
 	setDestinations(destSummaries.sort((a: any, b: any) => a.title.localeCompare(b.title)));
 

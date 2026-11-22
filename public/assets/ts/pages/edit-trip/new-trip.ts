@@ -28,7 +28,7 @@ import {
 } from './categories/accommodation.js';
 import { addRemoveTransportationListener } from './support/event-listeners.js';
 import { DateRangePicker } from '../../ui/date-range-picker.js';
-import { getTravelerOptionsHTML } from './categories/travelers.js';
+import { getTravelerOptionsHTML, renderTripTravelersWheel } from './categories/travelers.js';
 import { switchPinLabel, switchPinVisibility } from './categories/basic-data/protected-data.js';
 import {
 	getDestinationsItemCheckbox,
@@ -93,6 +93,10 @@ function loadBasicFieldsNewTrip() {
 	getID('end').value = TOMORROW;
 
 	getID('currency').value = 'BRL';
+
+	// Registered people are selectable from the start; new trips begin with
+	// nobody selected (same as the old travelers dialog).
+	renderTripTravelersWheel([]);
 
 	// New trips default to "no protection" — reflect that in the PIN section
 	// visibility and button label (see #pin-disabled in trip.html).
@@ -297,6 +301,14 @@ export function addAccommodations() {
                   aria-label="${translate('trip.accommodation.import.button')}">
                   <i class="iconify" data-icon="heroicons:document-arrow-down-16-solid"></i>
                   <span>${translate('trip.accommodation.import.button')}</span>
+                </button>
+                <button type="button" id="accommodation-template-button-${j}"
+                  data-action="open-accommodation-template" data-index="${j}"
+                  class="btn btn-basic btn-sm" style="display:none"
+                  title="${translate('trip.template.import_button')}"
+                  aria-label="${translate('trip.template.import_button')}">
+                  <i class="iconify" data-icon="material-symbols:content-copy"></i>
+                  <span>${translate('trip.template.import_button')}</span>
                 </button>
               </div>
               <div class="nice-form-group" style="display: none">

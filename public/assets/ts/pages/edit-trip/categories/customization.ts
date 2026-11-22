@@ -223,3 +223,29 @@ function hideCustomPickers() {
 export function getSelectedPresetIndex(): number | null {
 	return _selectedPresetIndex;
 }
+
+/**
+ * Apply a light/dark pair coming from a template: writes both pickers and
+ * syncs the preset/custom state. Unlike `buildColorPresets()`, this never
+ * rebuilds the swatch grid (which would re-bind the carousel arrows).
+ */
+export function setColorsFromValues(light: string, dark: string) {
+	const lightInput = getID('light-color') as HTMLInputElement;
+	const darkInput = getID('dark-color') as HTMLInputElement;
+	if (!lightInput || !darkInput || !light || !dark) return;
+
+	lightInput.value = light;
+	darkInput.value = dark;
+	CURRENT_LIGHT = light;
+
+	const options = getColors()?.options;
+	const index = Array.isArray(options)
+		? options.findIndex((opt) => opt.hex === light && opt.dark === dark)
+		: -1;
+
+	if (index >= 0) {
+		selectPresetColor(index);
+	} else {
+		selectCustomColor();
+	}
+}

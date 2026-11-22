@@ -1,6 +1,62 @@
 {
 	"account": {
 		"settings": "Settings",
+		"people": {
+			"title": "People",
+			"description": "Register the people you travel with and add a photo. Click a person to edit, or + to add a new one. They are selected when you edit a trip or an itinerary item.",
+			"new_title": "New person",
+			"edit_title": "Edit person",
+			"name_required": "Enter a name for the person",
+			"remove_title": "Remove person",
+			"remove_message": "Remove \"{{name}}\" from your people list? Trips already saved keep the name and photo.",
+			"add": "Add person",
+			"name_placeholder": "Name",
+			"photo_placeholder": "Photo URL (https://…)",
+			"photo_invalid": "Photo links must start with http:// or https://",
+			"duplicate": "Person names must be unique",
+			"hint": "People added while editing a trip can be saved for future trips. Name changes apply to future trip saves.",
+			"saved": "People updated successfully",
+			"error_save": "Could not save people. Please try again.",
+			"removed": "Person removed"
+		},
+		"templates": {
+			"title": "Templates",
+			"description": "Save the look of a trip and the details of a stay to reuse when editing trips.",
+			"manage": "Manage templates",
+			"manager_title": "Templates",
+			"empty": "No templates registered yet.",
+			"hint": "Dates, reservation codes and payment status are never copied.",
+			"trip_section": "Trip templates",
+			"accommodation_section": "Accommodation templates",
+			"trip_count": "{{count}} trip template(s)",
+			"accommodation_count": "{{count}} accommodation template(s)",
+			"add_trip": "New trip template",
+			"add_accommodation": "New accommodation template",
+			"name": "Template name",
+			"name_placeholder": "e.g. Lollapalooza trip",
+			"source_trip": "Base trip",
+			"source_accommodation": "Accommodation",
+			"destination": "Destination",
+			"search_destinations": "Search destinations",
+			"loading_trip_destinations": "Loading the trip destinations…",
+			"trip_has_no_destinations": "This trip has no linked destinations. Choose them below.",
+			"no_destination_matches": "No destination matches this search.",
+			"select_trip": "Select a trip",
+			"select_accommodation": "Select an accommodation",
+			"no_trip_matches": "No trip found",
+			"no_source_trips": "You have no trips to use as a base yet.",
+			"no_source_trips_accommodation": "No trip with accommodations to use as a base yet.",
+			"no_destinations": "Register a destination first — every template must be linked to one.",
+			"no_accommodations": "This trip has no accommodations.",
+			"loading_accommodations": "Loading accommodations…",
+			"error_name": "Enter a name for the template",
+			"error_trip": "Select the base trip",
+			"error_destination": "Select the destination",
+			"error_accommodation": "Select the accommodation",
+			"error_source": "Could not read the base document. Please try again.",
+			"error_save": "Could not save the templates. Please try again.",
+			"saved": "Templates updated successfully"
+		},
 		"backup": {
 			"title": "Export Account",
 			"prompt": "Would you like to back up sensitive trip data as well?",
@@ -110,7 +166,6 @@
 		"current_multi_1": "Multiple trips happening now",
 		"current_multi_2": "Check \"Next trips\"",
 		"edit": "Edit trip",
-		"share": "Check out my trip \"{{name}}\" created on TripViewer, starting on {{start}} and ending on {{end}}",
 		"delete": {
 			"title": "Delete trip",
 			"message": "Are you sure you want to delete the trip \"{{name}}\"? This action cannot be undone"
@@ -148,6 +203,17 @@
 			"subtitle": "Give your trip a personal touch",
 			"colors": "Choose your trip's theme and colors",
 			"links": "Add useful links to your trip"
+		},
+		"template": {
+			"apply": "Apply template",
+			"picker_title": "Apply trip template",
+			"accommodation_picker_title": "Import from template",
+			"search_placeholder": "Search templates",
+			"show_all": "Show templates from other destinations",
+			"empty": "No trip template for the destinations linked to this trip. Try showing templates from other destinations.",
+			"empty_accommodation": "No accommodation template for the destinations linked to this trip. Try showing templates from other destinations.",
+			"no_destination": "No destination",
+			"import_button": "Import from template"
 		},
 		"expenses": {
 			"document": "Trip expenses",
@@ -295,11 +361,10 @@
 		},
 		"travelers": {
 			"title": "Travelers",
-			"info": "Travelers information",
-			"quantity": "Number of travelers",
-			"unique": "Traveler names must be unique",
-			"add": "Add travelers",
-			"add_traveler": "Add traveler"
+			"save_future": "Save this person for future trips",
+			"save_future_hint": "They will also appear in Settings → People after you save the trip.",
+			"previous": "Previous people",
+			"next": "Next people"
 		}
 	},
 	"destination": {
@@ -545,7 +610,6 @@
 		"title": "Destination lists",
 		"new": "New destination list",
 		"edit": "Edit destination List",
-		"share": "Check out the destination list \"{{name}}\" created on TripViewer",
 		"delete": {
 			"title": "Delete Listing",
 			"message": "Are you sure you want to delete the listing \"{{name}}\"? This action cannot be undone"
@@ -671,10 +735,10 @@
 	},
 	"messages": {
 		"text_copied": "Text copied to clipboard",
+		"link_copied": "Link copied to clipboard",
 		"itinerary_copied": "Itinerary copied! Paste it into WhatsApp or a notes app to keep the formatting",
 		"expenses_copied": "List copied! Paste it into WhatsApp or a notes app to keep the formatting",
 		"no_data": "No data found 😔",
-		"share": "Check out what I've created on TripViewer",
 		"exit_confirmation": "Are you sure you want to exit? You may lose unsaved changes",
 		"busy_operation": "A backup/restore operation is in progress. Leaving now may interrupt it and lose data. Are you sure you want to leave?",
 		"select_one": "Please select at least one item",
@@ -1022,6 +1086,20 @@
 		"search_placeholder": "Search",
 		"days": "days",
 		"day": "day",
+		"countdown": {
+			"next_day": "In {{value}} day",
+			"next_days": "In {{value}} days",
+			"next_month": "In {{value}} month",
+			"next_months": "In {{value}} months",
+			"next_year": "In {{value}} year",
+			"next_years": "In {{value}} years",
+			"past_day": "{{value}} day ago",
+			"past_days": "{{value}} days ago",
+			"past_month": "{{value}} month ago",
+			"past_months": "{{value}} months ago",
+			"past_year": "{{value}} year ago",
+			"past_years": "{{value}} years ago"
+		},
 		"modules_active": "Active modules",
 		"trip_destinations": "Trip Destinations",
 		"view_trip": "View Trip",

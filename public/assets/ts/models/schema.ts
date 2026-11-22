@@ -66,6 +66,8 @@ export type DestinationCategory = 'restaurants' | 'snacks' | 'shopping' | 'night
 export interface Traveler {
 	id: string /** was "id" */;
 	name: string /** was "nome" */;
+	/** Denormalized avatar URL copied from the owner's people registry. */
+	photo?: string;
 }
 
 // -----------------------------------------------------------
@@ -668,6 +670,12 @@ export interface TripSummary {
 	pin: PinType;
 	/** was "modulos" */
 	modules: TripModules;
+	/**
+	 * Denormalized traveler list (id/name/photo) so the index cards can render
+	 * the travelers' photo circles without fetching the trip document.
+	 * Absent in summaries written before Nov 2026.
+	 */
+	travelers?: Traveler[];
 }
 
 /** Document at users/{uid}/destinationSummaries/{id}  was "destinos" inside user doc */

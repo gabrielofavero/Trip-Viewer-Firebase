@@ -1,6 +1,62 @@
 {
 	"account": {
 		"settings": "Ajustes",
+		"people": {
+			"title": "Pessoas",
+			"description": "Cadastre as pessoas com quem você viaja e adicione uma foto. Clique em uma pessoa para editar, ou no + para adicionar uma nova. Elas são selecionadas ao editar uma viagem ou um item do roteiro.",
+			"new_title": "Nova pessoa",
+			"edit_title": "Editar pessoa",
+			"name_required": "Digite um nome para a pessoa",
+			"remove_title": "Remover pessoa",
+			"remove_message": "Remover \"{{name}}\" da sua lista de pessoas? Viagens já salvas mantêm o nome e a foto.",
+			"add": "Adicionar pessoa",
+			"name_placeholder": "Nome",
+			"photo_placeholder": "Link da foto (https://…)",
+			"photo_invalid": "O link da foto deve começar com http:// ou https://",
+			"duplicate": "Os nomes das pessoas devem ser únicos",
+			"hint": "Pessoas adicionadas durante a edição de uma viagem podem ser salvas para viagens futuras. Alterações de nome valem para os próximos salvamentos de viagem.",
+			"saved": "Pessoas atualizadas com sucesso",
+			"error_save": "Não foi possível salvar as pessoas. Tente novamente.",
+			"removed": "Pessoa removida"
+		},
+		"templates": {
+			"title": "Templates",
+			"description": "Salve a aparência de uma viagem e os dados de uma hospedagem para reutilizar ao editar viagens.",
+			"manage": "Gerenciar templates",
+			"manager_title": "Templates",
+			"empty": "Nenhum template cadastrado ainda.",
+			"hint": "Datas, códigos de reserva e pagamento nunca são copiados.",
+			"trip_section": "Templates de viagem",
+			"accommodation_section": "Templates de hospedagem",
+			"trip_count": "{{count}} template(s) de viagem",
+			"accommodation_count": "{{count}} template(s) de hospedagem",
+			"add_trip": "Novo template de viagem",
+			"add_accommodation": "Novo template de hospedagem",
+			"name": "Nome do template",
+			"name_placeholder": "Ex.: Viagem Lollapalooza",
+			"source_trip": "Viagem base",
+			"source_accommodation": "Hospedagem",
+			"destination": "Destino",
+			"search_destinations": "Buscar destinos",
+			"loading_trip_destinations": "Carregando os destinos da viagem…",
+			"trip_has_no_destinations": "Esta viagem não tem destinos vinculados. Escolha abaixo.",
+			"no_destination_matches": "Nenhum destino corresponde à busca.",
+			"select_trip": "Selecione uma viagem",
+			"select_accommodation": "Selecione uma hospedagem",
+			"no_trip_matches": "Nenhuma viagem encontrada",
+			"no_source_trips": "Você ainda não tem viagens para usar como base.",
+			"no_source_trips_accommodation": "Nenhuma viagem com hospedagens para usar como base ainda.",
+			"no_destinations": "Cadastre um destino antes — todo template precisa estar vinculado a um.",
+			"no_accommodations": "Esta viagem não tem hospedagens.",
+			"loading_accommodations": "Carregando hospedagens…",
+			"error_name": "Digite um nome para o template",
+			"error_trip": "Selecione a viagem base",
+			"error_destination": "Selecione o destino",
+			"error_accommodation": "Selecione a hospedagem",
+			"error_source": "Não foi possível ler o documento base. Tente novamente.",
+			"error_save": "Não foi possível salvar os templates. Tente novamente.",
+			"saved": "Templates atualizados com sucesso"
+		},
 		"backup": {
 			"title": "Exportar Conta",
 			"prompt": "Você gostaria de fazer backup também dos dados sensíveis de viagens?",
@@ -110,7 +166,6 @@
 		"current_multi_1": "Múltiplas viagens em andamento",
 		"current_multi_2": "Confira em \"Próximas viagens\"",
 		"edit": "Editar viagem",
-		"share": "Venha visualizar minha viagem \"{{name}}\" criada no TripViewer, com início em {{start}} e fim em {{end}}",
 		"delete": {
 			"title": "Excluir viagem",
 			"message": "Tem certeza que deseja excluir a viagem \"{{name}}\"? A ação não poderá ser desfeita"
@@ -148,6 +203,17 @@
 			"subtitle": "Dê uma cara única para a sua viagem",
 			"colors": "Escolha o tema e as cores da sua viagem",
 			"links": "Adicione links úteis para a sua viagem"
+		},
+		"template": {
+			"apply": "Aplicar template",
+			"picker_title": "Aplicar template de viagem",
+			"accommodation_picker_title": "Importar do template",
+			"search_placeholder": "Buscar templates",
+			"show_all": "Mostrar templates de outros destinos",
+			"empty": "Nenhum template de viagem para os destinos vinculados a esta viagem. Tente mostrar templates de outros destinos.",
+			"empty_accommodation": "Nenhum template de hospedagem para os destinos vinculados a esta viagem. Tente mostrar templates de outros destinos.",
+			"no_destination": "Sem destino",
+			"import_button": "Importar do template"
 		},
 		"expenses": {
 			"document": "Gastos da viagem",
@@ -295,11 +361,10 @@
 		},
 		"travelers": {
 			"title": "Viajantes",
-			"info": "Informações dos viajantes",
-			"quantity": "Quantidade de viajantes",
-			"unique": "Os nomes dos viajantes devem ser únicos",
-			"add": "Adicionar viajantes",
-			"add_traveler": "Adicionar viajante"
+			"save_future": "Salvar esta pessoa para viagens futuras",
+			"save_future_hint": "A pessoa também aparecerá em Ajustes → Pessoas depois que você salvar a viagem.",
+			"previous": "Pessoas anteriores",
+			"next": "Próximas pessoas"
 		}
 	},
 	"destination": {
@@ -545,7 +610,6 @@
 		"title": "Listas de destinos",
 		"new": "Nova lista de destinos",
 		"edit": "Editar lista de destinos",
-		"share": "Venha visualizar a lista de destinos \"{{name}}\" criada no TripViewer",
 		"delete": {
 			"title": "Excluir Lista",
 			"message": "Tem certeza que deseja excluir a lista \"{{name}}\"? A ação não poderá ser desfeita"
@@ -671,10 +735,10 @@
 	},
 	"messages": {
 		"text_copied": "Texto copiado para a área de transferência",
+		"link_copied": "Link copiado para a área de transferência",
 		"itinerary_copied": "Programação copiada! Cole no WhatsApp ou em um app de notas para manter a formatação",
 		"expenses_copied": "Lista copiada! Cole no WhatsApp ou em um app de notas para manter a formatação",
 		"no_data": "Sem dados cadastrados 😔",
-		"share": "Venha visualizar meus dados criados no TripViewer",
 		"exit_confirmation": "Você tem certeza que deseja sair? Todas as alterações não salvas serão perdidas",
 		"busy_operation": "Uma operação de backup/restauração está em andamento. Sair agora pode interrompê-la e causar perda de dados. Tem certeza que deseja sair?",
 		"select_one": "Selecione pelo menos um item",
@@ -1022,6 +1086,20 @@
 		"search_placeholder": "Buscar",
 		"days": "dias",
 		"day": "dia",
+		"countdown": {
+			"next_day": "Em {{value}} dia",
+			"next_days": "Em {{value}} dias",
+			"next_month": "Em {{value}} mês",
+			"next_months": "Em {{value}} meses",
+			"next_year": "Em {{value}} ano",
+			"next_years": "Em {{value}} anos",
+			"past_day": "Há {{value}} dia",
+			"past_days": "Há {{value}} dias",
+			"past_month": "Há {{value}} mês",
+			"past_months": "Há {{value}} meses",
+			"past_year": "Há {{value}} ano",
+			"past_years": "Há {{value}} anos"
+		},
 		"modules_active": "Módulos ativos",
 		"trip_destinations": "Destinos da Viagem",
 		"view_trip": "Ver Viagem",

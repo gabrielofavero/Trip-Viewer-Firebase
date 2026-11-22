@@ -669,6 +669,7 @@ function buildTripSummary(tripData: Record<string, any>): Record<string, any> {
 		version: tripData.version || { lastUpdated: new Date().toISOString() },
 		pin: tripData.pin || 'no-pin',
 		modules: tripData.modules || {},
+		travelers: Array.isArray(tripData.travelers) ? tripData.travelers : [],
 	};
 }
 

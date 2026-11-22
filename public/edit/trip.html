@@ -64,6 +64,13 @@
 
           <p data-translate="trip.basic_information.subtitle"></p>
 
+          <div class="button-box-formatted" id="trip-template-box" style="display: none">
+            <button id="trip-template-button" class="btn btn-basic" data-action="open-trip-template">
+              <i class="iconify" data-icon="material-symbols:content-copy"></i>
+              <span data-translate="trip.template.apply"></span>
+            </button>
+          </div>
+
           <div class="nice-form-group">
             <label data-translate="labels.title"></label>
             <input required id="title" type="text" data-translate="trip.basic_information.title_placeholder" />
@@ -109,8 +116,7 @@
 
           <div class="nice-form-group">
             <label data-translate="trip.travelers.title"></label>
-            <button id="travelers-info" class="btn input-button travelers-input" data-action="open-travelers-info"
-              data-translate="trip.travelers.add"></button>
+            <div class="travelers-inline" id="trip-travelers-container"></div>
           </div>
 
           <fieldset class="nice-form-group">

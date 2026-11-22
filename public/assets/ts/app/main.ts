@@ -100,14 +100,22 @@ export function getHTMLpage() {
 	return name;
 }
 
+/**
+ * Public app origin. `trip-viewer-prd.firebaseapp.com` is the only deployed
+ * domain — there is no separate dev/alias host anymore.
+ */
+const PUBLIC_ORIGIN = 'https://trip-viewer-prd.firebaseapp.com';
+
+/**
+ * Absolute, shareable URL for the current page. Always points at the public
+ * production host (even when running on localhost) and drops the local-only
+ * hints (`visibility` theme, `ai` dev helper) so recipients get a clean link.
+ */
 export function getPageURL() {
-	const isAltPrd = window.location.hostname === 'trip-viewer-prd.firebaseapp.com';
-
-	const base = isAltPrd ? 'https://trip-viewer.com' : window.location.origin;
-
-	const url = new URL(window.location.pathname + window.location.search, base);
+	const url = new URL(window.location.pathname + window.location.search, PUBLIC_ORIGIN);
 
 	url.searchParams.delete('visibility');
+	url.searchParams.delete('ai');
 
 	return url.toString();
 }

@@ -36,6 +36,8 @@ import {
 	switchPanel,
 } from '../../../utils/messages.js';
 import { registerActions } from '../../../ui/actions.js';
+import { openPersonDialog } from './people.js';
+import { openTemplatesManager } from './templates.js';
 
 /**
  * Hide Settings actions that must never run against real (production) Firebase
@@ -178,6 +180,9 @@ export function loadListenersIndex() {
 		},
 		'open-folders-dialog': () => openFoldersDialog(),
 		'close-folders-dialog': () => closeFoldersDialog(),
+		'edit-person': (target) => openPersonDialog(target.getAttribute('data-person-id')),
+		'add-person': () => openPersonDialog(null),
+		'open-templates-manager': () => openTemplatesManager(),
 		'toggle-dest-folder': (target) =>
 			toggleDestinationFolder(target.getAttribute('data-folder-id')),
 		'create-folder': () => createDestinationFolderFromInput(),

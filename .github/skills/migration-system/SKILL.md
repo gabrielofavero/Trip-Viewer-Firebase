@@ -59,6 +59,7 @@ npm run migrations -- --project dev
 | **20** | **`migrateExpenseFields`** | **Expense multi-person fields: add `link` + `people` to every expense entry in preTrip/duringTrip (public + protected)** |
 | **21** | **`migrateAccommodationPaymentStatus`** | **Accommodation payment status (F065): add `paymentStatus: ""` to every accommodation sub-document (`trips/{id}/accommodations/{accId}`)** |
 | **22** | **`migrateDestinationRegionsSplit`** | **Split combined region values on destination entries: expand `regions` elements (and any leftover legacy `region`) separated by comma/semicolon into separate array items** |
+| **23** | **`migrateTripSummaryTravelers`** | **Backfill `travelers` from every `trips/{id}` document into its owner's `tripSummaries` doc (index cards render their photo circles from the summary)** |
 
 **Migrations 1–17 are legacy / manual-only** — already applied in production (1–12) or kept for reference (13–17). They are NOT registered in the current `functions/src/index.ts`, so the deploy script cannot offer them.
 

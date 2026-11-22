@@ -71,6 +71,20 @@
         }
       ],
       "body": []
+    },
+    {
+      "id": 23,
+      "function": "migrateTripSummaryTravelers",
+      "label": "Backfill travelers into trip summaries (index card avatars)",
+      "params": [
+        {
+          "name": "dryRun",
+          "type": "bool",
+          "label": "Dry run (preview changes, write nothing)",
+          "default": false
+        }
+      ],
+      "body": []
     }
   ]
 }

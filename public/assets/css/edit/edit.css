@@ -1549,10 +1549,11 @@
 }
 
 /* Shared "action at the top-right" wrapper for editor accordion bodies
-   (transport copy, accommodation import) — mirrors the Places API button. */
+   (transport copy, accommodation import, accommodation template). */
 .import-fetch-wrapper {
 	display: flex;
 	justify-content: flex-end;
+	gap: 8px;
 	margin: 12px 0;
 }
 
@@ -2462,69 +2463,6 @@
 .expense-currency-option:hover,
 .expense-currency-option.active {
 	background: var(--bg-tertiary);
-}
-
-/*--------------------------------------------------------------
-# Travelers Modal — Dynamic List
-# Replaces the old "number of travelers" spinner with explicit
-# add / remove rows.
---------------------------------------------------------------*/
-.travelers-list {
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
-}
-
-.travelers-row {
-	display: flex;
-	align-items: flex-end;
-	gap: 8px;
-}
-
-.travelers-row .travelers-name-group {
-	flex: 1;
-	min-width: 0;
-	margin-top: 0;
-}
-
-.travelers-row .travelers-name-group label {
-	margin-bottom: calc(var(--nf-input-size) / 4);
-}
-
-.travelers-remove {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	flex-shrink: 0;
-	width: 48px;
-	height: 48px;
-	min-height: 48px;
-	padding: 0;
-	margin: 0;
-	border: 1.5px solid var(--border-color);
-	border-radius: var(--radius-md);
-	background: var(--bg-secondary);
-	color: var(--text-muted);
-	cursor: pointer;
-	transition:
-		border var(--transition-fast),
-		color var(--transition-fast),
-		background var(--transition-fast);
-}
-
-.travelers-remove:hover {
-	border-color: #e74c3c;
-	color: #e74c3c;
-	background: rgba(231, 76, 60, 0.08);
-}
-
-.travelers-remove svg {
-	width: 18px;
-	height: 18px;
-}
-
-.travelers-add {
-	margin-top: 12px;
 }
 
 /* Disabled confirm button (nothing selected yet) */
