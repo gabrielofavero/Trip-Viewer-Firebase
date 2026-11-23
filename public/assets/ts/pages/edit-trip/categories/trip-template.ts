@@ -190,11 +190,10 @@ function getVisibleTemplates(): TripTemplate[] {
 	return byDestination.filter((template) => {
 		const accommodationName =
 			template.type === 'accommodation' ? template.accommodation.name : '';
-		const haystack = [
-			template.name,
-			accommodationName,
-			getDestinationTitle(template.destinationId),
-		]
+		const destinationTitles = template.destinationIds
+			.map((destinationId) => getDestinationTitle(destinationId))
+			.join(' ');
+		const haystack = [template.name, accommodationName, destinationTitles]
 			.join(' ')
 			.toLowerCase();
 		return haystack.includes(query);
@@ -218,9 +217,10 @@ function renderPickerList(): void {
 	}
 
 	// Group by destination so templates from different cities never mix.
+	const linked = getLinkedDestinationIds();
 	const groups = new Map<string, TripTemplate[]>();
 	for (const template of templates) {
-		const key = template.destinationId || '';
+		const key = getTemplateGroupDestinationId(template, linked);
 		if (!groups.has(key)) groups.set(key, []);
 		groups.get(key).push(template);
 	}
@@ -329,8 +329,10 @@ async function applyTripSkeleton(template: TripSkeletonTemplate): Promise<void> 
 	clearWallpaperSource();
 	refreshImagePickers();
 
-	// The template's destination becomes a linked destination of this trip.
-	await ensureDestinationLinked(template.destinationId);
+	// The template's destinations become linked destinations of this trip.
+	for (const destinationId of template.destinationIds) {
+		await ensureDestinationLinked(destinationId);
+	}
 
 	// Selecting a destination card is not a tracked form field, so a template
 	// that only changes the linked destination would otherwise be reported as
@@ -425,4 +427,16 @@ function getDestinationTitle(destinationId: string): string {
 		`.destination-card[data-destination-id="${destinationId}"] .destination-card-name`,
 	);
 	return card?.textContent?.trim() || '';
+}
+
+/**
+ * Destination that groups a template in the picker. Prefers a destination
+ * already linked to the trip, then the template's first destination.
+ */
+function getTemplateGroupDestinationId(template: TripTemplate, linked: string[]): string {
+	return (
+		template.destinationIds.find((destinationId) => linked.includes(destinationId)) ||
+		template.destinationIds[0] ||
+		''
+	);
 }

@@ -15,6 +15,7 @@
 - 🐞 **B234:** Fix destination folder hidden in trip picker
 - 📈 **M249:** Trip card badges show relative time
 - 🐞 **B235:** Fix view page share link
+- 🐞 **B236:** Fix trip template destination type errors
 
 ## [2.28.10] - 2026-09-19
 

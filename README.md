@@ -73,6 +73,7 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B234:** Fix destination folder hidden in trip picker
 - 📈 **M249:** Trip card badges show relative time
 - 🐞 **B235:** Fix view page share link
+- 🐞 **B236:** Fix trip template destination type errors
 
 ### September 2026
 
