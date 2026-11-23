@@ -4,7 +4,7 @@
  * The dev config is a full deep-copy of firebase.json with the
  * `hosting.headers` array replaced by a single `no-store` rule, so the
  * emulator never serves stale content during development. Rewrites,
- * redirects, the SPA rewrite, emulators, and functions config are all
+ * redirects, clean URLs, emulators, and functions config are all
  * preserved from the single source of truth (firebase.json).
  *
  * firebase.dev.json is generated — never hand-edit it.

@@ -6,7 +6,16 @@
 -->
 <meta charset="utf-8">
 <meta name="viewport"
-  content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
+  content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1, viewport-fit=cover">
+
+<!-- Status bar / browser-UI tint. Safari 15-18 read this meta; Safari 26
+     (iOS 26 Liquid Glass) ignores it and samples the opaque `.top-bar`
+     background-color instead. theme-init.js rewrites it before first paint so
+     both paths resolve to the same solid light/dark top-bar color. -->
+<meta name="theme-color" content="#ffffff">
+
+<!-- Independent of the module graph: can recover even if an entry import fails. -->
+<script src="{{ASSET_PREFIX}}assets/js/startup-recovery.js"></script>
 
 <!-- Prevent flash of incorrect theme: set data-theme before first paint.
      theme-init.js is a synchronous classic script (no modules) that mirrors the
@@ -25,7 +34,6 @@
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-touch-fullscreen" content="yes" />
 <meta name="apple-mobile-web-app-title" content="TripViewer" />
-<meta name="theme-color" content="#fff">
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
@@ -38,7 +46,6 @@
 <link rel="shortcut icon" href="{{ASSET_PREFIX}}favicon.ico">
 <meta name="msapplication-TileColor" content="#e4ebdb">
 <meta name="msapplication-config" content="{{ASSET_PREFIX}}browserconfig.xml">
-<meta name="theme-color" content="#ffffff">
 
 <!-- Google Fonts -->
 <link

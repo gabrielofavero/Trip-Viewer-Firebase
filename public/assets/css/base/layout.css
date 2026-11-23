@@ -6,16 +6,37 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	background: rgba(255, 255, 255, 0.85);
-	backdrop-filter: blur(20px) saturate(180%);
-	-webkit-backdrop-filter: blur(20px) saturate(180%);
+	/* Opaque on purpose. iOS 26 Liquid Glass derives the status-bar tint from
+	   the background-color of a fixed element at the top edge and ignores
+	   `theme-color`; it also skips elements that have a backdrop-filter. A
+	   translucent/frosted bar therefore makes the status bar show the page
+	   through it, while an opaque color makes it match the bar exactly. */
+	background: var(--top-bar-bg);
 	height: 60px;
+	height: calc(60px + env(safe-area-inset-top, 0px));
 	border-bottom: 1px solid var(--border-color);
 	z-index: 999;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 0 16px;
+	padding: env(safe-area-inset-top, 0px) calc(16px + env(safe-area-inset-right, 0px)) 0
+		calc(16px + env(safe-area-inset-left, 0px));
+}
+
+/* Solid backdrop for the iOS status-bar / notch area. Stays in place even when
+   the view page auto-hides the top bar on scroll. Zero height on devices with
+   no top safe-area inset. */
+.status-bar-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 0;
+	height: env(safe-area-inset-top, 0px);
+	background: var(--top-bar-bg);
+	z-index: 998;
+	pointer-events: none;
 }
 
 .logo-box {

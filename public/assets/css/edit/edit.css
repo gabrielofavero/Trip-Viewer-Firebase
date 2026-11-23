@@ -3066,6 +3066,7 @@ details summary::-webkit-details-marker {
 	.edit-tab-bar {
 		position: fixed;
 		top: 60px;
+		top: calc(60px + env(safe-area-inset-top, 0px));
 		left: 0;
 		right: 0;
 		border-top: none;

@@ -84,7 +84,9 @@ export function updateUserLanguage(language) {
 }
 
 export function translatePage() {
-	const elements = document.querySelectorAll<HTMLElement>('[data-translate]');
+	const elements = document.querySelectorAll<HTMLElement>(
+		'[data-translate], [data-translate-aria-label], [data-translate-title]',
+	);
 	for (const element of elements) {
 		const key = element.getAttribute('data-translate');
 		if (key) {
@@ -95,6 +97,12 @@ export function translatePage() {
 				element.textContent = translation;
 			}
 		}
+		// Attribute translations are used by controls whose visible label can be
+		// hidden responsively (e.g. icon-only buttons on phones).
+		const ariaKey = element.getAttribute('data-translate-aria-label');
+		if (ariaKey) element.setAttribute('aria-label', translate(ariaKey));
+		const titleKey = element.getAttribute('data-translate-title');
+		if (titleKey) element.setAttribute('title', translate(titleKey));
 	}
 }
 

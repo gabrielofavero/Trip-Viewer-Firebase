@@ -37,6 +37,20 @@
 	white-space: nowrap;
 }
 
+/* An overflowing strip must be a real scroll container at EVERY width — not
+   just ≤600px. ui/scroll-hint.ts overlays its chevron buttons as soon as
+   scrollWidth exceeds clientWidth, and scrollBy() is a silent no-op on an
+   element without overflow, which made the arrows look dead. */
+.category-tabs.is-scrollable {
+	justify-content: flex-start;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+}
+.category-tabs.is-scrollable::-webkit-scrollbar {
+	display: none;
+}
+
 .category-tab:hover {
 	color: var(--text-primary);
 	background: rgba(0, 0, 0, 0.03);
@@ -53,6 +67,9 @@
 .edit-tab-bar {
 	display: flex;
 	justify-content: center;
+	/* Falling back to the start edge on overflow keeps the first tabs
+	   reachable (centered overflow is clipped past the start edge). */
+	justify-content: safe center;
 	gap: 4px;
 	margin-bottom: 3em;
 	background: rgba(255, 255, 255, 0.5);
@@ -136,11 +153,17 @@
 @media (max-width: 600px) {
 	.category-tabs {
 		justify-content: center;
+		justify-content: safe center;
 		gap: 4px;
 		padding: 4px;
 		overflow-x: auto;
 		-webkit-overflow-scrolling: touch;
 		scrollbar-width: none;
+	}
+	/* ui/scroll-hint.ts flags an overflowing strip: align to the start so
+	   the first tabs are visible and reachable by scrolling. */
+	.category-tabs.is-scrollable {
+		justify-content: flex-start;
 	}
 	.category-tabs::-webkit-scrollbar {
 		display: none;
@@ -161,6 +184,7 @@
 		opacity: 0;
 		overflow: hidden;
 		white-space: nowrap;
+		text-overflow: ellipsis;
 		margin-left: 0;
 		transition:
 			max-width var(--transition-normal) ease,
@@ -168,8 +192,101 @@
 			margin-left var(--transition-normal) ease;
 	}
 	.category-tab.active .tab-label {
-		max-width: 160px;
+		/* Generous cap so translated labels never clip mid-word. */
+		max-width: min(240px, 62vw);
 		opacity: 1;
 		margin-left: 6px;
 	}
+}
+
+/*--------------------------------------------------------------
+# Scroll Hint Shell (ui/scroll-hint.ts)
+# Wraps an overflowing tab bar and overlays edge fades + chevron
+# buttons while there is more content to scroll to.
+--------------------------------------------------------------*/
+.scroll-hint {
+	position: relative;
+	min-width: 0;
+}
+
+.scroll-hint-btn {
+	position: absolute;
+	top: 50%;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 30px;
+	padding: 0;
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-sm);
+	background: var(--bg-primary);
+	color: var(--text-muted);
+	box-shadow: var(--shadow-sm);
+	cursor: pointer;
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transform: translateY(-50%);
+	transition:
+		opacity var(--transition-fast),
+		visibility var(--transition-fast),
+		color var(--transition-fast);
+}
+
+.scroll-hint-btn i {
+	font-size: 20px;
+	line-height: 1;
+}
+
+.scroll-hint-btn:hover {
+	color: var(--text-primary);
+}
+
+.scroll-hint-btn:active {
+	transform: translateY(-50%) scale(0.94);
+}
+
+.scroll-hint-left {
+	left: 1px;
+}
+
+.scroll-hint-right {
+	right: 1px;
+}
+
+.scroll-hint.has-scroll-left .scroll-hint-left,
+.scroll-hint.has-scroll-right .scroll-hint-right {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+}
+
+/* Fade the strip into the buttons on the sides that still have content. */
+.scroll-hint.has-scroll-left > .category-tabs {
+	-webkit-mask-image: linear-gradient(to right, transparent, #000 32px);
+	mask-image: linear-gradient(to right, transparent, #000 32px);
+}
+
+.scroll-hint.has-scroll-right > .category-tabs {
+	-webkit-mask-image: linear-gradient(to left, transparent, #000 32px);
+	mask-image: linear-gradient(to left, transparent, #000 32px);
+}
+
+.scroll-hint.has-scroll-left.has-scroll-right > .category-tabs {
+	-webkit-mask-image: linear-gradient(
+		to right,
+		transparent,
+		#000 32px,
+		#000 calc(100% - 32px),
+		transparent
+	);
+	mask-image: linear-gradient(
+		to right,
+		transparent,
+		#000 32px,
+		#000 calc(100% - 32px),
+		transparent
+	);
 }

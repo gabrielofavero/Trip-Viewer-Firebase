@@ -331,11 +331,17 @@
 .dest-folder:hover {
 	border-color: rgba(var(--theme-color-rgb), 0.3);
 }
+.dest-folder-head {
+	display: flex;
+	align-items: stretch;
+}
 .dest-folder-header {
 	display: flex;
 	align-items: center;
 	gap: 10px;
-	width: 100%;
+	flex: 1;
+	min-width: 0;
+	width: auto;
 	padding: 14px 16px;
 	border: none;
 	background: transparent;
@@ -349,6 +355,34 @@
 }
 .dest-folder-header:hover {
 	background: rgba(var(--theme-color-rgb), 0.06);
+}
+/* Pencil that opens the folder editor. Sits at the right edge of the header
+   row; it is a sibling of the toggle button so tapping it never collapses
+   the folder. */
+.dest-folder-edit {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 44px;
+	padding: 0;
+	border: none;
+	border-radius: 0;
+	background: transparent;
+	color: var(--text-muted);
+	font-size: 20px;
+	cursor: pointer;
+	transition:
+		background var(--transition-fast),
+		color var(--transition-fast);
+}
+.dest-folder-edit:hover {
+	background: rgba(var(--theme-color-rgb), 0.08);
+	color: var(--theme-color);
+}
+.dest-folder-edit:focus-visible {
+	outline: 2px solid var(--theme-color);
+	outline-offset: -2px;
 }
 .dest-folder-icon {
 	display: inline-flex;
@@ -391,6 +425,28 @@
 	align-items: center;
 	gap: 8px;
 	flex-wrap: wrap;
+}
+/* Header buttons share one explicit height so the bordered secondary button
+   and the borderless primary button line up exactly. */
+.tab-header .btn {
+	height: 34px;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+/* Phones: header buttons become compact icon-only squares to save space.
+   The label span stays in the DOM (hidden) and the button keeps its
+   translated aria-label/title. */
+@media (max-width: 520px) {
+	.tab-header .btn {
+		width: 34px;
+		padding: 0;
+		gap: 0;
+		font-size: 18px;
+	}
+	.tab-header .btn span {
+		display: none;
+	}
 }
 
 .trip-card,
@@ -842,6 +898,33 @@
 	margin: 0 0 18px;
 	line-height: 1.5;
 }
+.folders-dialog-field {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-bottom: 14px;
+}
+.folders-dialog-label {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--text-secondary);
+}
+.folders-dialog-error {
+	margin: 0 0 12px;
+	color: #e74c3c;
+	font-size: 13px;
+	line-height: 1.4;
+}
+.folders-dialog-dests {
+	margin-top: 4px;
+}
+.folders-dialog-dests-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	margin-bottom: 8px;
+}
 .folders-dialog-list {
 	display: flex;
 	flex-direction: column;
@@ -977,7 +1060,7 @@
 	padding: 0 16px;
 }
 .folders-dialog-input {
-	flex: 1;
+	width: 100%;
 	min-width: 0;
 	height: 42px;
 	padding: 0 12px;

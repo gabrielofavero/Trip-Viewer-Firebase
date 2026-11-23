@@ -70,7 +70,9 @@ export function loadDarkMode() {
 	applyMode({
 		isDark: true,
 		loadCss: true,
-		barColor: '#303030',
+		// Must match the opaque dark `--top-bar-bg` (base/dark-mode.css):
+		// iOS 26 Safari ignores theme-color and samples the top bar instead.
+		barColor: '#1c1c1e',
 		hoverFn: getDarkerColor,
 		secondaryKey: 'dark',
 	});
@@ -80,7 +82,8 @@ export function loadLightMode() {
 	applyMode({
 		isDark: false,
 		loadCss: true,
-		barColor: '#fff',
+		// Must match the opaque light `--top-bar-bg` (base/variables.css).
+		barColor: '#ffffff',
 		hoverFn: getLighterColor,
 		secondaryKey: 'light',
 	});
@@ -90,7 +93,7 @@ export function loadLightModeLite() {
 	applyMode({
 		isDark: false,
 		loadCss: false,
-		barColor: '#fff',
+		barColor: '#ffffff',
 		hoverFn: getLighterColor,
 		secondaryKey: 'light',
 	});

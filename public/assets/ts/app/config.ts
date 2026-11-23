@@ -16,6 +16,14 @@ import { isStaticMode } from '../static-mode/static-mode.js';
 
 const _cache = {};
 
+export class ConfigLoadError extends Error {
+	readonly startupAssetFailure = true;
+	constructor(path: string, detail: string) {
+		super(`Failed to load configuration ${path}: ${detail}`);
+		this.name = 'ConfigLoadError';
+	}
+}
+
 // ======= Async Loaders (used at startup) =======
 
 async function loadJSON(path) {
@@ -25,11 +33,30 @@ async function loadJSON(path) {
 	// relative to the page. Keep the canonical path as the cache key so the
 	// sync getters (getColors, ...) keep working unchanged.
 	const fetchPath = isStaticMode() && path.startsWith('/') ? path.slice(1) : path;
-	const response = await fetch(fetchPath);
-	if (!response.ok) throw new Error(`Failed to load ${fetchPath}: ${response.status}`);
-	const data = await response.json();
-	_cache[path] = data;
-	return data;
+	for (let attempt = 0; attempt < 2; attempt++) {
+		try {
+			// A bad cached response gets one network retry before shell recovery.
+			const response = await fetch(fetchPath, attempt ? { cache: 'reload' } : {});
+			if (!response.ok) throw new Error(`HTTP ${response.status}`);
+			const type = response.headers.get('content-type') || '';
+			if (type.includes('text/html')) {
+				throw new Error('Received HTML instead of JSON (possibly an obsolete asset URL)');
+			}
+			const data = await response.json();
+			if (!data || typeof data !== 'object' || Array.isArray(data)) {
+				throw new Error('Expected a JSON object');
+			}
+			_cache[path] = data;
+			return data;
+		} catch (error) {
+			if (attempt === 1) {
+				throw new ConfigLoadError(
+					fetchPath,
+					error instanceof Error ? error.message : String(error),
+				);
+			}
+		}
+	}
 }
 
 export async function loadColors() {

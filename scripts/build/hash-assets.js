@@ -74,6 +74,9 @@ const EXCLUDED_FILES = new Set([
 	// background version polling — it must keep its fixed /version.json URL so
 	// each fetch reflects the latest deploy.
 	'version.json',
+	// Service worker (image cache): must keep its fixed /sw.js URL — the
+	// browser registers it by path and needs root scope.
+	'sw.js',
 	'assets/json/iconify-icons.json',
 	'assets/css/fonts.css',
 ]);
@@ -178,16 +181,25 @@ function hashAssets(distDir) {
 			if (d) deps.add(d);
 		};
 		if (ext === '.js') {
-			content.replace(/\b(import|export)\b([^;]*?)\bfrom\s*["']([^"']+)["']/g, (_m, _k, _mid, s) => {
-				add(s);
-				return _m;
-			});
+			content.replace(
+				/\b(import|export)\b([^;]*?)\bfrom\s*["']([^"']+)["']/g,
+				(_m, _k, _mid, s) => {
+					add(s);
+					return _m;
+				},
+			);
 			content.replace(/\bimport\s*["']([^"']+)["']/g, (_m, s) => {
 				add(s);
 				return _m;
 			});
 			content.replace(/\bimport\s*\(\s*["']([^"']+)["']\s*\)/g, (_m, s) => {
 				add(s);
+				return _m;
+			});
+			// Match the literal-asset rewriting pass below too. Otherwise changing
+			// JSON rewrites this module's bytes without changing its immutable URL.
+			content.replace(/["']([^"'\n]+)["']/g, (_m, s) => {
+				if (isLocalSpec(s)) add(s);
 				return _m;
 			});
 		} else if (ext === '.css') {
@@ -216,24 +228,24 @@ function hashAssets(distDir) {
 		return crypto.createHash('sha1').update(buf).digest('hex');
 	};
 
-	const memo = new Map();
-	const deepHash = (rel, visiting) => {
-		if (memo.has(rel)) return memo.get(rel);
-		if (visiting.has(rel)) {
-			// Cycle guard: fall back to the file's own content hash.
-			const h = ownHash(rel).slice(0, HASH_LEN);
-			memo.set(rel, h);
-			return h;
-		}
-		visiting.add(rel);
-		const depPart = extractDeps(rel)
-			.map((d) => `${d}:${deepHash(d, visiting)}`)
+	const dependencies = new Map(relFiles.map((rel) => [rel, extractDeps(rel)]));
+	const hashes = new Map(relFiles.map((rel) => [rel, ownHash(rel)]));
+	const deepHash = (rel) => {
+		// Hash the sorted reachable graph instead of memoizing a partially
+		// visited cycle. Every member of a circular import group must change
+		// when any reachable dependency changes, regardless of traversal order.
+		const reachable = new Set();
+		const visit = (file) => {
+			if (reachable.has(file)) return;
+			reachable.add(file);
+			for (const dependency of dependencies.get(file)) visit(dependency);
+		};
+		visit(rel);
+		const graph = [...reachable]
 			.sort()
+			.map((file) => `${file}:${hashes.get(file)}`)
 			.join('\u0000');
-		visiting.delete(rel);
-		const h = sha1(ownHash(rel) + '\u0000' + depPart).slice(0, HASH_LEN);
-		memo.set(rel, h);
-		return h;
+		return sha1(rel + '\u0000' + graph).slice(0, HASH_LEN);
 	};
 
 	// rel -> hashed rel
@@ -242,7 +254,7 @@ function hashAssets(distDir) {
 		const dir = path.posix.dirname(rel);
 		const ext = path.posix.extname(rel);
 		const stem = path.posix.basename(rel, ext);
-		const h = deepHash(rel, new Set());
+		const h = deepHash(rel);
 		map.set(rel, (dir === '.' ? '' : dir + '/') + `${stem}.${h}${ext}`);
 	}
 

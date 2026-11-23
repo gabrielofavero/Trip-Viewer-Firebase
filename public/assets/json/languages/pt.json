@@ -132,6 +132,11 @@
 			"partial_success": "{{exported}} documento(s) exportado(s) com sucesso ({{failed}} falhou).",
 			"failed": "Falha ao exportar documentos."
 		},
+		"image_cache": {
+			"title": "Limpar Cache de Imagens",
+			"cleared": "Cache de imagens limpo.",
+			"empty": "O cache de imagens já está vazio."
+		},
 		"export_static": {
 			"title": "Exportar como Página Web Estática",
 			"warning": "⚠️ O pacote exportado contém os dados do seu documento em texto simples, incluindo informações protegidas (códigos de reserva, links). Qualquer pessoa com acesso aos arquivos pode ler esses dados. Armazene os arquivos exportados com segurança e exclua-os quando não forem mais necessários.",

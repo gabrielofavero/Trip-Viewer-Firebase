@@ -1,3 +1,4 @@
+import { evictCachedImage } from '../../../app/media-cache.js';
 import {
 	getUID,
 	registerIfUserNotPresent,
@@ -296,8 +297,10 @@ function handleCardImageEvent(e: Event, failed: boolean): void {
 	container.classList.remove('is-loading');
 	if (failed) {
 		// Image could not load (broken/unavailable external link): show the
-		// placeholder icon instead of a broken image.
+		// placeholder icon instead of a broken image. Also drop a cached copy
+		// so the next visit retries the URL instead of showing it broken.
 		container.classList.add('no-image');
+		evictCachedImage(target.src);
 		target.remove();
 	} else {
 		container.classList.add('is-loaded');

@@ -177,7 +177,7 @@ nothing is cached, and livereload refreshes the page on every rebuild.
 |---|---|
 | `tsconfig.json` | TypeScript config: `strict: false`, `noEmit: true`, `moduleResolution: "bundler"`, `isolatedModules: true`, includes `public/assets/ts/**/*.ts` |
 | `biome.json` | Formatter/linter: tab width 2, single quotes, semicolons, trailing commas, 100 char width |
-| `firebase.json` | Hosting from `dist/`, SPA rewrite `** → /index.html`, cache headers, 301 redirects |
+| `firebase.json` | Hosting from `dist/`, clean HTML URLs, cache headers, 301 redirects; missing assets return 404 (no catch-all rewrite) |
 | `firebase.dev.json` | Generated copy of `firebase.json` with a single `no-store` header (dev only; regenerated on emulator start) |
 | `firebase-config.js` | Firebase config, auto-detects DEV/PRD/TCC by hostname |
 | `functions/tsconfig.json` | Separate TS config for Cloud Functions |

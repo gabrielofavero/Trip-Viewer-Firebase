@@ -6,10 +6,13 @@
 
 /* ===== CSS Variables ===== */
 [data-theme="dark"] {
+	color-scheme: dark;
 	--theme-color: #7f75b6;
 	--theme-color-rgb: 127, 117, 182;
 	--theme-secondary: #9b91d4;
 	--theme-color-hover: #7367b4;
+	/* Opaque top-bar / status-bar tint (Safari 26 samples this color). */
+	--top-bar-bg: #1c1c1e;
 	--theme-color-secondary: #494852;
 	--theme-color-secondary-hover: #434346;
 	--bg-primary: #1c1c1e;
@@ -103,13 +106,7 @@
 }
 
 /* ===== Top Bar ===== */
-[data-theme="dark"] .top-bar {
-	background: rgba(28, 28, 30, 0.85);
-	backdrop-filter: blur(20px) saturate(180%);
-	-webkit-backdrop-filter: blur(20px) saturate(180%);
-	border-bottom: 1px solid var(--border-color);
-}
-
+/* Background comes from --top-bar-bg (layout.css) so it stays opaque. */
 [data-theme="dark"] #trip-viewer-text {
 	color: var(--theme-color);
 }

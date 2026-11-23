@@ -7,29 +7,20 @@
 		"cleanUrls": true,
 		"headers": [
 			{
-				"source": "**/*.@(js|css|png|jpg|jpeg|webp|svg|gif|ico|woff|woff2|ttf|otf|json)",
+				"source": "**",
+				"headers": [
+					{
+						"key": "Cache-Control",
+						"value": "no-cache, must-revalidate"
+					}
+				]
+			},
+			{
+				"regex": "^/.*\\.[a-f0-9]{10}\\.(js|css|png|jpg|jpeg|webp|svg|gif|ico|woff|woff2|ttf|otf|json)$",
 				"headers": [
 					{
 						"key": "Cache-Control",
 						"value": "public, max-age=31536000, immutable"
-					}
-				]
-			},
-			{
-				"source": "**/*.html",
-				"headers": [
-					{
-						"key": "Cache-Control",
-						"value": "no-cache, must-revalidate"
-					}
-				]
-			},
-			{
-				"regex": "^/[^.]*$",
-				"headers": [
-					{
-						"key": "Cache-Control",
-						"value": "no-cache, must-revalidate"
 					}
 				]
 			},
@@ -73,12 +64,6 @@
 				"source": "/editar-listagem*",
 				"destination": "/edit/listing",
 				"type": 301
-			}
-		],
-		"rewrites": [
-			{
-				"source": "**",
-				"destination": "/index.html"
 			}
 		],
 		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"]

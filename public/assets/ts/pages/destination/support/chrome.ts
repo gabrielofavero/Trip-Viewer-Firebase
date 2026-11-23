@@ -6,6 +6,7 @@
 import { getDestinations } from '../../../app/config.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../../../data/state.js';
 import { translate } from '../../../i18n/translation.js';
+import { scrollTabIntoView, setupScrollHint } from '../../../ui/scroll-hint.js';
 import { getID } from '../../../utils/dom.js';
 import { ACTIVE_CATEGORY, updateActiveCategory } from '../categories.js';
 import { loadDestinationByType, setSearchQuery } from '../mount.js';
@@ -17,6 +18,9 @@ export function loadDestinationTabBar() {
 
 	tabBar.innerHTML = getDestinationTabsHTML();
 	tabBar.style.display = '';
+	// Edge fades + chevrons once the tabs overflow (phones); setupScrollHint is
+	// idempotent, so the view.html lightbox can re-run this safely.
+	setupScrollHint(tabBar);
 
 	for (const tab of Array.from(tabBar.querySelectorAll('.category-tab'))) {
 		(tab as HTMLElement).addEventListener('click', () => {
@@ -26,8 +30,14 @@ export function loadDestinationTabBar() {
 			adjustDrawer();
 			updateActiveCategory(value);
 			loadDestinationByType(value);
+			// The active label expands on phones — keep the pill fully visible.
+			scrollTabIntoView(tab as HTMLElement);
 		});
 	}
+
+	// Deep links can start on a tab that sits past the visible strip.
+	const initialActive = tabBar.querySelector('.category-tab.active') as HTMLElement | null;
+	if (initialActive) scrollTabIntoView(initialActive, 'auto');
 
 	function getDestinationTabsHTML() {
 		const destinationsConfig = getDestinations();

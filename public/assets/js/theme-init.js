@@ -470,4 +470,12 @@
 	}
 
 	document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+
+	// Match the browser/status-bar tint to the resolved theme before first paint
+	// (Safari 15-18 / Android Chrome read theme-color; values mirror the opaque
+	// --top-bar-bg tokens). Safari 26 instead samples the .top-bar color.
+	var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+	if (themeColorMeta) {
+		themeColorMeta.setAttribute('content', isDark ? '#1c1c1e' : '#ffffff');
+	}
 })();

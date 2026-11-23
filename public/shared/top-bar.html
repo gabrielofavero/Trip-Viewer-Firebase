@@ -10,6 +10,10 @@
   (#595a5a stroke). If you need to restore the original style for a page,
   keep the top-bar inline in that page's HTML instead of using this partial.
 -->
+<!-- Solid backdrop under the iOS status bar / notch. Keeps the status-bar area
+     on the top-bar color even when the view page auto-hides the bar on scroll.
+     Zero height on devices without a top safe-area inset. -->
+<div class="status-bar-backdrop" aria-hidden="true"></div>
 <div class="top-bar" id="top-bar">
   <a href="{{HOME_HREF}}" class="logo-link">
     <div class="logo-box">

@@ -22,6 +22,15 @@ export function initBackToTop() {
 	const backToTop = select('.back-to-top');
 	if (!backToTop) return;
 
+	// Scroll explicitly instead of relying on the `href="#"` default. The
+	// anchor hash navigation is a no-op when another handler already reset the
+	// fragment (or when the page scrolls an inner container), which is what made
+	// the arrow appear to "do nothing".
+	backToTop.addEventListener('click', (event) => {
+		event.preventDefault();
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	});
+
 	const toggleBackToTop = () => {
 		if (window.scrollY > VISIBLE_AFTER_SCROLL) {
 			backToTop.classList.add(ACTIVE_CLASS);

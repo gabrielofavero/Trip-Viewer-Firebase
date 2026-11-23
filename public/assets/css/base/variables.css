@@ -2,10 +2,14 @@
 # Variables
 --------------------------------------------------------------*/
 :root {
+	color-scheme: light;
 	--theme-color: #5859a7;
 	--theme-color-rgb: 88, 89, 167;
 	--theme-secondary: #7172b4;
 	--theme-color-hover: #505197;
+	/* Top bar + iOS status-bar tint. Must stay OPAQUE: Safari 26 samples this
+	   color for its Liquid Glass status bar (see base/layout.css .top-bar). */
+	--top-bar-bg: #ffffff;
 	--theme-color-secondary: #d5d6e9;
 	--theme-color-secondary-hover: #e9e9ed;
 	--bg-primary: #ffffff;

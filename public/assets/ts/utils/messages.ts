@@ -175,26 +175,29 @@ function _animateOut(
 	// element is reopened after being hidden here.
 	(element as any)._prevDisplay = element.style.display;
 	element.classList.add(leaveClass);
-	let cancelled = false;
-	(element as any)._animOutCancel = () => {
-		cancelled = true;
+	let settled = false;
+	const cleanup = () => {
+		settled = true;
+		clearTimeout(timeout);
+		element.removeEventListener('animationend', onAnimationEnd);
+		(element as any)._animOutCancel = null;
 	};
 	const finish = () => {
-		if (cancelled) return;
-		(element as any)._animOutCancel = null;
+		if (settled) return;
+		// Dispose both completion paths before invoking code that may reopen the
+		// dialog. Background tabs can delay timers or omit animationend entirely.
+		cleanup();
 		element.classList.remove(leaveClass);
 		element.style.display = 'none';
 		onComplete?.();
 	};
-	element.addEventListener(
-		'animationend',
-		(e) => {
-			if (e.target !== element) return;
-			finish();
-		},
-		{ once: true },
-	);
-	setTimeout(finish, duration + 80);
+	const onAnimationEnd = (event: AnimationEvent) => {
+		if (event.target === element) finish();
+	};
+	const timeout = setTimeout(finish, duration + 80);
+	(element as any)._animOutCancel = cleanup;
+	// Remove explicitly: a bubbled child event must not consume this listener.
+	element.addEventListener('animationend', onAnimationEnd);
 }
 
 /** Cancel a pending `_animateOut` on `element` (e.g. reopening it mid-close). */

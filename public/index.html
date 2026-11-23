@@ -142,11 +142,13 @@
           <div class="tab-header">
             <span class="tab-header-count" id="dests-count"></span>
             <div class="tab-header-actions">
-              <button id="folders-btn" class="btn btn-secondary-theme btn-sm" data-action="open-folders-dialog">
-                <i class="iconify" data-icon="material-symbols:create-new-folder"></i>
+              <button id="folders-btn" class="btn btn-outline-theme btn-sm" data-action="open-folders-dialog"
+                data-translate-aria-label="index.folders.add" data-translate-title="index.folders.add">
+                <i class="iconify" data-icon="tabler:folder-plus"></i>
                 <span data-translate="index.folders.add"></span>
               </button>
-              <button id="new-dest-btn" class="btn btn-primary-theme btn-sm">
+              <button id="new-dest-btn" class="btn btn-primary-theme btn-sm"
+                data-translate-aria-label="destination.new" data-translate-title="destination.new">
                 <i class="iconify" data-icon="gridicons:add-outline"></i>
                 <span data-translate="destination.new"></span>
               </button>
@@ -174,7 +176,8 @@
         <div class="tab-content" id="tab-lists">
           <div class="tab-header">
             <span class="tab-header-count" id="lists-count"></span>
-            <button id="new-list-btn" class="btn btn-primary-theme btn-sm">
+            <button id="new-list-btn" class="btn btn-primary-theme btn-sm"
+              data-translate-aria-label="listing.new" data-translate-title="listing.new">
               <i class="iconify" data-icon="gridicons:add-outline"></i>
               <span data-translate="listing.new"></span>
             </button>
@@ -224,6 +227,10 @@
                 <button class="btn btn-secondary-theme settings-action-btn" data-action="export-static">
                   <i class="iconify" data-icon="heroicons:globe-alt-16-solid"></i>
                   <span data-translate="account.export_static.title"></span>
+                </button>
+                <button class="btn btn-secondary-theme settings-action-btn" data-action="clear-image-cache">
+                  <i class="iconify" data-icon="material-symbols:image-outline"></i>
+                  <span data-translate="account.image_cache.title"></span>
                 </button>
                 <button class="btn btn-secondary-theme settings-action-btn" data-action="restore-account">
                   <i class="iconify" data-icon="mdi:account-arrow-down"></i>

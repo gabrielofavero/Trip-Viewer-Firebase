@@ -132,6 +132,11 @@
 			"partial_success": "{{exported}} document(s) exported successfully ({{failed}} failed).",
 			"failed": "Failed to export documents."
 		},
+		"image_cache": {
+			"title": "Clear Image Cache",
+			"cleared": "Image cache cleared.",
+			"empty": "Image cache is already empty."
+		},
 		"export_static": {
 			"title": "Export as Static Web Page",
 			"warning": "⚠️ The exported package contains your document data in plain text, including any protected information (reservation codes, booking links). Anyone with access to the files can read this data. Store the exported files securely and delete them when no longer needed.",

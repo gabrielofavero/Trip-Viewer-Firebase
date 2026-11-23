@@ -42,6 +42,11 @@ export async function loadDestinationPage() {
 		}
 	}
 
+	// Wire the top-bar icons BEFORE the async read. The back arrow ships visible
+	// in the HTML, so wiring it only after a successful mount left a dead arrow
+	// (visible, no handler) while loading and after a failed/denied read.
+	loadHeaderButtons(tripId);
+
 	// Abort early when the read failed (e.g. access denied for unauthenticated
 	// users) — the proper message was already shown by mountDestination.
 	const dispose = await mountDestination(getID('content'), {
@@ -61,7 +66,6 @@ export async function loadDestinationPage() {
 	setPageName(title);
 	getID('title').innerText = title;
 
-	loadHeaderButtons(tripId);
 	loadDestinationTabBar();
 	loadDestinationSearch();
 }

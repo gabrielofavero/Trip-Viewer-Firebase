@@ -8,6 +8,7 @@
 
 import { select, on, onscroll, getID } from '../utils/dom.js';
 import { displayError } from '../utils/messages.js';
+import { stopLoadingTimer } from '../utils/loading.js';
 import { loadAllConfigs, setLanguage, getVersions } from '../app/config.js';
 import {
 	translate,
@@ -20,10 +21,8 @@ import { initBackToTop } from '../ui/back-to-top.js';
 import { initUrlInputOpenLink } from '../ui/url-input-open-link.js';
 import { initDev } from '../utils/dev.js';
 import { isStaticMode, loadStaticData } from '../static-mode/static-mode.js';
-import {
-	checkForAppUpdate,
-	startVersionUpdatePolling,
-} from '../app/version-check.js';
+import { checkForAppUpdate, startVersionUpdatePolling } from '../app/version-check.js';
+import { initMediaCache } from './media-cache.js';
 
 const APP = {
 	projectId: null,
@@ -33,6 +32,8 @@ const APP = {
 
 export async function main(pageLoaders: Record<string, () => void> = {}) {
 	try {
+		// Start the image-cache worker before the page requests its media.
+		initMediaCache();
 		if (isStaticMode()) {
 			await loadStaticData();
 		}
@@ -47,7 +48,14 @@ export async function main(pageLoaders: Record<string, () => void> = {}) {
 		startVersionUpdatePolling(APP.version, APP.build, APP.projectId);
 		loadLangSelectorSelect();
 		loadPage(pageLoaders);
+		window.TripViewerStartup?.complete();
 	} catch (error) {
+		if (!isStaticMode() && (error as any)?.startupAssetFailure && window.TripViewerStartup) {
+			// The legacy loading watchdog must not reload over the recovery UI.
+			stopLoadingTimer();
+			await window.TripViewerStartup.recover(error);
+			return;
+		}
 		displayError(error instanceof Error ? error : new Error(String(error)));
 	}
 }
@@ -167,9 +175,7 @@ export function setPageName(pageName?) {
 	// real environment.
 	const isEmulator = isLocal && window.__TRIPVIEWER_EMULATOR__ === true;
 	const tag = isLocal ? (isEmulator ? '[LOCAL]' : '[LOCAL PRD]') : '';
-	const cleanTitle = document.title
-		.replace(/\[(LOCAL )?(LOCAL|PRD)\]\s*/g, '')
-		.trim();
+	const cleanTitle = document.title.replace(/\[(LOCAL )?(LOCAL|PRD)\]\s*/g, '').trim();
 
 	const resolvedPageName = pageName ?? cleanTitle;
 	const newTitle = tag ? `${tag} ${resolvedPageName}` : resolvedPageName;

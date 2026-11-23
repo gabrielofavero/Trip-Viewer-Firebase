@@ -185,8 +185,13 @@ export function clearCustomColors() {
 }
 
 export function changeBarColorIOS(color) {
-	let metaThemeColor = document.querySelector('meta[name=theme-color]');
-	metaThemeColor.setAttribute('content', color);
+	// Keep every theme-color meta in sync (head.html has a single one; the loop
+	// is defensive for static exports/older cached HTML). Safari 26 ignores this
+	// meta for its Liquid Glass tint and samples the opaque .top-bar instead,
+	// but Android Chrome and Safari 15-18 still use it.
+	document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+		meta.setAttribute('content', color);
+	});
 }
 
 export function saveLocalColors() {

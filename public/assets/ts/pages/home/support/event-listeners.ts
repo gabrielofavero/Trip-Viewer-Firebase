@@ -1,3 +1,4 @@
+import { clearMediaCache } from '../../../app/media-cache.js';
 import { backupOnClickAction } from '../../../backup/backup.js';
 import { exportDocumentsOnClickAction } from '../../../backup/export-documents.js';
 import {
@@ -7,8 +8,10 @@ import {
 import { restoreOnClickAction, restoreOnFileSelectionAction } from '../../../backup/restore.js';
 import { signInWithEmailAndPassword, signOut } from '../../../data/firebase/auth.js';
 import { deleteAccount } from '../../../data/firebase/database.js';
+import { translate } from '../../../i18n/translation.js';
 import { exportStaticOnClickAction } from '../../../static-export/export-static.js';
 import { registerActions } from '../../../ui/actions.js';
+import { scrollTabIntoView, setupScrollHint } from '../../../ui/scroll-hint.js';
 import { openAttributions } from '../../../utils/attributions.js';
 import { getID } from '../../../utils/dom.js';
 import { startLoadingScreen, stopLoadingScreen } from '../../../utils/loading.js';
@@ -17,6 +20,7 @@ import {
 	animateDialogOpen,
 	closeToast,
 	DIALOG_LEAVE_CLASS,
+	openToast,
 	switchPanel,
 } from '../../../utils/messages.js';
 import {
@@ -72,6 +76,9 @@ export function loadListenersIndex() {
 	});
 
 	// Category tabs
+	const categoryTabs = getID('category-tabs');
+	if (categoryTabs) setupScrollHint(categoryTabs);
+
 	const tabs = document.querySelectorAll('.category-tab');
 	tabs.forEach((tab) => {
 		tab.addEventListener('click', function () {
@@ -85,6 +92,8 @@ export function loadListenersIndex() {
 				tabs.forEach((t) => t.classList.remove('active'));
 				this.classList.add('active');
 				onTabChanged(target);
+				// The active label expands on phones — keep the pill fully visible.
+				scrollTabIntoView(this as HTMLElement);
 			}
 		});
 	});
@@ -98,6 +107,7 @@ export function loadListenersIndex() {
 			const settingsTab = document.querySelector('.category-tab[data-tab="settings"]');
 			if (settingsTab) settingsTab.classList.add('active');
 			onTabChanged('settings');
+			if (settingsTab) scrollTabIntoView(settingsTab as HTMLElement);
 		}
 	});
 
@@ -158,6 +168,10 @@ export function loadListenersIndex() {
 		'import-documents': () => importDocumentsOnClickAction(),
 		'export-documents': () => exportDocumentsOnClickAction(),
 		'export-static': () => exportStaticOnClickAction(),
+		'clear-image-cache': async () => {
+			const cleared = await clearMediaCache();
+			openToast(translate(cleared ? 'account.image_cache.cleared' : 'account.image_cache.empty'));
+		},
 		'open-delete-modal': () => openModal(),
 		'close-delete-modal': () => closeModal(),
 		'close-trip-dialog': () => closeTripDialog(),

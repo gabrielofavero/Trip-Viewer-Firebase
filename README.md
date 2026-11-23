@@ -82,6 +82,12 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M251:** Trip badge: 90-day limit and 12-month rollover
 - 📈 **M252:** Brighter dark-mode hover on pill bars
 - 📈 **M253:** Inline templates manager with edit and refresh
+- 🐞 **B241:** Prevent startup softlocks after app updates
+- 🐞 **B242:** Fix folder edit button styling
+- 📈 **M254:** Equalize destination tab header buttons
+- 📈 **M255:** Icon-only tab header buttons on mobile
+- 🐞 **B243:** Prevent disappearing cards after tab suspension
+- 📈 **M256:** Mobile category tabs overflow hint and alignment
 
 ### September 2026
 

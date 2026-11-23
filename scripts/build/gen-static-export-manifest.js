@@ -75,6 +75,9 @@ const EXCLUDED_FILES = new Set([
 	'firebase.dev.json',
 	'static-export-manifest.json',
 	'reload',
+	// Image-cache service worker — exported pages are static-mode and never
+	// register it (the string survives in compiled JS references).
+	'sw.js',
 ]);
 
 const EXCLUDED_PREFIXES = ['edit/'];
