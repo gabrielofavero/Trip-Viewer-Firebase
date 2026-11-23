@@ -16,13 +16,17 @@ import { getUID } from '../../data/firebase/auth.js';
 import { deleteUnusedImages } from '../../data/firebase/storage.js';
 import { translate } from '../../i18n/translation.js';
 import { getGalleryObject } from './categories/gallery.js';
-import { getItineraryArray, clearItineraryDurationStash } from './categories/itinerary-module/itinerary-module.js';
+import {
+	getItineraryArray,
+	clearItineraryDurationStash,
+} from './categories/itinerary-module/itinerary-module.js';
 import { getExcludedAutoKeys } from './categories/itinerary-module/inner-itinerary/auto-excluded.js';
 import { getDestinationsArray } from './categories/destination.js';
 import {
 	getAccommodationArray,
 	getProtectedAccommodationObject,
 } from './categories/accommodation.js';
+import { getAppliedTripTemplateId } from './categories/trip-template.js';
 import {
 	getProtectedTransportationObject,
 	getTransportationObject,
@@ -41,7 +45,10 @@ export var FIRESTORE_EXPENSES_PROTECTED_NEW_DATA = {};
 
 /** Subcollection data (written to trips/{id}/accommodations, /transportation, /itinerary) */
 export var FIRESTORE_ACCOMMODATIONS_NEW_DATA: any[] = [];
-export var FIRESTORE_TRANSPORTATION_NEW_DATA: { data: any[]; viewMode: string } = { data: [], viewMode: 'simple' };
+export var FIRESTORE_TRANSPORTATION_NEW_DATA: { data: any[]; viewMode: string } = {
+	data: [],
+	viewMode: 'simple',
+};
 export var FIRESTORE_ITINERARY_NEW_DATA: any[] = [];
 
 async function buildTripObject() {
@@ -66,7 +73,10 @@ async function buildTripObject() {
 
 	// Store subcollection data for separate batch write
 	FIRESTORE_ACCOMMODATIONS_NEW_DATA = fullTripObject.accommodations || [];
-	FIRESTORE_TRANSPORTATION_NEW_DATA = fullTripObject.transportation || { data: [], viewMode: 'simple' };
+	FIRESTORE_TRANSPORTATION_NEW_DATA = fullTripObject.transportation || {
+		data: [],
+		viewMode: 'simple',
+	};
 	FIRESTORE_ITINERARY_NEW_DATA = fullTripObject.itinerary || [];
 }
 
@@ -99,6 +109,7 @@ async function getUnprotectedTripObject() {
 		visibility: getVisibilityObject(),
 		pin: getCurrentPreferencePIN(),
 		itineraryAutoExcluded: getExcludedAutoKeys(),
+		templateId: getAppliedTripTemplateId(),
 	};
 }
 
@@ -140,6 +151,7 @@ async function getTripObjectFull(protectedReservationCodes = false) {
 		visibility: getVisibilityObject(),
 		pin: getCurrentPreferencePIN(),
 		itineraryAutoExcluded: getExcludedAutoKeys(),
+		templateId: getAppliedTripTemplateId(),
 	};
 }
 

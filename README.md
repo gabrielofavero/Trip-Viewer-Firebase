@@ -74,6 +74,14 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M249:** Trip card badges show relative time
 - 🐞 **B235:** Fix view page share link
 - 🐞 **B236:** Fix trip template destination type errors
+- 🐞 **B237:** Fix template dropdown hidden under dialog
+- 🐞 **B238:** Move trip people circles to expanded card
+- 🐞 **B239:** Resolve traveler photos from people registry
+- 🐞 **B240:** View highlights: stacked people avatars
+- 📈 **M250:** Destination folders: single-folder dialog and per-folder edit
+- 📈 **M251:** Trip badge: 90-day limit and 12-month rollover
+- 📈 **M252:** Brighter dark-mode hover on pill bars
+- 📈 **M253:** Inline templates manager with edit and refresh
 
 ### September 2026
 

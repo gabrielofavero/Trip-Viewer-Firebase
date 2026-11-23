@@ -2,7 +2,7 @@ import { getState } from '../../../data/state.js';
 import { TRAVELERS, setTravelersFn } from '../../../data/state.js';
 import { getID } from '../../../utils/dom.js';
 import { translate } from '../../../i18n/translation.js';
-import { escapePeopleHTML, getPersonAvatarHTML } from '../../../utils/people-avatars.js';
+import { escapePeopleHTML, getPeopleAvatarStackHTML } from '../../../utils/people-avatars.js';
 import { END_DATE } from '../view.js';
 import { START_DATE } from '../view.js';
 
@@ -27,14 +27,13 @@ export function loadSummary() {
                                                 <span>${days}</span>
                                                 <p>${translate('labels.days')}</p>`;
 
-	// Keypoint 4 — the floating badge carries the travelers' photos (first two,
-	// same size) instead of the generic icon; hovering or tapping the box shows
-	// the names in a tooltip above the card.
-	const withPhoto = travelerList.filter((traveler) => traveler?.photo).slice(0, 2);
-	const badge = withPhoto.length
-		? `<i class="keypoint-people-badge">${withPhoto
-				.map((traveler) => getPersonAvatarHTML(traveler, 'people-avatar keypoint-people-avatar'))
-				.join('')}</i>`
+	// Keypoint 4 — the floating badge carries the travelers' photo circles
+	// stacked exactly like the home cards (overlapping, not clipped by a
+	// colored circular container); hovering or tapping the box shows the names
+	// in a tooltip above the card.
+	const peopleStack = getPeopleAvatarStackHTML(travelerList, 'keypoint-people-stack');
+	const badge = peopleStack
+		? `<span class="keypoint-people-badge">${peopleStack}</span>`
 		: `<i class="bx bx-male"></i>`;
 	const names = travelerList
 		.map((traveler) => traveler?.name)

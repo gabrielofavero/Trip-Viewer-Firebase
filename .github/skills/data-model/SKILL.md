@@ -185,6 +185,7 @@ gallery          { categories[], descriptions[], images[], titles[] }
 destinationRefs  { id, title?, image?, categories?, version? }[]   Denormalized destination metadata (migration 18 + trip save) — see below
 image            { dark, light, background: string, active: bool }
 itineraryAutoExcluded  string[]         Source keys of auto-added itinerary entries the user deleted by hand — see below
+templateId       string                 Applied TripSkeletonTemplate id (`users/{uid}.tripTemplates[].id`; '' when none) — powers the editor's manual "refresh template" action. Not mirrored in summaries
 ```
 
 ### DateObject

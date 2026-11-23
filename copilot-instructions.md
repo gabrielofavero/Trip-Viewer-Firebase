@@ -41,6 +41,10 @@ This workspace has **16 domain-specific agent skills** in `.github/skills/`. The
 
 Always run and validate against the **local Firebase emulator stack** (`npm run dev`, tab shows `[LOCAL]`). The coding agent must **never** use `npm run dev:prd`, `--use-emulator false`, `firebase serve`, or any real-project data path for validation, reproduction, or testing — unless the user explicitly asks for production work. If a page tab shows `[LOCAL PRD]`, that is the PRD build talking to the **real** `trip-viewer-prd` project: **stop**, rebuild in emulator mode (`node scripts/build/build.js --use-emulator true` — the default), and reload before proceeding.
 
+## 💾 Hard rule: PRD data changes ALWAYS start with a backup
+
+Before **any** write to production Firestore — user/trip/destination/listing/expense documents, bulk patches, backfills, REST scripts, migrations — export a snapshot of the affected documents to `tmp/prd-backup-<timestamp>.json` (include the owner user document when its arrays drive the change) and keep a way back (`tmp/*restore*.mjs` or a documented PATCH plan). Never run the write without the backup in place, and report the backup path when the task ends.
+
 ## Notifications (do not skip)
 
 Send an ntfy.sh notification on topic `DeepSeek` via the helper below **before ending any turn** that (a) completes requested work, (b) finishes a meaningful step of a multi-step task, (c) hits an error needing the user, or (d) prompts the user with a question/approval/validation request.

@@ -1,15 +1,29 @@
 import {
-	displayError,
-	animateDialogOpen,
-	animateDialogClose,
-	DIALOG_LEAVE_CLASS,
-} from '../../../utils/messages.js';
-import {
+	getUID,
 	registerIfUserNotPresent,
 	setUserData,
 	USER_DATA,
-	getUID,
 } from '../../../data/firebase/auth.js';
+import {
+	getUserDestinationSummaries,
+	getUserListingSummaries,
+	getUserTripSummaries,
+} from '../../../data/firebase/database.js';
+import {
+	createDestinationFolderId,
+	type DestinationFolder,
+	getCachedDestinationFolders,
+	groupDestinationsByFolder,
+	saveDestinationFolders,
+	seedDestinationFolders,
+} from '../../../data/services/destination-folders.service.js';
+import { applyPeopleToTravelers, seedPeople } from '../../../data/services/people.service.js';
+import { seedTripTemplates } from '../../../data/services/trip-templates.service.js';
+import { translate, translatePage } from '../../../i18n/translation.js';
+import { getDarkerColor, getLighterColor, hexToRgb } from '../../../theme/colors.js';
+import { isOnDarkMode } from '../../../theme/visibility.js';
+import { LazyGrid } from '../../../ui/lazy-grid.js';
+import { dateObjectToString, getDateNoTime } from '../../../utils/dates.js';
 import {
 	getCurrentTrips,
 	getID,
@@ -18,38 +32,26 @@ import {
 	getOrderedDocumentByUpdateDate,
 	getPreviousTrips,
 } from '../../../utils/dom.js';
-import { translate, translatePage } from '../../../i18n/translation.js';
 import { stopLoadingScreen } from '../../../utils/loading.js';
-import { dateObjectToString, getDateNoTime } from '../../../utils/dates.js';
 import {
-	getUserTripSummaries,
-	getUserDestinationSummaries,
-	getUserListingSummaries,
-} from '../../../data/firebase/database.js';
+	animateDialogClose,
+	animateDialogOpen,
+	closeMessage,
+	DIALOG_LEAVE_CLASS,
+	displayError,
+	displayPrompt,
+} from '../../../utils/messages.js';
+import { escapePeopleHTML, getPeopleAvatarStackHTML } from '../../../utils/people-avatars.js';
 import {
-	viewTrip,
+	editDestination,
+	editListing,
 	editTrip,
 	viewDestination,
-	editDestination,
 	viewListing,
-	editListing,
+	viewTrip,
 } from './navigation.js';
-import { isOnDarkMode } from '../../../theme/visibility.js';
-import { getDarkerColor, getLighterColor, hexToRgb } from '../../../theme/colors.js';
-import { LazyGrid } from '../../../ui/lazy-grid.js';
-import {
-	getCachedDestinationFolders,
-	seedDestinationFolders,
-	saveDestinationFolders,
-	createDestinationFolderId,
-	groupDestinationsByFolder,
-	type DestinationFolder,
-} from '../../../data/services/destination-folders.service.js';
-import { seedPeople } from '../../../data/services/people.service.js';
 import { loadSettingsPeople } from './people.js';
-import { seedTripTemplates } from '../../../data/services/trip-templates.service.js';
 import { loadSettingsTemplates } from './templates.js';
-import { escapePeopleHTML, getPersonAvatarHTML } from '../../../utils/people-avatars.js';
 
 var INDEX_DATA: Record<string, any> = {};
 var CURRENT_TRIPS: any[] = [];
@@ -430,26 +432,11 @@ function buildTripCardHTML(trip): string {
 		? cardImageHTML('trip', bgImage, 'tabler:plane-departure')
 		: `<div class="trip-card-image no-image"><i class="iconify card-image-icon" data-icon="tabler:plane-departure"></i></div>`;
 
-	// Travelers with a photo float over the image's bottom-right corner, slightly
-	// overlapping. The native title attribute lists their names on hover.
-	const travelers = Array.isArray(trip.travelers) ? trip.travelers : [];
-	const travelersWithPhoto = travelers.filter((traveler) => traveler?.photo);
-	const travelerNames = travelers
-		.map((traveler) => traveler?.name)
-		.filter(Boolean)
-		.join(', ');
-	const travelersHTML = travelersWithPhoto.length
-		? `<span class="trip-card-people" title="${escapePeopleHTML(travelerNames)}" aria-label="${escapePeopleHTML(travelerNames)}">${travelersWithPhoto
-				.map((traveler) => getPersonAvatarHTML(traveler, 'people-avatar trip-card-people-avatar'))
-				.join('')}</span>`
-		: '';
-
 	return `
 		<div class="trip-card" data-action="open-trip-dialog" data-trip-id="${trip.id}">
 			<span class="trip-card-badge ${badgeClass}">${badgeLabel}</span>
 			<div class="trip-card-media">
 				${imageHTML}
-				${travelersHTML}
 			</div>
 			<div class="trip-card-body">
 				<div class="trip-card-title">${trip.title || translate('labels.no_title')}</div>
@@ -469,9 +456,9 @@ function getTripBackgroundImage(trip) {
 /**
  * Relative time shown on the trip card badge instead of a static status:
  * "In 10 days" for upcoming trips (until the start) and "10 days ago" for
- * finished ones (since the end). Up to 99 days shows days, up to 12 months
- * shows months, anything longer shows years. Days are rounded up; months and
- * years use normal rounding.
+ * finished ones (since the end). Up to 90 days shows days, longer shows
+ * months, anything past a year shows years. Days are rounded up; months and
+ * years use normal rounding — a month count that rounds to 12 becomes 1 year.
  */
 function getTripTimeBadgeLabel(
 	dateObject: Record<string, any> | undefined,
@@ -492,15 +479,21 @@ function getTripTimeBadgeLabel(
 
 	let unit: 'day' | 'month' | 'year';
 	let value: number;
-	if (days <= 99) {
+	if (days <= 90) {
 		unit = 'day';
 		value = days;
 	} else if (days <= 365) {
-		unit = 'month';
-		value = Math.round(days / 30.4375);
+		const months = Math.round(days / 30.4375);
+		if (months >= 12) {
+			unit = 'year';
+			value = 1;
+		} else {
+			unit = 'month';
+			value = months;
+		}
 	} else {
 		unit = 'year';
-		value = Math.round(days / 365.25);
+		value = Math.max(1, Math.round(days / 365.25));
 	}
 
 	const key = `index.countdown.${direction}_${unit}` + (value === 1 ? '' : 's');
@@ -594,6 +587,27 @@ export function openTripDialog(tripId) {
 
 	// Last updated
 	getID('trip-dialog-updated').textContent = getLastUpdatedOnText(trip.version?.lastUpdated);
+
+	// Travelers — stacked photo circles overlaid on the bottom-right corner of
+	// the header image (the row is positioned over the image in CSS). The
+	// registry is the source of truth: a photo/name edited in Settings shows up
+	// here immediately, without re-saving every trip (the trip copy is only a
+	// fallback for shared viewers).
+	const travelerList = applyPeopleToTravelers(
+		Array.isArray(trip.travelers) ? trip.travelers : [],
+	);
+	const travelerNames = travelerList
+		.map((traveler) => traveler?.name)
+		.filter(Boolean)
+		.join(', ');
+	const travelersStack = getPeopleAvatarStackHTML(travelerList);
+	const peopleRow = getID('trip-dialog-people');
+	if (peopleRow) {
+		peopleRow.innerHTML = travelersStack
+			? `<span class="dialog-people-stack" aria-label="${escapePeopleHTML(travelerNames)}">${travelersStack}</span><span class="dialog-people-names" aria-hidden="true">${escapePeopleHTML(travelerNames)}</span>`
+			: '';
+		peopleRow.style.display = travelersStack ? 'flex' : 'none';
+	}
 
 	// Modules — pill order mirrors the view page sections: overview → expenses →
 	// transportation → accommodations → itinerary → destinations → gallery.
@@ -743,17 +757,25 @@ function renderDestinationFolders(groups) {
 	container.innerHTML = groups
 		.map(({ folder, items }) => {
 			const expanded = searching || EXPANDED_DEST_FOLDERS.has(folder.id);
+			const editLabel = escapeHTML(translate('index.folders.edit_folder'));
 			return `
 				<div class="dest-folder${expanded ? ' expanded' : ''}" data-folder-id="${escapeHTML(folder.id)}">
-					<button type="button" class="dest-folder-header" data-action="toggle-dest-folder"
-						data-folder-id="${escapeHTML(folder.id)}" aria-expanded="${expanded}">
-						<span class="dest-folder-icon">
-							<i class="iconify" data-icon="material-symbols:folder"></i>
-						</span>
-						<span class="dest-folder-name">${escapeHTML(folder.name)}</span>
-						<span class="dest-folder-count">${items.length}</span>
-						<i class="iconify dest-folder-chevron" data-icon="material-symbols:expand-more"></i>
-					</button>
+					<div class="dest-folder-head">
+						<button type="button" class="dest-folder-header" data-action="toggle-dest-folder"
+							data-folder-id="${escapeHTML(folder.id)}" aria-expanded="${expanded}">
+							<span class="dest-folder-icon">
+								<i class="iconify" data-icon="material-symbols:folder"></i>
+							</span>
+							<span class="dest-folder-name">${escapeHTML(folder.name)}</span>
+							<span class="dest-folder-count">${items.length}</span>
+							<i class="iconify dest-folder-chevron" data-icon="material-symbols:expand-more"></i>
+						</button>
+						<button type="button" class="dest-folder-edit" data-action="edit-dest-folder"
+							data-folder-id="${escapeHTML(folder.id)}"
+							aria-label="${editLabel}" title="${editLabel}">
+							<i class="iconify" data-icon="material-symbols:edit"></i>
+						</button>
+					</div>
 					<div class="dest-folder-body" style="display:${expanded ? 'block' : 'none'}">
 						<div class="dest-grid">
 							${items.map((item) => buildDestCardHTML(item)).join('')}
@@ -784,105 +806,130 @@ export function toggleDestinationFolder(folderId: string | null) {
 }
 
 /*--------------------------------------------------------------
-# Destination Folders Dialog
+# Destination Folders Dialog (one folder at a time)
 --------------------------------------------------------------*/
-export function openFoldersDialog() {
+// The dialog always works on a single folder: "Add folder" opens it empty and
+// the pencil inside a folder's accordion header opens it for that folder.
+// Folders are never listed together, so the editor stays simple.
+
+/** Folder being edited, or null while creating a new one. */
+var FOLDER_DIALOG_ID: string | null = null;
+/** Destination ids checked in the open dialog (not yet persisted). */
+var FOLDER_DIALOG_SELECTION = new Set<string>();
+
+/**
+ * Open the folder dialog. Without an id it starts a new folder; with an id it
+ * edits that folder (rename + destination selection).
+ */
+export function openFoldersDialog(folderId: string | null = null) {
+	const folder = folderId
+		? getCachedDestinationFolders().find((item) => item.id === folderId)
+		: null;
+
+	FOLDER_DIALOG_ID = folder?.id ?? null;
+	FOLDER_DIALOG_SELECTION = new Set(folder?.destinationIds ?? []);
+
 	renderFoldersDialog();
+	hideFolderDialogError();
 	animateDialogOpen(getID('folders-dialog'), 'flex');
 	const card = getID('folders-dialog')?.querySelector<HTMLElement>('.dialog-card');
 	if (card) animateDialogOpen(card);
 	document.body.classList.add('dialog-open');
+
+	getID('folder-dialog-name')?.focus();
 }
 
 export function closeFoldersDialog() {
+	FOLDER_DIALOG_ID = null;
+	FOLDER_DIALOG_SELECTION = new Set();
 	closeIndexDialog('folders-dialog', () => {
 		document.body.classList.remove('dialog-open');
 	});
 }
 
+/** Fill the dialog for the current mode (new folder vs editing one folder). */
 function renderFoldersDialog() {
-	const list = getID('folders-dialog-list');
-	if (!list) return;
+	const editing = FOLDER_DIALOG_ID
+		? getCachedDestinationFolders().find((folder) => folder.id === FOLDER_DIALOG_ID)
+		: null;
 
-	// Re-rendering (rename/create/delete) keeps the list scroll position.
-	const scrollTop = list.scrollTop;
+	const title = getID('folder-dialog-title');
+	if (title) {
+		title.textContent = translate(
+			editing ? 'index.folders.edit_title' : 'index.folders.new_title',
+		);
+	}
+
+	const nameInput = getID('folder-dialog-name') as HTMLInputElement | null;
+	if (nameInput) nameInput.value = editing?.name ?? '';
+
+	// Deleting only makes sense for an existing folder.
+	const deleteBtn = getID('folder-dialog-delete');
+	if (deleteBtn) deleteBtn.style.display = editing ? '' : 'none';
 
 	const destinations = getOrderedDocumentByUpdateDate(INDEX_DATA.destinations);
 	const folders = getCachedDestinationFolders();
 
-	if (!destinations.length) {
-		list.innerHTML = `<p class="folders-dialog-empty">${translate('index.no_destinations')}</p>`;
-		return;
+	// A destination belongs to at most one folder, so the picker only offers
+	// the loose destinations plus the ones already filed in this folder.
+	const filedElsewhere = new Set<string>();
+	for (const folder of folders) {
+		if (folder.id === FOLDER_DIALOG_ID) continue;
+		for (const destinationId of folder.destinationIds) filedElsewhere.add(destinationId);
+	}
+	const available = destinations.filter(
+		(destination: any) => !filedElsewhere.has(destination.id),
+	);
+
+	// Drop checked ids whose destination no longer exists.
+	const availableIds = new Set(available.map((destination: any) => destination.id));
+	FOLDER_DIALOG_SELECTION = new Set(
+		[...FOLDER_DIALOG_SELECTION].filter((id) => availableIds.has(id)),
+	);
+
+	const items = getID('folder-dialog-items');
+	if (items) {
+		items.innerHTML = available
+			.map((destination: any) => {
+				const checked = FOLDER_DIALOG_SELECTION.has(destination.id);
+				return `
+					<label class="folder-editor-item${checked ? ' selected' : ''}">
+						<input type="checkbox" data-dest-id="${escapeHTML(destination.id)}"${checked ? ' checked' : ''}>
+						<span>${escapeHTML(destination.title || translate('labels.no_title'))}</span>
+					</label>`;
+			})
+			.join('');
+		items.style.display = available.length ? '' : 'none';
+
+		for (const checkbox of items.querySelectorAll<HTMLInputElement>('input[data-dest-id]')) {
+			checkbox.addEventListener('change', () => {
+				const destinationId = checkbox.getAttribute('data-dest-id') || '';
+				if (!destinationId) return;
+				if (checkbox.checked) FOLDER_DIALOG_SELECTION.add(destinationId);
+				else FOLDER_DIALOG_SELECTION.delete(destinationId);
+				checkbox.closest('.folder-editor-item')?.classList.toggle('selected', checkbox.checked);
+				updateFolderDialogCount();
+			});
+		}
 	}
 
-	if (!folders.length) {
-		list.innerHTML = `<p class="folders-dialog-empty">${translate('index.folders.empty')}</p>`;
-		return;
+	const empty = getID('folder-dialog-empty');
+	if (empty) {
+		empty.style.display = available.length ? 'none' : 'block';
+		empty.textContent = destinations.length
+			? translate('index.folders.no_available')
+			: translate('index.no_destinations');
 	}
 
-	const destinationIds = new Set(destinations.map((destination) => destination.id));
-
-	list.innerHTML = folders
-		.map((folder) => {
-			const count = folder.destinationIds.filter((id) => destinationIds.has(id)).length;
-			const items = destinations
-				.map((destination) => {
-					const checked = folder.destinationIds.includes(destination.id);
-					return `
-						<label class="folder-editor-item${checked ? ' selected' : ''}">
-							<input type="checkbox" data-folder-id="${escapeHTML(folder.id)}"
-								data-dest-id="${escapeHTML(destination.id)}"${checked ? ' checked' : ''}>
-							<span>${escapeHTML(destination.title || translate('labels.no_title'))}</span>
-						</label>`;
-				})
-				.join('');
-
-			return `
-				<div class="folder-editor" data-folder-id="${escapeHTML(folder.id)}">
-					<div class="folder-editor-header">
-						<i class="iconify folder-editor-icon" data-icon="material-symbols:folder"></i>
-						<input type="text" class="folder-editor-name" maxlength="60"
-							data-folder-id="${escapeHTML(folder.id)}" value="${escapeHTML(folder.name)}"
-							aria-label="${escapeHTML(translate('index.folders.rename'))}">
-						<span class="folder-editor-count">${count}</span>
-						<button type="button" class="folder-editor-remove" data-action="delete-folder"
-							data-folder-id="${escapeHTML(folder.id)}"
-							title="${escapeHTML(translate('index.folders.delete'))}">
-							<i class="iconify" data-icon="material-symbols:delete-outline"></i>
-						</button>
-					</div>
-					<div class="folder-editor-items">${items}</div>
-				</div>`;
-		})
-		.join('');
-
-	list.scrollTop = scrollTop;
-	bindFolderEditorListeners();
+	updateFolderDialogCount();
 }
 
-function bindFolderEditorListeners() {
-	const list = getID('folders-dialog-list');
-	if (!list) return;
-
-	for (const input of list.querySelectorAll<HTMLInputElement>('.folder-editor-name')) {
-		const folderId = input.getAttribute('data-folder-id') || '';
-		input.addEventListener('change', () => renameDestinationFolder(folderId, input.value));
-		input.addEventListener('keydown', (event) => {
-			if (event.key === 'Enter') {
-				event.preventDefault();
-				input.blur();
-			}
+function updateFolderDialogCount() {
+	const count = getID('folder-dialog-count');
+	if (count) {
+		count.textContent = translate('index.folders.selected', {
+			count: String(FOLDER_DIALOG_SELECTION.size),
 		});
-	}
-
-	for (const checkbox of list.querySelectorAll<HTMLInputElement>(
-		'input[type="checkbox"][data-dest-id]',
-	)) {
-		const folderId = checkbox.getAttribute('data-folder-id') || '';
-		const destinationId = checkbox.getAttribute('data-dest-id') || '';
-		checkbox.addEventListener('change', () =>
-			setDestinationFolderMembership(folderId, destinationId, checkbox.checked),
-		);
 	}
 }
 
@@ -890,89 +937,85 @@ function cloneFolders(folders: DestinationFolder[]): DestinationFolder[] {
 	return folders.map((folder) => ({ ...folder, destinationIds: [...folder.destinationIds] }));
 }
 
-async function renameDestinationFolder(folderId: string, rawName: string) {
-	const name = rawName.trim();
+function showFolderDialogError(message: string) {
+	const error = getID('folder-dialog-error');
+	if (!error) return;
+	error.textContent = message;
+	error.style.display = 'block';
+}
+
+function hideFolderDialogError() {
+	const error = getID('folder-dialog-error');
+	if (error) error.style.display = 'none';
+}
+
+/** Validate and persist the single folder shown in the dialog. */
+export async function saveFolderFromDialog() {
+	const nameInput = getID('folder-dialog-name') as HTMLInputElement | null;
+	const name = nameInput?.value.trim() || '';
+	if (!name) {
+		showFolderDialogError(translate('index.folders.name_required'));
+		nameInput?.focus();
+		return;
+	}
+
 	const folders = cloneFolders(getCachedDestinationFolders());
-	const folder = folders.find((item) => item.id === folderId);
+	const editingId = FOLDER_DIALOG_ID;
+	const duplicated = folders.some(
+		(folder) => folder.id !== editingId && folder.name.toLowerCase() === name.toLowerCase(),
+	);
+	if (duplicated) {
+		showFolderDialogError(translate('index.folders.duplicate'));
+		nameInput?.focus();
+		return;
+	}
+
+	const selected = [...FOLDER_DIALOG_SELECTION];
+	// A destination can live in a single folder: keep the saved selection out
+	// of every other folder as a safety net for stale data.
+	for (const folder of folders) {
+		if (folder.id === editingId) continue;
+		folder.destinationIds = folder.destinationIds.filter((id) => !selected.includes(id));
+	}
+
+	let folderId = editingId;
+	if (folderId) {
+		const folder = folders.find((item) => item.id === folderId);
+		if (!folder) return;
+		folder.name = name;
+		folder.destinationIds = selected;
+	} else {
+		folderId = createDestinationFolderId();
+		folders.push({ id: folderId, name, destinationIds: selected });
+	}
+
+	const saved = await saveDestinationFolders(folders);
+	if (!saved) {
+		showFolderDialogError(translate('index.folders.save_error'));
+		return;
+	}
+
+	// Reveal the folder on the tab so the change is visible after closing.
+	EXPANDED_DEST_FOLDERS.add(folderId);
+	closeFoldersDialog();
+	renderDestinationsTab();
+}
+
+/** Ask for confirmation, then delete the folder being edited. */
+export function deleteCurrentFolderFromDialog() {
+	const folder = FOLDER_DIALOG_ID
+		? getCachedDestinationFolders().find((item) => item.id === FOLDER_DIALOG_ID)
+		: null;
 	if (!folder) return;
 
-	if (!name) {
-		// Folder names cannot be empty — restore the previous value.
-		renderFoldersDialog();
-		return;
-	}
-	if (folder.name === name) return;
-
-	folder.name = name;
-	await persistFolders(folders);
-}
-
-/**
- * A destination belongs to at most one folder: checking it in one folder
- * removes it from any other folder; unchecking leaves it loose.
- */
-async function setDestinationFolderMembership(
-	folderId: string,
-	destinationId: string,
-	checked: boolean,
-) {
-	if (!destinationId) return;
-	const folders = cloneFolders(getCachedDestinationFolders());
-	for (const folder of folders) {
-		folder.destinationIds = folder.destinationIds.filter((id) => id !== destinationId);
-	}
-	if (checked) {
-		const target = folders.find((folder) => folder.id === folderId);
-		if (target) target.destinationIds.push(destinationId);
-	}
-	// Update the editors in place instead of re-rendering the whole list, so
-	// the scroll position is kept while filing several destinations.
-	const saved = await persistFolders(folders, false);
-	if (saved) syncFolderEditorSelection(destinationId, checked ? folderId : null);
-}
-
-/**
- * Reflect the new folder membership in the open dialog without rebuilding it:
- * only the edited destination moves between folders, so uncheck it everywhere
- * else and refresh every folder's selected count.
- */
-function syncFolderEditorSelection(destinationId: string, selectedFolderId: string | null) {
-	const list = getID('folders-dialog-list');
-	if (!list) return;
-
-	for (const editor of list.querySelectorAll<HTMLElement>('.folder-editor')) {
-		const folderId = editor.getAttribute('data-folder-id') || '';
-		const checked = folderId === selectedFolderId;
-		const checkbox = editor.querySelector<HTMLInputElement>(
-			`input[data-dest-id="${destinationId}"]`,
-		);
-		if (checkbox) {
-			checkbox.checked = checked;
-			const item = checkbox.closest('.folder-editor-item');
-			if (item) item.classList.toggle('selected', checked);
-		}
-
-		const count = editor.querySelector('.folder-editor-count');
-		if (count) {
-			count.textContent = String(
-				editor.querySelectorAll<HTMLInputElement>('input[data-dest-id]:checked').length,
-			);
-		}
-	}
-}
-
-export async function createDestinationFolderFromInput() {
-	const input = getID('folder-new-name') as HTMLInputElement | null;
-	const name = input?.value.trim() || '';
-	if (!name) {
-		input?.focus();
-		return;
-	}
-
-	const folders = cloneFolders(getCachedDestinationFolders());
-	folders.push({ id: createDestinationFolderId(), name, destinationIds: [] });
-	if (input) input.value = '';
-	await persistFolders(folders);
+	displayPrompt({
+		title: translate('index.folders.delete_title'),
+		content: translate('index.folders.delete_message', {
+			name: escapeHTML(folder.name),
+		}),
+		critical: true,
+		yesAction: () => deleteDestinationFolderById(folder.id),
+	});
 }
 
 export async function deleteDestinationFolderById(folderId: string | null) {
@@ -981,18 +1024,20 @@ export async function deleteDestinationFolderById(folderId: string | null) {
 		(folder) => folder.id !== folderId,
 	);
 	EXPANDED_DEST_FOLDERS.delete(folderId);
-	await persistFolders(folders);
-}
 
-async function persistFolders(folders: DestinationFolder[], rerender = true): Promise<boolean> {
 	const saved = await saveDestinationFolders(folders);
+	closeMessage();
 	if (!saved) {
 		displayError(new Error(translate('index.folders.save_error')));
-		return false;
+		return;
 	}
-	if (rerender) renderFoldersDialog();
+
+	if (FOLDER_DIALOG_ID === folderId) {
+		FOLDER_DIALOG_ID = null;
+		FOLDER_DIALOG_SELECTION = new Set();
+		closeFoldersDialog();
+	}
 	renderDestinationsTab();
-	return true;
 }
 
 function buildDestCardHTML(dest): string {

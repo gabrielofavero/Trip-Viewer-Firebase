@@ -1,43 +1,42 @@
-import { getID } from '../../../utils/dom.js';
-import { signInWithEmailAndPassword, signOut } from '../../../data/firebase/auth.js';
-import { startLoadingScreen, stopLoadingScreen } from '../../../utils/loading.js';
-import { deleteAccount } from '../../../data/firebase/database.js';
-import { newTrip, newDestination, newListing } from './navigation.js';
-import { restoreOnFileSelectionAction, restoreOnClickAction } from '../../../backup/restore.js';
 import { backupOnClickAction } from '../../../backup/backup.js';
+import { exportDocumentsOnClickAction } from '../../../backup/export-documents.js';
 import {
 	importDocumentsOnClickAction,
 	importDocumentsOnFileSelectionAction,
 } from '../../../backup/import-documents.js';
-import { exportDocumentsOnClickAction } from '../../../backup/export-documents.js';
+import { restoreOnClickAction, restoreOnFileSelectionAction } from '../../../backup/restore.js';
+import { signInWithEmailAndPassword, signOut } from '../../../data/firebase/auth.js';
+import { deleteAccount } from '../../../data/firebase/database.js';
 import { exportStaticOnClickAction } from '../../../static-export/export-static.js';
-import {
-	openTripDialog,
-	closeTripDialog,
-	openDestDialog,
-	closeDestDialog,
-	openListDialog,
-	closeListDialog,
-	openFoldersDialog,
-	closeFoldersDialog,
-	toggleDestinationFolder,
-	createDestinationFolderFromInput,
-	deleteDestinationFolderById,
-	onSearchInput,
-	clearSearch,
-	onTabChanged,
-} from './data.js';
+import { registerActions } from '../../../ui/actions.js';
 import { openAttributions } from '../../../utils/attributions.js';
+import { getID } from '../../../utils/dom.js';
+import { startLoadingScreen, stopLoadingScreen } from '../../../utils/loading.js';
 import {
-	closeToast,
-	animateDialogOpen,
 	animateDialogClose,
+	animateDialogOpen,
+	closeToast,
 	DIALOG_LEAVE_CLASS,
 	switchPanel,
 } from '../../../utils/messages.js';
-import { registerActions } from '../../../ui/actions.js';
+import {
+	clearSearch,
+	closeDestDialog,
+	closeFoldersDialog,
+	closeListDialog,
+	closeTripDialog,
+	deleteCurrentFolderFromDialog,
+	onSearchInput,
+	onTabChanged,
+	openDestDialog,
+	openFoldersDialog,
+	openListDialog,
+	openTripDialog,
+	saveFolderFromDialog,
+	toggleDestinationFolder,
+} from './data.js';
+import { newDestination, newListing, newTrip } from './navigation.js';
 import { openPersonDialog } from './people.js';
-import { openTemplatesManager } from './templates.js';
 
 /**
  * Hide Settings actions that must never run against real (production) Firebase
@@ -121,13 +120,13 @@ export function loadListenersIndex() {
 		clearSearch();
 	});
 
-	// Destination folders — Enter in the new-folder field creates the folder.
-	const folderNewName = getID('folder-new-name') as HTMLInputElement | null;
-	if (folderNewName) {
-		folderNewName.addEventListener('keydown', function (event) {
+	// Destination folder dialog — Enter in the name field saves the folder.
+	const folderNameInput = getID('folder-dialog-name') as HTMLInputElement | null;
+	if (folderNameInput) {
+		folderNameInput.addEventListener('keydown', function (event) {
 			if ((event as KeyboardEvent).key === 'Enter') {
 				event.preventDefault();
-				createDestinationFolderFromInput();
+				saveFolderFromDialog();
 			}
 		});
 	}
@@ -179,15 +178,14 @@ export function loadListenersIndex() {
 			if (listId) openListDialog(listId);
 		},
 		'open-folders-dialog': () => openFoldersDialog(),
+		'edit-dest-folder': (target) => openFoldersDialog(target.getAttribute('data-folder-id')),
+		'save-folder': () => saveFolderFromDialog(),
+		'delete-current-folder': () => deleteCurrentFolderFromDialog(),
 		'close-folders-dialog': () => closeFoldersDialog(),
 		'edit-person': (target) => openPersonDialog(target.getAttribute('data-person-id')),
 		'add-person': () => openPersonDialog(null),
-		'open-templates-manager': () => openTemplatesManager(),
 		'toggle-dest-folder': (target) =>
 			toggleDestinationFolder(target.getAttribute('data-folder-id')),
-		'create-folder': () => createDestinationFolderFromInput(),
-		'delete-folder': (target) =>
-			deleteDestinationFolderById(target.getAttribute('data-folder-id')),
 	});
 }
 

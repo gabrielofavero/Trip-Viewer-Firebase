@@ -328,6 +328,19 @@
 	font-weight: 700;
 }
 
+/* Hover lifts the pill toward light: the light-theme rgba(0, 0, 0, 0.03)
+   wash is invisible on the dark bar. The active pill keeps its theme tint
+   (just brighter) so hovering a mode-bound tab never loses its color. */
+[data-theme="dark"] .category-tab:hover {
+	background: rgba(255, 255, 255, 0.1);
+	color: var(--text-primary);
+}
+
+[data-theme="dark"] .category-tab.active:hover {
+	background: rgba(var(--theme-color-rgb), 0.34);
+	color: var(--text-primary);
+}
+
 /* ===== Search Bar ===== */
 [data-theme="dark"] .search-bar {
 	background: rgba(44, 44, 46, 0.5);
@@ -801,13 +814,18 @@
 	color: var(--text-muted);
 }
 
-[data-theme="dark"] .filter-sort:hover {
-	background: rgba(255, 255, 255, 0.06);
-}
-
 [data-theme="dark"] .filter-sort.active {
 	background: rgba(var(--theme-color-rgb), 0.2);
 	color: var(--theme-color);
+}
+
+[data-theme="dark"] .filter-sort:hover {
+	background: rgba(255, 255, 255, 0.1);
+	color: var(--text-primary);
+}
+
+[data-theme="dark"] .filter-sort.active:hover {
+	background: rgba(var(--theme-color-rgb), 0.34);
 }
 
 [data-theme="dark"] .drawer {
@@ -842,6 +860,13 @@
 [data-theme="dark"] .tabs {
 	background-color: #3b3b3b;
 	box-shadow: var(--shadow-card);
+}
+
+/* Glider tab labels (expenses + transportation bars): a soft light wash on
+   hover. The label sits above the theme-colored glider, so hovering the
+   active pill also brightens it slightly. */
+[data-theme="dark"] .tabs .tab:hover {
+	background: rgba(255, 255, 255, 0.08);
 }
 
 [data-theme="dark"] input[type="radio"]:checked + label > .notification {
@@ -906,14 +931,20 @@
 	border-color: var(--border-color);
 }
 
-[data-theme="dark"] .edit-tab:hover {
-	background: rgba(255, 255, 255, 0.06);
-}
-
 [data-theme="dark"] .edit-tab.active {
 	background: rgba(var(--theme-color-rgb), 0.2);
 	color: var(--theme-color);
 	font-weight: 700;
+}
+
+/* Same soft toward-light hover lift as the category tabs. */
+[data-theme="dark"] .edit-tab:hover {
+	background: rgba(255, 255, 255, 0.1);
+	color: var(--text-primary);
+}
+
+[data-theme="dark"] .edit-tab.active:hover {
+	background: rgba(var(--theme-color-rgb), 0.34);
 }
 
 /* Section Cards */

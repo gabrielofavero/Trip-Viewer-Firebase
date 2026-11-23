@@ -18,6 +18,7 @@ import {
 	displayFullMessage,
 	getContainersInput,
 	MESSAGE_PROPERTIES,
+	openToast,
 } from '../../../utils/messages.js';
 import { markStagedChanges } from '../../../ui/fields.js';
 import { DESTINATIONS } from '../../../data/state.js';
@@ -25,6 +26,7 @@ import {
 	filterTemplatesByDestinations,
 	getAccommodationTemplates,
 	getTripSkeletonTemplates,
+	loadTripTemplates,
 	type AccommodationTemplate,
 	type TripSkeletonTemplate,
 	type TripTemplate,
@@ -44,6 +46,24 @@ let PICKER_SELECTED_ID = '';
 let PICKER_SHOW_ALL = false;
 let PICKER_QUERY = '';
 
+/**
+ * Trip-skeleton template currently applied to the trip being edited. It is
+ * persisted in the trip document (`templateId`) so the editor can offer the
+ * manual "refresh" action on a later visit — editing a template in Settings
+ * never touches existing trips.
+ */
+let APPLIED_TRIP_TEMPLATE_ID = '';
+
+/** Seed the applied template read from the trip document. */
+export function setAppliedTripTemplateId(templateId: unknown): void {
+	APPLIED_TRIP_TEMPLATE_ID = String(templateId || '');
+}
+
+/** Applied template id — persisted by the save path (`templateId`). */
+export function getAppliedTripTemplateId(): string {
+	return APPLIED_TRIP_TEMPLATE_ID;
+}
+
 function escapeHTML(value: any): string {
 	return String(value ?? '')
 		.replace(/&/g, '&amp;')
@@ -57,17 +77,61 @@ function escapeHTML(value: any): string {
 
 /**
  * Show the "apply template" button in the basic-information tab and the
- * per-row accommodation template buttons only when templates exist.
+ * per-row accommodation template buttons only when templates exist. Also
+ * renders the applied trip template (name + refresh action) when the trip
+ * carries one.
  */
 export function refreshTemplateButtons(): void {
+	const tripTemplates = getTripSkeletonTemplates();
 	const box = getID('trip-template-box');
-	if (box) box.style.display = getTripSkeletonTemplates().length ? 'block' : 'none';
+	// The box is a flex row (applied template + apply button); clear the inline
+	// `display: none` instead of forcing `block`.
+	if (box) box.style.display = tripTemplates.length ? 'flex' : 'none';
+
+	// Applied template row — hidden when the template was removed from the
+	// account (nothing left to refresh).
+	const applied = tripTemplates.find((template) => template.id === APPLIED_TRIP_TEMPLATE_ID);
+	const appliedBox = getID('trip-template-applied');
+	if (appliedBox) appliedBox.style.display = applied ? 'flex' : 'none';
+	const appliedName = getID('trip-template-applied-name');
+	if (appliedName) appliedName.textContent = applied?.name || '';
 
 	const hasAccommodationTemplates = getAccommodationTemplates().length > 0;
 	for (const childId of getChildIDs('accommodations-box')) {
 		const button = getID(`accommodation-template-button-${getJ(childId)}`);
 		if (button) button.style.display = hasAccommodationTemplates ? '' : 'none';
 	}
+}
+
+// ── Manual refresh ──
+
+/**
+ * Re-apply the CURRENT values of the applied trip template to this trip.
+ * Templates edited in Settings do not update the trips that already use them —
+ * this is the manual refresh the user triggers from the editor.
+ */
+export async function refreshAppliedTripTemplate(): Promise<void> {
+	const templateId = APPLIED_TRIP_TEMPLATE_ID;
+	if (!templateId) return;
+
+	// Read the template list again so a template edited in another tab since
+	// this page loaded is picked up.
+	try {
+		await loadTripTemplates(true);
+	} catch (error) {
+		console.warn('Could not reload the templates:', error);
+	}
+
+	const template = getTripSkeletonTemplates().find((item) => item.id === templateId);
+	if (!template) {
+		openToast(translate('trip.template.refresh_missing'));
+		refreshTemplateButtons();
+		return;
+	}
+
+	await applyTripSkeleton(template);
+	refreshTemplateButtons();
+	openToast(translate('trip.template.refreshed'));
 }
 
 // ── Picker dialog ──
@@ -180,22 +244,17 @@ function getVisibleTemplates(): TripTemplate[] {
 	// With a destination linked, only that destination's templates are offered
 	// unless the user asks for all of them.
 	const byDestination =
-		PICKER_SHOW_ALL || !linked.length
-			? all
-			: filterTemplatesByDestinations(all, linked);
+		PICKER_SHOW_ALL || !linked.length ? all : filterTemplatesByDestinations(all, linked);
 
 	const query = PICKER_QUERY.trim().toLowerCase();
 	if (!query) return byDestination;
 
 	return byDestination.filter((template) => {
-		const accommodationName =
-			template.type === 'accommodation' ? template.accommodation.name : '';
+		const accommodationName = template.type === 'accommodation' ? template.accommodation.name : '';
 		const destinationTitles = template.destinationIds
 			.map((destinationId) => getDestinationTitle(destinationId))
 			.join(' ');
-		const haystack = [template.name, accommodationName, destinationTitles]
-			.join(' ')
-			.toLowerCase();
+		const haystack = [template.name, accommodationName, destinationTitles].join(' ').toLowerCase();
 		return haystack.includes(query);
 	});
 }
@@ -284,6 +343,10 @@ function applySelectedTemplate(): void {
 
 /** Copy the skeleton values into the customization fields + link the destination. */
 async function applyTripSkeleton(template: TripSkeletonTemplate): Promise<void> {
+	// Remember which template this trip is following, so the editor can offer
+	// the manual refresh on a later visit (persisted as `templateId`).
+	APPLIED_TRIP_TEMPLATE_ID = template.id;
+
 	// Theme / visibility first — the logo cards render per theme mode.
 	const themeEnabled = getID('theme-enabled') as HTMLInputElement | null;
 	const forced = !template.visibility.light || !template.visibility.dark;
@@ -338,6 +401,7 @@ async function applyTripSkeleton(template: TripSkeletonTemplate): Promise<void> 
 	// that only changes the linked destination would otherwise be reported as
 	// "no new data" on save.
 	markStagedChanges();
+	refreshTemplateButtons();
 }
 
 /** Copy the stay's reusable fields into row `index` (never its dates/booking data). */

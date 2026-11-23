@@ -246,6 +246,18 @@
 	margin-left: 0;
 }
 
+/* Overflow circle ("…"): shown when the stack has more people than the
+   visible limit. Neutral surface instead of the default-avatar silhouette. */
+.people-avatar-stack .people-avatar-overflow {
+	background-image: none;
+	background-color: var(--bg-tertiary);
+	color: var(--text-secondary);
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: 1px;
+}
+
 .itinerary-people-stack {
 	margin-right: 4px;
 	vertical-align: middle;

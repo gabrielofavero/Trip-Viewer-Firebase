@@ -29,25 +29,51 @@ function escapeStyleURL(value: any): string {
 }
 
 /**
- * Circular avatar for a person. People without a photo fall back to the
+ * The bundled default avatar is rendered by the `:not(.has-photo)` CSS (themed
+ * gradient + white person icon). Treating its URL as "no photo" keeps the same
+ * circle identical in the cards, the wheel and the highlights.
+ */
+function isDefaultAvatarPhoto(photo: string): boolean {
+	return !photo || /(^|\/)default-avatar\.svg(?:\?.*)?$/.test(photo);
+}
+
+/**
+ * Circular avatar for a person. People without a (real) photo fall back to the
  * default avatar image styled by `.people-avatar:not(.has-photo)`.
  */
 export function getPersonAvatarHTML(person: PersonLike, extraClass = 'people-avatar'): string {
 	const photo = escapeStyleURL(person?.photo);
-	const style = photo ? ` style="background-image: url('${photo}')"` : '';
+	const hasPhoto = !isDefaultAvatarPhoto(photo);
+	const style = hasPhoto ? ` style="background-image: url('${photo}')"` : '';
 
-	return `<span class="${extraClass}${photo ? ' has-photo' : ''}"${style}></span>`;
+	return `<span class="${extraClass}${hasPhoto ? ' has-photo' : ''}"${style}></span>`;
 }
 
 /**
  * Overlapping avatars for people that actually have a photo. Returns '' when
  * nobody qualifies, which keeps text-only layouts untouched.
+ *
+ * At most `maxVisible` circles are rendered; when the stack has more people
+ * than that, the remainder collapses into a single "…" circle so the row
+ * never blows up the layout.
  */
-export function getPeopleAvatarStackHTML(people: PersonLike[], extraClass = ''): string {
+export function getPeopleAvatarStackHTML(
+	people: PersonLike[],
+	extraClass = '',
+	maxVisible = 4,
+): string {
 	const withPhoto = (people || []).filter((person) => person?.photo);
 	if (withPhoto.length === 0) return '';
 
+	const limit = Math.max(1, Math.floor(maxVisible) || 1);
+	const visible = withPhoto.slice(0, limit);
+	const hiddenCount = withPhoto.length - visible.length;
+
 	const className = `people-avatar-stack${extraClass ? ` ${extraClass}` : ''}`;
-	const avatars = withPhoto.map((person) => getPersonAvatarHTML(person)).join('');
-	return `<span class="${className}">${avatars}</span>`;
+	const avatars = visible.map((person) => getPersonAvatarHTML(person)).join('');
+	const more =
+		hiddenCount > 0
+			? `<span class="people-avatar people-avatar-overflow" aria-hidden="true">…</span>`
+			: '';
+	return `<span class="${className}">${avatars}${more}</span>`;
 }

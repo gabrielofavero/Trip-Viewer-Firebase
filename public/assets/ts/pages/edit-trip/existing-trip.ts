@@ -58,6 +58,7 @@ import {
 } from '../../utils/dates.js';
 import { validateTravelersObject } from '../../models/traveler.model.js';
 import { applyPeopleToTravelers } from '../../data/services/people.service.js';
+import { setAppliedTripTemplateId } from './categories/trip-template.js';
 import { haveErrorFromGetRequest, get } from '../../data/firebase/database.js';
 import { ERROR_FROM_GET_REQUEST } from '../../data/state.js';
 import { getHTMLpage, setPageName } from '../../app/main.js';
@@ -83,6 +84,9 @@ export async function loadTripData() {
 function loadBasicTripData() {
 	getID('title').value = getState().title;
 	getID('currency').value = getState().currency;
+
+	// Applied trip template (if any) — powers the manual "refresh" action.
+	setAppliedTripTemplateId(getState().templateId);
 
 	const start = convertFromDateObject(getState().start);
 	const end = convertFromDateObject(getState().end);

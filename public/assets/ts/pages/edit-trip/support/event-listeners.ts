@@ -1,8 +1,4 @@
-import {
-	getCategoryLegJs,
-	getID,
-	removeChildWithValidation,
-} from '../../../utils/dom.js';
+import { getCategoryLegJs, getID, removeChildWithValidation } from '../../../utils/dom.js';
 import { hasUnsavedChanges, validateImageLink, validateLink } from '../../../ui/fields.js';
 import { hideContent, searchDestinationsListenerAction } from '../../../theme/visibility.js';
 import { translate } from '../../../i18n/translation.js';
@@ -30,6 +26,7 @@ import {
 import {
 	openAccommodationTemplatePicker,
 	openTripTemplatePicker,
+	refreshAppliedTripTemplate,
 	refreshTemplateButtons,
 } from '../categories/trip-template.js';
 import {
@@ -81,6 +78,7 @@ export function loadEventListeners() {
 			if (!isNaN(index)) openAccommodationImport(index);
 		},
 		'open-trip-template': () => openTripTemplatePicker(),
+		'refresh-trip-template': () => void refreshAppliedTripTemplate(),
 		'open-accommodation-template': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) openAccommodationTemplatePicker(index);
@@ -180,9 +178,18 @@ export function loadEventListeners() {
 	);
 
 	// Image Validation in Customization module
-	getID('link-background').addEventListener('change', () => void validateImageLink('link-background'));
-	getID('link-logo-light').addEventListener('change', () => void validateImageLink('link-logo-light'));
-	getID('link-logo-dark').addEventListener('change', () => void validateImageLink('link-logo-dark'));
+	getID('link-background').addEventListener(
+		'change',
+		() => void validateImageLink('link-background'),
+	);
+	getID('link-logo-light').addEventListener(
+		'change',
+		() => void validateImageLink('link-logo-light'),
+	);
+	getID('link-logo-dark').addEventListener(
+		'change',
+		() => void validateImageLink('link-logo-dark'),
+	);
 
 	// Link Validation in Customization module
 	getID('link-attachments').addEventListener('change', () => validateLink('link-attachments'));

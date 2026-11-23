@@ -29,6 +29,10 @@ import {
 	haveErrorFromGetRequest,
 	COLLECTION,
 } from '../../data/firebase/database.js';
+import {
+	applyPeopleToTravelers,
+	loadPeople,
+} from '../../data/services/people.service.js';
 import { getStaticMeta, isStaticMode } from '../../static-mode/static-mode.js';
 import {
 	isOnDarkMode,
@@ -219,6 +223,19 @@ export async function loadViewPage() {
 				viewMode: normalizeTransportViewMode(rawViewMode),
 				data: rawData,
 			};
+		}
+
+		// Resolve traveler names/photos from the account's people registry so a
+		// photo/name edited in Settings is reflected here without re-saving the
+		// trip. Shared viewers and static exports fall back to the trip's
+		// denormalized copy (the owner's user document is not readable for them).
+		if (!isStaticMode() && Array.isArray(firestoreData.travelers)) {
+			try {
+				await loadPeople();
+			} catch (error) {
+				console.warn('Could not load the people registry:', error);
+			}
+			firestoreData.travelers = applyPeopleToTravelers(firestoreData.travelers);
 		}
 
 		if (firestoreData.pin === 'all-data') {

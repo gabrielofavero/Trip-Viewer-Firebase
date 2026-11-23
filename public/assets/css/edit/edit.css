@@ -2219,6 +2219,70 @@
 	min-height: 40px;
 }
 
+/*--------------------------------------------------------------
+# Applied Trip Template (basic information)
+# The trip remembers which template it follows. Editing that template in
+# Settings does NOT change this trip — the user re-applies the current
+# values manually with the refresh action.
+--------------------------------------------------------------*/
+.trip-template-actions {
+	align-items: center;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+.trip-template-applied {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-right: auto;
+	min-width: 0;
+	padding: 5px 5px 5px 12px;
+	border: 1px solid var(--border-color);
+	border-radius: 999px;
+	background: var(--bg-secondary);
+	color: var(--text-secondary);
+	font-size: 12px;
+}
+.trip-template-applied > .iconify {
+	flex-shrink: 0;
+	font-size: 15px;
+	color: var(--theme-color);
+}
+.trip-template-applied-label {
+	flex-shrink: 0;
+	color: var(--text-muted);
+}
+.trip-template-applied-name {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: var(--text-primary);
+	font-weight: 700;
+}
+.trip-template-refresh {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	flex-shrink: 0;
+	padding: 5px 11px;
+	border: none;
+	border-radius: 999px;
+	background: rgba(var(--theme-color-rgb), 0.14);
+	color: var(--theme-color);
+	font-family: inherit;
+	font-size: 12px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background var(--transition-fast);
+}
+.trip-template-refresh:hover {
+	background: rgba(var(--theme-color-rgb), 0.26);
+}
+.trip-template-refresh .iconify {
+	font-size: 15px;
+}
+
 /*
  * Action rows that sit directly inside the accordion collapse (outside the
  * padded .accordion-body) — e.g. the destination entry move/remove buttons and
@@ -2865,12 +2929,16 @@ details summary::-webkit-details-marker {
 }
 
 [data-theme="dark"] .edit-tab:hover {
-	background: rgba(255, 255, 255, 0.06);
+	background: rgba(255, 255, 255, 0.1);
 }
 
 [data-theme="dark"] .edit-tab.active {
 	background: var(--bg-tertiary);
 	color: var(--theme-color);
+}
+
+[data-theme="dark"] .edit-tab.active:hover {
+	background: rgba(255, 255, 255, 0.16);
 }
 
 /* Section Cards */
@@ -3144,7 +3212,11 @@ details summary::-webkit-details-marker {
 }
 
 [data-theme="dark"] .modern-radio-group input[type="radio"] + label:hover {
-	background: rgba(255, 255, 255, 0.05);
+	background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .modern-radio-group input[type="radio"]:checked + label:hover {
+	background: rgba(var(--theme-color-rgb), 0.26);
 }
 
 /* Modern radio group in a fieldset — stack vertically on mobile */

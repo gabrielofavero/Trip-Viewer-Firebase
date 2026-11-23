@@ -35,6 +35,7 @@
 4. **Apply button lives in the “Basic information” tab** of the trip editor.
 5. **Accommodation template copies:** name, address, check-in/out **times**, images and description. **Not** copied: check-in/out days, reservation code/link, payment status, breakfast (they change per booking).
 6. **Multi-destination (follow-up, 2026-11-22):** picking the base trip auto-selects every destination linked to it, and the creator accepts more than one destination (searchable checkbox list). The picker matches a template when **any** of its destinations is linked to the trip and links all of them on apply.
+7. **Inline manager + edit + manual refresh (follow-up, 2026-11-22):** the Settings summary strip and the fullscreen manager dialog were replaced by the manager rendered **directly in the Settings tab**, with one fixed-height scrollable panel per type (the panels never grow with the template count). Rows gained an **edit** action next to delete; both persist immediately (delete asks for confirmation). Editing a template rebuilds its values from the selected base trip/stay and **never touches trips that already use it**. To update an existing trip, the trip editor shows the applied template ("Applied template: <name>") plus a **Refresh** button; the trip stores the applied template id in the new top-level `templateId` field.
 
 ## Data model
 
@@ -73,6 +74,19 @@ interface AccommodationTemplate extends TripTemplateBase {
 ```
 
 No summary-mirror work is required (templates are not indexed anywhere).
+
+Trips that applied a trip-skeleton template store the template id in the trip
+document:
+
+```ts
+interface Trip {
+	// …existing fields…
+	templateId?: string; // applied TripSkeletonTemplate id ('' when none)
+}
+```
+
+`templateId` is display-only for the editor refresh flow — it is not mirrored in
+the trip summary and does not affect rendering.
 
 ## End-to-end flow
 

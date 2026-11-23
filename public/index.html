@@ -144,7 +144,7 @@
             <div class="tab-header-actions">
               <button id="folders-btn" class="btn btn-secondary-theme btn-sm" data-action="open-folders-dialog">
                 <i class="iconify" data-icon="material-symbols:create-new-folder"></i>
-                <span data-translate="index.folders.edit"></span>
+                <span data-translate="index.folders.add"></span>
               </button>
               <button id="new-dest-btn" class="btn btn-primary-theme btn-sm">
                 <i class="iconify" data-icon="gridicons:add-outline"></i>
@@ -203,13 +203,9 @@
             <div class="settings-section">
               <h3 class="settings-section-title" data-translate="account.templates.title"></h3>
               <p class="settings-section-description" data-translate="account.templates.description"></p>
-              <div class="settings-templates-preview" id="settings-templates-preview"></div>
-              <div class="settings-templates-empty" id="settings-templates-empty"
-                data-translate="account.templates.empty"></div>
-              <button class="btn btn-secondary-theme settings-action-btn" data-action="open-templates-manager">
-                <i class="iconify" data-icon="material-symbols:content-copy"></i>
-                <span data-translate="account.templates.manage"></span>
-              </button>
+              <div class="templates-manager" id="templates-manager">
+                <!-- Trip + accommodation template panels rendered by JS -->
+              </div>
             </div>
 
             <!-- Advanced Settings -->
@@ -271,7 +267,10 @@
       <!-- Trip Detail Dialog -->
       <div id="trip-dialog" class="dialog-overlay" style="display:none">
         <div class="dialog-card">
-          <div class="dialog-image" id="trip-dialog-image"></div>
+          <div class="dialog-image-wrap">
+            <div class="dialog-image" id="trip-dialog-image"></div>
+            <div class="dialog-people" id="trip-dialog-people" style="display:none"></div>
+          </div>
           <a class="dialog-close" data-action="close-trip-dialog">
             <i class="iconify" data-icon="material-symbols:close"></i>
           </a>
@@ -381,7 +380,7 @@
         </div>
       </div>
 
-      <!-- Destination Folders Dialog -->
+      <!-- Destination Folder Dialog (one folder: create or edit) -->
       <div id="folders-dialog" class="dialog-overlay" style="display:none">
         <div class="dialog-card dialog-card-folders">
           <a class="dialog-close" data-action="close-folders-dialog">
@@ -389,23 +388,37 @@
           </a>
           <div class="dialog-body">
             <div class="dialog-header">
-              <h2 class="dialog-title" data-translate="index.folders.title"></h2>
+              <h2 class="dialog-title" id="folder-dialog-title"></h2>
             </div>
             <p class="folders-dialog-hint" data-translate="index.folders.hint"></p>
-            <div class="folders-dialog-list" id="folders-dialog-list">
-              <!-- Folder editors rendered by JS -->
+            <div class="folders-dialog-field">
+              <label class="folders-dialog-label" for="folder-dialog-name"
+                data-translate="index.folders.name_label"></label>
+              <input type="text" id="folder-dialog-name" class="folders-dialog-input" maxlength="60"
+                autocomplete="off" data-translate="index.folders.name_placeholder">
             </div>
-            <div class="folders-dialog-new">
-              <input type="text" id="folder-new-name" class="folders-dialog-input" maxlength="60"
-                data-translate="index.folders.name_placeholder">
-              <button class="btn btn-primary-theme btn-sm" id="folder-create-btn" data-action="create-folder">
-                <i class="iconify" data-icon="gridicons:add-outline"></i>
-                <span data-translate="index.folders.create"></span>
+            <p class="folders-dialog-error" id="folder-dialog-error" style="display:none"></p>
+            <div class="folders-dialog-dests">
+              <div class="folders-dialog-dests-header">
+                <span class="folders-dialog-label" data-translate="index.folders.destinations_label"></span>
+                <span class="folder-editor-count" id="folder-dialog-count"></span>
+              </div>
+              <div class="folder-editor-items" id="folder-dialog-items">
+                <!-- Destinations rendered by JS -->
+              </div>
+              <p class="folders-dialog-empty" id="folder-dialog-empty" style="display:none"></p>
+            </div>
+            <div class="dialog-actions folders-dialog-actions">
+              <button class="btn btn-danger dialog-action-btn" id="folder-dialog-delete"
+                data-action="delete-current-folder" style="display:none">
+                <i class="iconify" data-icon="material-symbols:delete-outline"></i>
+                <span data-translate="index.folders.delete"></span>
               </button>
-            </div>
-            <div class="dialog-actions">
               <button class="btn btn-outline-theme dialog-action-btn" data-action="close-folders-dialog">
-                <span data-translate="index.folders.done"></span>
+                <span data-translate="labels.cancel"></span>
+              </button>
+              <button class="btn btn-primary-theme dialog-action-btn" data-action="save-folder">
+                <span data-translate="labels.save"></span>
               </button>
             </div>
           </div>

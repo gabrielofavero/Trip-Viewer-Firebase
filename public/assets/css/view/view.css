@@ -533,38 +533,61 @@ section {
 	font-size: 14px;
 }
 
-/* Highlights — the floating badge holds the travelers' photos (equal size,
-   side by side); names show as a tooltip above the card. */
+/* Highlights — the people box shows the travelers' photo circles stacked
+   exactly like the home cards (no colored circular container clipping them);
+   names show as a tooltip above the card. */
 .facts .count-box.has-people {
 	cursor: pointer;
 }
 
-.facts .count-box i.keypoint-people-badge {
-	gap: 2px;
-	overflow: hidden;
+.facts .count-box .keypoint-people-badge {
+	position: absolute;
+	top: -25px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	height: auto;
+	background: none;
+	border-radius: 0;
+	box-shadow: none;
+	overflow: visible;
 	transition: transform var(--transition-normal);
 }
 
-.facts .count-box.has-people:hover i.keypoint-people-badge {
+.facts .count-box.has-people:hover .keypoint-people-badge {
 	transform: translateX(-50%) scale(1.06);
 }
 
-.facts .count-box .keypoint-people-badge .people-avatar {
-	width: 20px;
-	height: 20px;
-	border: 0;
-	box-shadow: none;
+.facts .count-box .keypoint-people-badge .people-avatar-stack {
+	display: inline-flex;
+	align-items: center;
 }
 
-.facts .count-box .keypoint-people-badge .people-avatar:only-child {
-	width: 36px;
-	height: 36px;
+/* Same size as the blue keypoint icon (48px), overlapping like the stack. */
+.facts .count-box .keypoint-people-badge .people-avatar {
+	--people-avatar-size: 48px;
+	display: inline-flex;
+	margin-left: -14px;
+	border-width: 3px;
+}
+
+.facts .count-box .keypoint-people-badge .people-avatar:first-child {
+	margin-left: 0;
+}
+
+.facts .count-box .keypoint-people-badge .people-avatar-overflow {
+	color: var(--text-secondary);
+	font-size: 18px;
+	letter-spacing: 1px;
 }
 
 .facts .count-box .keypoint-people-names {
 	position: absolute;
 	left: 50%;
-	bottom: calc(100% + 28px);
+	bottom: calc(100% + 34px);
 	transform: translateX(-50%);
 	max-width: min(200px, 50vw);
 	width: max-content;
@@ -2702,7 +2725,9 @@ input[type="radio"] {
 	border-radius: 99px;
 	cursor: pointer;
 	white-space: nowrap;
-	transition: color 0.15s ease-in;
+	transition:
+		color 0.15s ease-in,
+		background-color 0.15s ease-in;
 }
 
 /* Active tab label (main tabs, #tab-transportation and the expenses currency

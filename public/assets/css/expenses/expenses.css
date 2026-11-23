@@ -81,7 +81,9 @@ input[type="radio"] {
 	border-radius: 99px;
 	cursor: pointer;
 	white-space: nowrap;
-	transition: color 0.15s ease-in;
+	transition:
+		color 0.15s ease-in,
+		background-color 0.15s ease-in;
 }
 
 input[type="radio"]:checked + label {

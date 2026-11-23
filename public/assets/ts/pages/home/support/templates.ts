@@ -5,6 +5,12 @@
 // existing trip (accommodation), always associated with one or more
 // destinations. The trip editor only applies them — it never registers new
 // ones.
+//
+// The Settings tab renders this manager INLINE: one fixed-height panel per
+// template type, each with its own scroll. Rows can be edited (pencil) or
+// removed (trash); both actions persist immediately. Editing a template never
+// touches the trips that already exist — those are refreshed by hand from the
+// trip editor.
 
 import { cloneObject, getID } from '../../../utils/dom.js';
 import { translate } from '../../../i18n/translation.js';
@@ -12,6 +18,7 @@ import {
 	closeMessage,
 	displayError,
 	displayFullMessage,
+	displayPrompt,
 	getContainersInput,
 	MESSAGE_PROPERTIES,
 	openToast,
@@ -25,10 +32,9 @@ import {
 } from '../../../data/services/destination-folders.service.js';
 import {
 	createTripTemplateId,
-	getAccommodationTemplates,
 	getCachedTripTemplates,
-	getTripSkeletonTemplates,
 	saveTripTemplates,
+	seedTripTemplates,
 	type AccommodationTemplate,
 	type TripSkeletonTemplate,
 	type TripTemplate,
@@ -50,13 +56,13 @@ interface DestinationOption {
 	image: string;
 }
 
-/** Working copy edited by the manager — persisted only on Confirm. */
-let DRAFT_TEMPLATES: TripTemplate[] = [];
 let DESTINATIONS: DestinationOption[] = [];
 let SOURCE_TRIPS: Record<string, any>[] = [];
+let MANAGER_BOUND = false;
 
-/** Create flow state (kept across the creator sub-dialog). */
+/** Create / edit flow state (kept across the creator sub-dialog). */
 let CREATOR_TYPE: 'trip' | 'accommodation' = 'trip';
+let CREATOR_EDIT_ID = '';
 let CREATOR_ACCOMMODATIONS: Record<string, any>[] = [];
 let CREATOR_TRIP_ID = '';
 let CREATOR_DESTINATION_IDS = new Set<string>();
@@ -71,89 +77,38 @@ interface ActiveTemplateCombo {
 let ACTIVE_TEMPLATE_COMBO: ActiveTemplateCombo | null = null;
 let TEMPLATE_COMBO_LISTENERS_BOUND = false;
 
-// ── Settings tab preview ──
+// ── Inline manager (Settings tab) ──
 
-/** Refresh the read-only preview strip in the Settings tab. */
+/** Render the manager inline in the Settings tab. */
 export function loadSettingsTemplates(): void {
-	const preview = getID('settings-templates-preview');
-	const empty = getID('settings-templates-empty');
-	if (!preview) return;
-
-	const templates = getCachedTripTemplates();
-	const tripCount = getTripSkeletonTemplates().length;
-	const accommodationCount = getAccommodationTemplates().length;
-
-	preview.innerHTML = templates.length
-		? `<span class="template-chip">
-				<i class="iconify" data-icon="material-symbols:image-outline"></i>
-				${translate('account.templates.trip_count', { count: tripCount })}
-			</span>
-			<span class="template-chip">
-				<i class="iconify" data-icon="material-symbols:hotel-outline"></i>
-				${translate('account.templates.accommodation_count', { count: accommodationCount })}
-			</span>`
-		: '';
-
-	if (empty) empty.style.display = templates.length ? 'none' : 'block';
-}
-
-// ── Manager dialog ──
-
-/** Open the fullscreen templates manager dialog. */
-export async function openTemplatesManager(): Promise<void> {
-	try {
-		DESTINATIONS = await loadDestinationOptions();
-		SOURCE_TRIPS = await loadSourceTrips();
-		DRAFT_TEMPLATES = cloneObject(getCachedTripTemplates());
-		renderTemplatesManager();
-	} catch (error) {
-		displayError(error);
-	}
+	renderTemplatesManager();
 }
 
 function renderTemplatesManager(): void {
 	closeActiveTemplateCombo();
 
-	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = translate('account.templates.manager_title');
-	properties.containers = getContainersInput();
-	properties.fullscreen = true;
-	properties.content = getTemplatesManagerContent();
-	properties.buttons = [
-		{ type: 'cancel' },
-		{ type: 'confirm', action: () => saveTemplatesManager() },
-	];
+	const container = getID('templates-manager');
+	if (!container) return;
 
-	displayFullMessage(properties);
+	const templates = getCachedTripTemplates();
+	const tripTemplates = templates.filter((template) => template.type === 'trip');
+	const accommodationTemplates = templates.filter((template) => template.type === 'accommodation');
+
+	container.innerHTML = `
+		<div class="templates-manager-grid">
+			${getTemplatePanelHTML('trip', tripTemplates)}
+			${getTemplatePanelHTML('accommodation', accommodationTemplates)}
+		</div>
+
+		<p class="templates-manager-hint">
+			<i class="iconify" data-icon="material-symbols:info"></i>
+			<span>${escapeHTML(translate('account.templates.hint'))}</span>
+		</p>`;
+
 	bindTemplatesManagerListeners();
 }
 
-function getTemplatesManagerContent(): string {
-	const tripTemplates = DRAFT_TEMPLATES.filter((t) => t.type === 'trip');
-	const accommodationTemplates = DRAFT_TEMPLATES.filter((t) => t.type === 'accommodation');
-
-	return `
-		<div class="templates-manager" id="templates-manager">
-			<div class="templates-manager-grid">
-				${getTemplatePanelHTML('trip', tripTemplates)}
-				${getTemplatePanelHTML('accommodation', accommodationTemplates)}
-			</div>
-
-			<p class="templates-manager-hint">
-				<i class="iconify" data-icon="material-symbols:info"></i>
-				<span>${escapeHTML(translate('account.templates.hint'))}</span>
-			</p>
-
-			<div class="nice-form-group templates-manager-error" id="templates-manager-error" style="display: none">
-				<span class="red" id="templates-manager-error-text"></span>
-			</div>
-		</div>`;
-}
-
-function getTemplatePanelHTML(
-	type: 'trip' | 'accommodation',
-	templates: TripTemplate[],
-): string {
+function getTemplatePanelHTML(type: 'trip' | 'accommodation', templates: TripTemplate[]): string {
 	const isTrip = type === 'trip';
 	const icon = isTrip ? 'material-symbols:image-outline' : 'material-symbols:hotel-outline';
 	const title = translate(
@@ -161,6 +116,9 @@ function getTemplatePanelHTML(
 	);
 	const addLabel = translate(
 		isTrip ? 'account.templates.add_trip' : 'account.templates.add_accommodation',
+	);
+	const empty = translate(
+		isTrip ? 'account.templates.empty_trip' : 'account.templates.empty_accommodation',
 	);
 
 	return `
@@ -170,12 +128,16 @@ function getTemplatePanelHTML(
 					<i class="iconify" data-icon="${icon}"></i>
 				</span>
 				<h4 class="templates-panel-title">${escapeHTML(title)}</h4>
-				${templates.length ? `<span class="templates-panel-count">${templates.length}</span>` : ''}
+				<span class="templates-panel-count">${templates.length}</span>
 			</header>
-			<div class="templates-panel-list" id="templates-${type}-list">
-				${templates.map((template) => getTemplateRowHTML(template)).join('')}
+			<div class="templates-panel-scroll" id="templates-${type}-list">
+				${
+					templates.length
+						? templates.map((template) => getTemplateRowHTML(template)).join('')
+						: `<p class="templates-panel-empty">${escapeHTML(empty)}</p>`
+				}
 			</div>
-			<button type="button" class="templates-add" id="templates-${type}-add">
+			<button type="button" class="templates-add" data-template-add="${type}">
 				<i class="iconify" data-icon="material-symbols:add"></i>
 				<span>${escapeHTML(addLabel)}</span>
 			</button>
@@ -192,105 +154,170 @@ function getTemplateRowHTML(template: TripTemplate): string {
 			? [template.accommodation.name, destinationTitles].filter(Boolean).join(' · ')
 			: destinationTitles;
 
+	const image =
+		template.type === 'accommodation'
+			? template.accommodation.images?.[0]?.link || ''
+			: template.image.active
+				? template.image.background || ''
+				: '';
+	const fallbackIcon =
+		template.type === 'accommodation'
+			? 'material-symbols:hotel-outline'
+			: 'material-symbols:image-outline';
+
+	const thumb = image
+		? `<span class="templates-card-thumb" style="background-image: url('${escapeHTML(image)}')"></span>`
+		: `<span class="templates-card-thumb"><i class="iconify" data-icon="${fallbackIcon}"></i></span>`;
+
 	return `
 		<div class="templates-card" data-template-id="${escapeHTML(template.id)}">
-			<span class="templates-card-icon">
-				<i class="iconify" data-icon="${template.type === 'accommodation' ? 'material-symbols:hotel-outline' : 'material-symbols:image-outline'}"></i>
-			</span>
+			${thumb}
 			<div class="templates-card-text">
 				<span class="templates-card-name">${escapeHTML(template.name)}</span>
 				${subtitle ? `<span class="templates-card-meta">${escapeHTML(subtitle)}</span>` : ''}
 			</div>
-			<button type="button" class="people-editor-remove templates-manager-remove"
-				aria-label="${escapeHTML(translate('labels.delete'))}" title="${escapeHTML(translate('labels.delete'))}">
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-					<path fill="currentColor" fill-rule="evenodd"
-						d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-						clip-rule="evenodd"></path>
-				</svg>
-			</button>
+			<div class="templates-card-actions">
+				<button type="button" class="templates-card-action" data-template-action="edit"
+					aria-label="${escapeHTML(translate('account.templates.edit'))}"
+					title="${escapeHTML(translate('account.templates.edit'))}">
+					<i class="iconify" data-icon="material-symbols:edit-outline"></i>
+				</button>
+				<button type="button" class="templates-card-action templates-card-action-delete"
+					data-template-action="delete"
+					aria-label="${escapeHTML(translate('labels.delete'))}"
+					title="${escapeHTML(translate('labels.delete'))}">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+						<path fill="currentColor" fill-rule="evenodd"
+							d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
+							clip-rule="evenodd"></path>
+					</svg>
+				</button>
+			</div>
 		</div>`;
 }
 
+/** Delegated listeners — the container survives innerHTML re-renders. */
 function bindTemplatesManagerListeners(): void {
-	getID('templates-trip-add')?.addEventListener('click', () => openTemplateCreator('trip'));
-	getID('templates-accommodation-add')?.addEventListener('click', () =>
-		openTemplateCreator('accommodation'),
-	);
+	if (MANAGER_BOUND) return;
+	const container = getID('templates-manager');
+	if (!container) return;
+	MANAGER_BOUND = true;
 
-	for (const list of [getID('templates-trip-list'), getID('templates-accommodation-list')]) {
-		list?.addEventListener('click', (event) => {
-			const button = (event.target as Element)?.closest<HTMLElement>('.templates-manager-remove');
-			if (!button) return;
-			const row = button.closest<HTMLElement>('.templates-card');
-			const id = row?.dataset.templateId;
-			if (!id) return;
-			DRAFT_TEMPLATES = DRAFT_TEMPLATES.filter((template) => template.id !== id);
-			renderTemplatesManager();
-		});
-	}
-}
+	container.addEventListener('click', (event) => {
+		const target = event.target as Element;
 
-/** Persist the working copy and refresh the Settings preview. */
-export async function saveTemplatesManager(): Promise<void> {
-	try {
-		const success = await saveTripTemplates(DRAFT_TEMPLATES);
-		if (!success) {
-			showManagerError(translate('account.templates.error_save'));
+		const addButton = target.closest<HTMLElement>('[data-template-add]');
+		if (addButton?.dataset.templateAdd) {
+			void openTemplateCreator(addButton.dataset.templateAdd as 'trip' | 'accommodation');
 			return;
 		}
 
-		closeMessage();
-		loadSettingsTemplates();
-		openToast(translate('account.templates.saved'));
+		const actionButton = target.closest<HTMLElement>('[data-template-action]');
+		const id = target.closest<HTMLElement>('.templates-card')?.dataset.templateId;
+		if (!actionButton || !id) return;
+
+		const template = getCachedTripTemplates().find((item) => item.id === id);
+		if (!template) return;
+
+		if (actionButton.dataset.templateAction === 'edit') {
+			void openTemplateCreator(template.type, template.id);
+		} else if (actionButton.dataset.templateAction === 'delete') {
+			confirmRemoveTemplate(template);
+		}
+	});
+}
+
+/** Ask for confirmation before removing a template (persists immediately). */
+function confirmRemoveTemplate(template: TripTemplate): void {
+	displayPrompt({
+		title: translate('account.templates.remove_title'),
+		content: translate('account.templates.remove_message', { name: escapeHTML(template.name) }),
+		critical: true,
+		yesAction: () => void removeTemplate(template.id),
+	});
+}
+
+async function removeTemplate(templateId: string): Promise<void> {
+	const previous = getCachedTripTemplates();
+	let success = false;
+	try {
+		success = await saveTripTemplates(previous.filter((template) => template.id !== templateId));
 	} catch (error) {
-		displayError(error);
+		console.warn('Could not remove the template:', error);
 	}
+
+	if (!success) {
+		seedTripTemplates(previous);
+		openToast(translate('account.templates.error_save'));
+		return;
+	}
+
+	closeMessage();
+	renderTemplatesManager();
+	openToast(translate('account.templates.removed'));
 }
 
-function showManagerError(message: string): void {
-	const container = getID('templates-manager-error');
-	const text = getID('templates-manager-error-text');
-	if (text) text.textContent = message;
-	if (container) container.style.display = 'block';
-}
+// ── Create / edit flow ──
 
-// ── Create flow ──
-
-function openTemplateCreator(type: 'trip' | 'accommodation'): void {
+/**
+ * Open the creator dialog. With `templateId` the dialog edits that template
+ * in place (its values are rebuilt from the selected base trip / stay).
+ */
+async function openTemplateCreator(type: 'trip' | 'accommodation', templateId = ''): Promise<void> {
 	closeActiveTemplateCombo();
 
+	const editing = templateId
+		? getCachedTripTemplates().find((item) => item.id === templateId && item.type === type)
+		: undefined;
+
 	CREATOR_TYPE = type;
+	CREATOR_EDIT_ID = editing?.id || '';
 	CREATOR_ACCOMMODATIONS = [];
-	CREATOR_TRIP_ID = '';
-	CREATOR_DESTINATION_IDS = new Set();
+	CREATOR_TRIP_ID = editing?.sourceTripId || '';
+	CREATOR_DESTINATION_IDS = new Set(editing?.destinationIds || []);
 	CREATOR_DESTINATION_QUERY = '';
 
+	try {
+		DESTINATIONS = await loadDestinationOptions();
+		SOURCE_TRIPS = await loadSourceTrips();
+	} catch (error) {
+		displayError(error);
+		return;
+	}
+
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title =
-		type === 'accommodation'
-			? translate('account.templates.add_accommodation')
-			: translate('account.templates.add_trip');
+	properties.title = translate(
+		editing
+			? type === 'accommodation'
+				? 'account.templates.edit_accommodation'
+				: 'account.templates.edit_trip'
+			: type === 'accommodation'
+				? 'account.templates.add_accommodation'
+				: 'account.templates.add_trip',
+	);
 	properties.containers = getContainersInput();
 	properties.fullscreen = true;
-	// Back arrow returns to the manager (discarding the creator).
-	properties.icons = [{ type: 'goBack', action: () => renderTemplatesManager() }];
-	properties.content = getTemplateCreatorContent(type);
+	properties.content = getTemplateCreatorContent(type, editing);
 	properties.buttons = [
 		{ type: 'cancel' },
 		{ type: 'confirm', action: () => applyTemplateCreator() },
 	];
 
 	displayFullMessage(properties);
-	// The goBack icon is rendered hidden by default (shared #back-icon) — show
-	// it so the user can return to the manager without losing the draft.
-	const back = getID('back-icon');
-	if (back) back.style.visibility = 'visible';
 	bindTemplateCreatorListeners(type);
 	refreshCreatorDestinations();
+
+	if (type === 'accommodation' && CREATOR_TRIP_ID) {
+		void loadCreatorAccommodations(CREATOR_TRIP_ID);
+	}
 }
 
-function getTemplateCreatorContent(type: 'trip' | 'accommodation'): string {
+function getTemplateCreatorContent(type: 'trip' | 'accommodation', editing?: TripTemplate): string {
+	const name = editing?.name || '';
+	const tripTitle = editing
+		? String(SOURCE_TRIPS.find((trip) => trip.id === editing.sourceTripId)?.title || '')
+		: '';
+
 	const accommodationGroup =
 		type === 'accommodation'
 			? `<div class="templates-creator-group" id="templates-creator-accommodation-group">
@@ -317,12 +344,21 @@ function getTemplateCreatorContent(type: 'trip' | 'accommodation'): string {
 				translate('account.templates.no_destinations'),
 			)}</p>`;
 
+	// Editing keeps the current values when no base trip is picked, so that
+	// field is optional there (the base may even have been deleted).
+	const tripOptionalNote = editing
+		? `<p class="templates-creator-note">${escapeHTML(
+				translate('account.templates.edit_keep_values'),
+			)}</p>`
+		: '';
+
 	return `
 		<div class="templates-creator" id="templates-creator">
 			<div class="templates-creator-group">
 				<label class="templates-creator-label">${escapeHTML(translate('account.templates.name'))}</label>
 				<input type="text" id="templates-creator-name" class="templates-creator-input" maxlength="60"
-					placeholder="${escapeHTML(translate('account.templates.name_placeholder'))}" />
+					placeholder="${escapeHTML(translate('account.templates.name_placeholder'))}"
+					value="${escapeHTML(name)}" />
 			</div>
 
 			<div class="templates-creator-group">
@@ -333,9 +369,11 @@ function getTemplateCreatorContent(type: 'trip' | 'accommodation'): string {
 						placeholder="${escapeHTML(translate('account.templates.select_trip'))}"
 						autocomplete="off" role="combobox" aria-expanded="false"
 						aria-controls="templates-trip-options" aria-autocomplete="list"
+						value="${escapeHTML(tripTitle)}"
 						${SOURCE_TRIPS.length ? '' : 'disabled'} />
 					<div class="templates-combo-menu" id="templates-trip-options" role="listbox" hidden></div>
 				</div>
+				${tripOptionalNote}
 				${noTripsNote}
 			</div>
 
@@ -444,9 +482,7 @@ function bindTemplateCreatorListeners(type: 'trip' | 'accommodation'): void {
 	bindComboCloseOnBlur(destinationCombo, destinationInput, destinationMenu);
 
 	destinationChips?.addEventListener('click', (event) => {
-		const button = (event.target as Element)?.closest<HTMLElement>(
-			'[data-remove-destination-id]',
-		);
+		const button = (event.target as Element)?.closest<HTMLElement>('[data-remove-destination-id]');
 		if (!button?.dataset.removeDestinationId) return;
 		CREATOR_DESTINATION_IDS.delete(button.dataset.removeDestinationId);
 		refreshCreatorDestinations();
@@ -463,10 +499,6 @@ function bindTemplateCreatorListeners(type: 'trip' | 'accommodation'): void {
 				nameInput.value = accommodation.name;
 			}
 		});
-	}
-
-	if (type === 'accommodation' && CREATOR_TRIP_ID) {
-		void loadCreatorAccommodations(CREATOR_TRIP_ID);
 	}
 }
 
@@ -536,10 +568,7 @@ function renderDestinationOptions(): void {
 			translate('account.templates.no_destination_matches'),
 		)}</div>`;
 	} else {
-		const { groups, loose } = groupDestinationsByFolder(
-			matches,
-			getCachedDestinationFolders(),
-		);
+		const { groups, loose } = groupDestinationsByFolder(matches, getCachedDestinationFolders());
 		const visibleGroups = groups.filter((group) => group.items.length > 0);
 
 		let html = '';
@@ -577,9 +606,7 @@ function getDestinationOptionHTML(destination: DestinationOption): string {
 					? ` style="background-image: url('${escapeHTML(destination.image)}')"`
 					: ''
 			}>${
-				destination.image
-					? ''
-					: '<i class="iconify" data-icon="material-symbols:location-on"></i>'
+				destination.image ? '' : '<i class="iconify" data-icon="material-symbols:location-on"></i>'
 			}</span>
 			<span class="templates-combo-option-text">${escapeHTML(destination.title || destination.id)}</span>
 			<i class="iconify templates-combo-option-check" data-icon="material-symbols:check"></i>
@@ -856,11 +883,20 @@ async function loadCreatorAccommodations(tripId: string): Promise<void> {
 		return;
 	}
 
+	// Editing pre-selects the stay the template was built from (when it still
+	// exists in this trip).
+	const editing = CREATOR_EDIT_ID
+		? getCachedTripTemplates().find((item) => item.id === CREATOR_EDIT_ID)
+		: undefined;
+	const preferredId = editing?.type === 'accommodation' ? editing.sourceAccommodationId : '';
+
 	select.innerHTML = [
 		`<option value="">${escapeHTML(translate('account.templates.select_accommodation'))}</option>`,
 		...CREATOR_ACCOMMODATIONS.map(
 			(accommodation) =>
-				`<option value="${escapeHTML(accommodation.id)}">${escapeHTML(
+				`<option value="${escapeHTML(accommodation.id)}"${
+					accommodation.id === preferredId ? ' selected' : ''
+				}>${escapeHTML(
 					accommodation.name || translate('trip.accommodation.accommodation'),
 				)}</option>`,
 		),
@@ -869,8 +905,7 @@ async function loadCreatorAccommodations(tripId: string): Promise<void> {
 
 async function applyTemplateCreator(): Promise<void> {
 	const name = (getID('templates-creator-name') as HTMLInputElement)?.value.trim() || '';
-	const typedTrip =
-		(getID('templates-creator-trip-input') as HTMLInputElement)?.value.trim() || '';
+	const typedTrip = (getID('templates-creator-trip-input') as HTMLInputElement)?.value.trim() || '';
 	let tripId = CREATOR_TRIP_ID;
 	if (!tripId && typedTrip) {
 		// Accept an exact typed title as a selection when the user did not pick
@@ -884,60 +919,110 @@ async function applyTemplateCreator(): Promise<void> {
 	const accommodationId =
 		(getID('templates-creator-accommodation') as HTMLSelectElement)?.value || '';
 
+	const previous = getCachedTripTemplates();
+	const editing = CREATOR_EDIT_ID
+		? previous.find((template) => template.id === CREATOR_EDIT_ID)
+		: undefined;
+
 	if (!name) return showCreatorError(translate('account.templates.error_name'));
-	if (!tripId) return showCreatorError(translate('account.templates.error_trip'));
-	if (!destinationIds.length) return showCreatorError(translate('account.templates.error_destination'));
-	if (CREATOR_TYPE === 'accommodation' && !accommodationId) {
+	if (!tripId && !editing) return showCreatorError(translate('account.templates.error_trip'));
+	if (!destinationIds.length)
+		return showCreatorError(translate('account.templates.error_destination'));
+	if (CREATOR_TYPE === 'accommodation' && !accommodationId && !editing) {
 		return showCreatorError(translate('account.templates.error_accommodation'));
 	}
 
 	const template =
 		CREATOR_TYPE === 'accommodation'
-			? await buildAccommodationTemplate(name, tripId, destinationIds, accommodationId)
-			: await buildTripSkeletonTemplate(name, tripId, destinationIds);
+			? await buildAccommodationTemplate(
+					name,
+					tripId,
+					destinationIds,
+					accommodationId,
+					editing?.type === 'accommodation' ? editing : undefined,
+				)
+			: await buildTripSkeletonTemplate(
+					name,
+					tripId,
+					destinationIds,
+					editing?.type === 'trip' ? editing : undefined,
+				);
 
 	if (!template) return showCreatorError(translate('account.templates.error_source'));
 
-	DRAFT_TEMPLATES = [...DRAFT_TEMPLATES, template];
+	const next = editing
+		? previous.map((item) => (item.id === template.id ? template : item))
+		: [...previous, template];
+
+	let success = false;
+	try {
+		success = await saveTripTemplates(next);
+	} catch (error) {
+		console.warn('Could not save the templates:', error);
+	}
+
+	if (!success) {
+		seedTripTemplates(previous);
+		return showCreatorError(translate('account.templates.error_save'));
+	}
+
+	closeMessage();
 	renderTemplatesManager();
+	openToast(translate(editing ? 'account.templates.updated' : 'account.templates.created'));
 }
 
 async function buildTripSkeletonTemplate(
 	name: string,
 	tripId: string,
 	destinationIds: string[],
+	existing?: TripSkeletonTemplate,
 ): Promise<TripSkeletonTemplate | null> {
-	try {
-		const trip = await getTripRaw(tripId);
-		if (!trip) return null;
-
-		return {
-			id: createTripTemplateId('trip'),
-			type: 'trip',
-			name,
-			destinationIds,
-			sourceTripId: tripId,
-			createdAt: new Date().toISOString(),
-			colors: {
-				active: trip.colors?.active === true,
-				light: String(trip.colors?.light || ''),
-				dark: String(trip.colors?.dark || ''),
-			},
-			image: {
-				active: trip.image?.active === true,
-				background: String(trip.image?.background || ''),
-				light: String(trip.image?.light || ''),
-				dark: String(trip.image?.dark || ''),
-			},
-			visibility: {
-				light: trip.visibility?.light !== false,
-				dark: trip.visibility?.dark !== false,
-			},
-		};
-	} catch (error) {
-		console.warn('Could not build the trip template:', error);
-		return null;
+	let trip: Record<string, any> | null = null;
+	if (tripId) {
+		try {
+			trip = await getTripRaw(tripId);
+		} catch (error) {
+			console.warn('Could not build the trip template:', error);
+			trip = null;
+		}
 	}
+
+	// Editing without a readable base trip keeps the current values — only the
+	// name / destinations (and the source reference) change.
+	if (!trip) {
+		return existing
+			? {
+					...existing,
+					name,
+					destinationIds,
+					sourceTripId: tripId || existing.sourceTripId,
+				}
+			: null;
+	}
+
+	return {
+		id: existing?.id || createTripTemplateId('trip'),
+		type: 'trip',
+		name,
+		destinationIds,
+		sourceTripId: tripId,
+		createdAt: existing?.createdAt || new Date().toISOString(),
+		colors: {
+			active: trip.colors?.active === true,
+			light: String(trip.colors?.light || ''),
+			dark: String(trip.colors?.dark || ''),
+		},
+		image: {
+			active: trip.image?.active === true,
+			background: String(trip.image?.background || ''),
+			light: String(trip.image?.light || ''),
+			dark: String(trip.image?.dark || ''),
+		},
+		visibility: {
+			light: trip.visibility?.light !== false,
+			dark: trip.visibility?.dark !== false,
+		},
+	};
 }
 
 async function buildAccommodationTemplate(
@@ -945,11 +1030,25 @@ async function buildAccommodationTemplate(
 	tripId: string,
 	destinationIds: string[],
 	accommodationId: string,
+	existing?: AccommodationTemplate,
 ): Promise<AccommodationTemplate | null> {
 	const accommodation = CREATOR_ACCOMMODATIONS.find((item) => item.id === accommodationId);
-	if (!accommodation) return null;
 
-	const images: TripTemplatePhoto[] = (Array.isArray(accommodation.images) ? accommodation.images : [])
+	// Editing without a picked stay keeps the current values.
+	if (!accommodation) {
+		return existing
+			? {
+					...existing,
+					name,
+					destinationIds,
+					sourceTripId: tripId || existing.sourceTripId,
+				}
+			: null;
+	}
+
+	const images: TripTemplatePhoto[] = (
+		Array.isArray(accommodation.images) ? accommodation.images : []
+	)
 		.map((image) => ({
 			description: String(image?.description || ''),
 			link: String(image?.link || ''),
@@ -957,13 +1056,13 @@ async function buildAccommodationTemplate(
 		.filter((image) => image.link);
 
 	return {
-		id: createTripTemplateId('accommodation'),
+		id: existing?.id || createTripTemplateId('accommodation'),
 		type: 'accommodation',
 		name,
 		destinationIds,
 		sourceTripId: tripId,
 		sourceAccommodationId: accommodationId,
-		createdAt: new Date().toISOString(),
+		createdAt: existing?.createdAt || new Date().toISOString(),
 		accommodation: {
 			name: String(accommodation.name || ''),
 			address: String(accommodation.address || ''),
