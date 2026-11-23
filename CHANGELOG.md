@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.29.1] - 2026-11-22
+
+- 🐞 **B237:** Fix template dropdown hidden under dialog
+- 🐞 **B238:** Move trip people circles to expanded card
+- 🐞 **B239:** Resolve traveler photos from people registry
+- 🐞 **B240:** View highlights: stacked people avatars
+- 📈 **M250:** Destination folders: single-folder dialog and per-folder edit
+- 📈 **M251:** Trip badge: 90-day limit and 12-month rollover
+- 📈 **M252:** Brighter dark-mode hover on pill bars
+- 📈 **M253:** Inline templates manager with edit and refresh
+
 ## [2.29.0] - 2026-11-22
 
 - 🏆 **F208:** Add destination-feeding skill with image pipeline
