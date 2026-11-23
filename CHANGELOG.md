@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.29.0] - 2026-11-22
+
+- 🏆 **F208:** Add destination-feeding skill with image pipeline
+- 📈 **M244:** Limit backlog tickets to project changes
+- 🏆 **F209:** Add My Maps editing skill
+- 🏆 **F210:** Add destination folders
+- 📈 **M245:** Agent notes: sync user summary documents
+- 📈 **M246:** Improve date range picker usability and layering
+- 🐞 **B233:** Fix "no region" destination filter showing all
+- 📈 **M247:** People avatars: default image and border
+- 🏆 **F211:** Add trip and accommodation templates
+- 📈 **M248:** Queue gmaps scraper requests to avoid OOM
+- 🐞 **B234:** Fix destination folder hidden in trip picker
+- 📈 **M249:** Trip card badges show relative time
+- 🐞 **B235:** Fix view page share link
+
 ## [2.28.10] - 2026-09-19
 
 - 📈 **M238:** Error dialog: copy details + consistent admin label
