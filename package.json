@@ -1,6 +1,6 @@
 {
   "name": "trip-viewer-firebase",
-  "version": "2.29.0",
+  "version": "2.29.1",
   "private": true,
   "description": "Trip Viewer â€” Firebase-hosted static frontend",
   "scripts": {
