@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.29.2] - 2026-11-23
+
+- 🐞 **B241:** Prevent startup softlocks after app updates
+- 🐞 **B242:** Fix folder edit button styling
+- 📈 **M254:** Equalize destination tab header buttons
+- 📈 **M255:** Icon-only tab header buttons on mobile
+- 🐞 **B243:** Prevent disappearing cards after tab suspension
+- 📈 **M256:** Mobile category tabs overflow hint and alignment
+
 ## [2.29.1] - 2026-11-22
 
 - 🐞 **B237:** Fix template dropdown hidden under dialog
