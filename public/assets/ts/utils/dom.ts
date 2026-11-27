@@ -477,19 +477,30 @@ export function getTranslatedDocumentLabel(type) {
 	}
 }
 
-export function getOrderedDocumentByUpdateDate(data: Record<string, any>): any[] {
-	return Object.entries(data)
-		.map(([id, v]) => ({ id, ...(v as Record<string, any>) }))
-		.sort(
-			(a: any, b: any) =>
-				new Date(b.version.lastUpdated).getTime() - new Date(a.version.lastUpdated).getTime(),
-		);
+/** Last-updated timestamp (ms) of a document, 0 when it has no version metadata. */
+function getDocumentUpdateTime(document: any): number {
+	const time = new Date(document?.version?.lastUpdated ?? 0).getTime();
+	return Number.isFinite(time) ? time : 0;
 }
 
-export function getOrderedDocumentByTitle(data: Record<string, any>): any[] {
-	return Object.entries(data)
+// The index tabs can render before the user summaries finish loading (tab
+// clicks / search input fire while the skeleton cards are still up), so the
+// input may be null/undefined and documents may lack `version` metadata —
+// both cases must degrade to an empty list instead of throwing.
+export function getOrderedDocumentByUpdateDate(
+	data: Record<string, any> | null | undefined,
+): any[] {
+	return Object.entries(data ?? {})
 		.map(([id, v]) => ({ id, ...(v as Record<string, any>) }))
-		.sort((a: any, b: any) => a.title.localeCompare(b.title));
+		.sort((a: any, b: any) => getDocumentUpdateTime(b) - getDocumentUpdateTime(a));
+}
+
+export function getOrderedDocumentByTitle(
+	data: Record<string, any> | null | undefined,
+): any[] {
+	return Object.entries(data ?? {})
+		.map(([id, v]) => ({ id, ...(v as Record<string, any>) }))
+		.sort((a: any, b: any) => String(a.title ?? '').localeCompare(String(b.title ?? '')));
 }
 
 // Destination

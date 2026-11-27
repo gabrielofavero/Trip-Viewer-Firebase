@@ -17,7 +17,8 @@ export function loadDestinationTabBar() {
 	if (!tabBar) return;
 
 	tabBar.innerHTML = getDestinationTabsHTML();
-	tabBar.style.display = '';
+	// No category has entries (empty destination) — render no empty tab strip.
+	tabBar.style.display = tabBar.innerHTML.trim() ? '' : 'none';
 	// Edge fades + chevrons once the tabs overflow (phones); setupScrollHint is
 	// idempotent, so the view.html lightbox can re-run this safely.
 	setupScrollHint(tabBar);

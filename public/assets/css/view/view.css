@@ -1064,7 +1064,7 @@ section {
 	padding: 70px 20px 80px 20px;
 	transition: all ease-in-out 0.3s;
 	color: var(--font-color);
-	background: var(--bg-secondary);
+	background: var(--bg-quaternary);
 	box-shadow: var(--shadow-card);
 }
 
@@ -2565,6 +2565,7 @@ body.lightbox-open {
 }
 
 .pill-circle {
+	--schedule-color: var(--schedule-color-light, var(--theme-color));
 	width: 12px;
 	height: 12px;
 	background-color: #aaabac;
@@ -2574,8 +2575,9 @@ body.lightbox-open {
 	transition: background-color 0.3s ease;
 }
 
-.pill:hover .pill-circle-default {
-	background-color: var(--theme-color);
+.pill:hover .pill-circle,
+.pill-circle.active-circle {
+	background-color: var(--schedule-color);
 }
 
 .pill {
@@ -2590,67 +2592,12 @@ body.lightbox-open {
 	margin: 0 8px 8px 0;
 }
 
-.pill:hover .pill-circle-blue,
-.active-circle-blue {
-	background-color: #47aeff;
+.calendarTrip.active-calendar {
+	--schedule-color: var(--schedule-color-light, var(--theme-color));
 }
 
-.pill:hover .pill-circle-yellow,
-.active-circle-yellow {
-	background-color: #ffbb2c;
-}
-
-.pill:hover .pill-circle-pink,
-.active-circle-pink {
-	background-color: #e80368;
-}
-
-.pill:hover .pill-circle-green,
-.active-circle-green {
-	background-color: #52b720;
-}
-
-.pill:hover .pill-circle-teal,
-.active-circle-teal {
-	background-color: #11dbcf;
-}
-
-.pill:hover .pill-circle-orange,
-.active-circle-orange {
-	background-color: #ffa76e;
-}
-
-.pill:hover .pill-circle-red,
-.active-circle-red {
-	background-color: #ff5828;
-}
-
-.active-calendar-blue {
-	background-color: #e3f3ff !important;
-}
-
-.active-calendar-yellow {
-	background-color: #fff5df !important;
-}
-
-.active-calendar-pink {
-	background-color: #fcd9e8 !important;
-}
-
-.active-calendar-green {
-	background-color: #e5f4de !important;
-}
-
-.active-calendar-teal {
-	background-color: #dbfaf8 !important;
-}
-
-.active-calendar-orange {
-	background-color: #fff2e9 !important;
-}
-
-.active-calendar-red {
-	background-color: #ffe6df !important;
+.calendarTrip.active-calendar:not(.active):not(:hover):not(:active) {
+	background-color: color-mix(in srgb, var(--schedule-color) 25%, var(--bg-primary)) !important;
 }
 
 #expenses-section {

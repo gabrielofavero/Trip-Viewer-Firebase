@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.29.3] - 2026-11-26
+
+- 📈 **M257:** [DEV] Resolve security vulnerabilities
+- 🐞 **B244:** Restore multi-city itinerary automations
+- 📈 **M258:** Soften destination category box backgrounds
+- 🐞 **B245:** Fix misleading offline dialog and retry buttons
+
 ## [2.29.2] - 2026-11-23
 
 - 🐞 **B241:** Prevent startup softlocks after app updates

@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
-import { FieldValue } from 'firebase-admin/firestore';
+import { FieldValue, getFirestore } from 'firebase-admin/firestore';
+import { getAuth } from 'firebase-admin/auth';
 
 /**
  * init-local-db
@@ -51,7 +51,7 @@ export const initLocalDb = functions.https.onRequest(async (req, res) => {
 	}
 
 	try {
-		const db = admin.firestore();
+		const db = getFirestore();
 
 		// ---------------------------------------------------------------
 		// Guard: never touch a database that already has data
@@ -73,7 +73,7 @@ export const initLocalDb = functions.https.onRequest(async (req, res) => {
 		let email = '';
 		let photoURL = '';
 		try {
-			const userRecord = await admin.auth().getUser(uid);
+			const userRecord = await getAuth().getUser(uid);
 			displayName = userRecord.displayName || '';
 			email = userRecord.email || '';
 			photoURL = userRecord.photoURL || '';

@@ -368,6 +368,7 @@ export function displayError(error, tryAgain = false, blocking = true) {
 
 	properties.title = translate('messages.errors.load_title');
 	properties.critical = true;
+	properties.containers.principal += ' error-dialog';
 	properties.content = getErrorMessage(error);
 	properties.localizacao = false; // Disabled. No point in showing to the user.
 
@@ -379,7 +380,7 @@ export function displayError(error, tryAgain = false, blocking = true) {
 		properties.errorDetails = error;
 	}
 
-	const buttons = tryAgain ? [{ type: 'try-again' }] : [];
+	const buttons = tryAgain ? [{ type: 'tryAgain' }] : [];
 	// Static exports have no index.html home page, so never offer the Home
 	// button there (it would navigate to a non-existent page).
 	if (!isStaticMode() && !window.location.href.includes('index.html')) {
@@ -417,15 +418,8 @@ export function isSystemFault(error): boolean {
 	return error instanceof Error && !isOfflineError(error);
 }
 
-/**
- * Recognizes offline / no-network errors across Firebase products so they are
- * never treated as system faults ("contact the administrator") — a missing
- * connection is something the user can fix, not a bug to report.
- *   - Firestore reports `code: 'unavailable'` with a message like "Failed to
- *     get document because the client is offline."
- *   - Firebase Auth reports `code: 'auth/network-request-failed'`.
- */
-export function isOfflineError(error): boolean {
+/** Firebase can report "client is offline" even when only its backend is unreachable. */
+function isNetworkError(error): boolean {
 	if (!error || !(error instanceof Error)) return false;
 	const code: string = (error as any)?.code || '';
 	const message: string = error.message || '';
@@ -436,12 +430,19 @@ export function isOfflineError(error): boolean {
 	);
 }
 
+export function isOfflineError(error): boolean {
+	return typeof navigator !== 'undefined' && navigator.onLine === false && isNetworkError(error);
+}
+
 export function getErrorMessage(error) {
 	const contact = `<a href=\"mailto:gabriel.o.favero@live.com\">${translate('messages.errors.contact_admin')}</a> ${translate('messages.errors.to_report')}`;
 
 	// Offline / no network: never a system fault.
 	if (isOfflineError(error)) {
 		return translate('messages.errors.offline');
+	}
+	if (isNetworkError(error)) {
+		return translate('messages.errors.service_unavailable');
 	}
 
 	if (error instanceof Error) {
@@ -720,6 +721,7 @@ export function getErrorElement(err) {
 // Buttons
 export function getButton(button) {
 	switch (button.type) {
+		case 'try-again':
 		case 'tryAgain':
 			return getTryAgainButton();
 		case 'home':
@@ -928,9 +930,9 @@ export function getBackButton(redirectTo = 'index.html') {
 
 export function getTryAgainButton() {
 	const button = document.createElement('button');
-	button.className = 'btn btn-secondary btn-format';
-	button.type = 'submit';
-	button.setAttribute('onclick', 'window.location.reload(true);');
+	button.className = 'btn btn-theme btn-format';
+	button.type = 'button';
+	button.addEventListener('click', () => window.location.reload());
 	button.id = 'message-try-again';
 
 	const icon = document.createElement('i');

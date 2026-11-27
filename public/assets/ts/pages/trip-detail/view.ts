@@ -396,6 +396,8 @@ function loadHeaderImageAndLogo(data = getState()) {
 }
 
 function loadModules() {
+	// The itinerary legend needs destination names before the selector renders.
+	setDestinations(getState().destinations || getState().destinationRefs || []);
 	loadSharingModule();
 	loadSummaryModule();
 	loadExpensesModule();
@@ -507,9 +509,9 @@ function loadModules() {
 
 		function loadDestinationsDefault() {
 			loadDestinationsCustomSelect();
-			loadDestinationsHTML(DESTINATIONS[0]);
 
 			if (DESTINATIONS.length === 1) {
+				loadDestinationsHTML(DESTINATIONS[0]);
 				setUniqueDestinationText();
 				setActiveDestination(DESTINATIONS[0].id);
 			}

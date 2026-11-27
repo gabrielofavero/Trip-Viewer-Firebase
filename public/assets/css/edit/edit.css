@@ -2030,6 +2030,15 @@
 	gap: 4px;
 	padding: 8px 0;
 	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+/* Children keep their natural height. A folder with `overflow: hidden`
+   resolves its automatic min-height to 0, so on the mobile flex column it
+   would shrink below its content and the expanded cards would be clipped
+   (not scrollable). */
+.destinations-cards > * {
+	flex-shrink: 0;
 }
 
 .destination-card {
@@ -2146,6 +2155,21 @@
 		grid-template-columns: 1fr 1fr;
 		gap: 6px;
 	}
+}
+
+/* Focus mode: while any folder is expanded the picker hides the collapsed
+   folder headers, giving the expanded folder the whole panel height. The
+   container class is synced by new-trip.ts on expand/collapse. */
+.destinations-cards.has-expanded-folder
+	.destinations-folder:not(.expanded):not(.search-expanded) {
+	display: none;
+}
+
+/* Keep the expanded folder's own header reachable while its cards scroll. */
+.destinations-cards.has-expanded-folder .destinations-folder.expanded > .destinations-folder-header {
+	position: sticky;
+	top: 0;
+	z-index: 1;
 }
 .destinations-loose-label {
 	grid-column: 1 / -1;

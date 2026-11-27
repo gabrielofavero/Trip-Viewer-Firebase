@@ -31,9 +31,16 @@ const path = require('path');
 const functionsDir = path.resolve(__dirname, '..', '..', 'functions');
 const adminPath = path.join(functionsDir, 'node_modules', 'firebase-admin');
 
-let admin;
+let initializeApp;
+let getApps;
+let getFirestore;
 try {
-	admin = require(adminPath);
+	// Resolve subpaths through the package exports map (firebase-admin >= 14 removed
+	// the `admin.firestore()` namespace API).
+	const { createRequire } = require('node:module');
+	const functionsRequire = createRequire(path.join(functionsDir, 'package.json'));
+	({ initializeApp, getApps } = functionsRequire('firebase-admin/app'));
+	({ getFirestore } = functionsRequire('firebase-admin/firestore'));
 } catch (err) {
 	console.error(
 		`[ERROR] Could not load firebase-admin from: ${adminPath}\n` +
@@ -104,10 +111,11 @@ function parseArgs(rawArgs) {
 
 // --- Initialize firebase-admin ----------------------------------------------
 function initAdmin(projectId) {
-	if (admin.apps.length > 0) {
-		return admin.apps[0];
+	const apps = getApps();
+	if (apps.length > 0) {
+		return apps[0];
 	}
-	return admin.initializeApp({ projectId });
+	return initializeApp({ projectId });
 }
 
 // --- Collection listing -----------------------------------------------------
@@ -214,7 +222,7 @@ async function main() {
 
 	process.env.FIRESTORE_EMULATOR_HOST = args.host;
 	initAdmin(args.project);
-	const db = admin.firestore();
+	const db = getFirestore();
 
 	try {
 		let output;

@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
 
 // ============================================================
 // MIGRATION 23: Backfill travelers into trip summaries
@@ -36,13 +36,13 @@ class BatchManager {
 	private count = 0;
 
 	constructor() {
-		this.current = admin.firestore().batch();
+		this.current = getFirestore().batch();
 		this.batches.push(this.current);
 	}
 
 	private rotateIfNeeded() {
 		if (this.count < 500) return;
-		this.current = admin.firestore().batch();
+		this.current = getFirestore().batch();
 		this.batches.push(this.current);
 		this.count = 0;
 	}
@@ -118,7 +118,7 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 	};
 
 	try {
-		const db = admin.firestore();
+		const db = getFirestore();
 		const tripsSnap = await db.collection('trips').get();
 		console.log(`[migration-23] Found ${tripsSnap.size} trip document(s).`);
 

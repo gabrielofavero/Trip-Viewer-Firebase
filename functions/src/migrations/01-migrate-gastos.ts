@@ -1,11 +1,11 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
 
 export const migrateGastos = functions.https.onRequest(async (req, res) => {
 	try {
-		const gastosCollection = admin.firestore().collection('gastos');
+		const gastosCollection = getFirestore().collection('gastos');
 		const snapshot = await gastosCollection.get();
-		const batch = admin.firestore().batch();
+		const batch = getFirestore().batch();
 
 		snapshot.forEach((doc) => {
 			const data = doc.data();

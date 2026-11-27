@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
 
-const db = admin.firestore();
+const db = getFirestore();
 const MAX_BATCH = 400;
 const READ_CHUNK = 20; // limit concurrent reads to avoid throttling
 

@@ -88,6 +88,10 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 📈 **M255:** Icon-only tab header buttons on mobile
 - 🐞 **B243:** Prevent disappearing cards after tab suspension
 - 📈 **M256:** Mobile category tabs overflow hint and alignment
+- 📈 **M257:** [DEV] Resolve security vulnerabilities
+- 🐞 **B244:** Restore multi-city itinerary automations
+- 📈 **M258:** Soften destination category box backgrounds
+- 🐞 **B245:** Fix misleading offline dialog and retry buttons
 
 ### September 2026
 

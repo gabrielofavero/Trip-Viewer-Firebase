@@ -1,6 +1,12 @@
 # Build output
 dist/
 
+# Security — private remediation plan for open Dependabot alerts.
+# Must NOT be committed: it reveals which dependencies are vulnerable.
+SECURITY-DEPENDABOT-PLAN.md
+tmp/dependabot-alerts.json
+tmp/dependabot-summary.txt
+
 # Functions compiled output
 functions/lib/
 
@@ -24,8 +30,13 @@ yarn-debug.log*
 yarn-error.log*
 firebase-debug.log*
 firebase-debug.*.log*
-package-lock.json
-functions/package-lock.json
+
+# Lockfiles are intentionally TRACKED (`npm ci` needs them and Dependabot scans them).
+# Never add package-lock.json / functions/package-lock.json here.
+
+# Workers: lockfiles stay untracked for now — `wrangler@4` (dev-only) still carries
+# open advisories; bump wrangler first, then track them (see SECURITY plan, Fase 4).
+workers/*/package-lock.json
 
 # Firebase cache
 .firebase/
@@ -86,10 +97,6 @@ node_modules/
 
 # Output of 'npm pack'
 *.tgz
-
-# Yarn
-yarn.lock
-.yarn-integrity
 
 # dotenv environment variables file
 .env

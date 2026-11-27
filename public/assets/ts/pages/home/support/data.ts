@@ -711,6 +711,12 @@ function loadDestinationsTab() {
  * destinations that are not filed in any folder.
  */
 function renderDestinationsTab() {
+	// A tab click or a search keystroke can reach this before the user
+	// summaries finish loading (INDEX_DATA starts without collections). Keep
+	// the skeleton placeholders (or the load-error state) untouched instead
+	// of rendering an empty tab.
+	if (!INDEX_DATA.destinations) return;
+
 	const destinations = getOrderedDocumentByUpdateDate(INDEX_DATA.destinations);
 	const { groups, loose } = groupDestinationsByFolder(
 		destinations,

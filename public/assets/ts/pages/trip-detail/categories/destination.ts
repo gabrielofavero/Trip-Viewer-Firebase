@@ -9,6 +9,7 @@ import { CUSTOM_SELECTS } from '../../../ui/custom-select.js';
 import { END_DATE } from '../view.js';
 import { START_DATE } from '../view.js';
 import { SCHEDULE_DESTINATIONS } from './itinerary-module/itinerary-module.js';
+import { getScheduleDestinationOrder } from '../../../utils/schedule-destinations.js';
 import { get } from '../../../data/firebase/database.js';
 
 var P_RESULT = {};
@@ -92,13 +93,7 @@ export function loadDestinationsCustomSelect() {
 
 	function getDestinationsCustomSelectOptions() {
 		const options = [];
-		const itineraryOrder: Set<string> = getState().itinerary
-			? new Set<string>(
-					getState()
-						.itinerary.flatMap((item: any) => (item.destinationIds || []).map((d: any) => d.id))
-						.filter(Boolean),
-				)
-			: new Set<string>();
+		const itineraryOrder = new Set(getScheduleDestinationOrder(getState().itinerary || []));
 
 		for (const destination of DESTINATIONS) {
 			options.push({

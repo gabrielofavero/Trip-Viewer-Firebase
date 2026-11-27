@@ -766,6 +766,17 @@ h1::after {
 	gap: 16px;
 }
 
+/* Empty destination — no entries in any category (brand-new document or every
+   module disabled). Renders a single centered message instead of the grid. */
+#content.destination-empty {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 180px;
+	text-align: center;
+	opacity: 0.7;
+}
+
 .dest-card {
 	background: rgba(255, 255, 255, 0.7);
 	backdrop-filter: blur(16px);

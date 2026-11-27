@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
 
 // ============================================================
 // PHASE 1: Translate & Restructure
@@ -301,7 +301,7 @@ class BatchManager {
 	private count = 0;
 
 	constructor() {
-		this.current = admin.firestore().batch();
+		this.current = getFirestore().batch();
 		this.batches.push(this.current);
 	}
 
@@ -323,7 +323,7 @@ class BatchManager {
 	private rotate() {
 		this.count++;
 		if (this.count >= 500) {
-			this.current = admin.firestore().batch();
+			this.current = getFirestore().batch();
 			this.batches.push(this.current);
 			this.count = 0;
 		}
@@ -684,7 +684,7 @@ async function processCollection(
 	totalTranslated: number;
 	totalWritten: number;
 }> {
-	const colRef = admin.firestore().collection(collectionName);
+	const colRef = getFirestore().collection(collectionName);
 	const snapshot = await colRef.get();
 
 	if (snapshot.empty) {
@@ -716,7 +716,7 @@ async function processCollection(
 		const newDocId: string | undefined = idMap[doc.id];
 
 		if (newDocId) {
-			const exists = await admin.firestore().doc(`${collectionName}/${newDocId}`).get();
+			const exists = await getFirestore().doc(`${collectionName}/${newDocId}`).get();
 			if (exists.exists) {
 				console.log(`[${collectionName}/${doc.id}] Already renamed to ${newDocId} — deleting old.`);
 				if (!dryRun) batch.delete(doc.ref);
@@ -807,7 +807,7 @@ async function processCollection(
 			console.log(`  New keys: ${Object.keys(newData).join(', ')}`);
 		} else {
 			if (newDocId) {
-				const newRef = admin.firestore().doc(`${collectionName}/${newDocId}`);
+				const newRef = getFirestore().doc(`${collectionName}/${newDocId}`);
 				batch.set(newRef, newData);
 				batch.delete(doc.ref);
 			} else {
@@ -833,7 +833,7 @@ async function processCollection(
 // ============================================================
 
 async function processProtectedSubcollections(dryRun: boolean): Promise<number> {
-	const protectedSnap = await admin.firestore().collection('protegido').get();
+	const protectedSnap = await getFirestore().collection('protegido').get();
 	const tripPins: Record<string, string> = {};
 	protectedSnap.forEach((doc) => {
 		const pin = doc.data()?.pin;
@@ -847,7 +847,7 @@ async function processProtectedSubcollections(dryRun: boolean): Promise<number> 
 		for (const parent of ['viagens', 'gastos']) {
 			const path = `${parent}/protected/${pin}/${tripId}`;
 			try {
-				const docRef = admin.firestore().doc(path);
+				const docRef = getFirestore().doc(path);
 				const docSnap = await docRef.get();
 				if (!docSnap.exists) continue;
 

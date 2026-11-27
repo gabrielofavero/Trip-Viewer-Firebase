@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
-import { FieldValue } from 'firebase-admin/firestore';
+import { FieldValue, getFirestore } from 'firebase-admin/firestore';
+import { getAuth } from 'firebase-admin/auth';
 
 // ============================================================
 // MIGRATION 17: Places API prep
@@ -81,7 +81,7 @@ class BatchManager {
 	private count = 0;
 
 	constructor() {
-		this.current = admin.firestore().batch();
+		this.current = getFirestore().batch();
 		this.batches.push(this.current);
 	}
 
@@ -98,7 +98,7 @@ class BatchManager {
 	private rotate() {
 		this.count++;
 		if (this.count >= 500) {
-			this.current = admin.firestore().batch();
+			this.current = getFirestore().batch();
 			this.batches.push(this.current);
 			this.count = 0;
 		}
@@ -190,7 +190,7 @@ async function grantUser(
 		let email = '';
 		let photoURL = '';
 		try {
-			const rec = await admin.auth().getUser(uid);
+			const rec = await getAuth().getUser(uid);
 			name = rec.displayName || '';
 			email = rec.email || '';
 			photoURL = rec.photoURL || '';
@@ -243,7 +243,7 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 	};
 
 	try {
-		const db = admin.firestore();
+		const db = getFirestore();
 
 		// -----------------------------------------------------------
 		// Step 1: Grant canUsePlacesAPI (and add the user) for requested UIDs

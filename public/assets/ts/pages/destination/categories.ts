@@ -16,39 +16,71 @@ import { FIRESTORE_DESTINATIONS_DATA } from '../../data/state.js';
 
 export var ACTIVE_CATEGORY;
 
+/**
+ * True when a destination category has something to render.
+ *
+ * The `myMaps` "category" holds the My Maps link itself (a string) while the
+ * regular categories are entry maps. Disabled modules leave empty maps on the
+ * document (`restaurants: {}`), so the key being present does NOT mean the
+ * category is usable — this is the single rule shared by the initial category
+ * selection, the tab bar and the page mount.
+ */
+export function hasCategoryContent(category) {
+	const data = FIRESTORE_DESTINATIONS_DATA?.[category];
+	if (!data) return false;
+	if (typeof data === 'string') return data.trim() !== '';
+	return typeof data === 'object' && Object.keys(data).length > 0;
+}
+
+/**
+ * Resolve a `?type=` value to a canonical category id. Accepts the English id
+ * (`tourism`), the label the tab bar writes into the URL (`Tourism`) and the
+ * legacy Portuguese ids (`turismo`). The legacy `map` id normalizes to
+ * `myMaps`, which is the document key holding the My Maps link.
+ */
+function resolveCategoryId(raw) {
+	if (!raw) return '';
+	const config = getDestinations();
+	const ids = config.categories.ids;
+	const needle = String(raw).trim().toLowerCase();
+
+	const canonical = (id) => (id === 'map' ? 'myMaps' : id);
+	const matches = (value) => String(value || '').trim().toLowerCase() === needle;
+
+	for (const id of ids) if (matches(id)) return canonical(id);
+	for (const id of ids) if (matches(config.translation?.[id])) return canonical(id);
+	for (const [id, legacy] of Object.entries(config._deprecated_original || {})) {
+		if (matches(legacy)) return canonical(id);
+	}
+	return '';
+}
+
 // Active Category
 export function loadActiveCategory(urlParams) {
-	const type = urlParams['type'];
-	const destinationsConfig = getDestinations();
-	const ids = destinationsConfig.categories.ids;
+	const requested = resolveCategoryId(urlParams?.['type']);
+	const ids = getDestinations().categories.ids;
 
-	// If the URL type is already a valid English category ID, use it directly.
-	// Otherwise, try the deprecated Portuguese→English mapping for old URLs.
-	if (type && ids.includes(type)) {
-		ACTIVE_CATEGORY = type;
+	// A deep-linked category is only honoured when it has content. Selecting an
+	// empty category left the page with nothing to render and aborted with
+	// "missing data" (prod: documents with disabled modules keep `{}` maps).
+	if (requested && hasCategoryContent(requested)) {
+		ACTIVE_CATEGORY = requested;
 		return;
 	}
 
-	const originals = destinationsConfig._deprecated_original;
-	if (type && originals[type]) {
-		ACTIVE_CATEGORY = originals[type];
-		return;
-	}
+	// Otherwise start on the first category that has content, in config order —
+	// the same rule the tab bar uses, so the initial tab is always the first tab.
+	ACTIVE_CATEGORY = ids.find((id) => hasCategoryContent(id));
 
-	ACTIVE_CATEGORY = getFirstCategory();
-
-	function getFirstCategory() {
-		const destinationsConfig = getDestinations();
-		const types = destinationsConfig.categories.ids;
-		const translations = destinationsConfig.translation;
-		const destinoIDs = Object.keys(FIRESTORE_DESTINATIONS_DATA);
-		for (const type of types) {
-			const value = translations[type];
-			if (destinoIDs.includes(type) && value) {
-				return type;
-			}
-		}
-		throw translate('messages.errors.missing_data');
+	// Nothing has content yet (brand-new destination): still pick a real
+	// category so the in-page "Add" button knows which map to write the first
+	// entry into. Prefer a module the document has enabled, skipping `myMaps`
+	// (that key holds the My Maps link, not entries).
+	if (!ACTIVE_CATEGORY) {
+		const modules = FIRESTORE_DESTINATIONS_DATA?.modules || {};
+		ACTIVE_CATEGORY =
+			ids.find((id) => id !== 'myMaps' && modules[id] === true) ||
+			ids.find((id) => id !== 'myMaps');
 	}
 }
 

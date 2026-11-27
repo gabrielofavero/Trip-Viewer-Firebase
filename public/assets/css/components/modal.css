@@ -432,6 +432,45 @@
 	margin: 5px;
 }
 
+.error-dialog > .message-text-container > .button-box {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+	justify-content: center;
+	gap: 10px;
+}
+
+.error-dialog > .message-text-container > .button-box > .btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	flex: 1 1 140px;
+	min-height: 44px;
+	margin: 0;
+	padding: 10px 16px;
+	font-size: 14px;
+	line-height: 1.5;
+	border: 1px solid var(--border-color);
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
+}
+
+.error-dialog > .message-text-container > .button-box > .btn-theme {
+	background: var(--theme-color);
+	border-color: var(--theme-color);
+	color: #fff;
+}
+
+.error-dialog > .message-text-container > .button-box > .btn:hover {
+	background: var(--bg-secondary);
+}
+
+.error-dialog > .message-text-container > .button-box > .btn-theme:hover {
+	background: var(--theme-color-hover);
+	border-color: var(--theme-color-hover);
+}
+
 .btn-basic {
 	border-width: 2px;
 	border-style: solid;

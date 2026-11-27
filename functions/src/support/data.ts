@@ -1,7 +1,7 @@
-import * as admin from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
 
 export async function getDocument(stringPath: string) {
-	const documentRef = admin.firestore().doc(stringPath);
+	const documentRef = getFirestore().doc(stringPath);
 	const documentSnapshot = await documentRef.get();
 
 	if (!documentSnapshot.exists) {
@@ -11,13 +11,13 @@ export async function getDocument(stringPath: string) {
 }
 
 export async function setDocument(stringPath: string, data: any) {
-	const documentRef = admin.firestore().doc(stringPath);
+	const documentRef = getFirestore().doc(stringPath);
 	await documentRef.set(data, { merge: true });
 	return { success: true };
 }
 
 export async function deleteDocument(stringPath: string) {
-	const documentRef = admin.firestore().doc(stringPath);
+	const documentRef = getFirestore().doc(stringPath);
 	await documentRef.delete();
 	return { success: true };
 }

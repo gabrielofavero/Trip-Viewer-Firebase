@@ -21,7 +21,12 @@ import {
 import { getID, getErrorFromGetRequestMessage } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
 import { stopLoadingScreen } from '../../utils/loading.js';
-import { loadActiveCategory, ACTIVE_CATEGORY, getPlanned } from './categories.js';
+import {
+	loadActiveCategory,
+	ACTIVE_CATEGORY,
+	getPlanned,
+	hasCategoryContent,
+} from './categories.js';
 import { adjustEditVisibility } from './edit-destination.js';
 import { getDestinationCardHTML } from './support/card.js';
 import { bindCardImageHandlers } from './support/card-media.js';
@@ -158,12 +163,7 @@ export async function mountDestination(
 
 	await loadDestinationVisibility();
 
-	if (
-		ACTIVE_CATEGORY &&
-		(ACTIVE_CATEGORY === 'map' ||
-			(FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY] &&
-				Object.keys(FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY]).length > 0))
-	) {
+	if (ACTIVE_CATEGORY && hasCategoryContent(ACTIVE_CATEGORY)) {
 		loadDestinationByType(ACTIVE_CATEGORY);
 		return () => {
 			GRID?.disconnect();
@@ -176,7 +176,35 @@ export async function mountDestination(
 		};
 	}
 
-	throw new Error(translate('messages.errors.missing_data'));
+	// Nothing to render (brand-new destination or every module empty): show the
+	// empty state instead of failing the whole page with a "missing data"
+	// error. The hero (title + wallpaper) and the edit controls still load.
+	renderEmptyState();
+	stopLoadingScreen();
+	return () => {
+		container.innerHTML = '';
+	};
+}
+
+/**
+ * Content-area placeholder for a destination with no entries in any category.
+ * Hides the grid controls that only make sense with cards (sort/filter, search,
+ * lazy-grid sentinel) and mirrors the `myMaps` tab layout.
+ */
+function renderEmptyState() {
+	const content = getContainer();
+	// Reached from refreshDestination() too (last entry deleted): drop the
+	// previous grid so it can't render into the now-empty container.
+	GRID?.disconnect();
+	GRID = null;
+	CONTENT = [];
+	content.classList = 'destination-empty';
+	content.innerHTML = `<p>${translate('destination.empty')}</p>`;
+
+	const filterSortContainer = getID('filter-sort-container');
+	if (filterSortContainer) filterSortContainer.style.display = 'none';
+	setSearchBarVisible(false);
+	setSentinelVisible(false);
 }
 
 export function loadDestinationByType(activeCategory) {
@@ -188,12 +216,18 @@ export function loadDestinationByType(activeCategory) {
 
 	if (activeCategory === 'myMaps') {
 		content.classList = 'map-content';
-		loadMapDestination(FIRESTORE_DESTINATIONS_DATA?.myMaps);
-		if (filterSortContainer) filterSortContainer.style.display = 'none';
-		const addContainer = document.querySelector('.add-container') as HTMLElement | null;
-		if (addContainer) addContainer.style.display = 'none';
-		setSearchBarVisible(false);
-		setSentinelVisible(false);
+		if (loadMapDestination(FIRESTORE_DESTINATIONS_DATA?.myMaps)) {
+			if (filterSortContainer) filterSortContainer.style.display = 'none';
+			const addContainer = document.querySelector('.add-container') as HTMLElement | null;
+			if (addContainer) addContainer.style.display = 'none';
+			setSearchBarVisible(false);
+			setSentinelVisible(false);
+		} else {
+			// Stored link isn't a usable My Maps URL — don't leave a blank tab
+			// with the loading screen stuck.
+			renderEmptyState();
+		}
+		stopLoadingScreen();
 		return;
 	}
 
@@ -222,11 +256,12 @@ function loadMapDestination(link) {
 	const iframe = buildMyMapsEmbed(link);
 	if (!iframe) {
 		console.error('Invalid My Maps link.');
-		return;
+		return false;
 	}
 	const container = getContainer();
 	container.innerHTML = '';
 	container.appendChild(iframe);
+	return true;
 }
 
 // Setters
@@ -326,8 +361,15 @@ export async function refreshDestination() {
 	// (view.html lightbox) shows the updated document instead of the old copy.
 	DESTINATION_CACHE.set(DOCUMENT_ID, data);
 	setFirestoreDestinationsData(data);
-	// The planned state may have just changed, which adds/removes drawer
-	// options — force them to be rebuilt instead of reusing the cache.
-	loadDestinationByType(ACTIVE_CATEGORY);
-	loadSortAndFilter(true);
+	// A local write may have added the first entry (empty → non-empty) or
+	// removed the last one of the active category — re-resolve before rendering.
+	if (!ACTIVE_CATEGORY || !hasCategoryContent(ACTIVE_CATEGORY)) loadActiveCategory({});
+	if (ACTIVE_CATEGORY && hasCategoryContent(ACTIVE_CATEGORY)) {
+		// The planned state may have just changed, which adds/removes drawer
+		// options — force them to be rebuilt instead of reusing the cache.
+		loadDestinationByType(ACTIVE_CATEGORY);
+		loadSortAndFilter(true);
+	} else {
+		renderEmptyState();
+	}
 }

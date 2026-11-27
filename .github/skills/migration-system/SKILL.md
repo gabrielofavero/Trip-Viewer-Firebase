@@ -75,7 +75,7 @@ Every migration follows this pattern:
 
 ```typescript
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
 
 export const migrateX = functions.https.onRequest(async (req, res) => {
     const dryRun = req.query.dryRun === 'true';
@@ -121,7 +121,7 @@ class BatchManager {
     private count = 0;
 
     constructor() {
-        this.current = admin.firestore().batch();
+        this.current = getFirestore().batch();
         this.batches.push(this.current);
     }
 
@@ -129,7 +129,7 @@ class BatchManager {
         this.current.set(ref, data);
         this.count++;
         if (this.count >= 500) {
-            this.current = admin.firestore().batch();
+            this.current = getFirestore().batch();
             this.batches.push(this.current);
             this.count = 0;
         }
@@ -221,7 +221,7 @@ Backfills every `users/{uid}` document with the profile fields `name`, `email` a
 ### Operations:
 1. Scan all `users/{uid}` documents.
 2. **Idempotency check:** skip any user whose doc already has all three fields (absent / `null` / `''` all count as "missing").
-3. Fetch the Auth record via `admin.auth().getUser(uid)` to source the values.
+3. Fetch the Auth record via `getAuth().getUser(uid)` (`firebase-admin/auth`) to source the values.
 4. Build an `update()` patch containing **only the missing fields** — existing profile values are never overwritten.
 5. `?dryRun=true` logs what would change without committing.
 
@@ -443,7 +443,7 @@ Use the next available number (currently up to 20).
 
 ```typescript
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
 
 export const migrateNewFeature = functions.https.onRequest(async (req, res) => {
     const dryRun = req.query.dryRun === 'true';
@@ -451,7 +451,7 @@ export const migrateNewFeature = functions.https.onRequest(async (req, res) => {
     const report = { processed: 0, migrated: 0, skipped: 0, errors: [] as string[] };
 
     try {
-        const db = admin.firestore();
+        const db = getFirestore();
         const snapshot = await db.collection('targetCollection').get();
 
         for (const doc of snapshot.docs) {

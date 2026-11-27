@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
 
 export const migrate = functions.https.onRequest(async (req, res) => {
 	try {
@@ -20,7 +20,7 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 });
 
 async function prepareMigration(rootName: string, from: string, to: string) {
-	const db = admin.firestore();
+	const db = getFirestore();
 	const writes: FirebaseFirestore.WriteBatch[] = [];
 	let batch = db.batch();
 	let opCount = 0;

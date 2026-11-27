@@ -2,17 +2,18 @@ import { getState, DESTINATIONS } from '../../../../data/state.js';
 import { getID } from '../../../../utils/dom.js';
 import {
 	convertFromDateObject,
-	dateObjectToKey,
 	getDateString,
 	getTodayDateObject,
 } from '../../../../utils/dates.js';
-import { getColorNameFromOptions } from '../../../../theme/colors.js';
+import { getColorIndexFromOptions } from '../../../../theme/colors.js';
+import { getColors } from '../../../../app/config.js';
 import { loadCalendar } from './calendar.js';
 import { loadCalendarItem } from './inner-itinerary.js';
 import { openItineraryLightbox } from '../../support/embed.js';
 import { END_DATE } from '../../view.js';
 import { START_DATE } from '../../view.js';
 import { CURRENT_SCHEDULE_DATE, SCHEDULE_OPEN } from './inner-itinerary.js';
+import { getScheduleDestinations } from '../../../../utils/schedule-destinations.js';
 
 export var SCHEDULE_DESTINATIONS = {};
 var PILLS_ACTIONS = {};
@@ -28,12 +29,7 @@ export function loadItinerarySchedule() {
 }
 
 function loadScheduleDestinations() {
-	const itinerary = getState()?.itinerary;
-	if (!itinerary) return;
-	for (const label of itinerary) {
-		const key = dateObjectToKey(label.date);
-		SCHEDULE_DESTINATIONS[key] = label.destinationIds;
-	}
+	SCHEDULE_DESTINATIONS = getScheduleDestinations(getState()?.itinerary || []);
 }
 
 function getUniqueDestinationsFromSchedule() {
@@ -51,9 +47,13 @@ function getUniqueDestinationsFromSchedule() {
 
 // Pills
 function loadSchedulePills(multipleColors = true) {
+	PILLS_ACTIONS = {};
+	PILLS_INDEX = {};
+	const pillBox = getID('pill-box');
+	pillBox.innerHTML = '';
+	pillBox.style.display = 'none';
 	const destinations = getUniqueDestinationsFromSchedule();
 	if (destinations.length > 1) {
-		const pillBox = getID('pill-box');
 		pillBox.style.display = '';
 
 		let innerHTML = '';
@@ -63,11 +63,8 @@ function loadSchedulePills(multipleColors = true) {
 			const destination = DESTINATIONS.find((destination) => destination.id === destinoID);
 			if (!destination) continue;
 
-			const circleClass = multipleColors
-				? `pill-circle pill-circle-${getColorNameFromOptions(i)}`
-				: `pill-circle pill-circle-default`;
 			innerHTML += `<div class="pill" id="pill-${destinoID}">
-                            <span class="${circleClass}" id="pill-circle-${destinoID}"></span><span>${destination.title || destination.destinations?.title}</span>
+                            <span class="pill-circle" id="pill-circle-${destinoID}"></span><span>${destination.title || destination.destinations?.title}</span>
                           </div>`;
 		}
 
@@ -79,6 +76,7 @@ function loadSchedulePills(multipleColors = true) {
 			if (!destination) continue;
 
 			const colorIndex = multipleColors ? i : -1;
+			setPillColors(getID(`pill-circle-${destinoID}`), colorIndex);
 			addPillListeners(destinations[i], colorIndex);
 			PILLS_INDEX[destinations[i]] = colorIndex;
 		}
@@ -94,50 +92,42 @@ function loadPill(destinoID, action, colorIndex = -1) {
 		}
 	} else if (lastAction === 'click') {
 		if (action === 'click') {
-			deactivatePill(destinoID, colorIndex);
+			deactivatePill(destinoID);
 		}
 	} else if (lastAction === 'mouseenter') {
 		if (action === 'mouseleave') {
-			deactivatePill(destinoID, colorIndex);
+			deactivatePill(destinoID);
 		}
 		if (action === 'click') {
 			PILLS_ACTIONS[destinoID] = action;
-		}
-	} else if (lastAction === 'mouseleave') {
-		if (action === 'click' || action === 'mouseenter') {
-			PILLS_ACTIONS[destinoID] = action;
-			activatePill();
 		}
 	}
 }
 
 export function refreshPills() {
+	for (const calendarDay of document.getElementsByClassName('calendarTrip')) {
+		calendarDay.classList.remove('active-calendar');
+	}
 	for (const destinoID in PILLS_ACTIONS) {
-		const action = PILLS_ACTIONS[destinoID];
-		const index = PILLS_INDEX[destinoID];
-		deactivatePill(destinoID, index);
-		loadPill(destinoID, action, index);
+		for (const calendarDay of document.getElementsByClassName(`pill-${destinoID}`)) {
+			setPillColors(calendarDay as HTMLElement, PILLS_INDEX[destinoID]);
+			calendarDay.classList.add('active-calendar');
+		}
 	}
 }
 
-function activatePill(destinoID?, colorIndex = -1) {
-	const pillClasses = getPillClasses(colorIndex);
+function activatePill(destinoID, colorIndex = -1) {
+	PILLS_INDEX[destinoID] = colorIndex;
 	getID(`pill-${destinoID}`).classList.add('active-pill');
-	getID(`pill-circle-${destinoID}`).classList.add(pillClasses.activeCircle);
-	for (const calendarDay of document.getElementsByClassName(`pill-${destinoID}`)) {
-		calendarDay.classList.add(pillClasses.activeCalendar);
-	}
+	getID(`pill-circle-${destinoID}`).classList.add('active-circle');
+	refreshPills();
 }
 
-function deactivatePill(destinoID, colorIndex = -1) {
-	const pillClasses = getPillClasses(colorIndex);
+function deactivatePill(destinoID) {
 	getID(`pill-${destinoID}`).classList.remove('active-pill');
-	getID(`pill-circle-${destinoID}`).classList.remove(pillClasses.pillCircle);
-	getID(`pill-circle-${destinoID}`).classList.remove(pillClasses.activeCircle);
-	for (const calendarDay of document.getElementsByClassName(`pill-${destinoID}`)) {
-		calendarDay.classList.remove(pillClasses.activeCalendar);
-	}
+	getID(`pill-circle-${destinoID}`).classList.remove('active-circle');
 	delete PILLS_ACTIONS[destinoID];
+	refreshPills();
 }
 
 function addPillListeners(destinoID, colorIndex) {
@@ -154,18 +144,15 @@ function addPillListeners(destinoID, colorIndex) {
 	});
 }
 
-function getPillClasses(colorIndex) {
-	let pillCircle = 'pill-circle';
-	let activeCircle = 'active-circle';
-	let activeCalendar = 'active-calendar';
-
+function setPillColors(element: HTMLElement, colorIndex: number) {
 	if (colorIndex >= 0) {
-		const colorName = getColorNameFromOptions(colorIndex);
-		pillCircle = `pill-circle-${colorName}`;
-		activeCircle = `active-circle-${colorName}`;
-		activeCalendar = `active-calendar-${colorName}`;
+		const color = getColors().options[getColorIndexFromOptions(colorIndex)];
+		element.style.setProperty('--schedule-color-light', color.hex);
+		element.style.setProperty('--schedule-color-dark', color.dark || color.hex);
+	} else {
+		element.style.removeProperty('--schedule-color-light');
+		element.style.removeProperty('--schedule-color-dark');
 	}
-	return { pillCircle, activeCircle, activeCalendar };
 }
 
 // Today's Schedule

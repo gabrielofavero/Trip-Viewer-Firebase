@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
 
 interface Hospedagem {
 	id: string;
@@ -20,7 +20,7 @@ interface ViagemData {
 }
 
 export const migrate = functions.https.onRequest(async (_req, res): Promise<void> => {
-	const batch = admin.firestore().batch();
+	const batch = getFirestore().batch();
 
 	try {
 		await migrateViagens(batch);
@@ -35,7 +35,7 @@ export const migrate = functions.https.onRequest(async (_req, res): Promise<void
 });
 
 async function migrateViagens(batch: FirebaseFirestore.WriteBatch) {
-	const collection = admin.firestore().collection('viagens');
+	const collection = getFirestore().collection('viagens');
 	const snap = await collection.get();
 
 	for (const doc of snap.docs) {
@@ -52,8 +52,7 @@ async function migrateViagens(batch: FirebaseFirestore.WriteBatch) {
 			}
 			const sensitive = getSensitiveTripObject(data);
 
-			const protectedRef = admin
-				.firestore()
+			const protectedRef = getFirestore()
 				.collection('viagens')
 				.doc('protected')
 				.collection(pin)
@@ -68,14 +67,14 @@ async function migrateViagens(batch: FirebaseFirestore.WriteBatch) {
 }
 
 async function _getPinForTrip(tripId: string): Promise<string> {
-	const gastosRef = admin.firestore().collection('gastos').doc(tripId);
+	const gastosRef = getFirestore().collection('gastos').doc(tripId);
 	const gastosDoc = await gastosRef.get();
 	const gastosData = gastosDoc.data();
 	return gastosData?.pin ?? '';
 }
 
 async function migrateGastos(batch: FirebaseFirestore.WriteBatch) {
-	const collection = admin.firestore().collection('gastos');
+	const collection = getFirestore().collection('gastos');
 	const snap = await collection.get();
 
 	snap.forEach((doc) => {
@@ -86,7 +85,7 @@ async function migrateGastos(batch: FirebaseFirestore.WriteBatch) {
 		const gastosPrevios = data.gastosPrevios ?? [];
 
 		if (pin) {
-			const protectedRef = admin.firestore().collection('protegido').doc(doc.id);
+			const protectedRef = getFirestore().collection('protegido').doc(doc.id);
 			batch.set(protectedRef, { pin });
 		}
 

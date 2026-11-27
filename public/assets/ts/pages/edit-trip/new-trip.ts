@@ -426,6 +426,7 @@ export function loadDestinations() {
 
 	const container = getID('destinations-checkboxes');
 	container.innerHTML = '';
+	container.classList.remove('has-expanded-folder');
 
 	// Folders first (collapsed by default), then the destinations that are
 	// not filed in any folder.
@@ -506,6 +507,22 @@ function toggleDestinationFolderGroup(header: Element) {
 	const expanded = !group.classList.contains('expanded');
 	group.classList.toggle('expanded', expanded);
 	header.setAttribute('aria-expanded', String(expanded));
+	syncExpandedFolderFocusMode();
+}
+
+/**
+ * Focus mode for the picker: while at least one folder is expanded, the
+ * collapsed folder headers are hidden (`has-expanded-folder` on the list), so
+ * the expanded folder gets the whole panel height. Collapsing every folder
+ * brings the full list back.
+ */
+function syncExpandedFolderFocusMode(container: Element | null = null) {
+	const target = container || getID('destinations-checkboxes');
+	if (!target) return;
+	target.classList.toggle(
+		'has-expanded-folder',
+		target.querySelector('.destinations-folder.expanded') !== null,
+	);
 }
 
 /** Expand every folder that contains a selected destination (trip load). */
@@ -519,6 +536,7 @@ export function expandDestinationFoldersWithSelection() {
 			.querySelector('.destinations-folder-header')
 			?.setAttribute('aria-expanded', 'true');
 	}
+	syncExpandedFolderFocusMode(container);
 }
 
 /**

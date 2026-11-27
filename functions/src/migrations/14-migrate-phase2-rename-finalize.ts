@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import { FieldValue, getFirestore } from 'firebase-admin/firestore';
 
 // ============================================================
 // PHASE 2: Rename Collections & Finalize
@@ -61,7 +61,7 @@ class BatchManager {
 	private count = 0;
 
 	constructor() {
-		this.current = admin.firestore().batch();
+		this.current = getFirestore().batch();
 		this.batches.push(this.current);
 	}
 
@@ -78,7 +78,7 @@ class BatchManager {
 	private rotate() {
 		this.count++;
 		if (this.count >= 500) {
-			this.current = admin.firestore().batch();
+			this.current = getFirestore().batch();
 			this.batches.push(this.current);
 			this.count = 0;
 		}
@@ -118,7 +118,7 @@ async function migrateSubcollections(
 		errors: [],
 	};
 
-	const parentSnap = await admin.firestore().collection(oldParent).get();
+	const parentSnap = await getFirestore().collection(oldParent).get();
 	if (parentSnap.empty) {
 		console.log(`[sub:${oldParent}] No parent docs — skipping.`);
 		return report;
@@ -132,7 +132,7 @@ async function migrateSubcollections(
 			const oldPath = `${oldParent}/${parentDoc.id}/${subName}`;
 			let subSnap: FirebaseFirestore.QuerySnapshot;
 			try {
-				subSnap = await admin.firestore().collection(oldPath).get();
+				subSnap = await getFirestore().collection(oldPath).get();
 			} catch {
 				continue;
 			}
@@ -142,8 +142,7 @@ async function migrateSubcollections(
 
 			for (const subDoc of subSnap.docs) {
 				report.processed++;
-				const newRef = admin
-					.firestore()
+				const newRef = getFirestore()
 					.doc(`${newParent}/${parentDoc.id}/${subName}/${subDoc.id}`);
 				const newSnap = await newRef.get();
 
@@ -183,7 +182,7 @@ async function migrateProtectedSubcollections(dryRun: boolean): Promise<MigrateR
 	// Gather PINs
 	const tripPins: Record<string, string> = {};
 	try {
-		const snap = await admin.firestore().collection('protegido').get();
+		const snap = await getFirestore().collection('protegido').get();
 		snap.forEach((doc) => {
 			const pin = doc.data()?.pin;
 			if (pin) tripPins[doc.id] = pin;
@@ -206,7 +205,7 @@ async function migrateProtectedSubcollections(dryRun: boolean): Promise<MigrateR
 			errors: [],
 		};
 
-		const protectedRef = admin.firestore().doc(`${oldParent}/protected`);
+		const protectedRef = getFirestore().doc(`${oldParent}/protected`);
 		let cols: FirebaseFirestore.CollectionReference[];
 		try {
 			cols = await protectedRef.listCollections();
@@ -223,7 +222,7 @@ async function migrateProtectedSubcollections(dryRun: boolean): Promise<MigrateR
 
 			for (const doc of pinSnap.docs) {
 				report.processed++;
-				const newRef = admin.firestore().doc(`${newParent}/protected/${pinCol.id}/${doc.id}`);
+				const newRef = getFirestore().doc(`${newParent}/protected/${pinCol.id}/${doc.id}`);
 				const newSnap = await newRef.get();
 
 				if (newSnap.exists) {
@@ -267,7 +266,7 @@ async function migrateTopLevel(
 		errors: [],
 	};
 
-	const oldSnap = await admin.firestore().collection(oldName).get();
+	const oldSnap = await getFirestore().collection(oldName).get();
 	if (oldSnap.empty) {
 		console.log(`[${oldName} → ${newName}] Empty — skipping.`);
 		return report;
@@ -278,7 +277,7 @@ async function migrateTopLevel(
 
 	for (const oldDoc of oldSnap.docs) {
 		report.processed++;
-		const newRef = admin.firestore().collection(newName).doc(oldDoc.id);
+		const newRef = getFirestore().collection(newName).doc(oldDoc.id);
 		const newSnap = await newRef.get();
 
 		if (newSnap.exists) {
@@ -310,7 +309,7 @@ async function migrateTopLevel(
 async function fixItineraryTipo(dryRun: boolean): Promise<{ days: number; items: number }> {
 	console.log(`\n[fix-itinerary-tipo] Scanning trips/itinerary...`);
 
-	const tripsSnap = await admin.firestore().collection('trips').get();
+	const tripsSnap = await getFirestore().collection('trips').get();
 	if (tripsSnap.empty) {
 		console.log(`[fix-itinerary-tipo] No trips found.`);
 		return { days: 0, items: 0 };
@@ -318,7 +317,7 @@ async function fixItineraryTipo(dryRun: boolean): Promise<{ days: number; items:
 
 	let totalDays = 0;
 	let totalItems = 0;
-	const batch = admin.firestore().batch();
+	const batch = getFirestore().batch();
 	let batchCount = 0;
 
 	for (const tripDoc of tripsSnap.docs) {
@@ -376,7 +375,7 @@ async function fixItineraryDestinationIdKeys(
 ): Promise<{ days: number; items: number }> {
 	console.log(`\n[fix-itinerary-destinationIds] Scanning trips/itinerary...`);
 
-	const tripsSnap = await admin.firestore().collection('trips').get();
+	const tripsSnap = await getFirestore().collection('trips').get();
 	if (tripsSnap.empty) {
 		console.log(`[fix-itinerary-destinationIds] No trips found.`);
 		return { days: 0, items: 0 };
@@ -384,7 +383,7 @@ async function fixItineraryDestinationIdKeys(
 
 	let totalDays = 0;
 	let totalItems = 0;
-	const batch = admin.firestore().batch();
+	const batch = getFirestore().batch();
 	let batchCount = 0;
 
 	for (const tripDoc of tripsSnap.docs) {
@@ -428,7 +427,7 @@ async function fixItineraryDestinationIdKeys(
 
 	// Also scan the old Portuguese collection if it still exists
 	try {
-		const oldTripsSnap = await admin.firestore().collection('viagens').get();
+		const oldTripsSnap = await getFirestore().collection('viagens').get();
 		for (const tripDoc of oldTripsSnap.docs) {
 			const itinSnap = await tripDoc.ref.collection('itinerary').get();
 			if (itinSnap.empty) continue;
@@ -487,7 +486,7 @@ async function fixDestinationCategories(
 ): Promise<{ dests: number; subItems: number; moduleKeys: number }> {
 	console.log(`\n[fix-destination-categories] Scanning destinations...`);
 
-	const destSnap = await admin.firestore().collection('destinations').get();
+	const destSnap = await getFirestore().collection('destinations').get();
 	if (destSnap.empty) {
 		console.log(`[fix-destination-categories] No destinations.`);
 		return { dests: 0, subItems: 0, moduleKeys: 0 };
@@ -528,7 +527,7 @@ async function fixDestinationCategories(
 			} else {
 				await destDoc.ref.update({
 					modules,
-					...(data.modulos ? { modulos: admin.firestore.FieldValue.delete() } : {}),
+					...(data.modulos ? { modulos: FieldValue.delete() } : {}),
 				});
 			}
 			destChanged = true;
@@ -550,7 +549,7 @@ async function fixDestinationCategories(
 				console.log(`  [DRY RUN] ${destDoc.id}: ${allOld.size} doc(s) ${oldCat} → ${newCat}`);
 				totalSubItems += allOld.size;
 			} else {
-				const batch = admin.firestore().batch();
+				const batch = getFirestore().batch();
 				let bc = 0;
 				for (const item of allOld.docs) {
 					batch.set(destDoc.ref.collection(newCat).doc(item.id), item.data() || {});
@@ -590,13 +589,13 @@ async function cleanupOldCollections(dryRun: boolean): Promise<MigrateReport[]> 
 
 	// Cleanup top-level
 	for (const [oldName, newName] of Object.entries(COLLECTION_RENAME_MAP)) {
-		const newSnap = await admin.firestore().collection(newName).limit(1).get();
+		const newSnap = await getFirestore().collection(newName).limit(1).get();
 		if (newSnap.empty) {
 			console.log(`[cleanup:${oldName}] New collection "${newName}" empty — SKIPPING (safety).`);
 			continue;
 		}
 
-		const oldSnap = await admin.firestore().collection(oldName).get();
+		const oldSnap = await getFirestore().collection(oldName).get();
 		if (oldSnap.empty) {
 			console.log(`[cleanup:${oldName}] Already empty.`);
 			continue;
@@ -613,7 +612,7 @@ async function cleanupOldCollections(dryRun: boolean): Promise<MigrateReport[]> 
 
 		for (const oldDoc of oldSnap.docs) {
 			report.processed++;
-			const match = await admin.firestore().collection(newName).doc(oldDoc.id).get();
+			const match = await getFirestore().collection(newName).doc(oldDoc.id).get();
 			if (!match.exists) {
 				console.log(`[cleanup:${oldName}/${oldDoc.id}] No match — SKIPPING.`);
 				continue;
@@ -632,7 +631,7 @@ async function cleanupOldCollections(dryRun: boolean): Promise<MigrateReport[]> 
 		const newParent = COLLECTION_RENAME_MAP[oldParent];
 		if (!newParent) continue;
 
-		const parentSnap = await admin.firestore().collection(oldParent).get();
+		const parentSnap = await getFirestore().collection(oldParent).get();
 		if (parentSnap.empty) continue;
 
 		const report: MigrateReport = {
@@ -649,7 +648,7 @@ async function cleanupOldCollections(dryRun: boolean): Promise<MigrateReport[]> 
 				const oldPath = `${oldParent}/${parentDoc.id}/${subName}`;
 				let subSnap: FirebaseFirestore.QuerySnapshot;
 				try {
-					subSnap = await admin.firestore().collection(oldPath).get();
+					subSnap = await getFirestore().collection(oldPath).get();
 				} catch {
 					continue;
 				}
@@ -657,8 +656,7 @@ async function cleanupOldCollections(dryRun: boolean): Promise<MigrateReport[]> 
 
 				for (const subDoc of subSnap.docs) {
 					report.processed++;
-					const newRef = admin
-						.firestore()
+					const newRef = getFirestore()
 						.doc(`${newParent}/${parentDoc.id}/${subName}/${subDoc.id}`);
 					const match = await newRef.get();
 					if (!match.exists) {

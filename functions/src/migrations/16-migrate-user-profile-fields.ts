@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
+import { getAuth } from 'firebase-admin/auth';
 
 // ============================================================
 // MIGRATION 16: User Profile Fields (name, email, photoURL)
@@ -37,7 +38,7 @@ class BatchManager {
 	private count = 0;
 
 	constructor() {
-		this.current = admin.firestore().batch();
+		this.current = getFirestore().batch();
 		this.batches.push(this.current);
 	}
 
@@ -48,7 +49,7 @@ class BatchManager {
 		this.current.update(ref, data);
 		this.count++;
 		if (this.count >= 500) {
-			this.current = admin.firestore().batch();
+			this.current = getFirestore().batch();
 			this.batches.push(this.current);
 			this.count = 0;
 		}
@@ -91,7 +92,7 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 	};
 
 	try {
-		const db = admin.firestore();
+		const db = getFirestore();
 		const usersSnap = await db.collection('users').get();
 		console.log(`[migration-16] Found ${usersSnap.size} user document(s).`);
 
@@ -114,7 +115,7 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 			let email = '';
 			let photoURL = '';
 			try {
-				const userRecord = await admin.auth().getUser(uid);
+				const userRecord = await getAuth().getUser(uid);
 				displayName = userRecord.displayName || '';
 				email = userRecord.email || '';
 				photoURL = userRecord.photoURL || '';

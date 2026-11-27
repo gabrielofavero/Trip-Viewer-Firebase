@@ -1,9 +1,9 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
 
 export const migrate = functions.https.onRequest(async (req, res) => {
 	try {
-		const db = admin.firestore();
+		const db = getFirestore();
 		const usersRef = db.collection('usuarios');
 		const usersSnapshot = await usersRef.get();
 
@@ -54,7 +54,7 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 async function getTripMinimalData(ids: string[]) {
 	if (!ids?.length) return {};
 
-	const db = admin.firestore();
+	const db = getFirestore();
 	const result: Record<string, any> = {};
 
 	await Promise.all(
@@ -80,7 +80,7 @@ async function getTripMinimalData(ids: string[]) {
 async function getDestinationMinimalData(ids: string[]) {
 	if (!ids?.length) return {};
 
-	const db = admin.firestore();
+	const db = getFirestore();
 	const result: Record<string, any> = {};
 
 	await Promise.all(
@@ -102,7 +102,7 @@ async function getDestinationMinimalData(ids: string[]) {
 async function getListingMinimalData(ids: string[]) {
 	if (!ids?.length) return {};
 
-	const db = admin.firestore();
+	const db = getFirestore();
 	const result: Record<string, any> = {};
 
 	await Promise.all(
