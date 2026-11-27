@@ -105,6 +105,10 @@ interface AccommodationTemplate extends TripTemplateBase {
   owner `update` of `users/{uid}.tripTemplates`).
 - Applying a template is pure DOM (the editor's normal Save persists it); nothing is copied
   between trips on the server.
+- Templates are independent snapshots: `sourceTripId` and `sourceAccommodationId` are
+  provenance only. Applying never copies the source accommodation ID or retains a template
+  association; editing the source, template or imported copy never updates the others.
+  Metadata-only template edits preserve the stored snapshot unless a source is explicitly selected.
 - Templates are private to the owner: shared viewers/editors cannot read the owner's user
   document. Account backup/restore does **not** carry template data (same as folders).
 
@@ -185,7 +189,7 @@ gallery          { categories[], descriptions[], images[], titles[] }
 destinationRefs  { id, title?, image?, categories?, version? }[]   Denormalized destination metadata (migration 18 + trip save) — see below
 image            { dark, light, background: string, active: bool }
 itineraryAutoExcluded  string[]         Source keys of auto-added itinerary entries the user deleted by hand — see below
-templateId       string                 Applied TripSkeletonTemplate id (`users/{uid}.tripTemplates[].id`; '' when none) — powers the editor's manual "refresh template" action. Not mirrored in summaries
+templateId       string                 Legacy template association; ignored on load and cleared to '' on save. Templates are independent snapshots. Not mirrored in summaries
 ```
 
 ### DateObject

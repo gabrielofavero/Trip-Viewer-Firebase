@@ -127,11 +127,10 @@ export function addTransportation() {
             <div class="accordion-body">
               <div class="import-fetch-wrapper">
                 <button type="button" id="transportation-import-button-${j}" data-action="open-transportation-import"
-                  data-index="${j}" class="btn btn-basic btn-sm" style="display:none"
+                  data-index="${j}" class="editor-import-button" style="display:none"
                   title="${translate('trip.transportation.import.button')}"
                   aria-label="${translate('trip.transportation.import.button')}">
                   <i class="iconify" data-icon="heroicons:document-arrow-down-16-solid"></i>
-                  <span>${translate('trip.transportation.import.button')}</span>
                 </button>
               </div>
               <div class="nice-form-group" style="display: none">
@@ -294,22 +293,23 @@ export function addAccommodations() {
         <div id="collapse-accommodations-${j}" class="accordion-collapse collapse"
           aria-labelledby="heading-accommodations-${j}" data-bs-parent="#accommodations-box">
             <div class="accordion-body">
-              <div class="import-fetch-wrapper">
-                <button type="button" id="accommodation-import-button-${j}" data-action="open-accommodation-import"
-                  data-index="${j}" class="btn btn-basic btn-sm" style="display:none"
-                  title="${translate('trip.accommodation.import.button')}"
-                  aria-label="${translate('trip.accommodation.import.button')}">
+              <div class="import-fetch-wrapper dropdown">
+                <button type="button" id="accommodation-import-button-${j}" data-action="open-accommodation-source"
+                  data-index="${j}" class="editor-import-button" style="display:none"
+                  aria-expanded="false" aria-controls="accommodation-import-menu-${j}"
+                  title="${translate('trip.accommodation.import.choose_source')}"
+                  aria-label="${translate('trip.accommodation.import.choose_source')}">
                   <i class="iconify" data-icon="heroicons:document-arrow-down-16-solid"></i>
-                  <span>${translate('trip.accommodation.import.button')}</span>
                 </button>
-                <button type="button" id="accommodation-template-button-${j}"
-                  data-action="open-accommodation-template" data-index="${j}"
-                  class="btn btn-basic btn-sm" style="display:none"
-                  title="${translate('trip.template.import_button')}"
-                  aria-label="${translate('trip.template.import_button')}">
-                  <i class="iconify" data-icon="material-symbols:content-copy"></i>
-                  <span>${translate('trip.template.import_button')}</span>
-                </button>
+                <div id="accommodation-import-menu-${j}" class="dropdown-menu dropdown-menu-end import-source-menu"
+                  aria-labelledby="accommodation-import-button-${j}">
+                  <button type="button" class="dropdown-item" data-action="open-accommodation-template" data-index="${j}">
+                    ${translate('trip.template.import_button')}
+                  </button>
+                  <button type="button" class="dropdown-item" data-action="open-accommodation-import" data-index="${j}">
+                    ${translate('trip.accommodation.import.button')}
+                  </button>
+                </div>
               </div>
               <div class="nice-form-group" style="display: none">
               <label>${translate('labels.id')}</label>

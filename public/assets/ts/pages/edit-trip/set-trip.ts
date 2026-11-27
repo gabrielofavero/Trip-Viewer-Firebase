@@ -26,7 +26,6 @@ import {
 	getAccommodationArray,
 	getProtectedAccommodationObject,
 } from './categories/accommodation.js';
-import { getAppliedTripTemplateId } from './categories/trip-template.js';
 import {
 	getProtectedTransportationObject,
 	getTransportationObject,
@@ -109,7 +108,8 @@ async function getUnprotectedTripObject() {
 		visibility: getVisibilityObject(),
 		pin: getCurrentPreferencePIN(),
 		itineraryAutoExcluded: getExcludedAutoKeys(),
-		templateId: getAppliedTripTemplateId(),
+		// Clear legacy template associations: applying a template is a snapshot.
+		templateId: '',
 	};
 }
 
@@ -151,7 +151,7 @@ async function getTripObjectFull(protectedReservationCodes = false) {
 		visibility: getVisibilityObject(),
 		pin: getCurrentPreferencePIN(),
 		itineraryAutoExcluded: getExcludedAutoKeys(),
-		templateId: getAppliedTripTemplateId(),
+		templateId: '',
 	};
 }
 

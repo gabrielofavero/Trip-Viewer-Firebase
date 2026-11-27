@@ -92,6 +92,8 @@ npm run dev:prd    # firebase use prd first (trip-viewer-prd)
 - 🐞 **B244:** Restore multi-city itinerary automations
 - 📈 **M258:** Soften destination category box backgrounds
 - 🐞 **B245:** Fix misleading offline dialog and retry buttons
+- 🐞 **B246:** Preserve independent accommodation template snapshots
+- 📈 **M259:** Unify template imports behind concise icons
 
 ### September 2026
 

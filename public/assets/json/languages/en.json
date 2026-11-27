@@ -27,7 +27,7 @@
 			"empty": "No templates registered yet.",
 			"empty_trip": "No trip templates yet.",
 			"empty_accommodation": "No accommodation templates yet.",
-			"hint": "Dates, reservation codes and payment status are never copied. Editing a template does not change trips that already use it — refresh them from the trip editor.",
+			"hint": "Templates are independent snapshots. Editing or deleting a source, template or imported copy never updates the others. Dates, reservation codes and payment status are never copied.",
 			"trip_section": "Trip templates",
 			"accommodation_section": "Accommodation templates",
 			"trip_count": "{{count}} trip template(s)",
@@ -336,6 +336,7 @@
 			},
 			"import": {
 				"label": "Reuse a stay",
+				"choose_source": "Import accommodation",
 				"button": "Import from trip",
 				"title": "Import accommodation",
 				"loading": "Loading accommodations",

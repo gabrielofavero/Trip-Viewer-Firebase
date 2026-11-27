@@ -21,12 +21,11 @@ import { closeToast } from '../../../utils/messages.js';
 import { accommodationsAddListenerAction } from '../categories/accommodation.js';
 import {
 	openAccommodationImport,
-	refreshAccommodationImportButtons,
+	openAccommodationSource,
 } from '../categories/accommodation-import.js';
 import {
 	openAccommodationTemplatePicker,
 	openTripTemplatePicker,
-	refreshAppliedTripTemplate,
 	refreshTemplateButtons,
 } from '../categories/trip-template.js';
 import {
@@ -77,8 +76,8 @@ export function loadEventListeners() {
 			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) openAccommodationImport(index);
 		},
+		'open-accommodation-source': (target) => openAccommodationSource(target),
 		'open-trip-template': () => openTripTemplatePicker(),
-		'refresh-trip-template': () => void refreshAppliedTripTemplate(),
 		'open-accommodation-template': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
 			if (!isNaN(index)) openAccommodationTemplatePicker(index);
@@ -161,7 +160,6 @@ export function loadEventListeners() {
 	});
 	getID('accommodation-add').addEventListener('click', () => {
 		accommodationsAddListenerAction();
-		void refreshAccommodationImportButtons();
 		refreshTemplateButtons();
 	});
 	getID('pin-disabled').addEventListener('click', switchPin);
@@ -206,7 +204,6 @@ export function loadEventListeners() {
 	// Render the wallpaper/logo picker cards (values are set for existing
 	// trips; the destination-changed event handles mid-edit changes).
 	refreshImagePickers();
-	void refreshAccommodationImportButtons();
 	refreshTemplateButtons();
 	refreshTransportationImportButtons();
 

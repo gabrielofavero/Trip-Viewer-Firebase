@@ -18,6 +18,8 @@ import {
 import { markStagedChanges } from '../../../ui/fields.js';
 import { ACCOMMODATION_IMAGES, renderAccommodationImageCarousel } from './accommodation.js';
 import { syncAccommodationItinerary } from './itinerary-module/inner-itinerary/auto-populate.js';
+import { getAccommodationTemplates } from '../../../data/services/trip-templates.service.js';
+import { openAccommodationTemplatePicker } from './trip-template.js';
 
 let TARGET_INDEX = 0;
 let SOURCE_ACCOMMODATIONS: Record<string, any> = {};
@@ -27,15 +29,46 @@ let AVAILABLE_SOURCE_TRIPS_REQUEST: Promise<Record<string, any>[]> | null = null
 let SEARCH_QUERY = '';
 
 /**
- * Show the accommodation import button only when the user actually has other
- * trips with accommodations to import from — hide it otherwise.
+ * Show one import button when saved templates or other trips are available.
+ * Offer a source menu only when both kinds can be imported.
  */
 export async function refreshAccommodationImportButtons() {
-	const trips = await getAvailableSourceTrips();
+	let hasTrips = false;
+	try {
+		hasTrips = (await getAvailableSourceTrips()).length > 0;
+	} catch (error) {
+		console.warn('Could not load accommodation import sources:', error);
+	}
+	const hasTemplates = getAccommodationTemplates().length > 0;
 	for (const childId of getChildIDs('accommodations-box')) {
 		const button = getID(`accommodation-import-button-${getJ(childId)}`);
-		if (button) button.style.display = trips.length ? '' : 'none';
+		if (!button) continue;
+		button.style.display = hasTrips || hasTemplates ? '' : 'none';
+		button.dataset.hasTrips = String(hasTrips);
+		button.dataset.hasTemplates = String(hasTemplates);
+		if (hasTrips && hasTemplates) button.setAttribute('data-bs-toggle', 'dropdown');
+		else button.removeAttribute('data-bs-toggle');
+		const label = translate(
+			hasTrips && hasTemplates
+				? 'trip.accommodation.import.choose_source'
+				: hasTemplates
+					? 'trip.template.import_button'
+					: 'trip.accommodation.import.button',
+		);
+		button.title = label;
+		button.setAttribute('aria-label', label);
 	}
+}
+
+/** With two sources Bootstrap opens the menu; a single source opens directly. */
+export function openAccommodationSource(button: HTMLElement): void {
+	const index = Number(button.dataset.index);
+	if (!index) return;
+	const hasTemplates = button.dataset.hasTemplates === 'true';
+	const hasTrips = button.dataset.hasTrips === 'true';
+	if (hasTemplates && hasTrips) return;
+	if (hasTemplates) openAccommodationTemplatePicker(index);
+	else if (hasTrips) openAccommodationImport(index);
 }
 
 /** Open the source-trip picker for accommodation row `index`. */
@@ -150,13 +183,17 @@ function initTripSearch() {
 function getAvailableSourceTrips(): Promise<Record<string, any>[]> {
 	if (AVAILABLE_SOURCE_TRIPS) return Promise.resolve(AVAILABLE_SOURCE_TRIPS);
 	if (!AVAILABLE_SOURCE_TRIPS_REQUEST) {
-		AVAILABLE_SOURCE_TRIPS_REQUEST = getUserTrips().then((trips) => {
-			// Newest first (older trips last), from the summary's start date.
-			AVAILABLE_SOURCE_TRIPS = trips
-				.filter((trip) => trip.id !== DOCUMENT_ID && trip.modules?.accommodations === true)
-				.sort((a, b) => getTripStartTime(b) - getTripStartTime(a));
-			return AVAILABLE_SOURCE_TRIPS;
-		});
+		AVAILABLE_SOURCE_TRIPS_REQUEST = getUserTrips()
+			.then((trips) => {
+				// Newest first (older trips last), from the summary's start date.
+				AVAILABLE_SOURCE_TRIPS = trips
+					.filter((trip) => trip.id !== DOCUMENT_ID && trip.modules?.accommodations === true)
+					.sort((a, b) => getTripStartTime(b) - getTripStartTime(a));
+				return AVAILABLE_SOURCE_TRIPS;
+			})
+			.finally(() => {
+				AVAILABLE_SOURCE_TRIPS_REQUEST = null;
+			});
 	}
 	return AVAILABLE_SOURCE_TRIPS_REQUEST;
 }

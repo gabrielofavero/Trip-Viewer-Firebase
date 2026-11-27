@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.29.4] - 2026-11-27
+- 🐞 **B246:** Preserve independent accommodation template snapshots
+- 📈 **M259:** Unify template imports behind concise icons
+
 ## [2.29.3] - 2026-11-26
 
 - 📈 **M257:** [DEV] Resolve security vulnerabilities

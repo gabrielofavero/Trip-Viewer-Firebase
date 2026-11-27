@@ -27,7 +27,7 @@
 			"empty": "Nenhum template cadastrado ainda.",
 			"empty_trip": "Nenhum template de viagem ainda.",
 			"empty_accommodation": "Nenhum template de hospedagem ainda.",
-			"hint": "Datas, códigos de reserva e pagamento nunca são copiados. Editar um template não altera viagens que já o usam — atualize-as pelo editor de viagem.",
+			"hint": "Templates são cópias independentes. Editar ou excluir a origem, o template ou uma cópia importada nunca atualiza os demais. Datas, códigos de reserva e pagamento nunca são copiados.",
 			"trip_section": "Templates de viagem",
 			"accommodation_section": "Templates de hospedagem",
 			"trip_count": "{{count}} template(s) de viagem",
@@ -336,6 +336,7 @@
 			},
 			"import": {
 				"label": "Reutilizar uma hospedagem",
+				"choose_source": "Importar hospedagem",
 				"button": "Importar de uma viagem",
 				"title": "Importar hospedagem",
 				"loading": "Carregando hospedagens",

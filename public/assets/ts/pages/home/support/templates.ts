@@ -9,8 +9,7 @@
 // The Settings tab renders this manager INLINE: one fixed-height panel per
 // template type, each with its own scroll. Rows can be edited (pencil) or
 // removed (trash); both actions persist immediately. Editing a template never
-// touches the trips that already exist — those are refreshed by hand from the
-// trip editor.
+// touches the original source or the trips that already copied its snapshot.
 
 import { cloneObject, getID } from '../../../utils/dom.js';
 import { translate } from '../../../i18n/translation.js';
@@ -261,7 +260,7 @@ async function removeTemplate(templateId: string): Promise<void> {
 
 /**
  * Open the creator dialog. With `templateId` the dialog edits that template
- * in place (its values are rebuilt from the selected base trip / stay).
+ * in place. Values are rebuilt only when a base trip / stay is selected.
  */
 async function openTemplateCreator(type: 'trip' | 'accommodation', templateId = ''): Promise<void> {
 	closeActiveTemplateCombo();
@@ -273,7 +272,9 @@ async function openTemplateCreator(type: 'trip' | 'accommodation', templateId = 
 	CREATOR_TYPE = type;
 	CREATOR_EDIT_ID = editing?.id || '';
 	CREATOR_ACCOMMODATIONS = [];
-	CREATOR_TRIP_ID = editing?.sourceTripId || '';
+	// Editing the name/destinations preserves the snapshot. Only an explicit
+	// source selection replaces its values with a new snapshot.
+	CREATOR_TRIP_ID = '';
 	CREATOR_DESTINATION_IDS = new Set(editing?.destinationIds || []);
 	CREATOR_DESTINATION_QUERY = '';
 
@@ -314,16 +315,13 @@ async function openTemplateCreator(type: 'trip' | 'accommodation', templateId = 
 
 function getTemplateCreatorContent(type: 'trip' | 'accommodation', editing?: TripTemplate): string {
 	const name = editing?.name || '';
-	const tripTitle = editing
-		? String(SOURCE_TRIPS.find((trip) => trip.id === editing.sourceTripId)?.title || '')
-		: '';
 
 	const accommodationGroup =
 		type === 'accommodation'
 			? `<div class="templates-creator-group" id="templates-creator-accommodation-group">
 					<label class="templates-creator-label">${escapeHTML(translate('account.templates.source_accommodation'))}</label>
 					<select id="templates-creator-accommodation" class="templates-creator-select">
-						<option value="">${escapeHTML(translate('account.templates.loading_accommodations'))}</option>
+						<option value="">${escapeHTML(translate('account.templates.select_accommodation'))}</option>
 					</select>
 				</div>`
 			: '';
@@ -369,7 +367,7 @@ function getTemplateCreatorContent(type: 'trip' | 'accommodation', editing?: Tri
 						placeholder="${escapeHTML(translate('account.templates.select_trip'))}"
 						autocomplete="off" role="combobox" aria-expanded="false"
 						aria-controls="templates-trip-options" aria-autocomplete="list"
-						value="${escapeHTML(tripTitle)}"
+						value=""
 						${SOURCE_TRIPS.length ? '' : 'disabled'} />
 					<div class="templates-combo-menu" id="templates-trip-options" role="listbox" hidden></div>
 				</div>
